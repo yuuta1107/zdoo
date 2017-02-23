@@ -1315,12 +1315,12 @@
             /* toggle desktop and others entry. */
             $('#s-menu-dashboard button').click(function()
             {
-                var et = getEntry('dashboard');
-                if(!et.opened)
-                {
+                //var et = getEntry('dashboard');
+                //if(!et.opened)
+                //{
                     desktop.fullScreenApps.toggle('home');
                     return false;
-                }
+                //}
             });
         };
 
