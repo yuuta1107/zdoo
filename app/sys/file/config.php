@@ -10,6 +10,7 @@
  * @link        http://www.ranzhico.com
  */
 $config->file->imageExtensions = array('jpeg', 'jpg', 'gif', 'png');
+$config->file->image2Compress  = array('.jpg', '.bmp', '.jpeg');
 
 $config->file->mimes['default'] = 'application/octet-stream';
 

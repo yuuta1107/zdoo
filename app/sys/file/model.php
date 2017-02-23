@@ -610,6 +610,100 @@ class fileModel extends model
     }
 
     /**
+     * Compress image 
+     * 
+     * @param  array    $file 
+     * @access public
+     * @return array
+     */
+    public function compressImage($file)
+    {
+        if(!extension_loaded('gd') or !function_exists('imagecreatefromjpeg')) return $file;
+
+        $pathName    = $file['pathname'];
+        $fileName    = $this->savePath . $pathName;
+        $suffix      = strrchr($fileName, '.');
+        $lowerSuffix = strtolower($suffix);
+
+        if(!in_array($lowerSuffix, $this->config->file->image2Compress)) return $file;
+
+        $quality        = 85;
+        $newSuffix      = '.jpg';
+        $compressedName = str_replace($suffix, $newSuffix, $pathName);
+
+        $res  = $lowerSuffix == '.bmp' ? $this->imagecreatefrombmp($fileName) : imagecreatefromjpeg($fileName);
+        imagejpeg($res, $this->savePath . $compressedName, $quality);
+        if($fileName != $this->savePath . $compressedName) unlink($fileName);
+
+        $file['pathname']   = $compressedName;
+        $file['extension']  = ltrim($newSuffix, '.');
+        $file['size']       = filesize($this->savePath . $compressedName);
+        return $file;
+    }
+
+    /**
+     * Read 24bit BMP files
+     * Author: de77
+     * Licence: MIT
+     * Webpage: de77.com
+     * Version: 07.02.2010
+     * Source : https://github.com/acustodioo/pic/blob/master/imagecreatefrombmp.function.php
+     * 
+     * @param  string    $filename 
+     * @access public
+     * @return resource
+     */
+    public function imagecreatefrombmp($filename) {
+        $f = fopen($filename, "rb");
+
+        //read header    
+        $header = fread($f, 54);
+        $header = unpack('c2identifier/Vfile_size/Vreserved/Vbitmap_data/Vheader_size/'.
+            'Vwidth/Vheight/vplanes/vbits_per_pixel/Vcompression/Vdata_size/'.
+            'Vh_resolution/Vv_resolution/Vcolors/Vimportant_colors', $header);
+
+        if ($header['identifier1'] != 66 or $header['identifier2'] != 77)
+            return false;
+
+        if ($header['bits_per_pixel'] != 24)
+            return false;
+
+        $wid2 = ceil((3 * $header['width']) / 4) * 4;
+
+        $wid = $header['width'];
+        $hei = $header['height'];
+
+        $img = imagecreatetruecolor($header['width'], $header['height']);
+
+        //read pixels
+        for ($y = $hei - 1; $y >= 0; $y--) {
+            $row = fread($f, $wid2);
+            $pixels = str_split($row, 3);
+
+            for ($x = 0; $x < $wid; $x++) {
+                imagesetpixel($img, $x, $y, $this->dwordize($pixels[$x]));
+            }
+        }
+        fclose($f);
+        return $img;
+    }
+
+    /**
+     * Dwordize for imagecreatefrombmp 
+     * 
+     * @param  streing $str 
+     * @access private
+     * @return int
+     */
+    private function dwordize($str)
+    {
+        $a = ord($str[0]);
+        $b = ord($str[1]);
+        $c = ord($str[2]);
+        return $c * 256 * 256 + $b * 256 + $a;
+    }
+
+    /**
      * Exclude html.
      * 
      * @param  string $content 
