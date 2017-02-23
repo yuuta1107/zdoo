@@ -107,8 +107,8 @@ class file extends control
                 /* Compress image for jpg and bmp. */
                 $file = $this->file->compressImage($file);
 
-                $file['addedBy']    = $this->app->user->account;
-                $file['addedDate']  = helper::today();
+                $file['createdBy']    = $this->app->user->account;
+                $file['createdDate']  = helper::today();
                 unset($file['tmpname']);
                 $this->dao->insert(TABLE_FILE)->data($file)->exec();
 
