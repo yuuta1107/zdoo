@@ -612,8 +612,11 @@ function getWebRoot()
 
     if(PHP_SAPI == 'cli')
     {
-        $url  = parse_url($_SERVER['argv'][1]);
-        $path = empty($url['path']) ? '/' : rtrim($url['path'], '/');
+        if(isset($_SERVER['argv'][1]))
+        {
+            $url  = parse_url($_SERVER['argv'][1]);
+            $path = empty($url['path']) ? '/' : rtrim($url['path'], '/');
+        }
         $path = empty($path) ? '/' : preg_replace('/\/www$/', '/www/', $path);
     }
 
