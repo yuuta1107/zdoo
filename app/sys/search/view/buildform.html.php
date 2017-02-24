@@ -94,7 +94,7 @@ $(function()
             time = Y + '-' + m + '-' + d;
             $('.date').val(time);
         }
-        setDateField(this);
+        setDateField(this, undefined, 'date');
     });
 
     $('.datetime').each(function()
@@ -109,7 +109,7 @@ $(function()
             time = Y + '-' + m + '-' + d + ' ' + h + ':' + i;
             $('.datetime').val(time);
         }
-        setDateField(this);
+        setDateField(this, undefined, 'datetime');
     });
 });
 
@@ -142,7 +142,15 @@ function setDateField(query, fieldNO, type)
             var target = $('#' + $period.data('target'));
             if(target.length)
             {
-                target.val($(this).attr('href').replace('#', '$'));
+                if(target.next('input[type=hidden]').length)
+                {
+                    target.next('input[type=hidden]').val($(this).attr('href').replace('#', '$'));
+                    target.attr('placeholder', $(this).attr('href').replace('#', '$'));
+                }
+                else
+                {
+                    target.val($(this).attr('href').replace('#', '$'));
+                }
                 $('#operator' + $period.data('fieldNO')).val('between');
                 $period.hide();
             }
@@ -159,6 +167,14 @@ function setDateField(query, fieldNO, type)
     }).on('changeDate', function()
     {
         var opt = $('#operator' + $period.data('fieldNO'));
+        var target = $('#' + $period.data('target'));
+        if(target.length)
+        {
+            if(target.next('input[type=hidden]').length)
+            {
+                target.next('input[type=hidden]').val(target.val());
+            }
+        }
         if(opt.val() == 'between') opt.val('<=');
         $period.hide();
     }).on('hide', function(){setTimeout(function(){$period.hide();}, 200);});
@@ -361,9 +377,9 @@ foreach($fieldParams as $fieldName => $param)
               $fieldValue = $formSession["value$fieldNO"];
               $extraClass = isset($param['class']) ? $param['class'] : '';
 
-              if($fieldValue && strpos('$lastweek,$thisweek,$today,$yesterday,$thismonth,$lastmonth',$fieldValue) !== false)
+              if($fieldValue && strpos('$lastWeek,$thisWeek,$today,$yesterday,$thisMonth,$lastMonth',$fieldValue) !== false)
               {
-                  echo html::input("value$fieldNO", '', "class='form-control $extraClass searchInput' placeholder='{$fieldValue}'");
+                  echo html::input("dateValue$fieldNO", '', "class='form-control $extraClass searchInput' placeholder='{$fieldValue}'");
                   echo html::hidden("value$fieldNO", $fieldValue);
               }
               else
