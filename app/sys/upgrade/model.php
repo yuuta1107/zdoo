@@ -128,6 +128,8 @@ class upgradeModel extends model
                 $this->updateDocPrivileges();
                 $this->moveDocContent();
                 $this->addProjectDoc();
+            case '4_0':
+                $this->addProjPrivilege();
             default: if(!$this->isError()) $this->loadModel('setting')->updateVersion($this->config->version);
         }
 
@@ -1274,6 +1276,29 @@ class upgradeModel extends model
             $lib->users = join(',', $teams);
             $lib->groups = isset($project->whitelist) ? $project->whitelist : '';
             $this->dao->insert(TABLE_DOCLIB)->data($lib)->exec();
+        }
+
+        return !dao::isError();
+    }
+
+    /**
+     * Add privilege of proj app when upgrade from 4.0.
+     * 
+     * @access public
+     * @return void
+     */
+    public function addProjPrivilege()
+    {
+        $groups = $this->dao->select('*')->from(TABLE_GROUP)->fetchAll();
+
+        $data = new stdclass();
+        $data->module = 'apppriv';
+        $data->method = 'proj';
+
+        foreach($groups as $group)
+        {
+            $data->group = $group->id;
+            $this->dao->replace(TABLE_GROUPPRIV)->data($data)->exec();
         }
 
         return !dao::isError();

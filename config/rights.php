@@ -56,7 +56,6 @@ $config->rights->member['order']['sendmail']         = 'sendmail';
 $config->rights->member['thread']['locate']          = 'locate';
 $config->rights->member['tree']['redirect']          = 'redirect';
 
-$config->rights->member['apppriv']['proj']       = 'proj';
 $config->rights->member['project']['index']      = 'index';
 $config->rights->member['project']['create']     = 'create';
 $config->rights->member['project']['edit']       = 'edit';
