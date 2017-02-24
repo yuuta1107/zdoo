@@ -33,6 +33,7 @@ $lang->apps->crm        = '客户';
 $lang->apps->cash       = '财务';
 $lang->apps->oa         = '办公';
 $lang->apps->doc        = '文档';
+$lang->apps->proj       = '项目';
 $lang->apps->sys        = '通用';
 $lang->apps->team       = '团队';
 $lang->apps->superadmin = '后台';

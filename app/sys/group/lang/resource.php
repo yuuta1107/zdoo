@@ -34,7 +34,6 @@ $lang->appModule->cash[] = 'schema';
 
 $lang->appModule->oa = array();
 $lang->appModule->oa[] = 'announce';
-$lang->appModule->oa[] = 'task';
 $lang->appModule->oa[] = 'attend';
 $lang->appModule->oa[] = 'holiday';
 $lang->appModule->oa[] = 'leave';
@@ -46,6 +45,9 @@ $lang->appModule->oa[] = 'overtime';
 
 $lang->appModule->doc = array();
 $lang->appModule->doc[] = 'doc';
+
+$lang->appModule->proj = array();
+$lang->appModule->proj[] = 'task';
 
 $lang->appModule->team = array();
 $lang->appModule->team[] = 'blog';

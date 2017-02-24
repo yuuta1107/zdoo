@@ -33,6 +33,7 @@ $lang->apps->crm        = 'CRM';
 $lang->apps->cash       = 'CASH';
 $lang->apps->oa         = 'OA';
 $lang->apps->doc        = 'DOC';
+$lang->apps->proj       = 'PROJ';
 $lang->apps->sys        = 'SYSTEM';
 $lang->apps->team       = 'TEAM';
 $lang->apps->superadmin = 'ADMIN';
