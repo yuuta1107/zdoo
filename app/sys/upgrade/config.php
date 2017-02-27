@@ -13,3 +13,4 @@ $config->delete['3_7'][] = 'app/crm/customer/';
 $config->delete['3_7'][] = 'app/crm/product/';
 $config->delete['3_7'][] = 'app/oa/project/';
 $config->delete['3_7'][] = 'app/oa/doc/';
+$config->delete['4_0'][] = 'app/sys/error/';
