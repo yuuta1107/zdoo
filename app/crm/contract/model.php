@@ -811,7 +811,7 @@ class contractModel extends model
             {
                 $menu .= "<a href='###' disabled='disabled' class='disabled $class'>" . $this->lang->delete . '</a> ';
             }
-            $menu .= html::a('#commentBox', $this->lang->comment, "class='btn btn-default' onclick=setComment()");
+            if(commonModel::hasPriv('crm.crontract', 'edit')) $menu .= html::a('#commentBox', $this->lang->comment, "class='btn btn-default' onclick=setComment()");
         }
 
         if($type == 'browse')
