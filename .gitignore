@@ -6,4 +6,5 @@ tmp/cache/*
 tmp/extension/*
 tmp/log/*
 tmp/model/*
+tmp/package/*
 .gitkeep
