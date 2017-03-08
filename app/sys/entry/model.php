@@ -38,7 +38,7 @@ class entryModel extends model
             $entry = new stdclass();
             $entry->id          = $category->id;
             $entry->name        = $category->name;
-            $entry->code        = '';
+            $entry->code        = $category->name;
             $entry->abbr        = $category->name;
             $entry->buildin     = 0;
             $entry->integration = 0;
@@ -89,6 +89,7 @@ class entryModel extends model
             $dashboardEntry->buildin  = true;
             $dashboardEntry->code     = 'dashboard';
             $dashboardEntry->name     = $this->lang->index->dashboard;
+            $dashboardEntry->abbr     = $this->lang->index->dashboard;
             $dashboardEntry->icon     = 'icon-home';
             $dashboardEntry->url      = helper::createLink('sys.index');
             $dashboardEntry->order    = 0;
@@ -102,6 +103,7 @@ class entryModel extends model
                 $adminEntry->buildin  = true;
                 $adminEntry->code     = 'superadmin';
                 $adminEntry->name     = $this->lang->index->superAdmin;
+                $adminEntry->abbr     = $this->lang->index->superAdmin;
                 $adminEntry->icon     = 'icon-cog';
                 $adminEntry->url      = helper::createLink('admin');
                 $adminEntry->order    = 999999;

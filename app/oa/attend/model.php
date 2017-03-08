@@ -300,7 +300,7 @@ class attendModel extends model
                             $seconds = $seconds % 60;
                             $desc   .= $minutes . $this->lang->attend->m;
                         }
-                        if($seconds > 0) $desdc .= $seconds . $this->lang->attend->s;
+                        if($seconds > 0) $desc .= $seconds . $this->lang->attend->s;
                     }
                     elseif($attend->status == 'both')
                     {
