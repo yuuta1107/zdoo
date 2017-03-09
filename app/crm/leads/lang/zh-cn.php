@@ -14,6 +14,8 @@ $lang->leads->ignore    = '忽略';
 $lang->leads->settings  = '设置';
 $lang->leads->applyRule = '派发规则';
 
+$lang->leads->list = '名单列表';
+
 $lang->leads->applyLimit   = '每次申请记录数';
 $lang->leads->applyRemain  = '最多未处理记录数';
 $lang->leads->ignoreReason = '原因';

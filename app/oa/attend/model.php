@@ -517,10 +517,15 @@ EOT;
             return !dao::isError();
         }
 
+        $attend->signOut = helper::time();
+        $status = $this->computeStatus($attend);
+
         $this->dao->update(TABLE_ATTEND)
             ->set('signOut')->eq(helper::time())
+            ->set('status')->eq($status)
             ->where('id')->eq($attend->id)
             ->exec();
+
         return !dao::isError();
     }
 

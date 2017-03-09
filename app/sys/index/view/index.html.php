@@ -142,6 +142,7 @@ var entries = [
     id        : 'dashboard',
     code      : 'dashboard',
     name      : '<?php echo $lang->index->dashboard;?>',
+    abbr      : '<?php echo $lang->index->dashboardAbbr;?>',
     open      : 'iframe',
     desc      : '<?php echo $lang->index->dashboard?>',
     menu      : '<?php echo $dashboardMenu;?>',

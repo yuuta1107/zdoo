@@ -221,7 +221,7 @@ class refundModel extends model
                 $detail->money       = $money;
                 $detail->date        = empty($_POST['dateList'][$key]) ? $refund->date : $_POST['dateList'][$key];
                 $detail->currency    = $refund->currency;
-                $detail->category    = $_POST['categoryList'][$key];
+                $detail->category    = !empty($_POST['categoryList'][$key]) ? $_POST['categoryList'][$key] : '';
                 $detail->desc        = $_POST['descList'][$key];
 
                 if($detail->id == '0') 
