@@ -113,6 +113,7 @@ class block extends control
     {
         $this->lang->announce = new stdclass();
         $this->app->loadLang('announce', 'oa');
+        $this->app->loadLang('article', 'sys');
 
         $this->processParams();
 
@@ -122,6 +123,7 @@ class block extends control
             ->limit($this->params->num)
             ->fetchAll('id');
 
+        $this->view->users = $this->loadModel('user')->getPairs();
         $this->display();
     }
 

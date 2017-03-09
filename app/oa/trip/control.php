@@ -212,6 +212,7 @@ class trip extends control
         $this->view->trip      = $this->trip->getByID($id);
         $this->view->type      = $this->type;
         $this->view->customers = $this->loadModel('customer')->getPairs();
+        $this->view->users     = $this->loadModel('user')->getPairs();
         $this->display('trip', 'view');
     }
 }

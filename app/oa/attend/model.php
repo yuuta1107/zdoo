@@ -300,7 +300,7 @@ class attendModel extends model
                             $seconds = $seconds % 60;
                             $desc   .= $minutes . $this->lang->attend->m;
                         }
-                        if($seconds > 0) $desdc .= $seconds . $this->lang->attend->s;
+                        if($seconds > 0) $desc .= $seconds . $this->lang->attend->s;
                     }
                     elseif($attend->status == 'both')
                     {
@@ -517,10 +517,15 @@ EOT;
             return !dao::isError();
         }
 
+        $attend->signOut = helper::time();
+        $status = $this->computeStatus($attend);
+
         $this->dao->update(TABLE_ATTEND)
             ->set('signOut')->eq(helper::time())
+            ->set('status')->eq($status)
             ->where('id')->eq($attend->id)
             ->exec();
+
         return !dao::isError();
     }
 

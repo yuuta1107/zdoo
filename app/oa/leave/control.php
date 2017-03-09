@@ -125,6 +125,15 @@ class leave extends control
         $this->display();
     }
 
+    public function view($leaveID, $type = '')
+    {
+        $this->view->title = $this->lang->leave->view;
+        $this->view->type  = $type;
+        $this->view->leave = $this->leave->getByID($leaveID);
+        $this->view->users = $this->loadModel('user')->getPairs();
+        $this->display();
+    }
+
     /**
      * review 
      * 

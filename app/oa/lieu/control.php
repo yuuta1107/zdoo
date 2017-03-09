@@ -132,7 +132,7 @@ class lieu extends control
      * @access public
      * @return void
      */
-    public function view($id)
+    public function view($id, $type = '')
     {
         $lieu = $this->lieu->getByID($id);
         $lieu->overtimeList = explode(',', trim($lieu->overtime, ','));
@@ -145,6 +145,7 @@ class lieu extends control
         $this->view->lieu          = $lieu;
         $this->view->users         = $this->loadModel('user', 'sys')->getPairs();
         $this->view->overtimePairs = $overtimePairs;
+        $this->view->type          = $type;
         $this->display();
     }
 
