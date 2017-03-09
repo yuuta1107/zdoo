@@ -110,6 +110,7 @@ class product extends control
     {
         $this->view->title   = $this->lang->product->view;
         $this->view->product = $this->product->getByID($productID);
+        $this->view->users   = $this->loadModel('user')->getPairs();
         
         $this->display();
     }
