@@ -89,11 +89,7 @@ class entryModel extends model
             $dashboardEntry->buildin  = true;
             $dashboardEntry->code     = 'dashboard';
             $dashboardEntry->name     = $this->lang->index->dashboard;
-<<<<<<< HEAD
             $dashboardEntry->abbr     = $this->lang->index->dashboardAbbr;
-=======
-            $dashboardEntry->abbr     = $this->lang->index->dashboard;
->>>>>>> 1259054051117375f863dd5f4d040c9fac9b09a9
             $dashboardEntry->icon     = 'icon-home';
             $dashboardEntry->url      = helper::createLink('sys.index');
             $dashboardEntry->order    = 0;
