@@ -66,7 +66,7 @@ class my extends control
             $secondRefunds = array();
             if(!empty($this->config->refund->secondReviewer) and $this->config->refund->secondReviewer == $account)
             {
-                $secondRefunds = $this->refund->getList($mode = 'browseReview', $type= '', $date = '', $deptIDList = '', 'doing');
+                $secondRefunds = $this->refund->getList($mode = 'browseReview', '', $date = '', $deptIDList = '', 'doing');
             }
 
             /* Get refund list for firstReviewer. */
@@ -79,7 +79,7 @@ class my extends control
             {
                 $deptList = $managedDeptList;
             }
-            if(!empty($deptList)) $firstRefunds = $this->refund->getList($mode = 'browseReview', $type = '', $date = '',  $deptIDList = array_keys($deptList), 'wait');
+            if(!empty($deptList)) $firstRefunds = $this->refund->getList($mode = 'browseReview', '', $date = '',  $deptIDList = array_keys($deptList), 'wait');
             $refunds = array_merge($secondRefunds, $firstRefunds);
         }
 
