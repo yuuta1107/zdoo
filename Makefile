@@ -14,7 +14,7 @@ ranzhi:
 	cp -fr doc ranzhi/ && rm -fr ranzhi/doc/phpdoc && rm -fr ranzhi/doc/doxygen
 	cp -fr framework ranzhi/
 	cp -fr lib ranzhi/
-	cp -fr tmp ranzhi
+	cp -fr tmp ranzhi/
 	rm -fr ranzhi/db/temp.sql
 	rm -fr ranzhi/tmp/cache/* 
 	rm -fr ranzhi/tmp/extension/*

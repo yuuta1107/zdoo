@@ -206,6 +206,13 @@ class trip extends control
         $this->send(array('result' => 'success'));
     }
 
+    /**
+     * Detail view of a trip. 
+     * 
+     * @param  int    $id 
+     * @access public
+     * @return void
+     */
     public function view($id)
     {
         $this->view->title     = $this->lang->{$this->type}->view;
