@@ -16,7 +16,7 @@ class myModel extends model
         if(!isset($this->lang->my->$method->menu)) return false;
 
         $isMobile = $this->app->getViewType() === 'mhtml';
-        $string   = !$isMobile ? "<nav id='menu'><ul class='nav'>\n" : '';
+        $string   = $isMobile ? '' : "<nav id='menu'><ul class='nav'>\n";
         
         $menuOrder = isset($this->lang->my->{$method}->menuOrder) ? $this->lang->my->{$method}->menuOrder : array();  
 
@@ -68,12 +68,12 @@ class myModel extends model
             if($module == 'my' and $method == 'contract') $hasPriv = commonModel::hasPriv('contract', 'browse');
             if($hasPriv)
             {
-                $link    = html::a(helper::createLink($module, $method, $vars), $label);
-                $string .= !$isMobile ? "<li $class>$link</li>\n" : $link;
+                $link    = html::a(helper::createLink($module, $method, $vars), $label, $isMobile ? $class : '');
+                $string .= $isMobile ? $link : "<li $class>$link</li>\n";
             }
         }
 
-        $string .= !$isMobile ? "</ul></nav>\n" : '';
+        $string .= $isMobile ? '' : "</ul></nav>\n";
         return $string;
     }
 }
