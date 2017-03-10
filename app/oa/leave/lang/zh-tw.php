@@ -2,6 +2,7 @@
 if(!isset($lang->leave)) $lang->leave = new stdclass();
 $lang->leave->common     = '請假';
 $lang->leave->browse     = '請假列表';
+$lang->leave->view       = '詳情';
 $lang->leave->create     = '請假';
 $lang->leave->edit       = '編輯';
 $lang->leave->delete     = '刪除';

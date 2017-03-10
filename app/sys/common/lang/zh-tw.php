@@ -33,6 +33,7 @@ $lang->apps->crm        = '客戶';
 $lang->apps->cash       = '財務';
 $lang->apps->oa         = '辦公';
 $lang->apps->doc        = '文檔';
+$lang->apps->proj       = '項目';
 $lang->apps->sys        = '通用';
 $lang->apps->team       = '團隊';
 $lang->apps->superadmin = '後台';
