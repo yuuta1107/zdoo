@@ -64,7 +64,17 @@
     <?php elseif(!empty($customers)):?>
     <tr>
       <th><?php echo $lang->action->record->customer;?></th>
-      <td><?php echo html::select('customer', $customers, '', "class='form-control'");?></td>
+      <td>
+        <div class='row'>
+          <div class='col-sm-7'><?php echo html::select('customer', $customers, '', "class='form-control'");?></div>
+          <div class='col-sm-5'>
+            <div class='input-group'>
+              <span class='input-group-addon'><?php echo $lang->action->record->date;?></span>
+              <?php echo html::input('date', date('Y-m-d H:i:s'), "class='form-control form-datetime'");?>
+            </div>
+          </div>
+        </div>
+      </td>
     </tr>
     <?php endif;?>
     <?php if($objectType == 'customer'):?>
