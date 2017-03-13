@@ -2,6 +2,7 @@
 if(!isset($lang->leave)) $lang->leave = new stdclass();
 $lang->leave->common     = 'Leave';
 $lang->leave->browse     = 'Browse leave';
+$lang->leave->view       = 'View';
 $lang->leave->create     = 'Create';
 $lang->leave->edit       = 'Edit';
 $lang->leave->delete     = 'Delete';

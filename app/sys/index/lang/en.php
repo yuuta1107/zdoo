@@ -9,23 +9,24 @@
  * @version     $Id: en.php 4029 2016-08-26 06:50:41Z liugang $
  * @link        http://www.ranzhico.com
  */
-$lang->index->common       = 'Home';
-$lang->index->dashboard    = 'Dashboard';
-$lang->index->about        = 'About';
-$lang->index->allEntries   = 'All';
-$lang->index->showOnLeft   = 'On left';
-$lang->index->notOnLeft    = 'Not on left';
-$lang->index->opened       = 'opened';
-$lang->index->addEntry     = 'Add';
-$lang->index->profile      = 'Profile';
-$lang->index->set          = 'Settings';
-$lang->index->theme        = 'Theme';
-$lang->index->superAdmin   = 'Admin';
-$lang->index->showDesk     = 'Show Desk';
-$lang->index->customBlocks = 'Custom block';
-$lang->index->addBlock     = 'Add Block';
-$lang->index->refresh      = 'Refresh';
-$lang->index->hidden       = 'Hidden';
+$lang->index->common        = 'Home';
+$lang->index->dashboard     = 'Dashboard';
+$lang->index->dashboardAbbr = 'Dashboard';
+$lang->index->about         = 'About';
+$lang->index->allEntries    = 'All';
+$lang->index->showOnLeft    = 'On left';
+$lang->index->notOnLeft     = 'Not on left';
+$lang->index->opened        = 'opened';
+$lang->index->addEntry      = 'Add';
+$lang->index->profile       = 'Profile';
+$lang->index->set           = 'Settings';
+$lang->index->theme         = 'Theme';
+$lang->index->superAdmin    = 'Admin';
+$lang->index->showDesk      = 'Show Desk';
+$lang->index->customBlocks  = 'Custom block';
+$lang->index->addBlock      = 'Add Block';
+$lang->index->refresh       = 'Refresh';
+$lang->index->hidden        = 'Hidden';
 
 $lang->index->ips['confirmClose']        = 'Be sure to delete [{0}]?';
 $lang->index->ips['entryNotFindTip']     = 'Entry is not found!';

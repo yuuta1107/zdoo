@@ -14,6 +14,8 @@ $lang->leads->ignore    = 'Ignroe';
 $lang->leads->settings  = 'Settings';
 $lang->leads->applyRule = 'Apply rules';
 
+$lang->leads->list = 'Leads List';
+
 $lang->leads->applyLimit   = 'Maximum to apply';
 $lang->leads->applyRemain  = 'Maxmum to wait';
 $lang->leads->ignoreReason = 'Reasons';
