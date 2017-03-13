@@ -110,6 +110,8 @@ class thread extends control
         $thread = $this->thread->getByID($threadID);
         if(!$thread) die(js::locate('back'));
 
+        $this->lang->menuGroups->thread = 'forum';
+
         /* Set editor for current user. */
         $this->thread->setEditor($thread->board, 'view');
 
