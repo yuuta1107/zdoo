@@ -377,6 +377,20 @@ class projectModel extends model
     }
 
     /**
+     * Delete tasks of project.
+     * 
+     * @param  int    $projectID 
+     * @access public
+     * @return void
+     */
+    public function deleteTasks($projectID)
+    {
+        $tasks = $this->dao->select('*')->from(TABLE_TASK)->where('project')->eq($projectID)->andWhere('deleted')->eq('0')->fetchAll();
+        foreach($tasks as $task) $this->loadModel('task')->delete(TABLE_TASK, $task->id);
+        return !dao::isError();
+    }
+
+    /**
      * Import tasks.
      * 
      * @param  int    $projectID 

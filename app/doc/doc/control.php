@@ -118,7 +118,7 @@ class doc extends control
         $pager = new pager($recTotal, $recPerPage, $pageID);
  
         /* Get docs. */
-        $modules = 0;
+        $modules = '';
         $docs    = array();
         if($browseType == 'bymodule')
         {
@@ -131,7 +131,7 @@ class doc extends control
         }
         else
         {
-            $docs = $this->doc->getDocList($libID, $projectID, '', $orderBy, $pager);
+            $docs = $this->doc->getDocList($libID, $projectID, $modules, $orderBy, $pager);
         }
 
         /* Get the tree menu. */
