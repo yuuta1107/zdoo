@@ -431,11 +431,11 @@ class docModel extends model
         {
             $file->webPath  = $this->file->webPath . $file->pathname;
             $file->realPath = $this->file->savePath . $file->pathname;
-            if(strpos(",{$docContent->files},", ",{$file->id},") !== false) $docFiles[$file->id] = $file;
+            if(!empty($docContent->files) && strpos(",$docContent->files,", ",$file->id,") !== false) $docFiles[$file->id] = $file;
         }
 
         /* Check file change. */
-        if($version == $doc->version and ((empty($docContent->files) and $docFiles) OR ($docContent->files and count(explode(',', trim($docContent->files, ','))) != count($docFiles))))
+        if($version == $doc->version and ((empty($docContent->files) and $docFiles) or (!empty($docContent->files) and count(explode(',', trim($docContent->files, ','))) != count($docFiles))))
         {
             unset($docContent->id);
             $doc->version        += 1;

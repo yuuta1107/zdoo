@@ -253,6 +253,8 @@ class attendModel extends model
             ksort($deptAttends);
             foreach($deptAttends as $account => $userAttends)
             {
+                if(strpos(",{$this->config->attend->noAttendUsers},", ",$account,") !== false) continue;
+
                 for($day = 1; $day <= $dayNum; $day++)
                 {
                     if($day < 10) $day = '0' . $day;
