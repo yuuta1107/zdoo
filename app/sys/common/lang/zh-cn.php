@@ -407,6 +407,9 @@ $lang->pager->locate     = 'Go!';
 $lang->pager->showMore   = '显示更多 <i class="icon icon-double-angle-down"></i>';
 $lang->pager->noMore     = '没有更多';
 $lang->pager->showTotal  = '已显示 <strong>%s</strong> 项，共 <strong>%s</strong> 项';
+$lang->pager->previousPage = "上一页";
+$lang->pager->nextPage     = "下一页";
+$lang->pager->summery      = "第 <strong>%s-%s</strong> 项，共 <strong>%s</strong> 项";
 
 /* The excel items. */
 $lang->excel = new stdClass();
