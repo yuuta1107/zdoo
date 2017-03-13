@@ -396,17 +396,20 @@ $lang->error->pasteImg     = 'Your browser does not support paste pictures.';
 
 /* The pager items. */
 $lang->pager = new stdclass();
-$lang->pager->noRecord   = "No records yet.";
-$lang->pager->digest     = "<strong>%s</strong> records, <strong>%s</strong> per page, <strong>%s/%s</strong> ";
-$lang->pager->recPerPage = "<strong>%s</strong> per page";
-$lang->pager->first      = " First";
-$lang->pager->pre        = " Prev";
-$lang->pager->next       = " Next";
-$lang->pager->last       = " Last";
-$lang->pager->locate     = "GO!";
-$lang->pager->showMore   = 'Show more <i class="icon icon-double-angle-down"></i>';
-$lang->pager->noMore     = 'No more';
-$lang->pager->showTotal  = 'Show <strong>%s</strong> of <strong>%s</strong>';
+$lang->pager->noRecord     = "No records yet.";
+$lang->pager->digest       = "<strong>%s</strong> records, <strong>%s</strong> per page, <strong>%s/%s</strong> ";
+$lang->pager->recPerPage   = "<strong>%s</strong> per page";
+$lang->pager->first        = " First";
+$lang->pager->pre          = " Prev";
+$lang->pager->next         = " Next";
+$lang->pager->last         = " Last";
+$lang->pager->locate       = "GO!";
+$lang->pager->showMore     = 'Show more <i class="icon icon-double-angle-down"></i>';
+$lang->pager->noMore       = 'No more';
+$lang->pager->showTotal    = 'Show <strong>%s</strong> of <strong>%s</strong>';
+$lang->pager->previousPage = "Previous";
+$lang->pager->nextPage     = "Next";
+$lang->pager->summery      = "<strong>%s-%s</strong> of <strong>%s</strong>.";
 
 /* The excel items. */
 $lang->excel = new stdClass();
