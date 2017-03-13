@@ -9,23 +9,24 @@
  * @version     $Id: zh-tw.php 4029 2016-08-26 06:50:41Z liugang $
  * @link        http://www.ranzhico.com
  */
-$lang->index->common       = '首頁';
-$lang->index->dashboard    = '我的地盤';
-$lang->index->about        = '關於';
-$lang->index->allEntries   = '所有應用';
-$lang->index->showOnLeft   = '左側顯示';
-$lang->index->notOnLeft    = '非左側顯示';
-$lang->index->opened       = '已打開';
-$lang->index->addEntry     = '添加應用';
-$lang->index->profile      = '個人信息';
-$lang->index->set          = '系統配置';
-$lang->index->theme        = '更換主題';
-$lang->index->superAdmin   = '後台管理';
-$lang->index->showDesk     = '桌面';
-$lang->index->customBlocks = '編輯區塊';
-$lang->index->addBlock     = '添加區塊';
-$lang->index->refresh      = '更新';
-$lang->index->hidden       = '隱藏';
+$lang->index->common        = '首頁';
+$lang->index->dashboard     = '我的地盤';
+$lang->index->dashboardAbbr = '我的';
+$lang->index->about         = '關於';
+$lang->index->allEntries    = '所有應用';
+$lang->index->showOnLeft    = '左側顯示';
+$lang->index->notOnLeft     = '非左側顯示';
+$lang->index->opened        = '已打開';
+$lang->index->addEntry      = '添加應用';
+$lang->index->profile       = '個人信息';
+$lang->index->set           = '系統配置';
+$lang->index->theme         = '更換主題';
+$lang->index->superAdmin    = '後台管理';
+$lang->index->showDesk      = '桌面';
+$lang->index->customBlocks  = '編輯區塊';
+$lang->index->addBlock      = '添加區塊';
+$lang->index->refresh       = '更新';
+$lang->index->hidden        = '隱藏';
 
 $lang->index->ips['confirmClose']       = '確認要關閉　【{0}】 嗎？';
 $lang->index->ips['entryNotFindTip']    = '應用沒有找到！';
