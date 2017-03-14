@@ -208,14 +208,15 @@ class tripModel extends model
      */
     public function checkDate($date, $id = 0)
     {
+        if($date->type == 'egress') $this->app->loadLang('egress', 'oa');
+
         if(substr($date->begin, 0, 7) != substr($date->end, 0, 7)) return array('result' => 'fail', 'message' => $this->lang->{$date->type}->sameMonth);
         if("$date->end $date->finish" <= "$date->begin $date->start") return array('result' => 'fail', 'message' => $this->lang->{$date->type}->wrongEnd);
 
         $existTrip = $this->checkTrip('trip', $date, $this->app->user->account, $id); 
         if(!empty($existTrip)) return array('result' => 'fail', 'message' => sprintf($this->lang->trip->unique, implode(', ', $existTrip))); 
 
-        if($date->type == 'trip') $this->app->loadLang('egress', 'oa');
-        $existEgress = $this->checkTrip('egress', $date, $this->app->user->account); 
+        $existEgress = $this->checkTrip('egress', $date, $this->app->user->account, $id); 
         if(!empty($existEgress)) return array('result' => 'fail', 'message' => sprintf($this->lang->egress->unique, implode(', ', $existEgress))); 
         
         $existLeave = $this->loadModel('leave', 'oa')->checkLeave($date, $this->app->user->account);
