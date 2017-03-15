@@ -22,6 +22,7 @@ $config->action->objectNameFields['depositor'] = 'abbr';
 $config->action->objectNameFields['doc']       = 'title';
 $config->action->objectNameFields['doclib']    = 'name';
 $config->action->objectNameFields['holiday']   = 'name';
+$config->action->objectNameFields['leads']     = 'realname';
 $config->action->objectNameFields['leave']     = 'begin';
 $config->action->objectNameFields['lieu']      = 'begin';
 $config->action->objectNameFields['order']     = 'id';
