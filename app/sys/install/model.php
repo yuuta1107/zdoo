@@ -377,6 +377,17 @@ EOT;
 
         $this->dao->insert(TABLE_ENTRY)->data($entry)->exec();
 
+        /* Add oa. */
+        $entry->name  = $this->lang->install->buildinEntry->oa['name'];
+        $entry->abbr  = $this->lang->install->buildinEntry->oa['abbr'];
+        $entry->code  = 'oa';
+        $entry->key   = '1a673c4c3c85fadcf0333e0a4596d220';
+        $entry->logo  = 'theme/default/images/ips/app-oa.png';
+        $entry->login = '../oa';
+        $entry->order = 20;
+
+        $this->dao->insert(TABLE_ENTRY)->data($entry)->exec();
+
         /* Add proj. */
         $entry->name  = $this->lang->install->buildinEntry->proj['name'];
         $entry->abbr  = $this->lang->install->buildinEntry->proj['abbr'];
@@ -384,7 +395,7 @@ EOT;
         $entry->key   = 'a910d9d1dd03c9dd99cecb3ca31ea600';
         $entry->logo  = 'theme/default/images/ips/app-proj.png';
         $entry->login = '../proj';
-        $entry->order = 20;
+        $entry->order = 30;
 
         $this->dao->insert(TABLE_ENTRY)->data($entry)->exec();
 
@@ -395,17 +406,6 @@ EOT;
         $entry->key   = '76ff605479df34f1d239730efa68d562';
         $entry->logo  = 'theme/default/images/ips/app-doc.png';
         $entry->login = '../doc';
-        $entry->order = 30;
-
-        $this->dao->insert(TABLE_ENTRY)->data($entry)->exec();
-
-        /* Add oa. */
-        $entry->name  = $this->lang->install->buildinEntry->oa['name'];
-        $entry->abbr  = $this->lang->install->buildinEntry->oa['abbr'];
-        $entry->code  = 'oa';
-        $entry->key   = '1a673c4c3c85fadcf0333e0a4596d220';
-        $entry->logo  = 'theme/default/images/ips/app-oa.png';
-        $entry->login = '../oa';
         $entry->order = 40;
 
         $this->dao->insert(TABLE_ENTRY)->data($entry)->exec();
