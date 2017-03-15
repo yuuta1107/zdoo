@@ -69,7 +69,7 @@ class blockModel extends model
         $query['hash']    = $entry->key;
         $query['entry']   = $entry->id;
         $query['app']     = 'sys';
-        $query['lang']    = $this->app->getClientLang();
+        $query['lang']    = str_replace('-', '_', $this->app->getClientLang());
         $query['sso']     = base64_encode(commonModel::getSysURL() . helper::createLink('entry', 'visit', "entry=$entry->id"));
         $query['user']    = $this->app->user->account;
         if(isset($params)) $query['param'] = $params;
@@ -91,8 +91,6 @@ class blockModel extends model
             if(isset($parsedUrl['path'])) $link .= $parsedUrl['path']; 
             $link .= '?' . $parsedUrl['query'];
         }
-
-        $link = str_replace('-', '_', $link);
 
         /* Send login request. */
         $loginObj = "<iframe src=" . helper::createLink('sys.entry', 'visit', "entryID={$entry->id}") . "' class='hidden' />";

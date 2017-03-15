@@ -409,7 +409,7 @@ class entryModel extends model
     {
         if(empty($entry)) return array();
         $parseUrl   = parse_url($entry->block);
-        $blockQuery = "mode=getblocklist&hash={$entry->key}&lang=" . $this->app->getClientLang();
+        $blockQuery = "mode=getblocklist&hash={$entry->key}&lang=" . str_replace('-', '_', $this->app->getClientLang());
         $parseUrl['query'] = empty($parseUrl['query']) ? $blockQuery : $parseUrl['query'] . '&' . $blockQuery;
 
         $link = '';
@@ -426,7 +426,6 @@ class entryModel extends model
             $link .= '?' . $parseUrl['query'];
         }
 
-        $link = str_replace('-', '_', $link);
         $blocks = commonModel::http($link);
         return json_decode($blocks, true);
     }
@@ -443,7 +442,7 @@ class entryModel extends model
     {
         if(empty($entry)) return array();
         $parseUrl  = parse_url($entry->block);
-        $formQuery = "mode=getblockform&blockid=$blockID&hash={$entry->key}&lang=" . $this->app->getClientLang();
+        $formQuery = "mode=getblockform&blockid=$blockID&hash={$entry->key}&lang=" . str_replace('-', '_', $this->app->getClientLang());
         $parseUrl['query'] = empty($parseUrl['query']) ? $formQuery : $parseUrl['query'] . '&' . $formQuery;
 
         $link = '';
@@ -460,7 +459,6 @@ class entryModel extends model
             $link .= '?' . $parseUrl['query'];
         }
 
-        $link = str_replace('-', '_', $link);
         $params = commonModel::http($link);
 
         return json_decode($params, true);
