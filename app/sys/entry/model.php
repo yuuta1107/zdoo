@@ -38,7 +38,7 @@ class entryModel extends model
             $entry = new stdclass();
             $entry->id          = $category->id;
             $entry->name        = $category->name;
-            $entry->code        = $category->name;
+            $entry->code        = '';
             $entry->abbr        = $category->name;
             $entry->buildin     = 0;
             $entry->integration = 0;
