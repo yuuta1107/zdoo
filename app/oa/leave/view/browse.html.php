@@ -92,11 +92,11 @@
             <?php echo html::a($this->createLink('oa.leave', 'delete', "id={$leave->id}"), $lang->delete, "class='deleter'");?>
             <?php endif;?>
 
-            <?php if($type == 'browseReview' and $leave->status == 'pass' and $leave->backDate != '0000-00-00 00:00:00' and $leave->backDate != $leave->end . ' ' . $leave->finish):?>
+            <?php if($type == 'browseReview' and $leave->status == 'pass' and $leave->backDate != '0000-00-00 00:00:00' and $leave->backDate != "$leave->end $leave->finish"):?>
             <?php echo html::a($this->createLink('oa.leave', 'review', "id={$leave->id}&status=back"), $lang->leave->statusList['pass'] . $lang->leave->back, "class='reviewPass'");?>
             <?php endif;?>
 
-            <?php if($type == 'personal' and $leave->status == 'pass' and $leave->backDate != $leave->end . ' ' . $leave->finish) echo html::a($this->createLink('oa.leave', 'back', "id={$leave->id}"), $lang->leave->back, "data-toggle='modal'");?>
+            <?php if($type == 'personal' and $leave->status == 'pass' and date('Y-m-d H:i:s') < "$leave->end $leave->finish" && $leave->backDate != "$leave->end $leave->finish") echo html::a($this->createLink('oa.leave', 'back', "id={$leave->id}"), $lang->leave->back, "data-toggle='modal'");?>
           </td>
           <?php endif;?>
         </tr>
