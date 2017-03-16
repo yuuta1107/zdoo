@@ -32,10 +32,12 @@
       <th><?php echo $lang->comment?></th>
       <td><?php echo html::textarea('comment');?></td>
     </tr>
+    <?php if(commonModel::hasPriv('file', 'upload')):?>
     <tr>
       <th><?php echo $lang->files;?></th>
       <td><?php echo $this->fetch('file', 'buildForm')?></td>
     </tr>
+    <?php endif;?>
     <tr>
       <th></th>
       <td><?php echo html::submitButton();?></td>

@@ -100,6 +100,7 @@
       <th><?php echo $lang->action->record->comment;?></th>
       <td><?php echo html::textarea('comment', '', "class='form-control' rows='2'");?></td>
     </tr>
+    <?php if(commonModel::hasPriv('file', 'upload')):?>
     <tr>
       <th>
         <?php echo $lang->action->record->file;?>
@@ -107,6 +108,7 @@
       </th>
       <td colspan='2'><?php echo $this->fetch('file', 'buildForm', "fileCount=1");?></td>
     </tr>
+    <?php endif;?>
     <tr>
       <th></th>
       <td>

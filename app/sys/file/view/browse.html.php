@@ -64,6 +64,7 @@
         </tbody>
 
       </table>
+      <?php if(commonModel::hasPriv('file', 'upload')):?>
       <form id="fileForm" method='post' enctype='multipart/form-data' action='<?php echo inlink('upload', "objectType=$objectType&objectID=$objectID");?>'>
         <table class='table table-form'>
           <?php if($writeable):?>
@@ -77,6 +78,7 @@
           <?php endif;?>
         </table>
       </form>
+      <?php endif;?>
     </div>
   </div>
 </div>

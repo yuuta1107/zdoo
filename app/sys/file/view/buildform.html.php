@@ -18,6 +18,7 @@ table.fileBox td {padding: 0!important}
 .file-wrapper.form-control {border-right: 0; border-radius: 0;}
 .file-name .form-control{border-radius: 0;}
 </style>
+<?php if(commonModel::hasPriv('file', 'upload')):?>
 <?php if(!$writeable):?>
 <h5 class='text-danger text-left'> <?php echo $this->lang->file->errorUnwritable;?> </h5>
 <?php else:?>
@@ -38,6 +39,7 @@ EOT;
   printf($lang->file->sizeLimit, $this->config->file->maxSize / 1024 / 1024);
 ?>
 </div>
+<?php endif;?>
 <?php endif;?>
 
 <script language='javascript'>

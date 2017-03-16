@@ -20,7 +20,9 @@ class productModel extends model
      */
     public function getByID($id = 0)
     {
-        return $this->dao->select('*')->from(TABLE_PRODUCT)->where('id')->eq($id)->fetch();
+        $product = $this->dao->select('*')->from(TABLE_PRODUCT)->where('id')->eq($id)->fetch();
+        if($product) $product->files = $this->loadModel('file', 'sys')->getByObject('product', $product->id);
+        return $product;
     }
 
     /** 
@@ -79,7 +81,7 @@ class productModel extends model
             ->get();
 
         $this->dao->insert(TABLE_PRODUCT)
-            ->data($product)
+            ->data($product, 'files,labels')
             ->autoCheck()
             ->batchCheck($this->config->product->require->create, 'notempty')
             ->check('code', 'unique')
@@ -87,7 +89,9 @@ class productModel extends model
             ->check('code', 'notInt')
             ->exec();
 
-        return $this->dao->lastInsertID();
+        $productID = $this->dao->lastInsertID();
+        $this->loadModel('file', 'sys')->saveUpload('product', $productID);
+        return $productID;
     }
 
     /**
@@ -107,7 +111,7 @@ class productModel extends model
             ->get();
 
         $this->dao->update(TABLE_PRODUCT)
-            ->data($product)
+            ->data($product, 'labels,files')
             ->autoCheck()
             ->batchCheck($this->config->product->require->edit, 'notempty')
             ->check('code', 'unique', "id!={$productID}")

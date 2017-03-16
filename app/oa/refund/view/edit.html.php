@@ -82,10 +82,12 @@
           <th><?php echo $lang->refund->desc?></th>
           <td colspan='2'><?php echo html::textarea('desc', $refund->desc, "class='form-control'")?></td>
         </tr>
+        <?php if(commonModel::hasPriv('file', 'uplaod')):?>
         <tr>
           <th><?php echo $lang->refund->files;?></th>
           <td colspan='2'><?php echo $this->fetch('file', 'buildForm')?></td>
         </tr>
+        <?php endif;?>
         <tr><th></th><td colspan='2'><?php echo html::submitButton() . '&nbsp;&nbsp;' . html::backButton();?></td></tr>
       </table>
     </div>

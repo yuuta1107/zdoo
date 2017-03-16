@@ -18,6 +18,12 @@
 </ul>
 <div class='row-table'>
   <div class='col-main'>
+    <?php if($product->files):?>
+    <div class='panel'>
+      <div class='panel-heading'><strong><?php echo $lang->files;?></strong></div>
+      <div class='panel-body'><?php echo $this->fetch('file', 'printFiles', array('files' => $product->files, 'fieldset' => 'false'))?></div>
+    </div>
+    <?php endif;?>
     <?php echo $this->fetch('action', 'history', "objectType=product&objectID={$product->id}");?>
     <div class='page-actions'>
       <?php

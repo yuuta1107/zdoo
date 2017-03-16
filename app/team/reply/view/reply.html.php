@@ -30,7 +30,7 @@
     {
         foreach($reply->files as $file) echo html::a($file->fullURL, $file->title . '.' . $file->extension, "target='_blank'") . ' ' . html::linkButton('Ｘ', inlink('deleteFile', "fileID=$file->id&objectID=$reply->id&objectType=reply"), 'btn btn-default', '', 'hiddenwin');
     }
-    echo $this->fetch('file', 'buildForm');
+    if(commonModel::hasPriv('file', 'upload')) echo $this->fetch('file', 'buildForm');
     ?>
     </td>
   </tr>

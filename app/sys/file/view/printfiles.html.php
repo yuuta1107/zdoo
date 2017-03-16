@@ -37,6 +37,7 @@ function downloadFile(fileID)
     return false;
 }
 </script>
+<?php if(commonModel::hasPriv('file', 'download')):?>
 <?php if($fieldset == 'true'):?>
 <fieldset>
   <legend><?php echo $lang->file->common;?></legend>
@@ -45,15 +46,13 @@ function downloadFile(fileID)
     <?php
     foreach($files as $file)
     {
-        if(commonModel::hasPriv('file', 'download'))
-        {
-            echo "<li><i class='icon-file-text-alt text-muted'></i> ";
-            echo html::a('javascript:;', $file->title .'.' . $file->extension, "onclick='return downloadFile($file->id)'");
-            commonModel::printLink('file', 'edit', "fileID=$file->id", "<i class='icon-pencil'></i>", "data-toggle='modal' class='link-edit link-btn'");
-            commonModel::printLink('file', 'delete', "fileID=$file->id", "<i class='icon-remove'></i>", "class='deleter link-btn'");
-            echo '</li>';
-        }
+        echo "<li><i class='icon-file-text-alt text-muted'></i> ";
+        echo html::a('javascript:;', $file->title .'.' . $file->extension, "onclick='return downloadFile($file->id)'");
+        commonModel::printLink('file', 'edit', "fileID=$file->id", "<i class='icon-pencil'></i>", "data-toggle='modal' class='link-edit link-btn'");
+        commonModel::printLink('file', 'delete', "fileID=$file->id", "<i class='icon-remove'></i>", "class='deleter link-btn'");
+        echo '</li>';
     }
     ?>
   </ul>
 <?php if($fieldset == 'true') echo '</fieldset>';?>
+<?php endif;?>

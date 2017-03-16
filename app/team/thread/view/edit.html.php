@@ -41,6 +41,7 @@
             <label class='col-md-1 col-sm-2 control-label'><?php echo $lang->thread->content;?></label>
             <div class='col-md-11 col-sm-10'><?php echo html::textarea('content', htmlspecialchars($thread->content), "rows='15' class='form-control'");?></div>
           </div>
+          <?php if(commonModel::hasPriv('file', 'upload')):?>
           <div class='form-group'>
             <label class='col-md-1 col-sm-2 control-label'><?php echo $lang->thread->file;?></label>
             <div class='col-md-11 col-sm-10'>
@@ -50,6 +51,7 @@
               ?>
             </div>
           </div>
+          <?php endif;?>
           <div class='form-group'>
             <label class='col-md-1 col-sm-2'></label>
             <div class='col-md-11 col-sm-10'><?php echo html::submitButton() . html::backButton();;?></div>

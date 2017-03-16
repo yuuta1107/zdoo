@@ -85,10 +85,13 @@ class product extends control
             $changes = $this->product->update($productID);
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
 
-            if($changes)
+            $files = $this->loadModel('file', 'sys')->saveUpload('product', $productID);
+            if($changes or $files)
             {
-                $actionID = $this->loadModel('action')->create('product', $productID, 'Edited');
-                $this->action->logHistory($actionID, $changes);
+                if($files) $fileAction = $this->lang->addFiles . join(',', $files);
+
+                $actionID = $this->loadModel('action')->create('product', $productID, 'Edited', $fileAction);
+                if($changes) $this->action->logHistory($actionID, $changes);
             }
 
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => inlink('browse')));

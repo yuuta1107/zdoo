@@ -105,10 +105,12 @@
           <th><?php echo $lang->contract->items;?></th>
           <td colspan='2'><?php echo html::textarea('items', '',"rows='5' class='form-control'");?></td>
         </tr>
+        <?php if(commonModel::hasPriv('file', 'upload')):?>
         <tr>
           <th><?php echo $lang->contract->uploadFile;?></th>
           <td colspan='2'><?php echo $this->fetch('file', 'buildForm');?></td>
         </tr>
+        <?php endif;?>
         <tr>
           <th></th>
           <td><?php echo html::submitButton() . '&nbsp;&nbsp;' . html::backButton();?></td>
