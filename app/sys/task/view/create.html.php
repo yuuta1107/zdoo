@@ -70,10 +70,12 @@
               <th><?php echo $lang->task->mailto;?></th>
               <td colspan='2'><?php echo html::select('mailto[]', $users, '', "class='form-control chosen' multiple data-placeholder='{$lang->task->mailtoPlaceholder}'");?></td>
             </tr>
+            <?php if(commonModel::hasPriv('file', 'upload')):?>
             <tr>
               <th><?php echo $lang->files;?></th>
               <td colspan='2'><?php echo $this->fetch('file', 'buildForm')?></td>
             </tr>
+            <?php endif;?>
             <tr>
               <th></th>
               <td colspan='2'><?php echo html::submitButton();?></td>

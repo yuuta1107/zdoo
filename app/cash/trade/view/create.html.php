@@ -124,10 +124,12 @@
           <th><?php echo $lang->trade->desc;?></th>
           <td><?php echo html::textarea('desc','', "class='form-control' rows='3'");?></td>
         </tr>
+        <?php if(commonModel::hasPriv('file', 'upload')):?>
         <tr>
           <th><?php echo $lang->trade->uploadFile;?></th>
           <td><?php echo $this->fetch('file', 'buildForm');?></td>
         </tr>
+        <?php endif;?>
         <tr>
           <th></th>
           <td><?php echo html::submitButton() . '&nbsp;&nbsp;' . html::backButton();?></td>

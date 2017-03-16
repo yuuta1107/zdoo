@@ -81,10 +81,12 @@
             <th><?php echo $lang->contract->items;?></th>
             <td colspan='2'><?php echo html::textarea('items', $contract->items, "class='form-control'");?></td>
           </tr>
+          <?php if(commonModel::hasPriv('file', 'upload')):?>
           <tr>
             <th><?php echo $lang->files;?></th>
             <td colspan='2'><?php echo $this->fetch('file', 'buildForm');?></td>
           </tr>
+          <?php endif;?>
         </table>
       </div>
     </div>
