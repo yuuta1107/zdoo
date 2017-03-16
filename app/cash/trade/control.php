@@ -111,6 +111,7 @@ class trade extends control
         {
             $currentDate = $date ? $date : ($this->session->date ? $this->session->date : '');
         }
+        if($currentDate == 'all') $currentDate = '';
 
         $trades = $this->trade->getList($mode, $currentDate, $orderBy, $pager);
 
@@ -120,24 +121,28 @@ class trade extends control
             $selectYear  = $currentDate ? substr($currentDate, 0, 4) : $currentYear;
             $selectMonth = substr($currentDate, 4, 2);
 
-            $moduleMenu .= "<li class='dropdown'>";
+            $class = $currentDate ? '' : 'active';
+            $moduleMenu .= "<li class='$class'>" . commonModel::printLink('trade', 'browse', "mode=$mode&date=all", $this->lang->trade->all, '', false) . '</li>';
+            $class = $currentDate ? 'active' : '';
+            $moduleMenu .= "<li class='$class dropdown'>";
             $moduleMenu .= html::a('#', $selectYear . $this->lang->year . "<span class='caret'></span>", "class='dropdown-toggle' data-toggle='dropdown'");
             $moduleMenu .= "<ul role='menu' class='dropdown-menu'>";
             foreach($tradeYears as $year)
             {
-                $moduleMenu .= "<li>" . commonModel::printLink('trade', 'browse', "mode=$mode&date=$year", $year . $this->lang->year, '', false) . "</li>";
+                $moduleMenu .= commonModel::printLink('trade', 'browse', "mode=$mode&date=$year", $year . $this->lang->year, '', false, '', 'li');
             }
             $moduleMenu .= "</ul></li>";
 
-            $moduleMenu .= "<li class='dropdown'>";
+            $class = $selectMonth ? 'active' : '';
+            $moduleMenu .= "<li class='$class dropdown'>";
             $moduleMenu .= html::a('#', zget($this->lang->trade->quarterList, $selectMonth, zget($this->lang->trade->monthList, $selectMonth, $this->lang->trade->month)) . "<span class='caret'></span>", "class='dropdown-toggle' data-toggle='dropdown'");
             $moduleMenu .= "<ul role='menu' class='dropdown-menu'>";
             foreach($tradeQuarters[$selectYear] as $quarter)
             {
-                $moduleMenu .= "<li>" . commonModel::printLink('trade', 'browse', "mode=$mode&date=$selectYear$quarter", $this->lang->trade->quarterList[$quarter], '', false) . "</li>";
+                $moduleMenu .= commonModel::printLink('trade', 'browse', "mode=$mode&date=$selectYear$quarter", $this->lang->trade->quarterList[$quarter], '', false, '', 'li');
                 foreach($tradeMonths[$selectYear][$quarter] as $month)
                 {
-                    $moduleMenu .= "<li>" . commonModel::printLink('trade', 'browse', "mode=$mode&date=$selectYear$month", $this->lang->trade->monthList[$month], '', false) . "</li>";
+                    $moduleMenu .= commonModel::printLink('trade', 'browse', "mode=$mode&date=$selectYear$month", $this->lang->trade->monthList[$month], '', false, '', 'li');
                 }
             }
             $moduleMenu .= "</ul></li>";

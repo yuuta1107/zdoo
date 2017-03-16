@@ -52,6 +52,7 @@ $lang->trade->loanID      = '借貸';
 $lang->trade->investID    = '投資';
 $lang->trade->loanrate    = '利率';
 
+$lang->trade->all           = '所有';
 $lang->trade->create        = '記賬';
 $lang->trade->in            = '收入';
 $lang->trade->out           = '支出';

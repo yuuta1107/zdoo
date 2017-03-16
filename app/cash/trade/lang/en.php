@@ -52,6 +52,7 @@ $lang->trade->loanID      = 'Loan';
 $lang->trade->investID    = 'Invest';
 $lang->trade->loanrate    = 'Interest Rate';
 
+$lang->trade->all           = 'All';
 $lang->trade->create        = 'Create Trade';
 $lang->trade->in            = 'Income';
 $lang->trade->out           = 'Expense';

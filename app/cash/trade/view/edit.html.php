@@ -42,7 +42,7 @@
           <th><?php echo $lang->trade->category;?></th>
           <td>
             <div class='input-group'>
-              <?php echo html::select('category', array('') + $categories, $trade->category, "class='form-control'");?>
+              <?php echo html::select('category', array('') + $categories, $trade->category, "class='form-control chosen'");?>
               <div class='input-group-addon'><?php echo html::checkbox('objectType', $lang->trade->objectTypeList, $objectType);?></div>
             </div>
           </td>
