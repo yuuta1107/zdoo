@@ -12,4 +12,3 @@
 ?>
 <?php 
 include '../../../sys/file/view/export.html.php';
-css::import($this->app->getClientTheme() . 'theme.oa.css');

@@ -19,7 +19,10 @@
       <div class='panel panel-sm'>
         <div class='panel-heading'>
           <strong><?php echo $lang->trade->report->selectYears;?></strong>
-          <div class='panel-actions pull-right'><?php echo html::select('currency', $currencyList, $currency, "class='form-control'")?></div>
+          <div class='panel-actions pull-right'>
+            <?php echo html::select('currency', $currencyList, $currency, "class='form-control'")?>
+            <?php echo html::select('unit', $lang->trade->report->unitList, $unit, "class='form-control'")?>
+          </div>
         </div>
         <div class='panel-body'>
           <?php echo html::checkBox('years', $tradeYears, $selectYears, '', 'block');?>
@@ -36,7 +39,7 @@
           <tr>
             <td colspan='3'>
               <div class='chart-wrapper text-center'>
-                <h5><?php echo $lang->trade->in . $lang->trade->report->compare . '(' . $currencyList[$currency] . ':' . $lang->trade->report->unit . ')';?></h5>
+                <h5><?php echo $lang->trade->in . $lang->trade->report->compare . '(' . $currencyList[$currency] . ':' . $lang->trade->report->unitList[$unit] . ')';?></h5>
                 <div class='chart-canvas'><canvas height='350' width='800' id='chart-income'></canvas></div>
               </div>
             </td>
@@ -77,7 +80,7 @@
           <tr>
             <td colspan='3'>
               <div class='chart-wrapper text-center'>
-                <h5><?php echo $lang->trade->out . $lang->trade->report->compare . '(' . $currencyList[$currency] . ':' . $lang->trade->report->unit . ')';?></h5>
+                <h5><?php echo $lang->trade->out . $lang->trade->report->compare . '(' . $currencyList[$currency] . ':' . $lang->trade->report->unitList[$unit] . ')';?></h5>
                 <div class='chart-canvas'><canvas height='350' width='800' id='chart-expense'></canvas></div>
               </div>
             </td>
@@ -118,7 +121,7 @@
           <tr>
             <td colspan='3'>
               <div class='chart-wrapper text-center'>
-                <h5><?php echo $lang->trade->profit . $lang->trade->loss . $lang->trade->report->compare . '(' . $currencyList[$currency] . ':' . $lang->trade->report->unit . ')';?></h5>
+                <h5><?php echo $lang->trade->profit . $lang->trade->loss . $lang->trade->report->compare . '(' . $currencyList[$currency] . ':' . $lang->trade->report->unitList[$unit] . ')';?></h5>
                 <div class='chart-canvas'><canvas height='350' width='800' id='chart-profit'></canvas></div>
               </div>
             </td>

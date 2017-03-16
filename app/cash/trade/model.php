@@ -1361,7 +1361,19 @@ class tradeModel extends model
         return $datas;
     }
 
-    public function getCompareDatas($selectYears = array(), &$incomeDatas = array(), &$expenseDatas = array(), &$profitDatas = array(), $currency = 'rmb')
+    /**
+     * Get compare datas. 
+     * 
+     * @param  array  $selectYears 
+     * @param  array  $incomeDatas 
+     * @param  array  $expenseDatas 
+     * @param  array  $profitDatas 
+     * @param  string $currency 
+     * @param  string $unit 
+     * @access public
+     * @return void
+     */
+    public function getCompareDatas($selectYears = array(), &$incomeDatas = array(), &$expenseDatas = array(), &$profitDatas = array(), $currency = 'rmb', $unit = '1')
     {
         foreach($selectYears as $year)
         {
@@ -1391,8 +1403,8 @@ class tradeModel extends model
         ksort($expenseDatas, SORT_STRING);
         ksort($profitDatas, SORT_STRING);
 
-        foreach($incomeDatas as $month => $data)  foreach($data as $year => $money) $incomeDatas[$month][$year]  = round($money / (int)$this->lang->trade->report->ratio, 2);
-        foreach($expenseDatas as $month => $data) foreach($data as $year => $money) $expenseDatas[$month][$year] = round($money / (int)$this->lang->trade->report->ratio, 2);
-        foreach($profitDatas as $month => $data)  foreach($data as $year => $money) $profitDatas[$month][$year]  = round($money / (int)$this->lang->trade->report->ratio, 2);
+        foreach($incomeDatas as $month => $data)  foreach($data as $year => $money) $incomeDatas[$month][$year]  = round($money / $unit, 2);
+        foreach($expenseDatas as $month => $data) foreach($data as $year => $money) $expenseDatas[$month][$year] = round($money / $unit, 2);
+        foreach($profitDatas as $month => $data)  foreach($data as $year => $money) $profitDatas[$month][$year]  = round($money / $unit, 2);
     }
 }

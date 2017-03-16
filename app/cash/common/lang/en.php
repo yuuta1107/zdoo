@@ -45,6 +45,7 @@ $lang->report->menu = new stdclass();
 $lang->report->menu->annual  = 'Annual balance sheet|trade|report|';
 $lang->report->menu->compare = 'Annual Comparison sheet|trade|compare|';
 $lang->report->menu->export  = 'Profit and loss statement|trade|export2Excel|mode=depositor';
+$lang->report->menu->setting = 'Report Unit|trade|setReportUnit|';
 
 /* Menu of setting module. */
 $lang->setting = new stdclass();

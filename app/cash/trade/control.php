@@ -910,14 +910,15 @@ class trade extends control
      * 
      * @param  string $date 
      * @param  string $currency 
+     * @param  string $unit     1 | 1000 | 10000 | 1000000
      * @access public
      * @return void
      */
-    public function report($date = '', $currency = 'rmb')
+    public function report($date = '', $currency = 'rmb', $unit = '')
     {
         $tradeYears  = array();
         $tradeMonths = array();
-        $tradeDates = $this->trade->getDatePairs();
+        $tradeDates  = $this->trade->getDatePairs();
         foreach($tradeDates as $tradeDate)
         {
             $year  = substr($tradeDate, 0, 4);
@@ -973,11 +974,12 @@ class trade extends control
             $monthlyChartDatas[$groupBy]['out'] = $this->report->computePercent($monthlyChartDatas[$groupBy]['out']);
         }
 
+        $unit = $unit ? $unit : (empty($this->config->trade->report->unit) ? 1 : $this->config->trade->report->unit);
         foreach($annualChartDatas as $month => $datas) 
         {
             foreach($datas as $key => $money) 
             {
-                $annualChartDatas[$month][$key] = round($money / (int)$this->lang->trade->report->ratio, 2);
+                $annualChartDatas[$month][$key] = round($money / $unit, 2);
             }
         }
         foreach($monthlyChartDatas as $datas) 
@@ -986,7 +988,7 @@ class trade extends control
             {
                 foreach($typeDatas as $data) 
                 {
-                    $data->value = round($data->value / (int)$this->lang->trade->report->ratio, 2);
+                    $data->value = round($data->value / $unit, 2);
                 }
             }
         }
@@ -1001,6 +1003,7 @@ class trade extends control
         $this->view->currentYear       = $currentYear;
         $this->view->currentMonth      = $currentMonth;
         $this->view->currentCurrency   = $currency;
+        $this->view->currentUnit       = $unit;
         $this->view->currencyList      = $this->loadModel('common', 'sys')->getCurrencyList();
         $this->display();
     }
@@ -1025,13 +1028,14 @@ class trade extends control
 
         $selectYears = $this->post->years ? $this->post->years : array_slice($tradeYears, 0, 2);
         $currency    = $this->post->currency ? $this->post->currency : current(array_flip($currencyList));
+        $unit        = $this->post->unit ? $this->post->unit : (empty($this->config->trade->report->unit) ? 1 : $this->config->trade->report->unit);
 
         asort($selectYears);
         $selectYears  = array_values($selectYears);
         $incomeDatas  = array();
         $expenseDatas = array();
         $profitDatas  = array();
-        $this->trade->getCompareDatas($selectYears, $incomeDatas, $expenseDatas, $profitDatas, $currency);
+        $this->trade->getCompareDatas($selectYears, $incomeDatas, $expenseDatas, $profitDatas, $currency, $unit);
 
         $this->lang->trade->menu = $this->lang->report->menu;
 
@@ -1042,6 +1046,7 @@ class trade extends control
         $this->view->expenseDatas = $expenseDatas;
         $this->view->profitDatas  = $profitDatas;
         $this->view->currency     = $currency;
+        $this->view->unit         = $unit;
         $this->view->currencyList = $currencyList;
         $this->display();
     }
@@ -1058,5 +1063,25 @@ class trade extends control
         $customer = $this->loadModel('customer')->getByID($customerID);
         if(!$customer) die();
         die($customer->depositor);
+    }
+
+    /**
+     * Set report unit. 
+     * 
+     * @access public
+     * @return void
+     */
+    public function setReportUnit()
+    {
+        if($_POST)
+        {
+            $this->loadModel('setting')->setItem('system.cash.trade.report.unit', $this->post->unit);
+            if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
+
+            $this->send(array('result' => 'success', 'locate' => 'reload'));
+        }
+
+        $this->view->title = $this->lang->trade->setReportUnit;
+        $this->display();
     }
 }

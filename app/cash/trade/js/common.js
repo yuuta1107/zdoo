@@ -1,5 +1,7 @@
 $(document).ready(function()
 {
+    $('#menu a[href*=setReportUnit]').attr({'data-toggle' : 'modal', 'data-width' : 400});
+
     $('[name*=objectType]').change(function()
     {
         if($(this).prop('checked')) 

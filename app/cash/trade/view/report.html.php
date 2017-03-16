@@ -21,12 +21,12 @@
       <ul class='dropdown-menu'>
         <?php foreach($tradeYears as $tradeYear):?>
         <li class='dropdown-submenu'>
-          <?php echo html::a(helper::createLink('trade', 'report', "date=$tradeYear&currency=$currentCurrency"), $tradeYear);?>
+          <?php echo html::a(helper::createLink('trade', 'report', "date=$tradeYear&currency=$currentCurrency&unit=$currentUnit"), $tradeYear);?>
           <ul class='dropdown-menu'>
             <?php foreach($tradeMonths[$tradeYear] as $tradeMonth):?>
-            <li><?php echo html::a(helper::createLink('trade', 'report', "date=$tradeYear$tradeMonth&currency=$currentCurrency"), $tradeMonth . $lang->month);?></li>
+            <li><?php echo html::a(helper::createLink('trade', 'report', "date=$tradeYear$tradeMonth&currency=$currentCurrency&unit=$currentUnit"), $tradeMonth . $lang->month);?></li>
             <?php endforeach;?>
-            <li><?php echo html::a(helper::createLink('trade', 'report', "date={$tradeYear}00&currency=$currentCurrency"), $lang->trade->fullYear);?></li>
+            <li><?php echo html::a(helper::createLink('trade', 'report', "date={$tradeYear}00&currency=$currentCurrency&unit=$currentUnit"), $lang->trade->fullYear);?></li>
           </ul>
         </li>
         <?php endforeach;?>
@@ -36,7 +36,15 @@
       <button type='button' class='btn btn-sm btn-default dropdown-toggle' data-toggle='dropdown'><?php echo $currencyList[$currentCurrency];?> <span class="caret"></span></button>
       <ul class='dropdown-menu'>
         <?php foreach($currencyList as $key => $currency):?>
-        <li><?php echo html::a(helper::createLink('trade', 'report', "date=$currentYear$currentMonth&currency=$key"), $currency);?></li>
+        <li><?php echo html::a(helper::createLink('trade', 'report', "date=$currentYear$currentMonth&currency=$key&unit=$currentUnit"), $currency);?></li>
+        <?php endforeach;?>
+      </ul>
+    </div>
+    <div class='unit dropdown'>
+      <button type='button' class='btn btn-sm btn-default dropdown-toggle' data-toggle='dropdown'><?php echo $lang->trade->report->unitList[$currentUnit];?> <span class='caret'></span></button>
+      <ul class='dropdown-menu'>
+        <?php foreach($lang->trade->report->unitList as $key => $unit):?>
+        <li><?php echo html::a(helper::createLink('trade', 'report', "date=$currentYear$currentMonth&currency=$currentCurrency&unit=$key"), $unit);?></li>
         <?php endforeach;?>
       </ul>
     </div>
@@ -47,7 +55,7 @@
       <tr>
         <td colspan='3' class='annual'>
           <div class='chart-wrapper text-center'>
-            <h5><?php echo $currentYear . $lang->trade->report->annual . '(' . $currencyList[$currentCurrency] . ':' . $lang->trade->report->unit . ')';?></h5>
+            <h5><?php echo $currentYear . $lang->trade->report->annual . '(' . $currencyList[$currentCurrency] . ':' . $lang->trade->report->unitList[$currentUnit] . ')';?></h5>
             <div class='chart-canvas'><canvas height='260' width='800' id='chart-annual'></canvas></div>
           </div>
         </td>
