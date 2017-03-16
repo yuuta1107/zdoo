@@ -198,7 +198,7 @@ $lang->trade->chartList['dept']        = '按部门统计';
 
 $lang->trade->excel = new stdclass();
 $lang->trade->excel->title = new stdclass();
-$lang->trade->excel->title->depositor = '账号盈亏';
+$lang->trade->excel->title->depositor = '账号盈亏表';
 
 $lang->trade->excel->help = new stdclass();
 $lang->trade->excel->help->depositor = '本报表不区分币种。';

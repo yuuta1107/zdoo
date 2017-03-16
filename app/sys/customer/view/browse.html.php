@@ -27,7 +27,7 @@
   <?php commonModel::printLink('customer', 'create', '', '<i class="icon-plus"></i> ' . $lang->customer->create, 'class="btn btn-primary"');?>
 </div>
 <div class='panel'>
-  <form id='ajaxForm' method='post' action='<?php echo inlink('batchAssign');?>'>
+  <form id='browseForm' method='post' action='<?php echo inlink('batchAssign');?>'>
     <table class='table table-hover table-striped table-bordered tablesorter table-data table-fixed table-fixedHeader'>
       <thead>
         <tr class='text-center'>

@@ -4,6 +4,6 @@ $(function()
 
     $('.batchAssign').click(function()
     {
-        $('#ajaxForm').submit();        
+        $('#browseForm').submit();        
     });
 });
