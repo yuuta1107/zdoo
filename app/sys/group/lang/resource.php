@@ -301,23 +301,24 @@ $lang->sales->methodOrder[25] = 'delete';
 
 /* Product plan. */
 $lang->resource->trade = new stdclass();
-$lang->resource->trade->browse       = 'browse';
-$lang->resource->trade->view         = 'view';
-$lang->resource->trade->create       = 'create';
-$lang->resource->trade->batchCreate  = 'batchCreate';
-$lang->resource->trade->batchEdit    = 'batchEdit';
-$lang->resource->trade->edit         = 'edit';
-$lang->resource->trade->transfer     = 'transfer';
-$lang->resource->trade->invest       = 'invest';
-$lang->resource->trade->loan         = 'loan';
-$lang->resource->trade->detail       = 'detail';
-$lang->resource->trade->delete       = 'delete';
-$lang->resource->trade->import       = 'import';
-$lang->resource->trade->showImport   = 'showImport';
-$lang->resource->trade->export       = 'export';
-$lang->resource->trade->report       = 'report';
-$lang->resource->trade->compare      = 'compare';
-$lang->resource->trade->export2Excel = 'export2Excel';
+$lang->resource->trade->browse        = 'browse';
+$lang->resource->trade->view          = 'view';
+$lang->resource->trade->create        = 'create';
+$lang->resource->trade->batchCreate   = 'batchCreate';
+$lang->resource->trade->batchEdit     = 'batchEdit';
+$lang->resource->trade->edit          = 'edit';
+$lang->resource->trade->transfer      = 'transfer';
+$lang->resource->trade->invest        = 'invest';
+$lang->resource->trade->loan          = 'loan';
+$lang->resource->trade->detail        = 'detail';
+$lang->resource->trade->delete        = 'delete';
+$lang->resource->trade->import        = 'import';
+$lang->resource->trade->showImport    = 'showImport';
+$lang->resource->trade->export        = 'export';
+$lang->resource->trade->report        = 'report';
+$lang->resource->trade->compare       = 'compare';
+$lang->resource->trade->export2Excel  = 'export2Excel';
+$lang->resource->trade->setReportUnit = 'setReportUnit';
 
 $lang->trade->methodOrder[10] = 'browse';
 $lang->trade->methodOrder[11] = 'view';
@@ -336,6 +337,7 @@ $lang->trade->methodOrder[55] = 'export';
 $lang->trade->methodOrder[60] = 'report';
 $lang->trade->methodOrder[61] = 'compare';
 $lang->trade->methodOrder[65] = 'export2Excel';
+$lang->trade->methodOrder[70] = 'setReportUnit';
 
 /* Depositor. */
 $lang->resource->depositor = new stdclass();
