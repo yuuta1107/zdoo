@@ -57,8 +57,8 @@
           <td><?php echo html::select("depositor[$i]", $depositors, $depositor, "class='form-control' id='depositor{$i}'");?></td>
           <td><?php echo html::select("type[$i]", $lang->trade->typeList, 'out', "class='form-control type' id='type{$i}'");?></td>
           <td>
-            <?php echo html::select("category[$i]", $incomeTypes, $incomeType, "class='form-control in' style='display:none'");?>
-            <?php echo html::select("category[$i]", $expenseTypes, $expenseType, "class='form-control out' id='category{$i}'");?>
+            <?php echo html::select("category[$i]", $incomeTypes, $incomeType, "class='form-control in chosen' style='display:none'");?>
+            <?php echo html::select("category[$i]", $expenseTypes, $expenseType, "class='form-control out chosen' id='category{$i}'");?>
           </td>
           <td>
             <div class='input-group out'>

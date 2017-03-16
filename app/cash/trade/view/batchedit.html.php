@@ -42,8 +42,8 @@
           <td><?php echo html::select("depositor[{$id}]", $depositors, $trade->depositor, "class='form-control' id='depositor{$id}'");?></td>
           <td>
             <?php $disabled = isset($disabledCategories[$trade->category]) ? 'disabled' : '';?>
-            <?php if($trade->type == 'in') echo html::select("category[$id]", $incomeTypes, $trade->category, "class='form-control in' id='category{$id}' $disabled");?>
-            <?php if($trade->type == 'out') echo html::select("category[$id]", $expenseTypes, $trade->category, "class='form-control in' id='category{$id}' $disabled");?>
+            <?php if($trade->type == 'in') echo html::select("category[$id]", $incomeTypes, $trade->category, "class='form-control in chosen' id='category{$id}' $disabled");?>
+            <?php if($trade->type == 'out') echo html::select("category[$id]", $expenseTypes, $trade->category, "class='form-control in chosen' id='category{$id}' $disabled");?>
             <?php if(in_array($trade->type, array_keys($lang->trade->categoryList))) echo html::select("category[$id]", $lang->trade->categoryList, $trade->category, "class='form-control' disabled");?>
           </td>
           <td>

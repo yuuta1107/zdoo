@@ -34,7 +34,7 @@
         <?php if($trade->type == 'in'):?>
         <tr class='income'>
           <th><?php echo $lang->trade->category;?></th>
-          <td><?php echo html::select('category', array('') + $categories, $trade->category, "class='form-control'");?></td>
+          <td><?php echo html::select('category', array('') + $categories, $trade->category, "class='form-control chosen'");?></td>
         </tr>
         <?php endif;?>
         <?php if($trade->type == 'out'):?>
