@@ -206,8 +206,8 @@ class tradeModel extends model
 
         if($groupBy == 'category')
         {
-            if($type == 'in')  $list = $this->loadModel('tree')->getOptionMenu('in', 0, true);
-            if($type == 'out') $list = $this->loadModel('tree')->getOptionMenu('out', 0, true);
+            if($type == 'in')  $list = $this->loadModel('tree')->getPairs(0, 'in');
+            if($type == 'out') $list = $this->loadModel('tree')->getPairs(0, 'out');
             $list = array('' => '') + $list;
         }
 
