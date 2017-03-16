@@ -44,11 +44,11 @@ $(document).ready(function()
     {
         if(v.mode == 'in')
         {
-            $('#mainNavbar li').removeClass('active').find("[href*='=" + v.mode + "']").not('[href*=mode\\=invest]').parent().addClass('active');
+            $('#mainNavbar li').removeClass('active').find("[href*='mode\\=" + v.mode + "']").not('[href*=mode\\=invest]').parent().addClass('active');
         }
         else
         {
-            $('#mainNavbar li').removeClass('active').find("[href*='=" + v.mode + "']").parent().addClass('active');
+            $('#mainNavbar li').removeClass('active').find("[href*='mode\\=" + v.mode + "']").parent().addClass('active');
         }
     }
     else
@@ -60,7 +60,7 @@ $(document).ready(function()
         }
         else
         {
-            $('#mainNavbar li').find('[href*=' + v.mode + ']').parent().addClass('active');
+            $('#mainNavbar li').find("[href*='-" + v.mode + "']").parent().addClass('active');
         }
     }
 
