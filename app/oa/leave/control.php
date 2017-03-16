@@ -127,10 +127,14 @@ class leave extends control
 
     public function view($leaveID, $type = '')
     {
+        $leave = $this->leave->getByID($leaveID);
+
         $this->view->title = $this->lang->leave->view;
+        $this->view->depts = $this->loadModel('tree')->getPairs(0, 'dept');
+        $this->view->user  = $this->loadModel('user')->getByAccount($leave->createdBy);
+        $this->view->users = $this->user->getPairs();
         $this->view->type  = $type;
-        $this->view->leave = $this->leave->getByID($leaveID);
-        $this->view->users = $this->loadModel('user')->getPairs();
+        $this->view->leave = $leave;
         $this->display();
     }
 

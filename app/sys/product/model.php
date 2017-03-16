@@ -111,7 +111,7 @@ class productModel extends model
             ->get();
 
         $this->dao->update(TABLE_PRODUCT)
-            ->data($product, 'labels,files')
+            ->data($product, 'files,labels')
             ->autoCheck()
             ->batchCheck($this->config->product->require->edit, 'notempty')
             ->check('code', 'unique', "id!={$productID}")

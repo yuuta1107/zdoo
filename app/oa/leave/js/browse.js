@@ -1,5 +1,11 @@
 $(document).ready(function()
 {
+    $('#leaveTable td:not(:last)').click(function()
+    {
+        var vurl = $(this).parent().attr('url');
+        $.zui.modalTrigger.show({width : '600px', url : vurl});
+    });
+
     $(document).on('click', '.reviewPass', function()
     {
         if(confirm(v.confirmReview.pass))

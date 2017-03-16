@@ -63,7 +63,7 @@
           </tr>
         </thead>
         <?php foreach($leaveList as $leave):?>
-        <tr>
+        <tr url='<?php echo inlink('view', "id=$leave->id");?>'>
           <td><?php echo $leave->id;?></td>
           <td><?php echo zget($users, $leave->createdBy);?></td>
           <td class='visible-lg'><?php echo zget($deptList, $leave->dept);?></td>
