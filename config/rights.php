@@ -121,7 +121,6 @@ $config->rights->member['file']['buildlist']      = 'buildlist';
 $config->rights->member['file']['printfiles']     = 'printfiles';
 $config->rights->member['file']['ajaxupload']     = 'ajaxupload';
 $config->rights->member['file']['browse']         = 'browse';
-$config->rights->member['file']['upload']         = 'upload';
 $config->rights->member['file']['senddownheader'] = 'senddownheader';
 $config->rights->member['file']['ajaxpasteimage'] = 'ajaxpasteimage';
 $config->rights->member['file']['filemanager']    = 'filemanager';
@@ -140,6 +139,7 @@ $config->rights->member['leave']['personal']     = 'personal';
 $config->rights->member['leave']['create']       = 'create';
 $config->rights->member['leave']['edit']         = 'edit';
 $config->rights->member['leave']['delete']       = 'delete';
+$config->rights->member['leave']['view']         = 'view';
 $config->rights->member['leave']['switchstatus'] = 'switchstatus';
 $config->rights->member['leave']['back']         = 'back';
 
@@ -147,6 +147,7 @@ $config->rights->member['lieu']['personal']     = 'personal';
 $config->rights->member['lieu']['create']       = 'create';
 $config->rights->member['lieu']['edit']         = 'edit';
 $config->rights->member['lieu']['delete']       = 'delete';
+$config->rights->member['lieu']['view']         = 'view';
 $config->rights->member['lieu']['switchstatus'] = 'switchstatus';
 
 $config->rights->member['overtime']['personal']     = 'personal';
@@ -166,6 +167,7 @@ $config->rights->member['egress']['personal'] = 'personal';
 $config->rights->member['egress']['create']   = 'create';
 $config->rights->member['egress']['edit']     = 'edit';
 $config->rights->member['egress']['delete']   = 'delete';
+$config->rights->member['egress']['view']     = 'view';
 
 $config->rights->member['out']['personal'] = 'personal';
 $config->rights->member['out']['create']   = 'create';

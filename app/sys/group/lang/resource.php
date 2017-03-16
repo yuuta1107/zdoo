@@ -641,15 +641,15 @@ $lang->tree->methodOrder[20] = 'merge';
 
 /* File. */
 $lang->resource->file = new stdclass();
+$lang->resource->file->upload   = 'upload';
 $lang->resource->file->download = 'download';
 $lang->resource->file->edit     = 'edit';
 $lang->resource->file->delete   = 'delete';
 
-$lang->tree->methodOrder[0]  = 'browse';
-$lang->tree->methodOrder[5]  = 'edit';
-$lang->tree->methodOrder[10] = 'children';
-$lang->tree->methodOrder[15] = 'delete';
-$lang->tree->methodOrder[20] = 'merge';
+$lang->file->methodOrder[0]  = 'upload';
+$lang->file->methodOrder[5]  = 'download';
+$lang->file->methodOrder[10] = 'edit';
+$lang->file->methodOrder[15] = 'delete';
 
 /* Setting. */
 $lang->resource->setting = new stdclass();
