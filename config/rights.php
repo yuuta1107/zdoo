@@ -121,7 +121,6 @@ $config->rights->member['file']['buildlist']      = 'buildlist';
 $config->rights->member['file']['printfiles']     = 'printfiles';
 $config->rights->member['file']['ajaxupload']     = 'ajaxupload';
 $config->rights->member['file']['browse']         = 'browse';
-$config->rights->member['file']['upload']         = 'upload';
 $config->rights->member['file']['senddownheader'] = 'senddownheader';
 $config->rights->member['file']['ajaxpasteimage'] = 'ajaxpasteimage';
 $config->rights->member['file']['filemanager']    = 'filemanager';
