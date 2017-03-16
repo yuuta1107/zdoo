@@ -1161,11 +1161,13 @@ class tradeModel extends model
      */
     public function getExportData($mode = '')
     {
-        $trades     = $this->getList($mode = 'all', $date = date('Y'), $orderBy = 'date');
+        $year       = $this->post->year;
+        $totalMonth = $year == date('Y') ? date('m') : 12;
+        $trades     = $this->getList($mode = 'all', $year, $orderBy = 'date');
         $depositors = $this->loadModel('depositor', 'cash')->getPairs();
         $lastDates  = $this->dao->select('depositor, max(date)')
             ->from(TABLE_BALANCE)
-            ->where('date')->lt(date('Y-01-01'))
+            ->where('date')->lt("$year-01-01")
             ->groupBy('depositor')
             ->fetchPairs();
         $balances = array();
@@ -1237,7 +1239,7 @@ class tradeModel extends model
             $rows['total']['last']['balance']    += $money;
 
             /* Add money to balance of every month in this year. */
-            for($i = 1; $i <= (int)date('m'); $i++)
+            for($i = 1; $i <= $totalMonth; $i++)
             {
                 $month = $i < 10 ? '0' . $i : $i;
                 $rows[$depositor][$month]['balance'] += $money;
@@ -1281,7 +1283,7 @@ class tradeModel extends model
             }
 
             /* Add money to profit and balance of every month that after this month. */
-            for($i = (int)$month + 1; $i <= (int)date('m'); $i++)
+            for($i = (int)$month + 1; $i <= $totalMonth; $i++)
             {
                 $m = $i < 10 ? '0' . $i : $i;
                 $rows[$depositor][$m]['balance'] += $money;

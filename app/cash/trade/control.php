@@ -890,8 +890,18 @@ class trade extends control
             $this->app->loadClass('excel')->export($excelData, $this->post->fileType);
         }
 
+        $tradeDates = $this->trade->getDatePairs('all');
+
+        $years = array(date('Y') => date('Y'));
+        foreach($tradeDates as $tradeDate)
+        {
+            $year = substr($tradeDate, 0, 4);
+            $years[$year] = $year;
+        }
+
         $this->view->title    = $this->lang->export;
         $this->view->fileName = $this->lang->trade->excel->title->$mode;
+        $this->view->years    = $years;
         $this->display();
     }
 
