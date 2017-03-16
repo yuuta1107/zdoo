@@ -33,6 +33,12 @@
       <th><?php echo $lang->product->status;?></th>
       <td><?php echo html::select('status', $lang->product->statusList, $product->status, "class='form-control'");?></td>
     </tr>
+    <?php if(commonModel::hasPriv('file', 'upload')):?>
+    <tr>
+      <th><?php echo $lang->files;?></th>
+      <td><?php echo $this->fetch('file', 'buildForm');?></td>
+    </tr>
+    <?php endif;?>
     <tr>
       <th></th>
       <td><?php echo html::submitButton();?></td>
