@@ -38,6 +38,7 @@
         <th class='w-200px text-left'><?php commonModel::printOrderLink('phone', $orderBy, $vars, $lang->contact->phone . $lang->slash . $lang->contact->mobile);?></th>
         <th class='w-200px'><?php commonModel::printOrderLink('email', $orderBy, $vars, $lang->contact->email);?></th>
         <th class='w-100px visible-lg'><?php commonModel::printOrderLink('qq', $orderBy, $vars, $lang->contact->qq);?></th>
+        <th class='w-100px visible-lg'><?php commonModel::printOrderLink('weixin', $orderBy, $vars, $lang->contact->weixin);?></th>
         <th class='w-200px'><?php echo $lang->actions;?></th>
       </tr>
     </thead>
@@ -51,6 +52,7 @@
       <td class='text-left'><?php echo $contact->phone . ' ' . $contact->mobile;?></td>
       <td><?php echo html::mailto($contact->email, $contact->email)?></td>
       <td class='visible-lg'><?php echo empty($contact->qq) ? '' : html::a("tencent://Message/?Uin={$contact->qq}&websiteName=RanZhi&Menu=yes", $contact->qq, "target='_blank'")?></td>
+      <td class='visible-lg'><?php echo empty($contact->weixin) ? '' : $contact->weixin;?></td>
       <td class='operate'>
         <?php
         commonModel::printLink('action',  'createRecord', "objectType=contact&objectID={$contact->id}&customer={$contact->customer}", $lang->contact->record, "data-toggle='modal' data-width='860'");

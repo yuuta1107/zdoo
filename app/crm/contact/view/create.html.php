@@ -85,6 +85,10 @@
               <th><?php echo $lang->contact->qq;?></th>
               <td><?php echo html::input('qq', '', "class='form-control'");?></td>
             </tr>
+            <tr>
+              <th><?php echo $lang->contact->weixin;?></th>
+              <td><?php echo html::input('weixin', '', "class='form-control'");?></td>
+            </tr>
             <tr class='customerInfo hide'>
               <th><?php echo $lang->customer->type;?></th>
               <td><?php echo html::select('type', $lang->customer->typeList, '', "class='form-control'");?></td>

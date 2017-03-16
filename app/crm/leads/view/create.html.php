@@ -59,6 +59,10 @@
               <td><?php echo html::input('qq', '', "class='form-control'");?></td>
             </tr>
             <tr>
+              <th><?php echo $lang->contact->weixin;?></th>
+              <td><?php echo html::input('weixin', '', "class='form-control'");?></td>
+            </tr>
+            <tr>
               <th><?php echo $lang->contact->desc;?></th>
               <td><?php echo html::textarea('desc', '', "rows='3' class='form-control'");?></td>
             </tr>

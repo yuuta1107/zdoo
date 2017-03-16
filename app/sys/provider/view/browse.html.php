@@ -25,7 +25,7 @@
     </div>
   </div>
   <div class='main panel'>
-    <table class='table table-hover table-striped tablesorter table-data table-fixedHeader'>
+    <table class='table table-bordered table-hover table-striped tablesorter table-data table-fixedHeader'>
       <thead>
         <tr class='text-center'>
           <?php $vars = "mode=all&param=&orderBy=%s&recTotal={$pager->recTotal}&recPerPage={$pager->recPerPage}&pageID={$pager->pageID}";?>

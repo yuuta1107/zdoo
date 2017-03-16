@@ -32,7 +32,7 @@
     </div>
   </div>
   <div class='main panel'>
-    <table class='table table-hover table-striped tablesorter table-data' id='productList'>
+    <table class='table table-bordered table-hover table-striped tablesorter table-data' id='productList'>
       <thead>
         <tr class='text-center'>
           <?php $vars = "status={$status}&line={$line}&orderBy=%s&recTotal={$pager->recTotal}&recPerPage={$pager->recPerPage}&pageID={$pager->pageID}";?>

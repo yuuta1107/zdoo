@@ -30,7 +30,7 @@
   <?php commonModel::printLink('leads', 'create', '', "<i class='icon-plus'></i> {$lang->leads->create}", "class='btn btn-primary'")?>
 </div>
 <div class='panel'>
-  <table class='table table-hover table-striped table-bordered tablesorter table-data table-fixed' id='contactList'>
+  <table class='table table-bordered table-hover table-striped table-bordered tablesorter table-data table-fixed' id='contactList'>
     <thead>
       <tr class='text-center'>
         <?php $vars = "mode={$mode}&status={$status}&origin={$origin}&orderBy=%s&recTotal={$pager->recTotal}&recPerPage={$pager->recPerPage}&pageID={$pager->pageID}";?>
@@ -44,8 +44,9 @@
         <th class='w-200px text-left'><?php commonModel::printOrderLink('phone', $orderBy, $vars, $lang->contact->phone . $lang->slash . $lang->contact->mobile);?></th>
         <th class='w-160px'><?php commonModel::printOrderLink('email', $orderBy, $vars, $lang->contact->email);?></th>
         <th class='w-80px visible-lg'><?php commonModel::printOrderLink('qq', $orderBy, $vars, $lang->contact->qq);?></th>
+        <th class='w-80px visible-lg'><?php commonModel::printOrderLink('weixin', $orderBy, $vars, $lang->contact->weixin);?></th>
         <th class='w-100px'><?php commonModel::printOrderLink('origin', $orderBy, $vars, $lang->contact->origin);?></th>
-        <th class='w-220px'><?php echo $lang->actions;?></th>
+        <th class='w-200px'><?php echo $lang->actions;?></th>
       </tr>
     </thead>
     <tbody>
@@ -61,6 +62,7 @@
       <td class='text-left'><?php echo $contact->phone . ' ' . $contact->mobile;?></td>
       <td><?php echo html::mailto($contact->email, $contact->email)?></td>
       <td class='visible-lg'><?php echo empty($contact->qq) ? '' : html::a("tencent://Message/?Uin={$contact->qq}&websiteName=RanZhi&Menu=yes", $contact->qq, "target='_blank'")?></td>
+      <td class='visible-lg'><?php echo empty($contact->weixin) ? '' : $contact->weixin;?></td>
       <td><?php echo $contact->origin;?></td>
       <td class='operate'>
         <?php
@@ -69,9 +71,8 @@
         commonModel::printLink('address', 'browse', "objectType=contact&objectID=$contact->id", $lang->contact->address, "data-toggle='modal'");
         commonModel::printLink('leads', 'edit', "contactID={$contact->id}&mode={$mode}&status={$status}", $lang->edit);
         commonModel::printLink('leads', 'transform', "contactID=$contact->id", $lang->confirm, "data-toggle='modal'");
-        commonModel::printLink('leads', 'ignore', "contactID=$contact->id", $lang->ignore, "data-toggle='modal'");
+        if($contact->status != 'ignore') commonModel::printLink('leads', 'ignore', "contactID=$contact->id", $lang->ignore, "data-toggle='modal'");
         if($contact->status == 'ignore') commonModel::printLink('leads', 'delete', "contactID=$contact->id", $lang->delete, "class='deleter'");
-        if($contact->status != 'ignore') echo html::a('#', $lang->delete, "disabled='disabled'");
         ?>
       </td>
     </tr>
