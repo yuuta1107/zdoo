@@ -14,7 +14,8 @@ $(document).ready(function()
             $('.traderTR').show();
         }
         $('#' + $(this).val()).parents('tr').toggle($(this).prop('checked'))
-        if($(this).val() != 'customer') $('#customer').parents('tr').toggle($(this).prop('checked'));
+        if($(this).val() == 'order') $('.customerTR').toggle($(this).prop('checked'));
+        if($(this).val() == 'contract') $('.allCustomerTR').toggle($(this).prop('checked'));
     })
 
     $('[name*=objectType]').each(function()
