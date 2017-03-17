@@ -22,6 +22,7 @@ $lang->menu->oa->lieu      = 'Leave In Lieu|lieu|personal|';
 $lang->menu->oa->trip      = 'Trip|trip|personal|';
 $lang->menu->oa->egress    = 'Egress|egress|personal|';
 $lang->menu->oa->refund    = 'Reimburse|refund|personal|';
+$lang->menu->oa->holiday   = 'Holiday|holiday|browse|';
 $lang->menu->oa->setting   = 'Settings|setting|module|app=oa';
 
 $lang->dashboard = new stdclass();
@@ -39,12 +40,7 @@ $lang->attend->menu->company    = 'Company|attend|company|';
 $lang->attend->menu->detail     = 'Details|attend|detail|';
 $lang->attend->menu->review     = 'Review|attend|browsereview|';
 $lang->attend->menu->stat       = 'Report|attend|stat|';
-$lang->attend->menu->holiday    = 'Holidays|holiday|browse|';
 $lang->attend->menu->settings   = array('link' => 'Settings|attend|settings|', 'alias' => 'setmanager');
-
-if(!isset($lang->holiday)) $lang->holiday = new stdclass();
-$lang->holiday->menu = $lang->attend->menu;
-$lang->menuGroups->holiday = 'attend';
 
 if(!isset($lang->leave)) $lang->leave = new stdclass();
 $lang->leave->menu = new stdclass();
@@ -84,6 +80,10 @@ $lang->refund->menu->reviewedBy = 'Reviewed by me|refund|browsereview|date=&stat
 $lang->refund->menu->todo       = 'Reimburse pending|refund|todo|';
 $lang->refund->menu->company    = 'All|refund|company|';
 $lang->refund->menu->settings   = array('link' => 'Settings|refund|settings|', 'alias' => 'setcategory');
+
+if(!isset($lang->holiday)) $lang->holiday = new stdclass();
+$lang->holiday->menu = new stdclass();
+$lang->holiday->menu->all = 'All|holiday|browse|';
 
 $lang->setting->menu = new stdclass();
 $lang->setting->menu->modules = 'Modules|setting|modules|app=oa';

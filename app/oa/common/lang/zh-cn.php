@@ -22,6 +22,7 @@ $lang->menu->oa->lieu      = '调休|lieu|personal|';
 $lang->menu->oa->trip      = '出差|trip|personal|';
 $lang->menu->oa->egress    = '外出|egress|personal|';
 $lang->menu->oa->refund    = '报销|refund|personal|';
+$lang->menu->oa->holiday   = '节假日|holiday|browse|';
 $lang->menu->oa->setting   = '设置|setting|modules|app=oa';
 
 $lang->dashboard = new stdclass();
@@ -39,12 +40,7 @@ $lang->attend->menu->company    = '公司考勤|attend|company|';
 $lang->attend->menu->detail     = '考勤明细|attend|detail|';
 $lang->attend->menu->review     = '补录审核|attend|browsereview|';
 $lang->attend->menu->stat       = '统计|attend|stat|';
-$lang->attend->menu->holiday    = '节假日|holiday|browse|';
 $lang->attend->menu->settings   = array('link' => '设置|attend|settings|', 'alias' => 'setmanager');
-
-if(!isset($lang->holiday)) $lang->holiday = new stdclass();
-$lang->holiday->menu = $lang->attend->menu;
-$lang->menuGroups->holiday = 'attend';
 
 if(!isset($lang->leave)) $lang->leave = new stdclass();
 $lang->leave->menu = new stdclass();
@@ -84,6 +80,10 @@ $lang->refund->menu->reviewedBy = '由我审批|refund|browsereview|date=&status
 $lang->refund->menu->todo       = '待报销|refund|todo|';
 $lang->refund->menu->company    = '所有报销|refund|company|';
 $lang->refund->menu->settings   = array('link' => '设置|refund|setreviewer|', 'alias' => 'setcategory,setmoney,setdepositor,setrefundby');
+
+if(!isset($lang->holiday)) $lang->holiday = new stdclass();
+$lang->holiday->menu = new stdclass();
+$lang->holiday->menu->all = '所有|holiday|browse|';
 
 $lang->setting->menu = new stdclass();
 $lang->setting->menu->modules = '功能模块|setting|modules|app=oa';

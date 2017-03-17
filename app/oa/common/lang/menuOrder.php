@@ -8,7 +8,8 @@ $lang->oa->menuOrder[40] = 'lieu';
 $lang->oa->menuOrder[45] = 'trip';
 $lang->oa->menuOrder[50] = 'egress';
 $lang->oa->menuOrder[55] = 'refund';
-$lang->oa->menuOrder[60] = 'setting';
+$lang->oa->menuOrder[60] = 'holiday';
+$lang->oa->menuOrder[65] = 'setting';
 
 $lang->announce->menuOrder[5]  = 'browse';
 $lang->announce->menuOrder[10] = 'category';
@@ -19,10 +20,7 @@ $lang->attend->menuOrder[15] = 'company';
 $lang->attend->menuOrder[20] = 'detail';
 $lang->attend->menuOrder[25] = 'review';
 $lang->attend->menuOrder[30] = 'stat';
-$lang->attend->menuOrder[35] = 'holiday';
 $lang->attend->menuOrder[40] = 'settings';
-
-$lang->holiday->menuOrder = $lang->attend->menuOrder;
 
 $lang->leave->menuOrder[5]  = 'personal';
 $lang->leave->menuOrder[10] = 'browseReview';
@@ -50,5 +48,7 @@ $lang->refund->menuOrder[15] = 'reviewedBy';
 $lang->refund->menuOrder[20] = 'todo';
 $lang->refund->menuOrder[25] = 'company';
 $lang->refund->menuOrder[30] = 'settings';
+
+$lang->holiday->menuOrder[5] = 'browse';
 
 $lang->setting->menuOrder[5] = 'modules';
