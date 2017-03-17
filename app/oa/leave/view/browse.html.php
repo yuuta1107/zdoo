@@ -57,13 +57,15 @@
             <?php if($type != 'browseReview'):?>
             <th class='w-80px'><?php commonModel::printOrderLink('reviewedBy', $orderBy, $vars, $lang->leave->reviewedBy);?></th>
             <?php endif;?>
-            <?php if($type != 'company'):?>
-            <th class='w-100px'><?php echo $lang->actions;?></th>
+            <?php if($type == 'company'):?>
+            <th class='w-50px'><?php echo $lang->actions;?></th>
+            <?php else:?>
+            <th class='w-130px'><?php echo $lang->actions;?></th>
             <?php endif;?>
           </tr>
         </thead>
         <?php foreach($leaveList as $leave):?>
-        <tr url='<?php echo inlink('view', "id=$leave->id");?>'>
+        <tr>
           <td><?php echo $leave->id;?></td>
           <td><?php echo zget($users, $leave->createdBy);?></td>
           <td class='visible-lg'><?php echo zget($deptList, $leave->dept);?></td>
@@ -78,8 +80,8 @@
           <?php if($type != 'browseReview'):?>
           <td><?php echo zget($users, $leave->reviewedBy);?></td>
           <?php endif;?>
-          <?php if($type != 'company'):?>
-          <td>
+          <td class='actionTD'>
+            <?php echo html::a($this->createLink('oa.leave', 'view', "id={$leave->id}&type=$type"), $lang->detail, "data-toggle='modal'");?>
             <?php if($type == 'browseReview' and $leave->status == 'wait'):?>
             <?php echo html::a($this->createLink('oa.leave', 'edit', "id={$leave->id}"), $lang->edit, "data-toggle='modal'");?>
             <?php echo html::a($this->createLink('oa.leave', 'review', "id={$leave->id}&status=pass"), $lang->leave->statusList['pass'], "class='reviewPass'");?>
@@ -98,7 +100,6 @@
 
             <?php if($type == 'personal' and $leave->status == 'pass' and date('Y-m-d H:i:s') < "$leave->end $leave->finish" && $leave->backDate != "$leave->end $leave->finish") echo html::a($this->createLink('oa.leave', 'back', "id={$leave->id}"), $lang->leave->back, "data-toggle='modal'");?>
           </td>
-          <?php endif;?>
         </tr>
         <?php endforeach;?>
       </table>

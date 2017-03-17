@@ -1,13 +1,3 @@
-ALTER TABLE `cash_trade` ADD INDEX `depositor` (`depositor`);
-ALTER TABLE `cash_trade` ADD INDEX `parent` (`parent`);
-ALTER TABLE `cash_trade` ADD INDEX `product` (`product`);
-ALTER TABLE `cash_trade` ADD INDEX `trader` (`trader`);
-ALTER TABLE `cash_trade` ADD INDEX `order` (`order`);
-ALTER TABLE `cash_trade` ADD INDEX `contract` (`contract`);
-ALTER TABLE `cash_trade` ADD INDEX `investID` (`investID`);
-ALTER TABLE `cash_trade` ADD INDEX `loanID` (`loanID`);
-ALTER TABLE `cash_trade` ADD INDEX `dept` (`dept`);
-
 ALTER TABLE `oa_doclib` ADD `project` mediumint(8) unsigned NOT NULL AFTER `id`,
 ADD `main` enum('0', '1') NOT NULL default '0' AFTER `groups`,
 ADD `order` tinyint(5) unsigned NOT NULL AFTER `main`;
@@ -40,3 +30,13 @@ CREATE TABLE IF NOT EXISTS `oa_doccontent` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `docVersion` (`doc`,`version`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+ALTER TABLE `cash_trade` ADD INDEX `depositor` (`depositor`);
+ALTER TABLE `cash_trade` ADD INDEX `parent` (`parent`);
+ALTER TABLE `cash_trade` ADD INDEX `product` (`product`);
+ALTER TABLE `cash_trade` ADD INDEX `trader` (`trader`);
+ALTER TABLE `cash_trade` ADD INDEX `order` (`order`);
+ALTER TABLE `cash_trade` ADD INDEX `contract` (`contract`);
+ALTER TABLE `cash_trade` ADD INDEX `investID` (`investID`);
+ALTER TABLE `cash_trade` ADD INDEX `loanID` (`loanID`);
+ALTER TABLE `cash_trade` ADD INDEX `dept` (`dept`);

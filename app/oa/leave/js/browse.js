@@ -1,9 +1,31 @@
 $(document).ready(function()
 {
-    $('#leaveTable td:not(:last)').click(function()
+    $(document).on('click', '#leaveTable td:not(.actionTD)', function()
     {
-        var vurl = $(this).parent().attr('url');
-        $.zui.modalTrigger.show({width : '600px', url : vurl});
+        $(this).parent().find('.actionTD a[href*=view]').click();
+    });
+
+    $(document).on('click', '.deleteLeave', function()
+    {
+        if(confirm(v.lang.confirmDelete))
+        {
+            $(this).text(v.lang.deleting);
+            $.getJSON($(this).attr('href'), function(data)
+            {
+                if(data.result == 'success')
+                {
+                    if(data.locate) return location.href = data.locate;
+                    return location.reload();
+                }
+                else
+                {
+                    alert(data.message);
+                    if(selecter.parents('#ajaxModal').size()) return $.reloadAjaxModal(1200);
+                    return location.reload();
+                }
+            });
+        }
+        return false;
     });
 
     $(document).on('click', '.reviewPass', function()

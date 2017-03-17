@@ -52,6 +52,7 @@
     <td><?php echo $overtime->reviewedDate;?></td>
   </tr> 
 </table>
+<?php echo $this->fetch('action', 'history', "objectType=overtime&objectID=$overtime->id");?>
 <div class='page-actions'>
   <?php
   if($type == 'browseReview' and $overtime->status == 'wait')
@@ -63,8 +64,10 @@
   if($type == 'personal' and ($overtime->status == 'wait' or $overtime->status == 'draft'))
   {
       if($overtime->status == 'wait' or $overtime->status == 'draft') commonModel::printLink('oa.overtime', 'switchstatus', "id=$overtime->id", $overtime->status == 'wait' ? $lang->overtime->cancel : $lang->overtime->commit, "class='switch-status btn'");
+      echo "<div class='btn-group'>";
       commonModel::printLink('oa.overtime', 'edit', "id=$overtime->id", $lang->edit, "class='btn loadInModal'");
-      commonModel::printLink('oa.overtime', 'delete', "id=$overtime->id", $lang->delete, "class='btn deleter'");
+      commonModel::printLink('oa.overtime', 'delete', "id=$overtime->id", $lang->delete, "class='btn deleteOvertime'");
+      echo '</div>';
   }
 
   echo html::a('#', $lang->goback, "class='btn' data-dismiss='modal'");

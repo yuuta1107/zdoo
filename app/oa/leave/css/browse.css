@@ -1,1 +1,1 @@
-#leaveTable tr[url] {cursor: pointer;}
+#leaveTable tbody tr {cursor: pointer;}
