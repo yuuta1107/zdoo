@@ -23,7 +23,7 @@
           <th class='w-120px'><?php echo $lang->order->customer;?></th>
           <td>
             <div class='input-group'>
-              <?php echo html::select('customer', $customers, '', "class='form-control chosen'");?>
+              <?php echo html::select('customer', $customers, $customer, "class='form-control chosen'");?>
               <?php echo html::input('name', '', "class='form-control' style='display:none'");?>
               <span class='input-group-addon'>
                 <label class='checkbox'>

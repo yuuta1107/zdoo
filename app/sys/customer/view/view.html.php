@@ -37,6 +37,10 @@
     <div class='page-actions'>
       <?php
       echo "<div class='btn-group'>";
+      commonModel::printLink('crm.order', 'create', "customer=$customer->id", $lang->order->common, "class='btn'");
+      commonModel::printLink('crm.contract', 'create', "customer=$customer->id", $lang->contract->common, "class='btn'");
+      echo '</div>';
+      echo "<div class='btn-group'>";
       commonModel::printLink('action', 'createRecord', "objectType=customer&objectID={$customer->id}&customer={$customer->id}&history=", $lang->customer->record, "class='btn' data-toggle='modal' data-width='860'");
       commonModel::printLink('customer', 'assign', "customerID=$customer->id", $lang->customer->assign, "class='btn' data-toggle='modal'");
       commonModel::printLink('customer', 'contact', "customerID=$customer->id", $lang->customer->contact,  "class='btn' data-toggle='modal'");

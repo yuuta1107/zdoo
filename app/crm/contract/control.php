@@ -103,9 +103,9 @@ class contract extends control
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => inlink('browse')));
         }
 
-        if($orderID && $customerID)
+        if($customerID) $this->view->customer = $customerID;
+        if($orderID)
         {
-            $this->view->customer     = $customerID;
             $this->view->currentOrder = $this->loadModel('order', 'crm')->getByID($orderID);
             $this->view->orders       = $this->order->getList($mode = 'query', "customer={$customerID} and o.status = 'normal'");
         }

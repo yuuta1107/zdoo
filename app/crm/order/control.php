@@ -68,10 +68,11 @@ class order extends control
     /**
      * Create an order.
      * 
+     * @param  int    $customer
      * @access public
      * @return viod
      */
-    public function create()
+    public function create($customer = 0)
     {
         if($_POST)
         {
@@ -85,6 +86,7 @@ class order extends control
         $this->view->customers    = $this->loadModel('customer')->getPairs('client');
         $this->view->title        = $this->lang->order->create;
         $this->view->currencyList = $this->loadModel('common', 'sys')->getCurrencyList();
+        $this->view->customer     = $customer;
 
         $this->display();
     }
