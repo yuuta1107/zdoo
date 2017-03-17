@@ -30,7 +30,7 @@
         <form id='ajaxForm' class='form-inline' method='post'>
           <table class='table table-form table-condensed w-p50'>
             <tr>
-              <th class='w-60px'><?php echo $lang->refund->refundBy;?></th>
+              <th class='w-100px'><?php echo $lang->refund->refundBy;?></th>
               <td><?php echo html::select('refundBy', $users, isset($this->config->refund->refundBy) ? $this->config->refund->refundBy : '', "class='form-control chosen'");?></td>
             </tr>
             <tr>

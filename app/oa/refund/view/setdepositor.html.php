@@ -29,7 +29,7 @@
         <form id='ajaxForm' class='form-inline' method='post'>
           <table class='table table-form table-condensed w-p40'>
             <tr>
-              <th class='w-80px'><?php echo $lang->refund->depositor;?></th>
+              <th class='w-100px text-center'><?php echo $lang->refund->depositor;?></th>
               <td><?php echo html::select('depositor', array('' => '') + $depositorList, isset($this->config->refund->depositor) ? $this->config->refund->depositor : '', "class='form-control'")?></td>
             </tr>
             <tr>
