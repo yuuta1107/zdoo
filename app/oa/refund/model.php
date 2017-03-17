@@ -288,7 +288,7 @@ class refundModel extends model
      */
     public function setCategory($expenseIdList)
     {
-        $refundCategories   = $this->post->refundCategories;
+        $refundCategories   = $this->post->refundCategories ? $this->post->refundCategories : array();
         $unRefundCategories = array_diff($expenseIdList, $refundCategories);
 
         foreach($refundCategories as $refundCategory) $this->dao->update(TABLE_CATEGORY)->set('refund')->eq(1)->where('id')->eq($refundCategory)->exec();

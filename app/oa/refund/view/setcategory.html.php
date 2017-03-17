@@ -43,6 +43,7 @@
             </tr>
             <tr>
               <td>
+                <?php echo html::hidden('uid');?>
                 <?php if(!empty($expenseList))
                 { 
                     echo html::submitButton() . "&nbsp;&nbsp;";

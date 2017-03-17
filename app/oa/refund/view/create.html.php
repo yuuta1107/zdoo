@@ -26,11 +26,13 @@
           <td class='w-400px'><?php echo html::input('name', '', "class='form-control'")?></td>
           <td></td>
         </tr>
+        <?php if($categories):?>
         <tr>
           <th><?php echo $lang->refund->category?></th>
           <td><?php echo html::select('category', $categories, '', "class='form-control chosen'")?></td>
           <td></td>
         </tr>
+        <?php endif;?>
         <tr>
           <th><?php echo $lang->refund->money?></th>
           <td>
@@ -58,7 +60,9 @@
             <table class='table table-detail'>
               <tr>
                 <td class='w-100px'><?php echo html::input('dateList[1]', '', "class='form-control form-date' placeholder='{$lang->refund->date}'")?></td>
+                <?php if($categories):?>
                 <td class='w-160px'><?php echo html::select('categoryList[1]', $categories, '', "class='form-control chosen' placeholder='{$lang->refund->category}'")?></td>
+                <?php endif;?>
                 <td class='w-100px'><?php echo html::input('moneyList[1]', '', "class='form-control' placeholder='{$lang->refund->money}'")?></td>
                 <td class='w-200px'><?php echo html::select('relatedList[1][]', $users, '', "class='form-control chosen' multiple data-placeholder='{$lang->refund->related}'")?></td>
                 <td><?php echo html::textarea('descList[1]', '', "class='form-control' style='height:32px;' placeholder='{$lang->refund->desc}'")?></td>
