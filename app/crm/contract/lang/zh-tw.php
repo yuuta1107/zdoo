@@ -33,6 +33,7 @@ $lang->contract->returnedBy    = '由誰回款';
 $lang->contract->returnedDate  = '回款時間';
 $lang->contract->status        = '狀態';
 $lang->contract->contact       = '聯繫人';
+$lang->contract->address       = '合同地址';
 $lang->contract->signedBy      = '由誰簽署';
 $lang->contract->signedDate    = '簽署日期';
 $lang->contract->finishedBy    = '由誰完成';

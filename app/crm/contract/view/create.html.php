@@ -80,6 +80,10 @@
           <td class='contactTD'><select name='contact' id='contact' class='form-control'></select></td>
         </tr>
         <tr>
+          <th><?php echo $lang->contract->address;?></th>
+          <td><?php echo html::input('address', '', "class='form-control'");?></td>
+        </tr>
+        <tr>
           <th><?php echo $lang->contract->signedBy;?></th>
           <td><?php echo html::select('signedBy', $users, '', "class='form-control chosen'");?></td>
         </tr>

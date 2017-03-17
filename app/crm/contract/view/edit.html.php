@@ -121,6 +121,10 @@
             <td><?php echo html::select('contact', $contacts, $contract->contact, "class='form-control chosen'");?></td>
           </tr>
           <tr>
+            <th><?php echo $lang->contract->address;?></th>
+            <td><?php echo html::input('address', $contract->address, "class='form-control'");?></td>
+          </tr>
+          <tr>
             <th><?php echo $lang->contract->begin;?></th>
             <td><?php echo html::input('begin', formatTime($contract->begin), "class='form-control form-date'");?></td>
           </tr>

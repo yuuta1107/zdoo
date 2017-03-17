@@ -99,6 +99,10 @@
             <td><?php if(isset($contacts[$contract->contact]) and trim($contacts[$contract->contact]) != "") echo html::a($this->createLink('contact', 'view', "contactID={$contract->contact}"), $contacts[$contract->contact]);?></td>
           </tr>
           <tr>
+            <th><?php echo $lang->contract->address;?></th>
+            <td><?php echo $contract->address;?></td>
+          </tr>
+          <tr>
             <th><?php echo $lang->contract->begin;?></th>
             <td><?php echo $contract->begin;?></td>
           </tr>

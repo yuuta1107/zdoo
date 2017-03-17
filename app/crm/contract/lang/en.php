@@ -33,6 +33,7 @@ $lang->contract->returnedBy    = 'Received By';
 $lang->contract->returnedDate  = 'Received On';
 $lang->contract->status        = 'Status';
 $lang->contract->contact       = 'Contact';
+$lang->contract->address       = 'Address';
 $lang->contract->signedBy      = 'Signed By';
 $lang->contract->signedDate    = 'Signed On';
 $lang->contract->finishedBy    = 'Finished By';
