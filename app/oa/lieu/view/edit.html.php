@@ -42,12 +42,12 @@
         </td>
       </tr>
       <tr>
-        <th><?php echo $lang->lieu->overtime;?></th>
-        <td><?php echo html::select('overtime[]', $overtimePairs, $lieu->overtime, "class='form-control chosen' multiple")?></td>
-      </tr>
-      <tr>
         <th><?php echo $lang->lieu->hours;?></th>
         <td><?php echo html::input('hours', $lieu->hours, "class='form-control'")?></td>
+      </tr>
+      <tr>
+        <th><?php echo $lang->lieu->overtime;?></th>
+        <td><?php echo html::select('overtime[]', $overtimePairs, $lieu->overtime, "class='form-control chosen' multiple")?></td>
       </tr>
       <tr>
         <th><?php echo $lang->lieu->desc;?></th>

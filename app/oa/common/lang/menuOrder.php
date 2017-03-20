@@ -3,6 +3,7 @@ $lang->oa->menuOrder[5]  = 'dashboard';
 $lang->oa->menuOrder[15] = 'announce';
 $lang->oa->menuOrder[25] = 'attend';
 $lang->oa->menuOrder[30] = 'leave';
+$lang->oa->menuOrder[33] = 'makeup';
 $lang->oa->menuOrder[35] = 'overtime';
 $lang->oa->menuOrder[40] = 'lieu';
 $lang->oa->menuOrder[45] = 'trip';
@@ -25,14 +26,22 @@ $lang->attend->menuOrder[40] = 'settings';
 $lang->leave->menuOrder[5]  = 'personal';
 $lang->leave->menuOrder[10] = 'browseReview';
 $lang->leave->menuOrder[15] = 'company';
+$lang->leave->menuOrder[20] = 'setReviewer';
+
+$lang->makeup->menuOrder[5]  = 'personal';
+$lang->makeup->menuOrder[10] = 'browseReview';
+$lang->makeup->menuOrder[15] = 'company';
+$lang->makeup->menuOrder[20] = 'setReviewer';
 
 $lang->overtime->menuOrder[5]  = 'personal';
 $lang->overtime->menuOrder[10] = 'browseReview';
 $lang->overtime->menuOrder[15] = 'company';
+$lang->overtime->menuOrder[20] = 'setReviewer';
 
 $lang->lieu->menuOrder[5]  = 'personal';
 $lang->lieu->menuOrder[10] = 'browseReview';
 $lang->lieu->menuOrder[15] = 'company';
+$lang->lieu->menuOrder[20] = 'setReviewer';
 
 $lang->trip->menuOrder[5]  = 'personal';
 $lang->trip->menuOrder[10] = 'department';

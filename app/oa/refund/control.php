@@ -438,10 +438,11 @@ class refund extends control
     /**
      * Set reviewer for refund. 
      * 
+     * @param  string $module
      * @access public
      * @return void
      */
-    public function setReviewer()
+    public function setReviewer($module = '')
     {
         $this->loadModel('user');
         if($_POST)
@@ -455,28 +456,32 @@ class refund extends control
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
         }
 
+        if($module)
+        {
+            $this->lang->menuGroups->refund = $module;
+            $this->lang->refund->menu       = $this->lang->$module->menu;
+        }
+
         $this->view->title           = $this->lang->refund->reviewer; 
         $this->view->firstReviewer   = !empty($this->config->refund->firstReviewer) ? $this->config->refund->firstReviewer : '';
         $this->view->secondReviewer  = !empty($this->config->refund->secondReviewer) ? $this->config->refund->secondReviewer : '';
         $this->view->firstReviewers  = array('' => $this->lang->dept->moderators) + $this->user->getPairs('noempty,nodeleted,noforbidden,noclosed');
         $this->view->secondReviewers = $this->user->getPairs('nodeleted,noclosed,noforbidden');
+        $this->view->module          = $module;
         $this->display();
     }
 
     /**
      * Set category for refund.
      * 
+     * @param  string $module
      * @access public
      * @return void
      */
-    public function setCategory()
+    public function setCategory($module = '')
     {
         $expenseList   = $this->loadModel('tree')->getOptionMenu('out', 0, true);
         $expenseIdList =  array_keys($expenseList);
-
-        $refundCategories = $this->dao->select('*')->from(TABLE_CATEGORY)->where('type')->eq('out')->andWhere('refund')->eq(1)->fetchAll('id');
-        $refundCategories = array_keys($refundCategories);
-        $refundCategories = implode($refundCategories, ',');
 
         if($_POST)
         {
@@ -485,19 +490,31 @@ class refund extends control
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess));
         }
 
+        if($module)
+        {
+            $this->lang->menuGroups->refund = $module;
+            $this->lang->refund->menu       = $this->lang->$module->menu;
+        }
+
+        $refundCategories = $this->dao->select('*')->from(TABLE_CATEGORY)->where('type')->eq('out')->andWhere('refund')->eq(1)->fetchAll('id');
+        $refundCategories = array_keys($refundCategories);
+        $refundCategories = implode($refundCategories, ',');
+
         $this->view->title            = $this->lang->refund->setCategory;
         $this->view->expenseList      = $expenseList;
         $this->view->refundCategories = $refundCategories;
+        $this->view->module           = $module;
         $this->display();
     }
 
     /**
      * Set depositor for refund.
      * 
+     * @param  string $module
      * @access public
      * @return void
      */
-    public function setDepositor()
+    public function setDepositor($module = '')
     {
         if($_POST)
         {
@@ -506,18 +523,26 @@ class refund extends control
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess));
         }
 
-        $this->view->title = $this->lang->refund->setDepositor;
+        if($module)
+        {
+            $this->lang->menuGroups->refund = $module;
+            $this->lang->refund->menu       = $this->lang->$module->menu;
+        }
+
+        $this->view->title         = $this->lang->refund->setDepositor;
         $this->view->depositorList = $this->loadModel('depositor', 'cash')->getPairs();
+        $this->view->module        = $module;
         $this->display();
     }
 
     /**
      * Set refundBy for refund.
      * 
+     * @param  string $module
      * @access public
      * @return void
      */
-    public function setRefundBy()
+    public function setRefundBy($module = '')
     {
         if($_POST)
         {
@@ -526,8 +551,15 @@ class refund extends control
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess));
         }
 
-        $this->view->title = $this->lang->refund->refundBy;
-        $this->view->users = $this->loadModel('user')->getPairs('nodeleted,noclosed,noforbidden');
+        if($module)
+        {
+            $this->lang->menuGroups->refund = $module;
+            $this->lang->refund->menu       = $this->lang->$module->menu;
+        }
+
+        $this->view->title  = $this->lang->refund->refundBy;
+        $this->view->users  = $this->loadModel('user')->getPairs('nodeleted,noclosed,noforbidden');
+        $this->view->module = $module;
         $this->display();
     }
 

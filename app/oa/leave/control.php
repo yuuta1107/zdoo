@@ -83,9 +83,10 @@ class leave extends control
         elseif($type == 'browseReview')
         {
             $this->app->loadModuleConfig('attend');
-            if(!empty($this->config->attend->reviewedBy))
+            $reviewedBy = $this->leave->getReviewedBy();
+            if($reviewedBy)
             { 
-                if($this->config->attend->reviewedBy == $this->app->user->account)
+                if($reviewedBy == $this->app->user->account)
                 {
                     $deptList = $this->loadModel('tree')->getPairs('', 'dept');
                     $deptList[0] = '/';
@@ -152,9 +153,10 @@ class leave extends control
 
         /* Check privilage. */
         $this->app->loadModuleConfig('attend');
-        if(!empty($this->config->attend->reviewedBy))
+        $reviewedBy = $this->leave->getReviewedBy();
+        if($reviewedBy)
         { 
-            if($this->config->attend->reviewedBy != $this->app->user->account) $this->send(array('result' => 'fail', 'message' => $this->lang->leave->denied));
+            if($reviewedBy != $this->app->user->account) $this->send(array('result' => 'fail', 'message' => $this->lang->leave->denied));
         }
         else
         {
@@ -228,8 +230,8 @@ class leave extends control
 
         /* check privilage. */
         $this->app->loadModuleConfig('attend');
-        if(!empty($this->config->attend->reviewedBy)) $reviewedBy = $this->config->attend->reviewedBy;
-        if(empty($this->config->attend->reviewedBy))
+        $reviewedBy = $this->leave->getReviewedBy();
+        if(!reviewedBy)
         {
             $createdUser = $this->loadModel('user')->getByAccount($leave->createdBy);
             $dept        = $this->loadModel('tree')->getByID($createdUser->dept);
@@ -334,9 +336,10 @@ class leave extends control
         if($action->action == 'created' or $action->action == 'revoked' or $action->action == 'commited')
         {
             $this->app->loadModuleConfig('attend');
-            if(!empty($this->config->attend->reviewedBy))
+            $reviewedBy = $this->leave->getReviewedBy();
+            if($reviewedBy)
             {
-                $toList = $this->config->attend->reviewedBy; 
+                $toList = $reviewedBy; 
             }
             else
             {
@@ -467,6 +470,34 @@ class leave extends control
             $this->fetch('file', 'export2CSV' , $_POST);
         }
 
+        $this->display();
+    }
+
+    /**
+     * Set reviewer. 
+     * 
+     * @param  string $module 
+     * @access public
+     * @return void
+     */
+    public function setReviewer($module = '')
+    {
+        if($_POST)
+        {
+            $this->loadModel('setting')->setItem('system.oa.leave..reviewedBy', $this->post->reviewedBy);
+            if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
+            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess));
+        }
+
+        if($module)
+        {
+            $this->lang->menuGroups->leave = $module;
+            $this->lang->leave->menu      = $this->lang->$module->menu;
+        }
+
+        $this->view->title      = $this->lang->leave->setReviewer;
+        $this->view->users      = $this->loadModel('user', 'sys')->getPairs('noclosed,noforbidden,nodelete');
+        $this->view->reviewedBy = $this->leave->getReviewedBy();
         $this->display();
     }
 }

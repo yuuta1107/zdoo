@@ -83,9 +83,10 @@ class lieu extends control
         elseif($type == 'browseReview')
         {
             $this->app->loadModuleConfig('attend');
-            if(!empty($this->config->attend->reviewedBy))
+            $reviewedBy = $this->lieu->getReviewedBy();
+            if($reviewedBy)
             { 
-                if($this->config->attend->reviewedBy == $this->app->user->account)
+                if($reviewedBy == $this->app->user->account)
                 {
                     $deptList    = $this->loadModel('tree')->getPairs('', 'dept');
                     $deptList[0] = '/';
@@ -319,9 +320,10 @@ class lieu extends control
 
         /* Check privilage. */
         $this->app->loadModuleConfig('attend');
-        if(!empty($this->config->attend->reviewedBy))
+        $reviewedBy = $this->lieu->getReviewedBy();
+        if($reviewedBy)
         { 
-            if($this->config->attend->reviewedBy != $this->app->user->account) $this->send(array('result' => 'fail', 'message' => $this->lang->lieu->denied));
+            if($reviewedBy != $this->app->user->account) $this->send(array('result' => 'fail', 'message' => $this->lang->lieu->denied));
         }
         else
         {
@@ -369,9 +371,10 @@ class lieu extends control
         if($action->action == 'created' or $action->action == 'revoked' or $action->action == 'commited')
         {
             $this->app->loadModuleConfig('attend');
-            if(!empty($this->config->attend->reviewedBy))
+            $reviewedBy = $this->lieu->getReviewedBy();
+            if($reviewedBy)
             {
-                $toList = $this->config->attend->reviewedBy; 
+                $toList = $reviewedBy; 
             }
             else
             {
@@ -395,5 +398,33 @@ class lieu extends control
         /* Send emails. */
         $this->loadModel('mail')->send($toList, $subject, $mailContent);
         if($this->mail->isError()) trigger_error(join("\n", $this->mail->getError()));
+    }
+
+    /**
+     * Set reviewer. 
+     * 
+     * @param  string $module 
+     * @access public
+     * @return void
+     */
+    public function setReviewer($module = '')
+    {
+        if($_POST)
+        {
+            $this->loadModel('setting')->setItem('system.oa.lieu..reviewedBy', $this->post->reviewedBy);
+            if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
+            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess));
+        }
+
+        if($module)
+        {
+            $this->lang->menuGroups->lieu = $module;
+            $this->lang->lieu->menu       = $this->lang->$module->menu;
+        }
+
+        $this->view->title      = $this->lang->lieu->setReviewer;
+        $this->view->users      = $this->loadModel('user', 'sys')->getPairs('noclosed,noforbidden,nodelete');
+        $this->view->reviewedBy = $this->lieu->getReviewedBy();
+        $this->display();
     }
 }

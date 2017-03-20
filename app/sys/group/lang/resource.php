@@ -37,11 +37,12 @@ $lang->appModule->oa[] = 'announce';
 $lang->appModule->oa[] = 'attend';
 $lang->appModule->oa[] = 'holiday';
 $lang->appModule->oa[] = 'leave';
+$lang->appModule->oa[] = 'makeup';
+$lang->appModule->oa[] = 'overtime';
 $lang->appModule->oa[] = 'lieu';
 $lang->appModule->oa[] = 'trip';
 $lang->appModule->oa[] = 'egress';
 $lang->appModule->oa[] = 'refund';
-$lang->appModule->oa[] = 'overtime';
 
 $lang->appModule->doc = array();
 $lang->appModule->doc[] = 'doc';
@@ -88,11 +89,12 @@ $lang->moduleOrder[57]  = 'task';
 $lang->moduleOrder[70]  = 'attend';
 $lang->moduleOrder[75]  = 'holiday';
 $lang->moduleOrder[80]  = 'leave';
-$lang->moduleOrder[81]  = 'lieu';
+$lang->moduleOrder[81]  = 'makeup';
+$lang->moduleOrder[82]  = 'overtime';
+$lang->moduleOrder[83]  = 'lieu';
 $lang->moduleOrder[85]  = 'trip';
 $lang->moduleOrder[90]  = 'egress';
 $lang->moduleOrder[91]  = 'refund';
-$lang->moduleOrder[92]  = 'overtime';
 
 $lang->moduleOrder[93]  = 'doc';
 
@@ -503,21 +505,27 @@ $lang->resource->leave->browseReview = 'browseReview';
 $lang->resource->leave->company      = 'company';
 $lang->resource->leave->review       = 'review';
 $lang->resource->leave->export       = 'export';
+$lang->resource->leave->setReviewer  = 'setReviewer';
 
 $lang->leave->methodOrder[0]  = 'browseReview';
 $lang->leave->methodOrder[5]  = 'company';
 $lang->leave->methodOrder[10] = 'review';
 $lang->leave->methodOrder[15] = 'export';
+$lang->leave->methodOrder[20] = 'setReviewer';
 
-/* Lieu */
-$lang->resource->lieu = new stdclass();
-$lang->resource->lieu->browseReview = 'browseReview';
-$lang->resource->lieu->company      = 'company';
-$lang->resource->lieu->review       = 'review';
+/* Overtime */
+$lang->resource->makeup = new stdclass();
+$lang->resource->makeup->browseReview = 'browseReview';
+$lang->resource->makeup->company      = 'company';
+$lang->resource->makeup->review       = 'review';
+$lang->resource->makeup->export       = 'export';
+$lang->resource->makeup->setReviewer  = 'setReviewer';
 
-$lang->lieu->methodOrder[0]  = 'browseReview';
-$lang->lieu->methodOrder[5]  = 'company';
-$lang->lieu->methodOrder[10] = 'review';
+$lang->makeup->methodOrder[0]  = 'browseReview';
+$lang->makeup->methodOrder[5]  = 'company';
+$lang->makeup->methodOrder[10] = 'review';
+$lang->makeup->methodOrder[15] = 'export';
+$lang->makeup->methodOrder[15] = 'setReviewer';
 
 /* Overtime */
 $lang->resource->overtime = new stdclass();
@@ -525,11 +533,25 @@ $lang->resource->overtime->browseReview = 'browseReview';
 $lang->resource->overtime->company      = 'company';
 $lang->resource->overtime->review       = 'review';
 $lang->resource->overtime->export       = 'export';
+$lang->resource->overtime->setReviewer  = 'setReviewer';
 
 $lang->overtime->methodOrder[0]  = 'browseReview';
 $lang->overtime->methodOrder[5]  = 'company';
 $lang->overtime->methodOrder[10] = 'review';
 $lang->overtime->methodOrder[15] = 'export';
+$lang->overtime->methodOrder[20] = 'setReviewer';
+
+/* Lieu */
+$lang->resource->lieu = new stdclass();
+$lang->resource->lieu->browseReview = 'browseReview';
+$lang->resource->lieu->company      = 'company';
+$lang->resource->lieu->review       = 'review';
+$lang->resource->lieu->setReviewer  = 'setReviewer';
+
+$lang->lieu->methodOrder[0]  = 'browseReview';
+$lang->lieu->methodOrder[5]  = 'company';
+$lang->lieu->methodOrder[10] = 'review';
+$lang->lieu->methodOrder[15] = 'setReviewer';
 
 /* Trip */
 $lang->resource->trip = new stdclass();

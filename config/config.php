@@ -197,6 +197,7 @@ $config->objectTables['holiday']     = TABLE_HOLIDAY;
 $config->objectTables['leads']       = TABLE_CONTACT;
 $config->objectTables['leave']       = TABLE_LEAVE;
 $config->objectTables['lieu']        = TABLE_LIEU;
+$config->objectTables['makeup']      = TABLE_OVERTIME;
 $config->objectTables['order']       = TABLE_ORDER;
 $config->objectTables['overtime']    = TABLE_OVERTIME;
 $config->objectTables['product']     = TABLE_PRODUCT;

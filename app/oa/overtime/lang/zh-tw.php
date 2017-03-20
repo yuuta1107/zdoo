@@ -14,6 +14,7 @@ $lang->overtime->export = '導出加班記錄';
 $lang->overtime->personal     = '我的加班';
 $lang->overtime->browseReview = '審核列表';
 $lang->overtime->company      = '所有加班';
+$lang->overtime->setReviewer  = '設置審核者';
 
 $lang->overtime->id           = '編號';
 $lang->overtime->year         = '年';
@@ -22,6 +23,7 @@ $lang->overtime->end          = '結束';
 $lang->overtime->start        = '開始時間';
 $lang->overtime->finish       = '結束時間';
 $lang->overtime->hours        = '總時長';
+$lang->overtime->leave        = '請假記錄';
 $lang->overtime->type         = '類型';
 $lang->overtime->desc         = '事由';
 $lang->overtime->status       = '狀態';
@@ -33,10 +35,9 @@ $lang->overtime->date         = '日期';
 $lang->overtime->time         = '時間';
 $lang->overtime->rejectReason = '拒絶理由';
 
-$lang->overtime->typeList['time']       = '工作日加班';
-$lang->overtime->typeList['rest']       = '休息日加班';
-$lang->overtime->typeList['holiday']    = '節假日加班';
-$lang->overtime->typeList['compensate'] = '補班';
+$lang->overtime->typeList['time']    = '工作日加班';
+$lang->overtime->typeList['rest']    = '休息日加班';
+$lang->overtime->typeList['holiday'] = '節假日加班';
 
 $lang->overtime->statusList['draft']  = '草稿';
 $lang->overtime->statusList['wait']   = '等待審核';

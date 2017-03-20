@@ -129,6 +129,8 @@ class upgradeModel extends model
                 $this->moveDocContent();
                 $this->addProjectDoc();
             case '4_0':$this->addProjPrivilege();
+            case '4_1': $this->execSQL($this->getUpgradeFile('4.1'));
+                $this->updateMakeupActions();
             default: if(!$this->isError()) $this->loadModel('setting')->updateVersion($this->config->version);
         }
 
@@ -1298,6 +1300,23 @@ class upgradeModel extends model
         {
             $data->group = $group->id;
             $this->dao->replace(TABLE_GROUPPRIV)->data($data)->exec();
+        }
+
+        return !dao::isError();
+    }
+
+    /**
+     * Update makeup actions. 
+     * 
+     * @access public
+     * @return void
+     */
+    public function updateMakeupActions()
+    {
+        $makeupList = $this->loadModel('makeup')->getList();
+        foreach($makeupList as $makeup)
+        {
+            $this->dao->update(TABLE_ACTION)->set('objectType')->eq('makeup')->where('objectType')->eq('overtime')->andWhere('objectID')->eq($makeup->id)->exec();
         }
 
         return !dao::isError();

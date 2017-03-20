@@ -13,6 +13,7 @@ $lang->lieu->commit = '提交';
 $lang->lieu->personal     = '我的調休';
 $lang->lieu->browseReview = '審核列表';
 $lang->lieu->company      = '所有調休';
+$lang->lieu->setReviewer  = '設置審核者';
 
 $lang->lieu->id           = '編號';
 $lang->lieu->year         = '年';
@@ -21,7 +22,7 @@ $lang->lieu->end          = '結束';
 $lang->lieu->start        = '開始時間';
 $lang->lieu->finish       = '結束時間';
 $lang->lieu->hours        = '總時長';
-$lang->lieu->overtime     = '加班';
+$lang->lieu->overtime     = '加班記錄';
 $lang->lieu->status       = '狀態';
 $lang->lieu->desc         = '事由';
 $lang->lieu->createdBy    = '申請者';

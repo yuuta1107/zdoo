@@ -47,18 +47,21 @@ $lang->leave->menu = new stdclass();
 $lang->leave->menu->personal     = 'My leave|leave|personal|';
 $lang->leave->menu->browseReview = 'Reviewed by me|leave|browsereview|';
 $lang->leave->menu->company      = 'All|leave|company|';
+$lang->leave->menu->settings     = 'Settings|leave|setReviewer|';
 
 if(!isset($lang->overtime)) $lang->overtime = new stdclass();
 $lang->overtime->menu = new stdclass();
 $lang->overtime->menu->personal     = 'My overtime|overtime|personal|';
 $lang->overtime->menu->browseReview = 'Reviewed by me|overtime|browsereview|';
 $lang->overtime->menu->company      = 'All|overtime|company|';
+$lang->overtime->menu->settings     = 'Settings|overtime|setReviewer|';
 
 if(!isset($lang->lieu)) $lang->lieu = new stdclass();
 $lang->lieu->menu = new stdclass();
 $lang->lieu->menu->personal     = 'My Leave In Lieu|lieu|personal|';
 $lang->lieu->menu->browseReview = 'Reviewed By Me|lieu|browsereview|';
 $lang->lieu->menu->company      = 'All|lieu|company|';
+$lang->lieu->menu->settings     = 'Settings|lieu|setReviewer|';
 
 if(!isset($lang->trip)) $lang->trip = new stdclass();
 $lang->trip->menu = new stdclass();
@@ -86,5 +89,15 @@ $lang->holiday->menu = new stdclass();
 $lang->holiday->menu->all = 'All|holiday|browse|';
 
 $lang->setting->menu = new stdclass();
-$lang->setting->menu->modules = 'Modules|setting|modules|app=oa';
+$lang->setting->menu->modules         = 'Modules|setting|modules|app=oa';
+$lang->setting->menu->attendSettings  = 'Settings|attend|settings|module=setting';
+$lang->setting->menu->attendManager   = 'Dept Manager|attend|setmanager|module=setting';
+$lang->setting->menu->leaveReviewer   = 'Leave Reviewer|leave|setReviewer|module=setting';
+$lang->setting->menu->makeupReviewer  = 'Makeup Reviewer|makeup|setReviewer|module=setting';
+$lang->setting->menu->lieuReviewer    = 'Lieu Reviewer|lieu|setReviewer|module=setting';
+$lang->setting->menu->overtimeReviewer= 'Overtime Reviewer|overtime|setReviewer|module=setting';
+$lang->setting->menu->refundReviewer  = 'Refund Reviewer|refund|setReviewer|module=setting';
+$lang->setting->menu->refundCategory  = 'Refund Category|refund|setCategory|module=setting';
+$lang->setting->menu->refundDepositor = 'Refund Depositor|refund|setDepositor|module=setting';
+$lang->setting->menu->refundBy        = 'Refund By|refund|setRefundBy|module=setting';
 include (dirname(__FILE__) . '/menuOrder.php');

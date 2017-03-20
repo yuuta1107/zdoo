@@ -12,6 +12,7 @@
 ?>
 <?php include '../../common/view/header.html.php';?>
 <?php include '../../../sys/common/view/chosen.html.php';?>
+<?php if(!$module):?>
 <div class='with-side'>
   <div class='side'>
     <nav class='menu leftmenu affix'>
@@ -22,6 +23,7 @@
     </nav>
   </div>
   <div class='main'>
+<?php endif;?>
     <div class='panel'>
       <div class='panel-heading'><?php echo $lang->attend->setManager;?></div>
       <div class='panel-body'>
@@ -42,6 +44,8 @@
         </form>
       </div>
     </div>
+<?php if(!$module):?>
   </div>
 </div>
+<?php endif;?>
 <?php include '../../common/view/footer.html.php';?>

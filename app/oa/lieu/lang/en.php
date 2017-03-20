@@ -13,6 +13,7 @@ $lang->lieu->commit = 'Commit';
 $lang->lieu->personal     = 'My Lieus';
 $lang->lieu->browseReview = 'Reviews';
 $lang->lieu->company      = 'All';
+$lang->lieu->setReviewer  = 'Set Reviewer';
 
 $lang->lieu->id           = 'ID';
 $lang->lieu->year         = 'Year';
@@ -21,7 +22,7 @@ $lang->lieu->end          = 'End';
 $lang->lieu->start        = 'Start';
 $lang->lieu->finish       = 'Finish';
 $lang->lieu->hours        = 'Hours';
-$lang->lieu->overtime     = 'Overtime';
+$lang->lieu->overtime     = 'Overtimes';
 $lang->lieu->status       = 'Status';
 $lang->lieu->desc         = 'Description';
 $lang->lieu->createdBy    = 'Created By';

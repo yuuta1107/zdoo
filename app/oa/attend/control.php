@@ -268,10 +268,11 @@ class attend extends control
     /**
      * settings 
      * 
+     * @param  string $module
      * @access public
      * @return void
      */
-    public function settings()
+    public function settings($module = '')
     {
         if($_POST)
         {
@@ -292,6 +293,12 @@ class attend extends control
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
         }
 
+        if($module)
+        {
+            $this->lang->menuGroups->attend = $module;
+            $this->lang->attend->menu       = $this->lang->$module->menu;
+        }
+
         $this->loadModel('user');
         $this->view->title          = $this->lang->attend->settings; 
         $this->view->signInLimit    = $this->config->attend->signInLimit;
@@ -303,6 +310,7 @@ class attend extends control
         $this->view->ip             = $this->config->attend->ip;
         $this->view->reviewedBy     = isset($this->config->attend->reviewedBy) ? $this->config->attend->reviewedBy : '';
         $this->view->users          = $this->user->getPairs('noempty,noclosed,nodeleted,noforbidden');
+        $this->view->module         = $module;
         $this->display();
     }
 
@@ -451,13 +459,12 @@ class attend extends control
     /**
      * Set reviewer for attend.
      * 
+     * @param  string $module
      * @access public
      * @return void
      */
-    public function setManager()
+    public function setManager($module = '')
     {
-        $deptList = $this->loadModel('tree')->getListByType('dept');
-
         if($_POST)
         {
             $this->attend->setManager();
@@ -465,8 +472,16 @@ class attend extends control
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess));
         }
 
-        $this->view->deptList = $deptList;
+        if($module)
+        {
+            $this->lang->menuGroups->attend = $module;
+            $this->lang->attend->menu       = $this->lang->$module->menu;
+        }
+
+        $this->view->title    = $this->lang->attend->setManager;
+        $this->view->deptList = $this->loadModel('tree')->getListByType('dept');
         $this->view->users    = $this->loadModel('user')->getPairs('noclosed,nodeleted,noforbidden');
+        $this->view->module   = $module;
         $this->display();
     }
 
@@ -503,6 +518,7 @@ class attend extends control
             $trips        = $this->loadModel('trip', 'oa')->getList($type = '', $currentYear, $currentMonth, $account = '', $dept = '', $orderBy = 'begin, start');
             $leaves       = $this->loadModel('leave', 'oa')->getList($type = 'company', $currentYear, $currentMonth, $account = '', $dept = '', $status = 'pass', $orderBy = 'begin, start');
             $overtimes    = $this->loadModel('overtime', 'oa')->getList($type = 'company', $currentYear, $currentMonth, $account = '', $dept = '', $status = 'pass', $orderBy = 'begin, start');
+            $makeups      = $this->loadModel('makeup', 'oa')->getList($type = 'company', $currentYear, $currentMonth, $account = '', $dept = '', $status = 'pass', $orderBy = 'begin, start');
             $lieus        = $this->loadModel('lieu', 'oa')->getList($type = 'company', $currentYear, $currentMonth, $account = '', $dept = '', $status = 'pass', $orderBy = 'begin');
             $allLieus     = $this->loadModel('lieu', 'oa')->getList($type = 'company', '', '', '', '', 'pass');
             $workingHours = empty($this->config->attend->workingHours) ? $this->config->attend->signOutLimit - $this->config->attend->signInLimit : $this->config->attend->workingHours;
@@ -629,6 +645,17 @@ class attend extends control
                 {
                     $date = date('Y-m-d', $datetime);
                     unset($stat[$leave->createdBy]->absentDates[$date]);
+                }
+            }
+
+            /* Update stat with makeups. */
+            /* Makeup's start and finish time has been checked when create or edit. */
+            /* Makeup should be seemed as a normal working day. */
+            foreach($makeups as $makeup)
+            {
+                if($makeup->type == 'compensate') 
+                {
+                    $stat[$makeup->createdBy]->normal += round($makeup->hours / $workingHours, 2);
                 }
             }
 

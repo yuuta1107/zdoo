@@ -122,6 +122,17 @@ class leaveModel extends model
     }
 
     /**
+     * Get reviewed by. 
+     * 
+     * @access public
+     * @return string
+     */
+    public function getReviewedBy()
+    {
+        return empty($this->config->leave->reviewedBy) ? (empty($this->config->attend->reviewedBy) ? '' : $this->config->attend->reviewedBy) : $this->config->leave->reviewedBy;
+    }
+
+    /**
      * Create a leave.
      * 
      * @access public
@@ -197,6 +208,9 @@ class leaveModel extends model
 
         $existLeave = $this->checkLeave($date, $this->app->user->account, $id);
         if(!empty($existLeave)) return array('result' => 'fail', 'message' => sprintf($this->lang->leave->unique, implode(', ', $existLeave))); 
+        
+        $existMakeup = $this->loadModel('makeup', 'oa')->checkMakeup($date, $this->app->user->account);
+        if(!empty($existMakeup)) return array('result' => 'fail', 'message' => sprintf($this->lang->makeup->unique, implode(', ', $existMakeup))); 
         
         $existOvertime = $this->loadModel('overtime', 'oa')->checkOvertime($date, $this->app->user->account);
         if(!empty($existOvertime)) return array('result' => 'fail', 'message' => sprintf($this->lang->overtime->unique, implode(', ', $existOvertime))); 

@@ -14,6 +14,7 @@ $lang->overtime->export = 'Export';
 $lang->overtime->personal     = 'My Overtime';
 $lang->overtime->browseReview = 'Review List';
 $lang->overtime->company      = 'All';
+$lang->overtime->setReviewer  = 'Set Reviewer';
 
 $lang->overtime->id           = 'ID';
 $lang->overtime->year         = 'Year';
@@ -22,6 +23,7 @@ $lang->overtime->end          = 'End';
 $lang->overtime->start        = 'Start';
 $lang->overtime->finish       = 'Finish';
 $lang->overtime->hours        = 'Hours';
+$lang->overtime->leave        = 'Leaves';
 $lang->overtime->type         = 'Type';
 $lang->overtime->desc         = 'Desc';
 $lang->overtime->status       = 'Status';
@@ -33,10 +35,9 @@ $lang->overtime->date         = 'Date';
 $lang->overtime->time         = 'Time';
 $lang->overtime->rejectReason = 'Reject Reason';
 
-$lang->overtime->typeList['time']       = 'After work';
-$lang->overtime->typeList['rest']       = 'On weekends';
-$lang->overtime->typeList['holiday']    = 'On holiday';
-$lang->overtime->typeList['compensate'] = 'Compensated Leave';
+$lang->overtime->typeList['time']    = 'After work';
+$lang->overtime->typeList['rest']    = 'On weekends';
+$lang->overtime->typeList['holiday'] = 'On holiday';
 
 $lang->overtime->statusList['draft']  = 'Draft';
 $lang->overtime->statusList['wait']   = 'Wait';

@@ -90,6 +90,17 @@ class lieuModel extends model
     }
 
     /**
+     * Get reviewed by. 
+     * 
+     * @access public
+     * @return string
+     */
+    public function getReviewedBy()
+    {
+        return empty($this->config->lieu->reviewedBy) ? (empty($this->config->attend->reviewedBy) ? '' : $this->config->attend->reviewedBy) : $this->config->lieu->reviewedBy;
+    }
+
+    /**
      * Create lieu.
      * 
      * @access public
@@ -134,10 +145,10 @@ class lieuModel extends model
         $oldLieu = $this->getByID($id);
 
         $lieu = fixer::input('post')
-            ->join('overtime', ',')
             ->remove('status')
             ->remove('createdBy')
             ->remove('createdDate')
+            ->join('overtime', ',')
             ->get();
 
         $data->overtime = isset($data->overtime) ? ',' . trim($data->overtime, ',') . ',' : '';
@@ -179,6 +190,9 @@ class lieuModel extends model
 
         $existLeave = $this->loadModel('leave', 'oa')->checkLeave($date, $this->app->user->account);
         if(!empty($existLeave)) return array('result' => 'fail', 'message' => sprintf($this->lang->leave->unique, implode(', ', $existLeave)));  
+        
+        $existMakeup = $this->loadModel('makeup', 'oa')->checkMakeup($date, $this->app->user->account);
+        if(!empty($existMakeup)) return array('result' => 'fail', 'message' => sprintf($this->lang->makeup->unique, implode(', ', $existMakeup))); 
 
         $existOvertime = $this->loadModel('overtime', 'oa')->checkOvertime($date, $this->app->user->account);
         if(!empty($existOvertime)) return array('result' => 'fail', 'message' => sprintf($this->lang->overtime->unique, implode(', ', $existOvertime))); 

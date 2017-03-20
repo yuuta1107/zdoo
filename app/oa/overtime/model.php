@@ -20,7 +20,7 @@ class overtimeModel extends model
      */
     public function getById($id)
     {
-        return $this->dao->select('*')->from(TABLE_OVERTIME)->where('id')->eq($id)->fetch();
+        return $this->dao->select('*')->from(TABLE_OVERTIME)->where('type')->ne('compensate')->andWhere('id')->eq($id)->fetch();
     }
 
     /**
@@ -41,7 +41,7 @@ class overtimeModel extends model
         $overtimeList = $this->dao->select('t1.*, t2.realname, t2.dept')
             ->from(TABLE_OVERTIME)->alias('t1')
             ->leftJoin(TABLE_USER)->alias('t2')->on("t1.createdBy=t2.account")
-            ->where('1=1')
+            ->where('t1.type')->ne('compensate')
             ->beginIf($year != '')->andWhere('t1.year')->eq($year)->fi()
             ->beginIf($month != '')->andWhere('t1.begin')->like("%-$month-%")->fi()
             ->beginIf($account != '')->andWhere('t1.createdBy')->eq($account)->fi()
@@ -65,7 +65,7 @@ class overtimeModel extends model
      */
     public function getByDate($date, $account)
     {
-        return $this->dao->select('*')->from(TABLE_OVERTIME)->where('begin')->le($date)->andWhere('end')->ge($date)->andWhere('createdBy')->eq($account)->fetch();
+        return $this->dao->select('*')->from(TABLE_OVERTIME)->where('type')->ne('compensate')->andWhere('begin')->le($date)->andWhere('end')->ge($date)->andWhere('createdBy')->eq($account)->fetch();
     }
 
     /**
@@ -79,7 +79,8 @@ class overtimeModel extends model
     {
         $monthList = array();
         $dateList  = $this->dao->select('begin')->from(TABLE_OVERTIME)
-            ->beginIF($type == 'personal')->where('createdBy')->eq($this->app->user->account)->fi()
+            ->where('type')->ne('compensate')
+            ->beginIF($type == 'personal')->andWhere('createdBy')->eq($this->app->user->account)->fi()
             ->groupBy('begin')
             ->orderBy('begin_desc')
             ->fetchAll('begin');
@@ -90,6 +91,17 @@ class overtimeModel extends model
             if(!isset($monthList[$year][$month])) $monthList[$year][$month] = $month;
         }
         return $monthList;
+    }
+
+    /**
+     * Get reviewed by. 
+     * 
+     * @access public
+     * @return string
+     */
+    public function getReviewedBy()
+    {
+        return empty($this->config->overtime->reviewedBy) ? (empty($this->config->attend->reviewedBy) ? '' : $this->config->attend->reviewedBy) : $this->config->overtime->reviewedBy;
     }
 
     /**
@@ -172,6 +184,9 @@ class overtimeModel extends model
 
         $existLeave = $this->loadModel('leave', 'oa')->checkLeave($date, $this->app->user->account);
         if(!empty($existLeave)) return array('result' => 'fail', 'message' => sprintf($this->lang->leave->unique, implode(', ', $existLeave))); 
+        
+        $existMakeup = $this->loadModel('makeup', 'oa')->checkMakeup($date, $this->app->user->account);
+        if(!empty($existMakeup)) return array('result' => 'fail', 'message' => sprintf($this->lang->makeup->unique, implode(', ', $existMakeup))); 
         
         $existTrip = $this->loadModel('trip', 'oa')->checkTrip('trip', $date, $this->app->user->account); 
         if(!empty($existTrip)) return array('result' => 'fail', 'message' => sprintf($this->lang->trip->unique, implode(', ', $existTrip))); 

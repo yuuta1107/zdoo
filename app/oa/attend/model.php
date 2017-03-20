@@ -266,7 +266,7 @@ class attendModel extends model
                     $attend->dayName  = $this->lang->datepicker->dayNames[(int)date('w', strtotime($currentDate))];
 
                     $desc = zget($this->lang->attend->statusList, $attend->status);
-                    if(strpos('leave,trip,egress,overtime', $attend->status) !== false and $attend->desc)
+                    if(strpos(',leave,makeup,overtime,trip,egress,', ",$attend->status,") !== false and $attend->desc)
                     {
                         $desc .= $attend->desc . $this->lang->attend->h;
                     }
@@ -659,6 +659,7 @@ EOT;
         if($this->loadModel('trip', 'oa')->isTrip('trip', $attend->date, $attend->account)) return 'trip';
         if($this->loadModel('trip', 'oa')->isTrip('egress', $attend->date, $attend->account)) return 'egress';
         if($this->loadModel('overtime', 'oa')->isOvertime($attend->date, $attend->account)) return 'overtime';
+        if($this->loadModel('makeup', 'oa')->isMakeup($attend->date, $attend->account)) return 'makeup';
         if($this->loadModel('lieu', 'oa')->isLieu($attend->date, $attend->account)) return 'lieu';
 
         $status = 'normal';
@@ -857,7 +858,7 @@ EOT;
      */
     public function batchUpdate($dates, $account, $status = '', $reason = '', $time = '')
     {
-        if($status != '' and strpos('trip,egress,leave,overtime,normal,lieu', $status) === false) return false;
+        if($status != '' and strpos(',trip,egress,leave,makeup,overtime,normal,lieu,', ",$status,") === false) return false;
         if($reason == '') $reason = $status;
 
         foreach($dates as $datetime)
@@ -879,22 +880,22 @@ EOT;
                 }
                 elseif($time->begin == $date and $time->end != $date) 
                 {
-                    if($status == 'leave' || ($status == 'overtime' && $time->start < $this->config->attend->signOutLimit))    
+                    if($status == 'leave' || (($status == 'overtime' || $status == 'makeup') && $time->start < $this->config->attend->signOutLimit))    
                     {
                         $hours = round((strtotime("{$date} {$this->config->attend->signOutLimit}") - strtotime("{$date} {$time->start}")) / 3600, 2);
                     }
-                    elseif($status == 'overtime') 
+                    elseif($status == 'overtime' || $status == 'makeup') 
                     {
                         $hours = round((strtotime("{$date} +1 days") - strtotime("{$date} {$time->start}")) / 3600, 2);
                     }
                 }
                 elseif($time->begin != $date and $time->end == $date) 
                 {
-                    if($status == 'leave' || ($status == 'overtime' && $time->finish > $this->config->attend->signInLimit))    
+                    if($status == 'leave' || (($status == 'overtime' || $status == 'makeup') && $time->finish > $this->config->attend->signInLimit))    
                     {
                         $hours = round((strtotime("{$date} {$time->finish}") - strtotime("{$date} {$this->config->attend->signInLimit}")) / 3600, 2);
                     }
-                    elseif($status == 'overtime') 
+                    elseif($status == 'overtime' || $status == 'makeup') 
                     {
                         $hours = round((strtotime("{$date} {$time->finish}") - strtotime("{$date}")) / 3600, 2);
                     }
@@ -902,9 +903,9 @@ EOT;
                 else
                 {
                     if($status == 'leave')    $hours = $this->config->attend->workingHours;
-                    if($status == 'overtime') $hours = $this->config->attend->signOutLimit - $this->config->attend->signInLimit;
+                    if($status == 'overtime' || $status == 'makeup') $hours = $this->config->attend->signOutLimit - $this->config->attend->signInLimit;
                 }
-                if($hours > $this->config->attend->workingHours && ($status == 'leave' || $status == 'lieu' || ($status == 'overtime' && $time->type == 'compensate'))) 
+                if($hours > $this->config->attend->workingHours && ($status == 'leave' || $status == 'lieu' || $status == 'makeup')) 
                 {
                     $hours = $this->config->attend->workingHours;
                 }
@@ -921,7 +922,7 @@ EOT;
             }
             else
             {
-                if($status && strpos('leave, overtime, lieu', $status) !== false && !empty($oldAttend->desc)) $attend->desc += (float)$oldAttend->desc;
+                if($status && strpos(',leave,makeup,overtime,lieu,', ",$status,") !== false && !empty($oldAttend->desc)) $attend->desc += (float)$oldAttend->desc;
                 $attend->status = $this->computeStatus($oldAttend);
                 $this->dao->update(TABLE_ATTEND)->data($attend)->autoCheck()->where('date')->eq($date)->andWhere('account')->eq($account)->exec();
             }

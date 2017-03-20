@@ -377,6 +377,7 @@ CREATE TABLE `oa_attendstat` (
 -- DROP TABLE IF EXISTS `oa_overtime`;
 CREATE TABLE `oa_overtime` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `leaves` varchar(30) NOT NULL,
   `year` char(4) NOT NULL,
   `begin` date NOT NULL,
   `end` date NOT NULL,

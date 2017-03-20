@@ -13,6 +13,7 @@
 <?php include '../../common/view/header.html.php';?>
 <?php include '../../../sys/common/view/datepicker.html.php';?>
 <?php include '../../../sys/common/view/chosen.html.php';?>
+<?php if(!$module):?>
 <div class='with-side'>
   <div class='side'>
     <nav class='menu leftmenu affix'>
@@ -23,6 +24,7 @@
     </nav>
   </div>
   <div class='main'>
+<?php endif;?>
     <div class='panel'>
       <div class='panel-heading'><?php echo $lang->attend->settings;?></div>
       <div class='panel-body'>
@@ -55,7 +57,7 @@
             </tr>
             <tr>
               <th><?php echo $lang->attend->reviewedBy;?></th>
-              <td><?php echo html::select('reviewedBy', array('' => $this->lang->dept->moderators) + $users, $reviewedBy, "class='form-control'")?></td>
+              <td><?php echo html::select('reviewedBy', array('' => $this->lang->dept->moderators) + $users, $reviewedBy, "class='form-control chosen'")?></td>
               <td></td>
             </tr>
             <tr>
@@ -82,6 +84,8 @@
         </form>
       </div>
     </div>
+<?php if(!$module):?>
   </div>
 </div>
+<?php endif;?>
 <?php include '../../common/view/footer.html.php';?>

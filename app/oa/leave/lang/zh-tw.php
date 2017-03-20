@@ -16,6 +16,7 @@ $lang->leave->reviewBack = '審核銷假';
 $lang->leave->personal     = '我的請假';
 $lang->leave->browseReview = '審核列表';
 $lang->leave->company      = '所有請假';
+$lang->leave->setReviewer  = '設置審核者';
 
 $lang->leave->id           = '編號';
 $lang->leave->year         = '年';

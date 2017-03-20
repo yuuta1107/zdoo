@@ -143,12 +143,12 @@ $config->rights->member['leave']['view']         = 'view';
 $config->rights->member['leave']['switchstatus'] = 'switchstatus';
 $config->rights->member['leave']['back']         = 'back';
 
-$config->rights->member['lieu']['personal']     = 'personal';
-$config->rights->member['lieu']['create']       = 'create';
-$config->rights->member['lieu']['edit']         = 'edit';
-$config->rights->member['lieu']['delete']       = 'delete';
-$config->rights->member['lieu']['view']         = 'view';
-$config->rights->member['lieu']['switchstatus'] = 'switchstatus';
+$config->rights->member['makeup']['personal']     = 'personal';
+$config->rights->member['makeup']['create']       = 'create';
+$config->rights->member['makeup']['edit']         = 'edit';
+$config->rights->member['makeup']['view']         = 'view';
+$config->rights->member['makeup']['delete']       = 'delete';
+$config->rights->member['makeup']['switchstatus'] = 'switchstatus';
 
 $config->rights->member['overtime']['personal']     = 'personal';
 $config->rights->member['overtime']['create']       = 'create';
@@ -156,6 +156,13 @@ $config->rights->member['overtime']['edit']         = 'edit';
 $config->rights->member['overtime']['view']         = 'view';
 $config->rights->member['overtime']['delete']       = 'delete';
 $config->rights->member['overtime']['switchstatus'] = 'switchstatus';
+
+$config->rights->member['lieu']['personal']     = 'personal';
+$config->rights->member['lieu']['create']       = 'create';
+$config->rights->member['lieu']['edit']         = 'edit';
+$config->rights->member['lieu']['delete']       = 'delete';
+$config->rights->member['lieu']['view']         = 'view';
+$config->rights->member['lieu']['switchstatus'] = 'switchstatus';
 
 $config->rights->member['trip']['personal'] = 'personal';
 $config->rights->member['trip']['view']     = 'view';

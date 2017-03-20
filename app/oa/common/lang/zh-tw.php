@@ -17,6 +17,7 @@ $lang->menu->oa->dashboard = '首頁|dashboard|index|';
 $lang->menu->oa->announce  = '公告|announce|browse|';
 $lang->menu->oa->attend    = '考勤|attend|personal|';
 $lang->menu->oa->leave     = '請假|leave|personal|';
+$lang->menu->oa->makeup    = '補班|makeup|personal|';
 $lang->menu->oa->overtime  = '加班|overtime|personal|';
 $lang->menu->oa->lieu      = '調休|lieu|personal|';
 $lang->menu->oa->trip      = '出差|trip|personal|';
@@ -47,18 +48,28 @@ $lang->leave->menu = new stdclass();
 $lang->leave->menu->personal     = '我的請假|leave|personal|';
 $lang->leave->menu->browseReview = '我的審核|leave|browsereview|';
 $lang->leave->menu->company      = '所有請假|leave|company|';
+$lang->leave->menu->settings     = '設置|leave|setReviewer|';
+
+if(!isset($lang->makeup)) $lang->makeup = new stdclass();
+$lang->makeup->menu = new stdclass();
+$lang->makeup->menu->personal     = '我的補班|makeup|personal|';
+$lang->makeup->menu->browseReview = '我的審核|makeup|browsereview|';
+$lang->makeup->menu->company      = '所有補班|makeup|company|';
+$lang->makeup->menu->settings     = '設置|makeup|setReviewer|';
 
 if(!isset($lang->overtime)) $lang->overtime = new stdclass();
 $lang->overtime->menu = new stdclass();
 $lang->overtime->menu->personal     = '我的加班|overtime|personal|';
 $lang->overtime->menu->browseReview = '我的審核|overtime|browsereview|';
 $lang->overtime->menu->company      = '所有加班|overtime|company|';
+$lang->overtime->menu->settings     = '設置|overtime|setReviewer|';
 
 if(!isset($lang->lieu)) $lang->lieu = new stdclass();
 $lang->lieu->menu = new stdclass();
 $lang->lieu->menu->personal     = '我的調休|lieu|personal|';
 $lang->lieu->menu->browseReview = '我的審核|lieu|browsereview|';
 $lang->lieu->menu->company      = '所有調休|lieu|company|';
+$lang->lieu->menu->settings     = '設置|lieu|setReviewer|';
 
 if(!isset($lang->trip)) $lang->trip = new stdclass();
 $lang->trip->menu = new stdclass();
@@ -86,5 +97,15 @@ $lang->holiday->menu = new stdclass();
 $lang->holiday->menu->all = '所有|holiday|browse|';
 
 $lang->setting->menu = new stdclass();
-$lang->setting->menu->modules = '功能模組|setting|modules|app=oa';
+$lang->setting->menu->modules         = '功能模組|setting|modules|app=oa';
+$lang->setting->menu->attendSettings  = '考勤設置|attend|settings|module=setting';
+$lang->setting->menu->attendManager   = '部門經理|attend|setmanager|module=setting';
+$lang->setting->menu->leaveReviewer   = '請假審批人|leave|setReviewer|module=setting';
+$lang->setting->menu->makeupReviewer  = '補班審批人|makeup|setReviewer|module=setting';
+$lang->setting->menu->lieuReviewer    = '調休審批人|lieu|setReviewer|module=setting';
+$lang->setting->menu->overtimeReviewer= '加班審批人|overtime|setReviewer|module=setting';
+$lang->setting->menu->refundReviewer  = '報銷審批人|refund|setReviewer|module=setting';
+$lang->setting->menu->refundCategory  = '報銷科目|refund|setCategory|module=setting';
+$lang->setting->menu->refundDepositor = '報銷賬戶|refund|setDepositor|module=setting';
+$lang->setting->menu->refundBy        = '由誰報銷|refund|setRefundBy|module=setting';
 include (dirname(__FILE__) . '/menuOrder.php');
