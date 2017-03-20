@@ -23,7 +23,7 @@ include '../../common/view/header.html.php';?>
               <span class='input-group-addon'><?php echo $lang->entry->adminAccount;?></span>
               <?php echo html::input('account', '', "class='form-control'")?>
               <span class='input-group-addon'><?php echo $lang->entry->adminPassword;?></span>
-              <?php echo html::input('password', '', "class='form-control'")?>
+              <?php echo html::password('password', '', "class='form-control'")?>
             </div>
           </td>
           <td><?php echo html::submitButton($lang->entry->nextStep);?></td>

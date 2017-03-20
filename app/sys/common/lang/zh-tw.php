@@ -230,7 +230,7 @@ $lang->group   = new stdclass();
 /* Menu entry. */
 $lang->entry       = new stdclass();
 $lang->entry->menu = new stdclass();
-$lang->entry->menu->admin    = array('link' => '應用列表|entry|admin|', 'alias' => 'edit, integration, style');
+$lang->entry->menu->admin    = array('link' => '應用列表|entry|admin|', 'alias' => 'edit, integration, style, zentaoAdmin');
 $lang->entry->menu->create   = '添加應用|entry|create|';
 $lang->entry->menu->webapp   = 'WEB應用|webapp|obtain|';
 $lang->entry->menu->category = '分組|entry|category|';

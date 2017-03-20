@@ -230,7 +230,7 @@ $lang->group   = new stdclass();
 /* Menu entry. */
 $lang->entry       = new stdclass();
 $lang->entry->menu = new stdclass();
-$lang->entry->menu->admin    = array('link' => 'Entries|entry|admin|', 'alias' => 'edit, integration, style');
+$lang->entry->menu->admin    = array('link' => 'Entries|entry|admin|', 'alias' => 'edit, integration, style, zentaoAdmin');
 $lang->entry->menu->create   = array('link' => 'Create|entry|create|');
 $lang->entry->menu->webapp   = 'Web App|webapp|obtain|';
 $lang->entry->menu->category = 'Category|entry|category|';
