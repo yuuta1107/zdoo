@@ -176,7 +176,7 @@ class leave extends control
         }
         if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
 
-        $actionID = $this->loadModel('action')->create('leave', $id, 'reviewed', '', $status);
+        $actionID = $this->loadModel('action')->create('leave', $id, 'reviewed', '', zget($this->lang->leave->statusList, $status));
         $this->sendmail($id, $actionID);
 
         $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess));

@@ -2,7 +2,7 @@ $(document).ready(function()
 {
     $(document).on('click', '#leaveTable td:not(.actionTD)', function()
     {
-        $(this).parent().find('.actionTD a[href*=view]').click();
+        $(this).parent().find('.actionTD a[href*=view]:not([href*=review])').click();
     });
 
     $(document).on('click', '.deleteLeave', function()

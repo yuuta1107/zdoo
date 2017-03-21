@@ -335,7 +335,7 @@ class lieu extends control
         $this->lieu->review($id, $status);
         if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
 
-        $actionID = $this->loadModel('action')->create('lieu', $id, 'reviewed', '', $status);
+        $actionID = $this->loadModel('action')->create('lieu', $id, 'reviewed', '', zget($this->lang->lieu->statusList, $status));
         $this->sendmail($id, $actionID);
 
         $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess));
