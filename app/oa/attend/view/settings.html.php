@@ -18,8 +18,9 @@
   <div class='side'>
     <nav class='menu leftmenu affix'>
       <ul class='nav nav-primary'>
-        <li><?php commonModel::printLink('attend', 'settings', '', "{$lang->attend->settings}");?></li>
-        <li><?php commonModel::printLink('attend', 'setmanager', '', "{$lang->attend->setManager}");?></li>
+        <li><?php commonModel::printLink('attend', 'settings', '', $lang->attend->settings);?></li>
+        <li><?php commonModel::printLink('attend', 'personalsettings', '', $lang->attend->personalSettings);?></li> 
+        <li><?php commonModel::printLink('attend', 'setManager', '', $lang->attend->setManager);?></li>
       </ul>
     </nav>
   </div>
@@ -31,8 +32,13 @@
         <form id='ajaxForm' method='post'>
           <table class='table table-form table-condensed w-p70'>
             <tr>
-              <th class='w-100px'><?php echo $lang->attend->signInLimit?></th>
-              <td class='w-300px'><?php echo html::input('signInLimit', $signInLimit, "class='form-control form-time'")?></td>
+              <th class='w-150px'><?php echo $lang->attend->beginDate->company;?></th>
+              <td class='w-300px'><?php echo html::input('beginDate[company]', $beginDate, "class='form-control form-date'")?></td>
+              <td></td>
+            </tr>
+            <tr>
+              <th><?php echo $lang->attend->signInLimit?></th>
+              <td><?php echo html::input('signInLimit', $signInLimit, "class='form-control form-time'")?></td>
               <td></td>
             </tr>
             <tr>

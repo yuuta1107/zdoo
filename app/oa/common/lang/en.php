@@ -17,6 +17,7 @@ $lang->menu->oa->dashboard = 'Home|dashboard|index|';
 $lang->menu->oa->announce  = 'Announce|announce|index|';
 $lang->menu->oa->attend    = 'Attendance|attend|personal|';
 $lang->menu->oa->leave     = 'Leave|leave|personal|';
+$lang->menu->oa->makeup    = 'Makeup|makeup|personal|';
 $lang->menu->oa->overtime  = 'Overtime|overtime|personal|';
 $lang->menu->oa->lieu      = 'Leave In Lieu|lieu|personal|';
 $lang->menu->oa->trip      = 'Trip|trip|personal|';
@@ -48,6 +49,13 @@ $lang->leave->menu->personal     = 'My leave|leave|personal|';
 $lang->leave->menu->browseReview = 'Reviewed by me|leave|browsereview|';
 $lang->leave->menu->company      = 'All|leave|company|';
 $lang->leave->menu->settings     = 'Settings|leave|setReviewer|';
+
+if(!isset($lang->makeup)) $lang->makeup = new stdclass();
+$lang->makeup->menu = new stdclass();
+$lang->makeup->menu->personal     = 'My makeup|makeup|personal|';
+$lang->makeup->menu->browseReview = 'Reviewed by me|makeup|browsereview|';
+$lang->makeup->menu->company      = 'All|makeup|company|';
+$lang->makeup->menu->settings     = 'Settings|makeup|setReviewer|';
 
 if(!isset($lang->overtime)) $lang->overtime = new stdclass();
 $lang->overtime->menu = new stdclass();
@@ -90,8 +98,9 @@ $lang->holiday->menu->all = 'All|holiday|browse|';
 
 $lang->setting->menu = new stdclass();
 $lang->setting->menu->modules         = 'Modules|setting|modules|app=oa';
-$lang->setting->menu->attendSettings  = 'Settings|attend|settings|module=setting';
-$lang->setting->menu->attendManager   = 'Dept Manager|attend|setmanager|module=setting';
+$lang->setting->menu->companyAttend   = 'Company Attend Settings|attend|settings|module=setting';
+$lang->setting->menu->personalAttend  = 'Personal Attend Settings|attend|personalSettings|module=setting';
+$lang->setting->menu->deptManager     = 'Dept Manager Settings|attend|setManager|module=setting';
 $lang->setting->menu->leaveReviewer   = 'Leave Reviewer|leave|setReviewer|module=setting';
 $lang->setting->menu->makeupReviewer  = 'Makeup Reviewer|makeup|setReviewer|module=setting';
 $lang->setting->menu->lieuReviewer    = 'Lieu Reviewer|lieu|setReviewer|module=setting';

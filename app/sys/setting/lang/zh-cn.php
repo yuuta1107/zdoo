@@ -74,9 +74,10 @@ $lang->setting->reserveDays    = '进入客户池（天）';
 $lang->setting->reserveDaysTip = '在设定天数内没有更新客户信息（未签约客户），该客户将自动进入客户池。值设为0时禁用此功能。';
 
 $lang->setting->moduleList['attend']   = '考勤';
-$lang->setting->moduleList['trip']     = '出差';
-$lang->setting->moduleList['egress']   = '外出';
 $lang->setting->moduleList['leave']    = '请假';
+$lang->setting->moduleList['makeup']   = '补班';
 $lang->setting->moduleList['overtime'] = '加班';
 $lang->setting->moduleList['lieu']     = '调休';
+$lang->setting->moduleList['trip']     = '出差';
+$lang->setting->moduleList['egress']   = '外出';
 $lang->setting->moduleList['refund']   = '报销';

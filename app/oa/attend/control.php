@@ -301,6 +301,7 @@ class attend extends control
 
         $this->loadModel('user');
         $this->view->title          = $this->lang->attend->settings; 
+        $this->view->beginDate      = $this->config->attend->beginDate->company;
         $this->view->signInLimit    = $this->config->attend->signInLimit;
         $this->view->signOutLimit   = $this->config->attend->signOutLimit;
         $this->view->workingDays    = $this->config->attend->workingDays;
@@ -457,6 +458,34 @@ class attend extends control
     }
 
     /**
+     * Set a date to begin record attend status. 
+     * 
+     * @param  string $module 
+     * @access public
+     * @return void
+     */
+    public function personalSettings($module = '')
+    {
+        if($_POST)
+        {
+            $this->attend->savePersonalSettings();
+            if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
+            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
+        }
+
+        if($module)
+        {
+            $this->lang->menuGroups->attend = $module;
+            $this->lang->attend->menu       = $this->lang->$module->menu;
+        }
+
+        $this->view->title  = $this->lang->attend->personalSettings;
+        $this->view->users  = $this->loadModel('user', 'sys')->getPairs('noclosed,nodelete,noforbidden');
+        $this->view->module = $module;
+        $this->display();
+    }
+
+    /**
      * Set reviewer for attend.
      * 
      * @param  string $module
@@ -527,9 +556,22 @@ class attend extends control
             $stat = array();
             foreach($users as $account => $realname)
             {
+                if(strpos(",{$this->config->attend->noAttendUsers},", ",$account,") !== false) continue;
+
+                $beginDate = isset($this->config->attend->beginDate->$account) ? $this->config->attend->beginDate->$account : $this->config->attend->beginDate->company;
+                $tmpDates  = $workingDates;
+                if($beginDate)
+                {
+                    foreach($tmpDates as $key => $date)
+                    {
+                        if($beginDate > $date)    unset($tmpDates[$key]);
+                        if($date > date('Y-m-d')) unset($tmpDates[$key]);
+                    }
+                }
+
                 $stat[$account] = new stdclass(); 
-                $stat[$account]->deserve  = count($workingDates);
-                $stat[$account]->actual   = strpos(",{$this->config->attend->noAttendUsers},", ",$account,") === false ? 0 : count($workingDates);
+                $stat[$account]->deserve  = count($tmpDates);
+                $stat[$account]->actual   = 0;
                 $stat[$account]->normal   = 0;
                 $stat[$account]->late     = 0;
                 $stat[$account]->early    = 0;
@@ -547,7 +589,7 @@ class attend extends control
                 $stat[$account]->holidayOvertime = 0;
 
                 /* Init absentDates. */
-                $stat[$account]->absentDates = $workingDates;
+                $stat[$account]->absentDates = $tmpDates;
             }
 
             /* Update stat with attends. */

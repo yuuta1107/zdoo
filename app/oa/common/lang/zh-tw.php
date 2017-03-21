@@ -98,8 +98,9 @@ $lang->holiday->menu->all = '所有|holiday|browse|';
 
 $lang->setting->menu = new stdclass();
 $lang->setting->menu->modules         = '功能模組|setting|modules|app=oa';
-$lang->setting->menu->attendSettings  = '考勤設置|attend|settings|module=setting';
-$lang->setting->menu->attendManager   = '部門經理|attend|setmanager|module=setting';
+$lang->setting->menu->companyAttend   = '公司考勤設置|attend|settings|module=setting';
+$lang->setting->menu->personalAttend  = '個人考勤設置|attend|personalSettings|module=setting';
+$lang->setting->menu->deptManager     = '部門經理設置|attend|setManager|module=setting';
 $lang->setting->menu->leaveReviewer   = '請假審批人|leave|setReviewer|module=setting';
 $lang->setting->menu->makeupReviewer  = '補班審批人|makeup|setReviewer|module=setting';
 $lang->setting->menu->lieuReviewer    = '調休審批人|lieu|setReviewer|module=setting';

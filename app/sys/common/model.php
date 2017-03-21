@@ -373,7 +373,7 @@ class commonModel extends model
             $class = $moduleName == $currentModule ? " class='active'" : '';
             list($label, $module, $method, $vars) = explode('|', $moduleMenu);
 
-            if(isset($config->attend->noAttendUsers) and strpos(',' . $config->attend->noAttendUsers . ',', ',' . $app->user->account . ',') !== false and $module == 'attend' and $method == 'personal')
+            if(isset($config->attend->noAttendUsers) and strpos(",{$config->attend->noAttendUsers},", ",{$app->user->account},") !== false and $module == 'attend' and $method == 'personal')
             {
                 $method = 'department';
             }
@@ -423,14 +423,14 @@ class commonModel extends model
         global $lang, $app, $config;
 
         if(!isset($lang->$currentModule->menu)) return false;
-        if(isset($config->attend->noAttendUsers) and strpos(',' . $config->attend->noAttendUsers . ',', ',' . $app->user->account . ',') !== false and isset($lang->attend->menu->personal))
+        if(isset($config->attend->noAttendUsers) and strpos(",{$config->attend->noAttendUsers},", ",{$app->user->account},") !== false and isset($lang->attend->menu->personal))
         {
             unset($lang->attend->menu->personal);
         }
 
         $isMobile = $app->viewType === 'mhtml';
         $string   = !$isMobile ? "<nav id='menu'><ul class='nav'>\n" : '';
-        if(!$isMobile && strpos(',setting,tree,schema,sales,group,', ',' . $currentModule . ',') !== false) $string = "<nav class='menu leftmenu affix'><ul class='nav nav-primary'>\n";
+        if(!$isMobile && strpos(',setting,tree,schema,sales,group,', ",$currentModule,") !== false) $string = "<nav class='menu leftmenu affix'><ul class='nav nav-primary'>\n";
 
         $menuOrder = isset($lang->{$currentModule}->menuOrder) ? $lang->{$currentModule}->menuOrder : array();  
 
@@ -1087,7 +1087,7 @@ class commonModel extends model
                 $diff = '';
                 if(substr_count($value, "\n") > 1     or
                    substr_count($old->$key, "\n") > 1 or
-                   strpos('name,title,desc,content,summary', strtolower($key)) !== false)
+                   strpos(',name,title,desc,content,summary,', ',' . strtolower($key) . ',') !== false)
                 {
                     $diff = commonModel::diff($old->$key, $value);
                 }
@@ -1169,7 +1169,7 @@ class commonModel extends model
     {
         $preAndNextObject = new stdClass();
 
-        if(strpos('order, contract, customer, contact, task, thread, blog, refund, trade', $type) === false) return $preAndNextObject;
+        if(strpos(',order,contract,customer,contact,task,thread,blog,refund,trade,', ",$type,") === false) return $preAndNextObject;
         $table = $this->config->objectTables[$type];
 
         $queryCondition = "{$type}QueryCondition";

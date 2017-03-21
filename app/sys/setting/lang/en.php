@@ -74,9 +74,10 @@ $lang->setting->reserveDays    = 'Hold days in customer pools.';
 $lang->setting->reserveDaysTip = "Customer will be automatically saved in customer pools, if customer info is not updated within certain days. It will be disabled if it is set as'0' days.";
 
 $lang->setting->moduleList['attend']   = 'Attend';
-$lang->setting->moduleList['trip']     = 'Trip';
-$lang->setting->moduleList['egress']   = 'Egress';
 $lang->setting->moduleList['leave']    = 'Leave';
+$lang->setting->moduleList['makeup']   = 'Makeup';
 $lang->setting->moduleList['overtime'] = 'Overtime';
 $lang->setting->moduleList['lieu']     = 'Lieu';
+$lang->setting->moduleList['trip']     = 'Trip';
+$lang->setting->moduleList['egress']   = 'Egress';
 $lang->setting->moduleList['refund']   = 'Reimburse';

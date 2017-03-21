@@ -129,14 +129,20 @@ $lang->attend->notice['absent']   = "沒有記錄";
 $lang->attend->confirmReview['pass']   = '您確定要執行通過操作嗎？';
 $lang->attend->confirmReview['reject'] = '您確定要執行拒絶操作嗎？';
 
-$lang->attend->settings   = '考勤設置';
-$lang->attend->setManager = '部門經理設置';
-$lang->attend->setDept    = '部門設置';
+$lang->attend->settings         = '公司考勤設置';
+$lang->attend->personalSettings = '個人考勤設置';
+$lang->attend->setManager       = '部門經理設置';
+$lang->attend->setDept          = '部門設置';
+
+$lang->attend->beginDate = new stdClass();
+$lang->attend->beginDate->company  = '公司開始考勤日期';
+$lang->attend->beginDate->personal = '個人開始考勤日期';
 
 $lang->attend->note = new stdClass();
-$lang->attend->note->ip       = "允許簽到的ip，多個ip用逗號隔開。支持IP段，如192.168.1.*";
-$lang->attend->note->allip    = '無限制';
-$lang->attend->note->IPDenied = '簽到IP受限，無法簽到';
+$lang->attend->note->ip        = "允許簽到的ip，多個ip用逗號隔開。支持IP段，如192.168.1.*";
+$lang->attend->note->allip     = '無限制';
+$lang->attend->note->IPDenied  = '簽到IP受限，無法簽到';
+$lang->attend->note->beginDate = '設置開始考勤的日期，在該日期之前不記錄考勤狀態。預設使用公司開始考勤日期計算考勤狀態，如果設置了個人開始考勤日期則使用個人日期。';
 
 $lang->attend->h = '小時';
 $lang->attend->m = '分';

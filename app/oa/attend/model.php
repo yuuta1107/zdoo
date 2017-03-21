@@ -75,6 +75,14 @@ class attendModel extends model
             ->beginIf($endDate != '')->andWhere('`date`')->le($endDate)->fi()
             ->orderBy('`date`')
             ->fetchAll('date');
+        $beginDate = isset($this->config->attend->beginDate->$account) ? $this->config->attend->beginDate->$account : $this->config->attend->beginDate->company;
+        if($beginDate)
+        {
+            foreach($attends as $date => $attend)
+            {
+                if($beginDate > $date) unset($attends[$date]);
+            }
+        }
 
         $attends = $this->fixUserAttendList($attends, $startDate, $endDate);
         return $this->processAttendList($attends);
@@ -93,6 +101,14 @@ class attendModel extends model
         foreach($attends as $account => $attendList)
         {
             if(strpos(',' . $this->config->attend->noAttendUsers . ',', ',' . $account . ',') !== false) unset($attends[$account]);
+            $beginDate = isset($this->config->attend->beginDate->$account) ? $this->config->attend->beginDate->$account : $this->config->attend->beginDate->company;
+            if($beginDate)
+            {
+                foreach($attendList as $key => $attend)
+                {
+                    if($beginDate > $attend->date) unset($attends[$account][$key]);
+                }
+            }
         }
 
         return $attends;
@@ -126,6 +142,14 @@ class attendModel extends model
         foreach($attends as $account => $attendList)
         {
             if(strpos(',' . $this->config->attend->noAttendUsers . ',', ',' . $account . ',') !== false) unset($attends[$account]);
+            $beginDate = isset($this->config->attend->beginDate->$account) ? $this->config->attend->beginDate->$account : $this->config->attend->beginDate->company;
+            if($beginDate)
+            {
+                foreach($attendList as $key => $attend)
+                {
+                    if($beginDate > $attend->date) unset($attends[$account][$key]);
+                }
+            }
         }
 
         return $attends;
@@ -174,14 +198,24 @@ class attendModel extends model
         {
             foreach($newAttends[$dept] as $user => $userAttends)
             {
-                if(strpos(',' . $this->config->attend->noAttendUsers . ',', ',' . $user . ',') !== false)
+                if(strpos(",{$this->config->attend->noAttendUsers},", ",$user,") !== false)
                 {
                     unset($newAttends[$dept][$user]);
                     continue;
                 }
+                $beginDate = isset($this->config->attend->beginDate->$user) ? $this->config->attend->beginDate->$user : $this->config->attend->beginDate->company;
+                if($beginDate)
+                {
+                    foreach($userAttends as $key => $attend)
+                    {
+                        if($beginDate > $attend->date) unset($newAttends[$dept][$user][$key]);
+                    }
+                }
 
                 if($reviewStatus == '') $newAttends[$dept][$user] = $this->fixUserAttendList($newAttends[$dept][$user], $startDate, $endDate, $user);
                 $newAttends[$dept][$user] = $this->processAttendList($newAttends[$dept][$user]);
+
+                if(!$newAttends[$dept][$user]) unset($newAttends[$dept][$user]);
             }
         }
 
@@ -260,7 +294,9 @@ class attendModel extends model
                     if($day < 10) $day = '0' . $day;
                     $currentDate = "{$currentYear}-{$currentMonth}-{$day}";
 
-                    $attend = $userAttends[$currentDate];
+                    $attend = zget($userAttends, $currentDate, '');
+                    if(!$attend) continue;
+
                     $attend->dept     = isset($users[$account]) ? $deptList[$users[$account]->dept] : '';
                     $attend->realname = isset($users[$account]) ? $users[$account]->realname : '';
                     $attend->dayName  = $this->lang->datepicker->dayNames[(int)date('w', strtotime($currentDate))];
@@ -406,6 +442,8 @@ class attendModel extends model
         $today   = helper::today();
         if(strpos(',' . $this->config->attend->noAttendUsers . ',', ',' . $account . ',') !== false ||
            (isset($this->config->attend->readers->{$today}) and strpos(',' . $this->config->attend->readers->{$today} . ',', ',' . $account . ',') !== false)) return '';
+        $beginDate = isset($this->config->attend->beginDate->$account) ? $this->config->attend->beginDate->$account : $this->config->attend->beginDate->company;
+        if($beginDate && $beginDate > $today) return '';
 
         $link    = helper::createLink('oa.attend', 'personal');
         $misc    = "class='app-btn alert-link' data-id='oa'";
@@ -654,6 +692,9 @@ EOT;
      */
     public function computeStatus($attend)
     {
+        $beginDate = isset($this->config->attend->beginDate->{$attend->account}) ? $this->config->attend->beginDate->{$attend->account} : $this->config->attend->beginDate->company;
+        if($beginDate && $beginDate > $attend->date) return 'normal';
+
         /* 'leave': ask for leave. 'trip': biz trip. */
         if($this->loadModel('leave', 'oa')->isLeave($attend->date, $attend->account)) return 'leave';
         if($this->loadModel('trip', 'oa')->isTrip('trip', $attend->date, $attend->account)) return 'trip';
@@ -752,7 +793,7 @@ EOT;
         foreach($attends as $attend)
         {
             if(strtotime($attend->date) < strtotime($startDate) or $startDate == '0000-00-00') $startDate = $attend->date;
-            if(strtotime($attend->date) > strtotime($endDate)) $endDate   = $attend->date;
+            if(strtotime($attend->date) > strtotime($endDate)) $endDate = $attend->date;
             if($account == '') $account = $attend->account;
         }
 
@@ -776,6 +817,12 @@ EOT;
                 $attends[$startDate] = $attend;
             }
             $startDate = date("Y-m-d", strtotime("$startDate +1 day"));
+        }
+
+        foreach($attends as $key => $attend)
+        {
+            $beginDate = isset($this->config->attend->beginDate->{$attend->account}) ? $this->config->attend->beginDate->{$attend->account} : $this->config->attend->beginDate->company;
+            if($beginDate && $beginDate > $attend->date) unset($attends[$key]);
         }
 
         return $attends;
@@ -988,5 +1035,32 @@ EOT;
             if(implode('.', $allowIPParts) == $_SERVER['REMOTE_ADDR']) return true;
         }
         return false;
+    }
+
+    /**
+     * Save personal settings. 
+     * 
+     * @access public
+     * @return bool 
+     */
+    public function savePersonalSettings()
+    {
+        $this->dao->delete()->from(TABLE_CONFIG)
+            ->where('`owner`')->eq('system')
+            ->andWhere('`app`')->eq('oa')
+            ->andWhere('`module`')->eq('attend')
+            ->andWhere('`section`')->eq('beginDate')
+            ->andWhere('`key`')->ne('company')
+            ->exec();
+        $beginDates = array();
+        foreach($this->post->account as $key => $account)
+        {
+            $date = $this->post->date[$key];
+            if(!$account or !$date) continue;
+            $beginDates[$account] = $date;
+        }
+        if($beginDates) $this->loadModel('setting')->setItems('system.oa.attend.beginDate', $beginDates);
+
+        return !dao::isError();
     }
 }

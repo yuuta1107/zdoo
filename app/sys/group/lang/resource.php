@@ -463,31 +463,33 @@ $lang->doc->methodOrder[60] = 'sort';
 
 /* Attend */
 $lang->resource->attend = new stdclass();
-$lang->resource->attend->department   = 'department';
-$lang->resource->attend->company      = 'company';
-$lang->resource->attend->export       = 'export';
-$lang->resource->attend->settings     = 'settings';
-$lang->resource->attend->browseReview = 'browseReview';
-$lang->resource->attend->review       = 'review';
-$lang->resource->attend->setManager   = 'setManager';
-$lang->resource->attend->stat         = 'stat';
-$lang->resource->attend->saveStat     = 'saveStat';
-$lang->resource->attend->exportStat   = 'exportStat';
-$lang->resource->attend->detail       = 'detail';
-$lang->resource->attend->exportDetail = 'exportDetail';
+$lang->resource->attend->department       = 'department';
+$lang->resource->attend->company          = 'company';
+$lang->resource->attend->browseReview     = 'browseReview';
+$lang->resource->attend->review           = 'review';
+$lang->resource->attend->export           = 'export';
+$lang->resource->attend->stat             = 'stat';
+$lang->resource->attend->saveStat         = 'saveStat';
+$lang->resource->attend->exportStat       = 'exportStat';
+$lang->resource->attend->detail           = 'detail';
+$lang->resource->attend->exportDetail     = 'exportDetail';
+$lang->resource->attend->settings         = 'settings';
+$lang->resource->attend->personalSettings = 'personalSettings';
+$lang->resource->attend->setManager       = 'setManager';
 
 $lang->attend->methodOrder[5]  = 'department';
 $lang->attend->methodOrder[10] = 'company';
-$lang->attend->methodOrder[15] = 'export';
-$lang->attend->methodOrder[20] = 'settings';
-$lang->attend->methodOrder[30] = 'browseReview';
-$lang->attend->methodOrder[35] = 'review';
-$lang->attend->methodOrder[40] = 'setManager';
-$lang->attend->methodOrder[45] = 'stat';
-$lang->attend->methodOrder[50] = 'saveStat';
-$lang->attend->methodOrder[55] = 'exportStat';
-$lang->attend->methodOrder[60] = 'detail';
-$lang->attend->methodOrder[65] = 'exportDetail';
+$lang->attend->methodOrder[15] = 'browseReview';
+$lang->attend->methodOrder[20] = 'review';
+$lang->attend->methodOrder[25] = 'export';
+$lang->attend->methodOrder[30] = 'stat';
+$lang->attend->methodOrder[35] = 'saveStat';
+$lang->attend->methodOrder[40] = 'exportStat';
+$lang->attend->methodOrder[45] = 'detail';
+$lang->attend->methodOrder[60] = 'exportDetail';
+$lang->attend->methodOrder[65] = 'settings';
+$lang->attend->methodOrder[70] = 'personalSettings';
+$lang->attend->methodOrder[75] = 'setManager';
 
 /* Holiday */
 $lang->resource->holiday = new stdclass();

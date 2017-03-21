@@ -129,14 +129,20 @@ $lang->attend->notice['absent']   = "N/A";
 $lang->attend->confirmReview['pass']   = 'Do you want to pass it?';
 $lang->attend->confirmReview['reject'] = 'Do you want to reject it?';
 
-$lang->attend->settings   = 'Settings';
-$lang->attend->setManager = 'Department Manager Settings';
-$lang->attend->setDept    = 'Set Department';
+$lang->attend->settings         = 'Company Attend Settings';
+$lang->attend->personalSettings = 'Personal Attend Settings';
+$lang->attend->setManager       = 'Department Manager Settings';
+$lang->attend->setDept          = 'Set Department';
+
+$lang->attend->beginDate = new stdClass();
+$lang->attend->beginDate->company  = '公司开始考勤日期';
+$lang->attend->beginDate->personal = '个人开始考勤日期';
 
 $lang->attend->note = new stdClass();
-$lang->attend->note->ip       = "Use commas to separate IPs, and IP segment is OK, e.g. 192.168.1.*";
-$lang->attend->note->allip    = 'All IPs';
-$lang->attend->note->IPDenied = 'IP denied.';
+$lang->attend->note->ip        = "Use commas to separate IPs, and IP segment is OK, e.g. 192.168.1.*";
+$lang->attend->note->allip     = 'All IPs';
+$lang->attend->note->IPDenied  = 'IP denied.';
+$lang->attend->note->beginDate = 'Set a date to begin record attend status. The attend status of days before this date will not be record.';
 
 $lang->attend->h = 'hours';
 $lang->attend->m = 'minutes';
