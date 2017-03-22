@@ -44,7 +44,7 @@
           <th><?php echo $lang->trade->invest;?></th>
           <td>
             <div class="required required-wrapper"></div>
-            <?php echo html::select('investID', $investList, '', "class='form-control'");?>
+            <?php echo html::select('investID', $investList, '', "class='form-control chosen'");?>
           </td>
         </tr>
         <tr>

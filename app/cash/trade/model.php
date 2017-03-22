@@ -613,7 +613,7 @@ class tradeModel extends model
             ->get();
 
         $this->dao->update(TABLE_TRADE)
-            ->data($trade, $skip = 'createTrader,traderName,files,labels')
+            ->data($trade, $skip = 'createTrader,traderName,files,labels,invests,redeems,profits')
             ->autoCheck()
             ->batchCheck($this->config->trade->require->edit, 'notempty')
             ->where('id')->eq($tradeID)->exec();
@@ -631,6 +631,19 @@ class tradeModel extends model
             $this->loadModel('action')->create('customer', $traderID, 'Created');
 
             $this->dao->update(TABLE_TRADE)->set('trader')->eq($traderID)->where('id')->eq($tradeID)->exec();
+        }
+
+        if($trade->type == 'invest')
+        {
+            $this->dao->update(TABLE_TRADE)->set('investID')->eq(0)->where('investID')->eq($tradeID)->exec();
+            if($this->post->redeems)
+            {
+                $this->dao->update(TABLE_TRADE)->set('investID')->eq($tradeID)->where('id')->in($this->post->redeems)->exec();
+            }
+            if($this->post->profits)
+            {
+                $this->dao->update(TABLE_TRADE)->set('investID')->eq($tradeID)->where('id')->in($this->post->profits)->exec();
+            }
         }
 
         if(!dao::isError())

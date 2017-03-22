@@ -13,7 +13,6 @@
 <?php include '../../common/view/header.html.php';?>
 <?php include '../../../sys/common/view/datepicker.html.php';?>
 <?php include '../../../sys/common/view/chosen.html.php';?>
-<?php $mode = $trade->type == 'redeem' ? 'invest' : ($trade->type == 'repay' ? 'loan' : $trade->type);?>
 <?php js::set('mode', $mode);?>
 <?php js::set('contract', $trade->contract);?>
 <ul id='menuTitle'>
@@ -104,6 +103,16 @@
         <tr>
           <th><?php echo $lang->trade->contract;?></th>
           <td class='contractTD'><?php echo html::select('contract', $tradeContract, $trade->contract, "class='form-control'");?></td>
+        </tr>
+        <?php endif;?>
+        <?php if($trade->type == 'invest'):?>
+        <tr>
+          <th><?php echo $lang->trade->redeem;?></th>
+          <td><?php echo html::select('redeems[]', $redeemPairs, $trade->redeems, "class='form-control chosen' multiple");?></td>
+        </tr>
+        <tr>
+          <th><?php echo $lang->trade->in;?></th>
+          <td><?php echo html::select('profits[]', $tradePairs, $trade->profits, "class='form-control chosen' multiple");?></td>
         </tr>
         <?php endif;?>
         <tr>

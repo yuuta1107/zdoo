@@ -249,10 +249,11 @@ class trade extends control
      * Edit a trade.
      * 
      * @param  int    $tradeID 
+     * @param  string $mode
      * @access public
      * @return void
      */
-    public function edit($tradeID)
+    public function edit($tradeID = 0, $mode = '')
     {
         $trade = $this->trade->getByID($tradeID);
         if(empty($trade)) die();
@@ -281,20 +282,57 @@ class trade extends control
         if($trade->order)    $objectType[] = 'order';
         if($trade->contract) $objectType[] = 'contract';
         $this->view->objectType = $objectType;
+
+        $depositorList = $this->loadModel('depositor', 'cash')->getPairs();
+        $currencySign  = $this->loadModel('common', 'sys')->getCurrencySign();
        
         $this->view->title         = $this->lang->trade->edit;
-        $this->view->trade         = $trade;
-        $this->view->depositorList = $this->loadModel('depositor', 'cash')->getPairs();
         $this->view->productList   = $this->loadModel('product')->getPairs();
-        $this->view->orderList     = $orderList;
         $this->view->customerList  = $this->loadModel('customer')->getPairs('client');
         $this->view->traderList    = $this->customer->getPairs('provider');
         $this->view->contractList  = $this->loadModel('contract', 'crm')->getList($customerID = 0);
         $this->view->tradeContract = array('' => '') + $this->loadModel('contract', 'crm')->getPairs($customerID = $trade->trader);
         $this->view->users         = $this->loadModel('user')->getPairs('nodeleted,noforbidden,noclosed');
         $this->view->deptList      = $this->loadModel('tree')->getOptionMenu('dept', 0, $removeRoot = true);
-       
+        $this->view->depositorList = $depositorList;
+        $this->view->orderList     = $orderList;
+        $this->view->trade         = $trade;
+        $this->view->mode          = $mode;
+
         if($trade->type == 'in' or $trade->type == 'out') $this->view->categories = $this->loadModel('tree')->getOptionMenu($trade->type, 0, $removeRoot = true);
+
+        if($trade->type == 'invest')
+        {
+            $redeems     = array();
+            $profits     = array();
+            $tradePairs  = array();
+            $redeemPairs = array();
+            $categories  = $this->trade->getSystemCategoryPairs('invest');
+            $investList  = $this->trade->getList('invest');
+            foreach($investList as $key => $invest)
+            {
+                if($invest->type == 'redeem')
+                {
+                    if($invest->investID == $tradeID) $redeems[] = $invest->id;
+                    if($invest->date > $trade->date)
+                    {
+                        $redeemPairs[$invest->id] = $invest->date . $depositorList[$invest->depositor] . $this->lang->trade->redeem . zget($currencySign, $invest->currency) . $invest->money;
+                    }
+                }
+                if($invest->type == 'in')
+                {
+                    if($invest->investID == $tradeID) $profits[] = $invest->id;
+                    if($invest->date > $trade->date)
+                    {
+                        $tradePairs[$invest->id] = $invest->date . $depositorList[$invest->depositor] . zget($categories, $invest->category) . zget($currencySign, $invest->currency) . $invest->money;
+                    }
+                } 
+            }
+            $trade->redeems = implode(',', $redeems);
+            $trade->profits = implode(',', $profits);
+            $this->view->redeemPairs = $redeemPairs;
+            $this->view->tradePairs  = $tradePairs;
+        }
 
         $this->display();
     }
