@@ -905,7 +905,7 @@ EOT;
      */
     public function batchUpdate($dates, $account, $status = '', $reason = '', $time = '')
     {
-        if($status != '' and strpos(',trip,egress,leave,makeup,overtime,normal,lieu,', ",$status,") === false) return false;
+        if($status != '' and strpos(',normal,leave,makeup,overtime,lieu,trip,egress,', ",$status,") === false) return false;
         if($reason == '') $reason = $status;
 
         foreach($dates as $datetime)
