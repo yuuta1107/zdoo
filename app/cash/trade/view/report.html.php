@@ -88,9 +88,10 @@
     <?php endif;?>
     <?php foreach($monthlyChartDatas as $groupBy => $chartDatas):?>
     <table class='table active-disabled'>
+      <?php foreach($chartDatas as $type => $datas):?>
       <tr class='text-top'>
-        <?php foreach($chartDatas as $type => $datas):?>
-        <td class='w-p25 monthly'>
+        <td></td>
+        <td class='w-p50 monthly'>
           <div class='chart-wrapper text-center'>
             <?php $dateTip = $currentMonth == '00' ? $currentYear . $lang->year : $currentMonth . $lang->month;?>
             <h5><?php echo $dateTip . $lang->trade->$type . $lang->trade->chartList[$groupBy];?></h5>
@@ -99,7 +100,7 @@
         </td>
         <td class='w-p25 monthly'>
           <div style="overflow:auto;" class='table-wrapper'>
-            <table class='table table-fixed table-condensed table-hover table-striped table-chart' data-chart='pie' data-target="<?php echo '#chart-' . $type . '-' . $groupBy;?>" data-animation='false'>
+            <table class='table table-fixed table-condensed table-hover table-striped table-chart' data-scaleLineHeight='1.5' data-chart='pie' data-target="<?php echo '#chart-' . $type . '-' . $groupBy;?>" data-animation='false'>
               <thead>
                 <tr class='text-center'>
                   <th><?php echo $lang->trade->$groupBy;?></th>
@@ -119,8 +120,9 @@
             </table>
           </div>
         </td>
-        <?php endforeach;?>
+        <td></td>
       </tr>
+      <?php endforeach;?>
     </table>
     <?php endforeach;?>
   </div>

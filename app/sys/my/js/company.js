@@ -27,8 +27,9 @@ $(document).ready(function()
 
 function fixScrollWrapper()
 {
-    var tbHeight   = parseFloat($('div.datatable').css('height'));
+    var tbHeight   = $(document).height();
     var wHeight    = $(window).height();
     var wScrollTop = $(window).scrollTop();
-    $('div.datatable>div.scroll-wrapper').css('bottom', tbHeight - wHeight - wScrollTop + 60);
+    var marginBtm  = parseInt($('div.datatable').css('margin-bottom'))
+    $('div.datatable > div.scroll-wrapper').css('bottom', tbHeight - wHeight - wScrollTop - marginBtm);
 }

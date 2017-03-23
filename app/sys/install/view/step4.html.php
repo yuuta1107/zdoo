@@ -32,6 +32,7 @@ include '../../common/view/header.lite.html.php';
             <label for='password' class='col-xs-2 control-label'><?php echo $lang->install->password;?></label>
             <div class='col-xs-8'><?php echo html::input('password', '', "class='form-control' id='password1'");?></div>
           </div>
+          <div><?php printf($lang->install->ip, gethostbyname($_SERVER['HTTP_HOST']));?></div>
         </div>
         <div class='modal-footer'><?php echo html::submitButton();?></div>
       <?php endif; ?>

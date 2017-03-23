@@ -37,7 +37,8 @@ if($config->debug)
 
             if(chartType === 'pie')
             {
-                options = $.extend({scaleShowLabels: true, scaleLabel: '<%=label%>: <%=value%>'}, options);
+                var lineHeight = options.scalelineheight === undefined ? 1 : options.scalelineheight; 
+                options = $.extend({scaleShowLabels: true, scaleLabel: '<%=label%>: <%=value%>', scaleLineHeight: lineHeight}, options);
                 var data = [];
                 var $rows = $table.find('tbody > tr').each(function(idx)
                 {

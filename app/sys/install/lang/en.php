@@ -88,6 +88,7 @@ $lang->install->save2File  = '<div class="text-center"><span class="fail">Try to
 $lang->install->saved2File = 'The config file has saved to "<strong>%s</strong> ".';
 $lang->install->errorNotSaveConfig = 'Do not save the config file.';
 
+$lang->install->ip       = 'IP of ranzhi is %s';
 $lang->install->setAdmin = 'Create an Admin';
 $lang->install->account  = 'Account';
 $lang->install->password = 'Password';
