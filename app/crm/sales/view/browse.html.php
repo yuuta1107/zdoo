@@ -25,7 +25,7 @@
        <th class='w-50px'><?php echo $lang->sales->id;?></th>
        <th class='w-100px'><?php echo $lang->sales->name;?></th>
        <th class='w-200px visible-lg'><?php echo $lang->sales->desc;?></th>
-       <th><?php echo $lang->sales->users;?></th>
+       <th><?php echo $lang->sales->user;?></th>
        <th class='w-100px text-center'><?php echo $lang->actions;?></th>
       </tr>
     </thead>

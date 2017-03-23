@@ -27,7 +27,7 @@
           <td colspan='2'><?php echo html::textarea('desc', '', "rows='2' class='form-control'");?></td>
         </tr>
         <tr>
-          <th><?php echo $lang->sales->users;?></th>
+          <th><?php echo $lang->sales->user;?></th>
           <td colspan='2'><div class='checkbox-users'><?php echo html::checkbox('users', $users);?></div></td>
         </tr>
         <tr>

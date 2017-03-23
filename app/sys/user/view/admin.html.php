@@ -44,7 +44,7 @@ js::set('from', 'admin');
                   <?php $vars = "deptID=$deptID&mode=$mode&query=$query&orderBy=%s&recTotal={$pager->recTotal}&recPerPage={$pager->recPerPage}&pageID={$pager->pageID}";?>
                   <th class='w-60px'><?php commonModel::printOrderLink('id', $orderBy, $vars, $lang->user->id);?></th>
                   <th class='w-120px'><?php commonModel::printOrderLink('realname', $orderBy, $vars, $lang->user->realname);?></th>
-                  <th><?php commonModel::printOrderLink('account', $orderBy, $vars, $lang->user->account);?></th>
+                  <th class='w-120px'><?php commonModel::printOrderLink('account', $orderBy, $vars, $lang->user->account);?></th>
                   <th class='w-60px'><?php commonModel::printOrderLink('gender', $orderBy, $vars, $lang->user->gender);?></th>
                   <th class='w-130px'><?php commonModel::printOrderLink('dept', $orderBy, $vars, $lang->user->dept);?></th>
                   <th class='w-130px visible-lg'><?php commonModel::printOrderLink('join', $orderBy, $vars, $lang->user->join);?></th>

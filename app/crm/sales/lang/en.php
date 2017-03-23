@@ -11,7 +11,7 @@ $lang->sales->delete = 'Delete';
 $lang->sales->id     = 'ID';
 $lang->sales->name   = 'Name';
 $lang->sales->desc   = 'Desciption';
-$lang->sales->users  = 'Users';
+$lang->sales->user   = 'Users';
 
 $lang->sales->group  = 'Groups';
 $lang->sales->priv   = 'Privileges';

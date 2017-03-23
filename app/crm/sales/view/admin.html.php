@@ -11,7 +11,9 @@
  */
 ?>
 <?php include '../../common/view/header.html.php';?>
-<div class='panel'>
+<?php $count = count($groups);?>
+<?php $class = $count < 4 ? 'w-p' . round(30 * $count) : '';?>
+<div class='panel <?php echo $class;?>'>
   <div class='panel-heading'>
     <strong><i class='icon-group'></i> <?php echo $lang->sales->admin;?></strong>
     <span class='panel-actions pull-right'>
@@ -23,7 +25,11 @@
     <table class='table table-hover table-bordered table-striped' id='salesGroup'>
       <thead>
         <tr class='text-center'>
-          <th class='w-120px'><?php echo $lang->sales->users;?></th>
+          <th class='w-120px head'>
+            <div class='out'></div>
+            <span class='group'><?php echo $lang->sales->group;?></span>
+            <span class='user'><?php echo $lang->sales->user;?></span>
+          </th>
           <?php foreach($groups as $group):?>
           <th><?php if(!commonModel::printLink('sales', 'edit', "groupID={$group->id}", $group->name, "class='groupname'")) echo $group->name;?></th>
           <?php endforeach;?>

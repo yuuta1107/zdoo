@@ -11,7 +11,7 @@ $lang->sales->delete = '删除';
 $lang->sales->id     = '编号';
 $lang->sales->name   = '名称';
 $lang->sales->desc   = '描述';
-$lang->sales->users  = '用户';
+$lang->sales->user   = '用户';
 
 $lang->sales->group  = '分组';
 $lang->sales->priv   = '权限';
