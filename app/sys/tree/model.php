@@ -23,9 +23,8 @@ class treeModel extends model
      */
     public function getByID($categoryID, $type = 'article')
     {
-        $category = $this->dao->select('*')->from(TABLE_CATEGORY)->where('alias')->eq($categoryID)->andWhere('type')->eq($type)->fetch();
-        if(!$category) $category = $this->dao->findById((int)$categoryID)->from(TABLE_CATEGORY)->fetch();
-
+        $category = $this->dao->select('*')->from(TABLE_CATEGORY)->where('id')->eq($categoryID)->fetch();
+        if(!$category) $category = $this->dao->select('*')->from(TABLE_CATEGORY)->where('alias')->eq($categoryID)->beginIF($type)->andWhere('type')->eq($type)->fi()->fetch();
         if(!$category) return false;
 
         if($category->type == 'forum') 
@@ -71,17 +70,19 @@ class treeModel extends model
      */
     public function getPairs($categories = '', $type = 'article')
     {
-        $categories = $this->dao->select('id, name')->from(TABLE_CATEGORY)
-            ->where('1=1')
+        $categories = $this->dao->select('*')->from(TABLE_CATEGORY)
+            ->where(1)
             ->beginIF($type)->andWhere('type')->eq($type)->fi()
-            ->fetchPairs();
+            ->fetchAll('id');
 
+        $categoryPairs = array();
+        $categories    = $this->process($categories, $type);
         foreach($categories as $id => $category)
         {
-            if(!$this->hasRight($category)) unset($categories[$id]);
+            $categoryPairs[$id] = $category->name; 
         }
 
-        return $categories;
+        return $categoryPairs;
     }
 
     /**
@@ -157,12 +158,7 @@ class treeModel extends model
             ->orderBy('`order`')
             ->fetchAll('id');
 
-        foreach($categories as $id => $category)
-        {
-            if(!$this->hasRight($category)) unset($categories[$id]);
-        }
-
-        return $categories;
+        return $this->process($categories, $type);
     }
 
     /**
@@ -243,9 +239,9 @@ class treeModel extends model
         $categories = array();
         while($category = $stmt->fetch())
         {
-            if(!$this->hasRight($category)) continue;
             $categories[$category->id] = $category;
         }
+        $categories = $this->process($categories, $type);
 
         /* Cycle them, build the select control.  */
         foreach($categories as $category)
@@ -315,12 +311,16 @@ class treeModel extends model
      */
     public function getTreeMenu($type = 'article', $startCategoryID = 0, $userFunc, $root = 0)
     {
-        $treeMenu = array();
+        $treeMenu   = array();
+        $categories = array();
         $stmt = $this->dbh->query($this->buildQuery($type, $startCategoryID, $root));
         while($category = $stmt->fetch())
         {
-            if(!$this->hasRight($category)) continue;
-
+            $categories[$category->id] = $category;
+        }
+        $categories = $this->process($categories, $type);
+        foreach($categories as $category)
+        {
             $linkHtml = call_user_func($userFunc, $category);
 
             if(isset($treeMenu[$category->id]) and !empty($treeMenu[$category->id]))
@@ -846,17 +846,43 @@ class treeModel extends model
     }
 
     /**
+     * Process categories. 
+     * 
+     * @param  array  $categories 
+     * @param  string $type 
+     * @access public
+     * @return array 
+     */
+    public function process($categories = array(), $type = '')
+    {
+        foreach($categories as $key => $category)
+        {
+            $tmpParent = $category->parent;
+            if(isset($categories[$category->parent])) $category->parent = $categories[$category->parent];
+            if(!$this->hasRight($category, $type)) 
+            {
+                unset($categories[$key]);
+                continue;
+            }
+            $category->parent = $tmpParent;
+        }
+
+        return $categories;
+    }
+
+    /**
      * Check current user has Privilege for this category. 
      *
      * @param  mixed  $category 
+     * @param  string $type
      * @access public
      * @return bool
      */
-    public function hasRight($category)
+    public function hasRight($category = null, $type = '')
     {
         if($this->app->user->admin == 'super') return true;
 
-        if(!is_object($category)) $category = $this->getByID($category);
+        if(!is_object($category)) $category = $this->getByID($category, $type);
         if(!$category) return true;
 
         if(empty($category->users) && empty($category->rights))
@@ -884,7 +910,7 @@ class treeModel extends model
 
         if($hasRight && !empty($category->parent))
         {
-            $hasRight = $this->hasRight($category->parent);
+            $hasRight = $this->hasRight($category->parent, $type);
         }
 
         return $hasRight;
@@ -897,7 +923,7 @@ class treeModel extends model
      * @access public
      * @return void
      */
-    public function checkRight($categoryID)
+    public function checkRight($categoryID = 0)
     {
         if(!$this->hasRight($categoryID))
         {

@@ -22,9 +22,8 @@ class articleModel extends model
     public function getByID($articleID, $replaceTag = true)
     {   
         /* Get article self. */
-        $article = $this->dao->select('*')->from(TABLE_ARTICLE)->where('alias')->eq($articleID)->fetch();
-        if(!$article) $article = $this->dao->select('*')->from(TABLE_ARTICLE)->where('id')->eq($articleID)->fetch();
-
+        $article = $this->dao->select('*')->from(TABLE_ARTICLE)->where('id')->eq($articleID)->fetch();
+        if(!$article) $article = $this->dao->select('*')->from(TABLE_ARTICLE)->where('alias')->eq($articleID)->fetch();
         if(!$article) return false;
         
         /* Get it's categories. */

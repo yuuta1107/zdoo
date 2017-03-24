@@ -133,11 +133,12 @@ class block extends control
         $this->processParams();
 
         /* Do not get trades which user has no privilege to browse their categories. */
-        $denyCategories = array();
-        $outCategories = $this->dao->select('*')->from(TABLE_CATEGORY)->where('type')->eq('out')->fetchAll('id');
-        foreach($outCategories as $id => $outCategory)
+        $denyCategories  = array();
+        $outCategories   = $this->dao->select('*')->from(TABLE_CATEGORY)->where('type')->eq('out')->fetchAll('id');
+        $allowCategories = $this->loadModel('tree')->process($outCategories);
+        foreach(array_diff($outCategories, $allowCategories) as $id => $category)
         {
-            if(!$this->loadModel('tree')->hasRight($outCategory)) $denyCategories[] = $id; 
+            $denyCategories[] = $id; 
         }
 
         $rights = $this->app->user->rights;

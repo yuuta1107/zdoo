@@ -923,14 +923,7 @@ class docModel extends model
 
             if(!$hasRight && !empty($object->groups))
             {
-                $count = $this->dao->select('count(t2.account) as count')
-                    ->from(TABLE_USER)->alias('t1')
-                    ->leftJoin(TABLE_USERGROUP)->alias('t2')->on('t1.account = t2.account')
-                    ->where('t1.deleted')->eq(0)
-                    ->andWhere('t1.account')->eq($this->app->user->account)
-                    ->andWhere('t2.group')->in($object->groups)
-                    ->fetch('count');
-                $hasRight = $count > 0;
+                $hasRight = !empty(array_intersect($this->app->user->groups, explode(',', $object->groups)));
             }
         }
 
