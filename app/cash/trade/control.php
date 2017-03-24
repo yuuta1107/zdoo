@@ -188,7 +188,7 @@ class trade extends control
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => inlink('browse', "type=$type")));
         }
         $orderList = $this->loadModel('order', 'crm')->getList();
-        $orders    = $this->order->getPairs($customerID = 0);
+        $orders    = $this->order->getPairs();
         foreach($orderList as $id => $order) $order->name = $orders[$id];
 
         unset($this->lang->trade->menu);
@@ -275,7 +275,7 @@ class trade extends control
         }
 
         $orderList = $this->loadModel('order', 'crm')->getList();
-        $orders    = $this->order->getPairs($customerID = 0);
+        $orders    = $this->order->getPairs();
         foreach($orderList as $id => $order) $order->name = $orders[$id];
         
         $objectType = array();
@@ -846,6 +846,8 @@ class trade extends control
             $deptList   = $this->tree->getPairs(0, 'dept');
             $categories = $this->lang->trade->categoryList + $expenseTypes + $incomeTypes;
             $products   = $this->loadModel('product')->getPairs();
+            $orders     = $this->loadModel('order', 'crm')->getPairs();
+            $contracts  = $this->loadModel('contract', 'crm')->getPairs();
 
             $details = $this->dao->select('*')->from(TABLE_TRADE)->where('parent')->ne('')->fetchGroup('parent');
 
@@ -871,18 +873,18 @@ class trade extends control
                 $trade->desc = str_replace("<br />", "\n", $trade->desc);
                 $trade->desc = str_replace('"', '""', $trade->desc);
 
-                if(isset($depositors[$trade->depositor]))     $trade->depositor = $depositors[$trade->depositor];
-                if(isset($customers[$trade->trader]))         $trade->trader    = $customers[$trade->trader] . "(#$trade->trader)";
-                if(isset($deptList[$trade->dept]))            $trade->dept      = $deptList[$trade->dept];
-                if(isset($categories[$trade->category]))      $trade->category  = $categories[$trade->category];
-                if(isset($products[$trade->product]))         $trade->product   = $products[$trade->product];
-                if(isset($orders[$trade->order]))             $trade->order     = $orders[$trade->order];
-                if(isset($contracts[$trade->contract]))       $trade->contract  = $contracts[$trade->contract];
-                if(isset($tradeLang->typeList[$trade->type])) $trade->type      = $tradeLang->typeList[$trade->type];
-                if(isset($this->lang->currencyList[$trade->currency])) $trade->currency = $this->lang->currencyList[$trade->currency];
+                $trade->depositor = zget($depositors, $trade->depositor, '');
+                $trade->trader    = isset($customers[$trade->trader]) ? $customers[$trade->trader] . "(#$trade->trader)" : '';
+                $trade->dept      = zget($deptList, $trade->dept, '');
+                $trade->category  = zget($categories, $trade->category, '');
+                $trade->product   = zget($products, $trade->product, '');
+                $trade->order     = zget($orders, $trade->order, '');
+                $trade->contract  = zget($contracts, $trade->contract, '');
+                $trade->type      = zget($tradeLang->typeList, $trade->type, '');
+                $trade->currency  = zget($this->lang->currencyList, $trade->currency, '');
 
-                if(isset($users[$trade->createdBy])) $trade->createdBy = $users[$trade->createdBy];
-                if(isset($users[$trade->editedBy]))  $trade->editedBy  = $users[$trade->editedBy];
+                $trade->createdBy = zget($users, $trade->createdBy, '');
+                $trade->editedBy  = zget($users, $trade->editedBy, '');
 
                 $trade->createdDate = substr($trade->createdDate, 0, 10);
                 $trade->editedDate  = substr($trade->editedDate,  0, 10);

@@ -53,7 +53,11 @@
            <?php if(($app->user->admin == 'super' or isset($app->user->rights['balance']['browse'])) and isset($balances[$depositor->currency][$depositor->id])):?>
              <span  class='label-balance text-danger'>
              <?php echo zget($lang->currencySymbols, $depositor->currency)?>
+             <?php if($balances[$depositor->currency][$depositor->id]->money == 0):?>
+             <?php echo $balances[$depositor->currency][$depositor->id]->money;?>
+             <?php else:?>
              <?php echo formatMoney($balances[$depositor->currency][$depositor->id]->money);?>
+             <?php endif;?>
              </span>
            <?php endif;?>
           </div>

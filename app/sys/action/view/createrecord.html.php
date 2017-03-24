@@ -113,6 +113,7 @@
       <th></th>
       <td>
         <?php if($objectType == 'contact') echo html::hidden('contact', $objectID);?>
+        <?php if($objectType == 'contact' && empty($customers)) echo html::hidden('date', date(DT_DATETIME1));?>
         <?php echo html::submitButton() . html::hidden('customer', $customer);?>
         <div id='duplicateError' class='hide'></div>
       </td>

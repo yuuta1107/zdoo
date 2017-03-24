@@ -85,8 +85,14 @@ class contactModel extends model
             ->andWhere('t2.customer')->in($customerIdList)
             ->fi()
             ->fetchPairs();
+        $leadsList = $this->dao->select('id')->from(TABLE_CONTACT)
+            ->where('deleted')->eq('0')
+            ->andWhere('status', true)->eq('ignore')
+            ->orWhere('assignedTo')->eq($this->app->user->account)
+            ->markRight(1)
+            ->fetchPairs();
 
-        return $contactList;
+        return array_merge($contactList, $leadsList);
     }
 
     /** 
@@ -529,6 +535,7 @@ class contactModel extends model
      */
     public function transform($contactID)
     {
+        $customerID = 0;
         if(!$this->post->selectCustomer)
         {
             $customer = new stdclass();
@@ -558,13 +565,16 @@ class contactModel extends model
         }
         else
         {
+            $customerID = $this->post->customer;
             $resume = new stdclass();
             $resume->contact  = $contactID;
-            $resume->customer = $this->post->customer;
+            $resume->customer = $customerID;
 
             $this->dao->insert(TABLE_RESUME)->data($resume)->exec();
             if(!dao::isError()) $this->dao->update(TABLE_CONTACT)->set('resume')->eq($this->dao->lastInsertID())->set('status')->eq('normal')->where('id')->eq($contactID)->exec();
         }
+
+        $this->dao->update(TABLE_ACTION)->set('customer')->eq($customerID)->where('contact')->eq($contactID)->andWhere('action')->eq('record')->exec();
 
         return !dao::isError();
     }

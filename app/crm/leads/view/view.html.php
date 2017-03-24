@@ -28,9 +28,13 @@
     <div class='page-actions'>
       <?php
       echo "<div class='btn-group'>";
+      commonModel::printLink('leads', 'assign', "contactID=$contact->id", $lang->contact->assign, "class='btn' data-toggle='modal'");
       commonModel::printLink('action', 'createRecord', "objectType=contact&objectID={$contact->id}&customer=&history=", $lang->contact->record, "data-toggle='modal' data-width='860' class='btn'");
       commonModel::printLink('address', 'browse', "objectType=contact&objectID=$contact->id", $lang->contact->address, "data-toggle='modal' class='btn'");
       commonModel::printLink('leads', 'edit', "contactID=$contact->id", $lang->edit, "class='btn'");
+      commonModel::printLink('leads', 'transform', "contactID=$contact->id", $lang->confirm, "class='btn' data-toggle='modal'");
+      if($contact->status != 'ignore') commonModel::printLink('leads', 'ignore', "contactID=$contact->id", $lang->ignore, "class='btn' data-toggle='modal'");
+      if($contact->status == 'ignore') commonModel::printLink('leads', 'delete', "contactID=$contact->id", $lang->delete, "class='btn deleter'");
       echo html::a('#commentBox', $this->lang->comment, "class='btn btn-default' onclick=setComment()");
       echo "</div>";
 

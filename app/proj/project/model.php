@@ -381,11 +381,24 @@ class projectModel extends model
      * 
      * @param  int    $projectID 
      * @access public
-     * @return void
+     * @return bool 
      */
     public function deleteTasks($projectID)
     {
-        $this->dao->update(TABLE_TASK)->set('deleted')->eq('1')->where('project')->eq($projectID)->andWhere('deleted')->eq('0')->exec();
+        $this->dao->update(TABLE_TASK)->set('deleted')->eq('1')->where('project')->eq($projectID)->exec();
+        return !dao::isError();
+    }
+
+    /**
+     * Delete doclib of project.
+     * 
+     * @param  int    $projectID 
+     * @access public
+     * @return bool 
+     */
+    public function deleteDoclib($projectID)
+    {
+        $this->dao->update(TABLE_DOCLIB)->set('deleted')->eq('1')->where('project')->eq($projectID)->exec();
         return !dao::isError();
     }
 

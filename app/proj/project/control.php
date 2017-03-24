@@ -229,6 +229,7 @@ class project extends control
         $this->checkPriv($projectID, '', 'json');
         $this->project->delete(TABLE_PROJECT, $projectID);
         $this->project->deleteTasks($projectID);
+        $this->project->deleteDoclib($projectID);
         if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
         $this->send(array('result' => 'success'));
     }
