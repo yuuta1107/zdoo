@@ -30,13 +30,13 @@ class forumModel extends model
         $this->loadModel('tree');
         foreach($rawBoards[0] as $parentBoard)
         {
-            if(!$this->tree->hasRight($parentBoard->id)) continue;
+            if(!$this->tree->hasRight($parentBoard)) continue;
 
             if(isset($rawBoards[$parentBoard->id]))
             {
                 foreach($rawBoards[$parentBoard->id] as $key => $childBoard) 
                 {
-                    if(!$this->tree->hasRight($childBoard->id)) unset($rawBoards[$parentBoard->id][$key]);
+                    if(!$this->tree->hasRight($childBoard)) unset($rawBoards[$parentBoard->id][$key]);
                     
                     $childBoard->lastPostReplies = isset($replies[$childBoard->postID]) ? $replies[$childBoard->postID] : 0;
                     $childBoard->moderators      = explode(',', trim($childBoard->moderators, ','));

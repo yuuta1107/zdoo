@@ -1272,6 +1272,7 @@ class upgradeModel extends model
             $lib->name    = $this->lang->doc->projectMainLib;
             $lib->main    = 1;
             $lib->private = 0;
+            $lib->createdDate = helper::now();
 
             $teams = $this->dao->select('account')->from(TABLE_TEAM)->where('type')->eq('project')->andWhere('id')->eq($projectID)->fetchPairs('account', 'account');
             $lib->users = join(',', $teams);

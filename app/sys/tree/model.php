@@ -78,7 +78,7 @@ class treeModel extends model
 
         foreach($categories as $id => $category)
         {
-            if(!$this->hasRight($id)) unset($categories[$id]);
+            if(!$this->hasRight($category)) unset($categories[$id]);
         }
 
         return $categories;
@@ -159,7 +159,7 @@ class treeModel extends model
 
         foreach($categories as $id => $category)
         {
-            if(!$this->hasRight($id)) unset($categories[$id]);
+            if(!$this->hasRight($category)) unset($categories[$id]);
         }
 
         return $categories;
@@ -243,7 +243,7 @@ class treeModel extends model
         $categories = array();
         while($category = $stmt->fetch())
         {
-            if(!$this->hasRight($category->id)) continue;
+            if(!$this->hasRight($category)) continue;
             $categories[$category->id] = $category;
         }
 
@@ -319,7 +319,7 @@ class treeModel extends model
         $stmt = $this->dbh->query($this->buildQuery($type, $startCategoryID, $root));
         while($category = $stmt->fetch())
         {
-            if(!$this->hasRight($category->id)) continue;
+            if(!$this->hasRight($category)) continue;
 
             $linkHtml = call_user_func($userFunc, $category);
 
@@ -848,15 +848,15 @@ class treeModel extends model
     /**
      * Check current user has Privilege for this category. 
      *
-     * @param  int    $category 
+     * @param  mixed  $category 
      * @access public
      * @return bool
      */
-    public function hasRight($categoryID)
+    public function hasRight($category)
     {
         if($this->app->user->admin == 'super') return true;
 
-        $category = $this->getByID($categoryID);
+        if(!is_object($category)) $category = $this->getByID($category);
         if(!$category) return true;
 
         if(empty($category->users) && empty($category->rights))
@@ -873,14 +873,7 @@ class treeModel extends model
 
             if(!$hasRight && !empty($category->rights))
             {
-                $count = $this->dao->select('count(t2.account) as count')
-                    ->from(TABLE_USER)->alias('t1')
-                    ->leftJoin(TABLE_USERGROUP)->alias('t2')->on('t1.account = t2.account')
-                    ->where('t1.deleted')->eq(0)
-                    ->andWhere('t1.account')->eq($this->app->user->account)
-                    ->andWhere('t2.group')->in($category->rights)
-                    ->fetch('count');
-                $hasRight = $count > 0;
+                $hasRight = !empty(array_intersect($this->app->user->groups, explode(',', $category->rights)));
             }
 
             if(!$hasRight && !empty($category->moderators))

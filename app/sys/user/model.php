@@ -329,6 +329,8 @@ class userModel extends model
 
         $user->password = $this->post->rawPassword;
 
+        $groups = $this->loadModel('group')->getByAccount($account);
+        $user->groups = array_keys($groups);
         $user->rights = $this->authorize($user);
         $this->session->set('user', $user);
         $this->app->user = $this->session->user;
@@ -431,6 +433,8 @@ class userModel extends model
         /* Update keep login cookie info. */
         $this->keepLogin($user);
 
+        $groups = $this->loadModel('group')->getByAccount($account);
+        $user->groups = array_keys($groups);
         $user->rights = $this->authorize($user);
         $this->session->set('user', $user);
         $this->app->user = $this->session->user;

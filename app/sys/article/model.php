@@ -82,18 +82,7 @@ class articleModel extends model
             ->fetchAll('id');
         if(!$articles) return array();
 
-        /* Get categories for these articles. */
-        $categories = $this->dao->select('t2.id, t2.name, t2.alias, t1.id AS article')
-            ->from(TABLE_RELATION)->alias('t1')
-            ->leftJoin(TABLE_CATEGORY)->alias('t2')->on('t1.category = t2.id')
-            ->where('t2.type')->eq($type)
-            ->beginIf($categories)->andWhere('t1.category')->in($categories)->fi()
-            ->fetchGroup('article', 'id');
-
-        /* Assign categories to it's article. */
-        foreach($articles as $key => $article) $article->categories = isset($categories[$article->id]) ? $categories[$article->id] : array();
-
-        $articles = $this->process($articles, $orderBy, $pager);
+        $articles = $this->process($articles, $type, $categories, $orderBy, $pager);
 
         /* Get images for these articles. */
         $images = $this->loadModel('file')->getByObject($type, array_keys($articles), $isImage = true);
@@ -427,16 +416,28 @@ class articleModel extends model
      * Process articles and fix pager. 
      * 
      * @param  array  $articles 
+     * @param  string $type
+     * @param  array  $categories
      * @param  string $orderBy
      * @param  object $pager
      * @access public
      * @return array
      */
-    public function process($articles = array(), $orderBy = 'id_desc', $pager = null)
+    public function process($articles = array(), $type = '', $categories = array(), $orderBy = 'id_desc', $pager = null)
     {
+        /* Get categories for these articles. */
+        $categories = $this->dao->select('t2.id, t2.name, t2.alias, t1.id AS article')
+            ->from(TABLE_RELATION)->alias('t1')
+            ->leftJoin(TABLE_CATEGORY)->alias('t2')->on('t1.category = t2.id')
+            ->where('t2.type')->eq($type)
+            ->beginIf($categories)->andWhere('t1.category')->in($categories)->fi()
+            ->fetchGroup('article', 'id');
+
         $idList = array();
         foreach($articles as $key => $article)
         {
+            /* Assign categories to it's article. */
+            $article->categories = isset($categories[$article->id]) ? $categories[$article->id] : array();
             if($this->hasRight($article)) $idList[] = $article->id;
         }
 
@@ -481,14 +482,7 @@ class articleModel extends model
 
             if(!$hasRight && !empty($article->groups))
             {
-                $count = $this->dao->select('count(t2.account) as count')
-                    ->from(TABLE_USER)->alias('t1')
-                    ->leftJoin(TABLE_USERGROUP)->alias('t2')->on('t1.account = t2.account')
-                    ->where('t1.deleted')->eq(0)
-                    ->andWhere('t1.account')->eq($this->app->user->account)
-                    ->andWhere('t2.group')->in($article->groups)
-                    ->fetch('count');
-                $hasRight = $count > 0;
+                $hasRight = !empty(array_intersect($this->app->user->groups, explode(',', $article->groups)));
             }
         }
 
@@ -508,7 +502,7 @@ class articleModel extends model
                 $this->loadModel('tree');
                 foreach($article->categories as $category)
                 {
-                    $hasRight = $this->tree->hasRight($category->id);
+                    $hasRight = $this->tree->hasRight($category);
                     if($hasRight) break;
                 }
             }

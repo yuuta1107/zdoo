@@ -48,7 +48,7 @@ class tradeModel extends model
         $outCategories = $this->dao->select('*')->from(TABLE_CATEGORY)->where('type')->eq('out')->fetchAll('id');
         foreach($outCategories as $id => $outCategory)
         {
-            if(!$this->loadModel('tree')->hasRight($id)) $denyCategories[] = $id; 
+            if(!$this->loadModel('tree')->hasRight($outCategory)) $denyCategories[] = $id; 
         }
 
         $rights = $this->app->user->rights;
