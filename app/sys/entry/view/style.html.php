@@ -25,7 +25,11 @@ include '../../common/view/header.html.php';
         </tr>
         <tr>
           <th class='w-100px'><?php echo $lang->entry->open;?></th>
+          <?php if($entry->buildin):?>
+          <td class='w-p50'><?php echo html::select('open', $lang->entry->openList, 'iframe', 'class="form-control disabled" disabled');?></td>
+          <?php else:?>
           <td class='w-p50'><?php echo html::select('open', $lang->entry->openList, $entry->open, 'class="form-control"');?></td>
+          <?php endif;?>
           <td></td><td></td>
         </tr>
         <tr>

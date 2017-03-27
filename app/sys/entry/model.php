@@ -265,6 +265,7 @@ class entryModel extends model
         $entry = fixer::input('post')->get();
 
         if($entry->size == 'custom') $entry->size = helper::jsonEncode(array('width' => (int)$entry->width, 'height' => (int)$entry->height));
+        if($oldEntry->buildin) $entry->open = 'iframe';
         unset($entry->logo);
 
         $this->dao->update(TABLE_ENTRY)->data($entry, $skip = 'width,height,files')
