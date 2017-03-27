@@ -76,6 +76,7 @@ $lang->upgrade->fromVersions['3_5']      = '3.5';
 $lang->upgrade->fromVersions['3_6']      = '3.6';
 $lang->upgrade->fromVersions['3_7']      = '3.7';
 $lang->upgrade->fromVersions['4_0']      = '4.0';
+$lang->upgrade->fromVersions['4_1']      = '4.1';
 
 $lang->upgrade->deleteTips   = 'Need to delete some files. The commands in Linux are:<br />';
 $lang->upgrade->deleteDir    = '<code>rm -fr %s</code>';
