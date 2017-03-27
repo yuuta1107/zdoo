@@ -163,6 +163,7 @@ class customerModel extends model
                 ->add('createdBy', $this->app->user->account)
                 ->add('assignedTo', $this->app->user->account)
                 ->add('createdDate', $now)
+                ->remove('address')
                 ->get();
 
             /* check field before insert. */
@@ -241,6 +242,18 @@ class customerModel extends model
                 $this->action->logHistory($actionID, $changes);
             }
         }
+
+        if(!empty($customerID) && $this->post->address['location'])
+        {
+            $address = new stdclass();
+            $address->objectType = 'customer';
+            $address->objectID   = $customerID;
+            $address->title      = $this->post->address['title'];
+            $address->area       = $this->post->address['area'];
+            $address->location   = $this->post->address['location'];
+
+            $this->dao->insert(TABLE_ADDRESS)->data($address)->autoCheck()->exec();
+        }   
 
         $locate = $relation == 'provider' ? helper::createLink('provider', 'browse') : helper::createLink('customer', 'browse');
         return array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => $locate, 'customerID' => $customerID);

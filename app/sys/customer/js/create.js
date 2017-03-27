@@ -53,4 +53,15 @@ $(document).ready(function()
         }
     });
     $('#selectContact').change();
+
+    $('#addresslocation').change(function()
+    {
+        $.getJSON(createLink('customer', 'ajaxGetArea', 'location=' + $(this).val()), function(area)
+        {
+            if(area != 0)
+            {
+                $('#addressarea').val(area).trigger('chosen:updated');
+            }
+        });
+    });
 })

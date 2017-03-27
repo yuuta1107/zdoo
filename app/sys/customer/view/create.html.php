@@ -84,6 +84,21 @@
           <td><?php echo html::select('level', $levelList, 0, "class='form-control'");?></td>
         </tr>
         <tr>
+          <?php $this->app->loadLang('address', 'crm');?>
+          <th class='w-60px'><?php echo $lang->customer->address;?></th>
+          <td colspan='2'>
+            <div class='col-md-3 nopaddingleft'>
+              <?php echo html::input('address[title]', '', "id='addresstitle' class='form-control' placeholder='{$lang->address->title}'")?>
+            </div>
+            <div class='col-md-3'>
+              <?php echo html::select('address[area]', $areaList, '', "id='addressarea' class='form-control chosen' data-placeholder='{$lang->address->area}'")?>
+            </div>
+            <div class='col-md-6 nopaddingright'>
+              <?php echo html::input('address[location]', '', "id='addresslocation' class='form-control' placeholder='{$lang->address->location}'")?>
+            </div>
+          </td>
+        </tr>
+        <tr>
           <th><?php echo $lang->customer->intension;?></th>
           <td colspan='2'><?php echo html::textarea('intension', '', "rows='2' class='form-control'");?></td>
         </tr>
