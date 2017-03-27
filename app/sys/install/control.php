@@ -145,6 +145,20 @@ class install extends control
         }
         else
         {
+            $this->view->domainIP = gethostbyname($_SERVER['HTTP_HOST']);
+            $this->view->serverIP = $_SERVER['SERVER_ADDR'];
+            try
+            {
+                $socket   = socket_create(AF_INET, SOCK_STREAM, 6);  
+                $ret      = socket_connect($socket,'ns1.dnspod.net',6666);  
+                $publicIP = socket_read($socket, 16);  
+                socket_close($socket);  
+                $this->view->publicIP = $publicIP;
+            }
+            catch(Exception $exception)
+            {
+                $this->view->publicIP = '';
+            }
             $this->view->title = $this->lang->install->setAdmin;
             $this->display();
         }

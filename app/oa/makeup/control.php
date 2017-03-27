@@ -92,9 +92,9 @@ class makeup extends control
             { 
                 if($reviewedBy == $this->app->user->account)
                 {
-                    $deptList     = $this->loadModel('tree')->getPairs('', 'dept');
-                    $deptList[0]  = '';
-                    $makeupList = $this->makeup->getList($type, $currentYear, $currentMonth, '', array_keys($deptList), '', $orderBy);
+                    $deptList    = $this->loadModel('tree')->getPairs('', 'dept');
+                    $deptList[0] = '';
+                    $makeupList  = $this->makeup->getList($type, $currentYear, $currentMonth, '', array_keys($deptList), '', $orderBy);
                 }
             }
             else
@@ -126,7 +126,7 @@ class makeup extends control
         $this->view->yearList     = $yearList;
         $this->view->deptList     = $deptList;
         $this->view->users        = $this->loadModel('user')->getPairs();
-        $this->view->makeupList = $makeupList;
+        $this->view->makeupList   = $makeupList;
         $this->view->date         = $date;
         $this->view->orderBy      = $orderBy;
         $this->display();
@@ -154,7 +154,7 @@ class makeup extends control
         else
         {
             $createdUser = $this->loadModel('user')->getByAccount($makeup->createdBy);
-            $dept = $this->loadModel('tree')->getByID($createdUser->dept);
+            $dept        = $this->loadModel('tree')->getByID($createdUser->dept);
             if((empty($dept) or ",{$this->app->user->account}," != $dept->moderators)) $this->send(array('result' => 'fail', 'message' => $this->lang->makeup->denied));
         }
 
@@ -183,7 +183,7 @@ class makeup extends control
 
         if($status == 'reject')
         {
-            $this->view->title    = $this->lang->makeup->review;
+            $this->view->title  = $this->lang->makeup->review;
             $this->view->makeup = $makeup;
             $this->display();
         }
@@ -205,7 +205,7 @@ class makeup extends control
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
 
             $makeupID = $result;
-            $actionID   = $this->loadModel('action')->create('makeup', $makeupID, 'created');
+            $actionID = $this->loadModel('action')->create('makeup', $makeupID, 'created');
             $this->sendmail($makeupID, $actionID);
             
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => inlink('personal')));
@@ -213,12 +213,12 @@ class makeup extends control
 
         if($date)
         {
-            $date     = date('Y-m-d', strtotime($date));
+            $date   = date('Y-m-d', strtotime($date));
             $makeup = $this->makeup->getByDate($date, $this->app->user->account);
             if($makeup) $this->locate(inlink('edit', "id=$makeup->id"));
         }
 
-        $leavePairs = array();
+        $leavePairs = array('');
         $leaveList  = $this->loadModel('leave', 'oa')->getList('company', '', '', $this->app->user->account, '', 'pass');
         $makeupList = $this->makeup->getList('company', '', '', $this->app->user->account);
 
@@ -310,10 +310,10 @@ class makeup extends control
      */
     public function view($id, $type = '')
     {
-        $this->view->title    = $this->lang->makeup->view;
-        $this->view->makeup = $this->makeup->getByID($id);
-        $this->view->type     = $type;
-        $this->view->users    = $this->loadModel('user')->getPairs();
+        $this->view->title      = $this->lang->makeup->view;
+        $this->view->makeup     = $this->makeup->getByID($id);
+        $this->view->type       = $type;
+        $this->view->users      = $this->loadModel('user')->getPairs();
         $this->view->preAndNext = $this->loadModel('common', 'sys')->getPreAndNextObject('makeup', $id);
         $this->display();
     }
@@ -394,11 +394,11 @@ class makeup extends control
 
         /* Set toList and ccList. */
         $makeup = $this->makeup->getById($makeupID);
-        $users    = $this->loadModel('user')->getPairs();
-        $toList   = '';
+        $users  = $this->loadModel('user')->getPairs();
+        $toList = '';
         if($action->action == 'reviewed')
         {
-            $toList = $makeup->createdBy;
+            $toList  = $makeup->createdBy;
             $subject = "{$this->lang->makeup->common}{$this->lang->makeup->statusList[$makeup->status]}#{$makeup->id} " . zget($users, $makeup->createdBy) . " {$makeup->begin}~{$makeup->end}";
         }
         if($action->action == 'created' or $action->action == 'revoked' or $action->action == 'commited')
@@ -422,7 +422,7 @@ class makeup extends control
         $toList = $this->loadModel('action')->sendNotice($actionID, $toList);
 
         /* Create the email content. */
-        $this->view->makeup  = $makeup;
+        $this->view->makeup = $makeup;
         $this->view->action = $action;
         $this->view->users  = $users;
 

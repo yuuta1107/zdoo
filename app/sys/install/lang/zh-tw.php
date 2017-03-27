@@ -88,7 +88,9 @@ $lang->install->save2File  = '<span class="red">嘗試寫入配置檔案，失�
 $lang->install->saved2File = '配置信息已經成功保存到" <strong>%s</strong> "中。您後面還可繼續修改此檔案。';
 $lang->install->errorNotSaveConfig = '還沒有保存配置檔案';
 
-$lang->install->ip       = '系統的IP是：%s';
+$lang->install->domainIP = '域名映射的IP是：%s';
+$lang->install->serverIP = '伺服器的內網IP是：%s';
+$lang->install->publicIP = '伺服器的公網IP是：%s';
 $lang->install->setAdmin = '設置管理員';
 $lang->install->account  = '帳號';
 $lang->install->password = '密碼';

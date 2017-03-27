@@ -173,7 +173,7 @@ class lieu extends control
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => inlink('personal')));
         }
 
-        $overtimePairs = array();
+        $overtimePairs = array('');
         $overtimeList  = $this->loadModel('overtime', 'oa')->getList('company', '', '', $this->app->user->account, '', 'pass');
         $lieuList      = $this->lieu->getList('company', '', '', $this->app->user->account);
 
@@ -195,7 +195,7 @@ class lieu extends control
         }
 
         $this->view->title         = $this->lang->lieu->create;
-        $this->view->overtimePairs = array(0 => '') + $overtimePairs;
+        $this->view->overtimePairs = $overtimePairs;
         $this->display();
     }
 
