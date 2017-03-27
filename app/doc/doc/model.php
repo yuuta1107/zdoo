@@ -923,7 +923,8 @@ class docModel extends model
 
             if(!$hasRight && !empty($object->groups))
             {
-                $hasRight = !empty(array_intersect($this->app->user->groups, explode(',', $object->groups)));
+                $groups   = array_intersect($this->app->user->groups, explode(',', $object->groups));
+                $hasRight = !empty($groups);
             }
         }
 

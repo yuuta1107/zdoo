@@ -481,7 +481,8 @@ class articleModel extends model
 
             if(!$hasRight && !empty($article->groups))
             {
-                $hasRight = !empty(array_intersect($this->app->user->groups, explode(',', $article->groups)));
+                $groups   = array_intersect($this->app->user->groups, explode(',', $article->groups));
+                $hasRight = !empty($groups);
             }
         }
 

@@ -899,7 +899,8 @@ class treeModel extends model
 
             if(!$hasRight && !empty($category->rights))
             {
-                $hasRight = !empty(array_intersect($this->app->user->groups, explode(',', $category->rights)));
+                $groups   = array_intersect($this->app->user->groups, explode(',', $category->rights));
+                $hasRight = !empty($groups);
             }
 
             if(!$hasRight && !empty($category->moderators))
