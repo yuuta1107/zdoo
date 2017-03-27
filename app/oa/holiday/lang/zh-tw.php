@@ -16,4 +16,4 @@ $lang->holiday->end   = '結束日期';
 $lang->holiday->holiday = '假期';
 
 $lang->holiday->typeList['holiday'] = '假期';
-$lang->holiday->typeList['working'] = '調休';
+$lang->holiday->typeList['working'] = '補班';
