@@ -97,6 +97,7 @@ class lieuModel extends model
      */
     public function getReviewedBy()
     {
+        $this->app->loadModuleConfig('attend');
         return empty($this->config->lieu->reviewedBy) ? (empty($this->config->attend->reviewedBy) ? '' : $this->config->attend->reviewedBy) : $this->config->lieu->reviewedBy;
     }
 

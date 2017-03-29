@@ -129,6 +129,7 @@ class leaveModel extends model
      */
     public function getReviewedBy()
     {
+        $this->app->loadModuleConfig('attend');
         return empty($this->config->leave->reviewedBy) ? (empty($this->config->attend->reviewedBy) ? '' : $this->config->attend->reviewedBy) : $this->config->leave->reviewedBy;
     }
 
@@ -315,10 +316,10 @@ class leaveModel extends model
         $oldLeave = $this->getByID($id);
         $backDate = substr($oldLeave->backDate, 0, 10);
         $backTime = substr($oldLeave->backDate, 11);
-        $begin  = $oldLeave->begin;
-        $start  = $oldLeave->start;
-        $end    = $backDate;
-        $finish = $backTime;
+        $begin    = $oldLeave->begin;
+        $start    = $oldLeave->start;
+        $end      = $backDate;
+        $finish   = $backTime;
 
         if($oldLeave->begin == $backDate) 
         {

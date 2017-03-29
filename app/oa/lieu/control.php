@@ -82,7 +82,6 @@ class lieu extends control
         }
         elseif($type == 'browseReview')
         {
-            $this->app->loadModuleConfig('attend');
             $reviewedBy = $this->lieu->getReviewedBy();
             if($reviewedBy)
             { 
@@ -319,7 +318,6 @@ class lieu extends control
         $lieu = $this->lieu->getById($id);
 
         /* Check privilage. */
-        $this->app->loadModuleConfig('attend');
         $reviewedBy = $this->lieu->getReviewedBy();
         if($reviewedBy)
         { 
@@ -370,7 +368,6 @@ class lieu extends control
         }
         if($action->action == 'created' or $action->action == 'revoked' or $action->action == 'commited')
         {
-            $this->app->loadModuleConfig('attend');
             $reviewedBy = $this->lieu->getReviewedBy();
             if($reviewedBy)
             {

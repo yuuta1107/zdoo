@@ -86,7 +86,6 @@ class overtime extends control
         }
         elseif($type == 'browseReview')
         {
-            $this->app->loadModuleConfig('attend');
             $reviewedBy = $this->overtime->getReviewedBy();
             if($reviewedBy)
             { 
@@ -145,7 +144,6 @@ class overtime extends control
         $overtime = $this->overtime->getById($id);
 
         /* Check privilage. */
-        $this->app->loadModuleConfig('attend');
         $reviewedBy = $this->overtime->getReviewedBy();
         if($reviewedBy)
         { 
@@ -359,7 +357,6 @@ class overtime extends control
         }
         if($action->action == 'created' or $action->action == 'revoked' or $action->action == 'commited')
         {
-            $this->app->loadModuleConfig('attend');
             $reviewedBy = $this->overtime->getReviewedBy();
             if($reviewedBy)
             {

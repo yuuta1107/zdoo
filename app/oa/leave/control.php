@@ -82,7 +82,6 @@ class leave extends control
         }
         elseif($type == 'browseReview')
         {
-            $this->app->loadModuleConfig('attend');
             $reviewedBy = $this->leave->getReviewedBy();
             if($reviewedBy)
             { 
@@ -152,7 +151,6 @@ class leave extends control
         $leave = $this->leave->getById($id);
 
         /* Check privilage. */
-        $this->app->loadModuleConfig('attend');
         $reviewedBy = $this->leave->getReviewedBy();
         if($reviewedBy)
         { 
@@ -229,9 +227,8 @@ class leave extends control
         $leave = $this->leave->getById($id);
 
         /* check privilage. */
-        $this->app->loadModuleConfig('attend');
         $reviewedBy = $this->leave->getReviewedBy();
-        if(!reviewedBy)
+        if(!$reviewedBy)
         {
             $createdUser = $this->loadModel('user')->getByAccount($leave->createdBy);
             $dept        = $this->loadModel('tree')->getByID($createdUser->dept);
@@ -262,13 +259,13 @@ class leave extends control
     /**
      * Back to report.
      * 
-     * @param  int    $id 
+     * @param  int    $leaveID 
      * @access public
      * @return void
      */
-    public function back($id)
+    public function back($leaveID = 0)
     {
-        $leave = $this->leave->getByID($id);
+        $leave = $this->leave->getByID($leaveID);
         if($leave->createdBy != $this->app->user->account) 
         {
             $locate     = helper::safe64Encode(helper::createLink('oa.leave', 'personal'));
@@ -279,8 +276,10 @@ class leave extends control
         if($_POST)
         {
             if($this->post->backDate < ($leave->begin . ' ' . $leave->start)) $this->send(array('result' => 'fail', 'message' => array('backDate' => $this->lang->leave->wrongBackDate)));
-            $this->leave->back($id);
+            $this->leave->back($leaveID);
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
+            $actionID = $this->loadModel('action')->create('leave', $leaveID, 'reported');
+            $this->sendmail($leaveID, $actionID);
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
         }
 
@@ -333,9 +332,8 @@ class leave extends control
             $toList = $leave->createdBy;
             $subject = "{$this->lang->leave->common}{$this->lang->leave->statusList[$leave->status]}#{$leave->id} " . zget($users, $leave->createdBy) . " {$leave->begin}~{$leave->end}";
         }
-        if($action->action == 'created' or $action->action == 'revoked' or $action->action == 'commited')
+        elseif(strpos(',created,revoked,commited,reported,', ",$action->action,") !== false)
         {
-            $this->app->loadModuleConfig('attend');
             $reviewedBy = $this->leave->getReviewedBy();
             if($reviewedBy)
             {
@@ -492,7 +490,7 @@ class leave extends control
         if($module)
         {
             $this->lang->menuGroups->leave = $module;
-            $this->lang->leave->menu      = $this->lang->$module->menu;
+            $this->lang->leave->menu       = $this->lang->$module->menu;
         }
 
         $this->view->title      = $this->lang->leave->setReviewer;
