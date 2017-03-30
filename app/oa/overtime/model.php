@@ -101,6 +101,7 @@ class overtimeModel extends model
      */
     public function getReviewedBy()
     {
+        $this->app->loadModuleConfig('attend');
         return empty($this->config->overtime->reviewedBy) ? (empty($this->config->attend->reviewedBy) ? '' : $this->config->attend->reviewedBy) : $this->config->overtime->reviewedBy;
     }
 

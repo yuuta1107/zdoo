@@ -86,7 +86,6 @@ class makeup extends control
         }
         elseif($type == 'browseReview')
         {
-            $this->app->loadModuleConfig('attend');
             $reviewedBy = $this->makeup->getReviewedBy();
             if($reviewedBy)
             { 
@@ -145,7 +144,6 @@ class makeup extends control
         $makeup = $this->makeup->getById($id);
 
         /* Check privilage. */
-        $this->app->loadModuleConfig('attend');
         $reviewedBy = $this->makeup->getReviewedBy();
         if($reviewedBy)
         { 
@@ -403,7 +401,6 @@ class makeup extends control
         }
         if($action->action == 'created' or $action->action == 'revoked' or $action->action == 'commited')
         {
-            $this->app->loadModuleConfig('attend');
             $reviewedBy = $this->makeup->getReviewedBy();
             if($reviewedBy)
             {
