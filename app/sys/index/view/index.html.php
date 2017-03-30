@@ -15,8 +15,8 @@ $isSuperAdmin = $this->app->user->admin == 'super';
 js::set('attend', commonModel::isAvailable('attend') ? 1 : 0);
 ?>
 <!-- Desktop -->
-<div id='desktop' class='fullscreen-mode' unselectable='on' style='-moz-user-select:none;-webkit-user-select:none;' onselectstart='return false;'>
-  <div id='leftBar' class='dock-left'>
+<div id='desktop' class='fullscreen-mode'>
+  <div id='leftBar' class='dock-left unselectable'>
     <button id='start' class='dock-bottom' type='button' title="<?php echo $app->user->realname;?>">
       <div class='avatar avatar-md'><?php if(!empty($app->user->avatar)) echo html::image($app->user->avatar);?></div>
     </button>
@@ -41,7 +41,7 @@ js::set('attend', commonModel::isAvailable('attend') ? 1 : 0);
       </ul>
     </div>
   </div>
-  <div id='bottomBar' class='dock-bottom'>
+  <div id='bottomBar' class='dock-bottom unselectable'>
     <div id='taskbar'><ul class='bar-menu'></ul></div>
     <div id='bottomRightBar' class='dock-right'>
       <ul class='bar-menu'>
@@ -51,7 +51,7 @@ js::set('attend', commonModel::isAvailable('attend') ? 1 : 0);
       <div class='copyright'><?php printf($lang->poweredBy, $this->config->version, $this->config->version)?></div>
     </div>
   </div>
-  <div id='home' class='fullscreen fullscreen-active'>
+  <div id='home' class='fullscreen fullscreen-active unselectable'>
     <nav class='navbar navbar-main navbar-fixed-top' id='mainNavbar'>
       <div class='collapse navbar-collapse'>
         <ul class='nav navbar-nav'>
@@ -103,7 +103,7 @@ js::set('attend', commonModel::isAvailable('attend') ? 1 : 0);
       </div>
     </div>
   </div>
-  <div id='allapps' class='fullscreen'>
+  <div id='allapps' class='fullscreen unselectable'>
     <header>
       <ul class='nav' id='appSearchNav'>
         <li><a href="javascript:;" class='app-search' data-key=''><i class='icon-th-large'></i> <span><?php echo $lang->index->allEntries?></span> &nbsp;<small class='muted entries-count'></small></a></li>
