@@ -321,6 +321,7 @@ body > form {margin-top: 20px;} /* form behind body */
 .page-form {padding-left: 15px; padding-right: 15px;}
 .input-group {width: 100%;}
 .ie-8 .input-group > .form-control + .input-group-btn > .btn {margin-left: -1px}
+@media (min-width: 768px){.form-inline .input-group .form-control {width: 100%}}
 
 .borderless.form-control{border-color: transparent;box-shadow: none;}
 .borderless.form-control:hover,.borderless.form-control:active,.borderless.form-control:focus {border-color: #506EAF; box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);}
