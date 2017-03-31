@@ -35,8 +35,7 @@ $editorLang  = isset($editorLangs[$app->getClientLang()]) ? $editorLangs[$app->g
 js::set('editorLang', $editorLang);
 
 /* Import css and js for kindeditor. */
-css::import($jsRoot . 'kindeditor/themes/default/default.css');
-js::import($jsRoot . 'kindeditor/kindeditor-min.js');
+js::import($jsRoot . 'kindeditor/kindeditor.min.js');
 js::import($jsRoot  . 'kindeditor/lang/' . $editorLang . '.js');
 
 /* set uid for upload. */
@@ -85,8 +84,7 @@ function initKindeditor(afterInit)
             filterMode:v.editors.filterMode,
             allowFileManager:true,
             langType:v.editorLang,
-            afterBlur: function(){this.sync();$editor.prev('.ke-container').removeClass('focus');},
-            afterFocus: function(){$editor.prev('.ke-container').addClass('focus');},
+            afterBlur: function(){this.sync();},
             afterChange: function(){$editor.change().hide();},
             afterCreate: function()
             {
