@@ -13,6 +13,7 @@
 <?php include '../../../sys/common/view/header.modal.html.php';?>
 <?php include '../../../sys/common/view/datepicker.html.php';?>
 <?php include '../../../sys/common/view/chosen.html.php';?>
+<?php $this->app->loadModuleConfig('attend');?>
 <?php js::set('signIn', $config->attend->signInLimit)?>
 <?php js::set('signOut', $config->attend->signOutLimit)?>
 <?php js::set('workingHours', $config->attend->workingHours)?>

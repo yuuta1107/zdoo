@@ -379,9 +379,9 @@ class refund extends control
             $this->send(array('result' => 'success', 'isDetail' => $isDetail, 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
         }
 
-        $this->view->title      = $this->lang->refund->review;
-        $this->view->refund     = $refund;
-        $this->view->categories = $this->refund->getCategoryPairs();
+        $this->view->title        = $this->lang->refund->review;
+        $this->view->refund       = $refund;
+        $this->view->categories   = $this->refund->getCategoryPairs();
         $this->view->currencySign = $this->loadModel('common', 'sys')->getCurrencySign();
         $this->display();
     }
@@ -595,14 +595,12 @@ class refund extends control
             }
             $subject = "{$this->lang->refund->common}{$this->lang->refund->review}#{$refund->id} " . zget($users, $refund->createdBy) . " - {$refund->name}";
         }
-
-        if($action->action == 'reimburse')
+        elseif($action->action == 'reimburse')
         {
-            $toList = $refund->createdBy;
+            $toList  = $refund->createdBy;
             $subject = "{$this->lang->refund->reimburse}#{$refund->id} " . zget($users, $refund->createdBy) . " - {$refund->name}";
         }
-
-        if($action->action == 'created' or $action->action == 'revoked' or $action->action == 'commited')
+        elseif($action->action == 'created' or $action->action == 'revoked' or $action->action == 'commited')
         {
             if(!empty($this->config->refund->firstReviewer))
             {
@@ -610,7 +608,7 @@ class refund extends control
             }
             else
             {
-               $dept = $this->loadModel('tree')->getByID($this->app->user->dept);
+               $dept   = $this->loadModel('tree')->getByID($this->app->user->dept);
                $toList = isset($dept->moderators) ? trim($dept->moderators, ',') : '';
             }
             $subject = "{$this->lang->refund->create}#{$refund->id} " . zget($users, $refund->createdBy) . " - {$refund->name}";

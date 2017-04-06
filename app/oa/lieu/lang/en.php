@@ -44,3 +44,5 @@ $lang->lieu->denied    = 'Access denied.';
 $lang->lieu->unique    = 'There was a record of lieu in %s.';
 $lang->lieu->sameMonth = 'Lieu must be in the same month.';
 $lang->lieu->wrongEnd  = 'End time should be greater than begin time.';
+
+$lang->lieu->hoursTip = 'Hours';

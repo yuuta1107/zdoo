@@ -62,4 +62,4 @@ $lang->leave->wrongBackDate = 'Back time should be greater than begin time.';
 $lang->leave->confirmReview['pass']   = 'Do you want to pass it?';
 $lang->leave->confirmReview['reject'] = 'Do you want to reject it?';
 
-$lang->leave->hoursTip = 'Hour';
+$lang->leave->hoursTip = 'Hours';

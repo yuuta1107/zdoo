@@ -24,11 +24,11 @@
   </tr>
   <tr>
     <th><?php echo $lang->$type->begin;?></th>
-    <td><?php echo $trip->begin . ' ' . $trip->start;?></td>
+    <td><?php echo formatTime($trip->begin . ' ' . $trip->start, DT_DATETIME2);?></td>
   </tr>
   <tr>
     <th><?php echo $lang->$type->end;?></th>
-    <td><?php echo $trip->end . ' ' . $trip->finish;?></td>
+    <td><?php echo formatTime($trip->end . ' ' . $trip->finish, DT_DATETIME2);?></td>
   </tr>
   <?php if($trip->type == 'trip'):?>
   <tr>
@@ -45,5 +45,6 @@
     <td><?php echo $trip->desc;?></td>
   </tr> 
 </table>
-<div class='text-center'><?php echo html::a('#', $lang->goback, "class='btn' data-dismiss='modal'");?></div>
+<?php echo $this->fetch('action', 'history', "objectType=$type&objectID=$trip->id");?>
+<div class='page-actions'><?php echo html::a('#', $lang->goback, "class='btn' data-dismiss='modal'");?></div>
 <?php include '../../../sys/common/view/footer.modal.html.php';?>

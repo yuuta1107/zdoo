@@ -18,7 +18,7 @@ class lieuModel extends model
      * @access public
      * @return object
      */
-    public function getByID($id)
+    public function getById($id)
     {
         return $this->dao->select('*')->from(TABLE_LIEU)->where('id')->eq($id)->fetch();
     }
@@ -62,7 +62,9 @@ class lieuModel extends model
      */
     public function getByDate($date, $account)
     {
-        return $this->dao->select('*')->from(TABLE_LIEU)->where('begin')->le($date)->andWhere('end')->ge($date)->andWhere('createdBy')->eq($account)->fetch();
+        $lieus = $this->dao->select('*')->from(TABLE_LIEU)->where('begin')->le($date)->andWhere('end')->ge($date)->andWhere('createdBy')->eq($account)->fetchAll();
+        if(count($lieus) == 1) return current($lieus);
+        return null;
     }
 
     /**
@@ -109,22 +111,22 @@ class lieuModel extends model
      */
     public function create()
     {
-        $data = fixer::input('post')
+        $lieu = fixer::input('post')
             ->add('status', 'wait')
             ->add('createdBy', $this->app->user->account)
             ->add('createdDate', helper::now())
             ->join('overtime', ',')
             ->get();
 
-        $data->overtime = isset($data->overtime) ? ',' . trim($data->overtime, ',') . ',' : '';
-        if(isset($data->begin) and $data->begin != '') $data->year = substr($data->begin, 0, 4);
+        $lieu->overtime = isset($lieu->overtime) ? ',' . trim($lieu->overtime, ',') . ',' : '';
+        if(isset($lieu->begin) and $lieu->begin != '') $lieu->year = substr($lieu->begin, 0, 4);
 
-        $return = $this->checkDate($data);
+        $return = $this->checkDate($lieu);
         if($return['result'] == 'fail') return $return;
 
-        $this->dao->insert(TABLE_LIEU)->data($data)->autoCheck()
+        $this->dao->insert(TABLE_LIEU)->data($lieu)->autoCheck()
             ->batchCheck($this->config->lieu->require->create, 'notempty')
-            ->check('end', 'ge', $data->begin)
+            ->check('end', 'ge', $lieu->begin)
             ->exec();
         if(!dao::isError())
         {
@@ -143,7 +145,7 @@ class lieuModel extends model
      */
     public function update($id)
     {
-        $oldLieu = $this->getByID($id);
+        $oldLieu = $this->getById($id);
 
         $lieu = fixer::input('post')
             ->remove('status')
@@ -152,7 +154,7 @@ class lieuModel extends model
             ->join('overtime', ',')
             ->get();
 
-        $data->overtime = isset($data->overtime) ? ',' . trim($data->overtime, ',') . ',' : '';
+        $lieu->overtime = isset($lieu->overtime) ? ',' . trim($lieu->overtime, ',') . ',' : '';
         if(isset($lieu->begin) and $lieu->begin != '') $lieu->year = substr($lieu->begin, 0, 4);
 
         $return = $this->checkDate($lieu, $id);
@@ -164,13 +166,7 @@ class lieuModel extends model
             ->where('id')->eq($id)
             ->exec();
 
-        if(!dao::isError())
-        {
-            $changes = commonModel::createChanges($oldLieu, $lieu);
-            $actionID = $this->loadModel('action', 'sys')->create('lieu', $id, 'Edited');
-            $this->action->logHistory($actionID, $changes);
-        }
-        return !dao::isError();
+        return commonModel::createChanges($oldLieu, $lieu);
     }
 
     /**
@@ -249,7 +245,7 @@ class lieuModel extends model
      */
     public function delete($id, $null = null)
     {
-        $oldLieu = $this->getByID($id);
+        $oldLieu = $this->getById($id);
         $this->dao->delete()->from(TABLE_LIEU)->where('id')->eq($id)->exec();
 
         if(!dao::isError())
@@ -282,9 +278,9 @@ class lieuModel extends model
 
         if(!dao::isError() and $status == 'pass')
         {
-            $lieu = $this->getByID($id);
-            $lieuDates = range(strtotime($lieu->begin), strtotime($lieu->end), 60*60*24);
-            $this->loadModel('attend', 'oa')->batchUpdate($lieuDates, $lieu->createdBy, 'lieu', '', $lieu);
+            $lieu  = $this->getById($id);
+            $dates = range(strtotime($lieu->begin), strtotime($lieu->end), 60*60*24);
+            $this->loadModel('attend', 'oa')->batchUpdate($dates, $lieu->createdBy, 'lieu', '', $lieu);
         }
 
         return !dao::isError();

@@ -66,8 +66,8 @@
           <td><?php echo zget($users, $overtime->createdBy);?></td>
           <td class='visible-lg'><?php echo zget($deptList, $overtime->dept, ' ');?></td>
           <td><?php echo zget($this->lang->overtime->typeList, $overtime->type);?></td>
-          <td><?php echo $overtime->begin . ' ' . $overtime->start;?></td>
-          <td><?php echo $overtime->end . ' ' . $overtime->finish;?></td>
+          <td><?php echo formatTime($overtime->begin . ' ' . $overtime->start, DT_DATETIME2);?></td>
+          <td><?php echo formatTime($overtime->end . ' ' . $overtime->finish, DT_DATETIME2);?></td>
           <td class='visible-lg'><?php echo $overtime->hours == 0 ? '' : $overtime->hours;?></td>
           <td title='<?php echo $overtime->desc?>'><?php echo $overtime->desc;?></td>
           <td class='overtime-<?php echo $overtime->status?>'><?php echo zget($this->lang->overtime->statusList, $overtime->status);?></td>

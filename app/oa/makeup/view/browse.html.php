@@ -64,8 +64,8 @@
           <td><?php echo $makeup->id;?></td>
           <td><?php echo zget($users, $makeup->createdBy);?></td>
           <td class='visible-lg'><?php echo zget($deptList, $makeup->dept, ' ');?></td>
-          <td><?php echo $makeup->begin . ' ' . $makeup->start;?></td>
-          <td><?php echo $makeup->end . ' ' . $makeup->finish;?></td>
+          <td><?php echo formatTime($makeup->begin . ' ' . $makeup->start, DT_DATETIME2);?></td>
+          <td><?php echo formatTime($makeup->end . ' ' . $makeup->finish, DT_DATETIME2);?></td>
           <td class='visible-lg'><?php echo $makeup->hours == 0 ? '' : $makeup->hours;?></td>
           <td title='<?php echo $makeup->desc?>'><?php echo $makeup->desc;?></td>
           <td class='makeup-<?php echo $makeup->status?>'><?php echo zget($this->lang->makeup->statusList, $makeup->status);?></td>

@@ -65,7 +65,9 @@ class makeupModel extends model
      */
     public function getByDate($date, $account)
     {
-        return $this->dao->select('*')->from(TABLE_OVERTIME)->where('type')->eq('compensate')->andWhere('begin')->le($date)->andWhere('end')->ge($date)->andWhere('createdBy')->eq($account)->fetch();
+        $makeups = $this->dao->select('*')->from(TABLE_OVERTIME)->where('type')->eq('compensate')->andWhere('begin')->le($date)->andWhere('end')->ge($date)->andWhere('createdBy')->eq($account)->fetchAll();
+        if(count($makeups) == 1) return current($makeups);
+        return null;
     }
 
     /**
@@ -146,7 +148,7 @@ class makeupModel extends model
      */
     public function update($id)
     {
-        $oldMakeup = $this->getByID($id);
+        $oldMakeup = $this->getById($id);
 
         $makeup = fixer::input('post')
             ->add('type', 'compensate')
@@ -170,7 +172,7 @@ class makeupModel extends model
             ->where('id')->eq($id)
             ->exec();
 
-        return !dao::isError();
+        return commonModel::createChanges($oldMakeup, $makeup);
     }
 
     /**
@@ -249,7 +251,7 @@ class makeupModel extends model
      */
     public function delete($id, $null = null)
     {
-        $oldMakeup = $this->getByID($id);
+        $oldMakeup = $this->getById($id);
         $this->dao->delete()->from(TABLE_OVERTIME)->where('id')->eq($id)->exec();
 
         if(!dao::isError())
@@ -282,8 +284,8 @@ class makeupModel extends model
 
         if(!dao::isError() and $status == 'pass')
         {
-            $makeup = $this->getByID($id);
-            $dates = range(strtotime($makeup->begin), strtotime($makeup->end), 60 * 60 * 24);
+            $makeup = $this->getById($id);
+            $dates  = range(strtotime($makeup->begin), strtotime($makeup->end), 60 * 60 * 24);
             $this->loadModel('attend', 'oa')->batchUpdate($dates, $makeup->createdBy, 'makeup', '', $makeup);
         }
 

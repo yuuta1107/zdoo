@@ -20,15 +20,15 @@
   </tr>
   <tr>
     <th><?php echo $lang->leave->start;?></th>
-    <td><?php echo formatTime($leave->begin . ' ' . $leave->start);?></td>
+    <td><?php echo formatTime($leave->begin . ' ' . $leave->start, DT_DATETIME2);?></td>
     <th><?php echo $lang->leave->finish;?></th>
-    <td><?php echo formatTime($leave->end . ' ' . $leave->finish);?></td>
+    <td><?php echo formatTime($leave->end . ' ' . $leave->finish, DT_DATETIME2);?></td>
   </tr>
   <tr>
     <th><?php echo $lang->leave->hours;?></th>
     <td><?php echo $leave->hours;?></td>
     <th><?php echo $lang->leave->backDate;?></th>
-    <td><?php echo formatTime($leave->backDate);?></td>
+    <td><?php echo formatTime($leave->backDate, DT_DATETIME2);?></td>
   </tr>
   <tr>
     <th><?php echo $lang->leave->desc;?></th>
@@ -56,7 +56,7 @@
   <?php endif;?>
 
   <?php if($type == 'personal' and ($leave->status == 'wait' or $leave->status == 'draft')):?>
-  <?php if($leave->status == 'wait' or $leave->status == 'draft') echo html::a($this->createLink('oa.leave', 'switchstatus', "id={$leave->id}"), $leave->status == 'wait' ? $lang->leave->cancel : $lang->leave->commit, "class='btn'");?>
+  <?php echo html::a($this->createLink('oa.leave', 'switchstatus', "id={$leave->id}"), $leave->status == 'wait' ? $lang->leave->cancel : $lang->leave->commit, "class='btn'");?>
   <div class='btn-group'>
     <?php echo html::a($this->createLink('oa.leave', 'edit', "id={$leave->id}"), $lang->edit, "class='btn loadInModal'");?>
     <?php echo html::a($this->createLink('oa.leave', 'delete', "id={$leave->id}"), $lang->delete, "class='btn deleteLeave'");?>

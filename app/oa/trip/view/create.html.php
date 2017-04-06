@@ -14,7 +14,7 @@
 <?php include '../../../sys/common/view/datepicker.html.php';?>
 <?php include '../../../sys/common/view/chosen.html.php';?>
 <div class='panel-body'>
-    <form id='ajaxForm' method='post' action="<?php echo $this->createLink("oa.$type", 'create')?>">
+  <form id='ajaxForm' method='post' action="<?php echo $this->createLink("oa.$type", 'create')?>">
     <table class='table table-form table-condensed'>
       <tr>
         <th class='w-90px'><?php echo $lang->$type->name?></th>

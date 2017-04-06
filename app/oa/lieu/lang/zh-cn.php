@@ -44,3 +44,5 @@ $lang->lieu->denied    = '信息访问受限';
 $lang->lieu->unique    = '%s 已经存在调休记录';
 $lang->lieu->sameMonth = '不支持跨月份调休';
 $lang->lieu->wrongEnd  = '结束时间应该大于开始时间';
+
+$lang->lieu->hoursTip = '小时';

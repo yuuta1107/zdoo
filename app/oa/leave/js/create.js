@@ -39,4 +39,6 @@ $(document).ready(function()
         }
         $('#hours').val(hours);
     });
+
+    $('#begin').change();
 })

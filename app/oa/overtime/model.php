@@ -65,7 +65,9 @@ class overtimeModel extends model
      */
     public function getByDate($date, $account)
     {
-        return $this->dao->select('*')->from(TABLE_OVERTIME)->where('type')->ne('compensate')->andWhere('begin')->le($date)->andWhere('end')->ge($date)->andWhere('createdBy')->eq($account)->fetch();
+        $overtimes = $this->dao->select('*')->from(TABLE_OVERTIME)->where('type')->ne('compensate')->andWhere('begin')->le($date)->andWhere('end')->ge($date)->andWhere('createdBy')->eq($account)->fetchAll();
+        if(count($overtimes) == 1) return current($overtimes);
+        return null;
     }
 
     /**
@@ -143,7 +145,7 @@ class overtimeModel extends model
      */
     public function update($id)
     {
-        $oldOvertime = $this->getByID($id);
+        $oldOvertime = $this->getById($id);
 
         $overtime = fixer::input('post')
             ->remove('status')
@@ -164,7 +166,7 @@ class overtimeModel extends model
             ->where('id')->eq($id)
             ->exec();
 
-        return !dao::isError();
+        return commonModel::createChanges($oldOvertime, $overtime); 
     }
 
     /**
@@ -243,7 +245,7 @@ class overtimeModel extends model
      */
     public function delete($id, $null = null)
     {
-        $oldOvertime = $this->getByID($id);
+        $oldOvertime = $this->getById($id);
         $this->dao->delete()->from(TABLE_OVERTIME)->where('id')->eq($id)->exec();
 
         if(!dao::isError())
@@ -276,8 +278,8 @@ class overtimeModel extends model
 
         if(!dao::isError() and $status == 'pass')
         {
-            $overtime = $this->getByID($id);
-            $dates = range(strtotime($overtime->begin), strtotime($overtime->end), 60 * 60 * 24);
+            $overtime = $this->getById($id);
+            $dates    = range(strtotime($overtime->begin), strtotime($overtime->end), 60 * 60 * 24);
             $this->loadModel('attend', 'oa')->batchUpdate($dates, $overtime->createdBy, 'overtime', '', $overtime);
         }
 

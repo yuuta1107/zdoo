@@ -13,6 +13,7 @@
 <?php include '../../../sys/common/view/header.modal.html.php';?>
 <?php include '../../../sys/common/view/datepicker.html.php';?>
 <?php include '../../../sys/common/view/chosen.html.php';?>
+<?php $this->app->loadModuleConfig('attend');?>
 <?php js::set('signIn', $config->attend->signInLimit)?>
 <?php js::set('signOut', $config->attend->signOutLimit)?>
 <?php js::set('workingHours', $config->attend->workingHours)?>
@@ -24,7 +25,7 @@
         <td>
           <div class='input-group'>
             <span class='input-group-addon'><?php echo $lang->lieu->date;?></span>
-            <?php echo html::input('begin', '', "class='form-control form-date'")?>
+            <?php echo html::input('begin', $date, "class='form-control form-date'")?>
             <span class='input-group-addon fix-border'><?php echo $lang->lieu->time;?></span>
             <?php echo html::input('start', $this->config->attend->signInLimit, "class='form-control form-time'")?>
           </div>
@@ -35,7 +36,7 @@
         <td>
           <div class='input-group'>
             <span class='input-group-addon'><?php echo $lang->lieu->date;?></span>
-            <?php echo html::input('end', '', "class='form-control form-date'")?>
+            <?php echo html::input('end', $date, "class='form-control form-date'")?>
             <span class='input-group-addon fix-border'><?php echo $lang->lieu->time;?></span>
             <?php echo html::input('finish', $this->config->attend->signOutLimit, "class='form-control form-time'")?>
           </div>

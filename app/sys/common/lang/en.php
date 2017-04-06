@@ -500,7 +500,8 @@ $lang->currencyTip['y'] = '';
 
 /* Date times. */
 define('DT_DATETIME1',  'Y-m-d H:i:s');
-define('DT_DATETIME2',  'y-m-d H:i');
+define('DT_DATETIME2',  'Y-m-d H:i');
+define('DT_DATETIME3',  'y-m-d H:i');
 define('DT_MONTHTIME1', 'n/d H:i');
 define('DT_MONTHTIME2', 'F j, H:i');
 define('DT_DATE1',      'Y-m-d');

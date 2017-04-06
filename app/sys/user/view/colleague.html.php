@@ -77,8 +77,8 @@ js::set('deptID', $deptID);
           </div>
         </div>
         <?php endforeach;?>
-        <?php $pager->show();?>
       </div>
+      <?php $pager->show();?>
     </div>
   </div>
 </div>

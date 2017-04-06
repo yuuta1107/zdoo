@@ -98,6 +98,7 @@
                   if(strpos(',rest,normal,leave,makeup,overtime,lieu,trip,egress,', ",$status,") === false):
                   $edit       = $reviewStatus == 'wait' ? $lang->attend->edited : $lang->attend->edit;
                   $leave      = $reason == 'leave' ? $lang->attend->leaved : $lang->attend->leave;
+                  $makeup     = $reason == 'makeup' ? $lang->attend->makeuped : $lang->attend->makeup;
                   $overtime   = $reason == 'overtime' ? $lang->attend->overtimed : $lang->attend->overtime;
                   $lieu       = $reason == 'lieu' ? $lang->attend->lieud : $lang->attend->lieu;
                   ?>
@@ -105,20 +106,23 @@
                   <?php echo html::a($this->createLink('attend', 'edit', "date=" . str_replace('-', '', $currentDate)), $edit, "data-toggle='modal' data-width='500px'");?>
                   <?php elseif($reason == 'leave'): ?>
                   <?php commonModel::printLink('leave', 'create', "date=" . str_replace('-', '', $currentDate), $leave, "data-toggle='modal' data-width='700px'");?>
-                  <?php elseif($reason == 'lieu'): ?>
-                  <?php commonModel::printLink('lieu', 'create', "date=" . str_replace('-', '', $currentDate), $lieu, "data-toggle='modal' data-width='700px'");?>
+                  <?php elseif($reason == 'makeup'): ?>
+                  <?php commonModel::printLink('makeup', 'create', "date=" . str_replace('-', '', $currentDate), $makeup, "data-toggle='modal' data-width='700px'");?>
                   <?php elseif($reason == 'overtime'): ?>
                   <?php commonModel::printLink('overtime', 'create', "date=" . str_replace('-', '', $currentDate), $overtime, "data-toggle='modal' data-width='700px'");?>
+                  <?php elseif($reason == 'lieu'): ?>
+                  <?php commonModel::printLink('lieu', 'create', "date=" . str_replace('-', '', $currentDate), $lieu, "data-toggle='modal' data-width='700px'");?>
                   <?php else:?>
                   <div class='dropdown'>
                     <a href='javascript:;' data-toggle='dropdown'><?php echo $lang->actions;?><span class='caret'></span></a>
                     <ul role='menu' class='dropdown-menu'>
                       <?php if($reason == '' or $reason == 'normal')   echo "<li>" . html::a($this->createLink('attend', 'edit', "date=" . str_replace('-', '', $currentDate)), $edit, "data-toggle='modal' data-width='500px'") . "</li>";?>
                       <?php if($reason == '' or $reason == 'leave')    commonModel::printLink('leave', 'create', "date=" . str_replace('-', '', $currentDate), $leave, "data-toggle='modal' data-width='700px'", '', '', 'li');?>
-                      <?php if($reason == '' or $reason == 'overtime') commonModel::printLink('overtime', 'create', "date=" . str_replace('-', '', $currentDate), $lang->attend->overtime, "data-toggle='modal' data-width='700px'", '', '', 'li');?>
-                      <?php if($reason == '' or $reason == 'egress')   commonModel::printLink('egress', 'create', '', $lang->attend->egress, "data-toggle='modal' data-width='700px'", '', '', 'li');?>
-                      <?php if($reason == '' or $reason == 'trip')     commonModel::printLink('trip', 'create', '', $lang->attend->trip, "data-toggle='modal' data-width='700px'", '', '', 'li');?>
-                      <?php if($reason == '' or $reason == 'lieu')     commonModel::printLink('lieu', 'create', '', $lang->attend->lieu, "data-toggle='modal' data-width='700px'", '', '', 'li');?>
+                      <?php if($reason == '' or $reason == 'makeup')   commonModel::printLink('makeup', 'create', "date=" . str_replace('-', '', $currentDate), $makeup, "data-toggle='modal' data-width='700px'", '', '', 'li');?>
+                      <?php if($reason == '' or $reason == 'overtime') commonModel::printLink('overtime', 'create', "date=" . str_replace('-', '', $currentDate), $overtime, "data-toggle='modal' data-width='700px'", '', '', 'li');?>
+                      <?php if($reason == '' or $reason == 'lieu')     commonModel::printLink('lieu', 'create', "date=" . str_replace('-', '', $currentDate), $lieu, "data-toggle='modal' data-width='700px'", '', '', 'li');?>
+                      <?php if($reason == '' or $reason == 'trip')     commonModel::printLink('trip', 'create', "date=" . str_replace('-', '', $currentDate), $lang->attend->trip, "data-toggle='modal' data-width='700px'", '', '', 'li');?>
+                      <?php if($reason == '' or $reason == 'egress')   commonModel::printLink('egress', 'create', "date=" . str_replace('-', '', $currentDate), $lang->attend->egress, "data-toggle='modal' data-width='700px'", '', '', 'li');?>
                     </ul>
                   </div>
                   <?php endif;?>

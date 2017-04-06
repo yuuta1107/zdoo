@@ -14,16 +14,16 @@
 <?php js::set('confirmReview', $lang->overtime->confirmReview)?>
 <table class='table table-bordered'>
   <tr>
-    <th class='w-80px'><?php echo $lang->overtime->status;?></th>
+    <th><?php echo $lang->overtime->status;?></th>
     <td class='text-warning'><?php echo $lang->overtime->statusList[$overtime->status];?></td>
-    <th class='w-80px'><?php echo $lang->overtime->type?></th>
+    <th><?php echo $lang->overtime->type?></th>
     <td><?php echo zget($lang->overtime->typeList, $overtime->type);?></td>
   </tr> 
   <tr>
     <th><?php echo $lang->overtime->begin?></th>
-    <td><?php echo $overtime->begin . ' ' . $overtime->start;?></td>
+    <td><?php echo formatTime($overtime->begin . ' ' . $overtime->start, DT_DATETIME2);?></td>
     <th><?php echo $lang->overtime->end?></th>
-    <td><?php echo $overtime->end . ' ' . $overtime->finish;?></td>
+    <td><?php echo formatTime($overtime->end . ' ' . $overtime->finish, DT_DATETIME2);?></td>
   </tr>
   <tr>
     <th><?php echo $lang->overtime->hours?></th>
@@ -47,9 +47,9 @@
   </tr> 
   <tr>
     <th><?php echo $lang->overtime->createdDate;?></th>
-    <td><?php echo $overtime->createdDate;?></td>
+    <td><?php echo formatTime($overtime->createdDate);?></td>
     <th><?php echo $lang->overtime->reviewedDate;?></th>
-    <td><?php echo $overtime->reviewedDate;?></td>
+    <td><?php echo formatTime($overtime->reviewedDate);?></td>
   </tr> 
 </table>
 <?php echo $this->fetch('action', 'history', "objectType=overtime&objectID=$overtime->id");?>

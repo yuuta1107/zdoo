@@ -149,6 +149,7 @@ class tripModel extends model
             ->batchCheck($this->config->trip->require->create, 'notempty')
             ->check('end', 'ge', $trip->begin)
             ->exec();
+        $tripID = $this->dao->lastInsertID();
 
         if(!dao::isError())
         {
@@ -156,7 +157,7 @@ class tripModel extends model
             $this->loadModel('attend', 'oa')->batchUpdate($dates, $trip->createdBy, 'trip', '', $trip);
         }
 
-        return $this->dao->lastInsertID();
+        return $tripID; 
     }
 
     /**
@@ -195,7 +196,7 @@ class tripModel extends model
             $this->loadModel('attend', 'oa')->batchUpdate($dates, $oldTrip->createdBy, 'trip', '', $trip);
         }
 
-        return !dao::isError();
+        return commonModel::createChanges($oldTrip, $trip);
     }
 
     /**

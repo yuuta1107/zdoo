@@ -70,9 +70,9 @@
           <td><?php echo zget($users, $leave->createdBy);?></td>
           <td class='visible-lg'><?php echo zget($deptList, $leave->dept);?></td>
           <td><?php echo zget($this->lang->leave->typeList, $leave->type);?></td>
-          <td><?php echo $leave->begin . ' ' . $leave->start;?></td>
-          <td><?php echo $leave->end . ' ' . $leave->finish;?></td>
-          <td><?php echo formatTime($leave->backDate);?></td>
+          <td><?php echo formatTime($leave->begin . ' ' . $leave->start, DT_DATETIME2);?></td>
+          <td><?php echo formatTime($leave->end . ' ' . $leave->finish, DT_DATETIME2);?></td>
+          <td><?php echo formatTime($leave->backDate, DT_DATETIME2);?></td>
           <td class='visible-lg'><?php echo $leave->hours == 0 ? '' : $leave->hours;?></td>
           <td title='<?php echo $leave->desc;?>'><?php echo $leave->desc;?></td>
           <?php $status = ($leave->status == 'pass' and $leave->backDate != '0000-00-00 00:00:00' and $leave->backDate != $leave->end . ' ' . $leave->finish) ? 'back' : $leave->status;?>
@@ -89,7 +89,7 @@
             <?php endif;?>
 
             <?php if($type == 'personal' and ($leave->status == 'wait' or $leave->status == 'draft')):?>
-            <?php if($leave->status == 'wait' or $leave->status == 'draft') echo html::a($this->createLink('oa.leave', 'switchstatus', "id={$leave->id}"), $leave->status == 'wait' ? $lang->leave->cancel : $lang->leave->commit, "class='reload'");?>
+            <?php echo html::a($this->createLink('oa.leave', 'switchstatus', "id={$leave->id}"), $leave->status == 'wait' ? $lang->leave->cancel : $lang->leave->commit, "class='reload'");?>
             <?php echo html::a($this->createLink('oa.leave', 'edit', "id={$leave->id}"), $lang->edit, "data-toggle='modal'");?>
             <?php echo html::a($this->createLink('oa.leave', 'delete', "id={$leave->id}"), $lang->delete, "class='deleter'");?>
             <?php endif;?>

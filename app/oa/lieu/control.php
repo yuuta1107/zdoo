@@ -134,15 +134,14 @@ class lieu extends control
      */
     public function view($id, $type = '')
     {
-        $lieu = $this->lieu->getByID($id);
-        $lieu->overtimeList = explode(',', trim($lieu->overtime, ','));
-
         $overtimePairs = array();
         $overtimeList  = $this->loadModel('overtime', 'oa')->getList('company', '', '', $this->app->user->account, '', 'pass');
-        foreach($overtimeList as $overtime) $overtimePairs[$overtime->id] = $overtime->begin . ' ' . $overtime->start . ' ~ ' . $overtime->end . ' ' . $overtime->finish;
-
+        foreach($overtimeList as $overtime) 
+        {
+            $overtimePairs[$overtime->id] = formatTime($overtime->begin . ' ' . $overtime->start, DT_DATETIME2) . ' ~ ' . formatTime($overtime->end . ' ' . $overtime->finish, DT_DATETIME2);
+        }
         $this->view->title         = $this->lang->lieu->view;
-        $this->view->lieu          = $lieu;
+        $this->view->lieu          = $this->lieu->getById($id);
         $this->view->users         = $this->loadModel('user', 'sys')->getPairs();
         $this->view->overtimePairs = $overtimePairs;
         $this->view->type          = $type;
@@ -152,12 +151,12 @@ class lieu extends control
     /**
      * Create lieu.
      * 
+     * @param  string $date
      * @access public
      * @return void
      */
-    public function create()
+    public function create($date = '')
     {
-        $this->app->loadModuleConfig('attend');
         if($_POST)
         {
             $result = $this->lieu->create();
@@ -165,36 +164,30 @@ class lieu extends control
 
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
 
-            $lieuID  = $result;
+            $lieuID   = $result;
             $actionID = $this->loadModel('action')->create('lieu', $lieuID, 'created');
             $this->sendmail($lieuID, $actionID);
 
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => inlink('personal')));
         }
 
+        if($date)
+        {
+            $date = date('Y-m-d', strtotime($date));
+            $lieu = $this->lieu->getByDate($date, $this->app->user->account);
+            if($lieu && strpos(',wait,draft,', $lieu->status) !== false) $this->locate(inlink('edit', "id=$lieu->id"));
+        }
+
         $overtimePairs = array('');
         $overtimeList  = $this->loadModel('overtime', 'oa')->getList('company', '', '', $this->app->user->account, '', 'pass');
-        $lieuList      = $this->lieu->getList('company', '', '', $this->app->user->account);
-
         foreach($overtimeList as $key => $overtime)
         {
-            $hasLieu = false;
-            foreach($lieuList as $lieu)
-            {
-                if($lieu->status == 'reject') continue;
-                if(strpos($lieu->overtime, ',' . $overtime->id . ',') !== false)
-                {
-                    $hasLieu = true;
-                    break;
-                }
-            }
-            if($hasLieu) continue;
-
-            $overtimePairs[$overtime->id] = $overtime->begin . ' ' . $overtime->start . ' ~ ' . $overtime->end . ' ' . $overtime->finish;
+            $overtimePairs[$overtime->id] = formatTime($overtime->begin . ' ' . $overtime->start, DT_DATETIME2) . ' ~ ' . formatTime($overtime->end . ' ' . $overtime->finish, DT_DATETIME2);
         }
 
         $this->view->title         = $this->lang->lieu->create;
         $this->view->overtimePairs = $overtimePairs;
+        $this->view->date          = $date;
         $this->display();
     }
 
@@ -207,11 +200,9 @@ class lieu extends control
      */
     public function edit($id)
     {
-        $this->app->loadModuleConfig('attend');
-        $oldLieu = $this->lieu->getByID($id);
-
+        $lieu = $this->lieu->getById($id);
         /* check privilage. */
-        if($oldLieu->createdBy != $this->app->user->account) 
+        if($lieu->createdBy != $this->app->user->account) 
         {
             $locate     = helper::safe64Encode(helper::createLink('oa.lieu', 'browse'));
             $noticeLink = helper::createLink('notice', 'index', "type=accessLimited&locate={$locate}");
@@ -221,36 +212,26 @@ class lieu extends control
         if($_POST)
         {
             $result = $this->lieu->update($id);
-            if(is_array($result)) $this->send($result);
-
+            if(is_array($result) && $result['result'] == 'fail') $this->send($result);
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
+            if($result)
+            {
+                $actionID = $this->loadModel('action')->create('lieu', $id, 'edited');
+                $this->action->logHistory($actionID, $result);
+            }
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
         }
 
-        $overtimePairs = array();
+        $overtimePairs = array('');
         $overtimeList  = $this->loadModel('overtime', 'oa')->getList('company', '', '', $this->app->user->account, '', 'pass');
-        $lieuList      = $this->lieu->getList('company', '', '', $this->app->user->account);
-
         foreach($overtimeList as $key => $overtime)
         {
-            $hasLieu = false;
-            foreach($lieuList as $lieu)
-            {
-                if($lieu->id == $oldLieu->id) continue;
-                if(strpos($lieu->overtime, ',' . $overtime->id . ',') !== false)
-                {
-                    $hasLieu = true;
-                    break;
-                }
-            }
-            if($hasLieu) continue;
-
-            $overtimePairs[$overtime->id] = $overtime->begin . ' ' . $overtime->start . ' ~ ' . $overtime->end . ' ' . $overtime->finish;
+            $overtimePairs[$overtime->id] = formatTime($overtime->begin . ' ' . $overtime->start, DT_DATETIME2) . ' ~ ' . formatTime($overtime->end . ' ' . $overtime->finish, DT_DATETIME2);
         }
 
         $this->view->title         = $this->lang->lieu->edit;
-        $this->view->lieu          = $oldLieu;
-        $this->view->overtimePairs = array(0 => '') + $overtimePairs;
+        $this->view->overtimePairs = $overtimePairs;
+        $this->view->lieu          = $lieu;
         $this->display();
     }
 
@@ -263,7 +244,7 @@ class lieu extends control
      */
     public function delete($id)
     {
-        $lieu = $this->lieu->getByID($id);
+        $lieu = $this->lieu->getById($id);
         if($lieu->createdBy != $this->app->user->account) $this->send(array('result' => 'fail', 'message' => $this->lang->lieu->denied));
 
         $this->lieu->delete($id);
@@ -280,7 +261,7 @@ class lieu extends control
      */
     public function switchStatus($lieuID)
     {
-        $lieu = $this->lieu->getByID($lieuID);
+        $lieu = $this->lieu->getById($lieuID);
         if(!$lieu) return false;
 
         if($lieu->createdBy != $this->app->user->account) $this->send(array('result' => 'fail', 'message' => $this->lang->liue->denied));
@@ -326,7 +307,7 @@ class lieu extends control
         else
         {
             $createdUser = $this->loadModel('user')->getByAccount($lieu->createdBy);
-            $dept = $this->loadModel('tree')->getByID($createdUser->dept);
+            $dept = $this->loadModel('tree')->getById($createdUser->dept);
             if((empty($dept) or ",{$this->app->user->account}," != $dept->moderators)) $this->send(array('result' => 'fail', 'message' => $this->lang->lieu->denied));
         }
 
@@ -375,7 +356,7 @@ class lieu extends control
             }
             else
             {
-               $dept   = $this->loadModel('tree')->getByID($this->app->user->dept);
+               $dept   = $this->loadModel('tree')->getById($this->app->user->dept);
                $toList = isset($dept->moderators) ? trim($dept->moderators, ',') : '';
             }
 

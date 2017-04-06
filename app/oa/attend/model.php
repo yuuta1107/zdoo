@@ -100,7 +100,7 @@ class attendModel extends model
         $attends = $this->dao->select('*')->from(TABLE_ATTENDSTAT)->where('month')->eq($date)->fetchAll('account');
         foreach($attends as $account => $attendList)
         {
-            if(strpos(',' . $this->config->attend->noAttendUsers . ',', ',' . $account . ',') !== false) unset($attends[$account]);
+            if(strpos(",{$this->config->attend->noAttendUsers},", ",$account,") !== false) unset($attends[$account]);
             $beginDate = isset($this->config->attend->beginDate->$account) ? $this->config->attend->beginDate->$account : $this->config->attend->beginDate->company;
             if($beginDate)
             {

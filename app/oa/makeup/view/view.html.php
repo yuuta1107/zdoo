@@ -14,20 +14,25 @@
 <?php js::set('confirmReview', $lang->makeup->confirmReview)?>
 <table class='table table-bordered'>
   <tr>
-    <th class='w-80px'><?php echo $lang->makeup->status;?></th>
+    <th><?php echo $lang->makeup->status;?></th>
     <td class='text-warning'><?php echo $lang->makeup->statusList[$makeup->status];?></td>
-    <th class='w-80px'><?php echo $lang->makeup->type?></th>
-    <td><?php echo zget($lang->makeup->typeList, $makeup->type);?></td>
+    <th><?php echo $lang->makeup->hours?></th>
+    <td><?php echo $makeup->hours . $lang->makeup->hoursTip;?></td>
   </tr> 
   <tr>
     <th><?php echo $lang->makeup->begin?></th>
-    <td><?php echo $makeup->begin . ' ' . $makeup->start;?></td>
+    <td><?php echo formatTime($makeup->begin . ' ' . $makeup->start, DT_DATETIME2);?></td>
     <th><?php echo $lang->makeup->end?></th>
-    <td><?php echo $makeup->end . ' ' . $makeup->finish;?></td>
+    <td><?php echo formatTime($makeup->end . ' ' . $makeup->finish, DT_DATETIME2);?></td>
   </tr>
   <tr>
-    <th><?php echo $lang->makeup->hours?></th>
-    <td colspan='3'><?php echo $makeup->hours . $lang->makeup->hoursTip;?></td>
+    <th class='text-middle'><?php echo $lang->makeup->leave;?></th>
+    <td colspan='3'>
+      <?php foreach(explode(',', trim($makeup->leave, ',')) as $leave):?>
+      <?php if(!$leave) continue;?>
+      <?php echo zget($leavePairs, $leave) . '</br>';?>
+      <?php endforeach;?>
+    </td>
   </tr>
   <tr>
     <th><?php echo $lang->makeup->desc?></th>
@@ -47,9 +52,9 @@
   </tr> 
   <tr>
     <th><?php echo $lang->makeup->createdDate;?></th>
-    <td><?php echo $makeup->createdDate;?></td>
+    <td><?php echo formatTime($makeup->createdDate);?></td>
     <th><?php echo $lang->makeup->reviewedDate;?></th>
-    <td><?php echo $makeup->reviewedDate;?></td>
+    <td><?php echo formatTime($makeup->reviewedDate);?></td>
   </tr> 
 </table>
 <?php echo $this->fetch('action', 'history', "objectType=makeup&objectID=$makeup->id");?>

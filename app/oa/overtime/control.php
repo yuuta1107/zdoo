@@ -152,7 +152,7 @@ class overtime extends control
         else
         {
             $createdUser = $this->loadModel('user')->getByAccount($overtime->createdBy);
-            $dept = $this->loadModel('tree')->getByID($createdUser->dept);
+            $dept = $this->loadModel('tree')->getById($createdUser->dept);
             if((empty($dept) or ",{$this->app->user->account}," != $dept->moderators)) $this->send(array('result' => 'fail', 'message' => $this->lang->overtime->denied));
         }
 
@@ -190,6 +190,7 @@ class overtime extends control
     /**
      * Create an overtime.
      * 
+     * @param  string $date
      * @access public
      * @return void
      */
@@ -213,10 +214,9 @@ class overtime extends control
         {
             $date     = date('Y-m-d', strtotime($date));
             $overtime = $this->overtime->getByDate($date, $this->app->user->account);
-            if($overtime) $this->locate(inlink('edit', "id=$overtime->id"));
+            if($overtime && strpos(',wait,draft,', $overtime->status) !== false) $this->locate(inlink('edit', "id=$overtime->id"));
         }
 
-        $this->app->loadModuleConfig('attend');
         $this->view->title = $this->lang->overtime->create;
         $this->view->date  = $date;
         $this->display();
@@ -231,7 +231,6 @@ class overtime extends control
      */
     public function edit($id)
     {
-        $this->app->loadModuleConfig('attend');
         $overtime = $this->overtime->getById($id);
         /* check privilage. */
         if($overtime->createdBy != $this->app->user->account) 
@@ -244,9 +243,13 @@ class overtime extends control
         if($_POST)
         {
             $result = $this->overtime->update($id);
-            if(is_array($result)) $this->send($result);
-
+            if(is_array($result) && $result['result'] == 'fail') $this->send($result);
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
+            if($result)
+            {
+                $actionID = $this->loadModel('action')->create('overtime', $id, 'edited');
+                $this->action->logHistory($actionID, $result);
+            }
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
         }
 
@@ -265,10 +268,9 @@ class overtime extends control
     public function view($id, $type = '')
     {
         $this->view->title    = $this->lang->overtime->view;
-        $this->view->overtime = $this->overtime->getByID($id);
-        $this->view->type     = $type;
+        $this->view->overtime = $this->overtime->getById($id);
         $this->view->users    = $this->loadModel('user')->getPairs();
-        $this->view->preAndNext = $this->loadModel('common', 'sys')->getPreAndNextObject('overtime', $id);
+        $this->view->type     = $type;
         $this->display();
     }
 
@@ -281,7 +283,7 @@ class overtime extends control
      */
     public function delete($id)
     {
-        $overtime = $this->overtime->getByID($id);
+        $overtime = $this->overtime->getById($id);
         if($overtime->createdBy != $this->app->user->account) $this->send(array('result' => 'fail', 'message' => $this->lang->overtime->denied));
 
         $this->overtime->delete($id);
@@ -298,7 +300,7 @@ class overtime extends control
      */
     public function switchStatus($overtimeID)
     {
-        $overtime = $this->overtime->getByID($overtimeID);
+        $overtime = $this->overtime->getById($overtimeID);
         if(!$overtime) return false;
         if($overtime->createdBy != $this->app->user->account) $this->send(array('result' => 'fail', 'message' => $this->lang->overtime->denied));
 
@@ -364,7 +366,7 @@ class overtime extends control
             }
             else
             {
-               $dept = $this->loadModel('tree')->getByID($this->app->user->dept);
+               $dept = $this->loadModel('tree')->getById($this->app->user->dept);
                if($dept) $toList = trim($dept->moderators, ',');
             }
 

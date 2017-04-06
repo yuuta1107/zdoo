@@ -152,7 +152,7 @@ class makeup extends control
         else
         {
             $createdUser = $this->loadModel('user')->getByAccount($makeup->createdBy);
-            $dept        = $this->loadModel('tree')->getByID($createdUser->dept);
+            $dept        = $this->loadModel('tree')->getById($createdUser->dept);
             if((empty($dept) or ",{$this->app->user->account}," != $dept->moderators)) $this->send(array('result' => 'fail', 'message' => $this->lang->makeup->denied));
         }
 
@@ -190,6 +190,7 @@ class makeup extends control
     /**
      * Create an makeup.
      * 
+     * @param  string $date
      * @access public
      * @return void
      */
@@ -213,34 +214,19 @@ class makeup extends control
         {
             $date   = date('Y-m-d', strtotime($date));
             $makeup = $this->makeup->getByDate($date, $this->app->user->account);
-            if($makeup) $this->locate(inlink('edit', "id=$makeup->id"));
+            if($makeup && strpos(',wait,draft,', $makeup->status) !== false) $this->locate(inlink('edit', "id=$makeup->id"));
         }
 
         $leavePairs = array('');
         $leaveList  = $this->loadModel('leave', 'oa')->getList('company', '', '', $this->app->user->account, '', 'pass');
-        $makeupList = $this->makeup->getList('company', '', '', $this->app->user->account);
-
         foreach($leaveList as $key => $leave)
         {
-            $hasMakeup = false;
-            foreach($makeupList as $makeup)
-            {
-                if($makeup->status == 'reject') continue;
-                if(strpos($makeup->leave, ",$leave->id,") !== false)
-                {
-                    $hasMakeup = true;
-                    break;
-                }
-            }
-            if($hasMakeup) continue;
-
-            $leavePairs[$leave->id] = $leave->begin . ' ' . $leave->start . ' ~ ' . $leave->end . ' ' . $leave->finish;
+            $leavePairs[$leave->id] = formatTime($leave->begin . ' ' . $leave->start, DT_DATETIME2) . ' ~ ' . formatTime($leave->end . ' ' . $leave->finish, DT_DATETIME2);
         }
 
-        $this->app->loadModuleConfig('attend');
         $this->view->title      = $this->lang->makeup->create;
-        $this->view->date       = $date;
         $this->view->leavePairs = $leavePairs;
+        $this->view->date       = $date;
         $this->display();
     }
 
@@ -253,7 +239,6 @@ class makeup extends control
      */
     public function edit($id)
     {
-        $this->app->loadModuleConfig('attend');
         $makeup = $this->makeup->getById($id);
         /* check privilage. */
         if($makeup->createdBy != $this->app->user->account) 
@@ -266,36 +251,26 @@ class makeup extends control
         if($_POST)
         {
             $result = $this->makeup->update($id);
-            if(is_array($result)) $this->send($result);
-
+            if(is_array($result) && $result['result'] == 'fail') $this->send($result);
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
+            if($result)
+            {
+                $actionID = $this->loadModel('action')->create('makeup', $id, 'edited');
+                $this->action->logHistory($actionID, $result);
+            }
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
         }
 
-        $leavePairs = array();
+        $leavePairs = array('');
         $leaveList  = $this->loadModel('leave', 'oa')->getList('company', '', '', $this->app->user->account, '', 'pass');
-        $makeupList = $this->makeup->getList('company', '', '', $this->app->user->account);
-
         foreach($leaveList as $key => $leave)
         {
-            $hasMakeup= false;
-            foreach($makeupList as $makeup)
-            {
-                if($makeup->id == $oldLieu->id) continue;
-                if(strpos($makeup->leave, ",$leave->id,") !== false)
-                {
-                    $hasMakeup = true;
-                    break;
-                }
-            }
-            if($hasMakeup) continue;
-
-            $leavePairs[$leave->id] = $leave->begin . ' ' . $leave->start . ' ~ ' . $leave->end . ' ' . $leave->finish;
+            $leavePairs[$leave->id] = formatTime($leave->begin . ' ' . $leave->start, DT_DATETIME2) . ' ~ ' . formatTime($leave->end . ' ' . $leave->finish, DT_DATETIME2);
         }
 
         $this->view->title      = $this->lang->makeup->edit;
-        $this->view->makeup     = $makeup;
         $this->view->leavePairs = $leavePairs;
+        $this->view->makeup     = $makeup;
         $this->display();
     }
 
@@ -308,11 +283,17 @@ class makeup extends control
      */
     public function view($id, $type = '')
     {
+        $leavePairs = array('');
+        $leaveList  = $this->loadModel('leave', 'oa')->getList('company', '', '', $this->app->user->account, '', 'pass');
+        foreach($leaveList as $key => $leave)
+        {
+            $leavePairs[$leave->id] = formatTime($leave->begin . ' ' . $leave->start, DT_DATETIME2) . ' ~ ' . formatTime($leave->end . ' ' . $leave->finish, DT_DATETIME2);
+        }
         $this->view->title      = $this->lang->makeup->view;
-        $this->view->makeup     = $this->makeup->getByID($id);
-        $this->view->type       = $type;
+        $this->view->makeup     = $this->makeup->getById($id);
         $this->view->users      = $this->loadModel('user')->getPairs();
-        $this->view->preAndNext = $this->loadModel('common', 'sys')->getPreAndNextObject('makeup', $id);
+        $this->view->leavePairs = $leavePairs;
+        $this->view->type       = $type;
         $this->display();
     }
 
@@ -325,7 +306,7 @@ class makeup extends control
      */
     public function delete($id)
     {
-        $makeup = $this->makeup->getByID($id);
+        $makeup = $this->makeup->getById($id);
         if($makeup->createdBy != $this->app->user->account) $this->send(array('result' => 'fail', 'message' => $this->lang->makeup->denied));
 
         $this->makeup->delete($id);
@@ -342,7 +323,7 @@ class makeup extends control
      */
     public function switchStatus($makeupID)
     {
-        $makeup = $this->makeup->getByID($makeupID);
+        $makeup = $this->makeup->getById($makeupID);
         if(!$makeup) return false;
         if($makeup->createdBy != $this->app->user->account) $this->send(array('result' => 'fail', 'message' => $this->lang->makeup->denied));
 
@@ -408,7 +389,7 @@ class makeup extends control
             }
             else
             {
-               $dept = $this->loadModel('tree')->getByID($this->app->user->dept);
+               $dept = $this->loadModel('tree')->getById($this->app->user->dept);
                if($dept) $toList = trim($dept->moderators, ',');
             }
 

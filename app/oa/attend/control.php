@@ -595,6 +595,7 @@ class attend extends control
             /* Update stat with attends. */
             foreach($attends as $account => $accountAttends)
             {
+                if(!isset($stat[$account])) continue;
                 foreach($accountAttends as $attend)
                 {
                     $stat[$account]->actual++;

@@ -73,7 +73,9 @@ class leaveModel extends model
      */
     public function getByDate($date, $account)
     {
-        return $this->dao->select('*')->from(TABLE_LEAVE)->where('begin')->le($date)->andWhere('end')->ge($date)->andWhere('createdBy')->eq($account)->fetch();
+        $leaves = $this->dao->select('*')->from(TABLE_LEAVE)->where('begin')->le($date)->andWhere('end')->ge($date)->andWhere('createdBy')->eq($account)->fetchAll();
+        if(count($leaves) == 1) return current($leaves);
+        return null;
     }
 
     /**
@@ -170,7 +172,7 @@ class leaveModel extends model
      */
     public function update($id)
     {
-        $oldLeave = $this->getByID($id);
+        $oldLeave = $this->getById($id);
 
         $leave = fixer::input('post')
             ->remove('status')
@@ -191,7 +193,7 @@ class leaveModel extends model
             ->where('id')->eq($id)
             ->exec();
 
-        return !dao::isError();
+        return commonModel::createChanges($oldLeave, $leave);
     }
 
     /**
@@ -286,8 +288,6 @@ class leaveModel extends model
     {
         if(!isset($this->lang->leave->statusList[$status])) return false;
 
-        $leave = $this->getByID($id);
-
         $this->dao->update(TABLE_LEAVE)
             ->set('status')->eq($status)
             ->set('reviewedBy')->eq($this->app->user->account)
@@ -297,6 +297,7 @@ class leaveModel extends model
 
         if(!dao::isError() and $status == 'pass')
         {
+            $leave = $this->getById($id);
             $dates = range(strtotime($leave->begin), strtotime($leave->end), 60*60*24);
             $this->loadModel('attend', 'oa')->batchUpdate($dates, $leave->createdBy, 'leave', '', $leave);
         }
@@ -313,7 +314,7 @@ class leaveModel extends model
      */
     public function reviewBackDate($id)
     {
-        $oldLeave = $this->getByID($id);
+        $oldLeave = $this->getById($id);
         $backDate = substr($oldLeave->backDate, 0, 10);
         $backTime = substr($oldLeave->backDate, 11);
         $begin    = $oldLeave->begin;
@@ -349,7 +350,7 @@ class leaveModel extends model
 
         if(!dao::isError())
         {
-            $leave = $this->getByID($id);
+            $leave = $this->getById($id);
             $dates = range(strtotime($leave->begin), strtotime($backDate), 60*60*24);
             $this->loadModel('attend', 'oa')->batchUpdate($dates, $leave->createdBy, 'leave', '', $leave);
 
@@ -371,7 +372,7 @@ class leaveModel extends model
      */
     public function delete($id, $null = null)
     {
-        $oldLeave = $this->getByID($id);
+        $oldLeave = $this->getById($id);
 
         $this->dao->delete()->from(TABLE_LEAVE)->where('id')->eq($id)->exec();
 

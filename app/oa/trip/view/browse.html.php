@@ -43,16 +43,16 @@
         <thead>
           <tr class='text-center'>
             <?php $vars = "date=$date&orderBy=%s";?>
-            <th class='w-50px'>  <?php commonModel::printOrderLink('id', $orderBy, $vars, $lang->$type->id);?></th>
-            <th class='w-80px'>  <?php commonModel::printOrderLink('createdBy', $orderBy, $vars, $lang->$type->createdBy);?></th>
-            <th class='w-180px'> <?php commonModel::printOrderLink('name', $orderBy, $vars, $lang->$type->name);?></th>
-            <th class='w-180px'> <?php commonModel::printOrderLink('customer', $orderBy, $vars, $lang->$type->customer);?></th>
-            <th class='w-150px'> <?php commonModel::printOrderLink('begin', $orderBy, $vars, $lang->$type->begin);?></th>
-            <th class='w-150px'> <?php commonModel::printOrderLink('end', $orderBy, $vars, $lang->$type->end);?></th>
+            <th class='w-50px'> <?php commonModel::printOrderLink('id', $orderBy, $vars, $lang->$type->id);?></th>
+            <th class='w-80px'> <?php commonModel::printOrderLink('createdBy', $orderBy, $vars, $lang->$type->createdBy);?></th>
+            <th class='w-180px'><?php commonModel::printOrderLink('name', $orderBy, $vars, $lang->$type->name);?></th>
+            <th class='w-180px'><?php commonModel::printOrderLink('customer', $orderBy, $vars, $lang->$type->customer);?></th>
+            <th class='w-150px'><?php commonModel::printOrderLink('begin', $orderBy, $vars, $lang->$type->begin);?></th>
+            <th class='w-150px'><?php commonModel::printOrderLink('end', $orderBy, $vars, $lang->$type->end);?></th>
             <?php if($type == 'trip'):?>
-            <th class='w-80px'>  <?php commonModel::printOrderLink('from', $orderBy, $vars, $lang->$type->from);?></th>
+            <th class='w-80px'><?php commonModel::printOrderLink('from', $orderBy, $vars, $lang->$type->from);?></th>
             <?php endif;?>
-            <th class='w-80px'>  <?php commonModel::printOrderLink('to', $orderBy, $vars, $lang->$type->to);?></th>
+            <th class='w-80px'><?php commonModel::printOrderLink('to', $orderBy, $vars, $lang->$type->to);?></th>
             <th><?php echo $lang->$type->desc;?></th>
             <th class='w-100px'><?php echo $lang->actions;?></th>
           </tr>
@@ -66,8 +66,8 @@
           <?php foreach(explode(',', $trip->customers) as $customer) $tripCustomer .= zget($customers, $customer, '') . '/';?>
           <?php $tripCustomer = trim($tripCustomer, '/');?>
           <td title='<?php echo $tripCustomer;?>'><?php echo $tripCustomer;?></td>
-          <td><?php echo $trip->begin . ' ' . $trip->start;?></td>
-          <td><?php echo $trip->end . ' ' . $trip->finish;?></td>
+          <td><?php echo formatTime($trip->begin . ' ' . $trip->start, DT_DATETIME2);?></td>
+          <td><?php echo formatTime($trip->end . ' ' . $trip->finish, DT_DATETIME2);?></td>
           <?php if($type == 'trip'):?>
           <td title='<?php echo $trip->from?>'><?php echo $trip->from;?></td>
           <?php endif;?>
