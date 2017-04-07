@@ -11,47 +11,45 @@
  */
 ?>
 <?php include '../../../sys/common/view/header.modal.html.php';?>
-<div class='panel-body'>
-  <table class='table table-bordered'>
-    <tr>
-      <th><?php echo $lang->lieu->status;?></th>
-      <td class='lieu-<?php echo $lieu->status;?>'><?php echo zget($lang->lieu->statusList, $lieu->status);?></td>
-      <th><?php echo $lang->lieu->hours;?></th>
-      <td><?php echo $lieu->hours . $lang->lieu->hoursTip;?></td>
-    </tr>
-    <tr>
-      <th><?php echo $lang->lieu->begin;?></th>
-      <td><?php echo formatTime($lieu->begin . ' ' . $lieu->start, DT_DATETIME2);?></td>
-      <th><?php echo $lang->lieu->end;?></th>
-      <td><?php echo formatTime($lieu->end . ' ' . $lieu->finish, DT_DATETIME2);?></td>
-    </tr>
-    <tr>
-      <th class='text-middle'><?php echo $lang->lieu->overtime;?></th>
-      <td colspan='3'>
-        <?php foreach(explode(',', trim($lieu->overtime, ',')) as $overtime):?>
-        <?php if(!$overtime) continue;?>
-        <?php echo zget($overtimePairs, $overtime) . '</br>';?>
-        <?php endforeach;?>
-      </td>
-    </tr>
-    <tr>
-      <th><?php echo $lang->lieu->desc;?></th>
-      <td colspan='3'><?php echo $lieu->desc;?></td>
-    </tr>
-    <tr>
-      <th><?php echo $lang->lieu->createdBy;?></th>
-      <td><?php echo zget($users, $lieu->createdBy);?></td>
-      <th><?php echo $lang->lieu->reviewedBy;?></th>
-      <td><?php echo zget($users, $lieu->reviewedBy);?></td>
-    </tr>
-    <tr>
-      <th><?php echo $lang->lieu->createdDate;?></th>
-      <td><?php echo formatTime($lieu->createdDate);?></td>
-      <th><?php echo $lang->lieu->reviewedDate;?></th>
-      <td><?php echo formatTime($lieu->reviewedDate);?></td>
-    </tr>
-  </table>
-</div>
+<table class='table table-bordered'>
+  <tr>
+    <th><?php echo $lang->lieu->status;?></th>
+    <td class='lieu-<?php echo $lieu->status;?>'><?php echo zget($lang->lieu->statusList, $lieu->status);?></td>
+    <th><?php echo $lang->lieu->hours;?></th>
+    <td><?php echo $lieu->hours . $lang->lieu->hoursTip;?></td>
+  </tr>
+  <tr>
+    <th><?php echo $lang->lieu->begin;?></th>
+    <td><?php echo formatTime($lieu->begin . ' ' . $lieu->start, DT_DATETIME2);?></td>
+    <th><?php echo $lang->lieu->end;?></th>
+    <td><?php echo formatTime($lieu->end . ' ' . $lieu->finish, DT_DATETIME2);?></td>
+  </tr>
+  <tr>
+    <th class='text-middle'><?php echo $lang->lieu->overtime;?></th>
+    <td colspan='3'>
+      <?php foreach(explode(',', trim($lieu->overtime, ',')) as $overtime):?>
+      <?php if(!$overtime) continue;?>
+      <?php echo zget($overtimePairs, $overtime) . '</br>';?>
+      <?php endforeach;?>
+    </td>
+  </tr>
+  <tr>
+    <th><?php echo $lang->lieu->desc;?></th>
+    <td colspan='3'><?php echo $lieu->desc;?></td>
+  </tr>
+  <tr>
+    <th><?php echo $lang->lieu->createdBy;?></th>
+    <td><?php echo zget($users, $lieu->createdBy);?></td>
+    <th><?php echo $lang->lieu->reviewedBy;?></th>
+    <td><?php echo zget($users, $lieu->reviewedBy);?></td>
+  </tr>
+  <tr>
+    <th><?php echo $lang->lieu->createdDate;?></th>
+    <td><?php echo formatTime($lieu->createdDate);?></td>
+    <th><?php echo $lang->lieu->reviewedDate;?></th>
+    <td><?php echo formatTime($lieu->reviewedDate);?></td>
+  </tr>
+</table>
 <?php echo $this->fetch('action', 'history', "objectType=lieu&objectID=$lieu->id");?>
 <div class='page-actions'>
   <?php if($type == 'browseReview' and $lieu->status == 'wait'):?>

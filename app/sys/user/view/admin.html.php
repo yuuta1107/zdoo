@@ -88,11 +88,11 @@ js::set('from', 'admin');
                   echo html::a($this->createLink('user', 'edit', "account=$user->account&from=admin"), $lang->edit);
                   if($status == 'normal')
                   {
-                      echo html::a($this->createLink('user', 'forbid', "userID=$user->id"), $lang->user->forbid, "class='forbider'");
+                      echo html::a($this->createLink('user', 'forbid', "account=$user->account"), $lang->user->forbid, "class='forbider'");
                   }
                   else
                   {
-                      echo html::a($this->createLink('user', 'active', "userID=$user->id"), $lang->user->active, "class='forbider'");
+                      echo html::a($this->createLink('user', 'active', "account=$user->account"), $lang->user->active, "class='forbider'");
                   }
                   echo html::a($this->createLink('user', 'delete', "account=$user->account"), $lang->delete, "class='deleter'");
                   ?>

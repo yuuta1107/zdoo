@@ -67,12 +67,23 @@ class task extends control
         $this->session->set('taskList', $this->app->getURI(true));
         setCookie('taskListType', 'browse', time() + 60 * 60 * 24 * 10);
 
+        $users = $this->loadModel('user')->getPairs('noclosed');
         /* Build search form. */
         $this->loadModel('search', 'sys');
         $this->config->task->search['actionURL'] = $this->createLink('task', 'browse', "projectID=$projectID&mode=bysearch");
-        $this->config->task->search['params']['assignedTo']['values'] = $this->loadModel('project', 'proj')->getMemberPairs($projectID);
-        $this->config->task->search['params']['createdBy']['values']  = $this->loadModel('project', 'proj')->getMemberPairs($projectID);
-        $this->config->task->search['params']['finishedBy']['values'] = $this->loadModel('project', 'proj')->getMemberPairs($projectID);
+        if($projectID)
+        {
+            $projectMembers = $this->loadModel('project', 'proj')->getMemberPairs($projectID);
+            $this->config->task->search['params']['assignedTo']['values'] = $projectMembers; 
+            $this->config->task->search['params']['createdBy']['values']  = $projectMembers; 
+            $this->config->task->search['params']['finishedBy']['values'] = $projectMembers; 
+        }
+        else
+        {
+            $this->config->task->search['params']['assignedTo']['values'] = $users; 
+            $this->config->task->search['params']['createdBy']['values']  = $users; 
+            $this->config->task->search['params']['finishedBy']['values'] = $users; 
+        }
         $this->search->setSearchParams($this->config->task->search);
 
         $this->view->title = $this->lang->task->browse;
@@ -88,7 +99,7 @@ class task extends control
         $this->view->project   = isset($project) ? $project : '';
         $this->view->projectID = $projectID;
         $this->view->projects  = $this->loadModel('project', 'proj')->getPairs();
-        $this->view->users     = $this->loadModel('user')->getPairs();
+        $this->view->users     = $users;
         $this->view->backLink  = html::a($backURL, $this->lang->goback);
         $this->display();
     }

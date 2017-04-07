@@ -54,9 +54,7 @@
             <?php if($type != 'browseReview'):?>
             <th class='w-80px'><?php commonModel::printOrderLink('reviewedBy', $orderBy, $vars, $lang->lieu->reviewedBy);?></th>
             <?php endif;?>
-            <?php if($type != 'company'):?>
             <th class='w-130px'><?php echo $lang->actions;?></th>
-            <?php endif;?>
           </tr>
         </thead>
         <?php foreach($lieuList as $lieu):?>
@@ -72,7 +70,6 @@
           <?php if($type != 'browseReview'):?>
           <td><?php echo zget($users, $lieu->reviewedBy);?></td>
           <?php endif;?>
-          <?php if($type != 'company'):?>
           <td class='actionTD'>
             <?php echo html::a($this->createLink('oa.lieu', 'view', "id={$lieu->id}&type=$type"), $lang->lieu->view, "data-toggle='modal'");?>
 
@@ -87,7 +84,6 @@
             <?php echo html::a($this->createLink('oa.lieu', 'delete', "id={$lieu->id}"), $lang->delete, "class='deleter'");?>
             <?php endif;?>
           </td>
-          <?php endif;?>
         </tr>
         <?php endforeach;?>
       </table>
