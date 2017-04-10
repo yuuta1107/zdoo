@@ -50,6 +50,10 @@ CREATE TABLE `crm_contact` (
   KEY `nickname` (`nickname`),
   KEY `origin` (`origin`),
   KEY `birthday` (`birthday`),
+  KEY `email` (`email`),
+  KEY `qq` (`qq`),
+  KEY `mobile` (`mobile`),
+  KEY `phone` (`phone`),
   KEY `createdBy` (`createdBy`),
   KEY `contactedBy` (`contactedBy`),
   KEY `contactedDate` (`contactedDate`),
@@ -656,6 +660,8 @@ CREATE TABLE `sys_action` (
   PRIMARY KEY (`id`),
   KEY `customer` (`customer`),
   KEY `contact` (`contact`),
+  KEY `objectType` (`objectType`),
+  KEY `objectID` (`objectID`),
   KEY `date` (`date`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `sys_block`;

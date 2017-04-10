@@ -416,8 +416,10 @@ $lang->excel = new stdClass();
 $lang->excel->canNotRead = 'Cannot resolve this file.';
 
 $lang->excel->error = new stdclass();
-$lang->excel->error->info  = 'The value you entered is not in the drop-down list.';
-$lang->excel->error->title = 'Input error';
+$lang->excel->error->info   = 'The value you entered is not in the drop-down list.';
+$lang->excel->error->title  = 'Input error.';
+$lang->excel->error->noFile = 'No file.';
+$lang->excel->error->noData = 'No valid data.';
 
 $lang->excel->title = new stdclass();
 $lang->excel->title->contact  = 'Contact';
