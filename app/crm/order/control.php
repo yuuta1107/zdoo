@@ -353,9 +353,6 @@ class order extends control
      * 
      * @param  string $mode 
      * @param  string $orderBy 
-     * @param  int    $recTotal 
-     * @param  int    $recPerPage 
-     * @param  int    $pageID 
      * @access public
      * @return void
      */
@@ -418,14 +415,14 @@ class order extends control
                 if(isset($users[$order->contactedBy])) $order->contactedBy = $users[$order->contactedBy];
                 if(isset($users[$order->closedBy]))    $order->closedBy    = $users[$order->closedBy]; 
 
-                $order->createdDate    = substr($order->createdDate, 0, 10);
-                $order->editedDate     = substr($order->editedDate, 0, 10);
-                $order->assignedDate   = substr($order->assignedDate, 0, 10);
-                $order->signedDate     = substr($order->signedDate, 0, 10);
-                $order->activatedDate  = substr($order->activatedDate, 0, 10);
-                $order->contactedDate  = substr($order->contactedDate, 0, 10);
-                $order->nextDate       = substr($order->contactedDate, 0, 10);
-                $order->closedDate     = substr($order->closedDate, 0, 10);
+                $order->createdDate   = formatTime($order->createdDate, DT_DATE1);
+                $order->editedDate    = formatTime($order->editedDate, DT_DATE1);
+                $order->assignedDate  = formatTime($order->assignedDate, DT_DATE1);
+                $order->signedDate    = formatTime($order->signedDate, DT_DATE1);
+                $order->activatedDate = formatTime($order->activatedDate, DT_DATE1);
+                $order->contactedDate = formatTime($order->contactedDate, DT_DATE1);
+                $order->nextDate      = formatTime($order->contactedDate, DT_DATE1);
+                $order->closedDate    = formatTime($order->closedDate, DT_DATE1);
 
                 $order->customer = $order->customerName;
                 if(!empty($order->products)) $order->product = join("; \n", $order->products);

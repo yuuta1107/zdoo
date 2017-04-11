@@ -47,7 +47,7 @@ $config->contact->list = new stdclass();
 $config->contact->list->exportFields = '
   id, realname, customer, nickname, birthday, gender, 
   mobile, phone, email, qq, weixin, weibo, 
-  skype,yahoo, gtalk, wangwang, site, fax, area,
+  skype,yahoo, gtalk, wangwang, site, fax, 
   createdBy, createdDate, editedBy, editedDate,
   contactedBy, contactedDate, nextDate, desc, resume, address';
 
@@ -56,8 +56,8 @@ $config->contact->excelCustomWidth = array('origin' => 15, 'company' => 15, 'rea
 $config->contact->listFields       = array('gender');
 
 /* Excel items. */
-$config->excel = new stdclass();
-$config->excel->width = new stdclass();
+if(!isset($config->excel)) $config->excel = new stdclass();
+if(!isset($config->excel->width)) $config->excel->width = new stdclass();
 $config->excel->width->title   = 30;
 $config->excel->width->content = 100;
 
@@ -65,5 +65,5 @@ $config->excel->titleFields  = array();
 $config->excel->centerFields = array();
 $config->excel->dateFields   = array('birthday');
 
-$config->excel->freeze = new stdclass();
+if(!isset($config->excel->freeze)) $config->excel->freeze = new stdclass();
 $config->excel->freeze->contact = 'email';

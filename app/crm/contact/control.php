@@ -254,9 +254,6 @@ END:VCARD";
      * @param  string $type         contact | leads
      * @param  string $mode 
      * @param  string $orderBy 
-     * @param  int    $recTotal 
-     * @param  int    $recPerPage 
-     * @param  int    $pageID 
      * @access public
      * @return void
      */
@@ -275,6 +272,7 @@ END:VCARD";
                 $fields[$fieldName] = isset($contactLang->$fieldName) ? $contactLang->$fieldName : $fieldName;
                 unset($fields[$key]);
             }
+            if($type != 'contact') unset($fields['customer']);
 
             $contacts = array();
             $queryCondition = $this->session->{$type . 'QueryCondition'};
@@ -320,28 +318,32 @@ END:VCARD";
                         $contact->address[] = ((isset($address->area)) ? str_replace('/', ' ', zget($areaList, $address->area)) : '') . $address->location;
                     }
                 }
-                elseif(!empty($addressList[$contact->customer]))
+                if($type == 'contact')
                 {
-                    foreach($addressList[$contact->customer] as $address)
+                    if(!empty($addressList[$contact->customer]))
                     {
-                        $contact->address[] = ((isset($address->area)) ? str_replace('/', ' ', zget($areaList, $address->area)) : '') . $address->location;
+                        foreach($addressList[$contact->customer] as $address)
+                        {
+                            $contact->address[] = ((isset($address->area)) ? str_replace('/', ' ', zget($areaList, $address->area)) : '') . $address->location;
+                        }
                     }
                 }
             }
 
             foreach($contacts as $contact)
             {
-                if(isset($customers[$contact->customer]))              $contact->customer = $customers[$contact->customer];
-                if(isset($this->lang->genderList->{$contact->gender})) $contact->gender   = $this->lang->genderList->{$contact->gender};
+                if($type == 'contact' && isset($customers[$contact->customer])) $contact->customer = $customers[$contact->customer];
+                if(isset($this->lang->genderList->{$contact->gender}))          $contact->gender   = $this->lang->genderList->{$contact->gender};
 
                 if(isset($users[$contact->createdBy]))   $contact->createdBy   = $users[$contact->createdBy];
                 if(isset($users[$contact->editedBy]))    $contact->editedBy    = $users[$contact->editedBy];
                 if(isset($users[$contact->contactedBy])) $contact->contactedBy = $users[$contact->contactedBy];
 
-                $contact->createdDate   = substr($contact->createdDate, 0, 10);
-                $contact->editedDate    = substr($contact->editedDate, 0, 10);
-                $contact->contactedDate = substr($contact->contactedDate, 0, 10);
-                $contact->nextDate      = substr($contact->contactedDate, 0, 10);
+                $contact->birthday      = formatTime($contact->birthday, DT_DATE1);
+                $contact->createdDate   = formatTime($contact->createdDate, DT_DATE1);
+                $contact->editedDate    = formatTime($contact->editedDate, DT_DATE1);
+                $contact->contactedDate = formatTime($contact->contactedDate, DT_DATE1);
+                $contact->nextDate      = formatTime($contact->contactedDate, DT_DATE1);
 
                 if(isset($contact->resume))  $contact->resume  = join("; \n", $contact->resume);
                 if(isset($contact->address)) $contact->address = join("; \n", $contact->address);
