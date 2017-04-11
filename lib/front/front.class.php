@@ -82,7 +82,7 @@ class html extends baseHTML
         {
             $key     = str_replace('item', '', $key);
             if($isBlock) $string .= "<div class='checkbox'><label>";
-            else $string .= "<label class='checkbox'>";
+            else $string .= "<label class='checkbox-inline'>";
             $string .= "<input type='checkbox' name='{$name}[]' value='$key' ";
             $string .= (strpos($checked, ",$key,") !== false) ? " checked ='checked'" : "";
             $string .= $attrib;
