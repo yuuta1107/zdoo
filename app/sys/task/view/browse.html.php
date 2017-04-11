@@ -42,7 +42,7 @@
         <tbody>
           <?php foreach($tasks as $task):?>
           <tr class='text-center'>
-            <td class='text-left'><label class='checkbox-inline'><input type='checkbox' name='taskIDList[]' value='<?php echo $task->id;?>'/><?php echo $task->id;?></td>
+            <td class='text-left'><label class='checkbox-inline'><input type='checkbox' name='taskIDList[]' value='<?php echo $task->id;?>'/> <?php echo $task->id;?></td>
             <td><span class='active pri pri-<?php echo $task->pri; ?>'><?php echo $lang->task->priList[$task->pri];?></span></td>
             <td class='text-left' title="<?php echo $task->name;?>">
               <?php if($task->parent != 0) echo "<span class='label'>{$lang->task->childrenAB}</span>"?>

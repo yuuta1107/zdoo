@@ -44,7 +44,7 @@
                   <span class='input-group-addon fix-border fix-padding team-group hidden'></span>
                   <?php echo html::a("#modalTeam", $lang->task->team, "class='form-control btn team-group hidden' data-toggle='modal' data-target='#modalTeam'");?>
                   <span class='input-group-addon'>
-                    <label class='checkbox'>
+                    <label class='checkbox-inline'>
                       <input type='checkBox' name='multiple' value='1'/>
                       <?php echo $lang->task->multipleAB;?>
                     </label>

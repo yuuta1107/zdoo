@@ -38,7 +38,7 @@
       <th class='w-100px'><?php echo $lang->doc->libName;?></th>
       <td><?php echo html::input('name', '', "class='form-control'");?></td>
       <td class='w-100px'>
-        <label class='checkbox'><input type='checkbox' name='private' id='private' value='1' /><?php echo $lang->doc->private;?></label>
+        <label class='checkbox-inline'><input type='checkbox' name='private' id='private' value='1' /> <?php echo $lang->doc->private;?></label>
       </td>
     </tr>
     <tr id='userTR'>

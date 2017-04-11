@@ -65,7 +65,7 @@
               <?php echo html::select("trader[$i]", $traderList, $trader, "class='form-control chosen' id='trader{$i}'");?>
               <?php  echo html::input("traderName[$i]", '', "class='form-control' id='traderName{$i}' style='display:none'");?>
               <span class='input-group-addon'>
-                <label class="checkbox">
+                <label class="checkbox-inline">
                   <input type="checkbox" name="createTrader[<?php echo $i;?>]" value="1"> <?php echo $lang->trade->newTrader;?>
                 </label>
               </span>

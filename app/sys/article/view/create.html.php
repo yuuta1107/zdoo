@@ -25,7 +25,7 @@
           <td class='w-p40'><?php echo html::select("categories[]", $categories, $currentCategory, "multiple='multiple' class='form-control chosen'");?></td>
           <td>
             <?php if($type == 'blog'):?>
-            <label class='checkbox'><input type='checkbox' name='private' id='private' value='1' /><?php echo $lang->article->private;?></label>
+            <label class='checkbox-inline'><input type='checkbox' name='private' id='private' value='1' /> <?php echo $lang->article->private;?></label>
             <?php endif;?>
           </td>
         </tr>

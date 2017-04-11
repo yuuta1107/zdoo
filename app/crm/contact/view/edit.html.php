@@ -55,9 +55,9 @@
                 <div class='input-group'>
                   <?php echo html::input('realname', $contact->realname, "class='form-control'");?>
                   <span class='input-group-addon'>
-                    <label class='checkbox'>
+                    <label class='checkbox-inline'>
                       <?php $checked = $contact->maker ? "checked='checked'" : '';?>
-                      <input type='checkbox' name='maker' id='maker' value='1' <?php echo $checked?>/><?php echo $lang->resume->maker;?>
+                      <input type='checkbox' name='maker' id='maker' value='1' <?php echo $checked?>/> <?php echo $lang->resume->maker;?>
                     </label>
                   </span>
                 </div>

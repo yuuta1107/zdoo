@@ -52,7 +52,7 @@ include $app->getAppRoot() . '../sys/common/view/header.modal.html.php';
             <div class='input-group'>
               <?php echo html::input("name[$i]", '', "class='form-control'");?>
               <span class='input-group-addon'>
-                <label class='checkbox'>
+                <label class='checkbox-inline'>
                   <input type='checkBox' data-id='<?php echo $i?>' name='<?php echo "multiple[$i]"?>' value='1' />
                   <?php echo $lang->task->multipleAB;?>
                 </label>

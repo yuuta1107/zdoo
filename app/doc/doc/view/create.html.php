@@ -30,7 +30,7 @@
           <th class='w-80px'><?php echo $lang->doc->category;?></th>
           <td><?php echo html::select('module', $moduleOptionMenu, $moduleID, "class='form-control'");?></td>
           <td class='w-100px'>
-            <label class='checkbox'><input type='checkbox' name='private' id='private' value='1' /><?php echo $lang->doc->private;?></label>
+            <label class='checkbox-inline'><input type='checkbox' name='private' id='private' value='1' /> <?php echo $lang->doc->private;?></label>
           </td>
         </tr>  
         <tr id='userTR'>

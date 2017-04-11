@@ -14,21 +14,23 @@
 <?php include '../../../sys/common/view/chosen.html.php';?>
 <form id='linkContactForm' method='post' action='<?php echo inlink('linkContact', "customerID=$customerID")?>'>
   <table class='table table-form'>
-    <tr>
-      <th class='w-100px'><?php echo $lang->customer->contact;?></th>
-      <td>
-        <div class='input-group'>
-          <?php echo html::input('realname', '', "class='form-control'");?>
-          <?php echo html::select('contact', $contacts, '', "class='form-control chosen' style='display:none'");?>
-          <span class='input-group-addon'>
-            <label class='checkbox'>
-              <input type='checkbox' name='selectContact' id='selectContact' value='1'/><?php echo $lang->customer->selectContact;?>
-            </label>
-          </span>
-        </div>
-      </td>
-    </tr>
-    <tbody id='contactInfo' class='hidden'>
+    <tbody>
+      <tr>
+        <th class='w-100px'><?php echo $lang->customer->contact;?></th>
+        <td>
+          <div class='input-group'>
+            <?php echo html::input('realname', '', "class='form-control'");?>
+            <?php echo html::select('contact', $contacts, '', "class='form-control chosen' style='display:none'");?>
+            <span class='input-group-addon'>
+              <label class='checkbox-inline'>
+                <input type='checkbox' name='selectContact' id='selectContact' value='1'/> <?php echo $lang->customer->selectContact;?>
+              </label>
+            </span>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+    <tbody id='contactInfo' class='hidden' style='border-top: none'>
       <tr>
         <th><?php echo $lang->contact->gender;?></th>
         <td><?php unset($lang->genderList->u); echo html::radio('gender', $lang->genderList, '');?></td>

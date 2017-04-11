@@ -21,8 +21,8 @@
           <?php echo html::input('realname', '', "class='form-control'");?>
           <?php echo html::select('contact', $contacts, '', "class='form-control chosen' style='display:none'");?>
           <span class='input-group-addon'>
-            <label class='checkbox'>
-              <input type='checkbox' name='selectContact' id='selectContact' value='1'/><?php echo $lang->customer->selectContact;?>
+            <label class='checkbox-inline'>
+              <input type='checkbox' name='selectContact' id='selectContact' value='1'/> <?php echo $lang->customer->selectContact;?>
             </label>
           </span>
         </div>

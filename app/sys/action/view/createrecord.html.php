@@ -19,7 +19,7 @@
 <?php js::set('objectID', $objectID);?>
 <?php js::set('history', $history);?>
 <div class='panel-body'>
-<form method='post' id='createRecordForm' action='<?php echo inlink('createrecord', "objectType={$objectType}&objectID={$objectID}")?>' class='form-inline'>
+<form method='post' id='createRecordForm' action='<?php echo inlink('createrecord', "objectType={$objectType}&objectID={$objectID}")?>' class='form'>
   <table class='table table-form table-condensed'>
     <?php if($objectType != 'contact'):?>
     <tr>
@@ -42,8 +42,8 @@
               <?php echo html::input('realname', '', "class='form-control' style='display:none'");?>
               <?php if($objectType == 'customer'):?>
               <span class='input-group-addon'>
-                <?php echo html::checkbox('createContact', array(1 => $lang->action->createContact), '', "class='checkbox-inline'");?>
-                <?php echo html::checkbox('objectType', array('order' => $lang->action->record->order, 'contract' => $lang->action->record->contract), '', "class='checkbox-inline'");?>
+                <?php echo html::checkbox('createContact', array(1 => $lang->action->createContact), '');?>
+                <?php echo html::checkbox('objectType', array('order' => $lang->action->record->order, 'contract' => $lang->action->record->contract), '');?>
               </span>
               <?php endif;?>
             </div>

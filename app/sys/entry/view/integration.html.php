@@ -16,7 +16,7 @@ include '../../common/view/header.html.php';
     <strong><i class='icon-link'></i> <?php echo $lang->entry->integration;?></strong>
   </div>
   <div class='panel-body'>
-    <form method='post' class='form-inline' id='entryForm'>
+    <form method='post' class='form' id='entryForm'>
       <table class='table table-form'>
         <tr>
           <th class='w-100px'><?php echo $lang->entry->integration;?></th>
@@ -46,7 +46,7 @@ include '../../common/view/header.html.php';
             <div class='input-group'>
               <?php echo html::input('ip', $entry->ip, "class='form-control' title='{$lang->entry->note->ip}' placeholder='{$lang->entry->note->ip}'");?>
               <div class='input-group-addon'>
-                <label class="checkbox"><input type="checkbox" id="allip" name="allip" value="1"> <?php echo $lang->entry->note->allip;?></label>
+                <label class="checkbox-inline"><input type="checkbox" id="allip" name="allip" value="1"> <?php echo $lang->entry->note->allip;?></label>
               </div>
             </div>
           </td>

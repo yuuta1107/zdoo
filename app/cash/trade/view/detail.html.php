@@ -14,8 +14,8 @@
 <?php include '../../../sys/common/view/datepicker.html.php';?>
 <?php include '../../../sys/common/view/chosen.html.php';?>
 <?php js::set('key', count($details));?>
-<form method='post' id='ajaxForm' action='<?php echo inlink('detail', "tradeID={$trade->id}")?>' class='form-inline'>
-  <table class='table table-bordered'>
+<form method='post' id='ajaxForm' action='<?php echo inlink('detail', "tradeID={$trade->id}")?>' class='form-table'>
+  <table class='table table-bordered table-fixed'>
     <thead>
       <tr class='text-center'>
         <th class='w-100px'><?php echo $lang->trade->money;?></th>

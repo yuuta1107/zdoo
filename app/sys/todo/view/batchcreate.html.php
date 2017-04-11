@@ -18,7 +18,7 @@
     <div class='input-group w-200px' id='datepicker'>
       <span class='input-group-addon'><?php echo $lang->todo->date;?></span>
       <?php echo html::input('date', $date, "class='form-control form-date' onchange='updateAction(this.value)'");?>
-      <span class='input-group-addon'><input type='checkbox' id='switchDate' onclick='switchDateTodo(this);'> <?php echo $lang->todo->periods['future'];?></span>
+      <span class='input-group-addon'><label class='checkbox-inline'><input type='checkbox' id='switchDate' onclick='switchDateTodo(this);'> <?php echo $lang->todo->periods['future'];?></label></span>
     </div>
   </div>
   <div class='panel'>
@@ -32,7 +32,7 @@
           <th class='w-p30 red'><?php echo $lang->todo->name;?></th>
           <th><?php echo $lang->todo->desc;?></th>
           <th class='w-160px'><?php echo $lang->todo->beginAndEnd;?></th>
-          <th class='w-70px'><input type='checkbox' name='switchAll' id='switchAll' onclick='switchDateAll(this)'><?php echo $lang->todo->periods['future'];?></th>
+          <th class='w-70px'><label class='checkbox-inline'><input type='checkbox' name='switchAll' id='switchAll' onclick='switchDateAll(this)'> <?php echo $lang->todo->periods['future'];?></label></th>
         </tr>
       </thead>
       <?php $pri = 3;?>
@@ -51,7 +51,7 @@
         <td colspan='2'>
           <div class='input-group'>
             <?php echo html::select("begins[$i]", $times, $time, "onchange=\"setBeginsAndEnds($i, 'begin');\" class='form-control' style='width: 50%'") . html::select("ends[$i]", $times, '', "onchange=\"setBeginsAndEnds($i, 'end');\" class='form-control' style='width: 50%'");?>
-            <span class='input-group-addon'><input type='checkbox' name="switchDate[<?php echo $i?>]" id="switchDate<?php echo $i?>" data-key="<?php echo $i;?>" onclick='switchDateList(<?php echo $i?>);'><?php echo $lang->todo->periods['future'];?></span>
+            <span class='input-group-addon'><label class='checkbox-inline'><input type='checkbox' name="switchDate[<?php echo $i?>]" id="switchDate<?php echo $i?>" data-key="<?php echo $i;?>" onclick='switchDateList(<?php echo $i?>);'> <?php echo $lang->todo->periods['future'];?></label></span>
           </div>
         </td>
       </tr>  

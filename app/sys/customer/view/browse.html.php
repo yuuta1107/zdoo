@@ -48,7 +48,7 @@
       <tbody>
         <?php foreach($customers as $customer):?>
         <tr class='text-center'>
-          <td class='text-left'><label class='checkbox-inline'><input type='checkbox' name='customerIDList[]' value='<?php echo $customer->id;?>'/><?php echo $customer->id;?></label></td>
+          <td class='text-left'><label class='checkbox-inline'><input type='checkbox' name='customerIDList[]' value='<?php echo $customer->id;?>'/> <?php echo $customer->id;?></label></td>
           <td class='text-left'><?php if(!commonModel::printLink('customer', 'view', "customerID={$customer->id}", $customer->name)) echo $customer->name;?></td>
           <td><?php if(isset($users[$customer->assignedTo])) echo $users[$customer->assignedTo];?></td>
           <td><?php echo isset($lang->customer->levelNameList[$customer->level]) ? $lang->customer->levelNameList[$customer->level] : '';?></td>

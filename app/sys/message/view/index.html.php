@@ -93,7 +93,7 @@
           <div class='form-group hiding' id='captchaBox'></div>
           <div class='form-group'>
             <div class='col-sm-1'></div>
-            <div class='col-sm-11'><label class='checkbox'><input type='checkbox' name='secret' value='1' /><?php echo $lang->message->secret;?></label></div>
+            <div class='col-sm-11'><label class='checkbox-inline'><input type='checkbox' name='secret' value='1' /> <?php echo $lang->message->secret;?></label></div>
           </div>
           <div class='form-group'>
             <div class='col-sm-1'></div>

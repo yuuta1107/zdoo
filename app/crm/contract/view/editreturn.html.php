@@ -14,7 +14,7 @@
 <?php include '../../../sys/common/view/kindeditor.html.php';?>
 <?php include '../../../sys/common/view/chosen.html.php';?>
 <?php include '../../common/view/datepicker.html.php';?>
-<form method='post' id='ajaxForm' class='form-inline' action='<?php echo $this->createLink('contract', 'editReturn', "returnID={$return->id}")?>'>
+<form method='post' id='ajaxForm' class='form-table' action='<?php echo $this->createLink('contract', 'editReturn', "returnID={$return->id}")?>'>
   <table class='table table-form table-condensed'>
     <tr>
       <th><?php echo $lang->contract->all;?></th>
@@ -27,7 +27,7 @@
           <?php echo html::input('amount', $return->amount, "class='form-control'");?>
           <?php $checked = $contract->return == 'done' ? 'checked' : '';?>
           <div class='input-group-addon'>
-            <label class='checkbox'><input type='checkbox' id='finish' name='finish' value='1' <?php echo $checked;?>> <?php echo $lang->contract->completeReturn;?></label>
+            <label class='checkbox-inline'><input type='checkbox' id='finish' name='finish' value='1' <?php echo $checked;?>> <?php echo $lang->contract->completeReturn;?></label>
           </div>
         </div>
       </td><td></td>

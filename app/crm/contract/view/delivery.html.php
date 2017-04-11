@@ -22,7 +22,7 @@
         <div class='input-group'>
           <?php echo html::select('deliveredBy', $users, $this->app->user->account, "class='form-control chosen'");?>
           <div class='input-group-addon'>
-            <label class='checkbox'><input type='checkbox' id='finish' name='finish' value='1'> <?php echo $lang->contract->completeDelivery;?></label>
+            <label class='checkbox-inline'><input type='checkbox' id='finish' name='finish' value='1'> <?php echo $lang->contract->completeDelivery;?></label>
           </div>
         </div>
       </td><td></td>

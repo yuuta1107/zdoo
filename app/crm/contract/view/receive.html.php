@@ -14,7 +14,7 @@
 <?php include '../../../sys/common/view/kindeditor.html.php';?>
 <?php include '../../../sys/common/view/chosen.html.php';?>
 <?php include '../../common/view/datepicker.html.php';?>
-<form method='post' id='receiveForm' class='form-inline' action='<?php echo $this->createLink('contract', 'receive', "contractID={$contract->id}")?>'>
+<form method='post' id='receiveForm' class='form-table' action='<?php echo $this->createLink('contract', 'receive', "contractID={$contract->id}")?>'>
   <table class='table table-form table-condensed'>
     <tr>
       <th><?php echo $lang->contract->all;?></th>
@@ -26,10 +26,10 @@
         <div class='input-group'>
           <?php echo html::input('amount', '', "class='form-control'");?>
           <div class='input-group-addon'>
-            <label class='checkbox'><input type='checkbox' id='finish' name='finish' value='1'> <?php echo $lang->contract->completeReturn;?></label>
+            <label class='checkbox-inline'><input type='checkbox' id='finish' name='finish' value='1'> <?php echo $lang->contract->completeReturn;?></label>
           </div>
           <div class='input-group-addon'>
-            <label class='checkbox'><input type='checkbox' id='createTrade' name='createTrade' value='1' checked='checked'> <?php echo $lang->trade->create;?></label>
+            <label class='checkbox-inline'><input type='checkbox' id='createTrade' name='createTrade' value='1' checked='checked'> <?php echo $lang->trade->create;?></label>
           </div>
         </div>
       </td><td></td>

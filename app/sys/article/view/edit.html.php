@@ -29,7 +29,7 @@
         </td>
         <td>
           <?php if($type == 'blog'):?>
-          <label class='checkbox'><input type='checkbox' name='private' id='private' value='1' /><?php echo $lang->article->private;?></label>
+          <label class='checkbox-inline'><input type='checkbox' name='private' id='private' value='1' /><?php echo $lang->article->private;?></label>
           <?php endif;?>
         </td>
       </tr>

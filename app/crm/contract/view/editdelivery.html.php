@@ -23,7 +23,7 @@
           <?php echo html::select('deliveredBy', $users, $delivery->deliveredBy, "class='form-control chosen'");?>
           <?php $checked = $contract->delivery == 'done' ? 'checked' : '';?>
           <div class='input-group-addon'>
-            <label class='checkbox'><input type='checkbox' id='finish' name='finish' value='1' <?php echo $checked;?>> <?php echo $lang->contract->completeDelivery;?></label>
+            <label class='checkbox-inline'><input type='checkbox' id='finish' name='finish' value='1' <?php echo $checked;?>> <?php echo $lang->contract->completeDelivery;?></label>
           </div>
         </div>
       </td><td></td>

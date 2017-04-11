@@ -19,7 +19,7 @@
     <strong><i class="icon-plus"></i> <?php echo $lang->trade->{$type};?></strong>
   </div>
   <div class='panel-body'>
-    <form method='post' id='ajaxForm' class='form-inline'>
+    <form method='post' id='ajaxForm' class='form-table'>
       <table class='table table-form w-p60'>
         <tr>
           <th class='w-100px'><?php echo $lang->trade->depositor;?></th>
@@ -37,7 +37,7 @@
           <td>
             <div class='input-group'>
               <?php echo html::select('category', array('') + (array) $categories, '', "class='form-control chosen'");?>
-              <div class='input-group-addon'><?php echo html::checkbox('objectType', $lang->trade->objectTypeList);?></div>
+              <div class='input-group-addon'><div style='padding-right: 20px;'><?php echo html::checkbox('objectType', $lang->trade->objectTypeList);?></div></div>
             </div>
           </td>
         </tr>

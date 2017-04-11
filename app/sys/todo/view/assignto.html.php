@@ -27,7 +27,7 @@
           <div class='input-group'>
             <?php $disabled = $todo->date == '00000000' ? "disabled='disabled'" : ''?>
             <?php echo html::input('date', $todo->date, "class='form-control form-date' $disabled");?>
-            <span class='input-group-addon'><input type='checkbox' <?php echo $todo->date == '00000000' ? 'checked' : ''?> id='switchDate' onclick='switchDateTodo(this);'> <?php echo $lang->todo->periods['future'];?></span>
+            <span class='input-group-addon'><label class='checkbox-inline'><input type='checkbox' <?php echo $todo->date == '00000000' ? 'checked' : ''?> id='switchDate' onclick='switchDateTodo(this);'> <?php echo $lang->todo->periods['future'];?></label></span>
           </div>
       </td>
       <td>

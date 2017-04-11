@@ -34,10 +34,10 @@ js::set('zentaoName', $lang->entry->zentao);
               <label class='input-group-addon fix-border'><?php echo $lang->entry->abbr;?></label>
               <?php echo html::input('abbr', '', "class='form-control' maxlength='2' placeholder='{$lang->entry->note->abbr}'");?>
               <div class='input-group-addon'>
-                <label class="checkbox"><input type="checkbox" id="visible" name="visible" value="1" checked="checked"> <?php echo $lang->entry->note->visible;?></label>
+                <label class="checkbox-inline"><input type="checkbox" id="visible" name="visible" value="1" checked="checked"> <?php echo $lang->entry->note->visible;?></label>
               </div>
               <div class='input-group-addon'>
-                <label class="checkbox"><input type="checkbox" id="zentao" name="zentao" value="1"> <?php echo $lang->entry->integrateZentao;?></label>
+                <label class="checkbox-inline"><input type="checkbox" id="zentao" name="zentao" value="1"> <?php echo $lang->entry->integrateZentao;?></label>
               </div>
             </div>
           </td>

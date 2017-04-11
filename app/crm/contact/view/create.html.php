@@ -28,8 +28,8 @@
                 <div class='input-group'>
                   <?php echo html::input('realname', '', "class='form-control'");?>
                   <span class='input-group-addon'>
-                    <label class='checkbox'>
-                      <input type='checkbox' name='maker' id='maker' value='1' /><?php echo $lang->resume->maker;?>
+                    <label class='checkbox-inline'>
+                      <input type='checkbox' name='maker' id='maker' value='1' /> <?php echo $lang->resume->maker;?>
                     </label>
                   </span>
                 </div>
@@ -42,8 +42,8 @@
                   <?php echo html::select('customer', $customers, !empty($customer) ? $customer : '', "class='form-control chosen'");?>
                   <?php echo html::input('name', '', "class='form-control' style='display:none'");?>
                   <span class='input-group-addon'>
-                    <label class='checkbox'>
-                      <input type='checkbox' name='newCustomer' id='newCustomer' value='1' /><?php echo $lang->contact->newCustomer?>
+                    <label class='checkbox-inline'>
+                      <input type='checkbox' name='newCustomer' id='newCustomer' value='1' /> <?php echo $lang->contact->newCustomer?>
                     </label>
                   </span>
                 </div>

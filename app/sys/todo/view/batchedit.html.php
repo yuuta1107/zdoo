@@ -27,7 +27,7 @@
           <th><?php echo $lang->todo->desc;?></th>
           <th class='w-100px'><?php echo $lang->todo->date;?></th>
           <th class='w-160px'><?php echo $lang->todo->beginAndEnd;?></th>
-          <th class='w-70px'><input type='checkbox' name='switchAll' id='switchAll' onclick='switchDateAll(this)'><?php echo $lang->todo->periods['future'];?></th>
+          <th class='w-70px'><label class='checkbox-inline'><input type='checkbox' name='switchAll' id='switchAll' onclick='switchDateAll(this)'> <?php echo $lang->todo->periods['future'];?></label></th>
         </tr>
       </thead>
       <?php $i = 1;?>
@@ -47,7 +47,7 @@
           <div class='input-group'>
             <?php echo html::select("begins[$id]", $times, $todo->begin, "onchange=\"setBeginsAndEnds($id, 'begin');\" class='form-control' style='width: 50%'");?>
             <?php echo html::select("ends[$id]", $times, $todo->end, "onchange=\"setBeginsAndEnds($id, 'end');\" class='form-control' style='width: 50%'");?>
-            <span class='input-group-addon'><input type='checkbox' name="switchDate[<?php echo $id?>]" id="switchDate<?php echo $id;?>" data-key="<?php echo $id;?>" onclick='switchDateList(<?php echo $id?>);'><?php echo $lang->todo->periods['future'];?></span>
+            <span class='input-group-addon'><label class='checkbox-inline'><input type='checkbox' name="switchDate[<?php echo $id?>]" id="switchDate<?php echo $id;?>" data-key="<?php echo $id;?>" onclick='switchDateList(<?php echo $id?>);'> <?php echo $lang->todo->periods['future'];?></label></span>
           </div>
         </td>
       </tr>  

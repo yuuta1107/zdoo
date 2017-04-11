@@ -12,7 +12,7 @@
 ?>
 <?php include $app->getModuleRoot() . 'common/view/header.html.php';?>
 <?php $isLineList = ($module == 'product' and $field == 'lineList') ? true : false;?>
-<form method='post' id='ajaxForm' class='form-inline'>
+<form method='post' id='ajaxForm'>
   <div class='panel'>
     <div class="panel-heading">
     <strong><i class="icon-wrench"></i> <?php echo ($module == 'common' and $field == 'currencyList') ? $lang->setting->system->fields['currencyList'] : $lang->setting->{$module}->fields[$field];?></strong>
@@ -21,7 +21,7 @@
     <div class='panel-body'>
       <table class='table table-form table-condensed table-currency'>
         <tr>
-          <td><?php echo html::checkbox('currency', $lang->currencyList, isset($this->config->setting->currency) ? $this->config->setting->currency : '');?></td>
+          <td><?php echo html::checkbox('currency,', $lang->currencyList, isset($this->config->setting->currency) ? $this->config->setting->currency : '', '', 'block');?></td>
         </tr>
         <tr><td><?php echo html::submitButton();?></td></tr>
       </table>

@@ -30,7 +30,7 @@
                   <div class='input-group'>
                     <?php echo html::input("name", $task->name, "class='form-control'");?>
                     <span class='input-group-addon'>
-                      <label class='checkbox'>
+                      <label class='checkbox-inline'>
                         <input type='checkBox' name='multiple' value='1' <?php echo empty($task->team) ? '' : 'checked'?> />
                         <?php echo $lang->task->multipleAB;?>
                       </label>

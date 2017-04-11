@@ -34,7 +34,7 @@
         <tbody>
           <?php foreach($todos as $todo):?>
           <tr class='text-center'>
-            <td><label class='checkbox-inline'><input type='checkbox' name='todoIDList[]' value='<?php echo $todo->id;?>'/><?php echo $todo->id;?></label></td>
+            <td><label class='checkbox-inline'><input type='checkbox' name='todoIDList[]' value='<?php echo $todo->id;?>'/> <?php echo $todo->id;?></label></td>
             <td><?php echo $todo->date;?></td>
             <td><?php echo zget($lang->todo->typeList, $todo->type);?></td>
             <td><?php echo $lang->todo->priList[$todo->pri];?></td>

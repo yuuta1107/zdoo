@@ -30,7 +30,7 @@ include '../../common/view/header.html.php';?>
             <div class='input-group'>
               <?php echo html::select("zentaoAccounts[$i]", $zentaoUsers, '', "class='form-control'");?>
               <span class='input-group-addon'>
-                <label class='checkbox'><input type='checkbox' name="createUsers[<?php echo $i;?>]" id='createusers' value='1' /> <?php echo $lang->entry->createUser;?></label>
+                <label class='checkbox-inline'><input type='checkbox' name="createUsers[<?php echo $i;?>]" id='createusers' value='1' /> <?php echo $lang->entry->createUser;?></label>
               </span>
             </div>
             <?php endif;?>

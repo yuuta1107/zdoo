@@ -22,7 +22,7 @@
           <div class='input-group'>
             <?php $disabled = $todo->date == '00000000' ? "disabled='disabled'" : ''?>
             <?php echo html::input('date', $todo->date, "class='form-control form-date' $disabled");?>
-            <span class='input-group-addon'><input type='checkbox' <?php echo $todo->date == '00000000' ? 'checked' : ''?> id='switchDate' onclick='switchDateTodo(this);'> <?php echo $lang->todo->periods['future'];?></span>
+            <span class='input-group-addon'><label class='checkbox-inline'><input type='checkbox' <?php echo $todo->date == '00000000' ? 'checked' : ''?> id='switchDate' onclick='switchDateTodo(this);'> <?php echo $lang->todo->periods['future'];?></label></span>
           </div>
         </td><td></td>
       </tr>
@@ -63,7 +63,7 @@
           </div>
         </td>
         <td>
-          <input type='checkbox' id='dateSwitcher' onclick='switchDateFeature(this);' <?php if($todo->begin == 2400) echo 'checked';?> > <?php echo $lang->todo->lblDisableDate;?>
+          <label class='checkbox-inline'><input type='checkbox' id='dateSwitcher' onclick='switchDateFeature(this);' <?php if($todo->begin == 2400) echo 'checked';?> > <?php echo $lang->todo->lblDisableDate;?></label>
         </td>
       </tr>  
       <tr>

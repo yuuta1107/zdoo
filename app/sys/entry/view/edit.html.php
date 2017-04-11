@@ -35,7 +35,7 @@ include '../../common/view/chosen.html.php';
               <div class="input-group-addon"></div>
               <?php echo html::input('abbr', $entry->abbr, "class='form-control' size='2' maxlength='2' placeholder='{$lang->entry->note->abbr}'");?>
               <div class='input-group-addon'>
-                <label class="checkbox"><input type="checkbox" id="visible" name="visible" value="1" <?php if($entry->visible) echo 'checked';?>> <?php echo $lang->entry->note->visible;?></label>
+                <label class="checkbox-inline"><input type="checkbox" id="visible" name="visible" value="1" <?php if($entry->visible) echo 'checked';?>> <?php echo $lang->entry->note->visible;?></label>
               </div>
             </div>
           </td>

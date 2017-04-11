@@ -26,7 +26,7 @@
             <div class='input-group'>
               <?php echo html::input('name', '', "class='form-control'");?>
               <div class='input-group-addon'>
-                <label class='checkbox'><input type='checkbox' id='public' name='public' value='1'> <?php echo $lang->customer->public;?></label>
+                <label class='checkbox-inline'><input type='checkbox' id='public' name='public' value='1'> <?php echo $lang->customer->public;?></label>
               </div>
             </div>
           </td><td></td>
@@ -38,7 +38,7 @@
               <?php echo html::input('contact', '', "class='form-control'");?>
               <?php echo html::select('contactID', $contacts, '', "class='form-control chosen' style='display:none'");?>
               <div class='input-group-addon'>
-                <label class='checkbox'><input type='checkbox' id='selectContact' name='selectContact' value='1'> <?php echo $lang->customer->selectContact;?></label>
+                <label class='checkbox-inline'><input type='checkbox' id='selectContact' name='selectContact' value='1'> <?php echo $lang->customer->selectContact;?></label>
               </div>
             </div>
           </td>

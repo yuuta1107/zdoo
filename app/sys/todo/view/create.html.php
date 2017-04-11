@@ -21,7 +21,7 @@
         <td class='w-p25-f'>
           <div class='input-group'>
             <?php echo html::input('date', $date, "class='form-control form-date'");?>
-            <span class='input-group-addon'><input type='checkbox' id='switchDate' onclick='switchDateTodo(this);'> <?php echo $lang->todo->periods['future'];?></td><td></td></span>
+            <span class='input-group-addon'><label class='checkbox-inline'><input type='checkbox' id='switchDate' onclick='switchDateTodo(this);'> <?php echo $lang->todo->periods['future'];?></label></td><td></td></span>
           </div>
       </tr>
       <tr>
@@ -54,7 +54,7 @@
             <?php echo html::select('begin', $times, date('Y-m-d') != $date ? key($times) : $time, 'onchange=selectNext(); class="form-control" style="width: 50%;"') . html::select('end', $times, '', 'class="form-control" style="width: 50%; margin-left:-1px"');?>
           </div>
         </td>
-        <td><input type='checkbox' id='switchDate' onclick='switchDateFeature(this);'> <?php echo $lang->todo->lblDisableDate;?></td>
+        <td><label class='checkbox-inline'><input type='checkbox' id='switchDate' onclick='switchDateFeature(this);'> <?php echo $lang->todo->lblDisableDate;?></label></td>
       </tr>  
       <tr>
         <th><?php echo $lang->todo->private;?></th>
