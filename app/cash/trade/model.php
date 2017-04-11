@@ -894,7 +894,7 @@ class tradeModel extends model
         $tradeID = $this->dao->lastInsertID();
         $this->loadModel('action')->create('trade', $tradeID, 'Created');
 
-        if($this->post->createTrader and $type == 'invest')
+        if($this->post->createTrader and $type == 'invest' and $this->post->traderName)
         {
             $trader = new stdclass();
             $trader->relation    = 'provider';
