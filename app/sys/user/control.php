@@ -307,12 +307,11 @@ class user extends control
     /**
      * Delete a user.
      * 
-     * @param mixed $userID 
-     * @param string $confirm 
+     * @param  string $account
      * @access public
      * @return void
      */
-    public function delete($account)
+    public function delete($account = '')
     {
         if($this->user->delete($account)) $this->send(array('result' => 'success'));
         $this->send(array('result' => 'fail', 'message' => dao::getError()));
@@ -386,14 +385,14 @@ class user extends control
     /**
      * forbid a user.
      *
-     * @param int    $userID
-     * @return viod
+     * @param  string $account
+     * @return void
      */
-    public function forbid($userID)
+    public function forbid($account = '')
     {
-        if(!$userID) $this->send(array('result'=>'fail', 'message' => $this->lang->user->actionFail));       
+        if(!$account) $this->send(array('result'=>'fail', 'message' => $this->lang->user->actionFail));       
 
-        $result = $this->user->forbid($userID);
+        $result = $this->user->forbid($account);
         if($result) die($this->send(array('result'=>'success', 'locate' => $this->server->http_referer)));
 
         $this->send(array('result' => 'fail', 'message' => dao::getError()));
@@ -402,15 +401,15 @@ class user extends control
     /**
      * Active user 
      * 
-     * @param  int    $userID 
+     * @param  string $account 
      * @access public
      * @return void
      */
-    public function active($userID)
+    public function active($account = '')
     {
-        if(!$userID) $this->send(array('result'=>'fail', 'message' => $this->lang->user->actionFail));       
+        if(!$account) $this->send(array('result'=>'fail', 'message' => $this->lang->user->actionFail));       
 
-        $result = $this->user->active($userID);
+        $result = $this->user->active($account);
         if($result) die($this->send(array('result'=>'success', 'locate' => $this->server->http_referer)));
 
         $this->send(array( 'result' => 'fail', 'message' => dao::getError()));

@@ -530,26 +530,26 @@ class userModel extends model
     /**
      * Forbid the user
      *
-     * @param int $userID
+     * @param  string $account
      * @access public
      * @return void
      */
-    public function forbid($userID)
+    public function forbid($account)
     {
-        $this->dao->update(TABLE_USER)->set('locked')->eq('2038-01-19 00:00:00')->where('id')->eq($userID)->exec();
+        $this->dao->update(TABLE_USER)->set('locked')->eq('2199-12-31 00:00:00')->where('account')->eq($account)->exec();
         return !dao::isError();
     }
 
     /**
      * Active user 
      * 
-     * @param  int    $userID 
+     * @param  string $account 
      * @access public
      * @return bool
      */
-    public function active($userID)
+    public function active($account)
     {
-        $this->dao->update(TABLE_USER)->set('fails')->eq(0)->set('locked')->eq('0000-00-00 00:00:00')->where('id')->eq($userID)->exec();
+        $this->dao->update(TABLE_USER)->set('fails')->eq(0)->set('locked')->eq('0000-00-00 00:00:00')->where('account')->eq($account)->exec();
         return !dao::isError();
     }
 

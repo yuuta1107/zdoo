@@ -26,7 +26,7 @@
   </tr>
   <tr>
     <th><?php echo $lang->leave->hours;?></th>
-    <td><?php echo $leave->hours;?></td>
+    <td><?php echo $leave->hours . $lang->leave->hoursTip;?></td>
     <th><?php echo $lang->leave->backDate;?></th>
     <td><?php echo formatTime($leave->backDate, DT_DATETIME2);?></td>
   </tr>

@@ -885,30 +885,36 @@ class attend extends control
         $userList = $this->loadModel('user')->getPairs('noclosed,nodeleted,noforbidden', $deptID);
 
         /* Sort data. */
-        $clientLang = $this->app->getClientLang();
-        if($clientLang == 'zh-cn')
+        if(function_exists('iconv'))
         {
-            foreach($deptList as $key => $value) $deptList[$key] = iconv('UTF-8', 'GBK', $value);
-            foreach($userList as $key => $value) $userList[$key] = iconv('UTF-8', 'GBK', $value);
-        }
-        elseif($clientLang == 'zh-tw')
-        {
-            foreach($deptList as $key => $value) $deptList[$key] = iconv('UTF-8', 'BIG5', $value);
-            foreach($userList as $key => $value) $userList[$key] = iconv('UTF-8', 'BIG5', $value);
+            $clientLang = $this->app->getClientLang();
+            if($clientLang == 'zh-cn')
+            {
+                foreach($deptList as $key => $value) $deptList[$key] = @iconv('UTF-8', 'GBK', $value);
+                foreach($userList as $key => $value) $userList[$key] = @iconv('UTF-8', 'GBK', $value);
+            }
+            elseif($clientLang == 'zh-tw')
+            {
+                foreach($deptList as $key => $value) $deptList[$key] = @iconv('UTF-8', 'BIG5', $value);
+                foreach($userList as $key => $value) $userList[$key] = @iconv('UTF-8', 'BIG5', $value);
+            }
         }
         
         asort($deptList);
         asort($userList);
         
-        if($clientLang == 'zh-cn')
+        if(function_exists('iconv'))
         {
-            foreach($deptList as $key => $value) $deptList[$key] = iconv('GBK', 'UTF-8', $value);
-            foreach($userList as $key => $value) $userList[$key] = iconv('GBK', 'UTF-8', $value);
-        }                                                                                
-        elseif($clientLang == 'zh-tw')                                                   
-        {                                                                                
-            foreach($deptList as $key => $value) $deptList[$key] = iconv('BIG5','UTF-8',  $value);
-            foreach($userList as $key => $value) $userList[$key] = iconv('BIG5','UTF-8',  $value);
+            if($clientLang == 'zh-cn')
+            {
+                foreach($deptList as $key => $value) $deptList[$key] = @iconv('GBK', 'UTF-8', $value);
+                foreach($userList as $key => $value) $userList[$key] = @iconv('GBK', 'UTF-8', $value);
+            }                                                                                
+            elseif($clientLang == 'zh-tw')                                                   
+            {                                                                                
+                foreach($deptList as $key => $value) $deptList[$key] = @iconv('BIG5','UTF-8',  $value);
+                foreach($userList as $key => $value) $userList[$key] = @iconv('BIG5','UTF-8',  $value);
+            }
         }
 
         $attends = $this->attend->getDetailAttends($date, $account, $deptID);

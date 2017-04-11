@@ -32,13 +32,13 @@ include '../../common/view/header.lite.html.php';
             <label for='password' class='col-xs-2 control-label'><?php echo $lang->install->password;?></label>
             <div class='col-xs-8'><?php echo html::input('password', '', "class='form-control' id='password1'");?></div>
           </div>
-          <?php if($domainIP):?>
+          <?php if(!empty($domainIP)):?>
           <div class='ipDiv'><?php printf($lang->install->domainIP, $domainIP);?></div>
           <?php endif;?>
-          <?php if($serverIP):?>
+          <?php if(!empty($serverIP)):?>
           <div class='ipDiv'><?php printf($lang->install->serverIP, $serverIP);?></div>
           <?php endif;?>
-          <?php if($publicIP):?>
+          <?php if(!empty($publicIP)):?>
           <div class='ipDiv'><?php printf($lang->install->publicIP, $publicIP);?></div>
           <?php endif;?>
         </div>

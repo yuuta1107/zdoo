@@ -717,7 +717,7 @@ class fileModel extends model
         $content = preg_replace('/<[^ia\/]+(.*)>/U', '', $content);
         $content = preg_replace('/<\/[^a]{1}.*>/U', '', $content);
         $content = preg_replace('/<i .*>/U', '', $content);
-        if($extra != 'noImg') $content = preg_replace('/<img src="data\/"(.*)\/>/U', "<img src=\"" . common::getSysURL() . "data/\"\$1/>", $content);
+        if($extra != 'noImg') $content = preg_replace('/<img src="data\/"(.*)\/>/U', "<img src=\"" . commonModel::getSysURL() . "data/\"\$1/>", $content);
         return $content;
     }
 }
