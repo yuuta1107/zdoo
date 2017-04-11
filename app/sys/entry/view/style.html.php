@@ -16,7 +16,7 @@ include '../../common/view/header.html.php';
     <strong><i class='icon-magic'></i> <?php echo $lang->entry->style;?></strong>
   </div>
   <div class='panel-body'>
-    <form method='post' class='form-inline' id='entryForm'>
+    <form method='post' class='form' id='entryForm'>
       <table class='table table-form'>
         <tr>
           <th><?php echo $lang->entry->logo;?></th>

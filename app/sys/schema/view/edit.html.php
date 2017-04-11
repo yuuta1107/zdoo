@@ -16,7 +16,7 @@
     <strong><i class="icon-plus"></i> <?php echo $lang->schema->edit;?></strong>
   </div>
   <div class='panel-body'>
-    <form method='post' id='ajaxForm' class='form-inline'>
+    <form method='post' id='ajaxForm' class='form'>
       <table class='table table-form w-p40'>
         <tr>
           <th class='w-100px'><?php echo $lang->schema->name;?></th>

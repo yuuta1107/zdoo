@@ -29,7 +29,7 @@
     <div class='panel'>
       <div class='panel-heading'><strong><?php echo $lang->refund->refundBy;?></strong></div>
       <div class='panel-body'>
-        <form id='ajaxForm' class='form-inline' method='post'>
+        <form id='ajaxForm' class='form' method='post'>
           <table class='table table-form table-condensed w-p50'>
             <tr>
               <th class='w-100px'><?php echo $lang->refund->refundBy;?></th>

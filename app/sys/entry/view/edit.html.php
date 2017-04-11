@@ -17,7 +17,7 @@ include '../../common/view/chosen.html.php';
     <strong><i class='icon-edit'></i> <?php echo $lang->entry->edit;?></strong>
   </div>
   <div class='panel-body'>
-    <form method='post' class='form form-inline' id='entryForm'>
+    <form method='post' class='form form' id='entryForm'>
       <table class='table table-form'>
         <?php if($entry->buildin):?>
         <tr>

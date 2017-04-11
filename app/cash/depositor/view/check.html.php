@@ -17,7 +17,7 @@
 <?php js::set('createBalance', $lang->depositor->createBalance);?>
 <div class='panel'>
   <div class='panel-heading'>
-    <form method='post' id='checkForm' class='form-inline'>
+    <form method='post' id='checkForm'>
       <table class="table table-form w-p100">
         <tr>
           <th class='w-40px'><?php echo $lang->depositor->common;?></th>

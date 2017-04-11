@@ -21,7 +21,7 @@
     </span>
   </div>
   <?php if(!empty($groups)):?>
-  <form method='post' id='ajaxForm' class='form-condensed form-inline'>
+  <form method='post' id='ajaxForm' class='form-condensed'>
     <table class='table table-hover table-bordered table-striped' id='salesGroup'>
       <thead>
         <tr class='text-center'>

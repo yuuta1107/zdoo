@@ -15,7 +15,7 @@ include '../../common/view/header.html.php';?>
     <strong><i class='icon-link'></i> <?php echo $lang->entry->bindUser;?></strong>
   </div>
   <div class='panel-body'>
-    <form method='post' class='form-inline' id='entryForm'>
+    <form method='post' class='form' id='entryForm'>
       <table class='table table-form w-p60'>
         <tr>
           <td>

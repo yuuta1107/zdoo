@@ -24,7 +24,7 @@
     <strong><i class="icon-edit"></i> <?php echo $lang->trade->edit;?></strong>
   </div>
   <div class='panel-body'>
-    <form method='post' id='ajaxForm' class='form-inline'>
+    <form method='post' id='ajaxForm'>
       <table class='table table-form w-p60'>
         <tr>
           <th class='w-100px'><?php echo $lang->trade->depositor;?></th>

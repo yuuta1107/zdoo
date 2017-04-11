@@ -24,7 +24,7 @@ js::set('zentaoName', $lang->entry->zentao);
     <strong><i class='icon-building'></i> <?php echo $lang->entry->create;?></strong>
   </div>
   <div class='panel-body'>
-    <form method='post' class='form-inline' id='entryForm'>
+    <form method='post' class='form' id='entryForm'>
       <table class='table table-form'>
         <tr>
           <th class='w-100px'><?php echo $lang->entry->name;?></th>

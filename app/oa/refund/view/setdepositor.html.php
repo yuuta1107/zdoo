@@ -28,7 +28,7 @@
     <div class='panel'>
       <div class='panel-heading'><strong><?php echo $lang->refund->setDepositor;?></strong></div>
       <div class='panel-body'>
-        <form id='ajaxForm' class='form-inline' method='post'>
+        <form id='ajaxForm' class='form' method='post'>
           <table class='table table-form table-condensed w-p40'>
             <tr>
               <th class='w-100px text-center'><?php echo $lang->refund->depositor;?></th>

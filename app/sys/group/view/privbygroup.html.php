@@ -11,7 +11,7 @@
  */
 ?>
 <div class='list'>
-<form class='form-inline' id='ajaxForm' method='post'>
+<form class='form' id='ajaxForm' method='post'>
   <?php foreach($lang->appModule as $app => $modules):?>
   <?php if($app != 'sys' and !isset($groupPrivs['apppriv'][$app])) continue;?>
   <div class='item'>

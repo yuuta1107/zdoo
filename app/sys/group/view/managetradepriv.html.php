@@ -11,7 +11,7 @@
  */
 ?>
 <?php include $app->getModuleRoot() . 'common/view/header.html.php';?>
-<form class='form-inline' id='ajaxForm' method='post'>
+<form class='form' id='ajaxForm' method='post'>
   <div class='panel'>
     <div class='panel-heading'>
       <strong><?php echo $lang->group->priv?></strong>

@@ -11,7 +11,7 @@
  */
 ?>
 <?php include '../../common/view/header.html.php';?>
-<form class='form-inline' id='ajaxForm' method='post'>
+<form class='form' id='ajaxForm' method='post'>
   <?php if($type == 'byGroup'):?>
   <div class='row'>
     <div class='col-md-6'>
