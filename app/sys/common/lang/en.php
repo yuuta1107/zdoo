@@ -103,6 +103,7 @@ $lang->export         = 'Export';
 $lang->setFileName    = 'File Name';
 $lang->setFileNum     = 'File Number';
 $lang->setFileType    = 'File Type';
+$lang->setCharset     = 'Charset';
 $lang->save           = 'Save';
 $lang->saved          = 'Saved';
 $lang->confirm        = 'Confirm';

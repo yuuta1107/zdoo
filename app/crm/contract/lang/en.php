@@ -50,6 +50,7 @@ $lang->contract->contactedDate = 'Contacted On';
 $lang->contract->nextDate      = 'Next Date';
 $lang->contract->product       = 'Products';
 $lang->contract->productLine   = 'Product Lines';
+$lang->contract->files         = 'Files';
 
 $lang->contract->browse           = 'Contracts';
 $lang->contract->receive          = 'Receive';

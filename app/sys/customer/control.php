@@ -358,12 +358,8 @@ class customer extends control
     /**
      * get data to export.
      * 
-     * @param  string $range 
      * @param  string $mode 
      * @param  string $orderBy 
-     * @param  int    $recTotal 
-     * @param  int    $recPerPage 
-     * @param  int    $pageID 
      * @access public
      * @return void
      */
@@ -424,11 +420,11 @@ class customer extends control
                 if(isset($users[$customer->assignedBy]))  $customer->assignedBy  = $users[$customer->assignedBy];
                 if(isset($users[$customer->contactedBy])) $customer->contactedBy = $users[$customer->contactedBy];
 
-                $customer->createdDate    = substr($customer->createdDate, 0, 10);
-                $customer->editedDate     = substr($customer->editedDate, 0, 10);
-                $customer->assignedDate   = substr($customer->assignedDate, 0, 10);
-                $customer->contactedDate  = substr($customer->contactedDate, 0, 10);
-                $customer->nextDate       = substr($customer->contactedDate, 0, 10);
+                $customer->createdDate   = formatTime($customer->createdDate, DT_DATE1);
+                $customer->editedDate    = formatTime($customer->editedDate, DT_DATE1);
+                $customer->assignedDate  = formatTime($customer->assignedDate, DT_DATE1);
+                $customer->contactedDate = formatTime($customer->contactedDate, DT_DATE1);
+                $customer->nextDate      = formatTime($customer->contactedDate, DT_DATE1);
             }
 
             $this->post->set('fields', $fields);

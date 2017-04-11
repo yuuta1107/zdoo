@@ -546,9 +546,6 @@ class contract extends control
      * 
      * @param  string $mode 
      * @param  string $orderBy 
-     * @param  int    $recTotal 
-     * @param  int    $recPerPage 
-     * @param  int    $pageID 
      * @access public
      * @return void
      */
@@ -639,17 +636,17 @@ class contract extends control
                 if(isset($users[$contract->canceledBy]))  $contract->canceledBy  = $users[$contract->canceledBy];
                 if(isset($users[$contract->contactedBy])) $contract->contactedBy = $users[$contract->contactedBy];
 
-                $contract->begin          = substr($contract->begin, 0, 10);
-                $contract->end            = substr($contract->end, 0, 10);
-                $contract->createdDate    = substr($contract->createdDate, 0, 10);
-                $contract->editedDate     = substr($contract->editedDate, 0, 10);
-                $contract->signedDate     = substr($contract->signedDate, 0, 10);
-                $contract->deliveredDate  = substr($contract->deliveredDate, 0, 10);
-                $contract->returnedDate   = substr($contract->returnedDate, 0, 10);
-                $contract->finishedDate   = substr($contract->finishedDate, 0, 10);
-                $contract->canceledDate   = substr($contract->canceledDate, 0, 10);
-                $contract->contactedDate  = substr($contract->contactedDate, 0, 10);
-                $contract->nextDate       = substr($contract->contactedDate, 0, 10);
+                $contract->begin          = formatTime($contract->begin, DT_DATE1);
+                $contract->end            = formatTime($contract->end, DT_DATE1);
+                $contract->createdDate    = formatTime($contract->createdDate, DT_DATE1);
+                $contract->editedDate     = formatTime($contract->editedDate, DT_DATE1);
+                $contract->signedDate     = formatTime($contract->signedDate, DT_DATE1);
+                $contract->deliveredDate  = formatTime($contract->deliveredDate, DT_DATE1);
+                $contract->returnedDate   = formatTime($contract->returnedDate, DT_DATE1);
+                $contract->finishedDate   = formatTime($contract->finishedDate, DT_DATE1);
+                $contract->canceledDate   = formatTime($contract->canceledDate, DT_DATE1);
+                $contract->contactedDate  = formatTime($contract->contactedDate, DT_DATE1);
+                $contract->nextDate       = formatTime($contract->contactedDate, DT_DATE1);
 
                 if($contract->handlers)
                 {

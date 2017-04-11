@@ -103,6 +103,7 @@ $lang->export         = '導出';
 $lang->setFileName    = '檔案名';
 $lang->setFileNum     = '記錄數';
 $lang->setFileType    = '檔案類型';
+$lang->setCharset     = '編碼格式';
 $lang->save           = '保存';
 $lang->saved          = '已保存';
 $lang->confirm        = '確認';
