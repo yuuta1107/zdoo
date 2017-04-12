@@ -715,7 +715,7 @@ EOT;
             if(strtotime("{$attend->date} {$attend->signIn}") > strtotime("{$attend->date} {$this->config->attend->signInLimit}")) $status = 'late';
             if($this->config->attend->mustSignOut == 'yes')
             {
-                if(!empty($attend->signOut) && $attend->signOut != '00:00:00' && strtotime("{$attend->date} {$attend->signOut}") <  strtotime("{$attend->date} {$this->config->attend->signOutLimit}"))
+                if((empty($attend->signOut) or $attend->signOut == '00:00:00') or (strtotime("{$attend->date} {$attend->signOut}") <  strtotime("{$attend->date} {$this->config->attend->signOutLimit}")))
                 {
                     $status = $status == 'late' ? 'both' : 'early';
                 }
