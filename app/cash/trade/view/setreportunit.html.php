@@ -14,7 +14,7 @@
 <form id='ajaxForm' method='post' action='<?php echo inlink('setReportUnit');?>'>
   <div class='input-group'>
     <span class='input-group-addon'><?php echo $lang->trade->report->unit;?></span>
-    <?php echo html::select('unit', $lang->trade->report->unitList, $config->trade->report->unit, "class='form-control'");?>
+    <?php echo html::select('unit', $lang->trade->report->unitList, !empty($config->trade->report->unit) ? $config->trade->report->unit : '1', "class='form-control'");?>
     <span class='input-group-btn'><?php echo html::submitButton();?></span>
   </div>
 <?php include '../../../sys/common/view/footer.modal.html.php';?>
