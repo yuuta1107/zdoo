@@ -969,7 +969,7 @@ EOT;
             }
             else
             {
-                if($status && strpos(',leave,makeup,overtime,lieu,', ",$status,") !== false && !empty($oldAttend->desc)) $attend->desc += (float)$oldAttend->desc;
+                if($status && strpos(',leave,makeup,overtime,lieu,', ",$status,") !== false && $status == $oldAttend->status && !empty($oldAttend->desc)) $attend->desc += (float)$oldAttend->desc;
                 $attend->status = $this->computeStatus($oldAttend);
                 $this->dao->update(TABLE_ATTEND)->data($attend)->autoCheck()->where('date')->eq($date)->andWhere('account')->eq($account)->exec();
             }

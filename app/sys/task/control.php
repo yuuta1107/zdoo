@@ -146,7 +146,11 @@ class task extends control
             $taskIDList = $this->task->batchCreate($projectID);
 
             $this->loadModel('action');
-            foreach($taskIDList as $taskID) $this->action->create('task', $taskID, 'Created');
+            foreach($taskIDList as $taskID)
+            {
+                $actionID = $this->action->create('task', $taskID, 'Created');
+                $this->sendmail($taskID, $actionID);
+            }
 
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => $this->post->referer));
         }
