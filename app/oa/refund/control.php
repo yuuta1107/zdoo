@@ -40,7 +40,7 @@ class refund extends control
             $refund = $this->refund->getByID($refundID);
             if($refund->status == 'doing' || $refund->status == 'pass')
             {
-                $this->loadModel('action')->create('refund', $refundID, 'reviewed');
+                $this->loadModel('action')->create('refund', $refundID, 'reviewed', '', $this->lang->refund->statusList['pass']);
             }
             $this->sendmail($refundID, $actionID);
 
@@ -84,7 +84,7 @@ class refund extends control
             $refund = $this->refund->getByID($refundID);
             if($refund->status == 'doing' || $refund->status == 'pass')
             {
-                $this->loadModel('action')->create('refund', $refundID, 'reviewed');
+                $this->loadModel('action')->create('refund', $refundID, 'reviewed', '', $this->lang->refund->statusList['pass']);
             }
 
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => inlink('view', "refundID=$refundID&mode=personal")));
@@ -365,13 +365,12 @@ class refund extends control
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
             
             /* send email. */
-            $actionID = $this->loadModel('action')->create('refund', $refundID, 'reviewed');
-
-            $refund = $this->refund->getByID($refundID);
+            $refund   = $this->refund->getByID($refundID);
+            $actionID = $this->loadModel('action')->create('refund', $refundID, 'reviewed', $refund->status == 'reject' ? $refund->reason : '', zget($this->lang->refund->statusList, $refund->status));
             if($refund->status == 'pass' && !empty($this->config->refund->secondReviewer) 
                 && $this->config->refund->secondReviewer != $this->app->user->account && $this->config->refund->secondReviewer == $refund->createdBy)
             {
-                $this->loadModel('action')->create('refund', $refundID, 'reviewed', '', '', $this->config->refund->secondReviewer);
+                $this->loadModel('action')->create('refund', $refundID, 'reviewed', '', $this->lang->refund->statusList['pass'], $this->config->refund->secondReviewer);
             }
             $this->sendmail($refundID, $actionID);
 
@@ -637,10 +636,10 @@ class refund extends control
      * @param  object $refund 
      * @param  string $action 
      * @param  string $errorType   html|json 
-     * @access private
+     * @access public 
      * @return void
      */
-    private function checkPriv($refund, $action, $errorType = '')
+    public function checkPriv($refund, $action, $errorType = '')
     {
         if($this->app->user->admin == 'super') return true;
 
