@@ -34,7 +34,7 @@
             <tr>
               <th class='w-150px'><?php echo $lang->attend->beginDate->company;?></th>
               <td class='w-300px'><?php echo html::input('beginDate[company]', $beginDate, "class='form-control form-date'")?></td>
-              <td></td>
+              <td style='padding-left: 10px'><a data-toggle='tooltip' title='<?php echo $lang->attend->note->beginDate;?>'><i class='icon-question-sign'></i></a></td>
             </tr>
             <tr>
               <th><?php echo $lang->attend->signInLimit?></th>

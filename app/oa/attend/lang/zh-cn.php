@@ -149,7 +149,7 @@ $lang->attend->note = new stdClass();
 $lang->attend->note->ip        = "允许签到的ip，多个ip用逗号隔开。支持IP段，如192.168.1.*";
 $lang->attend->note->allip     = '无限制';
 $lang->attend->note->IPDenied  = '签到IP受限，无法签到';
-$lang->attend->note->beginDate = '设置开始考勤的日期，在该日期之前不记录考勤状态。默认使用公司开始考勤日期计算考勤状态，如果设置了个人开始考勤日期则使用个人日期。';
+$lang->attend->note->beginDate = '设置开始考勤的日期，在该日期之前不记录考勤状态。如果不设置则根据实际数据记录考勤状态。默认使用公司开始考勤日期计算考勤状态，如果设置了个人开始考勤日期则使用个人日期。';
 
 $lang->attend->h = '小时';
 $lang->attend->m = '分';
