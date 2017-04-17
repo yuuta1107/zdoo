@@ -45,7 +45,7 @@
           <tr>
             <td><?php echo $d->id?></td>
             <td><?php echo zget($currencySign, $d->currency) . $d->money?></td>
-            <td><?php echo $d->date?></td>
+            <td><?php echo formatTime($d->date, DT_DATE1)?></td>
             <td><?php echo zget($categories, $d->category, ' ')?></td>
             <td><?php echo $related?></td>
             <td><span data-toggle='tooltip' data-original-title="<?php echo $d->reason?>"><?php echo zget($lang->refund->statusList, $d->status)?></span></td>
@@ -59,7 +59,7 @@
     <?php echo $this->fetch('action', 'history', "objectType=refund&objectID={$refund->id}");?>
     <div class='page-actions'>
       <?php
-      if($refund->status == 'wait' or $refund->status == 'draft')
+      if($this->app->user->admin == 'super' or (($refund->status == 'wait' or $refund->status == 'draft') && $refund->createdBy == $this->app->user->account))
       {
           echo "<div class='btn-group'>";
           commonModel::printLink('refund', 'edit', "refundID=$refund->id", $lang->edit, "class='btn btn-default'");
@@ -97,7 +97,7 @@
           </tr>
           <tr>
             <th><?php echo $lang->refund->date;?></th>
-            <td><?php echo $refund->date?></td>
+            <td><?php echo formatTime($refund->date, DT_DATE1);?></td>
           </tr>
           <tr>
             <th><?php echo $lang->refund->related;?></th>

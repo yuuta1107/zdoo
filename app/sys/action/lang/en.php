@@ -219,9 +219,9 @@ $lang->action->label->overtime['reviewed'] = 'overtime review|overtime|personal|
 $lang->action->label->refund = array();
 $lang->action->label->refund['commited']    = 'refund review|refund|browsereview|';
 $lang->action->label->refund['revoked']     = 'refund review|refund|browsereview|';
-$lang->action->label->refund['created']     = 'refund review|refund|view|refundID=%s';
-$lang->action->label->refund['edited']      = 'refund review|refund|view|refundID=%s';
-$lang->action->label->refund['reviewed']    = 'refund review|refund|view|refundID=%s';
+$lang->action->label->refund['created']     = 'refund review|refund|view|refundID=%s&mode=review';
+$lang->action->label->refund['edited']      = 'refund review|refund|view|refundID=%s&mode=review';
+$lang->action->label->refund['reviewed']    = 'refund review|refund|view|refundID=%s&mode=review';
 $lang->action->label->refund['reimburse']   = 'refund review|refund|view|refundID=%s';
 $lang->action->label->refund['deletedfile'] = 'refund review|refund|view|refundID=%s';
 $lang->action->label->user = array();

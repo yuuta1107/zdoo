@@ -79,12 +79,12 @@
           <td class='text-left' title='<?php echo $refund->name;?>'><?php echo $refund->name?></td>
           <td title='<?php echo zget($categories, $refund->category);?>'><?php echo zget($categories, $refund->category, ' ');?></td>
           <td class='text-right'><?php echo zget($currencySign, $refund->currency) . $refund->money?></td>
-          <td class='<?php echo $refund->status?>'><?php echo zget($lang->refund->statusList, $refund->status)?></td>
+          <td class='refund-<?php echo $refund->status?>'><?php echo zget($lang->refund->statusList, $refund->status)?></td>
           <td><?php echo zget($userPairs, $refund->createdBy);?></td>
-          <td><?php echo substr($refund->createdDate, 0, 10)?></td>
+          <td><?php echo formatTime($refund->createdDate, DT_DATE1)?></td>
           <td><?php echo zget($userPairs, $refund->firstReviewer) . ' ' . zget($userPairs, $refund->secondReviewer);?></td>
           <td><?php echo zget($userPairs, $refund->refundBy);?></td>
-          <td><?php echo substr($refund->refundDate, 0, 10)?></td>
+          <td><?php echo formatTime($refund->refundDate, DT_DATE1)?></td>
           <td>
             <?php if($mode == 'personal'):?>
             <?php if($refund->createdBy == $this->app->user->account and ($refund->status == 'wait' or $refund->status == 'draft')):?>
