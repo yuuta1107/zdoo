@@ -243,7 +243,7 @@ class overtime extends control
         if($_POST)
         {
             $result = $this->overtime->update($id);
-            if(is_array($result) && $result['result'] == 'fail') $this->send($result);
+            if(is_array($result) && isset($result['result']) && $result['result'] == 'fail') $this->send($result);
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
             if($result)
             {
