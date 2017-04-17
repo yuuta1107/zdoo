@@ -84,6 +84,7 @@ $lang->doc->errorEditSystemDoc = "系統文檔庫無需修改。";
 $lang->doc->placeholder = new stdclass();
 $lang->doc->placeholder->url = '相應的連結地址';
 
-$lang->doc->notFound     = '該文檔不存在';
-$lang->doc->libNotFound  = '該文檔庫不存在';
+$lang->doc->notFound     = '該文檔不存在！';
+$lang->doc->libNotFound  = '該文檔庫不存在！';
+$lang->doc->libNotEmpty  = '該文檔庫下存在文檔！';
 $lang->doc->errorMainLib = '該系統文檔庫不能刪除！';

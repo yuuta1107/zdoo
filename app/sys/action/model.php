@@ -535,6 +535,11 @@ class actionModel extends model
         /* Update deleted field in object table. */
         $table = $this->config->objectTables[$action->objectType];
         $this->dao->update($table)->set('deleted')->eq(0)->where('id')->eq($action->objectID)->exec();
+        if($action->objectType == 'project' && !dao::isError())
+        {
+            $this->dao->update(TABLE_TASK)->set('deleted')->eq('0')->where('project')->eq($action->objectID)->exec();
+            $this->dao->update(TABLE_DOCLIB)->set('deleted')->eq('0')->where('project')->eq($action->objectID)->exec();
+        }
 
         /* Update action record in action table. */
         $this->dao->update(TABLE_ACTION)->set('extra')->eq(ACTIONMODEL::BE_UNDELETED)->where('id')->eq($actionID)->exec();

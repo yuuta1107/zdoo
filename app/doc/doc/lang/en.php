@@ -84,6 +84,7 @@ $lang->doc->errorEditSystemDoc = "System doc library cannot be edited.";
 $lang->doc->placeholder = new stdclass();
 $lang->doc->placeholder->url = 'url';
 
-$lang->doc->notFound     = 'The document does not exist';
-$lang->doc->libNotFound  = 'The document library does not exist';
+$lang->doc->notFound     = 'The document does not exist.';
+$lang->doc->libNotFound  = 'The document library does not exist.';
+$lang->doc->libNotEmpty  = 'There are documents in this document library.';
 $lang->doc->errorMainLib = 'The main library can not be deleted.';
