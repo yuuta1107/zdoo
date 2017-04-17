@@ -203,11 +203,13 @@ class doc extends control
             $this->loadModel('action')->create('docLib', $libID, 'Created');
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => inlink('browse', "libID=$libID")));
         }
+        $projects = $this->project->getPairs();
+        krsort($projects);
 
         $this->view->title     = $this->lang->doc->createLib;
         $this->view->users     = $this->loadModel('user')->getPairs('nodeleted,noforbidden,noclosed');
         $this->view->groups    = $this->loadModel('group')->getPairs();
-        $this->view->projects  = $this->project->getPairs();
+        $this->view->projects  = $projects;
         $this->view->type      = $type;
         $this->view->projectID = $projectID;
         $this->display();
@@ -263,6 +265,9 @@ class doc extends control
 
         if(!$lib) $this->send(array('result' => 'fail', 'message' => $this->lang->doc->libNotFound));
         if(!empty($lib->main)) $this->send(array('result' => 'fail', 'message' => $this->lang->doc->errorMainLib));
+
+        $docs = $this->dao->select('*')->from(TABLE_DOC)->where('deleted')->eq('0')->andWhere('lib')->eq($libID)->fetchAll();
+        if($docs) $this->send(array('result' => 'fail', 'message' => $this->lang->doc->libNotEmpty));
 
         if($this->doc->deleteLib($libID)) $this->send(array('result' => 'success', 'locate' => inlink('browse')));
         $this->send(array('result' => 'fail', 'message' => dao::getError()));
