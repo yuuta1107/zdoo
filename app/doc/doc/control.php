@@ -120,7 +120,7 @@ class doc extends control
         /* Get docs. */
         $modules = '';
         $docs    = array();
-        if($browseType == 'bymodule')
+        if($this->cookie->browseType == 'bylist' and $browseType == 'bymodule')
         {
             if($moduleID) $modules = $this->tree->getFamily($moduleID, 'doc', (int)$libID);
             $docs = $this->doc->getDocList($libID, $projectID, $modules, $orderBy, $pager);
@@ -131,7 +131,7 @@ class doc extends control
         }
         else
         {
-            $docs = $this->doc->getDocList($libID, $projectID, $modules, $orderBy, $pager);
+            $docs = $this->doc->getDocList($libID, $projectID, $moduleID, $orderBy, $pager);
         }
 
         /* Get the tree menu. */
