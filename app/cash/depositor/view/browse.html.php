@@ -25,15 +25,17 @@
     if($app->user->admin == 'super' or isset($app->user->rights['balance']['browse']))
     {
         foreach($balances as $currency => $balanceList)
-        $sum = 0;
-        foreach($balanceList as $balance) 
         {
-            if(!isset($depositors[$balance->depositor])) continue;
-            $depositor = $depositors[$balance->depositor];
-            if($depositor->status != 'normal') continue;
-            $sum += $balance->money;
+            $sum = 0;
+            foreach($balanceList as $balance) 
+            {
+                if(!isset($depositors[$balance->depositor])) continue;
+                $depositor = $depositors[$balance->depositor];
+                if($depositor->status != 'normal') continue;
+                $sum += $balance->money;
+            }
+            if($sum) echo "<div class='pull-right'><strong class='text-danger' title='$sum'>" . $currencyList[$currency] . $lang->colon . commonModel::tidyMoney($sum) . '</strong></div>';
         }
-        echo "<div class='pull-right'><strong class='text-danger' title='$sum'>" . $currencyList[$currency] . $lang->colon . commonModel::tidyMoney($sum) . '</strong></div>';
     }    
     ?>
   </div>

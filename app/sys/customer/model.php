@@ -157,12 +157,13 @@ class customerModel extends model
         if(empty($customer))
         {
             $customer = fixer::input('post')
-                ->setIF($this->post->name == '' and !$this->post->selectContact, 'name', $this->post->contact)
                 ->add('relation', $relation)
-                ->setIF($relation == 'provider', 'public', 1)
                 ->add('createdBy', $this->app->user->account)
                 ->add('assignedTo', $this->app->user->account)
                 ->add('createdDate', $now)
+                ->setIF($this->post->name == '' and !$this->post->selectContact, 'name', $this->post->contact)
+                ->setIF($relation == 'provider', 'public', 1)
+                ->stripTags('desc', $this->config->allowedTags)
                 ->remove('address')
                 ->get();
 
