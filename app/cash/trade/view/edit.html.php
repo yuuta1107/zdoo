@@ -127,13 +127,13 @@
         </tr>
         <?php endif;?>
         <?php if($trade->type == 'invest'):?>
-        <?php if($redeemPairs):?>
+        <?php if(!empty($redeemPairs)):?>
         <tr>
           <th><?php echo $lang->trade->redeem;?></th>
           <td><?php echo html::select('redeems[]', $redeemPairs, $trade->redeems, "class='form-control chosen' multiple");?></td>
         </tr>
         <?php endif;?>
-        <?php if(isset($tradePairs)):?>
+        <?php if(!empty($tradePairs)):?>
         <tr>
           <th><?php echo $lang->trade->in;?></th>
           <td><?php echo html::select('profits[]', $tradePairs, $trade->profits, "class='form-control chosen' multiple");?></td>
