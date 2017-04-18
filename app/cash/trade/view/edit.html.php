@@ -118,6 +118,7 @@
           <td><?php echo html::select('profits[]', $tradePairs, $trade->profits, "class='form-control chosen' multiple");?></td>
         </tr>
         <?php endif;?>
+        <?php endif;?>
         <?php if($trade->type == 'loan'):?>
         <tr class='trader'>
           <th><?php echo $lang->trade->trader;?></th>
