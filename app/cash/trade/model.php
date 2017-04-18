@@ -45,10 +45,11 @@ class tradeModel extends model
 
         /* Do not get trades which user has no privilege to browse their categories. */
         $denyCategories = array();
-        $outCategories = $this->dao->select('*')->from(TABLE_CATEGORY)->where('type')->eq('out')->fetchAll('id');
+        $outCategories  = $this->dao->select('*')->from(TABLE_CATEGORY)->where('type')->eq('out')->fetchAll('id');
+        $this->loadModel('tree');
         foreach($outCategories as $id => $outCategory)
         {
-            if(!$this->loadModel('tree')->hasRight($outCategory)) $denyCategories[] = $id; 
+            if(!$this->tree->hasRight($outCategory, $type = 'out', $outCategories)) $denyCategories[] = $id; 
         }
 
         $rights = $this->app->user->rights;

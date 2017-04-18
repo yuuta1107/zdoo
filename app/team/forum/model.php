@@ -30,21 +30,17 @@ class forumModel extends model
         $this->loadModel('tree');
         foreach($rawBoards[0] as $parentBoard)
         {
-            if(!$this->tree->hasRight($parentBoard)) continue;
+            if(!$this->tree->hasRight($parentBoard, $type = 'forum', $rawBoards[0])) continue;
 
             if(isset($rawBoards[$parentBoard->id]))
             {
                 foreach($rawBoards[$parentBoard->id] as $key => $childBoard) 
                 {
-                    /* Assign parentBoard to childBoard so that the programe will not access db to fetch parent if need to check parentBoard's right. */
-                    $tmpParent = $childBoard->parent;
-                    $childBoard->parent = $parentBoard;
-                    if(!$this->tree->hasRight($childBoard)) 
+                    if(!$this->tree->hasRight($childBoard, $type = 'forum', $rawBoards[$parentBoard->id])) 
                     {
                         unset($rawBoards[$parentBoard->id][$key]);
                         continue;
                     }
-                    $childBoard->parent = $tmpParent;
                     
                     $childBoard->lastPostReplies = isset($replies[$childBoard->postID]) ? $replies[$childBoard->postID] : 0;
                     $childBoard->moderators      = explode(',', trim($childBoard->moderators, ','));

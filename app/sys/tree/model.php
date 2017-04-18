@@ -857,14 +857,11 @@ class treeModel extends model
     {
         foreach($categories as $key => $category)
         {
-            $tmpParent = $category->parent;
-            if(isset($categories[$category->parent])) $category->parent = $categories[$category->parent];
-            if(!$this->hasRight($category, $type)) 
+            if(!$this->hasRight($category, $type, $categories)) 
             {
                 unset($categories[$key]);
                 continue;
             }
-            $category->parent = $tmpParent;
         }
 
         return $categories;
@@ -875,10 +872,11 @@ class treeModel extends model
      *
      * @param  mixed  $category 
      * @param  string $type
+     * @param  array  $categories
      * @access public
      * @return bool
      */
-    public function hasRight($category = null, $type = '')
+    public function hasRight($category = null, $type = '', $categories = array())
     {
         if($this->app->user->admin == 'super') return true;
 
@@ -911,7 +909,8 @@ class treeModel extends model
 
         if($hasRight && !empty($category->parent))
         {
-            $hasRight = $this->hasRight($category->parent, $type);
+            $category = zget($categories, $category->parent);
+            $hasRight = $this->hasRight($category, $type, $categories);
         }
 
         return $hasRight;
