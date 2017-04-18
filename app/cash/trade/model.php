@@ -376,6 +376,23 @@ class tradeModel extends model
     }
 
     /**
+     * get interest for repay.
+     * 
+     * @param  int    $loanID 
+     * @param  int    $createdDate 
+     * @access public
+     * @return void
+     */
+    public function getInterest($loanID, $createdDate)
+    {
+        return $this->dao->select('*')->from(TABLE_TRADE)
+            ->where('type')->eq('out')
+            ->andWhere('loanID')->eq($loanID)
+            ->andWhere('createdDate')->eq($createdDate)
+            ->fetch();
+    }
+
+    /**
      * Create a trade.
      * 
      * @param  string    $type   in|out
@@ -613,7 +630,7 @@ class tradeModel extends model
             ->get();
 
         $this->dao->update(TABLE_TRADE)
-            ->data($trade, $skip = 'createTrader,traderName,files,labels,invests,redeems,profits')
+            ->data($trade, $skip = 'createTrader,traderName,files,labels,invests,redeems,profits,interest')
             ->autoCheck()
             ->batchCheck($this->config->trade->require->edit, 'notempty')
             ->where('id')->eq($tradeID)->exec();
@@ -644,6 +661,31 @@ class tradeModel extends model
             {
                 $this->dao->update(TABLE_TRADE)->set('investID')->eq($tradeID)->where('id')->in($this->post->profits)->exec();
             }
+        }
+
+        if($trade->type == 'repay' and $this->post->interest)
+        {
+            $depositor = $this->loadModel('depositor', 'cash')->getByID($this->post->depositor);
+
+            $interest = fixer::input('post') 
+                ->add('type', 'out')
+                ->add('money', $this->post->interest)
+                ->add('currency', !empty($depositor) ? $depositor->currency : '')
+                ->add('handlers', trim(join(',', $this->post->handlers), ','))
+                ->add('editedDate', helper::now())
+                ->setIf($this->post->createTrader or !$this->post->trader, 'trader', 0)
+                ->get();
+
+            $this->dao->update(TABLE_TRADE)
+                ->data($interest, $skip = 'files,labels,interest,createTrader,traderName')
+                ->autoCheck()
+                ->batchCheck('depositor,money,type,handlers,loanID', 'notempty')
+                ->where('type')->eq('out')
+                ->andWhere('loanID')->eq($oldTrade->loanID)
+                ->andWhere('createdDate')->eq($oldTrade->createdDate)
+                ->exec();
+
+            if(dao::isError()) return false;
         }
 
         if(!dao::isError())

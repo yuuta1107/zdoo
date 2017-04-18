@@ -299,6 +299,20 @@ class trade extends control
         $this->view->trade         = $trade;
         $this->view->mode          = $mode;
 
+        if($trade->type == 'repay') 
+        {
+            $loanList = array('' => '');
+            $loans = $this->dao->select('*')->from(TABLE_TRADE)->where('type')->eq('loan')->fetchAll();
+            foreach($loans as $loan)
+            {
+                $repay = $this->dao->select("sum(money) as value")->from(TABLE_TRADE)->where('loanID')->eq($loan->id)->andWhere('type')->eq('repay')->fetch('value');
+                if($repay >= $loan->money and $loan->id != $trade->loanID) continue;
+                $loanList[$loan->id] = $loan->date . $depositorList[$loan->depositor] . $this->lang->trade->loan . zget($currencySign, $loan->currency) . $loan->money;
+            }
+            $this->view->loanList = $loanList;
+            $this->view->interest = $this->trade->getInterest($trade->loanID, $trade->createdDate);
+        }
+
         if($trade->type == 'in' or $trade->type == 'out') $this->view->categories = $this->loadModel('tree')->getOptionMenu($trade->type, 0, $removeRoot = true);
 
         if($trade->type == 'invest')

@@ -74,7 +74,7 @@
         </tr>
         <tr class='allCustomerTR hide'>
           <th><?php echo $lang->trade->customer;?></th>
-          <td><?php echo html::select('customer', array_merge($customerList, $traderList), $trade->trader, "class='form-control chosen' onchange='getContract(this.value)'");?></td>
+          <td><?php echo html::select('customer', ($customerList + $traderList), $trade->trader, "class='form-control chosen' onchange='getContract(this.value)'");?></td>
         </tr>
         <tr class='traderTR'>
           <th><?php echo $lang->trade->trader;?></th>
@@ -119,10 +119,37 @@
         </tr>
         <?php endif;?>
         <?php endif;?>
+        <?php if($trade->type == 'loan'):?>
+        <tr class='trader'>
+          <th><?php echo $lang->trade->trader;?></th>
+          <td>
+            <div class='input-group'>
+              <?php  echo html::select('trader', ($customerList + $traderList), $trade->trader, "class='form-control chosen'");?>
+              <?php  echo html::input('traderName', '', "class='form-control' style='display:none'");?>
+              <div class='input-group-addon'><?php echo html::checkbox('createTrader', array( 1 => $lang->trade->newTrader));?></div>
+            </div>
+          </td>
+        </tr>
+        <?php endif;?>
+        <?php if($trade->type == 'repay'):?>
+        <tr class='loanList'>
+          <th><?php echo $lang->trade->loan;?></th>
+          <td>
+            <div class="required required-wrapper"></div>
+            <?php echo html::select('loanID', $loanList, $trade->loanID, "class='form-control'");?>
+          </td>
+        </tr>
+        <?php endif;?>
         <tr>
           <th><?php echo $lang->trade->money;?></th>
           <td><?php echo html::input('money', $trade->money, "class='form-control'");?></td>
         </tr>
+        <?php if($trade->type == 'repay'):?>
+        <tr>
+          <th><?php echo $lang->trade->interest;?></th>
+          <td><?php echo html::input('interest', $interest->money, "class='form-control'");?></td>
+        </tr>
+        <?php endif;?>
         <tr>
           <th><?php echo $lang->trade->dept;?></th>
           <td><?php echo html::select('dept', $deptList, $trade->dept, "class='form-control chosen'");?></td>
