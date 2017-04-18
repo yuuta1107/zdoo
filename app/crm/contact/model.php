@@ -22,6 +22,7 @@ class contactModel extends model
     public function getByID($id = 0, $status = 'normal')
     {
         $contact = $this->dao->select('*')->from(TABLE_CONTACT)->where('id')->eq($id)->fetch();
+        if(!$contact) return $contact;
 
         $contact->customer = '';
         $contact->maker    = '';
