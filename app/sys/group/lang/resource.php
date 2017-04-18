@@ -708,12 +708,14 @@ $lang->resource->adminUser->create = 'create';
 $lang->resource->adminUser->edit   = 'edit';
 $lang->resource->adminUser->delete = 'delete';
 $lang->resource->adminUser->forbid = 'forbid';
+$lang->resource->adminUser->active = 'active';
 
-$lang->adminUser->methodOrder[10]  = 'admin';
+$lang->adminUser->methodOrder[10] = 'admin';
 $lang->adminUser->methodOrder[15] = 'create';
 $lang->adminUser->methodOrder[20] = 'edit';
 $lang->adminUser->methodOrder[25] = 'delete';
 $lang->adminUser->methodOrder[30] = 'forbid';
+$lang->adminUser->methodOrder[35] = 'active';
 
 /* Every version of new privilege. */
 $lang->changelog = array();
