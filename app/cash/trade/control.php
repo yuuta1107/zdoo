@@ -342,10 +342,26 @@ class trade extends control
                     }
                 } 
             }
+
             $trade->redeems = implode(',', $redeems);
             $trade->profits = implode(',', $profits);
             $this->view->redeemPairs = $redeemPairs;
             $this->view->tradePairs  = $tradePairs;
+        }
+
+        if($trade->type == 'redeem')
+        {
+            $invests = $this->dao->select('*')->from(TABLE_TRADE)->where('type')->eq('invest')->fetchAll();
+            $investList = array('' => '');
+            foreach($invests as $invest)
+            {
+                $redeem = $this->dao->select("sum(money) as value")->from(TABLE_TRADE)->where('investID')->eq($invest->id)->andWhere('type')->eq('redeem')->fetch('value');
+                if($redeem >= $invest->money and $invest->id != $trade->investID) continue;
+                $investList[$invest->id] = $invest->date . $depositorList[$invest->depositor] . $this->lang->trade->invest . zget($currencySign, $invest->currency) . $invest->money;
+            }
+            $this->view->investList         = $investList;
+            $this->view->investTrade        = $this->trade->getInvestTrade($trade->investID, $trade->createdDate);
+            $this->view->investCategoryList = $this->trade->getSystemCategoryPairs('invest');
         }
 
         $this->display();

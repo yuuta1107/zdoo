@@ -106,13 +106,34 @@
         </tr>
         <?php endif;?>
         <?php if($trade->type == 'invest'):?>
+        <tr class='trader'>
+          <th><?php echo $lang->trade->trader;?></th>
+          <td>
+            <div class='input-group'>
+              <?php  echo html::select('trader', ($customerList + $traderList), $trade->trader, "class='form-control chosen'");?>
+              <?php  echo html::input('traderName', '', "class='form-control' style='display:none'");?>
+              <div class='input-group-addon'><?php echo html::checkbox('createTrader', array( 1 => $lang->trade->newTrader));?></div>
+            </div>
+          </td>
+        </tr>
+        <?php endif;?>
+        <?php if($trade->type == 'redeem'):?>
+        <tr class='investList'>
+          <th><?php echo $lang->trade->invest;?></th>
+          <td>
+            <div class="required required-wrapper"></div>
+            <?php echo html::select('investID', $investList, $trade->investID, "class='form-control chosen'");?>
+          </td>
+        </tr>
+        <?php endif;?>
+        <?php if($trade->type == 'invest'):?>
         <?php if($redeemPairs):?>
         <tr>
           <th><?php echo $lang->trade->redeem;?></th>
           <td><?php echo html::select('redeems[]', $redeemPairs, $trade->redeems, "class='form-control chosen' multiple");?></td>
         </tr>
         <?php endif;?>
-        <?php if($tradePairs):?>
+        <?php if(isset($tradePairs)):?>
         <tr>
           <th><?php echo $lang->trade->in;?></th>
           <td><?php echo html::select('profits[]', $tradePairs, $trade->profits, "class='form-control chosen' multiple");?></td>
@@ -148,6 +169,18 @@
         <tr>
           <th><?php echo $lang->trade->interest;?></th>
           <td><?php echo html::input('interest', $interest->money, "class='form-control'");?></td>
+        </tr>
+        <?php endif;?>
+        <?php if($trade->type == 'redeem'):?>
+        <tr class='category'>
+          <th><?php echo $lang->trade->in;?></th>
+          <td>
+            <div class='input-group'>
+              <?php echo html::select('investCategory', $investCategoryList, $investTrade->category, "class='form-control'");?>
+              <span class="input-group-addon fix-border fix-padding"></span>
+              <?php echo html::input('investMoney', $investTrade->money, "class='form-control'");?>
+            </div>
+          </td>
         </tr>
         <?php endif;?>
         <tr>
