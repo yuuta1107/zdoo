@@ -23,11 +23,13 @@
           <td class='w-400px'><?php echo html::input('name', $refund->name, "class='form-control'")?></td>
           <td></td>
         </tr>
+        <?php if($categories):?>
         <tr>
           <th><?php echo $lang->refund->category?></th>
           <td><?php echo html::select('category', $categories, $refund->category, "class='form-control chosen'")?></td>
           <td></td>
         </tr>
+        <?php endif;?>
         <tr>
           <th><?php echo $lang->refund->money?></th>
           <td>
@@ -53,26 +55,30 @@
           <th><?php echo $lang->refund->detail?></th>
           <td colspan='2' id='detailBox'>
             <table class='table table-detail'>
-            <?php $key = 0;?>
-            <?php foreach($refund->detail as $d):?>
+              <?php $key = 0;?>
+              <?php foreach($refund->detail as $d):?>
               <tr>
                 <?php echo html::hidden('idList[]', $d->id)?>
                 <td class='w-100px'><?php echo html::input("dateList[$key]", $d->date, "class='form-control form-date' placeholder='{$lang->refund->date}'")?></td>
+                <?php if($categories):?>
                 <td class='w-100px'><?php echo html::select("categoryList[$key]", $categories, $d->category, "class='form-control chosen' placeholder='{$lang->refund->category}'")?></td>
+                <?php endif;?>
                 <td class='w-100px'><?php echo html::input("moneyList[$key]", $d->money, "class='form-control' placeholder='{$lang->refund->money}'")?></td>
                 <td class='w-200px'><?php echo html::select("relatedList[$key][]", $users, $d->related, "class='form-control chosen' multiple data-placeholder='{$lang->refund->related}'")?></td>
                 <td><?php echo html::textarea("descList[$key]", $d->desc, "class='form-control' style='height:32px;' placeholder='{$lang->refund->desc}'")?></td>
                 <td class='w-70px'><i class='btn btn-mini icon-plus'></i>&nbsp;&nbsp;<i class='btn btn-mini icon-remove'></i></td>
               </tr>
-            <?php $key++;?>
-            <?php endforeach;?>
+              <?php $key++;?>
+              <?php endforeach;?>
               <tr class='text-center'>
                 <td class='w-100px'><?php echo html::input("dateList[$key]", '', "class='form-control form-date' placeholder='{$lang->refund->date}'")?></td>
+                <?php if($categories):?>
                 <td class='w-100px'><?php echo html::select("categoryList[$key]", $categories, '', "class='form-control chosen' placeholder='{$lang->refund->category}'")?></td>
+                <?php endif;?>
                 <td class='w-100px'><?php echo html::input("moneyList[$key]", '', "class='form-control' placeholder='{$lang->refund->money}'")?></td>
                 <td class='w-200px'><?php echo html::select("relatedList[$key][]", $users, '', "class='form-control chosen' multiple data-placeholder='{$lang->refund->related}'")?></td>
                 <td><?php echo html::textarea("descList[$key]", '', "class='form-control' style='height:32px;' placeholder='{$lang->refund->desc}'")?></td>
-                <td class='w-100px'><i class='btn btn-mini icon-plus'></i>&nbsp;&nbsp;<i class='btn btn-mini icon-remove'></i></td>
+                <td class='w-70px'><i class='btn btn-mini icon-plus'></i>&nbsp;&nbsp;<i class='btn btn-mini icon-remove'></i></td>
               </tr>
               <?php $key++;?>
             </table>
@@ -96,11 +102,13 @@
 <script type='text/template' id='detailTpl'>
 <tr class='text-center'>
   <td class='w-100px'><?php echo html::input('dateList[key]', '', "class='form-control form-date' placeholder='{$lang->refund->date}'")?></td>
+  <?php if($categories):?>
   <td class='w-100px'><?php echo html::select('categoryList[key]', $categories, '', "class='form-control chosen' placeholder='{$lang->refund->category}'")?></td>
+  <?php endif;?>
   <td class='w-100px'><?php echo html::input('moneyList[key]', '', "class='form-control' placeholder='{$lang->refund->money}'")?></td>
   <td class='w-200px'><?php echo html::select('relatedList[key][]', $users, '', "class='form-control chosen' multiple data-placeholder='{$lang->refund->related}'")?></td>
   <td><?php echo html::textarea('descList[key]', '', "class='form-control' style='height:32px;' placeholder='{$lang->refund->desc}'")?></td>
-  <td class='w-100px'><i class='btn btn-mini icon-plus'></i>&nbsp;&nbsp;<i class='btn btn-mini icon-remove'></i></td>
+  <td class='w-70px'><i class='btn btn-mini icon-plus'></i>&nbsp;&nbsp;<i class='btn btn-mini icon-remove'></i></td>
 </tr>
 </script>
 <?php js::set('key', 2)?>

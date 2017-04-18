@@ -32,7 +32,7 @@ $config->framework->purifier       = false; // 是否对数据做purifier处理�
 $config->framework->logDays        = 14;    // 日志文件保存的天数。              The days to save log files.
 
 /* Basic settings. */
-$config->version      = '4.2';             // The version of ranzhi. Don't change it.
+$config->version      = '4.2.1';           // The version of ranzhi. Don't change it.
 $config->charset      = 'UTF-8';           // The charset of ranzhi.
 $config->cookieLife   = time() + 2592000;  // The cookie life time.
 $config->timezone     = 'Asia/Shanghai';   // The time zone setting, for more see http://www.php.net/manual/en/timezones.php

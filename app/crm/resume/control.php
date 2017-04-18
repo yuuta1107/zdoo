@@ -24,7 +24,7 @@ class resume extends control
         $resumes = $this->resume->getList($contactID);
         $this->app->user->canEditResumeIdList = ',' . implode(',', $this->resume->getResumesSawByMe('edit', array_keys($resumes))) . ',';
 
-        $this->view->title      = $contact->realname . $this->lang->minus . $this->lang->resume->common;
+        $this->view->title      = (!empty($contact) ? $contact->realname : '') . $this->lang->minus . $this->lang->resume->common;
         $this->view->modalWidth = 800;
         $this->view->contact    = $contact;
         $this->view->resumes    = $resumes;

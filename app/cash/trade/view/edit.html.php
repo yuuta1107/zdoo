@@ -106,15 +106,19 @@
         </tr>
         <?php endif;?>
         <?php if($trade->type == 'invest'):?>
+        <?php if($redeemPairs):?>
         <tr>
           <th><?php echo $lang->trade->redeem;?></th>
           <td><?php echo html::select('redeems[]', $redeemPairs, $trade->redeems, "class='form-control chosen' multiple");?></td>
         </tr>
+        <?php endif;?>
+        <?php if($tradePairs):?>
         <tr>
           <th><?php echo $lang->trade->in;?></th>
           <td><?php echo html::select('profits[]', $tradePairs, $trade->profits, "class='form-control chosen' multiple");?></td>
         </tr>
         <?php endif;?>
+<<<<<<< HEAD
         <?php if($trade->type == 'loan'):?>
         <tr class='trader'>
           <th><?php echo $lang->trade->trader;?></th>
@@ -135,6 +139,8 @@
             <?php echo html::select('loanID', $loanList, $trade->loanID, "class='form-control'");?>
           </td>
         </tr>
+=======
+>>>>>>> a7d3e7ce162a4b36f288b8d3c14c1b06fe00e92e
         <?php endif;?>
         <tr>
           <th><?php echo $lang->trade->money;?></th>
