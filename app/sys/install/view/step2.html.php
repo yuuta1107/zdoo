@@ -16,7 +16,7 @@
     <div class='modal-content'>
       <div class='modal-header'><strong><?php echo $lang->install->setConfig;?></strong></div>
       <div class='modal-body'>
-      <form method='post' action='<?php echo $this->createLink('install', 'step3');?>' class='form' id='form1'>
+      <form method='post' action='<?php echo $this->createLink('install', 'step3');?>' class='form-inline' id='form1'>
         <table class='table table-bordered table-form'>
           <tr>
             <th class='w-p20'><?php echo $lang->install->key;?></th>
