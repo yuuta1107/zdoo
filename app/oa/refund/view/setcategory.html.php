@@ -38,7 +38,7 @@
                 } 
                 else
                 {
-                    echo html::checkbox('refundCategories', $expenseList, $refundCategories);
+                    echo html::checkbox('refundCategories', $expenseList, $refundCategories, '', $type = 'block');
                 }
                 ?>
               </td>
