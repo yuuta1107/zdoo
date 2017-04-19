@@ -669,11 +669,7 @@ EOT;
      */
     public function processStatus()
     {
-        $attends = $this->dao->select('*')->from(TABLE_ATTEND)
-            ->where('status')->eq('')
-            ->andWhere('date')->lt(helper::today())
-            ->orWhere('date')->eq(date("Y-m-d"))
-            ->fetchAll('id');
+        $attends = $this->dao->select('*')->from(TABLE_ATTEND)->where('date')->le(helper::today())->fetchAll('id');
 
         foreach($attends as $attend)
         {
