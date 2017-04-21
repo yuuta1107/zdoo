@@ -101,5 +101,4 @@ $allLibs['custom']  = $customLibs;
     <?php endif; ?>
   <?php endforeach;?>
 </div>
-<?php include '../../../sys/common/view/footer.html.php';?>
-
+<?php include '../../common/view/footer.html.php';?>

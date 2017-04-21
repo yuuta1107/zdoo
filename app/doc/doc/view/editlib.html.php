@@ -13,7 +13,7 @@
 <?php include '../../../sys/common/view/header.modal.html.php';?>
 <?php include '../../../sys/common/view/chosen.html.php';?>
 <?php js::set('private', $lib->private);?>
-<form method='post' id='ajaxForm' action='<?php echo inlink('editLib', "libID=$libID")?>'>
+<form method='post' id='ajaxForm' action='<?php echo inlink('editLib', "libID={$lib->id}")?>'>
   <table class='table table-form'>
     <?php if(!empty($lib->project)):?>
     <tr>

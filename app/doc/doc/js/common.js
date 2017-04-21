@@ -15,6 +15,9 @@ function setType(type)
 
 $(document).ready(function()
 {
+    $('#mainNavbar .nav li').removeClass('active');
+    $("#mainNavbar .nav li").first().addClass('active');
+
     if(v.libType != undefined)
     {
         $('#mainNavbar .nav li').removeClass('active');
