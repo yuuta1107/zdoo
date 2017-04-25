@@ -55,7 +55,7 @@ $(document).ready(function()
     $('#libList').sortable(
     {
         trigger: '.icon-move',
-        selector: '#libList .lib',
+        selector: '.lib',
         finish: function()
         {
             var orders = {};     
