@@ -502,7 +502,7 @@ class leave extends control
         }
 
         $this->view->title      = $this->lang->leave->setReviewer;
-        $this->view->users      = $this->loadModel('user', 'sys')->getPairs('noclosed,noforbidden,nodelete');
+        $this->view->users      = $this->loadModel('user', 'sys')->getPairs('noclosed,noforbidden,nodeleted');
         $this->view->reviewedBy = $this->leave->getReviewedBy();
         $this->display();
     }

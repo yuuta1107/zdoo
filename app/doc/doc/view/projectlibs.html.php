@@ -22,8 +22,8 @@
     if($libID == 'files')   $libLink = inlink('showFiles', "projectID=$project->id");
     ?>
     <a class="lib <?php echo $libID == 'files' ? 'files' : '';?>" title='<?php echo $libName?>' href='<?php echo $libLink?>' data-id='<?php echo $libID;?>'>
-      <i class='icon icon-2x icon-folder-open-alt'></i>
       <?php if($libID != 'files'):?><i class='icon icon-move'> </i><?php endif;?>
+      <i class='icon icon-2x icon-folder-open-alt'></i>
       <div class='lib-name' title='<?php echo $libName?>'><?php echo $libName?></div>
     </a>
     <?php endforeach; ?>

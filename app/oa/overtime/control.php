@@ -480,7 +480,7 @@ class overtime extends control
         }
 
         $this->view->title      = $this->lang->overtime->setReviewer;
-        $this->view->users      = $this->loadModel('user', 'sys')->getPairs('noclosed,noforbidden,nodelete');
+        $this->view->users      = $this->loadModel('user', 'sys')->getPairs('noclosed,noforbidden,nodeleted');
         $this->view->reviewedBy = $this->overtime->getReviewedBy();
         $this->display();
     }

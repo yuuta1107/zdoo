@@ -54,10 +54,10 @@ class doc extends control
     /**
      * Show all libs.
      * 
-     * @param  int    $type 
-     * @param  int    $recTotal 
-     * @param  int    $recPerPage 
-     * @param  int    $pageID 
+     * @param  string   $type 
+     * @param  int      $recTotal 
+     * @param  int      $recPerPage 
+     * @param  int      $pageID 
      * @access public
      * @return void
      */
@@ -70,10 +70,9 @@ class doc extends control
         $pager = new pager($recTotal, $recPerPage, $pageID);
 
         $libs    = $this->doc->getAllLibsByType($type, $pager);
-        $subLibs = array();
-        if($type == 'project') $subLibs = $this->doc->getSubLibGroups(array_keys($libs));
+        $subLibs = $type == 'project' ? $this->doc->getSubLibGroups(array_keys($libs)) : array();
 
-        $this->view->title   = $this->lang->doc->allLibs;
+        $this->view->title   = $this->lang->doc->{$type . 'Libs'};
         $this->view->type    = $type;
         $this->view->libs    = $libs;
         $this->view->subLibs = $subLibs;
@@ -108,6 +107,7 @@ class doc extends control
 
         /* Set browseType.*/ 
         $browseType = strtolower($browseType);
+        if(($this->cookie->browseType == 'bymenu' or $this->cookie->browseType == 'bytree') and $browseType != 'bysearch') $browseType = $this->cookie->browseType;
         $queryID    = ($browseType == 'bysearch') ? (int)$param : 0;
 
         /* Set menu, save session. */
@@ -118,10 +118,10 @@ class doc extends control
         $pager = new pager($recTotal, $recPerPage, $pageID);
  
         /* Get docs. */
-        $modules = '';
-        $docs    = array();
-        if($this->cookie->browseType == 'bylist' and $browseType == 'bymodule')
+        $docs = array();
+        if($browseType == 'bymodule')
         {
+            $modules = '';
             if($moduleID) $modules = $this->tree->getFamily($moduleID, 'doc', (int)$libID);
             $docs = $this->doc->getDocList($libID, $projectID, $modules, $orderBy, $pager);
         }
@@ -168,7 +168,6 @@ class doc extends control
         {
             $this->view->moduleTree = $moduleTree;
         }
-
        
         $this->view->title         = $this->lang->doc->common . $this->lang->colon . $this->libs[$libID];
         $this->view->libID         = $libID;
@@ -190,6 +189,8 @@ class doc extends control
     /**
      * Create a library.
      * 
+     * @param  string $type 
+     * @param  int    $projectID 
      * @access public
      * @return void
      */
@@ -242,7 +243,6 @@ class doc extends control
 
         if(!empty($lib->project)) $this->view->project = $this->project->getByID($lib->project);
 
-        $this->view->libID  = $libID;
         $this->view->title  = $this->lang->doc->editLib;
         $this->view->lib    = $lib;
         $this->view->users  = $this->loadModel('user')->getPairs('nodeleted,noforbidden,noclosed');
@@ -261,15 +261,15 @@ class doc extends control
     public function deleteLib($libID)
     {
         if($libID == 'project') die();
-        $lib = $this->doc->getLibById($libID);
 
+        $lib = $this->doc->getLibById($libID);
         if(!$lib) $this->send(array('result' => 'fail', 'message' => $this->lang->doc->libNotFound));
         if(!empty($lib->main)) $this->send(array('result' => 'fail', 'message' => $this->lang->doc->errorMainLib));
 
         $docs = $this->dao->select('*')->from(TABLE_DOC)->where('deleted')->eq('0')->andWhere('lib')->eq($libID)->fetchAll();
         if($docs) $this->send(array('result' => 'fail', 'message' => $this->lang->doc->libNotEmpty));
 
-        if($this->doc->deleteLib($libID)) $this->send(array('result' => 'success', 'locate' => inlink('browse')));
+        if($this->doc->deleteLib($libID)) $this->send(array('result' => 'success', 'locate' => inlink('index')));
         $this->send(array('result' => 'fail', 'message' => dao::getError()));
     }
     
@@ -295,8 +295,7 @@ class doc extends control
             $this->action->create('doc', $docID, 'Created');
 
             $projectID = intval($this->post->project);
-            $vars = "libID=$libID&moduleID={$this->post->module}&projectID=$projectID";
-            $link = $this->createLink('doc', 'browse', $vars);
+            $link = $this->createLink('doc', 'browse', "libID=$libID&module={$this->post->module}&projectID=$projectID");
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => $link));
         }
 
@@ -335,10 +334,9 @@ class doc extends control
 
             if($this->post->comment != '' or !empty($changes) or !empty($files))
             {
-                $action = !empty($changes) ? 'Edited' : 'Commented';
-                $fileAction = '';
-                if(!empty($files)) $fileAction = $this->lang->addFiles . join(',', $files) . "\n" ;
-                $actionID = $this->action->create('doc', $docID, $action, $fileAction . $this->post->comment);
+                $action     = !empty($changes) ? 'Edited' : 'Commented';
+                $fileAction = !empty($files) ? $this->lang->addFiles . join(',', $files) . "\n" : '';
+                $actionID   = $this->action->create('doc', $docID, $action, $fileAction . $this->post->comment);
                 if($changes) $this->action->logHistory($actionID, $changes);
             }
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => $this->createLink('doc', 'view', "docID=$docID")));
@@ -390,13 +388,9 @@ class doc extends control
             $doc->digest  = $hyperdown->makeHtml($doc->digest);
         }
 
-        /* Get library. */
-        $lib = $doc->libName;
-        if($doc->lib == 'project') $lib = $doc->projectName;
-
         $this->view->title      = "DOC #$doc->id $doc->title - " . $this->libs[$doc->lib];
         $this->view->doc        = $doc;
-        $this->view->lib        = $lib;
+        $this->view->lib        = $doc->lib == 'project' ? $doc->projectName : $doc->libName;
         $this->view->version    = $version ? $version : $doc->version;
         $this->view->projects   = $this->project->getPairs();
         $this->view->users      = $this->user->getPairs();
@@ -409,7 +403,6 @@ class doc extends control
      * Delete a doc.
      * 
      * @param  int    $docID 
-     * @param  string $confirm  yes|no
      * @access public
      * @return void
      */
@@ -417,6 +410,7 @@ class doc extends control
     {
         $doc = $this->doc->getById($docID);
         if(!$doc) die(js::error($this->lang->doc->notFound));
+
         $this->doc->delete(TABLE_DOC, $docID);
         if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
         $this->send(array('result' => 'success', 'locate' => inlink('browse')));
@@ -433,7 +427,7 @@ class doc extends control
     {
         $this->doc->setMainMenu();
 
-        $project = $this->dao->select('id,name')->from(TABLE_PROJECT)->where('id')->eq($projectID)->fetch();
+        $project = $this->project->getByID($projectID);
 
         $this->view->title   = $project->name;
         $this->view->project = $project;
@@ -453,10 +447,10 @@ class doc extends control
         $this->doc->setMainMenu();
 
         $uri = $this->app->getURI(true);
-        $this->app->session->set('taskList',  $uri);
-        $this->app->session->set('docList',   $uri);
+        $this->app->session->set('taskList', $uri);
+        $this->app->session->set('docList',  $uri);
 
-        $project = $this->dao->select('id,name')->from(TABLE_PROJECT)->where('id')->eq($projectID)->fetch();
+        $project = $this->project->getByID($projectID);
 
         /* Load pager. */
         $this->app->loadClass('pager', $static = true);
@@ -479,9 +473,7 @@ class doc extends control
      */
     public function ajaxFixedMenu($libID, $type = 'fixed')
     {
-        $customMenus = $this->loadModel('setting')->getItem("owner={$this->app->user->account}&app=sys&module=common&section=customMenu&key=doc");
-        if($customMenus) $customMenus = json_decode($customMenus);
-
+        $customMenus = isset($this->config->customMenu->doc) ? json_decode($this->config->customMenu->doc) : '';
         if(empty($customMenus) and $type == 'remove') $this->send(array('result' => 'success'));
 
         if(!empty($customMenus))
@@ -497,7 +489,7 @@ class doc extends control
         $customMenu->order = count($customMenus); 
         if($type == 'fixed') $customMenus[] = $customMenu;
 
-        $this->setting->setItem("{$this->app->user->account}.sys.common.customMenu.doc", json_encode($customMenus));
+        $this->loadModel('setting')->setItem("{$this->app->user->account}.sys.common.customMenu.doc", json_encode($customMenus));
         if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
         $this->send(array('result' => 'success'));
     }

@@ -57,8 +57,8 @@
   <div class='clearfix' id='libList'>
     <?php foreach($libs as $lib):?>
     <a class='lib lib-custom' title='<?php echo $lib->name?>' href='<?php echo inlink('browse', "libID=$lib->id") ?>' data-id='<?php echo $lib->id;?>'>
-      <i class='icon icon-2x icon-folder-open-alt'></i>
       <i class='icon icon-move'> </i>
+      <i class='icon icon-2x icon-folder-open-alt'></i>
       <div class='lib-name' title='<?php echo $lib->name?>'><?php echo $lib->name?></div>
     </a>
     <?php endforeach; ?>

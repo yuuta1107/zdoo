@@ -480,7 +480,7 @@ class attend extends control
         }
 
         $this->view->title  = $this->lang->attend->personalSettings;
-        $this->view->users  = $this->loadModel('user', 'sys')->getPairs('noclosed,nodelete,noforbidden');
+        $this->view->users  = $this->loadModel('user', 'sys')->getPairs('noclosed,nodeleted,noforbidden');
         $this->view->module = $module;
         $this->display();
     }
