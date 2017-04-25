@@ -26,9 +26,26 @@ class userModel extends model
      */
     public function getList($dept = 0, $mode = 'normal', $query = '', $orderBy = 'id', $pager = null)
     {
+        $deptList = array();
+        if($dept)
+        {
+            $this->loadModel('tree');
+            if(is_array($dept))
+            {
+                foreach($dept as $d)
+                {
+                    $depts    = $this->tree->getFamily($d);
+                    $deptList = array_merge($deptList, $depts);
+                }
+            }
+            else
+            {
+                $deptList = $this->tree->getFamily($dept);
+            }
+        }
         return $this->dao->select('*')->from(TABLE_USER)
             ->where(1)
-            ->beginIF($dept != 0)->andWhere('dept')->in($dept)->fi()
+            ->beginIF($deptList)->andWhere('dept')->in($deptList)->fi()
 
             ->beginIF($mode != 'all')->andWhere('deleted')->eq('0')->fi()
 
