@@ -15,6 +15,7 @@
 <?php include '../../../sys/common/view/kindeditor.html.php';?>
 <?php include '../../../sys/common/view/chosen.html.php';?>
 <?php js::set('customer', isset($customer) ? $customer : 0);?>
+<?php js::set('order', isset($orderID) ? $orderID : 0);?>
 <div class='panel'>
   <div class='panel-heading'>
     <strong><i class="icon-plus"></i> <?php echo $lang->contract->create;?></strong>

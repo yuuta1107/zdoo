@@ -20,6 +20,7 @@ function getOrder(customerID)
     {
         $('#orderTR').removeClass('hide');
         if($('.select-order').length > 1) $('.select-order').parents('tr').not('#orderTR, #tmpData, .orderInfo').remove();
+        if(v.order) $('#orderTD [name*=order]').val(v.order);
     })
 }
 
