@@ -30,17 +30,11 @@ class userModel extends model
         if($dept)
         {
             $this->loadModel('tree');
-            if(is_array($dept))
+            if(!is_array($dept)) $dept = explode(',', $dept);
+            foreach($dept as $d)
             {
-                foreach($dept as $d)
-                {
-                    $depts    = $this->tree->getFamily($d);
-                    $deptList = array_merge($deptList, $depts);
-                }
-            }
-            else
-            {
-                $deptList = $this->tree->getFamily($dept);
+                $depts    = $this->tree->getFamily($d);
+                $deptList = array_merge($deptList, $depts);
             }
         }
         return $this->dao->select('*')->from(TABLE_USER)
