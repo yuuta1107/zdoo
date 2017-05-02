@@ -138,7 +138,7 @@ $lang->action->label->revoked     = '撤銷了';
 $lang->action->label->reported    = '銷假了';
 $lang->action->label->forbidden   = '禁用了';
 $lang->action->label->transform   = '轉換了';
-$lang->action->label->ignore      = '忽略了';
+$lang->action->label->ignored     = '忽略了';
 $lang->action->label->login       = '登錄系統';
 $lang->action->label->logout      = "退出登錄";
 
@@ -182,6 +182,7 @@ $lang->action->label->contract  = '合同|contract|view|contractID=%s';
 $lang->action->label->customer  = '客戶|customer|view|customerID=%s';
 $lang->action->label->depositor = '賬戶|depositor|browse|';
 $lang->action->label->holiday   = '放假安排|holiday|browse|';
+$lang->action->label->leads     = '名單|leads|view|contactID=%s';
 $lang->action->label->order     = '訂單|order|view|orderID=%s';
 $lang->action->label->product   = '產品|product|view|productID=%s';
 $lang->action->label->project   = '項目|task|browse|projectID=%s';

@@ -138,7 +138,7 @@ $lang->action->label->revoked     = 'revoked';
 $lang->action->label->reported    = 'reported';
 $lang->action->label->forbidden   = 'Forbidden';
 $lang->action->label->transform   = 'transformed';
-$lang->action->label->ignore      = 'ignored';
+$lang->action->label->ignored     = 'ignored';
 $lang->action->label->login       = 'login';
 $lang->action->label->logout      = "logout";
 
@@ -182,6 +182,7 @@ $lang->action->label->contract  = 'Contract|contract|view|contractID=%s';
 $lang->action->label->customer  = 'Customer|customer|view|customerID=%s';
 $lang->action->label->depositor = 'Account|depositor|browse|';
 $lang->action->label->holiday   = 'Holiday|hiloday|browse|';
+$lang->action->label->leads     = 'Leads|leads|view|contactID=%s';
 $lang->action->label->order     = 'Order|order|view|orderID=%s';
 $lang->action->label->product   = 'Product|product|view|productID=%s';
 $lang->action->label->project   = 'Project|task|browse|projectID=%s';
