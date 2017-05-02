@@ -832,7 +832,7 @@ CREATE TABLE `sys_file` (
   `title` char(90) NOT NULL,
   `extension` char(30) NOT NULL,
   `size` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `objectType` char(20) NOT NULL,
+  `objectType` char(30) NOT NULL,
   `objectID` mediumint(8) unsigned NOT NULL,
   `createdBy` char(30) NOT NULL DEFAULT '',
   `createdDate` datetime NOT NULL,
