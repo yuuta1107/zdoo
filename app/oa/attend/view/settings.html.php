@@ -85,6 +85,13 @@
               <td><?php echo html::select('noAttendUsers[]', $users, $noAttendUsers, "class='form-control chosen' multiple")?></td>
               <td></td>
             </tr>
+            <tr>
+              <th><?php echo $lang->attend->signInClient;?></th>
+              <td><?php echo html::select('signInClient', $lang->attend->clientList, $config->attend->signInClient, "class='form-control'")?></td>
+              <td style='padding-left: 10px'>
+                <?php echo html::a('javascript:void(0)', "<i class='icon-question-sign'></i>", "data-original-title='{$lang->attend->note->signInClient}' data-toggle='tooltip' data-placement='right' ");?>     
+              </td>
+            </tr>
             <tr><th></th><td colspan='2'><?php echo html::submitButton();?></td></tr>
           </table>
         </form>

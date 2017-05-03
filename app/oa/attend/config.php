@@ -7,6 +7,7 @@ $config->attend->workingDays   = '5';
 $config->attend->mustSignOut   = 'yes';
 $config->attend->ip            = '*';
 $config->attend->noAttendUsers = '';
+$config->attend->signInClient  = 'all';
 
 $config->attend->beginDate = new stdclass();
 $config->attend->beginDate->company = '';

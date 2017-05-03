@@ -41,6 +41,7 @@ $lang->attend->AM            = 'AM';
 $lang->attend->PM            = 'PM';
 $lang->attend->ipList        = 'IP List';
 $lang->attend->noAttendUsers = 'Clock-in/out not required';
+$lang->attend->signInClient  = 'Clockin Client';
 
 $lang->attend->user          = 'User';
 $lang->attend->begin         = 'Begin';
@@ -55,6 +56,10 @@ $lang->attend->reviewedBy   = 'Reviewed By';
 $lang->attend->reviewedDate = 'Reviewed Date';
 $lang->attend->deserveDays  = 'Deserved Days';
 $lang->attend->actualDays   = 'Actual';
+
+$lang->attend->clientList['all']    = 'All';
+$lang->attend->clientList['pc']     = 'PC';
+$lang->attend->clientList['mobile'] = 'Mobile';
 
 $lang->attend->statusList['normal']   = 'Normal';
 $lang->attend->statusList['late']     = 'Late';
@@ -108,9 +113,9 @@ $lang->attend->reviewStatusList['pass']   = 'Pass';
 $lang->attend->reviewStatusList['reject'] = 'Reject';
 
 $lang->attend->inSuccess  = 'Signed in.';
-$lang->attend->inFail     = 'Signin failed.';
+$lang->attend->inFail     = 'Sign in failed.';
 $lang->attend->outSuccess = 'Signed out.';
-$lang->attend->outFail    = 'Signout failed.';
+$lang->attend->outFail    = 'Sign out failed.';
 
 $lang->attend->signInLimit  = 'Clock-in';
 $lang->attend->signOutLimit = 'Clock-out';
@@ -142,15 +147,18 @@ $lang->attend->setManager       = 'Department Manager Settings';
 $lang->attend->setDept          = 'Set Department';
 
 $lang->attend->beginDate = new stdClass();
-$lang->attend->beginDate->company  = '公司开始考勤日期';
-$lang->attend->beginDate->personal = '个人开始考勤日期';
+$lang->attend->beginDate->company  = 'Company start record attend';
+$lang->attend->beginDate->personal = 'People start record attend';
 
 $lang->attend->note = new stdClass();
-$lang->attend->note->ip        = "Use commas to separate IPs, and IP segment is OK, e.g. 192.168.1.*";
-$lang->attend->note->allip     = 'All IPs';
-$lang->attend->note->IPDenied  = 'IP denied.';
-$lang->attend->note->beginDate = 'Set a date to begin record attend status. The attend status of days before this date will not be record.';
+$lang->attend->note->ip           = "Use commas to separate IPs, and IP segment is OK, e.g. 192.168.1.*";
+$lang->attend->note->allip        = 'All IPs';
+$lang->attend->note->IPDenied     = 'IP denied.';
+$lang->attend->note->beginDate    = 'Set a date to begin record attend status. The attend status of days before this date will not be record.';
+$lang->attend->note->signInClient = 'Choose all to sign in by any way, otherwise sign in by the chose one.';
 
 $lang->attend->h = 'hours';
 $lang->attend->m = 'minutes';
 $lang->attend->s = 'seconds';
+
+$lang->attend->signInClientError = 'Signin failed. It has been set can only sign in by %s.';

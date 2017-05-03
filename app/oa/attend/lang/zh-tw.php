@@ -41,6 +41,7 @@ $lang->attend->AM            = '上午';
 $lang->attend->PM            = '下午';
 $lang->attend->ipList        = 'IP列表';
 $lang->attend->noAttendUsers = '無需考勤者';
+$lang->attend->signInClient  = '簽到途徑';
 
 $lang->attend->user          = '用戶';
 $lang->attend->begin         = '開始';
@@ -55,6 +56,10 @@ $lang->attend->reviewedBy   = '審核人';
 $lang->attend->reviewedDate = '審核時間';
 $lang->attend->deserveDays  = '應出勤天數';
 $lang->attend->actualDays   = '實際出勤天數';
+
+$lang->attend->clientList['all']    = '所有';
+$lang->attend->clientList['pc']     = 'PC端';
+$lang->attend->clientList['mobile'] = '移動端';
 
 $lang->attend->statusList['normal']   = '正常';
 $lang->attend->statusList['late']     = '遲到';
@@ -146,11 +151,14 @@ $lang->attend->beginDate->company  = '公司開始考勤日期';
 $lang->attend->beginDate->personal = '個人開始考勤日期';
 
 $lang->attend->note = new stdClass();
-$lang->attend->note->ip        = "允許簽到的ip，多個ip用逗號隔開。支持IP段，如192.168.1.*";
-$lang->attend->note->allip     = '無限制';
-$lang->attend->note->IPDenied  = '簽到IP受限，無法簽到';
-$lang->attend->note->beginDate = '設置開始考勤的日期，在該日期之前不記錄考勤狀態。如果不設置則根據實際數據記錄考勤狀態。預設使用公司開始考勤日期計算考勤狀態，如果設置了個人開始考勤日期則使用個人日期。';
+$lang->attend->note->ip           = "允許簽到的ip，多個ip用逗號隔開。支持IP段，如192.168.1.*";
+$lang->attend->note->allip        = '無限制';
+$lang->attend->note->IPDenied     = '簽到IP受限，無法簽到';
+$lang->attend->note->beginDate    = '設置開始考勤的日期，在該日期之前不記錄考勤狀態。如果不設置則根據實際數據記錄考勤狀態。預設使用公司開始考勤日期計算考勤狀態，如果設置了個人開始考勤日期則使用個人日期。';
+$lang->attend->note->signInClient = '設置為所有時可以通過任意途徑簽到，否則只能通過選定的訪問方式簽到。';
 
 $lang->attend->h = '小時';
 $lang->attend->m = '分';
 $lang->attend->s = '秒';
+
+$lang->attend->signInClientError = '簽到失敗！已設置只能通過 %s 簽到。';
