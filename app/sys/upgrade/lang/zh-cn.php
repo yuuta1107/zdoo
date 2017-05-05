@@ -78,6 +78,7 @@ $lang->upgrade->fromVersions['3_7']      = '3.7';
 $lang->upgrade->fromVersions['4_0']      = '4.0';
 $lang->upgrade->fromVersions['4_1']      = '4.1';
 $lang->upgrade->fromVersions['4_2']      = '4.2';
+$lang->upgrade->fromVersions['4_2_1']    = '4.2.1';
 
 $lang->upgrade->deleteTips   = '需要删除部分文件。linux下面命令为：<br />';
 $lang->upgrade->deleteDir    = '<code>rm -fr %s</code>';
