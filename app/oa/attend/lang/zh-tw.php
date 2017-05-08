@@ -57,9 +57,8 @@ $lang->attend->reviewedDate = '審核時間';
 $lang->attend->deserveDays  = '應出勤天數';
 $lang->attend->actualDays   = '實際出勤天數';
 
-$lang->attend->clientList['all']    = '所有';
-$lang->attend->clientList['pc']     = 'PC端';
-$lang->attend->clientList['mobile'] = '移動端';
+$lang->attend->clientList['all']     = '所有';
+$lang->attend->clientList['desktop'] = '桌面端';
 
 $lang->attend->statusList['normal']   = '正常';
 $lang->attend->statusList['late']     = '遲到';

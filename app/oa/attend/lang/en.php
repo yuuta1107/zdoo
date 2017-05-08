@@ -57,9 +57,8 @@ $lang->attend->reviewedDate = 'Reviewed Date';
 $lang->attend->deserveDays  = 'Deserved Days';
 $lang->attend->actualDays   = 'Actual';
 
-$lang->attend->clientList['all']    = 'All';
-$lang->attend->clientList['pc']     = 'PC';
-$lang->attend->clientList['mobile'] = 'Mobile';
+$lang->attend->clientList['all']     = 'All';
+$lang->attend->clientList['desktop'] = 'Desktop';
 
 $lang->attend->statusList['normal']   = 'Normal';
 $lang->attend->statusList['late']     = 'Late';
