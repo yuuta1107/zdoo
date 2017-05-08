@@ -207,9 +207,8 @@ class tradeModel extends model
 
         if($groupBy == 'category')
         {
-            if($type == 'in')  $list = $this->loadModel('tree')->getPairs(0, 'in');
-            if($type == 'out') $list = $this->loadModel('tree')->getPairs(0, 'out');
-            $list = array('' => '') + $list;
+            if($type == 'in')  $list = $this->loadModel('tree')->getListByType('in');
+            if($type == 'out') $list = $this->loadModel('tree')->getListByType('out');
         }
 
         if($groupBy == 'dept')     $list = $this->loadModel('tree')->getOptionMenu('dept', 0, true);
@@ -288,6 +287,53 @@ class tradeModel extends model
                             $datas[$parent]->name  = $list[$parent];
                             $datas[$parent]->value = isset($datas[$parent]->value) ? $datas[$parent]->value + $data->value : $data->value;
                             unset($datas[$name]);
+                        }
+                    }
+                }
+            }
+        }
+        elseif($groupBy == 'category')
+        {
+            foreach($datas as $name => $data)
+            {
+                if(empty($list[$name]))
+                {
+                    $data->name  = $this->lang->trade->report->undefined;
+                    $data->value = isset($datas['unset']) ? $datas['unset']->value + $data->value : $data->value;
+                    $datas['unset'] = $data;
+                    unset($datas[$name]);
+                }
+                else
+                {
+                    $category = $list[$name];
+                    if($category->grade == 2)
+                    {
+                        $data->name = $category->name;
+                    }
+                    else
+                    {
+                        unset($datas[$name]);
+
+                        if($category->grade == 1)continue;
+                        
+                        /* If grade > 2, get parent and compute the value. */
+                        $pathList = explode(',', trim($category->path, ','));
+                        $parent   = zget($pathList, 1, '');
+                        if(empty($list[$parent]))
+                        {
+                            $data->name  = $this->lang->trade->report->undefined;
+                            $data->value = isset($datas['unset']) ? $datas['unset']->value + $data->value : $data->value;
+                            $datas['unset'] = $data;
+                        }
+                        else
+                        {
+                            $category = $list[$parent];
+                            $data->name = $category->name;
+                            if(isset($datas[$category->id]))
+                            {
+                                $data->value += $datas[$category->id]->value;
+                            }
+                            $datas[$category->id] = $data;
                         }
                     }
                 }
