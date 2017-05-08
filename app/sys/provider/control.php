@@ -47,11 +47,16 @@ class provider extends control
         $this->app->loadClass('pager', $static = true);
         $pager = new pager($recTotal, $recPerPage, $pageID);
 
+        $providers = $this->customer->getList($mode = $mode, $param = $param, $relation = 'provider', $orderBy, $pager);
+
         $this->session->set('providerList', $this->app->getURI(true));
+
+        /* Set allowed edit customer ID list. */
+        $this->app->user->canEditCustomerIdList = ',' . implode(',', $this->customer->getCustomersSawByMe('edit', array_keys($providers))) . ',';
 
         $this->view->title      = $this->lang->provider->list;
         $this->view->mode       = $mode;
-        $this->view->providers  = $this->customer->getList($mode = $mode, $param = $param, $relation = 'provider', $orderBy, $pager);
+        $this->view->providers  = $providers;
         $this->view->areas      = $this->loadModel('tree')->getOptionMenu('area');
         $this->view->industries = $this->tree->getOptionMenu('industry');
         $this->view->treeMenu   = $this->loadModel('tree')->getTreeMenu('provider', 0, array('treeModel', 'createProviderBrowseLink'));

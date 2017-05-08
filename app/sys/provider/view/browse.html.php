@@ -36,7 +36,7 @@
           <th class='w-160px text-left'><?php commonModel::printOrderLink('area',     $orderBy, $vars, $lang->provider->area);?></th>
           <th class='w-150px text-left'><?php commonModel::printOrderLink('industry', $orderBy, $vars, $lang->provider->industry);?></th>
           <th class='w-100px'><?php commonModel::printOrderLink('createdDate', $orderBy, $vars, $lang->provider->createdDate);?></th>
-          <th class='w-120px'><?php echo $lang->actions;?></th>
+          <th class='w-150px'><?php echo $lang->actions;?></th>
         </tr>
       </thead>
       <tbody>
@@ -52,6 +52,7 @@
           <td class='text-left'><?php echo zget($industries, $provider->industry);?></td>
           <td><?php echo substr($provider->createdDate, 0, 10);?></td>
           <td class='actions'>
+            <?php commonModel::printLink('action',   'createRecord', "objectType=provider&objectID=$provider->id&customer=$provider->id", $lang->customer->record, "data-toggle='modal' data-width='860'");?>
             <?php commonModel::printLink('provider', 'contact', "providerID=$provider->id", $lang->provider->contact, "data-toggle='modal'");?>
             <?php commonModel::printLink('provider', 'edit',    "providerID=$provider->id", $lang->edit);?>
             <?php commonModel::printLink('provider', 'delete',  "providerID=$provider->id", $lang->delete, "class='deleter'");?>

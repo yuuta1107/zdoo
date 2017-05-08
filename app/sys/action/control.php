@@ -102,22 +102,22 @@ class action extends control
         
         if($objectType == 'contact')
         {
-            $this->view->customers = $this->loadModel('contact')->getCustomerPairs($objectID);
+            $this->view->customers = $this->loadModel('contact', 'crm')->getCustomerPairs($objectID);
         }
 
         if($objectType == 'customer')
         {
-            $this->view->orders    = array('') + $this->loadModel('order')->getPairs($objectID);
-            $this->view->contracts = array('') + $this->loadModel('contract')->getPairs($objectID);
+            $this->view->orders    = array('') + $this->loadModel('order', 'crm')->getPairs($objectID);
+            $this->view->contracts = array('') + $this->loadModel('contract', 'crm')->getPairs($objectID);
         }
 
         $this->loadModel('file');
         $this->view->title      = "<i class='icon-comment-alt'> </i>" . $this->lang->action->record->create;
-        $this->view->objectType = $objectType;
+        $this->view->objectType = $objectType == 'provider' ? 'customer' : $objectType;
         $this->view->objectID   = $objectID;
         $this->view->customer   = $customer;
         $this->view->history    = $history;
-        $this->view->contacts   = $this->loadModel('contact', 'crm')->getList($customer);
+        $this->view->contacts   = $this->loadModel('contact', 'crm')->getList($customer, $objectType == 'provider' ? 'provider' : '');
         $this->display();
     }
 
