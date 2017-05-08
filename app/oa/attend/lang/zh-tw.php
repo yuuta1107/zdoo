@@ -58,7 +58,7 @@ $lang->attend->deserveDays  = '應出勤天數';
 $lang->attend->actualDays   = '實際出勤天數';
 
 $lang->attend->clientList['all']     = '所有';
-$lang->attend->clientList['desktop'] = '桌面端';
+$lang->attend->clientList['desktop'] = '電腦版';
 
 $lang->attend->statusList['normal']   = '正常';
 $lang->attend->statusList['late']     = '遲到';

@@ -485,7 +485,8 @@ EOT;
      */
     public function getClient()
     {
-        return '';
+        if($this->app->getViewType() == 'html') return 'desktop';
+        return 'other';
     }
 
     /**
@@ -498,6 +499,11 @@ EOT;
      */
     public function signIn($account = '', $date = '')
     {
+        if($this->config->attend->signInClient == 'desktop' && $this->app->getViewType() != 'html') 
+        {
+            return array('result' => 'fail', 'message' => sprintf($this->lang->attend->signInClientError, $this->lang->attend->clientList[$this->config->attend->signInClient]));
+        }
+
         if(!$this->checkIP()) return array('result' => 'fail', 'message' => $this->lang->attend->note->IPDenied);
 
         if($account == '') $account = $this->app->user->account;
