@@ -422,6 +422,9 @@ class commonModel extends model
     {
         global $lang, $app, $config;
 
+        /* Get current method. */
+        $currentMethod = $app->getMethodName();
+
         if(!isset($lang->$currentModule->menu)) return false;
         if(isset($config->attend->noAttendUsers) and strpos(",{$config->attend->noAttendUsers},", ",{$app->user->account},") !== false and isset($lang->attend->menu->personal))
         {
@@ -430,7 +433,14 @@ class commonModel extends model
 
         $isMobile = $app->viewType === 'mhtml';
         $string   = !$isMobile ? "<nav id='menu'><ul class='nav'>\n" : '';
-        if(!$isMobile && strpos(',setting,tree,schema,sales,group,', ",$currentModule,") !== false) $string = "<nav class='menu leftmenu affix'><ul class='nav nav-primary'>\n";
+        if(!$isMobile && strpos(',setting,tree,schema,sales,group,', ",$currentModule,") !== false) 
+        {
+            $string = "<nav class='menu leftmenu affix'><ul class='nav nav-primary'>\n";
+            if($currentModule == 'setting' && strpos(',ameba,psi,modules,', ",$currentMethod,") !== false)
+            {
+                $string = "<nav id='menu'><ul class='nav'>\n";
+            }
+        }
 
         $menuOrder = isset($lang->{$currentModule}->menuOrder) ? $lang->{$currentModule}->menuOrder : array();  
 
@@ -458,9 +468,6 @@ class commonModel extends model
         {
             $moduleMenus = $lang->$currentModule->menu;  
         }
-
-        /* Get current method. */
-        $currentMethod = $app->getMethodName();
 
         /* Cycling to print every menus of current module. */
         foreach($moduleMenus as $methodName => $methodMenu)
