@@ -97,7 +97,7 @@
           <td>
           <div class="input-group">
             <?php echo html::input('begin', '', "class='form-control form-date' placeholder='{$lang->contract->begin}'");?>
-            <span class="input-group-addon"><?php echo $lang->minus;?></span>
+            <span class='input-group-addon fix-border'><?php echo $lang->minus;?></span>
             <?php echo html::input('end', '', "class='form-control form-date' placeholder='{$lang->contract->end}'");?></td>
           </div>
           </td>
