@@ -43,6 +43,7 @@ class index extends control
             
             /* add web root if logo not start with /  */
             if($logo != '' && substr($logo, 0, 1) != '/') $logo = $this->config->webRoot . $logo;
+            if($logo == '' && $entry->zentao) $logo = $this->config->webRoot . 'theme/default/images/ips/app-zentao.png';
             
             if(!isset($entry->control))  $entry->control = '';
             if(!isset($entry->position)) $entry->position = '';
