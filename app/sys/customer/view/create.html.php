@@ -25,9 +25,9 @@
           <td class='w-p40'>
             <div class='input-group'>
               <?php echo html::input('name', '', "class='form-control'");?>
-              <div class='input-group-addon'>
+              <span class='input-group-addon'>
                 <label class='checkbox-inline'><input type='checkbox' id='public' name='public' value='1'> <?php echo $lang->customer->public;?></label>
-              </div>
+              </span>
             </div>
           </td><td></td>
         </tr>
