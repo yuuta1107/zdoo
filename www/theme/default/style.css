@@ -329,7 +329,7 @@ body > form {margin-top: 20px;} /* form behind body */
 
 label.checkbox, input[type='radio']+label{font-weight: normal;}
 label.checkbox-inline input[type='checkbox'] {position: relative;}
-label:not(:first-child) input[type='radio']{margin-left: 10px;}
+/*label:not(:first-child) input[type='radio']{margin-left: 10px;}*/
 
 .panel-body > form{padding-right: 10px; max-width: 1000px}
 

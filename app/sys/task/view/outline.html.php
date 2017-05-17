@@ -11,7 +11,7 @@
  */
 ?>
 <?php include $app->getModuleRoot() . 'common/view/header.html.php';?>
-<?php $this->loadModel('project')->setMenu($projects, $projectID, $orderBy);?>
+<?php $this->loadModel('project', 'proj')->setMenu($projects, $projectID, $orderBy);?>
 <?php js::set('groupBy', $groupBy);?>
 <?php js::set('backLink', $backLink);?>
 <div class='page-content'>

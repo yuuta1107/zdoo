@@ -14,7 +14,7 @@
 <?php js::set('notAllowed', $lang->task->notAllowed);?>
 <?php js::set('groupBy', $groupBy);?>
 <?php js::set('backLink', $backLink);?>
-<?php $this->loadModel('project')->setMenu($projects, $projectID, $groupBy);?>
+<?php $this->loadModel('project', 'proj')->setMenu($projects, $projectID, $groupBy);?>
 <div class='page-content'>
   <div class='boards-container'>
     <div class='boards task-boards clearfix' id='taskKanban'>

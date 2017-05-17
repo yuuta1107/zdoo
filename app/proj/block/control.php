@@ -124,7 +124,7 @@ class block extends control
         }
 
         /* Get project ids. */
-        $projects = $this->loadMOdel('project')->getPairs();
+        $projects = $this->loadModel('project', 'proj')->getPairs();
         $ids = '';
         foreach($projects as $key => $project) $ids .= ',' . $key;
 
