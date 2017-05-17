@@ -734,6 +734,7 @@ class treeModel extends model
         $category->grade      = $parent ? $parent->grade + 1 : 1;
         $category->type       = $type;
         $category->root       = (int)$root;
+        $category->postedBy   = $this->app->user->account; 
         $category->postedDate = helper::now();
 
         $i = 1;
