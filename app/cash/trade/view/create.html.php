@@ -69,7 +69,7 @@
         </tr>
         <tr class='allCustomerTR hide'>
           <th><?php echo $lang->trade->customer;?></th>
-          <td><?php echo html::select('customer', array_merge($customerList, $traderList), '', "class='form-control chosen' onchange='getContract(this.value)'");?></td>
+          <td><?php echo html::select('customer', ($customerList + $traderList), '', "class='form-control chosen' onchange='getContract(this.value)'");?></td>
         </tr>
         <tr class='traderTR'>
           <th><?php echo $lang->trade->trader;?></th>
