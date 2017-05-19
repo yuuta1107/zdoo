@@ -140,9 +140,10 @@ class doc extends control
         /* Build the search form. */
         $this->loadModel('search', 'sys');
         $this->config->doc->search['actionURL'] = $this->createLink('doc', 'browse', "libID=$libID&moduleID=$moduleID&projectID=$projectID&browseType=bySearch");
-        $this->config->doc->search['params']['lib']['values']    = array('' => '') + $this->libs;
-        $this->config->doc->search['params']['type']['values']   = array('' => '') + $this->config->doc->search['params']['type']['values'];
-        $this->config->doc->search['params']['module']['values'] = array('' => '') + $this->tree->getOptionMenu('doc', $startModuleID = 0, false, $libID);
+        $this->config->doc->search['params']['lib']['values']     = array('' => '') + $this->libs;
+        $this->config->doc->search['params']['type']['values']    = array('' => '') + $this->config->doc->search['params']['type']['values'];
+        $this->config->doc->search['params']['module']['values']  = array('' => '') + $this->tree->getOptionMenu('doc', $startModuleID = 0, false, $libID);
+        $this->config->doc->search['params']['project']['values'] = array('' => '') + $this->project->getPairs();
         $this->search->setSearchParams($this->config->doc->search);
 
         $this->view->fixedMenu = false;
