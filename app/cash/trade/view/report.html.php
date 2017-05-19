@@ -12,7 +12,7 @@
 ?>
 <?php include $app->getModuleRoot() . 'common/view/header.html.php';?>
 <?php include '../../../sys/common/view/chart.html.php';?>
-<?php js::set('mode', 'report');?>
+<?php js::set('modeType', 'report');?>
 <div class='panel panel-sm'>
   <div class='panel-heading'>
     <div class='date dropdown'>

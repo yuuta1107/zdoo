@@ -12,7 +12,7 @@
 ?>
 <?php include '../../common/view/header.html.php';?>
 <?php include '../../../sys/common/view/treeview.html.php';?>
-<?php js::set('mode', $mode);?>
+<?php js::set('modeType', $mode);?>
 <?php js::set('date', $date);?>
 <?php js::set('currentYear', $currentYear);?>
 <?php js::set('treeview', !empty($_COOKIE['treeview']) ? $_COOKIE['treeview'] : '');?>
