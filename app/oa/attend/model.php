@@ -777,9 +777,9 @@ EOT;
         if($attend->status == '' or $attend->status == 'rest') $attend->status = $this->computeStatus($attend);
 
         /* Remove time. */
-        if($attend->signIn == '00:00:00')    $attend->signIn = '';
-        if($attend->signOut == '00:00:00')   $attend->signOut = '';
-        if($attend->manualIn == '00:00:00')  $attend->manualIn = '';
+        if($attend->signIn    == '00:00:00') $attend->signIn    = '';
+        if($attend->signOut   == '00:00:00') $attend->signOut   = '';
+        if($attend->manualIn  == '00:00:00') $attend->manualIn  = '';
         if($attend->manualOut == '00:00:00') $attend->manualOut = '';
 
         $dayIndex = date('w', strtotime($attend->date));

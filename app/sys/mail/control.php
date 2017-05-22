@@ -31,6 +31,10 @@ class mail extends control
      */
     public function detect()
     {
+        $this->lang->menuGroups->mail = 'system';
+        $this->lang->mail->menu       = $this->lang->system->menu;
+        $this->lang->mail->menuOrder  = $this->lang->system->menuOrder;
+
         if($_POST)
         {
             if($this->post->fromAddress == false) 
@@ -106,6 +110,10 @@ class mail extends control
      */
     public function save()
     {
+        $this->lang->menuGroups->mail = 'system';
+        $this->lang->mail->menu       = $this->lang->system->menu;
+        $this->lang->mail->menuOrder  = $this->lang->system->menuOrder;
+
         if(!empty($_POST))
         {
             $mailConfig = new stdclass();
