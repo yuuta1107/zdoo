@@ -158,8 +158,7 @@ class doc extends control
 
         if($this->cookie->browseType == 'bymenu' or $this->app->viewType === 'mhtml')
         {
-            $this->view->modules = $this->doc->getDocMenu($libID, $moduleID, $orderBy == 'title_asc' ? 'name_asc' : 'id_desc');
-            $this->view->parents = $this->loadModel('tree')->getFamily($moduleID);
+            $this->view->modules = $browseType == 'bysearch' ? array() : $this->doc->getDocMenu($libID, $moduleID, $orderBy == 'title_asc' ? 'name_asc' : 'id_desc');
         }
         elseif($this->cookie->browseType == 'bytree')
         {
@@ -175,7 +174,6 @@ class doc extends control
         $this->view->lib           = $lib;
         $this->view->libName       = $this->libs[$libID];
         $this->view->moduleID      = $moduleID;
-        $this->view->parentModules = $this->tree->getFamily($moduleID);
         $this->view->docs          = $docs;
         $this->view->pager         = $pager;
         $this->view->users         = $this->loadModel('user')->getPairs();
