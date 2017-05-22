@@ -1,6 +1,6 @@
 <?php
 /**
- * The mail file of customer module of RanZhi.
+ * The mail file of leave module of RanZhi.
  *
  * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
@@ -10,8 +10,8 @@
  * @link        http://www.ranzhico.com
  */
 ?>
-<?php include '../../../sys/common/view/mail.header.html.php';?>
 <?php $mailTitle = "{$lang->leave->common}#{$leave->id} " . zget($users, $leave->createdBy) . " {$leave->begin}~{$leave->end}";?>
+<?php include '../../../sys/common/view/mail.header.html.php';?>
 <tr>
   <td>
     <table cellpadding='0' cellspacing='0' width='600' style='border: none; border-collapse: collapse;'>

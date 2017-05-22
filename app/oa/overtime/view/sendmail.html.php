@@ -10,8 +10,8 @@
  * @link        http://www.ranzhico.com
  */
 ?>
-<?php include '../../../sys/common/view/mail.header.html.php';?>
 <?php $mailTitle = "{$lang->overtime->common}#{$overtime->id} " . zget($users, $overtime->createdBy) . " {$overtime->begin}~{$overtime->end}";?>
+<?php include '../../../sys/common/view/mail.header.html.php';?>
 <tr>
   <td>
     <table cellpadding='0' cellspacing='0' width='600' style='border: none; border-collapse: collapse;'>
