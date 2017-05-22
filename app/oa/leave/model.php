@@ -183,7 +183,7 @@ class leaveModel extends model
         if(isset($leave->begin) and $leave->begin != '') $leave->year = substr($leave->begin, 0, 4);
 
         $result = $this->checkDate($leave, $id);
-        if($result['result'] == 'fail') return $result;
+        if(!empty($result['result']) && $result['result'] == 'fail') return $result;
 
         $this->dao->update(TABLE_LEAVE)
             ->data($leave)
@@ -315,16 +315,14 @@ class leaveModel extends model
     public function reviewBackDate($id)
     {
         $oldLeave = $this->getById($id);
-        $backDate = substr($oldLeave->backDate, 0, 10);
-        $backTime = substr($oldLeave->backDate, 11);
         $begin    = $oldLeave->begin;
         $start    = $oldLeave->start;
-        $end      = $backDate;
-        $finish   = $backTime;
+        $end      = substr($oldLeave->backDate, 0, 10);
+        $finish   = substr($oldLeave->backDate, 11);
 
-        if($oldLeave->begin == $backDate) 
+        if($oldLeave->begin == $end) 
         {
-            $hours = round((strtotime("{$backDate} {$backTime}") - strtotime("{$backDate} {$oldLeave->start}")) / 3600, 2);
+            $hours = round((strtotime("{$end} {$finish}") - strtotime("{$end} {$oldLeave->start}")) / 3600, 2);
             if($hours > $this->config->attend->workingHours) $hours = $this->config->attend->workingHours;
         }
         else
@@ -335,23 +333,23 @@ class leaveModel extends model
             $hoursContent = $days > 1 ? (($days - 1)  * $this->config->attend->workingHours) : 0;
 
             if($hoursStart > $this->config->attend->workingHours) $hoursStart = $this->config->attend->workingHours;
-            if($hoursEnd > $this->config->attend->workingHours) $hoursEnd = $this->config->attend->workingHours;
+            if($hoursEnd > $this->config->attend->workingHours)   $hoursEnd   = $this->config->attend->workingHours;
             $hours = $hoursStart + $hoursEnd + $hoursContent;
         }
 
-        $this->dao->update(TABLE_LEAVE)
-            ->set('end')->eq($backDate)
-            ->set('finish')->eq($backTime)
-            ->set('hours')->eq($hours)
-            ->set('reviewedBy')->eq($this->app->user->account)
-            ->set('reviewedDate')->eq(helper::now())
-            ->where('id')->eq($id)
-            ->exec();
+        $data = new stdclass();
+        $data->end          = $end;
+        $data->finish       = $finish;
+        $data->hours        = $hours;
+        $data->reviewedBy   = $this->app->user->account;
+        $data->reviewedDate = helper::now();
+
+        $this->dao->update(TABLE_LEAVE)->data($data)->where('id')->eq($id)->exec();
 
         if(!dao::isError())
         {
             $leave = $this->getById($id);
-            $dates = range(strtotime($leave->begin), strtotime($backDate), 60*60*24);
+            $dates = range(strtotime($leave->begin), strtotime($leave->end), 60*60*24);
             $this->loadModel('attend', 'oa')->batchUpdate($dates, $leave->createdBy, 'leave', '', $leave);
 
             if($oldLeave->end > $leave->end)

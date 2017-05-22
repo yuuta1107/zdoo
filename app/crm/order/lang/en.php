@@ -45,7 +45,7 @@ $lang->order->nextDate       = 'Next Contact';
 $lang->order->editedBy       = 'Last Edited By';
 $lang->order->editedDate     = 'Last Edited On';
 $lang->order->createCustomer = 'Create Customer';
-$lang->order->createProduct  = 'Create';
+$lang->order->createProduct  = 'Create Product';
 
 $lang->order->list          = 'Orders';
 $lang->order->browse        = 'Orders';

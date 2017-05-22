@@ -40,6 +40,10 @@ class backup extends control
      */
     public function index()
     {
+        $this->lang->menuGroups->backup = 'system';
+        $this->lang->backup->menu       = $this->lang->system->menu;
+        $this->lang->backup->menuOrder  = $this->lang->system->menuOrder;
+
         $this->app->loadModuleConfig('cron');
 
         $backups = array();

@@ -25,9 +25,10 @@ class my extends control
 
         $this->loadModel('attend', 'oa');
         $this->loadModel('leave', 'oa');
+        $this->loadModel('makeup', 'oa');
         $this->loadModel('overtime', 'oa');
-        $this->loadModel('refund', 'oa');
         $this->loadModel('lieu', 'oa');
+        $this->loadModel('refund', 'oa');
         $account = $this->app->user->account;
 
         /* Get dept info. */

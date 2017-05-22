@@ -249,7 +249,7 @@ class leave extends control
         if($_POST)
         {
             $result = $this->leave->update($id);
-            if(is_array($result) && $result['result'] == 'fail') $this->send($result);
+            if(!empty($result['fail']) && $result['result'] == 'fail') $this->send($result);
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
             if($result)
             {

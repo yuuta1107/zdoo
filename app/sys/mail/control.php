@@ -69,6 +69,10 @@ class mail extends control
      */
     public function edit()
     {
+        $this->lang->menuGroups->mail = 'system';
+        $this->lang->mail->menu       = $this->lang->system->menu;
+        $this->lang->mail->menuOrder  = $this->lang->system->menuOrder;
+
         if($this->config->mail->turnon)
         {
             $mailConfig = $this->config->mail->smtp;

@@ -19,6 +19,10 @@ class cron extends control
      */
     public function index()
     {
+        $this->lang->menuGroups->cron = 'system';
+        $this->lang->cron->menu       = $this->lang->system->menu;
+        $this->lang->cron->menuOrder  = $this->lang->system->menuOrder;
+
         $this->view->title = $this->lang->cron->common;
         $this->view->crons = $this->cron->getCrons();
         $this->display();

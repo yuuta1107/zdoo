@@ -163,6 +163,10 @@ class action extends control
      */
     public function trash($type = 'all', $orderBy = 'id_desc', $recTotal = 0, $recPerPage = 20, $pageID = 1)
     {
+        $this->lang->menuGroups->action = 'system';
+        $this->lang->action->menu       = $this->lang->system->menu;
+        $this->lang->action->menuOrder  = $this->lang->system->menuOrder;
+
         /* Save session. */
         $uri = $this->app->getURI(true);
         $this->session->set('projectList', $uri);

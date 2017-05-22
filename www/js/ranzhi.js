@@ -266,8 +266,11 @@ $.extend(
 
             var $target = $(target);
             if(!$target.size()) return false;
+
+            var width = $(this).data('width');
             $target.load(url, function()
             {
+                if(width) $target.find('.modal-dialog').css('width', width); 
                 if($target.hasClass('modal') && $.zui.ajustModalPosition) $.zui.ajustModalPosition();
             });
 
