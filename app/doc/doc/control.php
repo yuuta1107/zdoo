@@ -108,7 +108,7 @@ class doc extends control
         /* Set browseType.*/ 
         $browseType = strtolower($browseType);
         if(($this->cookie->browseType == 'bymenu' or $this->cookie->browseType == 'bytree') and $browseType != 'bysearch') $browseType = $this->cookie->browseType;
-        $queryID    = ($browseType == 'bysearch') ? (int)$param : 0;
+        $queryID = ($browseType == 'bysearch') ? (int)$param : 0;
 
         /* Set menu, save session. */
         $this->session->set('docList', $this->app->getURI(true));
@@ -121,7 +121,7 @@ class doc extends control
         $docs = array();
         if($browseType == 'bymodule')
         {
-            $modules = '';
+            $modules = array();
             if($moduleID) $modules = $this->tree->getFamily($moduleID, 'doc', (int)$libID);
             $docs = $this->doc->getDocList($libID, $projectID, $modules, $orderBy, $pager);
         }
