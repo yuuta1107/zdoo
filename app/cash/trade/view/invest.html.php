@@ -13,7 +13,7 @@
 <?php include '../../common/view/header.html.php';?>
 <?php include '../../../sys/common/view/datepicker.html.php';?>
 <?php include '../../../sys/common/view/chosen.html.php';?>
-<?php js::set('mode', 'invest');?>
+<?php js::set('modeType', 'invest');?>
 <?php js::set('type', $type);?>
 <div class='panel'>
   <div class='panel-heading'>

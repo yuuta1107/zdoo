@@ -13,7 +13,7 @@
 <?php include '../../common/view/header.html.php';?>
 <?php include '../../../sys/common/view/datepicker.html.php';?>
 <?php include '../../../sys/common/view/chosen.html.php';?>
-<?php js::set('mode', $type);?>
+<?php js::set('modeType', $type);?>
 <div class='panel'>
   <div class='panel-heading'>
     <strong><i class="icon-plus"></i> <?php echo $lang->trade->{$type};?></strong>
@@ -69,7 +69,7 @@
         </tr>
         <tr class='allCustomerTR hide'>
           <th><?php echo $lang->trade->customer;?></th>
-          <td><?php echo html::select('customer', array_merge($customerList, $traderList), '', "class='form-control chosen' onchange='getContract(this.value)'");?></td>
+          <td><?php echo html::select('customer', ($customerList + $traderList), '', "class='form-control chosen' onchange='getContract(this.value)'");?></td>
         </tr>
         <tr class='traderTR'>
           <th><?php echo $lang->trade->trader;?></th>

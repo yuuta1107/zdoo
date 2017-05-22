@@ -36,22 +36,16 @@
         </tr>
       </thead>
       <tbody>
-        <?php
-        $incomeTypes['ditto']  = $lang->ditto;
-        $expenseTypes['ditto'] = $lang->ditto;
-        $deptList['ditto']     = $lang->ditto;
-        ?>
+        <?php $deptList['ditto'] = $lang->ditto;?>
         <?php foreach($trades as $i => $trade):?>
         <?php
         if($i == 0)
         {
-            $trade['category'] = $trade['category'] ? $trade['category'] : '';
-            $trade['dept']     = $trade['dept'] ? $trade['dept'] : '';
+            $trade['dept'] = $trade['dept'] ? $trade['dept'] : '';
         }
         else
         {
-            $trade['category'] = $trade['category'] ? $trade['category'] : 'ditto';
-            $trade['dept']     = $trade['dept'] ? $trade['dept'] : 'ditto';
+            $trade['dept'] = $trade['dept'] ? $trade['dept'] : 'ditto';
         }
         ?>
         <tr <?php echo !empty($existTrades[$i]) ? "class='repeat-record' title={$lang->trade->unique} data-toggle='tooltip'" : '';?>>

@@ -13,7 +13,7 @@
 <?php include '../../common/view/header.html.php';?>
 <?php include '../../../sys/common/view/datepicker.html.php';?>
 <?php include '../../../sys/common/view/chosen.html.php';?>
-<?php js::set('mode', $mode);?>
+<?php js::set('modeType', $mode);?>
 <?php js::set('contract', $trade->contract);?>
 <ul id='menuTitle'>
   <li><?php commonModel::printLink('trade', 'browse', "mode=$mode", $lang->trade->browse);?></li>

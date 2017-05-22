@@ -88,7 +88,7 @@ class product extends control
             $files = $this->loadModel('file', 'sys')->saveUpload('product', $productID);
             if($changes or $files)
             {
-                if($files) $fileAction = $this->lang->addFiles . join(',', $files);
+                $fileAction = $files ? $this->lang->addFiles . join(',', $files) : '';
 
                 $actionID = $this->loadModel('action')->create('product', $productID, 'Edited', $fileAction);
                 if($changes) $this->action->logHistory($actionID, $changes);

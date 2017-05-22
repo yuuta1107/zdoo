@@ -43,25 +43,25 @@ $(document).ready(function()
     /* Highlight submenu. */
     if(config.requestType == 'GET')
     {
-        if(v.mode == 'in')
+        if(v.modeType == 'in')
         {
-            $('#mainNavbar li').removeClass('active').find("[href*='mode\\=" + v.mode + "']").not('[href*=mode\\=invest]').parent().addClass('active');
+            $('#mainNavbar li').removeClass('active').find("[href*='mode\\=" + v.modeType + "']").not('[href*=mode\\=invest]').parent().addClass('active');
         }
         else
         {
-            $('#mainNavbar li').removeClass('active').find("[href*='mode\\=" + v.mode + "']").parent().addClass('active');
+            $('#mainNavbar li').removeClass('active').find("[href*='mode\\=" + v.modeType + "']").parent().addClass('active');
         }
     }
     else
     {
         $('#mainNavbar li').removeClass('active');
-        if(v.mode == 'in')
+        if(v.modeType == 'in')
         {
             $('#mainNavbar li').find("[href*='trade-browse-in.html']").parent().addClass('active');
         }
         else
         {
-            $('#mainNavbar li').find("[href*='-" + v.mode + "']").parent().addClass('active');
+            $('#mainNavbar li').find("[href*='-" + v.modeType + "']").parent().addClass('active');
         }
     }
 

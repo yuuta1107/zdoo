@@ -108,7 +108,7 @@ class doc extends control
         /* Set browseType.*/ 
         $browseType = strtolower($browseType);
         if(($this->cookie->browseType == 'bymenu' or $this->cookie->browseType == 'bytree') and $browseType != 'bysearch') $browseType = $this->cookie->browseType;
-        $queryID    = ($browseType == 'bysearch') ? (int)$param : 0;
+        $queryID = ($browseType == 'bysearch') ? (int)$param : 0;
 
         /* Set menu, save session. */
         $this->session->set('docList', $this->app->getURI(true));
@@ -121,7 +121,7 @@ class doc extends control
         $docs = array();
         if($browseType == 'bymodule')
         {
-            $modules = '';
+            $modules = array();
             if($moduleID) $modules = $this->tree->getFamily($moduleID, 'doc', (int)$libID);
             $docs = $this->doc->getDocList($libID, $projectID, $modules, $orderBy, $pager);
         }
@@ -140,9 +140,10 @@ class doc extends control
         /* Build the search form. */
         $this->loadModel('search', 'sys');
         $this->config->doc->search['actionURL'] = $this->createLink('doc', 'browse', "libID=$libID&moduleID=$moduleID&projectID=$projectID&browseType=bySearch");
-        $this->config->doc->search['params']['lib']['values']    = array('' => '') + $this->libs;
-        $this->config->doc->search['params']['type']['values']   = array('' => '') + $this->config->doc->search['params']['type']['values'];
-        $this->config->doc->search['params']['module']['values'] = array('' => '') + $this->tree->getOptionMenu('doc', $startModuleID = 0, false, $libID);
+        $this->config->doc->search['params']['lib']['values']     = array('' => '') + $this->libs;
+        $this->config->doc->search['params']['type']['values']    = array('' => '') + $this->config->doc->search['params']['type']['values'];
+        $this->config->doc->search['params']['module']['values']  = array('' => '') + $this->tree->getOptionMenu('doc', $startModuleID = 0, false, $libID);
+        $this->config->doc->search['params']['project']['values'] = array('' => '') + $this->project->getPairs();
         $this->search->setSearchParams($this->config->doc->search);
 
         $this->view->fixedMenu = false;
@@ -157,8 +158,7 @@ class doc extends control
 
         if($this->cookie->browseType == 'bymenu' or $this->app->viewType === 'mhtml')
         {
-            $this->view->modules = $this->doc->getDocMenu($libID, $moduleID, $orderBy == 'title_asc' ? 'name_asc' : 'id_desc');
-            $this->view->parents = $this->loadModel('tree')->getFamily($moduleID);
+            $this->view->modules = $browseType == 'bysearch' ? array() : $this->doc->getDocMenu($libID, $moduleID, $orderBy == 'title_asc' ? 'name_asc' : 'id_desc');
         }
         elseif($this->cookie->browseType == 'bytree')
         {
@@ -174,7 +174,6 @@ class doc extends control
         $this->view->lib           = $lib;
         $this->view->libName       = $this->libs[$libID];
         $this->view->moduleID      = $moduleID;
-        $this->view->parentModules = $this->tree->getFamily($moduleID);
         $this->view->docs          = $docs;
         $this->view->pager         = $pager;
         $this->view->users         = $this->loadModel('user')->getPairs();

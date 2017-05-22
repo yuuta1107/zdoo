@@ -25,4 +25,4 @@ input[type=checkbox]{margin-top: 1px;}
 .panel-body > form {max-width: 1200px;}
 
 #libList .lib .icon-move {display: none; position: relative; top: -20px; right: -70px;}
-#libList .lib:hover .icon-move {display: inline-block;}
+#libList .lib:hover .icon-move {display: inline-block; cursor: move;}

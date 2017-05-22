@@ -239,7 +239,6 @@ body[class*='dropdown-mode-'] .window-active .window-cover {display: block;}
 #dashboard .table tr[data-url] td {cursor: pointer;}
 .dashboard .panel-heading {height: 30px}
 #home .panel-actions {margin: 0}
-#home .panel-loading .panel-body:before {content: '\e6eb'; font-family: ZenIcon; display: block; width: 40px; height: 40px; text-align: center; line-height: 40px; font-size: 28px; -moz-animation: spin 2s infinite linear; -o-animation: spin 2s infinite linear; -webkit-animation: spin 2s infinite linear; animation: spin 2s infinite linear; color: #888; margin-left: auto; margin-right: auto; position: relative; top: 35%;}
 #home .panel-body > .article-content {padding: 8px 10px;}
 #home .panel-body > .list-group {margin: 0;}
 #home .panel-body .list-group-item {border-left: 0; border-right: 0; padding: 8px;}

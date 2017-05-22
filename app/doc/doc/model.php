@@ -323,8 +323,8 @@ class docModel extends model
             ->beginIF($libID == 'project')->andWhere('project')->in(array_keys($projects))->fi()
             ->beginIF($projectID > 0)->andWhere('project')->eq($projectID)->fi()
             ->beginIF((string)$projectID == 'int')->andWhere('project')->gt(0)->fi()
-            ->beginIF(is_int($module))->andWhere('module')->eq($module)->fi()
-            ->beginIF(!is_int($module) and $module)->andWhere('module')->in($module)->fi()
+            ->beginIF(!is_array($module))->andWhere('module')->eq($module)->fi()
+            ->beginIF(is_array($module) and !empty($module))->andWhere('module')->in($module)->fi()
             ->orderBy($orderBy)
             ->fetchAll();
 
