@@ -127,13 +127,13 @@
     <?php if(!empty($contract->returnList)):?>
     <div class='panel'>
       <table class='table table-data table-condensed table-fixed'>
-        <?php foreach($contract->returnList as $return):?>
         <tr>
           <th class='w-80px'><?php echo $lang->contract->returnedDate;?></th>
           <th class='w-80px'><?php echo $lang->contract->returnedBy;?></th> 
           <th class=''><?php echo $lang->contract->amount;?></th> 
           <th class='w-50px'></th>
         </tr>
+        <?php foreach($contract->returnList as $return):?>
         <tr>
           <td><?php echo $return->returnedDate;?></td>
           <td><?php echo zget($users, $return->returnedBy, $return->returnedBy);?></td>
@@ -150,13 +150,13 @@
     <?php if(!empty($contract->deliveryList)):?>
     <div class='panel'>
       <table class='table table-data table-condensed table-fixed'>
-        <?php foreach($contract->deliveryList as $delivery):?>
         <tr>
           <th class='w-80px'><?php echo $lang->contract->deliveredDate;?></th>
           <th class='w-80px'><?php echo $lang->contract->deliveredBy;?></th> 
           <th class=''><?php echo $lang->comment;?></th> 
           <th class='w-50px'></th>
         </tr>
+        <?php foreach($contract->deliveryList as $delivery):?>
         <tr>
           <td><?php echo $delivery->deliveredDate;?></td>
           <td><?php echo zget($users, $delivery->deliveredBy, $delivery->deliveredBy);?></td>
