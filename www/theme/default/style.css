@@ -357,13 +357,13 @@ fieldset > legend {width: auto; margin: 0 0 0 -5px; font-size: 13px; font-weight
 fieldset > .form-group {margin-bottom: 0;}
 
 form .chosen-container-single .chosen-single {padding: 4px 10px; height: 30px}
-form .chosen-container-single .chosen-single div {padding: 4px 10px}
+form .chosen-container-single .chosen-single div {padding: 4px 10px 4px 8px;}
 form .chosen-container-multi .chosen-choices {min-height: 30px}
 form .chosen-container-multi .chosen-choices li {margin: 4px 0 0 4px}
 form .chosen-container-multi .chosen-choices li.search-field {margin-bottom: 4px;}
 form .chosen-container {font-size: 13px}
 form .chosen-container-single .chosen-single {padding: 5px 10px}
-form .chosen-container-single .chosen-single abbr {right: 18px}
+form .chosen-container-single .chosen-single abbr {right: 24px}
 form .chosen-container-single .chosen-search:before {top: 10px}
 
 .input-group .chosen-container-single .chosen-single {height: 34px; line-height: 24px; border-radius: 4px 0 0 4px;}
