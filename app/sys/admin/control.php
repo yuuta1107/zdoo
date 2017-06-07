@@ -19,6 +19,10 @@ class admin extends control
      */
     public function index()
     {
+        $this->lang->menuGroups->admin = 'system';
+        $this->lang->admin->menu       = $this->lang->system->menu;
+        $this->lang->admin->menuOrder  = $this->lang->system->menuOrder;
+
         $this->display();
     }
 }

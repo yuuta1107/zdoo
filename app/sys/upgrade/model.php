@@ -128,7 +128,7 @@ class upgradeModel extends model
                 $this->updateDocPrivileges();
                 $this->moveDocContent();
                 $this->addProjectDoc();
-            case '4_0':$this->addProjPrivilege();
+            case '4_0': $this->addProjPrivilege(); 
             case '4_1': $this->execSQL($this->getUpgradeFile('4.1'));
                 $this->updateMakeupActions();
             case '4_2': $this->execSQL($this->getUpgradeFile('4.2'));
