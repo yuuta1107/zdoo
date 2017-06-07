@@ -328,7 +328,7 @@ class customerModel extends model
             ->get();
 
         $this->dao->update(TABLE_CUSTOMER)
-            ->data($customer, $skip = 'uid, comment')
+            ->data($customer, $skip = 'uid, note')
             ->autoCheck()
             ->where('id')->eq($customerID)
             ->exec();

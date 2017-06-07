@@ -28,7 +28,7 @@
     </tr>
     <tr>
       <th><?php echo $lang->comment?></th>
-      <td><?php echo html::textarea('comment')?></td>
+      <td><?php echo html::textarea('note')?></td>
     </tr>
     <tr>
       <th></th>
