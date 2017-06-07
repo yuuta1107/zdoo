@@ -16,7 +16,7 @@ $config->customer->require->edit   = 'name';
 $config->customer->editor = new stdclass();
 $config->customer->editor->create = array('id' => 'desc', 'tools' => 'simple');
 $config->customer->editor->edit   = array('id' => 'desc', 'tools' => 'simple');
-$config->customer->editor->assign = array('id' => 'comment', 'tools' => 'simple');
+$config->customer->editor->assign = array('id' => 'note', 'tools' => 'simple');
 $config->customer->editor->view   = array('id' => 'comment,lastComment', 'tools' => 'simple');
 
 global $lang;

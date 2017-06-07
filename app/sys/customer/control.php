@@ -221,7 +221,7 @@ class customer extends control
 
             if($this->post->assignedTo) 
             {
-                $actionID = $this->loadModel('action')->create('customer', $customerID, 'Assigned', $this->post->comment, $this->post->assignedTo);
+                $actionID = $this->loadModel('action')->create('customer', $customerID, 'Assigned', $this->post->note, $this->post->assignedTo);
                 $this->sendmail($customerID, $actionID);
             }
 

@@ -49,7 +49,7 @@ class webapp extends control
 
         $this->view->title      = $this->lang->webapp->common . $this->lang->colon . $this->lang->webapp->obtain;
         $this->view->position[] = $this->lang->webapp->obtain;
-        $this->view->moduleTree = $this->webapp->getModulesByAPI();
+        $this->view->moduleTree = str_replace('/index.php', $this->server->script_name, $this->webapp->getModulesByAPI());
         $this->view->webapps    = $webapps;
         $this->view->installeds = $this->webapp->getLocalApps();
         $this->view->pager      = $pager;
