@@ -34,6 +34,8 @@ $config->contract->search['fields']['name']          = $lang->contract->name;
 $config->contract->search['fields']['amount']        = $lang->contract->amount;
 $config->contract->search['fields']['signedDate']    = $lang->contract->signedDate;
 $config->contract->search['fields']['status']        = $lang->contract->status;
+$config->contract->search['fields']['begin']         = $lang->contract->begin;
+$config->contract->search['fields']['end']           = $lang->contract->end;
 $config->contract->search['fields']['createdBy']     = $lang->contract->createdBy;
 $config->contract->search['fields']['delivery']      = $lang->contract->delivery;
 $config->contract->search['fields']['deliveredBy']   = $lang->contract->deliveredBy;
@@ -47,6 +49,8 @@ $config->contract->search['params']['name']          = array('operator' => 'incl
 $config->contract->search['params']['amount']        = array('operator' => '>=', 'control' => 'input',  'values' => '');
 $config->contract->search['params']['signedDate']    = array('operator' => '>=', 'control' => 'input',  'values' => '', 'class' => 'date');
 $config->contract->search['params']['status']        = array('operator' => '=',  'control' => 'select', 'values' => $lang->contract->statusList);
+$config->contract->search['params']['begin']         = array('operator' => '>=', 'control' => 'input',  'values' => '', 'class' => 'date');
+$config->contract->search['params']['end']           = array('operator' => '>=', 'control' => 'input',  'values' => '', 'class' => 'date');
 $config->contract->search['params']['createdBy']     = array('operator' => '=',  'control' => 'select', 'values' => 'users');
 $config->contract->search['params']['delivery']      = array('operator' => '=',  'control' => 'select', 'values' => $lang->contract->deliveryList);
 $config->contract->search['params']['deliveredBy']   = array('operator' => '=',  'control' => 'select', 'values' => 'users');
