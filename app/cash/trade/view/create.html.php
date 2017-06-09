@@ -81,7 +81,7 @@
               <div class='input-group-addon'><?php echo html::checkbox('createTrader', array( 1 => $lang->trade->newTrader));?></div>
             </div>
             <?php else:?>
-            <?php echo html::input('traderName', '', "class='form-control'") . html::hidden('createTrader', '');?>
+            <?php echo html::input('traderName', '', "class='form-control'") . html::hidden('createTrader', '1');?>
             <?php endif;?>
           </td>
         </tr>
