@@ -40,24 +40,59 @@ class my extends control
 
         /* Get deptments managed by me. used when get attend and leave. */
         $deptList = array();
-        if(!empty($this->config->attend->reviewedBy) and $this->config->attend->reviewedBy == $account) $deptList = $allDeptList;
-        if(empty($this->config->attend->reviewedBy)) $deptList = $managedDeptList;
 
         /* Get attend list. */
         $attends  = array();
-        if($type == 'attend' and !empty($deptList)) $attends = $this->attend->getWaitAttends(array_keys($deptList));
+        if($type == 'attend')
+        {
+            if(!empty($this->config->attend->reviewedBy) and $this->config->attend->reviewedBy == $account) $deptList = $allDeptList;
+            if(empty($this->config->attend->reviewedBy)) $deptList = $managedDeptList;
+            $attends = $this->attend->getWaitAttends(array_keys($deptList));
+        }
         
         /* Get leave list. */
         $leaves = array();
-        if($type == 'leave' and !empty($deptList)) $leaves = $this->leave->getList('browseReview', $year = '', $month = '', '', array_keys($deptList), $status = 'wait,pass', $orderBy);
+        if($type == 'leave')
+        {
+            $reviewedBy = $this->leave->getReviewedBy();
+            if($reviewedBy and $reviewedBy == $account) $deptList = $allDeptList;
+            if(!$reviewedBy) $deptList = $managedDeptList;
+
+            $leaves = $this->leave->getList('browseReview', $year = '', $month = '', '', array_keys($deptList), $status = 'wait,pass', $orderBy);
+        }
 
         /* Get overtime list. */
         $overtimes = array();
-        if($type == 'overtime' and !empty($deptList)) $overtimes = $this->overtime->getList('browseReview', $year = '', $month = '', '', array_keys($deptList), $status = 'wait', $orderBy);
+        if($type == 'overtime')
+        {
+            $reviewedBy = $this->overtime->getReviewedBy();
+            if($reviewedBy and $reviewedBy == $account) $deptList = $allDeptList;
+            if(!$reviewedBy) $deptList = $managedDeptList;
+
+            $overtimes = $this->overtime->getList('browseReview', $year = '', $month = '', '', array_keys($deptList), $status = 'wait', $orderBy);
+        }
+
+        /* Get makeup list. */
+        $makeups = array();
+        if($type == 'makeup')
+        {
+            $reviewedBy = $this->makeup->getReviewedBy();
+            if($reviewedBy and $reviewedBy == $account) $deptList = $allDeptList;
+            if(!$reviewedBy) $deptList = $managedDeptList;
+
+            $makeups = $this->makeup->getList('browseReview', $year = '', $month = '', '', array_keys($deptList), $status = 'wait', $orderBy);
+        }
 
         /* Get lieu list. */
         $lieus = array();
-        if($type == 'lieu' and !empty($deptList)) $lieus = $this->lieu->getList('browseReview', $year = '', $month = '', '', array_keys($deptList), $status = 'wait', $orderBy);
+        if($type == 'lieu') 
+        {
+            $reviewedBy = $this->lieu->getReviewedBy();
+            if($reviewedBy and $reviewedBy == $account) $deptList = $allDeptList;
+            if(!$reviewedBy) $deptList = $managedDeptList;
+
+            $lieus = $this->lieu->getList('browseReview', $year = '', $month = '', '', array_keys($deptList), $status = 'wait', $orderBy);
+        }
 
         /* Get refund list. */
         $refunds = array();
@@ -88,6 +123,7 @@ class my extends control
         $this->view->attends      = $attends;
         $this->view->leaveList    = $leaves;
         $this->view->overtimeList = $overtimes;
+        $this->view->makeupList   = $makeups;
         $this->view->lieuList     = $lieus;
         $this->view->refunds      = $refunds;
         $this->view->deptList     = $allDeptList;

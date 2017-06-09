@@ -92,6 +92,41 @@
   </table>
 </div>
 <?php endif;?>
+<?php if($type == 'makeup'):?>
+<div class='panel'>
+  <table class='table table-data table-hover text-center table-fixed tablesorter' id='makeupTable'>
+    <thead>
+      <tr class='text-center'>
+        <?php $vars = "type={$type}&orderBy=%s";?>
+        <th class='w-80px'><?php commonModel::printOrderLink('id', $orderBy, $vars, $lang->makeup->id);?></th>
+        <th class='w-80px'><?php commonModel::printOrderLink('createdBy', $orderBy, $vars, $lang->makeup->createdBy);?></th>
+        <th class='w-80px'><?php echo $lang->user->dept;?></th>
+        <th class='w-80px'><?php commonModel::printOrderLink('type', $orderBy, $vars, $lang->makeup->type);?></th>
+        <th class='w-150px'><?php commonModel::printOrderLink('begin', $orderBy, $vars, $lang->makeup->begin);?></th>
+        <th class='w-150px'><?php commonModel::printOrderLink('begin', $orderBy, $vars, $lang->makeup->end);?></th>
+        <th><?php echo $lang->makeup->desc;?></th>
+        <th class='w-150px'><?php echo $lang->actions;?></th>
+      </tr>
+    </thead>
+    <?php foreach($makeupList as $makeup):?>
+    <tr>
+      <td><?php echo $makeup->id;?></td>
+      <td><?php echo zget($users, $makeup->createdBy);?></td>
+      <td><?php echo zget($deptList, $makeup->dept);?></td>
+      <td><?php echo zget($this->lang->makeup->typeList, $makeup->type);?></td>
+      <td><?php echo $makeup->begin . ' ' . $makeup->start;?></td>
+      <td><?php echo $makeup->end . ' ' . $makeup->finish;?></td>
+      <td title='<?php echo $makeup->desc?>'><?php echo $makeup->desc;?></td>
+      <td>
+        <?php echo html::a($this->createLink('oa.makeup', 'view', "id={$makeup->id}"), $lang->view, "data-toggle='modal'");?>
+        <?php echo html::a($this->createLink('oa.makeup', 'review', "id={$makeup->id}&status=pass"), $lang->makeup->statusList['pass'], "data-status='pass' data-toggle='ajax'");?>
+        <?php echo html::a($this->createLink('oa.makeup', 'review', "id={$makeup->id}&status=reject"), $lang->makeup->statusList['reject'], "data-status='reject' data-toggle='ajax'");?>
+      </td>
+    </tr>
+    <?php endforeach;?>
+  </table>
+</div>
+<?php endif;?>
 <?php if($type == 'overtime'):?>
 <div class='panel'>
   <table class='table table-data table-hover text-center table-fixed tablesorter' id='overtimeTable'>
@@ -186,7 +221,7 @@
     <tr>
       <td><?php echo $refund->id;?></td>
       <td class='text-left'><?php echo $refund->name;?></td>
-      <td><?php echo $categories[$refund->category];?></td>
+      <td><?php echo zget($categories, $refund->category, '');?></td>
       <td><?php echo zget($users, $refund->createdBy);?></td>
       <td class='text-right'><?php echo zget($currencySign, $refund->currency) . $refund->money;?></td>
       <td><?php echo $refund->date;?></td>

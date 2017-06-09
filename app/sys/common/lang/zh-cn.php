@@ -303,6 +303,7 @@ $lang->my->review->menu = new stdclass();
 $lang->my->review->menu->attend   = '考勤|my|review|type=attend';
 $lang->my->review->menu->leave    = '请假|my|review|type=leave';
 $lang->my->review->menu->overtime = '加班|my|review|type=overtime';
+$lang->my->review->menu->makeup   = '补班|my|review|type=makeup';
 $lang->my->review->menu->lieu     = '调休|my|review|type=lieu';
 $lang->my->review->menu->refund   = '报销|my|review|type=refund';
 
