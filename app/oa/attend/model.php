@@ -98,16 +98,13 @@ class attendModel extends model
     public function getStat($date)
     {
         $attends = $this->dao->select('*')->from(TABLE_ATTENDSTAT)->where('month')->eq($date)->fetchAll('account');
-        foreach($attends as $account => $attendList)
+        foreach($attends as $account => $attend)
         {
             if(strpos(",{$this->config->attend->noAttendUsers},", ",$account,") !== false) unset($attends[$account]);
             $beginDate = isset($this->config->attend->beginDate->$account) ? $this->config->attend->beginDate->$account : $this->config->attend->beginDate->company;
             if($beginDate)
             {
-                foreach($attendList as $key => $attend)
-                {
-                    if($beginDate > $attend->date) unset($attends[$account][$key]);
-                }
+                if(date('Ym', strtotime($beginDate)) > $date) unset($attends[$account][$key]);
             }
         }
 
@@ -748,7 +745,7 @@ EOT;
         }
 
         /* 'rest': rest day. */
-        if($this->isWeekend($attend->date) or $this->loadModel('holiday', 'oa')->isHoliday($attend->date)) $status = 'rest';
+        if($this->isRestDay($attend->date)) $status = 'rest';
 
         return $status;
     }
@@ -871,6 +868,24 @@ EOT;
     }
 
     /**
+     * Date is rest day or not.
+     * 
+     * @param  string $date 
+     * @access public
+     * @return bool
+     */
+    public function isRestDay($date)
+    {
+        if($this->loadModel('holiday')->isHoliday($date)) return true;
+        if($this->isWeekend($date))
+        {
+            if($this->holiday->isWorkingDay($date)) return false;
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Date is weekend or not.
      * 
      * @param  string    $date 
@@ -879,8 +894,6 @@ EOT;
      */
     public function isWeekend($date)
     {
-        if($this->loadModel('holiday')->isWorkingDay($date)) return false;
-
         $dayIndex = date('w', strtotime($date));
         if( (($this->config->attend->workingDays == '5' and ($dayIndex == 0 or $dayIndex == 6)) or 
             ($this->config->attend->workingDays == '6' and $dayIndex == 0) or
@@ -910,8 +923,7 @@ EOT;
         foreach($dates as $datetime)
         {
             $date = date('Y-m-d', $datetime);
-            if($this->isWeekend($date)) continue;
-            if($this->loadModel('holiday', 'oa')->isHoliday($date)) continue;
+            if($this->isRestDay($date)) continue;
             $workingDays[$date] = $date;
         }
         return $workingDays;
@@ -938,7 +950,7 @@ EOT;
             $date = date('Y-m-d', $datetime);
 
             $attend = new stdclass();
-            $attend->status       = $status ? $status : (($this->isWeekend($date) or $this->loadModel('holiday', 'oa')->isHoliday($date)) ? 'rest' : 'absent');
+            $attend->status       = $status ? $status : ($this->isRestDay($date) ? 'rest' : 'absent');
             $attend->reason       = $reason;
             $attend->reviewStatus = '';
             $attend->desc         = '';
