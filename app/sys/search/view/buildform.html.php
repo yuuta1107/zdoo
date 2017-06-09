@@ -111,6 +111,11 @@ $(function()
         }
         setDateField(this, undefined, 'datetime');
     });
+
+    $(document).on('change', '[name*=operator]', function()
+    {
+        if($(this).val() == 'between' && $(this).parent('td').next('td').find('input').val().indexOf('$') == -1) $(this).val('<=');
+    })
 });
 
 var params        = <?php echo json_encode($fieldParams);?>;
