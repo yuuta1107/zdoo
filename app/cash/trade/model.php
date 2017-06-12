@@ -86,7 +86,7 @@ class tradeModel extends model
         $investCategories   = $this->getSystemCategoryPairs('invest');
 
         $trades = $this->dao->select('*')->from(TABLE_TRADE)
-            ->where('parent')->eq('')
+            ->where('parent')->eq('0')
             ->beginIF($startDate and $endDate)->andWhere('date')->ge($startDate)->andWhere('date')->lt($endDate)->fi()
             ->beginIF($mode == 'in')->andWhere('type')->eq('in')->fi()
             ->beginIF($mode == 'out')->andWhere('type')->eq('out')->fi()
