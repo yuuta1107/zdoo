@@ -23,11 +23,11 @@
         <ul class='tree' data-collapsed='true'>
           <?php foreach($yearList as $year):?>
           <li class='<?php echo $year == $currentYear ? 'active' : ''?>'>
-            <?php commonModel::printLink('attend', 'stat', "date=$year", $year);?>
+            <?php commonModel::printLink('attend', 'stat', "currentDate=$year", $year);?>
             <ul>
               <?php foreach($monthList[$year] as $month):?>
               <li class='<?php echo ($year == $currentYear and $month == $currentMonth) ? 'active' : ''?>'>
-                <?php commonModel::printLink('attend', 'stat', "date=$year$month", $year . $month);?>
+                <?php commonModel::printLink('attend', 'stat', "currentDate=$year$month", $year . $month);?>
               </li>
               <?php endforeach;?>
             </ul>
@@ -42,7 +42,7 @@
       <div class='panel-heading text-center'>
         <strong><?php echo $currentYear . $lang->year . $currentMonth . $lang->month . $lang->attend->report;?></strong>
       </div>
-      <form id='ajaxForm' method='post' action='<?php echo $this->createLink('attend', 'saveStat', "date=$date")?>'>
+      <form id='ajaxForm' method='post' action='<?php echo $this->createLink('attend', 'saveStat', "date=$currentDate")?>'>
         <table class='table table-data table-condensed table-striped table-hover table-bordered text-center' id='attendStat'>
           <thead>
             <tr class='text-center'>
@@ -107,7 +107,7 @@
           <?php endforeach;?>
           <tr class='text-left'>
             <td colspan="<?php echo $mode == 'view' ? 16 : 15;?>">
-              <?php echo html::a($this->createLink('attend', 'stat', "date=$date&mode=edit"), $lang->edit, "class='btn'");?>
+              <?php echo html::a($this->createLink('attend', 'stat', "currentDate=$currentDate&mode=edit"), $lang->edit, "class='btn'");?>
               <?php if($mode == 'edit') echo html::submitButton();?>
             </td>
           </tr>

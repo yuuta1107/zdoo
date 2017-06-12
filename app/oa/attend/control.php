@@ -517,19 +517,19 @@ class attend extends control
     /**
      * Browse stat of attend.
      * 
-     * @param  string  $date 
+     * @param  string  $currentDate 
      * @param  string  $mode 
      * @access public
      * @return void
      */
-    public function stat($date = '', $mode = '')
+    public function stat($currentDate = '', $mode = '')
     {
-        if($date == '' or strlen($date) != 6) $date = date('Ym');
-        $currentYear  = substr($date, 0, 4);
-        $currentMonth = substr($date, 4, 2);
+        if($currentDate == '' or strlen($currentDate) != 6) $currentDate = date('Ym');
+        $currentYear  = substr($currentDate, 0, 4);
+        $currentMonth = substr($currentDate, 4, 2);
         $users        = $this->loadModel('user')->getPairs('noclosed,noempty,nodeleted,noforbidden');
 
-        $stat = $this->attend->getStat($date);
+        $stat = $this->attend->getStat($currentDate);
         if(!empty($stat))
         {
             $mode = $mode ? $mode : 'view';
@@ -765,7 +765,7 @@ class attend extends control
         $this->view->title        = $this->lang->attend->stat;
         $this->view->mode         = $mode;
         $this->view->stat         = $stat;
-        $this->view->date         = $date;
+        $this->view->currentDate  = $currentDate;
         $this->view->currentYear  = $currentYear;
         $this->view->currentMonth = $currentMonth;
         $this->view->yearList     = $yearList;
