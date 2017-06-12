@@ -58,7 +58,7 @@ class my extends control
             if($reviewedBy and $reviewedBy == $account) $deptList = $allDeptList;
             if(!$reviewedBy) $deptList = $managedDeptList;
 
-            $leaves = $this->leave->getList('browseReview', $year = '', $month = '', '', array_keys($deptList), $status = 'wait,pass', $orderBy);
+            if(!empty($deptList)) $leaves = $this->leave->getList('browseReview', $year = '', $month = '', '', array_keys($deptList), $status = 'wait,pass', $orderBy);
         }
 
         /* Get overtime list. */
@@ -69,7 +69,7 @@ class my extends control
             if($reviewedBy and $reviewedBy == $account) $deptList = $allDeptList;
             if(!$reviewedBy) $deptList = $managedDeptList;
 
-            $overtimes = $this->overtime->getList('browseReview', $year = '', $month = '', '', array_keys($deptList), $status = 'wait', $orderBy);
+            if(!empty($deptList)) $overtimes = $this->overtime->getList('browseReview', $year = '', $month = '', '', array_keys($deptList), $status = 'wait', $orderBy);
         }
 
         /* Get makeup list. */
@@ -80,7 +80,7 @@ class my extends control
             if($reviewedBy and $reviewedBy == $account) $deptList = $allDeptList;
             if(!$reviewedBy) $deptList = $managedDeptList;
 
-            $makeups = $this->makeup->getList('browseReview', $year = '', $month = '', '', array_keys($deptList), $status = 'wait', $orderBy);
+            if(!empty($deptList)) $makeups = $this->makeup->getList('browseReview', $year = '', $month = '', '', array_keys($deptList), $status = 'wait', $orderBy);
         }
 
         /* Get lieu list. */
@@ -91,7 +91,7 @@ class my extends control
             if($reviewedBy and $reviewedBy == $account) $deptList = $allDeptList;
             if(!$reviewedBy) $deptList = $managedDeptList;
 
-            $lieus = $this->lieu->getList('browseReview', $year = '', $month = '', '', array_keys($deptList), $status = 'wait', $orderBy);
+            if(!empty($deptList)) $lieus = $this->lieu->getList('browseReview', $year = '', $month = '', '', array_keys($deptList), $status = 'wait', $orderBy);
         }
 
         /* Get refund list. */
