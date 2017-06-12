@@ -49,27 +49,21 @@
         <div class='pull-right'>
           <div class='btn-group'>
           <?php
-          $url     = $webapp->url;
-          $popup   = '';
-          $target  = '_self';
-          $misc    = '';
-          if($webapp->target == 'popup')
+          $url  = $webapp->url;
+          $misc = '';
+          if($webapp->target == 'iframe')
           {
               $width  = 0;
               $height = 0;
               if($webapp->size) list($width, $height) = explode('x', $webapp->size);
-              $misc = "data-width='" . $width . "' data-height='" . $height . "'";
-              $popup  = 'popup';
+              $misc = "data-toggle='modal' data-type='iframe' data-width='" . $width . "' data-height='" . $height . "'";
           }
-          else
-          {
-              $method = "popup(1024, 600);";
-              $misc = "data-width='1024' data-height='600'";
-              $popup  = 'popup';
-          }
+
+          if($webapp->target == 'blank') $misc = "target='_blank'";
+
           echo isset($installeds[$webapp->id]) ? html::a('',"<i class='icon-ok icon'></i> " . $lang->webapp->installed, 'disabled="disabled" class="btn"') : html::a('###', $lang->webapp->install, "class='btn btn-primary webapp-install' data-url='" . inLink('install', "webappID={$webapp->id}") . "'");
 
-          echo html::a($url, $lang->webapp->preview, "id='useapp$webapp->id' class='btn runapp $popup' data-title='$webapp->name' $misc");
+          echo html::a($url, $lang->webapp->preview, "id='useapp$webapp->id' class='btn' data-title='$webapp->name' $misc");
           ?>
           </div>
         </div>

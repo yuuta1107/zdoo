@@ -57,8 +57,8 @@ $lang->webapp->allModule    = 'All';
 $lang->webapp->noModule     = 'Uncategorized';
 
 $lang->webapp->targetList['']       = '';
-$lang->webapp->targetList['popup']  = 'Popup';
-$lang->webapp->targetList['iframe']  = 'Iframe';
+$lang->webapp->targetList['blank']  = 'Blank';
+$lang->webapp->targetList['iframe'] = 'Iframe';
 
 $lang->webapp->width  = 'Width';
 $lang->webapp->height = 'Height';
