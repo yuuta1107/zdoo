@@ -24,7 +24,7 @@
   <div class="btn-group">
     <a href='javascript:;' class="dropdown-toggle" data-toggle="dropdown">
     <i class='icon-flag'></i>
- <?php echo $lang->task->groups[$groupBy];?>
+  <?php echo $lang->task->groups[$groupBy];?>
       <i class="icon-caret-down"></i>
     </a>
     <ul class="dropdown-menu">
