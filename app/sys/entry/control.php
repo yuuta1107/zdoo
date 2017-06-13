@@ -686,4 +686,15 @@ class entry extends control
         $this->view->children = $this->loadModel('tree')->getChildren(0, 'entry');
         $this->display();
     }
+
+    /**
+     * Get entries of json.
+     * 
+     * @access public
+     * @return json
+     */
+    public function getJSONEntries()
+    {
+        die($this->entry->getJSONEntries());
+    }
 }

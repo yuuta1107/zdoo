@@ -1930,6 +1930,14 @@
      */
     function refreshDesktop(entriesOptions, reset)
     {
+        if(!entriesOptions)
+        {
+            $.getJSON(createLink('entry', 'getJSONEntries'), function(entries)
+            {
+                refreshDesktop(entries, true);
+            });
+            return;
+        }
         refreshEntries(entriesOptions, reset);
         desktop.refreshShortcuts();
         desktop.refreshMenuSize();

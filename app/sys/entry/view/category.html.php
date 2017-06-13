@@ -25,7 +25,7 @@
             if($child->order > $maxOrder) $maxOrder = $child->order;
             echo "<div class='form-group'><div class='input-group'>";
             echo html::input("children[$child->id]", $child->name, "class='form-control'");
-            echo "<span class='input-group-addon'>" . html::a(helper::createLink('tree', 'delete', "id={$child->id}"), "<i class='icon-remove'></i>", "class='deleter'") . "</span>";
+            echo "<span class='input-group-addon'>" . html::a(helper::createLink('tree', 'delete', "id={$child->id}"), "<i class='icon-remove'></i>", "class='deleteCategory'") . "</span>";
             echo html::hidden("mode[$child->id]", 'update');
             echo "</div></div>";
         }
