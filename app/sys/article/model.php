@@ -44,6 +44,7 @@ class articleModel extends model
 
         /* Get it's files. */
         $article->files = $this->loadModel('file')->getByObject($article->type, $articleID);
+        $article = $this->file->revertRealSRC($article, 'content');
 
         $article->readers = explode(',', $article->readers);
         foreach($article->readers as $key => $reader) if(!$reader) unset($article->readers[$key]);
@@ -433,10 +434,12 @@ class articleModel extends model
             ->fetchGroup('article', 'id');
 
         $idList = array();
+        $this->loadModel('file');
         foreach($articles as $key => $article)
         {
             /* Assign categories to it's article. */
             $article->categories = isset($categories[$article->id]) ? $categories[$article->id] : array();
+            $article = $this->file->revertRealSRC($article, 'content');
             if($this->hasRight($article)) $idList[] = $article->id;
         }
 

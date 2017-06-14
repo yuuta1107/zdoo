@@ -18,3 +18,5 @@ $config->dynamic->search['params']['action']     = array('operator' => '=',     
 $config->dynamic->search['params']['objectType'] = array('operator' => '=',       'control' => 'select', 'values' => $lang->action->objectTypes);
 $config->dynamic->search['params']['objectID']   = array('operator' => 'include', 'control' => 'input',  'values' => '');
 $config->dynamic->search['params']['objectName'] = array('operator' => 'include', 'control' => 'input',  'values' => '');
+
+$config->filterParam->cookie['my']['project']['taskListType']['code'] = '';

@@ -70,7 +70,6 @@ class file extends control
         {
             if(!$this->file->checkSavePath()) $this->send(array('error' => 1, 'message' => $this->lang->file->errorUnwritable));
             move_uploaded_file($file['tmpname'], $this->file->savePath . $file['pathname']);
-            $url =  $this->file->webPath . $file['pathname'];
 
             $file['createdBy']   = $this->app->user->account;
             $file['createdDate'] = helper::now();
@@ -78,8 +77,9 @@ class file extends control
             unset($file['tmpname']);
             $this->dao->insert(TABLE_FILE)->data($file, false)->exec();
 
-            $_SESSION['album'][$uid][] = $this->dao->lastInsertID();
-
+            $fileID = $this->dao->lastInsertID();
+            $url    = $this->createLink('file', 'read', "fileID=$fileID");
+            if($uid) $_SESSION['album'][$uid][] = $fileID;
             die(json_encode(array('error' => 0, 'url' => $url)));
         }
     }
@@ -112,8 +112,9 @@ class file extends control
                 unset($file['tmpname']);
                 $this->dao->insert(TABLE_FILE)->data($file)->exec();
 
-                $url = $this->file->webPath . $file['pathname'];
-                if($uid) $_SESSION['album'][$uid][] = $this->dao->lastInsertID();
+                $fileID = $this->dao->lastInsertID();
+                $url    = $this->createLink('file', 'read', "fileID=$fileID");
+                if($uid) $_SESSION['album'][$uid][] = $fileID;
                 die(json_encode(array('state' => 'SUCCESS', 'url' => $url)));
             }
             else
@@ -461,6 +462,29 @@ class file extends control
             }
             if($a['order'] == 'type') return strcmp($a['filetype'], $b['filetype']);
             if($a['order'] == 'name') return strcmp($a['filename'], $b['filename']);
+        }
+    }
+
+    /**
+     * Read file. 
+     * 
+     * @param  int    $fileID 
+     * @access public
+     * @return void
+     */
+    public function read($fileID)
+    {
+        $file = $this->file->getById($fileID);
+        if(empty($file) or !file_exists($file->realPath)) return false;
+
+        $mime = in_array($file->extension, $this->config->file->imageExtensions) ? "image/{$file->extension}" : $this->config->file->mimes['default'];
+        header("Content-type: $mime");
+
+        $handle = fopen($file->realPath, "r");
+        if($handle)
+        {
+            while(!feof($handle)) echo fgets($handle);
+            fclose($handle);
         }
     }
 }

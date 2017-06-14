@@ -366,8 +366,12 @@ class baseRouter
 
         if($this->config->framework->multiSite)     $this->setSiteCode() && $this->loadExtraConfig();
         if($this->config->framework->autoConnectDB) $this->connectDB();
-        if($this->config->framework->detectDevice)  $this->setClientDevice();
-        if($this->config->framework->multiLanguage) $this->setClientLang() && $this->loadLang('common');
+        if($this->config->framework->multiLanguage) $this->setClientLang();
+
+        $isDetectDevice     = zget($this->config->framework->detectDevice, $this->clientLang, false);
+        $this->clientDevice = $isDetectDevice ? $this->setClientDevice() : 'desktop';
+
+        if($this->config->framework->multiLanguage) $this->loadLang('common');
         if($this->config->framework->multiTheme)    $this->setClientTheme();
     }
 
@@ -527,6 +531,7 @@ class baseRouter
         {
             $sessionName = $this->config->sessionVar;
             session_name($sessionName);
+            if(isset($_GET[$this->config->sessionVar])) session_id($_GET[$this->config->sessionVar]);
             session_start();
             define('SESSION_STARTED', true);
         }
@@ -1011,6 +1016,7 @@ class baseRouter
     public function parsePathInfo()
     {
         $pathInfo = $this->getPathInfo();
+        if(trim($pathInfo, '/') == trim($this->config->webRoot, '/')) $pathInfo = '';
         if(!empty($pathInfo))
         {
             $dotPos = strrpos($pathInfo, '.');
@@ -1055,17 +1061,24 @@ class baseRouter
         {
             $value = $_SERVER['ORIG_PATH_INFO'];
         }
+        elseif(isset($_SERVER['REQUEST_URI']))
+        {
+            $value = $_SERVER['REQUEST_URI'];
+            $subpath = '/' . str_replace($_SERVER['DOCUMENT_ROOT'], '', dirname($_SERVER['SCRIPT_FILENAME']));
+            if($subpath != '' and $subpath != '/' and strpos($value, $subpath) === 0) $value = substr($value, strlen($subpath));
+        }
         else
         {
             $value = @getenv('PATH_INFO');
             if(empty($value)) $value = @getenv('ORIG_PATH_INFO');
-            if(strpos($value, $_SERVER['SCRIPT_NAME']) !== false) $value = str_replace($_SERVER['SCRIPT_NAME'], '', $value);
         }
+
+        if(defined('RUN_MODE') and RUN_MODE == 'front' and strpos($value, $_SERVER['SCRIPT_NAME']) !== false) $value = str_replace($_SERVER['SCRIPT_NAME'], '', $value);
 
         if(strpos($value, '?') === false) return trim($value, '/');
 
         $value = parse_url($value);
-        return trim($value['path'], '/');
+        return trim(zget($value, 'path', ''), '/');
     }
 
     /**
@@ -1146,8 +1159,8 @@ class baseRouter
         helper::import($commonModelFile);
 
         if($this->config->framework->extensionLevel > 0  and class_exists('extCommonModel')) return new extCommonModel();
-        if(class_exists('commonModel')) return new commonModel();
 
+        if(class_exists('commonModel')) return new commonModel();
         return false;
     }
 
@@ -1161,7 +1174,7 @@ class baseRouter
      */
     public function setModuleName($moduleName = '')
     {
-        if($this->checkAlnum($moduleName)) $this->moduleName = strtolower($moduleName);
+        if($this->checkAlnum($moduleName, 'module')) $this->moduleName = strtolower($moduleName);
     }
 
     /**
@@ -1190,7 +1203,7 @@ class baseRouter
      */
     public function setMethodName($methodName = '')
     {
-        if($this->checkAlnum($methodName)) $this->methodName = strtolower($methodName);
+        if($this->checkAlnum($methodName, 'method')) $this->methodName = strtolower($methodName);
     }
 
     /**
@@ -1206,7 +1219,7 @@ class baseRouter
     {
         if($moduleName == '') $moduleName = $this->moduleName;
 
-        if($this->checkAlnum($moduleName))
+        if($this->checkAlnum($moduleName, 'module'))
         {
             $modulePath = $this->getModuleRoot($appName) . strtolower($moduleName) . DS;
             return $modulePath;
@@ -1229,7 +1242,7 @@ class baseRouter
     public function getModuleExtPath($appName, $moduleName, $ext)
     {
         /* 检查失败或者extensionLevel为0，直接返回空。If check failed or extensionLevel == 0, return empty array. */
-        if(!$this->checkAlnum($moduleName) or $this->config->framework->extensionLevel == 0) return array();
+        if(!$this->checkAlnum($moduleName, 'module') or $this->config->framework->extensionLevel == 0) return array();
 
         /* When extensionLevel == 1. */
         $modulePath = $this->getModulePath($appName, $moduleName);
@@ -1246,12 +1259,21 @@ class baseRouter
      * 检查某一个变量必须为英文字母和数字组合。Check a variable must be ascii.
      * 
      * @param  string    $var 
+     * @param  string    $type 
      * @access public
      * @return void
      */
-    public function checkAlnum($var)
+    public function checkAlnum($var, $type)
     {
-        if(preg_match('/^[a-zA-Z0-9]+$/', $var)) return true;
+        $filterConfig = $this->config->filterParam;
+        $rules = $filterConfig->module;
+        if($type == 'method')
+        {
+            $rules  = $filterConfig->method['common'];
+            if($this->config->framework->filterParam == 2) $rules = zget($filterConfig->method, $this->moduleName, $rules);
+        }
+
+        if(validater::checkByRules($var, $rules)) return true;
         $this->triggerError("'$var' illegal. ", __FILE__, __LINE__, $exit = true);
     }
 
@@ -1263,7 +1285,7 @@ class baseRouter
      */
     public function setActionExtFile()
     {
-        $moduleExtPaths  = $this->getModuleExtPath('', $this->moduleName, 'control');
+        $moduleExtPaths = $this->getModuleExtPath('', $this->moduleName, 'control');
         
         /* 如果扩展目录为空，不包含任何扩展文件。If there's no ext pathes return false.*/
         if(empty($moduleExtPaths)) return false;
@@ -1308,8 +1330,8 @@ class baseRouter
         {
             if(empty($modelExtPath)) continue;
 
-            $tmpHookFiles =  helper::ls($modelExtPath . 'hook/', '.php');
-            $tmpExtFiles  =  helper::ls($modelExtPath, '.php');
+            $tmpHookFiles = helper::ls($modelExtPath . 'hook/', '.php');
+            $tmpExtFiles  = helper::ls($modelExtPath, '.php');
             $hookFiles    = array_merge($hookFiles, $tmpHookFiles);
             $extFiles     = array_merge($extFiles,  $tmpExtFiles);
 
@@ -1389,7 +1411,10 @@ class baseRouter
 
         /* 开始拼装代码。Prepare the codes. */
         $modelLines  = "<?php\n";
+        $modelLines .= "global \$app;\n";
+        $modelLines .= "helper::cd(\$app->getBasePath());\n";
         $modelLines .= "helper::import('$mainModelFile');\n";
+        $modelLines .= "helper::cd();\n";
         $modelLines .= "class $tmpModelClass extends $modelClass \n{\n";
 
         /* 将扩展文件的代码合并到代码中。Cycle all the extension files and merge them into model lines. */
@@ -1640,6 +1665,12 @@ class baseRouter
             $this->setParamsByGET($defaultParams);
         }
 
+        if($this->config->framework->filterParam == 2)
+        {
+            $_GET     = validater::filterParam($_GET, 'get');
+            $_COOKIE  = validater::filterParam($_COOKIE, 'cookie');
+        }
+
         /* 调用该方法   Call the method. */
         call_user_func_array(array($module, $methodName), $this->params);
         return $module;
@@ -1649,26 +1680,30 @@ class baseRouter
      * 设置请求的参数(PATH_INFO 方式)。
      * Set the params by PATH_INFO.
      * 
-     * @param   array $defaultParams the default settings of the params.
+     * @param   array  $defaultParams the default settings of the params.
+     * @param   string $type
      * @access  public
      * @return  void
      */
-    public function setParamsByPathInfo($defaultParams = array())
+    public function setParamsByPathInfo($defaultParams = array(), $type = '')
     {
-        /* 分割URI。 Spit the URI. */
-        $items     = explode($this->config->requestFix, $this->URI);
-        $itemCount = count($items);
-        $params    = array();
-
-        /** 
-         * 前两项为模块名和方法名，参数从下标2开始。
-         * The first two item is moduleName and methodName. So the params should begin at 2.
-         **/
-        for($i = 2; $i < $itemCount; $i ++)
+        $params = array();
+        if($type != 'fetch')
         {
-            $key = key($defaultParams);     // Get key from the $defaultParams.
-            $params[$key] = $items[$i];
-            next($defaultParams);
+            /* 分割URI。 Spit the URI. */
+            $items     = explode($this->config->requestFix, $this->URI);
+            $itemCount = count($items);
+
+            /** 
+             * 前两项为模块名和方法名，参数从下标2开始。
+             * The first two item is moduleName and methodName. So the params should begin at 2.
+             **/
+            for($i = 2; $i < $itemCount; $i ++)
+            {
+                $key = key($defaultParams);     // Get key from the $defaultParams.
+                $params[$key] = str_replace('.', '-', $items[$i]);
+                next($defaultParams);
+            }
         }
 
         $this->params = $this->mergeParams($defaultParams, $params);
@@ -1678,19 +1713,26 @@ class baseRouter
      * 设置请求的参数(GET 方式)。
      * Set the params by GET.
      * 
-     * @param   array $defaultParams the default settings of the params.
+     * @param   array  $defaultParams the default settings of the params.
+     * @param   string $type
      * @access  public
      * @return  void
      */
-    public function setParamsByGET($defaultParams)
+    public function setParamsByGET($defaultParams, $type = '')
     {
-        /* Unset moduleVar, methodVar, viewVar and session 变量， 剩下的作为参数。 */
-        /* Unset the moduleVar, methodVar, viewVar and session var, all the left are the params. */
-        unset($_GET[$this->config->moduleVar]);
-        unset($_GET[$this->config->methodVar]);
-        unset($_GET[$this->config->viewVar]);
-        unset($_GET[$this->config->sessionVar]);
-        $this->params = $this->mergeParams($defaultParams, $_GET);
+        $params = array();
+        if($type != 'fetch')
+        {
+            /* Unset moduleVar, methodVar, viewVar and session 变量， 剩下的作为参数。 */
+            /* Unset the moduleVar, methodVar, viewVar and session var, all the left are the params. */
+            unset($_GET[$this->config->moduleVar]);
+            unset($_GET[$this->config->methodVar]);
+            unset($_GET[$this->config->viewVar]);
+            unset($_GET[$this->config->sessionVar]);
+            $params = $_GET;
+        }
+
+        $this->params = $this->mergeParams($defaultParams, $params);
     }
 
     /**
@@ -1709,9 +1751,12 @@ class baseRouter
         unset($passedParams['HTTP_X_REQUESTED_WITH']);
 
         /* Check params from URL. */
+        $nameRules  = isset($this->config->filterParam->param[$this->moduleName][$this->methodName]['name'])  ? $this->config->filterParam->param[$this->moduleName][$this->methodName]['name']  : $this->config->filterParam->param['common']['name'];
+        $valueRules = isset($this->config->filterParam->param[$this->moduleName][$this->methodName]['value']) ? $this->config->filterParam->param[$this->moduleName][$this->methodName]['value'] : $this->config->filterParam->param['common']['value'];
         foreach($passedParams as $param => $value)
         {
-            if(preg_match('/[^a-zA-Z0-9_\.]/', $param)) die('Bad Request!');
+            if(!validater::checkByRules($param, $nameRules)) die('Bad Request!');
+            if($value and !validater::checkByRules($value, $valueRules)) die('Bad Request!');
         }
 
         $passedParams = array_values($passedParams);
@@ -1893,27 +1938,46 @@ class baseRouter
             if(file_exists($configFile)) include $configFile;
             $loadedConfigs[] = $configFile;
         }
-        
-        /* 加载数据库中与本模块相关的配置项。Merge from the db configs. */
-        if($moduleName != 'common' and isset($config->system->$moduleName))
-        {   
-            /* 如果没有设置本模块配置，则首先进行初始化。Init the $config->$moduleName if not set.*/
-            if(!isset($config->$moduleName)) $config->$moduleName = new stdclass();
 
-            foreach($config->system->$moduleName as $item)
+        /* 加载数据库中与本模块相关的配置项。Merge from the db configs. */
+        if($moduleName != 'common')
+        {
+            if(isset($config->system->$moduleName))   $this->mergeConfig($config->system->$moduleName, $moduleName);
+            if(isset($config->personal->$moduleName)) $this->mergeConfig($config->personal->$moduleName, $moduleName);
+        }
+    }
+
+    /**
+     * Merge db config.
+     * 
+     * @param  array  $dbConfig 
+     * @param  string $moduleName 
+     * @access public
+     * @return void
+     */
+    public  function mergeConfig($dbConfig, $moduleName = 'common')
+    {
+        global $config;
+
+        /* 如果没有设置本模块配置，则首先进行初始化。Init the $config->$moduleName if not set.*/
+        if($moduleName != 'common' and !isset($config->$moduleName)) $config->$moduleName = new stdclass();
+
+        $config2Merge = $config;
+        if($moduleName != 'common') $config2Merge = $config->$moduleName;
+
+        foreach($dbConfig as $item)
+        {
+            if($item->section)
             {
-                if($item->section)
+                if(!isset($config2Merge->{$item->section})) $config2Merge->{$item->section} = new stdclass();
+                if(is_object($config2Merge->{$item->section}))
                 {
-                    if(!isset($config->{$moduleName}->{$item->section})) $config->{$moduleName}->{$item->section} = new stdclass();
-                    if(is_object($config->{$moduleName}->{$item->section}))
-                    {
-                        $config->{$moduleName}->{$item->section}->{$item->key} = $item->value;
-                    }
+                    $config2Merge->{$item->section}->{$item->key} = $item->value;
                 }
-                else
-                {
-                    $config->{$moduleName}->{$item->key} = $item->value;
-                }
+            }
+            else
+            {
+                $config2Merge->{$item->key} = $item->value;
             }
         }
     }
@@ -1937,15 +2001,17 @@ class baseRouter
         $view->sessionVar  = $this->config->sessionVar;
 
         $this->session->set('rand', mt_rand(0, 10000));
+        $this->session->set('random', $this->session->rand);
         $view->sessionName = session_name();
         $view->sessionID   = session_id();
         $view->rand        = $this->session->rand;
+        $view->random      = $this->session->random;
         $view->expiredTime = ini_get('session.gc_maxlifetime');
         $view->serverTime  = time();
 
-        $ip = gethostbyname($_SERVER['HTTP_HOST']);
-        $view->ip          = strpos($ip, ':') === false ? $ip : substr($ip, 0, strpos($ip, ':'));
-        $view->name        = isset($this->config->socket->name) ? $this->config->socket->name : '';
+        $ip         = gethostbyname($_SERVER['HTTP_HOST']);
+        $view->ip   = strpos($ip, ':') === false ? $ip : substr($ip, 0, strpos($ip, ':'));
+        $view->name = isset($this->config->socket->name) ? $this->config->socket->name : '';
         $view->port        = isset($this->config->socket->port) ? $this->config->socket->port : '';
         echo json_encode($view);
     }
@@ -2098,7 +2164,8 @@ class baseRouter
     public function triggerError($message, $file, $line, $exit = false)
     {
         /* 设置错误信息(Set the error info) */
-        $log = "ERROR: $message in $file on line $line";
+        $message = htmlspecialchars($message);
+        $log     = "ERROR: $message in $file on line $line";
         if(isset($_SERVER['SCRIPT_URI'])) $log .= ", request: $_SERVER[SCRIPT_URI]";; 
         $trace = debug_backtrace();
         extract($trace[0]);
@@ -2157,7 +2224,7 @@ class baseRouter
          * 为了安全起见，对公网环境隐藏脚本路径。
          * If the ip is pulic, hidden the full path of scripts.
          */
-        if(!defined('IN_SHELL') and !($this->server->server_addr == '127.0.0.1' or filter_var($this->server->server_addr, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE) === false))
+        if(!defined('IN_SHELL') and !($this->server->remote_addr == '127.0.0.1' or filter_var($this->server->remote_addr, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE) === false))
         {
             $errorLog  = str_replace($this->getBasePath(), '', $errorLog);
         }

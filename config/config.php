@@ -21,15 +21,19 @@ $config->framework = new stdclass();
 $config->framework->autoConnectDB  = true;  // 是否自动连接数据库。              Whether auto connect database or not.
 $config->framework->multiLanguage  = true;  // 是否启用多语言功能。              Whether enable multi lanuage or not.
 $config->framework->multiTheme     = true;  // 是否启用多风格功能。              Whether enable multi theme or not.
-$config->framework->detectDevice   = true;  // 是否启用设备检测功能。            Whether enable device detect or not.
 $config->framework->multiSite      = false; // 是否启用多站点模式。              Whether enable multi site mode or not.
 $config->framework->extensionLevel = 1;     // 0=>无扩展,1=>公共扩展,2=>站点扩展 0=>no extension, 1=> common extension, 2=> every site has it's extension.
 $config->framework->jsWithPrefix   = true;  // js::set()输出的时候是否增加前缀。 When us js::set(), add prefix or not.
 $config->framework->filterBadKeys  = true;  // 是否过滤不合要求的键值。          Whether filter bad keys or not.
 $config->framework->filterTrojan   = true;  // 是否过滤木马攻击代码。            Whether strip trojan code or not.
 $config->framework->filterXSS      = true;  // 是否过滤XSS攻击代码。             Whether strip xss code or not.
+$config->framework->filterParam    = 2;     // 是否开启过滤参数功能。            Whether strip param or not.
 $config->framework->purifier       = false; // 是否对数据做purifier处理。        Whether purifier data or not.
 $config->framework->logDays        = 14;    // 日志文件保存的天数。              The days to save log files.
+
+$config->framework->detectDevice['zh-cn'] = true; // 在zh-cn语言情况下，是否启用设备检测功能。 Whether enable device detect or not.
+$config->framework->detectDevice['zh-tw'] = true; // 在zh-tw语言情况下，是否启用设备检测功能。 Whether enable device detect or not.
+$config->framework->detectDevice['en']    = true; // 在en语言情况下，是否启用设备检测功能。 Whether enable device detect or not.
 
 /* Basic settings. */
 $config->version      = '4.2.3';           // The version of ranzhi. Don't change it.
@@ -82,16 +86,16 @@ $config->default->method = 'index';       // Default method.
 $config->dashboard = new stdclass();
 $config->dashboard->modules = 'my,todo';
 
-/* Upload settings: danger files and max upload size. */
-$config->file = new stdclass();
-$config->file->dangers = 'php,php3,php4,phtml,php5,jsp,py,rb,asp,aspx,ashx,asa,cer,cdx,aspl,shtm,shtml,html,htm';
-$config->file->maxSize = 1024 * 1024;
-
 /* IP white list settings.*/
 $config->ipWhiteList = '*';
+$config->allowedTags = '<p><span><h1><h2><h3><h4><h5><em><u><strong><br><ol><ul><li><img><a><b><font><hr><pre><div><table><td><th><tr><tbody><embed><style>';
 
-/* Set the allowed tags.  */
-$config->allowedTags = '<p><span><h1><h2><h3><h4><h5><em><u><strong><br><ol><ul><li><img><a><b><font><hr><pre><div><table><td><th><tr><tbody>';
+/* 文件上传设置。 Upload settings. */
+$config->file = new stdclass();    
+// 危险文件类型。 Dangerous file types.
+$config->file->dangers = 'php,php3,php4,phtml,php5,jsp,py,rb,asp,aspx,ashx,asa,cer,cdx,aspl,shtm,shtml,html,htm';
+// 允许上传的文件类型。 Allowed file types.
+$config->file->allowed = ',txt,doc,docx,dot,wps,wri,pdf,ppt,xls,xlsx,ett,xlt,xlsm,csv,jpg,jpeg,png,psd,gif,ico,bmp,swf,avi,rmvb,rm,mp3,mp4,3gp,flv,mov,movie,rar,zip,bz,bz2,tar,gz,';
 
 /* Master database settings. */
 $config->db = new stdclass();
@@ -115,6 +119,33 @@ $myConfig   = $configRoot . 'my.php';
 if(file_exists($myConfig)) include $myConfig;
 $rightsConfig = $configRoot . 'rights.php';
 if(file_exists($rightsConfig)) include $rightsConfig;
+
+/* 配置参数过滤。Filter param settings. */
+/* Like $config->filterParam->param[moduleName][methodname][ruleType] = rule. */
+$config->filterParam          = new stdclass();
+$config->filterParam->badKeys = '[^a-zA-Z0-9_\.]'; 
+$config->filterParam->module['reg'] = '/^[a-zA-Z0-9]+$/';
+$config->filterParam->method['common']['reg'] = '/^[a-zA-Z0-9]+$/';
+$config->filterParam->param['common']['name']['reg']  = '/^[a-zA-Z0-9_\.]+$/';
+$config->filterParam->param['common']['value']['reg'] = '/^[a-zA-Z0-9=_\-]+$/';
+
+$config->filterParam->get['common']['onlybody']['reg'] = '/^yes$|^no$/';
+$config->filterParam->get['common']['HTTP_X_REQUESTED_WITH']['equal'] = 'XMLHttpRequest';
+
+$config->filterParam->get['block']['index']['sys']['reg']     = '/^[a-zA-Z0-9]+$/';
+$config->filterParam->get['block']['index']['entry']['reg']   = '/^[a-zA-Z0-9_]+$/';
+$config->filterParam->get['block']['index']['lang']['reg']    = '/^[a-zA-Z_\-]+$/';
+$config->filterParam->get['block']['index']['mode']['reg']    = '/^[a-zA-Z0-9_]+$/';
+$config->filterParam->get['block']['index']['blockid']['reg'] = '/^[a-zA-Z0-9]+$/';
+$config->filterParam->get['block']['index']['param']['reg']   = '/^[a-zA-Z0-9\+\/\=]+$/';
+$config->filterParam->get['block']['index']['sso']['reg']     = '/^[a-zA-Z0-9\+\/\=]+$/';
+
+$config->filterParam->cookie['common']['lang']['reg']        = '/^[a-zA-Z\-_]+$/';
+$config->filterParam->cookie['common']['theme']['reg']       = '/^[a-zA-Z0-9_]+$/';
+$config->filterParam->cookie['common']['device']['reg']      = '/^[a-zA-Z0-9_]+$/';
+$config->filterParam->cookie['common']['ra']['account']      = '';
+$config->filterParam->cookie['common']['rp']['reg']          = '/^[a-f0-9]{40}$/';
+$config->filterParam->cookie['common']['keepLogin']['equal'] = 'on';
 
 /* Tables for basic system. */
 define('TABLE_CONFIG',    '`sys_config`');

@@ -35,3 +35,9 @@ $config->file->ueditor["videoMaxSize"]    = 102400000;
 $config->file->ueditor["videoAllowFiles"] = array(".flv", ".swf", ".mkv", ".avi", ".rm", ".rmvb", ".mpeg", ".mpg", ".ogg", ".ogv", ".mov", ".wmv", ".mp4", ".webm", ".mp3", ".wav", ".mid");
 $config->file->ueditor["videoUrlPrefix"]  = "";
 $config->file->ueditor["videoPathFormat"] = "";
+
+$config->filterParam->get['file']['ajaxueditorupload']['action']['equal'] = 'config';
+$config->filterParam->get['file']['filemanager']['path']['reg']           = '/^[a-zA-Z0-9\-_\/\.]+$/';
+$config->filterParam->get['file']['filemanager']['order']['reg']          = '/^[a-zA-Z0-9_]+$/';
+
+$config->filterParam->cookie['file']['download'][$config->sessionVar]['reg'] = '/^[a-zA-Z0-9]+$/';

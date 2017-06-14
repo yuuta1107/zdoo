@@ -282,13 +282,14 @@ class basePager
         }
 
         parse_str(strip_tags(urldecode($_SERVER['QUERY_STRING'])), $query);
+        if(!empty($query['m']) && !empty($query['f']) && $query['m'] == $this->moduleName && $query['f'] == $this->methodName)
+        {
+            unset($query['m']);
+            unset($query['f']);
+            unset($query['t']);
 
-        unset($query['m']);
-        unset($query['f']);
-        unset($query['t']);
-
-        $this->params = array_merge($this->params, $query);
-
+            $this->params = array_merge($this->params, $query);
+        }
     }
 
     /**
@@ -611,7 +612,8 @@ EOT;
             if(preg_match('/\/p\d+/', $link)) return html::a(preg_replace('/\/p\d+\./', '/p' . $this->params['pageID'] . '.', $link), $title);
 
             if($config->requestType == 'PATH_INFO2') $link = str_replace('index.php/', 'index_php/', $link);
-            $link = str_replace('.', "/p{$this->params['pageID']}.", $link);
+            if(strpos($link, '.') !== false) $link = str_replace('.', "/p{$this->params['pageID']}.", $link);
+            if(strpos($link, '.') === false) $link .= "/p{$this->params['pageID']}.html";
             if($config->requestType == 'PATH_INFO2') $link =  str_replace('index_php/', 'index.php/', $link);
             return html::a($link, $title);
         }

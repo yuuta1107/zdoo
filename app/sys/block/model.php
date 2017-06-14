@@ -28,6 +28,7 @@ class blockModel extends model
             ->add('order', $index)
             ->add('app', $appName)
             ->add('hidden', 0)
+            ->stripTags('html', $this->config->allowedTags)
             ->setIF($type != 'system', 'block', $type)
             ->setIF($blockID, 'id', $blockID)
             ->setDefault('grid', '4')
@@ -38,6 +39,7 @@ class blockModel extends model
         if($type != 'system') $data->source = '';
         if($type == 'html')
         {
+            $data = $this->loadModel('file')->processEditor($data, 'html', $this->post->uid);
             $data->params['html'] = $data->html;
             unset($data->html);
         }
@@ -168,6 +170,7 @@ class blockModel extends model
 
         $block->params = json_decode($block->params);
         if(empty($block->params)) $block->params = new stdclass();
+        if($block->block == 'html') $block->params = $this->loadModel('file')->revertRealSRC($block->params, 'html');
         return $block;
     }
 
@@ -190,6 +193,7 @@ class blockModel extends model
 
         $block->params = json_decode($block->params);
         if(empty($block->params)) $block->params = new stdclass();
+        if($block->block == 'html') $block->params = $this->loadModel('file')->revertRealSRC($block->params, 'html');
         return $block;
     }
 

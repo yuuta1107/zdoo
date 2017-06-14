@@ -143,7 +143,7 @@ class baseValidater
      */
     public static function checkTel($var)
     {
-        return preg_match("/^([0-9]{3,4}-)?[0-9]{7,8}$/", $var);
+        return preg_match("/^([0-9]{3,4}-?)?[0-9]{7,8}$/", $var);
     }
 
     /**
@@ -157,7 +157,7 @@ class baseValidater
      */
     public static function checkMobile($var)
     {
-        return preg_match("/^1[3-5,8]{1}[0-9]{9}$/", $var);
+        return preg_match("/^1[3-5,7,8]{1}[0-9]{9}$/", $var);
     }
 
     /**
@@ -212,6 +212,43 @@ class baseValidater
             if($var == '127.0.0.1' or filter_var($var, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE) === false) return true;
             return false;
         }
+    }
+
+    /**
+     * 身份证号检查。
+     * Idcard checking.
+     * 
+     * @access public
+     * @return void
+     */
+    public static function checkIdcard($idcard)
+    {
+        if(strlen($idcard)!=18) return false;
+        $idcard = strtoupper($idcard); 
+        $cityList = array(
+            '11','12','13','14','15','21','22',
+            '23','31','32','33','34','35','36',
+            '37','41','42','43','44','45','46',
+            '50','51','52','53','54','61','62',
+            '63','64','65','71','81','82','91'
+        );
+
+        if (!preg_match('/^([\d]{17}[xX\d]|[\d]{15})$/', $idcard)) return false;
+
+        if (!in_array(substr($idcard, 0, 2), $cityList)) return false;
+
+        $baseCode     = substr($idcard, 0, 17);
+        $verifyCode   = substr($idcard, 17, 1);
+        $interference = array(7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2);
+
+        $verifyConfig = array('1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2');
+
+        $total = 0;
+        for($i=0; $i<17; $i++) $total += substr($baseCode, $i, 1) * $interference[$i];
+
+        $mod = $total % 11;
+
+        return $verifyCode == $verifyConfig[$mod];
     }
 
     /**
@@ -499,7 +536,7 @@ class baseValidater
                 foreach($files['name'] as $i => $fileName)
                 {
                     $extension = ltrim(strrchr($fileName, '.'), '.');
-                    if(strrpos(",{$config->file->dangers},", ",{$extension},") !== false)
+                    if(stripos(",{$config->file->dangers},", ",{$extension},") !== false)
                     {
                         unset($_FILES);
                         return array();
@@ -509,7 +546,7 @@ class baseValidater
             else
             {
                 $extension = ltrim(strrchr($files['name'], '.'), '.');
-                if(strrpos(",{$config->file->dangers},", ",{$extension},") !== false)
+                if(stripos(",{$config->file->dangers},", ",{$extension},") !== false)
                 {
                     unset($_FILES);
                     return array();
@@ -541,13 +578,13 @@ class baseValidater
                 foreach($item as $subkey => $subItem)
                 {
                     if(is_array($subItem)) continue;
-                    $super[$key][$subkey] = self::filterTrojan($subItem);
+                    $subItem = self::filterTrojan($subItem);
                     $super[$key][$subkey] = self::filterXSS($subItem);
                 }
             }
             else
             {
-                $super[$key] = self::filterTrojan($item);
+                $item = self::filterTrojan($item);
                 $super[$key] = self::filterXSS($item);
             }
         }
@@ -608,16 +645,93 @@ class baseValidater
 
         if(stripos($var, '<script') !== false)
         {
-            $var    = (string) $var;
-            $evils    = array('appendchild(', 'createElement(', 'xss.re', 'onfocus', 'onclick', 'innerHTML', 'replaceChild(', 'html(', 'append(', 'appendTo(', 'prepend(', 'prependTo(', 'after(', 'before(', 'replaceWith(');
-            $replaces = array('a p p e n d c h i l d (', 'c r e a t e E l e  m e n t (', 'x s s . r e', 'o n f o c u s', 'o n c l i c k', 'i n n e r H T M L', 'r e p l a c e C h i l d (', 'h t m l (', 'a p p e n d (', 'a p p e n d T o (', 'p r e p e n d (', 'p r e p e n d T o (', 'a f t e r (', 'b e f o r e (', 'r e p l a c e W i t h (');
-            $var    = str_ireplace($evils, $replaces, $var);
+            $var      = (string) $var;
+            $evils    = array('appendchild(', 'createElement(', 'xss.re', 'onfocus', 'onclick', 'innerHTML', 'replaceChild(', 'html(', 'append(', 'appendTo(', 'prepend(', 'prependTo(', 'after(', 'insertBefore', 'before(', 'replaceWith(');
+            $replaces = array('a p p e n d c h i l d (', 'c r e a t e E l e  m e n t (', 'x s s . r e', 'o n f o c u s', 'o n c l i c k', 'i n n e r H T M L', 'r e p l a c e C h i l d (', 'h t m l (', 'a p p e n d (', 'a p p e n d T o (', 'p r e p e n d (', 'p r e p e n d T o (', 'a f t e r (', 'i n s e r t B e f o r e(', 'b e f o r e (', 'r e p l a c e W i t h (');
+            $var      = str_ireplace($evils, $replaces, $var);
         }
 
         /* Process like 'javascript:' */
         $var = preg_replace('/j\s*a\s*v\s*a\s*s\s*c\s*r\s*i\s*p\s*t\s*:/Ui', 'j a v a s c r i p t :', $var);
 
         return $var;
+    }
+
+    /**
+     * Filter param.
+     * 
+     * @param  array    $var 
+     * @param  string   $type 
+     * @static
+     * @access public
+     * @return array
+     */
+    public static function filterParam($var, $type)
+    {
+        global $config, $app;
+
+        if(!isset($config->filterParam->$type)) return array();
+
+        $moduleName   = $app->getModuleName();
+        $methodName   = $app->getMethodName();
+        $params       = $app->getParams();
+        $filterConfig = $config->filterParam->$type;
+
+        if($type == 'cookie')
+        {
+            $pagerCookie = 'pager' . ucfirst($moduleName) . ucfirst($methodName);
+            $filterConfig['common'][$pagerCookie]['int'] = '';
+        }
+        foreach($var as $key => $value)
+        {
+            if($config->requestType == 'GET' and $type == 'get' and isset($params[$key])) continue;
+
+            $rules = '';
+            if(isset($filterConfig[$moduleName][$methodName][$key]))
+            {
+                $rules = $filterConfig[$moduleName][$methodName][$key];
+            }
+            elseif(isset($filterConfig[$moduleName]['common'][$key]))
+            {
+                $rules = $filterConfig[$moduleName]['common'][$key];
+            }
+            elseif(isset($filterConfig['common'][$key]))
+            {
+                $rules = $filterConfig['common'][$key];
+            }
+
+            if(!self::checkByRules($value, $rules)) unset($var[$key]);
+        }
+        return $var;
+    }
+
+    /**
+     * Check by rules.
+     * 
+     * @param  string   $var 
+     * @param  array    $rules 
+     * @static
+     * @access public
+     * @return bool
+     */
+    public static function checkByRules($var, $rules)
+    {
+        if(empty($rules)) return false;
+        foreach($rules as $type => $rule)
+        {
+            $checkMethod = 'check' . $type;
+            if(method_exists('baseValidater', $checkMethod))
+            {
+                if(empty($rule)  and self::$checkMethod($var) === false) return false;
+                if(!empty($rule) and self::$checkMethod($var, $rule) === false) return false;
+            }
+            elseif(function_exists('is_' . $type))
+            {
+                $checkFunction = 'is_' . $type;
+                if(!$checkFunction($var)) return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -858,7 +972,7 @@ class baseFixer
         $fields = $this->processFields($fieldName);
         foreach($fields as $fieldName)
         {
-            if(version_compare(phpversion(), '5.4', '<') and get_magic_quotes_gpc()) $this->data->$fieldName = stripslashes($this->data->$fieldName);
+            if(function_exists('get_magic_quotes_gpc') and get_magic_quotes_gpc()) $this->data->$fieldName = stripslashes($this->data->$fieldName);
 
             if(!in_array($fieldName, $this->stripedFields))
             {
@@ -868,6 +982,8 @@ class baseFixer
                      * purifier会把&nbsp;替换空格，kindeditor在会吧行首的空格去掉。
                      * purifier will change &nbsp; to ' ', and edit it will no space in line head use kindeditor. 
                      **/
+                    $this->data->$fieldName = preg_replace('/<[^>]+</', '<', $this->data->$fieldName);
+                    $this->data->$fieldName = preg_replace('/>[^<]+>/', '>', $this->data->$fieldName);
                     if($usePurifier) $this->data->$fieldName = str_replace('&nbsp;', '&spnb;', $this->data->$fieldName);
                     $this->data->$fieldName = $usePurifier ? $purifier->purify($this->data->$fieldName) : strip_tags($this->data->$fieldName, $allowedTags);
                     if($usePurifier) $this->data->$fieldName = str_replace('&amp;spnb;', '&nbsp;', $this->data->$fieldName);

@@ -12,3 +12,5 @@
 $config->user->require = new stdclass();
 $config->user->require->create = 'account,realname,email,password1,role';
 $config->user->require->edit   = 'realname,email,role';
+
+$config->filterParam->get['user']['login']['lang']['reg'] = '/^[a-zA-Z_\-]$/';

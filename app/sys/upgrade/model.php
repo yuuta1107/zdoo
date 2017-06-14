@@ -809,7 +809,7 @@ class upgradeModel extends model
      */
     public function updateAppOrder()
     {
-        $entries = $this->dao->select('*')->from(TABLE_ENTRY)->orderBy('`order, id`')->fetchAll();
+        $entries = $this->dao->select('*')->from(TABLE_ENTRY)->orderBy('`order`, id')->fetchAll();
         $order   = 10;
         foreach($entries as $entry)
         {

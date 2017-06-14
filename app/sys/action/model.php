@@ -46,6 +46,9 @@ class actionModel extends model
         $action->extra      = $extra;
         $action->nextDate   = $this->post->nextDate;
 
+        /* Process action. */
+        $action = $this->loadModel('file')->processEditor($action, 'comment', $this->post->uid);
+
         /* If objectType is customer or contact, save objectID as customer id or contact id. */
         if($objectType == 'customer' || $objectType == 'provider') $action->customer = $objectID;
         if($objectType == 'contact')  $action->contact  = $objectID;
@@ -138,8 +141,9 @@ class actionModel extends model
         foreach($actions as $actionID => $action)
         {
             $action->history = isset($histories[$actionID]) ? $histories[$actionID] : array();
-            $action->files = $this->loadModel('file')->getByObject('action', $actionID);
+            $action->files   = $this->file->getByObject('action', $actionID);
             if($action->action == 'record') $action->contact = isset($contacts[$action->contact]) ? $contacts[$action->contact] : '';
+            $action = $this->file->revertRealSRC($action, 'comment');
             $actions[$actionID] = $action;
         }
 
@@ -569,9 +573,15 @@ class actionModel extends model
      */
     public function updateComment($actionID)
     {
+        $action = new stdclass();
+        $action->comment = trim(strip_tags($this->post->lastComment, $this->config->allowedTags));
+
+        /* Process action. */
+        $action = $this->loadModel('file')->processEditor($action, 'comment', $this->post->uid);
+
         $this->dao->update(TABLE_ACTION)
             ->set('date')->eq(helper::now())
-            ->set('comment')->eq($this->post->lastComment)
+            ->set('comment')->eq($action->comment)
             ->where('id')->eq($actionID)
             ->exec();
     }
