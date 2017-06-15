@@ -210,12 +210,6 @@ class fileModel extends model
                 $file['title']     = !empty($_POST['labels'][$id]) ? htmlspecialchars($_POST['labels'][$id]) : str_replace('.' . $file['extension'], '', $filename);
                 $file['size']      = $size[$id];
                 $file['tmpname']   = $tmp_name[$id];
-
-                if(stripos($this->config->file->allowed, ',' . $file['extension'] . ',') === false)
-                {
-                    $file['pathname'] = $file['pathname'] . '.notAllowed';
-                }
-
                 $files[] = $file;
             }
         }
@@ -228,12 +222,6 @@ class fileModel extends model
             $file['title']     = !empty($_POST['labels'][0]) ? htmlspecialchars($_POST['labels'][0]) : substr($name, 0, strpos($name, $file['extension']) - 1);
             $file['size']      = $size;
             $file['tmpname']   = $tmp_name;
-
-            if(stripos($this->config->file->allowed, ',' . $file['extension'] . ',') === false)
-            {
-                $file['pathname'] = $file['pathname'] . '.notAllowed';
-            }
-
             return array($file);
         }
         return $files;
@@ -249,8 +237,8 @@ class fileModel extends model
     public function getExtension($filename)
     {
         $extension = strtolower(trim(pathinfo($filename, PATHINFO_EXTENSION)));
-        if(empty($extension) or !preg_match('/^[a-z0-9]+$/', $extension) or strlen($extension) > 5) return 'txt';
-        if(strpos($this->config->file->dangers, $extension) !== false) return 'txt';
+        if(empty($extension) or stripos(",{$this->config->file->dangers},", ",{$extension},") !== false) return 'txt';
+        if(empty($extension) or stripos(",{$this->config->file->allowed},", ",{$extension},") === false) return 'txt';
         return $extension;
     }
 
