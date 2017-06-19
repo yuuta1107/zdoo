@@ -601,10 +601,8 @@ class fileModel extends model
     public function processEditor($data, $editorList)
     {
         if(is_string($editorList)) $editorList = explode(',', str_replace(' ', '', $editorList));
-        $webRoot     = $this->app->getWebRoot();
-        $readLinkReg = helper::createLink('file', 'read', 'fileID=(%fileID%)');
-        if($webRoot != '/') $readLinkReg = preg_replace('/^' . str_replace('/', '\/', $webRoot) . '/', '', $readLinkReg);
-        $readLinkReg = htmlspecialchars(str_replace(array('%fileID%', '/', '?'), array('[0-9]+', '\/', '\?'), $readLinkReg));
+        $readLinkReg = basename(helper::createLink('file', 'read', 'fileID=(%fileID%)'));
+        $readLinkReg = htmlspecialchars(str_replace(array('%fileID%', '?'), array('[0-9]+', '\?'), $readLinkReg));
         foreach($editorList as $editorID)
         {
             if(empty($editorID) or empty($data->$editorID)) continue;
