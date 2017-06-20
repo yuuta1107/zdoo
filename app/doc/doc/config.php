@@ -48,5 +48,3 @@ $config->doc->search['params']['createdBy']     = array('operator' => '=',      
 $config->doc->search['params']['createdDate']   = array('operator' => '>=',      'control' => 'input',  'values' => '', 'class' => 'date');
 $config->doc->search['params']['editedBy']      = array('operator' => '=',       'control' => 'select', 'values' => 'users');
 $config->doc->search['params']['editedDate']    = array('operator' => '>=',      'control' => 'input',  'values' => '', 'class' => 'date');
-
-$config->filterParam->cookie['doc']['browse']['browseType']['reg'] = '/^by[a-z]+$/';

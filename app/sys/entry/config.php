@@ -13,7 +13,3 @@ $config->entry = new stdclass();
 $config->entry->require = new stdclass();
 $config->entry->require->create = 'name,code,open,key,login';
 $config->entry->require->edit   = 'name,login';
-
-$config->filterParam->get['entry']['visit']['referer']['reg'] = '/^[a-zA-Z0-9\+\/\=]+$/';
-$config->filterParam->get['entry']['depts']['key']['reg']     = '/^[a-z0-9]{32}$/';
-$config->filterParam->get['entry']['users']['key']['reg']     = '/^[a-z0-9]{32}$/';

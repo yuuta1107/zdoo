@@ -22,5 +22,3 @@ $config->doc->editor->edit   = array('id' => 'content,comment', 'tools' => 'full
 
 $config->doc->markdown = new stdclass();
 $config->doc->markdown->create = array('id' => 'contentMarkdown', 'tools' => 'withchange');
-
-$config->filterParam->cookie['doc']['browse']['browseType']['reg'] = '/^by[a-z]+$/';

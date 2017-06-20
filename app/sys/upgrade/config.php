@@ -16,5 +16,3 @@ $config->delete['3_7'][]   = 'app/oa/doc/';
 $config->delete['4_0'][]   = 'app/sys/error/';
 $config->delete['4_2_2'][] = 'app/oa/leave/css/create.css';
 $config->delete['4_2_2'][] = 'app/oa/overtime/css/create.css';
-
-$config->filterParam->get['upgrade']['upgradelicense']['agree']['equal'] = 'true';

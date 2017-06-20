@@ -26,5 +26,3 @@ $config->todo->calendarColor['custom']   = '#3280FC';
 $config->todo->calendarColor['task']     = '#3280FC';
 $config->todo->calendarColor['order']    = '#3280FC';
 $config->todo->calendarColor['customer'] = '#3280FC';
-
-$config->filterParam->cookie['todo']['calendar']['todoCalendarSide']['equal'] = 'hide';
