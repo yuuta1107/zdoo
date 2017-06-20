@@ -75,5 +75,3 @@ $config->excel->width->content = 100;
 
 $config->excel->freeze = new stdclass();
 $config->excel->freeze->depositor = 'month';
-
-$config->filterParam->cookie['trade']['browse']['treeview']['code'] = '';

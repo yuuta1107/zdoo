@@ -40,7 +40,3 @@ $config->project->search['params']['t1.status']      = array('operator' => '=', 
 $config->project->search['params']['t1.id']          = array('operator' => '=',  'control' => 'input',  'values' => '');
 $config->project->search['params']['t1.createdBy']   = array('operator' => '=',  'control' => 'select', 'values' => '');
 $config->project->search['params']['t1.createdDate'] = array('operator' => '>=', 'control' => 'input',  'values' => '', 'class' => 'date');
-
-$config->filterParam->cookie['project']['common']['lastProject']['int']  = '';
-$config->filterParam->cookie['project']['common']['projectMode']['code'] = '';
-$config->filterParam->cookie['project']['index']['taskListType']['code'] = '';
