@@ -390,7 +390,7 @@ class fileModel extends model
             $fileID = $this->dao->lastInsertID();
             if($uid) $_SESSION['album'][$uid][] = $fileID;
 
-            $data = str_replace($out[1][$key], helper::createLink('file', 'read', "fileID=$fileID"), $data);
+            $data = str_replace($out[1][$key], helper::createLink('file', 'read', "fileID=$fileID", $file['extension']), $data);
         }
 
         return $data;
@@ -601,13 +601,14 @@ class fileModel extends model
     public function processEditor($data, $editorList)
     {
         if(is_string($editorList)) $editorList = explode(',', str_replace(' ', '', $editorList));
-        $readLinkReg = basename(helper::createLink('file', 'read', 'fileID=(%fileID%)'));
-        $readLinkReg = htmlspecialchars(str_replace(array('%fileID%', '?'), array('[0-9]+', '\?'), $readLinkReg));
+        $readLinkReg = basename(helper::createLink('file', 'read', 'fileID=(%fileID%)', '\w+'));
+        $readLinkReg = str_replace(array('%fileID%', '?'), array('[0-9]+', '\?'), $readLinkReg);
         foreach($editorList as $editorID)
         {
             if(empty($editorID) or empty($data->$editorID)) continue;
             $data->$editorID = $this->pasteImage($data->$editorID, $uid);
             $data->$editorID = preg_replace("/ src=\"$readLinkReg\" /", ' src="{$1}" ', $data->$editorID);
+            $data->$editorID = preg_replace("/ src=\"" . htmlspecialchars($readLinkReg) . "\" /", ' src="{$1}" ', $data->$editorID);
         }
         return $data;
     }
@@ -738,7 +739,16 @@ class fileModel extends model
         foreach($fields as $field)
         {
             if(empty($field) or empty($data->$field)) continue;
-            $data->$field = preg_replace('/ src="{([0-9]+)}" /', ' src="' . helper::createLink('file', 'read', "fileID=$1")  . '" ', $data->$field);
+            preg_match_all('/ src="{([0-9]+)}" /', $data->$field, $matchs);
+            if($matchs[1])
+            {
+                $files = $this->dao->select('id,extension')->from(TABLE_FILE)->where('id')->in($matchs[1])->fetchPairs('id', 'extension');
+                foreach($matchs[0] as $i => $match)
+                {
+                    $fileID = $matchs[1][$i];
+                    $data->$field = str_replace($match, ' src="' . helper::createLink('file', 'read', "fileID=$fileID", $files[$fileID])  . '" ', $data->$field);
+                }
+            }
         }
         return $data;
     }

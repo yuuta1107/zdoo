@@ -78,7 +78,7 @@ class file extends control
             $this->dao->insert(TABLE_FILE)->data($file, false)->exec();
 
             $fileID = $this->dao->lastInsertID();
-            $url    = $this->createLink('file', 'read', "fileID=$fileID");
+            $url    = $this->createLink('file', 'read', "fileID=$fileID", $file['extension']);
             if($uid) $_SESSION['album'][$uid][] = $fileID;
             die(json_encode(array('error' => 0, 'url' => $url)));
         }
@@ -113,7 +113,7 @@ class file extends control
                 $this->dao->insert(TABLE_FILE)->data($file)->exec();
 
                 $fileID = $this->dao->lastInsertID();
-                $url    = $this->createLink('file', 'read', "fileID=$fileID");
+                $url    = $this->createLink('file', 'read', "fileID=$fileID", $file['extension']);
                 if($uid) $_SESSION['album'][$uid][] = $fileID;
                 die(json_encode(array('state' => 'SUCCESS', 'url' => $url)));
             }
