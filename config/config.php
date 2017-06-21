@@ -35,7 +35,7 @@ $config->views       = ',html,json,mhtml,'; // 支持的视图类型。         
 /* 支持的主题和语言。Supported thems and languages. */
 $config->themes['default'] = 'default'; 
 $config->langs['zh-cn']    = '简体';
-$config->langs['zh-tw']    = '繁体';
+$config->langs['zh-tw']    = '繁體';
 $config->langs['en']       = 'English';
 
 /* 设备类型视图文件前缀。The prefix for view file for different device. */ 
