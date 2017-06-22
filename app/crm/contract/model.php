@@ -100,12 +100,13 @@ class contractModel extends model
      * @access public
      * @return array
      */
-    public function getPairs($customerID = 0)
+    public function getPairs($customerID = 0, $orderBy = 'id_desc')
     {
         return $this->dao->select('id, name')->from(TABLE_CONTRACT)
             ->where(1)
             ->beginIF($customerID)->andWhere('customer')->eq($customerID)->fi()
             ->andWhere('deleted')->eq(0)
+            ->orderBy($orderBy)
             ->fetchPairs('id', 'name');
     }
 
