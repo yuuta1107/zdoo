@@ -405,6 +405,7 @@ class docModel extends model
         if($doc->lib)     $doc->libName     = $this->dao->findByID($doc->lib)->from(TABLE_DOCLIB)->fetch('name');
         if($doc->project) $doc->projectName = $this->dao->findByID($doc->project)->from(TABLE_PROJECT)->fetch('name');
         if($doc->module)  $doc->moduleName  = $this->dao->findByID($doc->module)->from(TABLE_CATEGORY)->fetch('name');
+        $doc = $this->loadModel('file')->revertRealSRC($doc, 'content');
         return $doc;
     }
 

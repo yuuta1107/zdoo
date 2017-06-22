@@ -42,6 +42,7 @@ class company extends control
             if($result) $this->send(array('result' => 'success', 'message' => $this->lang->setSuccess));
             $this->send(array('result' => 'fail', 'message' => $this->lang->fail));
         }
+        if(isset($this->config->company->content)) $this->config->company = $this->loadModel('file')->revertRealSRC($this->config->company, 'desc,content');
 
         $this->view->title = $this->lang->company->setBasic;
         $this->display();

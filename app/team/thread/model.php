@@ -32,6 +32,7 @@ class threadModel extends model
         $thread->editorRealname = !empty($thread->editor) ? $speaker[$thread->editor] : '';
 
         $thread->files = $this->loadModel('file')->getByObject('thread', $thread->id);
+        $thread = $this->file->revertRealSRC($thread, 'content');
         return $thread;
     }
 
@@ -148,6 +149,7 @@ class threadModel extends model
     public function process($threads = array(), $orderBy = 'repliedDate_desc', $pager = null)
     {
         $this->loadModel('tree');
+        $this->loadModel('file');
         foreach($threads as $key => $thread)
         {
             if(!$this->tree->hasRight($thread->board)) unset($threads[$key]); 
@@ -157,6 +159,7 @@ class threadModel extends model
 
             /* Judge the thread is new or not.*/
             $thread->isNew = (time() - strtotime($thread->repliedDate)) < 24 * 60 * 60 * $this->config->thread->newDays;
+            $thread = $this->file->revertRealSRC($thread, 'content');
         }
 
         $idList = array();

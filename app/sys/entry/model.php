@@ -24,7 +24,7 @@ class entryModel extends model
         $entries = $this->dao->select('*')->from(TABLE_ENTRY)
             ->where(1)
             ->beginIF(!empty($category))->andWhere('category')->eq($category)->fi()
-            ->orderBy('`order, id`')
+            ->orderBy('`order`, id')
             ->fetchAll();
         $categories = $this->dao->select('distinct t1.id, t1.name, t1.order')->from(TABLE_CATEGORY)->alias('t1')
             ->leftJoin(TABLE_ENTRY)->alias('t2')->on('t1.id=t2.category')

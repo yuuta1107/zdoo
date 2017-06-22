@@ -24,7 +24,8 @@ class customerModel extends model
         if(empty($customerIdList)) return false;
         if(!in_array($id, $customerIdList)) return false;
 
-        return $this->dao->select('*')->from(TABLE_CUSTOMER)->where('id')->eq($id)->limit(1)->fetch();
+        $customer = $this->dao->select('*')->from(TABLE_CUSTOMER)->where('id')->eq($id)->limit(1)->fetch();
+        $customer = $this->loadModel('file')->revertRealSRC($customer, 'desc');
     }
 
     /**

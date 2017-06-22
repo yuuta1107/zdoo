@@ -155,10 +155,10 @@ class baseHelper
      * @access public
      * @return string
      */
-    public static function processOnlyBodyParam($link, $onlyBody = true)
+    public static function processOnlyBodyParam($link, $onlyBody = false)
     {
         global $config;
-        if($onlyBody == false or !self::inOnlyBodyMode()) return $link;
+        if(!$onlyBody and !self::inOnlyBodyMode()) return $link;
         $onlybodyString = $config->requestType != 'GET' ? "?onlybody=yes" : "&onlybody=yes";
         return $link . $onlybodyString;
     }
@@ -262,7 +262,7 @@ class baseHelper
      */
     static public function jsonEncode($data)
     {
-        return (version_compare(phpversion(), '5.4', '<') and function_exists('get_magic_quotes_gpc') and get_magic_quotes_gpc()) ? addslashes(json_encode($data)) : json_encode($data);
+        return (function_exists('get_magic_quotes_gpc') and get_magic_quotes_gpc()) ? addslashes(json_encode($data)) : json_encode($data);
     }
 
     /**
@@ -343,6 +343,87 @@ class baseHelper
     }
 
     /**
+     * Get browser name and version.
+     * 
+     * @access public
+     * @return array
+     */
+    public static function getBrowser()
+    {
+        $browser = array('name'=>'unknown', 'version'=>'unknown');
+
+        if(empty($_SERVER['HTTP_USER_AGENT'])) return $browser;
+
+        $agent = $_SERVER["HTTP_USER_AGENT"];
+
+        /* Chrome should checked before safari.*/
+        if(strpos($agent, 'Firefox') !== false) $browser['name'] = "firefox";
+        if(strpos($agent, 'Opera') !== false)   $browser['name'] = 'opera';
+        if(strpos($agent, 'Safari') !== false)  $browser['name'] = 'safari';
+        if(strpos($agent, 'Chrome') !== false)  $browser['name'] = "chrome";
+
+        // Check the name of browser
+        if(strpos($agent, 'MSIE') !== false || strpos($agent, 'rv:11.0')) $browser['name'] = 'ie';
+        if(strpos($agent, 'Edge') !== false) $browser['name'] = 'edge';
+
+        // Check the version of browser
+        if(preg_match('/MSIE\s(\d+)\..*/i', $agent, $regs))       $browser['version'] = $regs[1];
+        if(preg_match('/FireFox\/(\d+)\..*/i', $agent, $regs))    $browser['version'] = $regs[1];
+        if(preg_match('/Opera[\s|\/](\d+)\..*/i', $agent, $regs)) $browser['version'] = $regs[1];
+        if(preg_match('/Chrome\/(\d+)\..*/i', $agent, $regs))     $browser['version'] = $regs[1];
+
+        if((strpos($agent, 'Chrome') == false) && preg_match('/Safari\/(\d+)\..*$/i', $agent, $regs)) $browser['version'] = $regs[1];
+        if(preg_match('/rv:(\d+)\..*/i', $agent, $regs)) $browser['version'] = $regs[1];
+        if(preg_match('/Edge\/(\d+)\..*/i', $agent, $regs)) $browser['version'] = $regs[1];
+
+        return $browser;
+    }
+
+    /**
+     * Get client os from agent info. 
+     * 
+     * @static
+     * @access public
+     * @return string
+     */
+    public static function getOS()
+    {
+        if(empty($_SERVER['HTTP_USER_AGENT'])) return 'unknow';
+
+        $osList = array();
+        $osList['/windows nt 10/i']      = 'Windows 10';
+        $osList['/windows nt 6.3/i']     = 'Windows 8.1';
+        $osList['/windows nt 6.2/i']     = 'Windows 8';
+        $osList['/windows nt 6.1/i']     = 'Windows 7';
+        $osList['/windows nt 6.0/i']     = 'Windows Vista';
+        $osList['/windows nt 5.2/i']     = 'Windows Server 2003/XP x64';
+        $osList['/windows nt 5.1/i']     = 'Windows XP';
+        $osList['/windows xp/i']         = 'Windows XP';
+        $osList['/windows nt 5.0/i']     = 'Windows 2000';
+        $osList['/windows me/i']         = 'Windows ME';
+        $osList['/win98/i']              = 'Windows 98';
+        $osList['/win95/i']              = 'Windows 95';
+        $osList['/win16/i']              = 'Windows 3.11';
+        $osList['/macintosh|mac os x/i'] = 'Mac OS X';
+        $osList['/mac_powerpc/i']        = 'Mac OS 9';
+        $osList['/linux/i']              = 'Linux';
+        $osList['/ubuntu/i']             = 'Ubuntu';
+        $osList['/iphone/i']             = 'iPhone';
+        $osList['/ipod/i']               = 'iPod';
+        $osList['/ipad/i']               = 'iPad';
+        $osList['/android/i']            = 'Android';
+        $osList['/blackberry/i']         = 'BlackBerry';
+        $osList['/webos/i']              = 'Mobile';
+
+        foreach ($osList as $regex => $value)
+        { 
+            if(preg_match($regex, $_SERVER['HTTP_USER_AGENT'])) return $value; 
+        }   
+
+        return 'unknown';
+    }
+    
+    /**
      *  计算两个日期相差的天数，取整。
      *  Compute the diff days of two date.
      * 
@@ -422,8 +503,8 @@ class baseHelper
     }
 
     /**
-     * 切换目录。第一次调用的时候记录当前的路径，再次调用的时候切换会之前的路径。
-     * Change directory: firest call, save the $cwd, sencode call, change to $cwd.
+     * 切换目录。第一次调用的时候记录当前的路径，再次调用的时候切换回之前的路径。
+     * Change directory: first call, save the $cwd, secend call, change to $cwd.
      * 
      * @param  string $path 
      * @static
@@ -473,6 +554,10 @@ class baseHelper
         /* 类似www.a.com的形式。 Domain like www.a.com. */
         $postfix = str_replace($items[0] . '.' . $items[1] . '.', '', $domain);
         if(isset($config->domainPostfix) and strpos($config->domainPostfix, "|$postfix|") !== false) return $items[1];
+
+        /* 类似xxx.sub.a.com的形式。 Domain like xxx.sub.a.com. */
+        $postfix = str_replace($items[0] . '.' . $items[1] . '.' . $items[2] . '.', '', $domain);
+        if(isset($config->domainPostfix) and strpos($config->domainPostfix, "|$postfix|") !== false) return $items[0];
 
         return '';
     }
@@ -593,6 +678,8 @@ function a($var)
  */
 function isLocalIP()
 {
+    global $config;
+    if(isset($config->islocalIP)) return $config->isLocalIP;
     $serverIP = $_SERVER['SERVER_ADDR'];
     if($serverIP == '127.0.0.1') return true;
     if(strpos($serverIP, '10.70') !== false) return false;
@@ -606,7 +693,7 @@ function isLocalIP()
  * @access public
  * @return string 
  */
-function getWebRoot()
+function getWebRoot($full = false)
 {
     $path = $_SERVER['SCRIPT_NAME'];
 
@@ -618,6 +705,12 @@ function getWebRoot()
             $path = empty($url['path']) ? '/' : rtrim($url['path'], '/');
         }
         $path = empty($path) ? '/' : preg_replace('/\/www$/', '/www/', $path);
+    }
+    
+    if($full)
+    {
+        $http = (isset($_SERVER['HTTPS']) and strtolower($_SERVER['HTTPS']) != 'off') ? 'https://' : 'http://';
+        return $http . $_SERVER['HTTP_HOST'] . substr($path, 0, (strrpos($path, '/') + 1));
     }
 
     $path = dirname(dirname($path));

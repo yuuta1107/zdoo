@@ -36,6 +36,7 @@ class taskModel extends model
         foreach($teams as $key => $team) $teams[$key] = array_reverse($team);
         $task->team = isset($teams[$taskID]) ? $teams[$taskID] : array();
         foreach($children as $child) $child->team = isset($teams[$child->id]) ? $teams[$child->id] : array();
+        $task = $this->loadModel('file')->revertRealSRC($task, 'desc,remark');
 
         return $task;
     }
@@ -429,7 +430,7 @@ class taskModel extends model
      */
     public function update($taskID, $task = null)
     {
-        $oldTask = $this->getById($taskID);
+        $oldTask = $this->dao->select('*')->from(TABLE_TASK)->where('id')->eq((int)$taskID)->fetch();
         $now     = helper::now();
         if(!$task)
         {

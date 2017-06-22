@@ -28,6 +28,7 @@ class projectModel extends model
         $project->PM      = '';
         foreach($members as $member) if($member->role == 'manager') $project->PM = $member->account;
 
+        $project = $this->loadModel('file')->revertRealSRC($project, 'desc');
         return $project;
     }
 
@@ -94,6 +95,7 @@ class projectModel extends model
 
         $members = $this->dao->select('*')->from(TABLE_TEAM)->where('type')->eq('project')->fetchGroup('id', 'account');
 
+        $this->loadModel('file');
         $idList = array();
         foreach($projects as $project)
         {
@@ -106,6 +108,7 @@ class projectModel extends model
                 $project->PM = $member->account;
             }
 
+            $project = $this->file->revertRealSRC($project, 'desc');
             if($this->checkPriv($project->id)) $idList[] = $project->id; 
         }
 

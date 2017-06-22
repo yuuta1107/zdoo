@@ -19,7 +19,7 @@
  */
 class baseDAO
 {
-    /* Use these strange strings to avoid conflicting with these keywords in the sql body. */
+    /* Use these strang strings to avoid conflicting with these keywords in the sql body. */
     const WHERE   = 'wHeRe';
     const GROUPBY = 'gRoUp bY';
     const HAVING  = 'hAvInG';
@@ -386,7 +386,7 @@ class baseDAO
             $this->sqlError($e);
         }
 
-        return $row->recTotal;
+        return is_object($row) ? $row->recTotal : 0;
     }
 
     /**
@@ -513,6 +513,7 @@ class baseDAO
         if($this->autoLang and !isset($data->lang)) 
         {
             $data->lang = $this->app->getClientLang();
+            if(isset($this->app->config->cn2tw) and $this->app->config->cn2tw and $data->lang == 'zh-tw') $data->lang = 'zh-cn';
             if(defined('RUN_MODE') and RUN_MODE == 'front' and !empty($this->app->config->cn2tw)) $data->lang = str_replace('zh-tw', 'zh-cn', $data->lang);
         }
 
@@ -558,6 +559,7 @@ class baseDAO
     {
         $sql    = empty($sql) ? $this->processSQL() : $sql;
         $result = $this->dbh->query('explain ' . $sql)->fetch();
+        a($result);
     }
 
     /**
@@ -672,8 +674,18 @@ class baseDAO
         /* If any error, return an empty statement object to make sure the remain method to execute. */
         if(!empty(dao::$errors)) return new PDOStatement();   
 
-        if($sql) $this->sqlobj->sql = $sql;
-        $sql = $this->processSQL();
+        if($sql)
+        {
+            $sql       = trim($sql);
+            $sqlMethod = strtolower(substr($sql, 0, strpos($sql, ' ')));
+            $this->setMethod($sqlMethod);
+            $this->sqlobj = new sql();
+            $this->sqlobj->sql = $sql;
+        }
+        else
+        {
+            $sql = $this->processSQL();
+        }
         $key = md5($sql);
 
         try
@@ -683,7 +695,7 @@ class baseDAO
 
             if($this->slaveDBH and $method == 'select')
             {
-                if(isset(dao::$cache['dbh'][$key])) return dao::$cache[$key];
+                if(isset(dao::$cache[$key])) return dao::$cache[$key];
                 $result = $this->slaveDBH->query($sql);
                 dao::$cache[$key] = $result;
                 return $result;
@@ -692,9 +704,9 @@ class baseDAO
             {
                 if($this->method == 'select')
                 {
-                    if(isset(dao::$cache['dbh'][$key])) return dao::$cache[$key];
+                    if(isset(dao::$cache[$key])) return dao::$cache[$key];
                     $result = $this->slaveDBH->query($sql);
-                    dao::$cache['dbh'][$key] = $result;
+                    dao::$cache[$key] = $result;
                     return $result;
                 }
 
@@ -745,8 +757,15 @@ class baseDAO
     {
         if(!empty(dao::$errors)) return new PDOStatement();   // If any error, return an empty statement object to make sure the remain method to execute.
 
-        if($sql) $this->sqlobj->sql = $sql;
-        $sql = $this->processSQL();
+        if($sql)
+        {
+            $this->sqlobj = new sql();
+            $this->sqlobj->sql = $sql;
+        }
+        else
+        {
+            $sql = $this->processSQL();
+        }
 
         try
         {
@@ -773,13 +792,9 @@ class baseDAO
     public function fetch($field = '')
     {
         if(empty($field)) return $this->query()->fetch();
-
         $this->setFields($field);
         $result = $this->query()->fetch(PDO::FETCH_OBJ);
-        if($result)
-        {
-            return $result->$field;
-        }
+        if($result) return $result->$field;
     }
 
     /**
@@ -970,7 +985,7 @@ class baseDAO
         global $lang, $config, $app;
         if(isset($config->db->prefix))
         {
-            $table      = strtolower(str_replace(array($config->db->prefix, '`'), '', $this->table));
+            $table = strtolower(str_replace(array($config->db->prefix, '`'), '', $this->table));
         }
         elseif(strpos($this->table, '_') !== false)
         {
@@ -1294,10 +1309,10 @@ class baseDAO
         $errorCode = $errorInfo[1];
         $errorMsg  = $errorInfo[2];
         $message   = $exception->getMessage();
-        if(strpos($this->repairCode, "|$errorCode|") !== false or ($errorCode == '1016' and strpos($errorMsg, 'errno: 145') !== false))
+        if(strpos($this->repairCode, "|$errorCode|") !== false or ($errorCode == '1016' and strpos($errorMsg, 'errno: 145') !== false) or strpos($message, 'repair') !== false)
         {
             global $config;
-            if(isset($config->framework->autoRepairTable) and $config->framework->autoRepairTable) die(js::locate(helper::createLink('misc', 'checkTable')));
+            if(isset($config->framework->autoRepairTable) and $config->framework->autoRepairTable) die(js::locate($config->webRoot . 'checktable.php', 'top'));
             $message .=  ' ' . $this->lang->repairTable;
         }
         $sql = $this->sqlobj->get();
@@ -1906,10 +1921,12 @@ class baseSQL
 
         /* Add "`" in order string. */
         /* When order has limit string. */
-        $pos      = stripos($order, 'limit');
-        $instrpos = stripos($order, 'instr');
-        $orders   = $pos ? substr($order, 0, $pos) : $order;
-        $limit    = $pos ? substr($order, $pos) : '';
+        $pos    = stripos($order, 'limit');
+        $orders = $pos ? substr($order, 0, $pos) : $order;
+        $limit  = $pos ? substr($order, $pos) : '';
+        $orders = trim($orders);
+        if(empty($orders)) return $this;
+        if(!preg_match('/^(\w+\.)?(`\w+`|\w+)( +(desc|asc))?( *(, *(\w+\.)?(`\w+`|\w+)( +(desc|asc))?)?)*$/i', $orders)) die("Order is bad request, The order is $orders");
 
         $orders = explode(',', $orders);
         foreach($orders as $i => $order)
@@ -1919,17 +1936,17 @@ class baseSQL
             {
                 $value = trim($value);
                 if(empty($value) or strtolower($value) == 'desc' or strtolower($value) == 'asc') continue;
-                $field = trim($value, '`');
 
+                $field = $value;
                 /* such as t1.id field. */
                 if(strpos($value, '.') !== false) list($table, $field) = explode('.', $field);
-                /* Ignore order with function e.g. order by length(tag) asc. */
-                if($instrpos === false && strpos($field, '(') === false) $field = "`$field`";
+                if(strpos($field, '`') === false) $field = "`$field`";
 
                 $orderParse[$key] = isset($table) ? $table . '.' . $field :  $field;
                 unset($table);
             }
             $orders[$i] = join(' ', $orderParse);
+            if(empty($orders[$i])) unset($orders[$i]);
         }
         $order = join(',', $orders) . ' ' . $limit;
 
@@ -1949,7 +1966,11 @@ class baseSQL
     {
         if($this->inCondition and !$this->conditionIsTrue) return $this;
         if(empty($limit)) return $this;
-        stripos($limit, 'limit') !== false ? $this->sql .= " $limit " : $this->sql .= ' ' . DAO::LIMIT . " $limit ";
+
+        /* filter limit. */
+        $limit = trim(str_ireplace('limit', '', $limit));
+        if(!preg_match('/^[0-9]+ *(, *[0-9]+)?$/', $limit)) die("Limit is bad query, The limit is $limit");
+        $this->sql .= ' ' . DAO::LIMIT . " $limit ";
         return $this;
     }
 

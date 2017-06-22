@@ -22,17 +22,19 @@ class contractModel extends model
     {
         $contract = $this->dao->select('*')->from(TABLE_CONTRACT)->where('id')->eq($contractID)->fetch();
 
+        $this->loadModel('file', 'sys');
         if($contract)
         {
             $contract->order = array();
             $contractOrders  = $this->dao->select('*')->from(TABLE_CONTRACTORDER)->where('contract')->eq($contractID)->fetchAll();
             foreach($contractOrders as $contractOrder) $contract->order[] = $contractOrder->order;
 
-            $contract->files        = $this->loadModel('file', 'sys')->getByObject('contract', $contractID);
+            $contract->files        = $this->file->getByObject('contract', $contractID);
             $contract->returnList   = $this->getReturnList($contractID);
             $contract->deliveryList = $this->getDeliveryList($contractID);
         }
 
+        $contract = $this->file->revertRealSRC($contract, 'items');
         return $contract;
     }
 

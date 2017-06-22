@@ -306,6 +306,7 @@ class todoModel extends model
             }
         }
         $todo->date = str_replace('-', '', $todo->date);
+        $todo = $this->loadModel('file')->revertRealSRC($todo, 'desc');
         return $todo;
     }
 
