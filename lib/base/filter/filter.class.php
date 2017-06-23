@@ -679,6 +679,7 @@ class baseValidater
             $pagerCookie = 'pager' . ucfirst($moduleName) . ucfirst($methodName);
             $filter->default->cookie[$pagerCookie] = 'int';
         }
+
         foreach($var as $key => $value)
         {
             if($config->requestType == 'GET' and $type == 'get' and isset($params[$key])) continue;
@@ -699,6 +700,7 @@ class baseValidater
 
             if(!self::checkByRule($value, $rules)) unset($var[$key]);
         }
+
         return $var;
     }
 
