@@ -21,7 +21,7 @@ $config->version    = '4.2.3';              // ZenTaoPHP的版本。 The version
 $config->charset    = 'UTF-8';              // ZenTaoPHP的编码。 The encoding of ZenTaoPHP.                 
 $config->cookieLife = time() + 2592000;     // Cookie的生存时间。The cookie life time.                      
 $config->timezone   = 'Asia/Shanghai';      // 时区设置。        The time zone setting, for more see http://www.php.net/manual/en/timezones.php.
-$config->webRoot    = getWebRoot();                   // URL根目录。       The root path of the url.
+$config->webRoot    = getWebRoot();         // URL根目录。       The root path of the url.
 
 /* 框架路由相关设置。Routing settings. */
 $config->requestType = 'PATH_INFO';         // 请求类型：PATH_INFO|PATHINFO2|GET。    The request type: PATH_INFO|PATH_INFO2|GET.

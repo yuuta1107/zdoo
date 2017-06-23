@@ -12,7 +12,9 @@
  * @link        http://www.ranzhi.org
  */
 
+if(!function_exists('getRanzhiWebRoot')){function getRanzhiWebRoot(){}}
 /* 基本设置。Rangerteam basic settings. */
+$config->webRoot      = getRanzhiWebRoot(); // URL根目录。       The root path of the url.
 $config->cookiePath   = '/';                // The path of cookies.
 $config->checkVersion = true;               // Auto check for new version or not.
 $config->timeout      = 30 * 1000;          // The timeout of ajax request.
