@@ -82,6 +82,40 @@ class helper extends baseHelper
         $string = str_replace($labels, $to, $string);
         return preg_replace("/[{$to}]+/", $to, trim($string, $to));
     }
+
+    /**
+     * 获取webRoot。
+     * Get web root. 
+     * 
+     * @access public
+     * @return string 
+     */
+    function getWebRoot($full = false)
+    {
+        $path = $_SERVER['SCRIPT_NAME'];
+    
+        if(PHP_SAPI == 'cli')
+        {
+            if(isset($_SERVER['argv'][1]))
+            {
+                $url  = parse_url($_SERVER['argv'][1]);
+                $path = empty($url['path']) ? '/' : rtrim($url['path'], '/');
+            }
+            $path = empty($path) ? '/' : preg_replace('/\/www$/', '/www/', $path);
+        }
+        
+        if($full)
+        {
+            $http = (isset($_SERVER['HTTPS']) and strtolower($_SERVER['HTTPS']) != 'off') ? 'https://' : 'http://';
+            return $http . $_SERVER['HTTP_HOST'] . substr($path, 0, (strrpos($path, '/') + 1));
+        }
+    
+        $path = dirname(dirname($path));
+        $path = str_replace('\\', '/', $path);
+        if($path == '/') return '/';
+        return $path . '/';
+    }
+
 }
 
 /**

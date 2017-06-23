@@ -120,9 +120,9 @@ if(file_exists($filterConfig)) include $filterConfig;
 $myConfig = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'my.php';
 if(file_exists($myConfig)) include $myConfig;
 
-$rightsConfig = $configRoot . 'rights.php';
+$rightsConfig = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'rights.php';
 if(file_exists($rightsConfig)) include $rightsConfig;
 
 /* Include extension config files. */
-$extConfigFiles = glob($configRoot . 'ext/*.php');
+$extConfigFiles = glob(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'ext/*.php');
 if($extConfigFiles) foreach($extConfigFiles as $extConfigFile) include $extConfigFile;
