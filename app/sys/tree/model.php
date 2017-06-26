@@ -41,7 +41,7 @@ class treeModel extends model
         }
 
         $category->pathNames = $this->dao->select('id, name')->from(TABLE_CATEGORY)->where('id')->in($category->path)->orderBy('grade')->fetchPairs();
-        $category = $this->loadModel('file')->revertRealSRC($category, 'desc');
+        $category = $this->loadModel('file')->replaceImgURL($category, 'desc');
         return $category;
     }
 

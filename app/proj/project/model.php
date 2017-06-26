@@ -28,7 +28,7 @@ class projectModel extends model
         $project->PM      = '';
         foreach($members as $member) if($member->role == 'manager') $project->PM = $member->account;
 
-        $project = $this->loadModel('file')->revertRealSRC($project, 'desc');
+        $project = $this->loadModel('file')->replaceImgURL($project, 'desc');
         return $project;
     }
 
@@ -108,7 +108,7 @@ class projectModel extends model
                 $project->PM = $member->account;
             }
 
-            $project = $this->file->revertRealSRC($project, 'desc');
+            $project = $this->file->replaceImgURL($project, 'desc');
             if($this->checkPriv($project->id)) $idList[] = $project->id; 
         }
 
@@ -189,7 +189,7 @@ class projectModel extends model
             ->stripTags('desc', $this->config->allowedTags)
             ->get();
 
-        $project = $this->loadModel('file')->processEditor($project, $this->config->project->editor->create['id']);
+        $project = $this->loadModel('file')->processImgURL($project, $this->config->project->editor->create['id']);
         $this->dao->insert(TABLE_PROJECT)
             ->data($project, $skip = 'uid')
             ->autoCheck()
@@ -254,7 +254,7 @@ class projectModel extends model
                 ->get();
         }
 
-        $project = $this->loadModel('file')->processEditor($project, $this->config->project->editor->edit['id']);
+        $project = $this->loadModel('file')->processImgURL($project, $this->config->project->editor->edit['id']);
         $this->dao->update(TABLE_PROJECT)
             ->data($project, $skip = 'uid')
             ->autoCheck()

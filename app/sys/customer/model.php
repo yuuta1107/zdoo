@@ -25,7 +25,7 @@ class customerModel extends model
         if(!in_array($id, $customerIdList)) return false;
 
         $customer = $this->dao->select('*')->from(TABLE_CUSTOMER)->where('id')->eq($id)->limit(1)->fetch();
-        $customer = $this->loadModel('file')->revertRealSRC($customer, 'desc');
+        $customer = $this->loadModel('file')->replaceImgURL($customer, 'desc');
     }
 
     /**
@@ -285,7 +285,7 @@ class customerModel extends model
         if($customer->site == 'http://') $customer->site = '';
         if($customer->weibo == 'http://weibo.com/') $customer->weibo = '';
 
-        $customer = $this->loadModel('file', 'sys')->processEditor($customer, $this->config->customer->editor->edit['id']);
+        $customer = $this->loadModel('file', 'sys')->processImgURL($customer, $this->config->customer->editor->edit['id']);
         $this->dao->update(TABLE_CUSTOMER)
             ->data($customer, $skip = 'uid')
             ->autoCheck()

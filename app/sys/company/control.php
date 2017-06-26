@@ -36,13 +36,13 @@ class company extends control
         {
             $now = helper::now();
             $company = fixer::input('post')->stripTags('content', $this->config->allowedTags)->get();
-            $company = $this->loadModel('file')->processEditor($company, $this->config->company->editor->setbasic['id']);
+            $company = $this->loadModel('file')->processImgURL($company, $this->config->company->editor->setbasic['id']);
 
             $result = $this->loadModel('setting')->setItems('system.sys.common.company', $company);
             if($result) $this->send(array('result' => 'success', 'message' => $this->lang->setSuccess));
             $this->send(array('result' => 'fail', 'message' => $this->lang->fail));
         }
-        if(isset($this->config->company->content)) $this->config->company = $this->loadModel('file')->revertRealSRC($this->config->company, 'desc,content');
+        if(isset($this->config->company->content)) $this->config->company = $this->loadModel('file')->replaceImgURL($this->config->company, 'desc,content');
 
         $this->view->title = $this->lang->company->setBasic;
         $this->display();

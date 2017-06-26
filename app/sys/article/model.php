@@ -44,7 +44,7 @@ class articleModel extends model
 
         /* Get it's files. */
         $article->files = $this->loadModel('file')->getByObject($article->type, $articleID);
-        $article = $this->file->revertRealSRC($article, 'content');
+        $article = $this->file->replaceImgURL($article, 'content');
 
         $article->readers = explode(',', $article->readers);
         foreach($article->readers as $key => $reader) if(!$reader) unset($article->readers[$key]);
@@ -270,7 +270,7 @@ class articleModel extends model
 
         if(empty($article->categories)) dao::$errors['categories'][] = sprintf($this->lang->error->notempty, $this->lang->article->category) ;
 
-        $article = $this->loadModel('file')->processEditor($article, $this->config->article->editor->create['id']);
+        $article = $this->loadModel('file')->processImgURL($article, $this->config->article->editor->create['id']);
         $this->dao->insert(TABLE_ARTICLE)
             ->data($article, $skip = 'categories,uid')
             ->autoCheck()
@@ -315,7 +315,7 @@ class articleModel extends model
         $article->users   = !empty($article->users) ? ',' . trim($article->users, ',') . ',' : '';
         $article->groups  = !empty($article->groups) ? ',' . trim($article->groups, ',') . ',' : '';
 
-        $article = $this->loadModel('file')->processEditor($article, $this->config->article->editor->edit['id']);
+        $article = $this->loadModel('file')->processImgURL($article, $this->config->article->editor->edit['id']);
         $this->dao->update(TABLE_ARTICLE)
             ->data($article, $skip = 'categories,uid')
             ->autoCheck()
@@ -439,7 +439,7 @@ class articleModel extends model
         {
             /* Assign categories to it's article. */
             $article->categories = isset($categories[$article->id]) ? $categories[$article->id] : array();
-            $article = $this->file->revertRealSRC($article, 'content');
+            $article = $this->file->replaceImgURL($article, 'content');
             if($this->hasRight($article)) $idList[] = $article->id;
         }
 

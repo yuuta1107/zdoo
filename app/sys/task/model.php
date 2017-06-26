@@ -36,7 +36,7 @@ class taskModel extends model
         foreach($teams as $key => $team) $teams[$key] = array_reverse($team);
         $task->team = isset($teams[$taskID]) ? $teams[$taskID] : array();
         foreach($children as $child) $child->team = isset($teams[$child->id]) ? $teams[$child->id] : array();
-        $task = $this->loadModel('file')->revertRealSRC($task, 'desc,remark');
+        $task = $this->loadModel('file')->replaceImgURL($task, 'desc,remark');
 
         return $task;
     }
@@ -303,7 +303,7 @@ class taskModel extends model
             }
         }
 
-        $task = $this->loadModel('file')->processEditor($task, $this->config->task->editor->create['id']);
+        $task = $this->loadModel('file')->processImgURL($task, $this->config->task->editor->create['id']);
         $this->dao->insert(TABLE_TASK)->data($task, $skip = 'uid,files,labels,team,teamEstimate,multiple,teamMember')
             ->autoCheck()
             ->batchCheck($this->config->task->require->create, 'notempty')
@@ -506,10 +506,10 @@ class taskModel extends model
                 }
                 $task->team = $team;
             }
-            $task = $this->loadModel('file')->processEditor($task, $this->config->task->editor->edit['id']);
+            $task = $this->loadModel('file')->processImgURL($task, $this->config->task->editor->edit['id']);
         }
 
-        if(isset($task->uid)) $task = $this->loadModel('file')->processEditor($task, $this->config->task->editor->edit['id']);
+        if(isset($task->uid)) $task = $this->loadModel('file')->processImgURL($task, $this->config->task->editor->edit['id']);
         $this->dao->update(TABLE_TASK)->data($task, 'files, children, team, uid')
             ->autoCheck()
             ->batchCheckIF($task->status != 'cancel', $this->config->task->require->edit, 'notempty')

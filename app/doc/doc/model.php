@@ -187,8 +187,9 @@ class docModel extends model
 
         foreach($files as $fileID => $file)
         {
-            $file->realPath = $this->file->savePath . $file->pathname;
-            $file->webPath  = $this->file->webPath . $file->pathname;
+            $realPathName   = $this->file->getRealPathName($file->pathname);
+            $file->realPath = $this->file->savePath . $realPathName;
+            $file->webPath  = $this->file->webPath . $realPathName;
         }
 
         return $files;
@@ -377,8 +378,9 @@ class docModel extends model
         $docFiles = array();
         foreach($files as $file)
         {
-            $file->webPath  = $this->file->webPath . $file->pathname;
-            $file->realPath = $this->file->savePath . $file->pathname;
+            $realPathName   = $this->file->getRealPathName($file->pathname);
+            $file->webPath  = $this->file->webPath . $realPathName;
+            $file->realPath = $this->file->savePath . $realPathName;
             if(!empty($docContent->files) && strpos(",$docContent->files,", ",$file->id,") !== false) $docFiles[$file->id] = $file;
         }
 
@@ -405,7 +407,7 @@ class docModel extends model
         if($doc->lib)     $doc->libName     = $this->dao->findByID($doc->lib)->from(TABLE_DOCLIB)->fetch('name');
         if($doc->project) $doc->projectName = $this->dao->findByID($doc->project)->from(TABLE_PROJECT)->fetch('name');
         if($doc->module)  $doc->moduleName  = $this->dao->findByID($doc->module)->from(TABLE_CATEGORY)->fetch('name');
-        $doc = $this->loadModel('file')->revertRealSRC($doc, 'content');
+        $doc = $this->loadModel('file')->replaceImgURL($doc, 'content');
         return $doc;
     }
 
@@ -436,7 +438,7 @@ class docModel extends model
         $doc->groups = !empty($doc->groups) ? ',' . trim($doc->groups, ',') . ',' : '';
 
         $condition = "lib = '$doc->lib' AND module = $doc->module";
-        $doc = $this->loadModel('file')->processEditor($doc, $this->config->doc->editor->create['id'], $this->post->uid);
+        $doc = $this->loadModel('file')->processImgURL($doc, $this->config->doc->editor->create['id'], $this->post->uid);
 
         $lib = $this->getLibByID($doc->lib);
         $doc->project = $lib->project;
@@ -511,7 +513,7 @@ class docModel extends model
 
         $uniqueCondition = "lib = '{$oldDoc->lib}' AND module = {$doc->module} AND id != $docID";
         $lib = $this->getLibByID($doc->lib);
-        $doc = $this->loadModel('file')->processEditor($doc, $this->config->doc->editor->edit['id'], $this->post->uid);
+        $doc = $this->loadModel('file')->processImgURL($doc, $this->config->doc->editor->edit['id'], $this->post->uid);
         $doc->project = $lib->project;
         if($oldDoc->type == 'url') $doc->content = $doc->url;
         unset($doc->url);

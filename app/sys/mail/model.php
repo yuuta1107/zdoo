@@ -284,7 +284,12 @@ class mailModel extends model
         $this->clear();
 
         /* Replace full webPath image for mail. */
-        if(strpos($body, 'src="data/upload')) $body = preg_replace('/<img (.*)src="data\/upload/', '<img $1 src="http://' . $this->server->http_host . $this->config->webRoot . 'data/upload', $body);
+        $sysURL      = commonModel::getSysURL();
+        $readLinkReg = str_replace(array('%fileID%', '/', '.', '?'), array('[0-9]+', '\/', '\.', '\?'), helper::createLink('file', 'read', 'fileID=(%fileID%)', '\w+'));
+
+        $body = preg_replace('/ src="(' . $readLinkReg . ')" /', ' src="' . $sysURL . '$1" ', $body);
+        $body = preg_replace('/ src="{([0-9]+)(\.(\w+))?}" /', ' src="' . $sysURL . helper::createLink('file', 'read', "fileID=$1", "$3") . '" ', $body);
+        $body = preg_replace('/<img (.*)src="\/?data\/upload/', '<img $1 src="' . $sysURL . $this->config->webRoot . 'data/upload', $body);
 
         try 
         {

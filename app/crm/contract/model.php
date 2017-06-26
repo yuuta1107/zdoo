@@ -34,7 +34,7 @@ class contractModel extends model
             $contract->deliveryList = $this->getDeliveryList($contractID);
         }
 
-        $contract = $this->file->revertRealSRC($contract, 'items');
+        $contract = $this->file->replaceImgURL($contract, 'items');
         return $contract;
     }
 
@@ -208,7 +208,7 @@ class contractModel extends model
             ->stripTags('items', $this->config->allowedTags)
             ->get();
 
-        $contract = $this->loadModel('file', 'sys')->processEditor($contract, $this->config->contract->editor->create['id']);
+        $contract = $this->loadModel('file', 'sys')->processImgURL($contract, $this->config->contract->editor->create['id']);
         $this->dao->insert(TABLE_CONTRACT)->data($contract, 'order,uid,files,labels,real')
             ->autoCheck()
             ->batchCheck($this->config->contract->require->create, 'notempty')
@@ -291,7 +291,7 @@ class contractModel extends model
             ->stripTags('items', $this->config->allowedTags)
             ->get();
 
-        $data = $this->loadModel('file', 'sys')->processEditor($data, $this->config->contract->editor->edit['id']);
+        $data = $this->loadModel('file', 'sys')->processImgURL($data, $this->config->contract->editor->edit['id']);
         $this->dao->update(TABLE_CONTRACT)->data($data, 'uid,order,real')
             ->where('id')->eq($contractID)
             ->autoCheck()
@@ -392,7 +392,7 @@ class contractModel extends model
             ->stripTags('comment', $this->config->allowedTags)
             ->get();
 
-        $data = $this->loadModel('file', 'sys')->processEditor($data, $this->config->contract->editor->delivery['id']);
+        $data = $this->loadModel('file', 'sys')->processImgURL($data, $this->config->contract->editor->delivery['id']);
         $this->dao->insert(TABLE_DELIVERY)->data($data, $skip = 'uid, handlers, finish')->autoCheck()->exec();
 
         if(!dao::isError())
@@ -437,7 +437,7 @@ class contractModel extends model
             ->stripTags('comment', $this->config->allowedTags)
             ->get();
 
-        $data = $this->loadModel('file', 'sys')->processEditor($data, $this->config->contract->editor->editdelivery['id']);
+        $data = $this->loadModel('file', 'sys')->processImgURL($data, $this->config->contract->editor->editdelivery['id']);
         $this->dao->update(TABLE_DELIVERY)->data($data, $skip = 'uid, handlers, finish')->where('id')->eq($delivery->id)->autoCheck()->exec();
 
         if(!dao::isError())

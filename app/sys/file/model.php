@@ -139,8 +139,10 @@ class fileModel extends model
     public function getByID($fileID)
     {
         $file = $this->dao->findById($fileID)->from(TABLE_FILE)->fetch();
-        $file->realPath = $this->savePath . $file->pathname;
-        $file->webPath  = $this->webPath . $file->pathname;
+
+        $realPathName   = $this->getRealPathName($file->pathname);
+        $file->realPath = $this->savePath . $realPathName;
+        $file->webPath  = $this->webPath . $realPathName;
 
         return $this->processFile($file);
     }
@@ -162,7 +164,7 @@ class fileModel extends model
 
         foreach($files as $id => $file)
         {   
-            if(!move_uploaded_file($file['tmpname'], $this->savePath . $file['pathname'])) return false;
+            if(!move_uploaded_file($file['tmpname'], $this->savePath . $this->getSaveName($file['pathname']))) return false;
 
             $file['objectType']  = $objectType;
             $file['objectID']    = $objectID;
@@ -240,6 +242,34 @@ class fileModel extends model
         if(empty($extension) or stripos(",{$this->config->file->dangers},", ",{$extension},") !== false) return 'txt';
         if(empty($extension) or stripos(",{$this->config->file->allowed},", ",{$extension},") === false) return 'txt';
         return $extension;
+    }
+
+    /**
+     * Get save name.
+     * 
+     * @param  string    $pathName 
+     * @access public
+     * @return string
+     */
+    public function getSaveName($pathName)
+    {
+        $saveName = strpos($pathName, '.') === false ? $pathName : substr($pathName, 0, strpos($pathName, '.'));
+        return $saveName;
+    }
+
+    /**
+     * Get real path name.
+     * 
+     * @param  string    $pathName 
+     * @access public
+     * @return string
+     */
+    public function getRealPathName($pathName)
+    {
+        $realPath = $this->savePath . $pathName;
+        if(file_exists($realPath)) return $pathName;
+
+        return $this->getSaveName($pathName);
     }
 
     /**
@@ -323,7 +353,7 @@ class fileModel extends model
                 $fileInfo->extension = $extension;
             }
 
-            $realPathName = $this->savePath . $fileInfo->pathname;
+            $realPathName = $this->savePath . $this->getSaveName($fileInfo->pathname);
             move_uploaded_file($file['tmpname'], $realPathName);
 
             $fileInfo->createdBy   = $this->app->user->account;
@@ -385,7 +415,7 @@ class fileModel extends model
             $file['title']       = basename($file['pathname']);
             $file['editor']      = 1;
 
-            file_put_contents($this->savePath . $file['pathname'], $imageData);
+            file_put_contents($this->savePath . $this->getSaveName($file['pathname']), $imageData);
             $this->dao->insert(TABLE_FILE)->data($file)->exec();
             $fileID = $this->dao->lastInsertID();
             if($uid) $_SESSION['album'][$uid][] = $fileID;
@@ -598,17 +628,20 @@ class fileModel extends model
      * @access public
      * @return object
      */
-    public function processEditor($data, $editorList)
+    public function processImgURL($data, $editorList, $uid = '')
     {
         if(is_string($editorList)) $editorList = explode(',', str_replace(' ', '', $editorList));
-        $readLinkReg = basename(helper::createLink('file', 'read', 'fileID=(%fileID%)', '\w+'));
+        $readLinkReg = basename(helper::createLink('file', 'read', 'fileID=(%fileID%)', '(\w+)'));
         $readLinkReg = str_replace(array('%fileID%', '?'), array('[0-9]+', '\?'), $readLinkReg);
         foreach($editorList as $editorID)
         {
             if(empty($editorID) or empty($data->$editorID)) continue;
+
+            $imgURL = $this->config->requestType == 'GET' ? '{$2.$1}' : '{$1.$2}';
+
             $data->$editorID = $this->pasteImage($data->$editorID, $uid);
-            $data->$editorID = preg_replace("/ src=\"$readLinkReg\" /", ' src="{$1}" ', $data->$editorID);
-            $data->$editorID = preg_replace("/ src=\"" . htmlspecialchars($readLinkReg) . "\" /", ' src="{$1}" ', $data->$editorID);
+            $data->$editorID = preg_replace("/ src=\"$readLinkReg\" /", ' src="' . $imgURL . '" ', $data->$editorID);
+            $data->$editorID = preg_replace("/ src=\"" . htmlspecialchars($readLinkReg) . "\" /", ' src="' . $imgURL . '" ', $data->$editorID);
         }
         return $data;
     }
@@ -733,22 +766,13 @@ class fileModel extends model
      * @access public
      * @return object
      */
-    public function revertRealSRC($data, $fields)
+    public function replaceImgURL($data, $fields)
     {
         if(is_string($fields)) $fields = explode(',', str_replace(' ', '', $fields));
         foreach($fields as $field)
         {
             if(empty($field) or empty($data->$field)) continue;
-            preg_match_all('/ src="{([0-9]+)}" /', $data->$field, $matchs);
-            if(!empty($matchs[1]))
-            {
-                $files = $this->dao->select('id,extension')->from(TABLE_FILE)->where('id')->in($matchs[1])->fetchPairs('id', 'extension');
-                foreach($matchs[0] as $i => $match)
-                {
-                    $fileID = $matchs[1][$i];
-                    $data->$field = str_replace($match, ' src="' . helper::createLink('file', 'read', "fileID=$fileID", $files[$fileID])  . '" ', $data->$field);
-                }
-            }
+            $data->$field = preg_replace('/ src="{([0-9]+)(\.(\w+))?}" /', ' src="' . helper::createLink('file', 'read', "fileID=$1", "$3") . '" ', $data->$field);
         }
         return $data;
     }

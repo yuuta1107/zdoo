@@ -32,7 +32,7 @@ class threadModel extends model
         $thread->editorRealname = !empty($thread->editor) ? $speaker[$thread->editor] : '';
 
         $thread->files = $this->loadModel('file')->getByObject('thread', $thread->id);
-        $thread = $this->file->revertRealSRC($thread, 'content');
+        $thread = $this->file->replaceImgURL($thread, 'content');
         return $thread;
     }
 
@@ -159,7 +159,7 @@ class threadModel extends model
 
             /* Judge the thread is new or not.*/
             $thread->isNew = (time() - strtotime($thread->repliedDate)) < 24 * 60 * 60 * $this->config->thread->newDays;
-            $thread = $this->file->revertRealSRC($thread, 'content');
+            $thread = $this->file->replaceImgURL($thread, 'content');
         }
 
         $idList = array();
@@ -197,7 +197,7 @@ class threadModel extends model
             ->remove('files, labels, views, replies, hidden, stick')
             ->get();
 
-        $thread = $this->loadModel('file')->processEditor($thread, $this->config->thread->editor->post['id']);
+        $thread = $this->loadModel('file')->processImgURL($thread, $this->config->thread->editor->post['id']);
         $this->dao->insert(TABLE_THREAD)
             ->data($thread, $skip = 'uid')
             ->autoCheck()
@@ -260,7 +260,7 @@ class threadModel extends model
             ->remove('files,labels, views, replies, stick, hidden')
             ->get();
 
-        $thread = $this->loadModel('file')->processEditor($thread, $this->config->thread->editor->edit['id']);
+        $thread = $this->loadModel('file')->processImgURL($thread, $this->config->thread->editor->edit['id']);
         $this->dao->update(TABLE_THREAD)
             ->data($thread, $skip = 'uid')
             ->autoCheck()

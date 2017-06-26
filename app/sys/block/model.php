@@ -39,7 +39,7 @@ class blockModel extends model
         if($type != 'system') $data->source = '';
         if($type == 'html')
         {
-            $data = $this->loadModel('file')->processEditor($data, 'html', $this->post->uid);
+            $data = $this->loadModel('file')->processImgURL($data, 'html', $this->post->uid);
             $data->params['html'] = $data->html;
             unset($data->html);
         }
@@ -170,7 +170,7 @@ class blockModel extends model
 
         $block->params = json_decode($block->params);
         if(empty($block->params)) $block->params = new stdclass();
-        if($block->block == 'html') $block->params = $this->loadModel('file')->revertRealSRC($block->params, 'html');
+        if($block->block == 'html') $block->params = $this->loadModel('file')->replaceImgURL($block->params, 'html');
         return $block;
     }
 
@@ -193,7 +193,7 @@ class blockModel extends model
 
         $block->params = json_decode($block->params);
         if(empty($block->params)) $block->params = new stdclass();
-        if($block->block == 'html') $block->params = $this->loadModel('file')->revertRealSRC($block->params, 'html');
+        if($block->block == 'html') $block->params = $this->loadModel('file')->replaceImgURL($block->params, 'html');
         return $block;
     }
 

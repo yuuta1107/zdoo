@@ -380,7 +380,7 @@ class entryModel extends model
         {
             $file = $this->file->getByID(key($fileTitle));
 
-            $logoPath = $this->file->webPath . $file->pathname;
+            $logoPath = $this->file->webPath . $this->file->getRealPathName($file->pathname);
             $this->dao->update(TABLE_ENTRY)->set('logo')->eq($logoPath)->where('id')->eq($entryID)->exec();
         }
     }

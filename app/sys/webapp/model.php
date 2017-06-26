@@ -189,9 +189,7 @@ class webappModel extends model
         /* Save webapp's icon. */
         if(!empty($webapp->icon))
         {
-            $ext      = explode('.', $webapp->icon);
-            $extend   = $ext[count($ext) - 1];
-            $fileName = md5(mt_rand(0, 10000) . str_shuffle(md5($webapp->icon)) . mt_rand(0, 10000)) . '.' . $extend;
+            $fileName = md5(mt_rand(0, 10000) . str_shuffle(md5($webapp->icon)) . mt_rand(0, 10000));
             $dateInfo = date('Ym/', time());
 
             /* mkdir if not exist. */

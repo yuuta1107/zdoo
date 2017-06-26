@@ -24,7 +24,7 @@ class replyModel extends model
         if(!$reply) return false;
 
         $reply->files = $this->loadModel('file')->getByObject('reply', $replyID);
-        $reply = $this->file->revertRealSRC($reply, 'content');
+        $reply = $this->file->replaceImgURL($reply, 'content');
         return $reply;
     }
 
@@ -181,7 +181,7 @@ class replyModel extends model
             ->remove('files,labels,hidden')
             ->get();
 
-        $reply = $this->loadModel('file')->processEditor($reply, $this->config->reply->editor->edit['id']);
+        $reply = $this->loadModel('file')->processImgURL($reply, $this->config->reply->editor->edit['id']);
         $this->dao->update(TABLE_REPLY)
             ->data($reply, $skip = 'uid')
             ->autoCheck()
@@ -309,7 +309,7 @@ class replyModel extends model
         {
            $reply->authorRealname = !empty($reply->author) ? $speakers[$reply->author] : '';
            $reply->editorRealname = !empty($reply->editor) ? $speakers[$reply->editor] : '';
-           $reply = $this->file->revertRealSRC($reply, 'content');
+           $reply = $this->file->replaceImgURL($reply, 'content');
         }
     }
 }
