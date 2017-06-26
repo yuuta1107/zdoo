@@ -409,21 +409,22 @@ END:VCARD";
             $file = $this->loadModel('file', 'sys')->getUpload('files');
             if(empty($file)) $this->send(array('result' => 'fail', 'message' => $this->lang->contact->noFile));
             $file = $file[0];
-            move_uploaded_file($file['tmpname'], $this->file->savePath . $file['pathname']);
 
-            $file = $this->file->savePath . $file['pathname'];
+            $fileName = $this->file->savePath . $this->file->getSaveName($file['pathname']);
+            move_uploaded_file($file['tmpname'], $fileName);
+
             $phpExcel  = $this->app->loadClass('phpexcel');
             $phpReader = new PHPExcel_Reader_Excel2007(); 
-            if(!$phpReader->canRead($file))
+            if(!$phpReader->canRead($fileName))
             { 
                 $phpReader = new PHPExcel_Reader_Excel5(); 
-                if(!$phpReader->canRead($file)) 
+                if(!$phpReader->canRead($fileName)) 
                 {   
-                    unlink($file);
+                    unlink($fileName);
                     die(js::alert($this->lang->excel->canNotRead));
                 }
             } 
-            $this->session->set('importFile', $file);
+            $this->session->set('importFile', $fileName);
             $this->send(array('result' => 'success', 'locate' => (inlink('showImport'))));
         }
 
