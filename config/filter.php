@@ -43,6 +43,13 @@ $filter->default->paramValue = 'reg::paramValue';
 $filter->default->get['onlybody'] = 'equal::yes';
 $filter->default->get['HTTP_X_REQUESTED_WITH'] = 'equal::XMLHttpRequest';
 
+$filter->default->cookie['lang']      = 'reg::lang';
+$filter->default->cookie['theme']     = 'reg::common';
+$filter->default->cookie['device']    = 'reg::common';
+$filter->default->cookie['ra']        = 'reg::common';
+$filter->default->cookie['rp']        = 'reg::common';
+$filter->default->cookie['keepLogin'] = 'equal::on';
+
 $filter->block->default->get['mode']            = 'reg::character';
 $filter->block->default->get['blockid']         = 'reg::character';
 $filter->block->default->get['hash']            = 'reg::md5';
@@ -64,13 +71,6 @@ $filter->sso->check->get['userIP']              = 'ip';
 $filter->upgrade->upgradelicense->get['agree']  = 'equal::true';
 $filter->user->login->get['lang']               = 'reg::lang';
 $filter->rss->index->get['type']                = 'reg::common';
-
-$filter->default->cookie['lang']      = 'reg::lang';
-$filter->default->cookie['theme']     = 'reg::common';
-$filter->default->cookie['device']    = 'reg::common';
-$filter->default->cookie['ra']        = 'reg::common';
-$filter->default->cookie['rp']        = 'reg::common';
-$filter->default->cookie['keepLogin'] = 'equal::on';
 
 $filter->trade->browse->cookie['treeview']           = 'code';
 $filter->doc->browse->cookie['browseType']           = 'reg::browseType';
