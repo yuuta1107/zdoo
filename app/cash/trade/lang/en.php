@@ -93,6 +93,7 @@ $lang->trade->report->unit        = 'Unit';
 
 $lang->trade->report->unitList[1]       = '$';
 $lang->trade->report->unitList[1000]    = 'K$';
+$lang->trade->report->unitList[10000]   = '10K$';
 $lang->trade->report->unitList[1000000] = 'M$';
 
 $lang->trade->report->typeList['annual']  = 'Annual balance sheet'; 

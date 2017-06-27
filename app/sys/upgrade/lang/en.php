@@ -80,6 +80,7 @@ $lang->upgrade->fromVersions['4_1']      = '4.1';
 $lang->upgrade->fromVersions['4_2']      = '4.2';
 $lang->upgrade->fromVersions['4_2_1']    = '4.2.1';
 $lang->upgrade->fromVersions['4_2_2']    = '4.2.2';
+$lang->upgrade->fromVersions['4_2_3']    = '4.2.3';
 
 $lang->upgrade->deleteTips   = 'Need to delete some files. The commands in Linux are:<br />';
 $lang->upgrade->deleteDir    = '<code>rm -fr %s</code>';

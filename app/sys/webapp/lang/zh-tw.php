@@ -57,7 +57,7 @@ $lang->webapp->allModule    = '所有';
 $lang->webapp->noModule     = '所有';
 
 $lang->webapp->targetList['']       = '';
-$lang->webapp->targetList['popup']  = '彈窗';
+$lang->webapp->targetList['blank']  = '新窗口';
 $lang->webapp->targetList['iframe'] = '內嵌';
 
 $lang->webapp->width  = '寬度';
