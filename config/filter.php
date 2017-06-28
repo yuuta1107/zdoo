@@ -27,7 +27,7 @@ $filter->rules->number     = '/^[0-9]+$/';
 $filter->rules->orderBy    = '/^\w+_(desc|asc)$/i';
 $filter->rules->word       = '/^\w+$/';
 $filter->rules->paramName  = '/^[a-zA-Z0-9_\.]+$/';
-$filter->rules->paramValue = '/^[a-zA-Z0-9=_\-]+$/';
+$filter->rules->paramValue = '/^[a-zA-Z0-9=_\-%\.\/\?\&]+$/';
 $filter->rules->common     = '/^[a-zA-Z0-9_]+$/';
 $filter->rules->character  = '/^[a-zA-Z_\-]+$/';
 $filter->rules->browseType = '/^by[a-z]+$/';
