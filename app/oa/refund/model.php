@@ -318,11 +318,14 @@ class refundModel extends model
     {
         $categories       = $this->loadModel('tree')->getOptionMenu('out', 0, $removeRoot = true);
         $refundCategories = $this->dao->select('*')->from(TABLE_CATEGORY)->where('type')->eq('out')->andWhere('refund')->eq(1)->fetchPairs('id', 'name');
-        foreach($refundCategories as $key => $category)
+        $newCategories = array();
+        foreach($categories as $key => $category)
         {
-            $refundCategories[$key] = $categories[$key];
+            if(isset($refundCategories[$key]))
+                $newCategories[$key] = $categories[$key];
         }
-        return $refundCategories;
+
+        return $newCategories;
     }
 
     /**
