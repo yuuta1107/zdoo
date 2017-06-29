@@ -336,7 +336,7 @@ class userModel extends model
         if(!$user) return false;
 
         /* Set keep login cookie info if keep login. */
-        if($this->post->keepLogin) $this->keepLogin($user);
+        if($this->post->keepLogin == 'true') $this->keepLogin($user);
 
         $user->password = $this->post->rawPassword;
 
