@@ -65,13 +65,11 @@
         </td>
         <td></td>
       </tr>
-      <?php if(!commonModel::hasPriv('oa.leave', 'browseReview')):?>
       <tr>
         <th><?php echo $lang->leave->desc?></th>
         <td><?php echo html::textarea('desc', $leave->desc, "class='form-control'")?></td>
         <td></td>
       </tr> 
-      <?php endif;?>
       <tr><th></th><td clospan='2'><?php echo html::submitButton();?></td></tr>
     </table>
   </form>
