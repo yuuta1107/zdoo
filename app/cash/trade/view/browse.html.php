@@ -62,7 +62,7 @@
           <th class='w-120px text-right'><?php commonModel::printOrderLink('money', $orderBy, $vars, $lang->trade->money);?></th>
           <th class='w-100px'><?php commonModel::printOrderLink('dept', $orderBy, $vars, $lang->trade->dept);?></th>
           <th class='w-100px'><?php commonModel::printOrderLink('handlers', $orderBy, $vars, $lang->trade->handlers);?></th>
-          <th class='w-200px'><?php commonModel::printOrderLink('product', $orderBy, $vars, $lang->trade->product . $lang->slash . $lang->trade->category);?></th>
+          <th class='w-200px'><?php commonModel::printOrderLink('category', $orderBy, $vars, $lang->trade->category);?></th>
           <th class='w-200px visible-lg'><?php echo $lang->trade->desc;?></th>
           <?php if($mode == 'invest' or $mode == 'loan'):?>
           <th class='w-80px'><?php echo $lang->trade->status;?></th>
@@ -88,7 +88,7 @@
           <td class='text-right'><?php echo zget($currencySign, $trade->currency) . formatMoney($trade->money);?></td>
           <td><?php echo zget($deptList, $trade->dept);?></td>
           <td title='<?php foreach(explode(',', $trade->handlers) as $handler) echo zget($users, $handler) . ' ';?>'><?php foreach(explode(',', $trade->handlers) as $handler) echo zget($users, $handler) . ' ';?></td>
-          <td class='text-left'><?php echo isset($productList[$trade->product]) ? $productList[$trade->product] . $lang->slash . zget($categories, $trade->category, ' ') : zget($categories, $trade->category, ' ');?></td>
+          <td class='text-left' title='<?php echo zget($categories, $trade->category, ' ');?>'><?php echo zget($categories, $trade->category, ' ');?></td>
           <td class='text-left visible-lg'><div title="<?php echo $trade->desc;?>" class='w-200px text-ellipsis'><?php echo $trade->desc;?><div></td>
           <?php if($mode == 'invest' or $mode == 'loan'):?>
           <td><?php echo zget($lang->trade->statusList, $trade->status);?></td>

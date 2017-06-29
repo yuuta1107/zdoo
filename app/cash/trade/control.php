@@ -149,6 +149,8 @@ class trade extends control
         }
         $moduleMenu .= "</ul></nav>";
 
+        $treeModel = $this->loadModel('tree');
+        $this->view->categories    = $treeModel->getOptionMenu('in', 0, $removeRoot = true) + $treeModel->getOptionMenu('out', 0, $removeRoot = true);
         $this->view->title         = $this->lang->trade->browse;
         $this->view->trades        = $trades;
         $this->view->mode          = $mode;
@@ -158,7 +160,6 @@ class trade extends control
         $this->view->depositorList = $this->loadModel('depositor', 'cash')->getPairs();
         $this->view->customerList  = $this->loadModel('customer')->getPairs();
         $this->view->deptList      = $this->tree->getPairs(0, 'dept');
-        $this->view->categories    = $this->lang->trade->categoryList + $this->tree->getPairs(0, 'out') + $this->tree->getPairs(0, 'in');
         $this->view->users         = $this->loadModel('user')->getPairs();
         $this->view->currencySign  = $this->loadModel('common', 'sys')->getCurrencySign();
         $this->view->currencyList  = $this->common->getCurrencyList();
