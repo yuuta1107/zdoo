@@ -62,7 +62,7 @@
         </form>
       </fieldset>      
     </div>
-    <div class='col-side'>
+    <div class='col-side' style="width:300px;">
       <div class='main main-side'>
         <fieldset>
         <legend><?php echo $lang->todo->legendBasic;?></legend>
