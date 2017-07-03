@@ -39,10 +39,6 @@ $themeRoot = $webRoot . "theme/";
         <div class='col-md-4'><?php echo html::select('moderators[]', $users, $category->moderators, "class='chosen form-control'");?></div>
       </div>
       <?php endif;?>
-      <div class='form-group'> 
-        <label class='col-md-2 control-label'><?php echo $lang->category->keywords;?></label>
-        <div class='col-md-9'><?php echo html::input('keywords', $category->keywords, "class='form-control'");?></div>
-      </div>
       <?php if($category->type == 'out'):?>
       <div class='form-group'> 
         <label class='col-md-2 control-label'><?php echo $lang->category->rights;?></label>

@@ -29,12 +29,12 @@
           <table class='table table-form table-condensed'>
             <tr>
               <th class='w-130px'><?php echo $lang->leads->applyLimit;?></th>
-              <td class='w-200px'><?php echo html::select('applyLimit', $lang->leads->applyLimitList, $applyLimit, "class='form-control chosen'")?></td>
+              <td class='w-200px'><?php echo html::select('applyLimit', $config->leads->applyLimitList, $applyLimit, "class='form-control chosen'")?></td>
               <td style='padding-left:5px;'></td>
             </tr>
             <tr>
               <th><?php echo $lang->leads->applyRemain;?></th>
-              <td><?php echo html::select('applyRemain', $lang->leads->applyRemainList, $applyRemain, "class='form-control chosen'")?></td>
+              <td><?php echo html::select('applyRemain', $config->leads->applyRemainList, $applyRemain, "class='form-control chosen'")?></td>
               <td style='padding-left:5px;'><a href='javascript:void(0)' data-original-title="<?php echo $lang->leads->tips->applyRemain;?>" data-placement='right' data-toggle='tooltip'><i class='icon icon-question-sign'></i></a></td>
             </tr>
             <tr>
