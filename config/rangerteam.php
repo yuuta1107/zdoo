@@ -35,69 +35,69 @@ $config->ipWhiteList = '*';
 $config->allowedTags = '<p><span><h1><h2><h3><h4><h5><em><u><strong><br><ol><ul><li><img><a><b><font><hr><pre><div><table><td><th><tr><tbody><embed><style>';
 
 /* Tables for basic system. */
-define('TABLE_CONFIG',    '`sys_config`');
-define('TABLE_PACKAGE',   '`sys_package`');
-define('TABLE_USER',      '`sys_user`');
-define('TABLE_GROUP',     '`sys_group`');
-define('TABLE_ACTION',    '`sys_action`');
-define('TABLE_FILE',      '`sys_file`');
-define('TABLE_HISTORY',   '`sys_history`');
-define('TABLE_CATEGORY',  '`sys_category`');
-define('TABLE_ARTICLE',   '`sys_article`');
-define('TABLE_EXTENSION', '`sys_extension`');
-define('TABLE_WEBAPP',    '`sys_webapp`');
-define('TABLE_LANG',      '`sys_lang`');
-define('TABLE_ENTRY',     '`sys_entry`');
-define('TABLE_SSO',       '`sys_sso`');
-define('TABLE_TASK',      '`sys_task`');
-define('TABLE_TEAM',      '`sys_team`');
-define('TABLE_TAG',       '`sys_tag`');
-define('TABLE_BLOCK',     '`sys_block`');
-define('TABLE_SCHEMA',    '`sys_schema`');
-define('TABLE_RELATION',  '`sys_relation`');
-define('TABLE_CRON',      '`sys_cron`');
-define('TABLE_USERGROUP', '`sys_usergroup`');
-define('TABLE_GROUPPRIV', '`sys_grouppriv`');
-define('TABLE_USERQUERY', '`sys_userquery`');
+define('TABLE_CONFIG',    '`' . $config->db->prefix . 'sys_config`');
+define('TABLE_PACKAGE',   '`' . $config->db->prefix . 'sys_package`');
+define('TABLE_USER',      '`' . $config->db->prefix . 'sys_user`');
+define('TABLE_GROUP',     '`' . $config->db->prefix . 'sys_group`');
+define('TABLE_ACTION',    '`' . $config->db->prefix . 'sys_action`');
+define('TABLE_FILE',      '`' . $config->db->prefix . 'sys_file`');
+define('TABLE_HISTORY',   '`' . $config->db->prefix . 'sys_history`');
+define('TABLE_CATEGORY',  '`' . $config->db->prefix . 'sys_category`');
+define('TABLE_ARTICLE',   '`' . $config->db->prefix . 'sys_article`');
+define('TABLE_EXTENSION', '`' . $config->db->prefix . 'sys_extension`');
+define('TABLE_WEBAPP',    '`' . $config->db->prefix . 'sys_webapp`');
+define('TABLE_LANG',      '`' . $config->db->prefix . 'sys_lang`');
+define('TABLE_ENTRY',     '`' . $config->db->prefix . 'sys_entry`');
+define('TABLE_SSO',       '`' . $config->db->prefix . 'sys_sso`');
+define('TABLE_TASK',      '`' . $config->db->prefix . 'sys_task`');
+define('TABLE_TEAM',      '`' . $config->db->prefix . 'sys_team`');
+define('TABLE_TAG',       '`' . $config->db->prefix . 'sys_tag`');
+define('TABLE_BLOCK',     '`' . $config->db->prefix . 'sys_block`');
+define('TABLE_SCHEMA',    '`' . $config->db->prefix . 'sys_schema`');
+define('TABLE_RELATION',  '`' . $config->db->prefix . 'sys_relation`');
+define('TABLE_CRON',      '`' . $config->db->prefix . 'sys_cron`');
+define('TABLE_USERGROUP', '`' . $config->db->prefix . 'sys_usergroup`');
+define('TABLE_GROUPPRIV', '`' . $config->db->prefix . 'sys_grouppriv`');
+define('TABLE_USERQUERY', '`' . $config->db->prefix . 'sys_userquery`');
 
 /* Tables for crm. */
-define('TABLE_ADDRESS',       '`crm_address`');
-define('TABLE_PRODUCT',       '`sys_product`');
-define('TABLE_ORDER',         '`crm_order`');
-define('TABLE_CUSTOMER',      '`crm_customer`');
-define('TABLE_RESUME',        '`crm_resume`');
-define('TABLE_CONTACT',       '`crm_contact`');
-define('TABLE_CONTRACT',      '`crm_contract`');
-define('TABLE_CONTRACTORDER', '`crm_contractorder`');
-define('TABLE_PLAN',          '`crm_plan`');
-define('TABLE_DELIVERY',      '`crm_delivery`');
-define('TABLE_SALESGROUP',    '`crm_salesgroup`');
-define('TABLE_SALESPRIV',     '`crm_salespriv`');
+define('TABLE_ADDRESS',       '`' . $config->db->prefix . 'crm_address`');
+define('TABLE_PRODUCT',       '`' . $config->db->prefix . 'sys_product`');
+define('TABLE_ORDER',         '`' . $config->db->prefix . 'crm_order`');
+define('TABLE_CUSTOMER',      '`' . $config->db->prefix . 'crm_customer`');
+define('TABLE_RESUME',        '`' . $config->db->prefix . 'crm_resume`');
+define('TABLE_CONTACT',       '`' . $config->db->prefix . 'crm_contact`');
+define('TABLE_CONTRACT',      '`' . $config->db->prefix . 'crm_contract`');
+define('TABLE_CONTRACTORDER', '`' . $config->db->prefix . 'crm_contractorder`');
+define('TABLE_PLAN',          '`' . $config->db->prefix . 'crm_plan`');
+define('TABLE_DELIVERY',      '`' . $config->db->prefix . 'crm_delivery`');
+define('TABLE_SALESGROUP',    '`' . $config->db->prefix . 'crm_salesgroup`');
+define('TABLE_SALESPRIV',     '`' . $config->db->prefix . 'crm_salespriv`');
 
 /* Tables for oa. */
-define('TABLE_TODO',       '`oa_todo`');
-define('TABLE_PROJECT',    '`oa_project`');
-define('TABLE_DOC',        '`oa_doc`');
-define('TABLE_DOCCONTENT', '`oa_doccontent`');
-define('TABLE_DOCLIB',     '`oa_doclib`');
-define('TABLE_ATTEND',     '`oa_attend`');
-define('TABLE_ATTENDSTAT', '`oa_attendstat`');
-define('TABLE_HOLIDAY',    '`oa_holiday`');
-define('TABLE_LEAVE',      '`oa_leave`');
-define('TABLE_OVERTIME',   '`oa_overtime`');
-define('TABLE_LIEU',       '`oa_lieu`');
-define('TABLE_TRIP',       '`oa_trip`');
-define('TABLE_REFUND',     '`oa_refund`');
+define('TABLE_TODO',       '`' . $config->db->prefix . 'oa_todo`');
+define('TABLE_PROJECT',    '`' . $config->db->prefix . 'oa_project`');
+define('TABLE_DOC',        '`' . $config->db->prefix . 'oa_doc`');
+define('TABLE_DOCCONTENT', '`' . $config->db->prefix . 'oa_doccontent`');
+define('TABLE_DOCLIB',     '`' . $config->db->prefix . 'oa_doclib`');
+define('TABLE_ATTEND',     '`' . $config->db->prefix . 'oa_attend`');
+define('TABLE_ATTENDSTAT', '`' . $config->db->prefix . 'oa_attendstat`');
+define('TABLE_HOLIDAY',    '`' . $config->db->prefix . 'oa_holiday`');
+define('TABLE_LEAVE',      '`' . $config->db->prefix . 'oa_leave`');
+define('TABLE_OVERTIME',   '`' . $config->db->prefix . 'oa_overtime`');
+define('TABLE_LIEU',       '`' . $config->db->prefix . 'oa_lieu`');
+define('TABLE_TRIP',       '`' . $config->db->prefix . 'oa_trip`');
+define('TABLE_REFUND',     '`' . $config->db->prefix . 'oa_refund`');
 
 /* Tables for cash. */
-define('TABLE_DEPOSITOR', '`cash_depositor`');
-define('TABLE_BALANCE',   '`cash_balance`');
-define('TABLE_TRADE',     '`cash_trade`');
+define('TABLE_DEPOSITOR', '`' . $config->db->prefix . 'cash_depositor`');
+define('TABLE_BALANCE',   '`' . $config->db->prefix . 'cash_balance`');
+define('TABLE_TRADE',     '`' . $config->db->prefix . 'cash_trade`');
 
 /* Tables for team. */
-define('TABLE_THREAD',  '`team_thread`');
-define('TABLE_REPLY',   '`team_reply`');
-define('TABLE_MESSAGE', '`sys_message`');
+define('TABLE_THREAD',  '`' . $config->db->prefix . 'team_thread`');
+define('TABLE_REPLY',   '`' . $config->db->prefix . 'team_reply`');
+define('TABLE_MESSAGE', '`' . $config->db->prefix . 'sys_message`');
 
 /* The mapping list of object and tables. */
 $config->objectTables['announce']    = TABLE_ARTICLE;

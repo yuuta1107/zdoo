@@ -108,10 +108,6 @@ $config->file = new stdclass();
 $config->file->dangers = 'php,php3,php4,phtml,php5,jsp,py,rb,asp,aspx,ashx,asa,cer,cdx,aspl,shtm,shtml,html,htm';
 $config->file->allowed = 'txt,doc,docx,dot,wps,wri,pdf,ppt,xls,xlsx,ett,xlt,xlsm,csv,jpg,jpeg,png,psd,gif,ico,bmp,swf,avi,rmvb,rm,mp3,mp4,3gp,flv,mov,movie,rar,zip,bz,bz2,tar,gz';
 
-/* 然之配置文件。 rangerteam settings. */
-$rangerteamConfig = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'rangerteam.php';
-if(file_exists($rangerteamConfig)) include $rangerteamConfig;
-
 /* 配置参数过滤。Filter param settings. */
 $filterConfig = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'filter.php';
 if(file_exists($filterConfig)) include $filterConfig;
@@ -119,6 +115,10 @@ if(file_exists($filterConfig)) include $filterConfig;
 /* 引用自定义的配置。 Include the custom config file. */
 $myConfig = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'my.php';
 if(file_exists($myConfig)) include $myConfig;
+
+/* 然之配置文件。 rangerteam settings. */
+$rangerteamConfig = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'rangerteam.php';
+if(file_exists($rangerteamConfig)) include $rangerteamConfig;
 
 $rightsConfig = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'rights.php';
 if(file_exists($rightsConfig)) include $rightsConfig;

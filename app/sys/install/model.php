@@ -298,7 +298,7 @@ class installModel extends model
             {
                 $table = str_replace('--', '', $table);
             }
-            $table = preg_replace('/`(\w+)_/', $this->config->db->name . ".`\${1}_" . $this->config->db->prefix, $table);
+            $table = preg_replace('/`(\w+)_/', $this->config->db->name . ".`{$this->config->db->prefix}\${1}_", $table);
 
             if(!$this->dbh->query($table)) return false;
         }
@@ -323,6 +323,7 @@ class installModel extends model
 \$config->db->name     = '{$this->post->dbName}';
 \$config->db->user     = '{$this->post->dbUser}';
 \$config->db->password = '{$this->post->dbPassword}';
+\$config->db->prefix   = '{$this->post->dbPrefix}';
 EOT;
     }
 

@@ -378,7 +378,7 @@ class actionModel extends model
             $objectIds = array_unique($objectIds);
             $table     = $this->config->objectTables[$objectType];
             $field     = $this->config->action->objectNameFields[$objectType];
-            if($table != '`oa_todo`' and $table != '`cash_trade`')
+            if($table != TABLE_TODO and $table != TABLE_TRADE)
             {
                 $objectNames[$objectType] = $this->dao->select("id, $field AS name")->from($table)->where('id')->in($objectIds)->fetchPairs();
                 if($objectType == 'order') $objectNames[$objectType] = $this->dao->select('o.id, concat(c.name, o.createdDate) as name')
@@ -387,7 +387,7 @@ class actionModel extends model
                     ->where('o.id')->in($objectIds)
                     ->fetchPairs(); 
             }
-            elseif($table == '`oa_todo`')
+            elseif($table == TABLE_TODO)
             {
                 $todos = $this->dao->select("id, $field AS name, account, private, type, idvalue")->from($table)->where('id')->in($objectIds)->fetchAll('id');
                 foreach($todos as $id => $todo)

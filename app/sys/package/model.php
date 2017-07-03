@@ -808,6 +808,7 @@ class packageModel extends model
         {
             $sql = trim($sql);
             if(empty($sql)) continue;
+            $sql = preg_replace('/`(\w+)_/', "{$this->config->db->prefix}\${1}_", $sql);
 
             try
             {
@@ -842,6 +843,7 @@ class packageModel extends model
         $backupTables = array();
         foreach($sqls as $sql)
         {
+            $sql = preg_replace('/`(\w+)_/', "{$this->config->db->prefix}\${1}_", $sql);
             $sql = preg_replace('/IF EXISTS /i', '', trim($sql));
             if(preg_match('/TABLE +`?([^` ]*)`?/i', $sql, $out))
             {

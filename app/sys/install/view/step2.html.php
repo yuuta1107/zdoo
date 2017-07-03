@@ -40,7 +40,11 @@
           </tr>
           <tr>
             <th><?php echo $lang->install->dbName;?></th>
-            <td><?php echo html::input('dbName', 'ranzhi', "class='text-3 form-control'") . html::checkBox('clearDB', $lang->install->clearDB);?></td>
+            <td><?php echo html::input('dbName', 'ranzhi', "class='text-3 form-control'");?></td>
+          </tr>
+          <tr>
+            <th><?php echo $lang->install->dbPrefix;?></th>
+            <td><?php echo html::input('dbPrefix', '', "class='text-3 form-control'") . html::checkBox('clearDB', $lang->install->clearDB);?></td>
           </tr>
           <tr><td colspan='2' class='text-center'><?php echo html::hidden('requestType','GET') . html::submitButton();?></td></tr>
         </table>
