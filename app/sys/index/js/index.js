@@ -224,7 +224,7 @@ function sortBlocks(orders)
  */
 function resizeBlock(event)
 {
-  var blockID = event.element.find('.panel').data('id');
+  var blockID = event.element.find('.panel').data('blockid');
   var data = event.type == 'vertical' ? event.height : event.grid;
   $.getJSON(createLink('block', 'resize', 'id=' + blockID + '&type=' + event.type + '&data=' + data), function(data)
   {

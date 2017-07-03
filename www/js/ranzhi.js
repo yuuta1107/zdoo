@@ -899,6 +899,7 @@ function reloadHome()
             sensitive         : true,
             afterOrdered      : sortBlocks,
             afterPanelRemoved : deleteBlock,
+            onResize          : resizeBlock,
             panelRemovingTip  : $('#dashboard').attr('data-confirm-remove-block')
         });
 
