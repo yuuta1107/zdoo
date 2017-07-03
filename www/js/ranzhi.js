@@ -37,7 +37,7 @@ $.extend(
             
             success: function(response)
             {
-                $.enableForm(formID);
+                $("body").click(function(){ $.enableForm(formID); });
                 var submitButton = $(formID).find(':input[type=submit], .submit');
 
                 /* The response is not an object, some error occers, bootbox.alert it. */
@@ -121,6 +121,7 @@ $.extend(
                  * The response.result is fail. 
                  */
 
+                $.enableForm(formID);
                 /* The result.message is just a string. */
                 if($.type(response.message) == 'string')
                 {
