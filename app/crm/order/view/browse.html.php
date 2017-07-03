@@ -33,7 +33,7 @@
         <th class='w-60px'><?php commonModel::printOrderLink('id', $orderBy, $vars, $lang->order->id);?></th>
         <th class='w-60px visible-lg'><?php commonModel::printOrderLink('level', $orderBy, $vars, $lang->customer->level);?></th>
         <th class='text-left'><?php commonModel::printOrderLink('customer', $orderBy, $vars, $lang->order->customer);?></th>
-        <th><?php commonModel::printOrderLink('product', $orderBy, $vars, $lang->order->product);?></th>
+        <th class='w-130px'><?php commonModel::printOrderLink('product', $orderBy, $vars, $lang->order->product);?></th>
         <th class='w-90px'><?php commonModel::printOrderLink('plan', $orderBy, $vars, $lang->order->plan);?></th>
         <th class='w-90px'><?php commonModel::printOrderLink('real', $orderBy, $vars, $lang->order->real);?></th>
         <th class='w-80px'><?php commonModel::printOrderLink('assignedTo', $orderBy, $vars, $lang->order->assignedTo);?></th>
@@ -50,7 +50,7 @@
         <?php $products = ''; foreach($order->products as $product) $products .= $product . ' ';?>
         <td><?php echo $order->id;?></td>
         <td class='visible-lg'><?php echo zget($lang->customer->levelNameList, $order->level, $order->level);?></td>
-        <td class='text-left'><?php echo $order->customerName;?></td>
+        <td class='text-left' title='<?php echo $order->customerName;?>'><?php echo $order->customerName;?></td>
         <td title='<?php echo $products;?>'><?php echo $products;?></td>
         <td class='text-right'><?php echo zget($currencySign, $order->currency, '') . formatMoney($order->plan);?></td>
         <td class='text-right'><?php echo zget($currencySign, $order->currency, '') . formatMoney($order->real);?></td>

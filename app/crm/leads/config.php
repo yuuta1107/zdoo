@@ -10,6 +10,26 @@
  * @link        http://www.ranzhico.com
  */
 $config->leads = new stdclass();
+
+$config->leads->applyLimitList['5']   = 5;
+$config->leads->applyLimitList['10']  = 10;
+$config->leads->applyLimitList['20']  = 20;
+$config->leads->applyLimitList['30']  = 30;
+$config->leads->applyLimitList['40']  = 40;
+$config->leads->applyLimitList['50']  = 50;
+$config->leads->applyLimitList['60']  = 60;
+$config->leads->applyLimitList['70']  = 70;
+$config->leads->applyLimitList['80']  = 80;
+$config->leads->applyLimitList['90']  = 90;
+$config->leads->applyLimitList['100'] = 100;
+
+$config->leads->applyRemainList['5']  = 5;
+$config->leads->applyRemainList['10'] = 10;
+$config->leads->applyRemainList['15'] = 15;
+$config->leads->applyRemainList['20'] = 20;
+$config->leads->applyRemainList['25'] = 25;
+$config->leads->applyRemainList['30'] = 30;
+
 $config->leads->editor = new stdclass();
 $config->leads->editor->assign = array('id' => 'comment', 'tools' => 'simple');
 $config->leads->editor->ignore = array('id' => 'comment', 'tools' => 'simple');
