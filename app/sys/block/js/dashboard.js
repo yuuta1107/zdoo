@@ -8,6 +8,7 @@ $(function()
         afterOrdered      : sortBlocks,
         afterPanelRemoved : deleteBlock,
         sensitive         : true,
+        onResize          : resizeBlock,
         panelRemovingTip  : config.confirmRemoveBlock
     });
 });
@@ -63,4 +64,20 @@ function sortBlocks(orders)
 
         $.zui.messager.success(config.ordersSaved);
     });
+}
+
+/**
+ * Resize block
+ * @param  object $event
+ * @access public
+ * @return void
+ */
+function resizeBlock(event)
+{
+  var blockID = event.element.find('.panel').data('blockid');
+  var data = event.type == 'vertical' ? event.height : event.grid;
+  $.getJSON(createLink('block', 'resize', 'id=' + blockID + '&type=' + event.type + '&data=' + data), function(data)
+  {
+        if(data.result !== 'success') event.revert();
+  });
 }

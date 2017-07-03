@@ -1431,6 +1431,7 @@
                 afterOrdered      : afterOrdered,
                 shadowType        : false,
                 sensitive         : true,
+                onResize          : onResize,
                 panelRemovingTip  : settings.confirmRemoveBlock,
                 afterPanelRemoved : afterPanelRemoved
             });
@@ -1464,6 +1465,15 @@
                 }
 
                 $.zui.messager.success(settings.orderdBlocksSaved);
+            }
+
+            function onResize(event)
+            {
+                if(settings.onResize && $.isFunction(settings.onResize))
+                {
+                    settings.onResize(event);
+                }
+
             }
         };
 

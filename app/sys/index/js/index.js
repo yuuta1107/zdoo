@@ -1,7 +1,7 @@
 $(function()
 {
     /* start ips */
-    $.ipsStart(entries, $.extend({onBlocksOrdered: sortBlocks, onDeleteBlock: deleteBlock, onDeleteEntry: deleteEntry, onUpdateEntryMenu: updateEntryMenu, onSortEntries: sortEntries}, config, ipsLang));
+    $.ipsStart(entries, $.extend({onBlocksOrdered: sortBlocks, onDeleteBlock: deleteBlock, onDeleteEntry: deleteEntry, onUpdateEntryMenu: updateEntryMenu, onSortEntries: sortEntries, onResize: resizeBlock}, config, ipsLang));
     if(v.attend)
     {
         initAttendButton();
@@ -214,6 +214,22 @@ function sortBlocks(orders)
             $this.find('.panel-actions .edit-block').attr('href', createLink('block', 'admin', 'index=' + index));
         });
     });
+}
+
+/**
+ * Resize block
+ * @param  object $event
+ * @access public
+ * @return void
+ */
+function resizeBlock(event)
+{
+  var blockID = event.element.find('.panel').data('blockid');
+  var data = event.type == 'vertical' ? event.height : event.grid;
+  $.getJSON(createLink('block', 'resize', 'id=' + blockID + '&type=' + event.type + '&data=' + data), function(data)
+  {
+      if(data.result !== 'success') event.revert();
+  });
 }
 
 /**

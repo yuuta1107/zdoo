@@ -92,6 +92,20 @@ class block extends control
     }
 
     /**
+     * Resize block 
+     * 
+     * @param  int    $id 
+     * @param  string $type 
+     * @param  string $data 
+     * @access public
+     * @return void
+     */
+    public function resize($id, $type, $data)
+    {
+        $this->locate($this->createLink('sys.block', 'resize', "id=$id&type=$type&data=$data"));
+    }
+
+    /**
      * Delete block. 
      * 
      * @param  int    $index 

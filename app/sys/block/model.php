@@ -36,6 +36,9 @@ class blockModel extends model
             ->setDefault('params', array())
             ->get();
 
+        $block = $this->dao->select('*')->from(TABLE_BLOCK)->where('account')->eq($data->account)->andWhere('app')->eq($data->app)->andWhere('`order`')->eq($data->order)->fetch();
+        if($block) $data->height = $block->height;
+
         if($type != 'system') $data->source = '';
         if($type == 'html')
         {
