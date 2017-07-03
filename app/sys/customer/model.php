@@ -26,6 +26,8 @@ class customerModel extends model
 
         $customer = $this->dao->select('*')->from(TABLE_CUSTOMER)->where('id')->eq($id)->limit(1)->fetch();
         $customer = $this->loadModel('file')->replaceImgURL($customer, 'desc');
+
+        return $customer;
     }
 
     /**
