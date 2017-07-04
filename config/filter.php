@@ -27,7 +27,7 @@ $filter->rules->number     = '/^[0-9]+$/';
 $filter->rules->orderBy    = '/^\w+_(desc|asc)$/i';
 $filter->rules->word       = '/^\w+$/';
 $filter->rules->paramName  = '/^[a-zA-Z0-9_\.]+$/';
-$filter->rules->paramValue = '/^[a-zA-Z0-9=_,`#+\^\/\.%\|\x7f-\xff]+$/';
+$filter->rules->paramValue = '/^[a-zA-Z0-9=_,\-\?\&`#+\^\/\.%\|\x7f-\xff]+$/';
 $filter->rules->common     = '/^[a-zA-Z0-9_]+$/';
 $filter->rules->character  = '/^[a-zA-Z_\-]+$/';
 $filter->rules->browseType = '/^by[a-z]+$/';
@@ -40,7 +40,8 @@ $filter->default->methodName = 'code';
 $filter->default->paramName  = 'reg::paramName';
 $filter->default->paramValue = 'reg::paramValue';
 
-$filter->default->get['onlybody'] = 'equal::yes';
+$filter->default->get['onlybody']              = 'equal::yes';
+$filter->default->get['lang']                  = 'reg::lang';
 $filter->default->get['HTTP_X_REQUESTED_WITH'] = 'equal::XMLHttpRequest';
 
 $filter->default->cookie['lang']      = 'reg::lang';

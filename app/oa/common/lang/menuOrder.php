@@ -1,6 +1,7 @@
 <?php
 $lang->oa->menuOrder[5]  = 'dashboard';
 $lang->oa->menuOrder[15] = 'announce';
+$lang->oa->menuOrder[20] = 'my';
 $lang->oa->menuOrder[25] = 'attend';
 $lang->oa->menuOrder[30] = 'leave';
 $lang->oa->menuOrder[33] = 'makeup';
