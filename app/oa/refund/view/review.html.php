@@ -43,8 +43,8 @@
       <td><?php echo $detail->date;?></td>
       <td class='text-right'><?php echo zget($currencySign, $detail->currency) . "<span class='detailMoney'>" . $detail->money . "</span>";?></td>
       <td><?php echo $lang->refund->statusList[$detail->status];?></td>
-      <td><?php echo zget($categories, $detail->category, ' ');?></td>
-      <td class='text-ellipsis' title="<?php echo $detail->desc;?>"><?php echo $detail->desc?></td>
+      <td class='text-ellipsis' title="<?php echo zget($categories, $detail->category, ' ');?>"><?php echo zget($categories, $detail->category, ' ');?></td>
+      <td class='text-ellipsis' title="<?php echo $detail->desc;?>"><?php echo $detail->desc;?></td>
       <td><?php echo html::radio("status{$detail->id}", $lang->refund->reviewStatusList, $detail->status == 'reject' ? 'reject' : 'pass');?></td>
     </tr>
     <?php endforeach;?>
@@ -53,8 +53,8 @@
       <td><?php echo $refund->date;?></td>
       <td class='text-right'><?php echo zget($currencySign, $refund->currency) . "<span class='detailMoney'>" . $refund->money . "</span>";?></td>
       <td><?php echo $lang->refund->statusList[$refund->status];?></td>
-      <td><?php echo zget($categories, $refund->category, ' ');?></td>
-      <td class='text-ellipsis' title="<?php echo $refund->desc;?>"><?php echo $refund->desc?></td>
+      <td class='text-ellipsis' title="<?php echo zget($categories, $detail->category, ' ');?>"><?php echo zget($categories, $refund->category, ' ');?></td>
+      <td class='text-ellipsis' title="<?php echo $refund->desc;?>"><?php echo $refund->desc;?></td>
       <td><?php echo html::radio("status", $lang->refund->reviewStatusList, $refund->status == 'reject' ? 'reject' : 'pass');?></td>
     </tr>
     <?php endif;?>
@@ -68,11 +68,10 @@
           <span class='input-group-addon'><?php echo zget($lang->currencyList, $refund->currency, $refund->currency);?></span>
         </div>
       </td>
-      <td><?php echo html::submitButton();?></td>
     </tr>
-    <tr class='reason hide'>
-      <th class='w-80px text-center text-middle'><?php echo $lang->refund->reason;?></th>
-      <td><?php echo html::textarea("reason", '', "class='form-control rowspan=3'");?></td>
+    <tr class='reason'>
+      <th class='w-50px text-center text-middle'><?php echo $lang->refund->reason;?></th>
+      <td><?php echo html::textarea("reason", '', "class='form-control rowspan=4'");?></td>
       <td class='text-middle'><?php echo html::submitButton();?></td>
     </tr>
   </table>

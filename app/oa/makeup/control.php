@@ -139,52 +139,50 @@ class makeup extends control
      * @access public
      * @return void
      */
-    public function review($id, $status)
+    public function review($id)
     {
         $makeup = $this->makeup->getById($id);
 
-        /* Check privilage. */
-        $reviewedBy = $this->makeup->getReviewedBy();
-        if($reviewedBy)
-        { 
-            if($reviewedBy != $this->app->user->account) $this->send(array('result' => 'fail', 'message' => $this->lang->makeup->denied));
-        }
-        else
+        if($_POST)
         {
-            $createdUser = $this->loadModel('user')->getByAccount($makeup->createdBy);
-            $dept        = $this->loadModel('tree')->getById($createdUser->dept);
-            if((empty($dept) or ",{$this->app->user->account}," != $dept->moderators)) $this->send(array('result' => 'fail', 'message' => $this->lang->makeup->denied));
-        }
-
-        if($status == 'reject')
-        {
-            if($_POST)
+            /* Check privilage. */
+            $reviewedBy = $this->makeup->getReviewedBy();
+            if($reviewedBy)
+            { 
+                if($reviewedBy != $this->app->user->account) $this->send(array('result' => 'fail', 'message' => $this->lang->makeup->denied));
+            }
+            else
             {
-                $this->makeup->review($id, $status);
+                $createdUser = $this->loadModel('user')->getByAccount($makeup->createdBy);
+                $dept        = $this->loadModel('tree')->getById($createdUser->dept);
+                if((empty($dept) or ",{$this->app->user->account}," != $dept->moderators)) $this->send(array('result' => 'fail', 'message' => $this->lang->makeup->denied));
+            }
+
+            if($this->post->status == 'reject')
+            {
+                $this->makeup->review($id, $this->post->status);
                 if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
 
-                $actionID = $this->loadModel('action')->create('makeup', $id, 'reviewed', '', zget($this->lang->makeup->statusList, $status));
+                $actionID = $this->loadModel('action')->create('makeup', $id, 'reviewed', $this->post->comment, zget($this->lang->makeup->statusList, $this->post->status));
                 $this->sendmail($id, $actionID);
-                $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => inlink('browseReview')));
+                $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
+            }
+            else
+            {
+                $this->makeup->review($id, $this->post->status);
+                if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
+
+                $actionID = $this->loadModel('action')->create('makeup', $id, 'reviewed', $this->post->comment, zget($this->lang->makeup->statusList, $this->post->status));
+                $this->sendmail($id, $actionID);
+
+                $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
             }
         }
-        else
-        {
-            $this->makeup->review($id, $status);
-            if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
+        
 
-            $actionID = $this->loadModel('action')->create('makeup', $id, 'reviewed', '', zget($this->lang->makeup->statusList, $status));
-            $this->sendmail($id, $actionID);
-
-            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess));
-        }
-
-        if($status == 'reject')
-        {
-            $this->view->title  = $this->lang->makeup->review;
-            $this->view->makeup = $makeup;
-            $this->display();
-        }
+        $this->view->title  = $this->lang->makeup->review;
+        $this->view->makeup = $makeup;
+        $this->display();
     }
 
     /**

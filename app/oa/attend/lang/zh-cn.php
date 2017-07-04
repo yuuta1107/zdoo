@@ -56,6 +56,7 @@ $lang->attend->reviewedBy   = '审核人';
 $lang->attend->reviewedDate = '审核时间';
 $lang->attend->deserveDays  = '应出勤天数';
 $lang->attend->actualDays   = '实际出勤天数';
+$lang->attend->comment      = '说明';
 
 $lang->attend->clientList['all']     = '所有';
 $lang->attend->clientList['desktop'] = '电脑版';

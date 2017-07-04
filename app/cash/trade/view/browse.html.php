@@ -88,7 +88,7 @@
           <td class='text-right'><?php echo zget($currencySign, $trade->currency) . formatMoney($trade->money);?></td>
           <td><?php echo zget($deptList, $trade->dept);?></td>
           <td title='<?php foreach(explode(',', $trade->handlers) as $handler) echo zget($users, $handler) . ' ';?>'><?php foreach(explode(',', $trade->handlers) as $handler) echo zget($users, $handler) . ' ';?></td>
-          <td class='text-left' title='<?php echo zget($categories, $trade->category, ' ');?>'><?php echo zget($categories, $trade->category, ' ');?></td>
+          <td class='text-nowrap text-ellipsis text-left' title='<?php echo zget($categories, $trade->category, ' ');?>'><?php echo zget($categories, $trade->category, ' ');?></td>
           <td class='text-left visible-lg'><div title="<?php echo $trade->desc;?>" class='w-200px text-ellipsis'><?php echo $trade->desc;?><div></td>
           <?php if($mode == 'invest' or $mode == 'loan'):?>
           <td><?php echo zget($lang->trade->statusList, $trade->status);?></td>

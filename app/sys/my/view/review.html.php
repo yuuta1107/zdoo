@@ -40,8 +40,7 @@
       <td><?php echo zget($lang->attend->reasonList, $attend->reason)?></td>
       <td><?php echo $attend->desc?></td>
       <td>
-        <?php echo html::a($this->createLink('oa.attend', 'review', "attendID={$attend->id}&status=pass"), $lang->attend->reviewStatusList['pass'], "data-status='pass' data-toggle='ajax'")?>
-        <?php echo html::a($this->createLink('oa.attend', 'review', "attendID={$attend->id}&status=reject"), $lang->attend->reviewStatusList['reject'], "data-status='reject' data-toggle='ajax'")?>
+        <?php echo html::a($this->createLink('oa.attend', 'review', "attendID={$attend->id}"), $lang->attend->review, "data-status='pass' data-toggle='modal'")?>
       </td>
     </tr>
     <?php endforeach;?>
@@ -81,10 +80,9 @@
       <td><?php echo zget($users, $leave->reviewedBy);?></td>
       <td>
         <?php if($leave->status == 'pass'):?>
-        <?php echo html::a($this->createLink('oa.leave', 'review', "id={$leave->id}&status=back"), $lang->leave->statusList['pass'] . $lang->leave->back, "data-status='pass' data-toggle='ajax'");?>
+        <?php echo html::a($this->createLink('oa.leave', 'review', "id={$leave->id}&type=back"), $lang->leave->statusList['pass'] . $lang->leave->back, "data-status='pass' data-toggle='modal' data-width=800");?>
         <?php else:?>
-        <?php echo html::a($this->createLink('oa.leave', 'review', "id={$leave->id}&status=pass"), $lang->leave->statusList['pass'], "data-status='pass' data-toggle='ajax'");?>
-        <?php echo html::a($this->createLink('oa.leave', 'review', "id={$leave->id}&status=reject"), $lang->leave->statusList['reject'], "data-status='reject' data-toggle='ajax'");?>
+        <?php echo html::a($this->createLink('oa.leave', 'review', "id={$leave->id}&type=review"), $lang->leave->review, "data-status='pass' data-toggle='modal' data-width=800");?>
         <?php endif;?>
       </td>
     </tr>
@@ -119,8 +117,7 @@
       <td title='<?php echo $makeup->desc?>'><?php echo $makeup->desc;?></td>
       <td>
         <?php echo html::a($this->createLink('oa.makeup', 'view', "id={$makeup->id}"), $lang->view, "data-toggle='modal'");?>
-        <?php echo html::a($this->createLink('oa.makeup', 'review', "id={$makeup->id}&status=pass"), $lang->makeup->statusList['pass'], "data-status='pass' data-toggle='ajax'");?>
-        <?php echo html::a($this->createLink('oa.makeup', 'review', "id={$makeup->id}&status=reject"), $lang->makeup->statusList['reject'], "data-status='reject' data-toggle='ajax'");?>
+        <?php echo html::a($this->createLink('oa.makeup', 'review', "id={$makeup->id}&status=pass"), $lang->makeup->review, "data-status='pass' data-toggle='modal' data-width=800");?>
       </td>
     </tr>
     <?php endforeach;?>
@@ -157,8 +154,7 @@
       <td class='overtime-<?php echo $overtime->status?>'><?php echo zget($this->lang->overtime->statusList, $overtime->status);?></td>
       <td><?php echo zget($users, $overtime->reviewedBy);?></td>
       <td>
-        <?php echo html::a($this->createLink('oa.overtime', 'review', "id={$overtime->id}&status=pass"), $lang->overtime->statusList['pass'], "data-status='pass' data-toggle='ajax'");?>
-        <?php echo html::a($this->createLink('oa.overtime', 'review', "id={$overtime->id}&status=reject"), $lang->overtime->statusList['reject'], "data-status='reject' data-toggle='ajax'");?>
+        <?php echo html::a($this->createLink('oa.overtime', 'review', "id={$overtime->id}"), $lang->overtime->review, "data-status='reject' data-toggle='modal' data-width=800");?>
       </td>
     </tr>
     <?php endforeach;?>
@@ -193,8 +189,7 @@
       <td class='lieu-<?php echo $lieu->status?>'><?php echo zget($this->lang->lieu->statusList, $lieu->status);?></td>
       <td><?php echo zget($users, $lieu->reviewedBy);?></td>
       <td>
-        <?php echo html::a($this->createLink('oa.lieu', 'review', "id={$lieu->id}&status=pass"), $lang->lieu->statusList['pass'], "data-status='pass' data-toggle='ajax'");?>
-        <?php echo html::a($this->createLink('oa.lieu', 'review', "id={$lieu->id}&status=reject"), $lang->lieu->statusList['reject'], "data-status='reject' data-toggle='ajax'");?>
+        <?php echo html::a($this->createLink('oa.lieu', 'review', "id={$lieu->id}"), $lang->lieu->review, "data-status='pass' data-toggle='modal' data-width=800");?>
       </td>
     </tr>
     <?php endforeach;?>
@@ -221,13 +216,13 @@
     <tr>
       <td><?php echo $refund->id;?></td>
       <td class='text-left'><?php echo $refund->name;?></td>
-      <td><?php echo zget($categories, $refund->category, '');?></td>
+      <td title='<?php echo zget($categories, $refund->category, '');?>'><?php echo zget($categories, $refund->category, '');?></td>
       <td><?php echo zget($users, $refund->createdBy);?></td>
       <td class='text-right'><?php echo zget($currencySign, $refund->currency) . $refund->money;?></td>
       <td><?php echo $refund->date;?></td>
       <td><?php echo zget($lang->refund->statusList, $refund->status);?></td>
       <td><?php echo $refund->desc?></td>
-      <td><?php echo html::a($this->createLink('oa.refund', 'review', "refundID={$refund->id}"), $lang->refund->review, "data-toggle='modal'")?></td>
+      <td><?php echo html::a($this->createLink('oa.refund', 'review', "refundID={$refund->id}"), $lang->refund->review, "data-toggle='modal' data-width=800")?></td>
     </tr>
     <?php endforeach;?>
   </table>

@@ -366,11 +366,11 @@ class refund extends control
             
             /* send email. */
             $refund   = $this->refund->getByID($refundID);
-            $actionID = $this->loadModel('action')->create('refund', $refundID, 'reviewed', $refund->status == 'reject' ? $refund->reason : '', zget($this->lang->refund->statusList, $refund->status));
+            $actionID = $this->loadModel('action')->create('refund', $refundID, 'reviewed', $this->post->reason, zget($this->lang->refund->statusList, $refund->status));
             if($refund->status == 'pass' && !empty($this->config->refund->secondReviewer) 
                 && $this->config->refund->secondReviewer != $this->app->user->account && $this->config->refund->secondReviewer == $refund->createdBy)
             {
-                $this->loadModel('action')->create('refund', $refundID, 'reviewed', '', $this->lang->refund->statusList['pass'], $this->config->refund->secondReviewer);
+                $this->loadModel('action')->create('refund', $refundID, 'reviewed', $this->post->reason, $this->lang->refund->statusList['pass'], $this->config->refund->secondReviewer);
             }
             $this->sendmail($refundID, $actionID);
 
