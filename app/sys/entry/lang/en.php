@@ -47,7 +47,7 @@ $lang->entry->integrateZentao  = 'Integrate ZenTao';
 
 $lang->entry->chanzhiPlaceholder = 'Please enter Admin URL';
 $lang->entry->chanzhiURL         = 'Admin URL';
-$lang->entry->zentaoPlaceholder  = 'E.g. http://www.zentaopms.com/user-login-Lw==.html';
+$lang->entry->zentaoPlaceholder  = 'E.g. http://www.zentaopms.com/user-login.html';
 $lang->entry->zentaoURL          = 'ZenTao URL';
 
 $lang->entry->zentaoAdmin   = 'ZenTao Admin';

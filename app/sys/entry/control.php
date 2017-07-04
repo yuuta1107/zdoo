@@ -86,6 +86,7 @@ class entry extends control
                 /* Get zentao config. */
                 $zentaoConfig = $this->loadModel('sso')->getZentaoServerConfig($zentaoUrl);
                 if(empty($zentaoConfig)) $this->send(array('result' => 'fail', 'message' => $this->lang->entry->error->zentaoUrl));
+                if(isset($zentaoConfig->result) and $zentaoConfig->result == 'fail') $this->send($zentaoConfig);
                 if(strpos($zentaoConfig->version, 'pro') !== false and version_compare($zentaoConfig->version, 'pro5.0', '<')) $this->send(array('result' => 'fail', 'message' => sprintf($this->lang->entry->error->version, 'pro5.0')));
                 if(strpos($zentaoConfig->version, 'pro') === false and version_compare($zentaoConfig->version, '7.4', '<')) $this->send(array('result' => 'fail', 'message' => sprintf($this->lang->entry->error->version, '7.4')));
 

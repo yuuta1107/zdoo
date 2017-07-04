@@ -47,7 +47,7 @@ $lang->entry->integrateZentao  = '集成禅道';
 
 $lang->entry->chanzhiPlaceholder = '请输入蝉知的后台访问地址';
 $lang->entry->chanzhiURL         = '后台入口';
-$lang->entry->zentaoPlaceholder  = '如：http://www.zentaopms.com/user-login-Lw==.html';
+$lang->entry->zentaoPlaceholder  = '如：http://www.zentaopms.com/user-login.html';
 $lang->entry->zentaoURL          = '禅道登录地址';
 
 $lang->entry->zentaoAdmin   = '禅道管理员';

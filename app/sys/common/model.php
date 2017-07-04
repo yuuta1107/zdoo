@@ -1418,10 +1418,7 @@ class commonModel extends model
     public static function http($url, $data = null)
     {
         global $lang;
-        if(!extension_loaded('curl'))
-        {
-            return $lang->error->noCurlExt;
-        }
+        if(!extension_loaded('curl')) return json_encode(array('result' => 'fail', 'message' => $lang->error->noCurlExt));
 
         $ci = curl_init();
         curl_setopt($ci, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
