@@ -139,52 +139,50 @@ class overtime extends control
      * @access public
      * @return void
      */
-    public function review($id, $status)
+    public function review($id)
     {
         $overtime = $this->overtime->getById($id);
 
-        /* Check privilage. */
-        $reviewedBy = $this->overtime->getReviewedBy();
-        if($reviewedBy)
-        { 
-            if($reviewedBy != $this->app->user->account) $this->send(array('result' => 'fail', 'message' => $this->lang->overtime->denied));
-        }
-        else
+        if($_POST)
         {
-            $createdUser = $this->loadModel('user')->getByAccount($overtime->createdBy);
-            $dept = $this->loadModel('tree')->getById($createdUser->dept);
-            if((empty($dept) or ",{$this->app->user->account}," != $dept->moderators)) $this->send(array('result' => 'fail', 'message' => $this->lang->overtime->denied));
-        }
-
-        if($status == 'reject')
-        {
-            if($_POST)
+            /* Check privilage. */
+            $reviewedBy = $this->overtime->getReviewedBy();
+            if($reviewedBy)
+            { 
+                if($reviewedBy != $this->app->user->account) $this->send(array('result' => 'fail', 'message' => $this->lang->overtime->denied));
+            }
+            else
             {
-                $this->overtime->review($id, $status);
+                $createdUser = $this->loadModel('user')->getByAccount($overtime->createdBy);
+                $dept = $this->loadModel('tree')->getById($createdUser->dept);
+                if((empty($dept) or ",{$this->app->user->account}," != $dept->moderators)) $this->send(array('result' => 'fail', 'message' => $this->lang->overtime->denied));
+            }
+
+            if($this->post->status == 'reject')
+            {
+                $this->overtime->review($id, $this->post->status);
                 if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
 
-                $actionID = $this->loadModel('action')->create('overtime', $id, 'reviewed', '', zget($this->lang->overtime->statusList, $status));
+                $actionID = $this->loadModel('action')->create('overtime', $id, 'reviewed', $this->post->comment, zget($this->lang->overtime->statusList, $this->post->status));
                 $this->sendmail($id, $actionID);
-                $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => inlink('browseReview')));
+                $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
+            }
+            else
+            {
+                $this->overtime->review($id, $this->post->status);
+                if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
+
+                $actionID = $this->loadModel('action')->create('overtime', $id, 'reviewed', $this->post->comment, zget($this->lang->overtime->statusList, $this->post->status));
+                $this->sendmail($id, $actionID);
+
+                $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
             }
         }
-        else
-        {
-            $this->overtime->review($id, $status);
-            if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
+        
 
-            $actionID = $this->loadModel('action')->create('overtime', $id, 'reviewed', '', zget($this->lang->overtime->statusList, $status));
-            $this->sendmail($id, $actionID);
-
-            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess));
-        }
-
-        if($status == 'reject')
-        {
-            $this->view->title    = $this->lang->overtime->review;
-            $this->view->overtime = $overtime;
-            $this->display();
-        }
+        $this->view->title    = $this->lang->overtime->review;
+        $this->view->overtime = $overtime;
+        $this->display();
     }
 
     /**

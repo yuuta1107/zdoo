@@ -31,6 +31,7 @@ $lang->lieu->reviewedBy   = '审核者';
 $lang->lieu->reviewedDate = '审核时间';
 $lang->lieu->date         = '日期';
 $lang->lieu->time         = '时间';
+$lang->lieu->comment      = '说明';
 
 $lang->lieu->statusList['draft']  = '草稿';
 $lang->lieu->statusList['wait']   = '等待审核';
@@ -46,3 +47,6 @@ $lang->lieu->sameMonth = '不支持跨月份调休';
 $lang->lieu->wrongEnd  = '结束时间应该大于开始时间';
 
 $lang->lieu->hoursTip = '小时';
+
+$lang->lieu->reviewStatusList['pass']   = '通过';
+$lang->lieu->reviewStatusList['reject'] = '拒绝';

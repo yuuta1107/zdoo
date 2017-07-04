@@ -393,13 +393,24 @@ class attend extends control
      * @access public
      * @return void
      */
-    public function review($attendID, $reviewStatus)
+    public function review($attendID)
     {
-        $result = $this->attend->review($attendID, $reviewStatus);
-        if(!$result) $this->send(array('result' => 'fail', 'message' => dao::getError()));
-        $actionID = $this->loadModel('action')->create('attend', $attendID, 'reviewed', '', $reviewStatus);
-        $this->sendmail($attendID, $actionID);
-        $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess));
+        $attend = $this->attend->getById($attendID);
+
+        if($_POST)
+        {
+            $result = $this->attend->review($attendID, $this->post->status);
+            if(!$result) $this->send(array('result' => 'fail', 'message' => dao::getError()));
+
+            $actionID = $this->loadModel('action')->create('attend', $attendID, 'reviewed', $this->post->comment, $this->post->status);
+            $this->sendmail($attendID, $actionID);
+            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
+        }
+
+        $this->view->title = $this->lang->attend->review;
+        $this->view->attend = $attend;
+        $this->view->users  = $this->loadModel('user')->getPairs();
+        $this->display();
     }
 
     /**

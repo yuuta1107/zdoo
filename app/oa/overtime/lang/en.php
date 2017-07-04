@@ -34,6 +34,7 @@ $lang->overtime->reviewedDate = 'Reviewed Date';
 $lang->overtime->date         = 'Date';
 $lang->overtime->time         = 'Time';
 $lang->overtime->rejectReason = 'Reject Reason';
+$lang->overtime->comment      = 'Comment';
 
 $lang->overtime->typeList['time']    = 'After work';
 $lang->overtime->typeList['rest']    = 'On weekends';
@@ -54,3 +55,6 @@ $lang->overtime->confirmReview['reject'] = 'Are you sure to reject it?';
 
 $lang->overtime->hoursTip = 'Hours';
 $lang->overtime->baseInfo = 'Basic Info';
+
+$lang->overtime->reviewStatusList['pass']   = 'Pass';
+$lang->overtime->reviewStatusList['reject'] = 'Reject';

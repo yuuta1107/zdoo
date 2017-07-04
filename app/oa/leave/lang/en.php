@@ -35,6 +35,7 @@ $lang->leave->reviewedBy   = 'Reviewer';
 $lang->leave->reviewedDate = 'Reviewed on';
 $lang->leave->date         = 'Date';
 $lang->leave->time         = 'Time';
+$lang->leave->comment      = 'Comment';
 
 $lang->leave->typeList['affairs']   = 'Private';
 $lang->leave->typeList['sick']      = 'Sick';
@@ -63,3 +64,6 @@ $lang->leave->confirmReview['pass']   = 'Do you want to pass it?';
 $lang->leave->confirmReview['reject'] = 'Do you want to reject it?';
 
 $lang->leave->hoursTip = 'Hours';
+
+$lang->leave->reviewStatusList['pass']   = 'Pass';
+$lang->leave->reviewStatusList['reject'] = 'Reject';

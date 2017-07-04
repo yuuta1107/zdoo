@@ -294,30 +294,37 @@ class lieu extends control
      * @access public
      * @return void
      */
-    public function review($id, $status)
+    public function review($id)
     {
         $lieu = $this->lieu->getById($id);
 
-        /* Check privilage. */
-        $reviewedBy = $this->lieu->getReviewedBy();
-        if($reviewedBy)
-        { 
-            if($reviewedBy != $this->app->user->account) $this->send(array('result' => 'fail', 'message' => $this->lang->lieu->denied));
-        }
-        else
+        if($_POST)
         {
-            $createdUser = $this->loadModel('user')->getByAccount($lieu->createdBy);
-            $dept = $this->loadModel('tree')->getById($createdUser->dept);
-            if((empty($dept) or ",{$this->app->user->account}," != $dept->moderators)) $this->send(array('result' => 'fail', 'message' => $this->lang->lieu->denied));
+            /* Check privilage. */
+            $reviewedBy = $this->lieu->getReviewedBy();
+            if($reviewedBy)
+            { 
+                if($reviewedBy != $this->app->user->account) $this->send(array('result' => 'fail', 'message' => $this->lang->lieu->denied));
+            }
+            else
+            {
+                $createdUser = $this->loadModel('user')->getByAccount($lieu->createdBy);
+                $dept = $this->loadModel('tree')->getById($createdUser->dept);
+                if((empty($dept) or ",{$this->app->user->account}," != $dept->moderators)) $this->send(array('result' => 'fail', 'message' => $this->lang->lieu->denied));
+            }
+
+            $this->lieu->review($id, $this->post->status);
+            if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
+
+            $actionID = $this->loadModel('action')->create('lieu', $id, 'reviewed', $this->post->comment, zget($this->lang->lieu->statusList, $this->post->status));
+            $this->sendmail($id, $actionID);
+
+            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
         }
 
-        $this->lieu->review($id, $status);
-        if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
-
-        $actionID = $this->loadModel('action')->create('lieu', $id, 'reviewed', '', zget($this->lang->lieu->statusList, $status));
-        $this->sendmail($id, $actionID);
-
-        $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess));
+        $this->view->title = $this->lang->lieu->review;
+        $this->view->lieu = $lieu;
+        $this->display();
     }
 
     /**

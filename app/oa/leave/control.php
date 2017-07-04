@@ -150,38 +150,51 @@ class leave extends control
      * @access public
      * @return void
      */
-    public function review($id, $status)
+    public function review($id, $type)
     {
         $leave = $this->leave->getById($id);
 
-        /* Check privilage. */
-        $reviewedBy = $this->leave->getReviewedBy();
-        if($reviewedBy)
-        { 
-            if($reviewedBy != $this->app->user->account) $this->send(array('result' => 'fail', 'message' => $this->lang->leave->denied));
-        }
-        else
+        if($_POST)
         {
-            $createdUser = $this->loadModel('user')->getByAccount($leave->createdBy);
-            $dept = $this->loadModel('tree')->getByID($createdUser->dept);
-            if((empty($dept) or ",{$this->app->user->account}," != $dept->moderators)) $this->send(array('result' => 'fail', 'message' => $this->lang->leave->denied));
+            /* Check privilage. */
+            $reviewedBy = $this->leave->getReviewedBy();
+            if($reviewedBy)
+            { 
+                if($reviewedBy != $this->app->user->account) $this->send(array('result' => 'fail', 'message' => $this->lang->leave->denied));
+            }
+            else
+            {
+                $createdUser = $this->loadModel('user')->getByAccount($leave->createdBy);
+                $dept        = $this->loadModel('tree')->getByID($createdUser->dept);
+
+                if((empty($dept) or ",{$this->app->user->account}," != $dept->moderators)) 
+                {
+                    $this->send(array('result' => 'fail', 'message' => $this->lang->leave->denied));
+                }
+            }
+
+            if($this->get->type == 'back')
+            {
+                $this->leave->reviewBackDate($id);
+                $status = 'pass';
+            }
+            else
+            {
+                $this->leave->review($id, $this->post->status);
+            }
+
+            if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
+
+            $actionID = $this->loadModel('action')->create('leave', $id, 'reviewed', $this->post->comment, zget($this->lang->leave->statusList, $this->post->status));
+            $this->sendmail($id, $actionID);
+
+            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
         }
 
-        if($status == 'back')
-        {
-            $this->leave->reviewBackDate($id);
-            $status = 'pass';
-        }
-        else
-        {
-            $this->leave->review($id, $status);
-        }
-        if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
-
-        $actionID = $this->loadModel('action')->create('leave', $id, 'reviewed', '', zget($this->lang->leave->statusList, $status));
-        $this->sendmail($id, $actionID);
-
-        $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess));
+        $this->view->title = $this->lang->leave->review;
+        $this->view->leave = $leave;
+        $this->view->type  = $type;
+        $this->display();
     }
 
     /**

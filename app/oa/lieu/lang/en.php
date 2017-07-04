@@ -31,6 +31,7 @@ $lang->lieu->reviewedBy   = 'Reviewed By';
 $lang->lieu->reviewedDate = 'Reviewed On';
 $lang->lieu->date         = 'Date';
 $lang->lieu->time         = 'Time';
+$lang->lieu->comment      = 'Comment';
 
 $lang->lieu->statusList['draft']  = 'Draft';
 $lang->lieu->statusList['wait']   = 'Wait';
@@ -46,3 +47,6 @@ $lang->lieu->sameMonth = 'Lieu must be in the same month.';
 $lang->lieu->wrongEnd  = 'End time should be greater than begin time.';
 
 $lang->lieu->hoursTip = 'Hours';
+
+$lang->lieu->reviewStatusList['pass']   = 'Pass';
+$lang->lieu->reviewStatusList['reject'] = 'Reject';
