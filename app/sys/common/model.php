@@ -581,6 +581,7 @@ class commonModel extends model
                     }
                 }
             }
+
             if($hasPriv)
             {
                 $link = helper::createLink($module, $method, $vars);
