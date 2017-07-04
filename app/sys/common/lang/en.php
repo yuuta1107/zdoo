@@ -448,6 +448,7 @@ $lang->datepicker->dpText->TEXT_PREV_YEAR   = 'Last Year';
 $lang->datepicker->dpText->TEXT_PREV_MONTH  = 'Last Month';
 $lang->datepicker->dpText->TEXT_PREV_WEEK   = 'Last Week';
 $lang->datepicker->dpText->TEXT_YESTERDAY   = 'Yesterday';
+$lang->datepicker->dpText->TEXT_THIS_YEAR   = 'This Year';
 $lang->datepicker->dpText->TEXT_THIS_MONTH  = 'This Month';
 $lang->datepicker->dpText->TEXT_THIS_WEEK   = 'This Week';
 $lang->datepicker->dpText->TEXT_TODAY       = 'Today';

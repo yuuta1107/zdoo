@@ -425,11 +425,15 @@ class searchModel extends model
         $thisWeek  = date::getThisWeek();
         $lastMonth = date::getLastMonth();
         $thisMonth = date::getThisMonth();
+        $thisYear  = date::getThisYear();
+        $lastYear  = date::getLastYear();
         $yesterday = date::yesterday();
         $today     = date::today();
         if(strpos($query, '$') !== false)
         {
             $query = str_replace('$@me', $this->app->user->account, $query);
+            $query = str_replace("'\$lastYear'",  "'" . $lastYear['begin']  . "' and '" . $lastYear['end']  . "'", $query);
+            $query = str_replace("'\$thisYear'",  "'" . $thisYear['begin']  . "' and '" . $thisYear['end']  . "'", $query);
             $query = str_replace("'\$lastMonth'", "'" . $lastMonth['begin'] . "' and '" . $lastMonth['end'] . "'", $query);
             $query = str_replace("'\$thisMonth'", "'" . $thisMonth['begin'] . "' and '" . $thisMonth['end'] . "'", $query);
             $query = str_replace("'\$lastWeek'",  "'" . $lastWeek['begin']  . "' and '" . $lastWeek['end']  . "'", $query);

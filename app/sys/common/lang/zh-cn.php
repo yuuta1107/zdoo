@@ -448,6 +448,7 @@ $lang->datepicker->dpText->TEXT_PREV_YEAR   = '去年';
 $lang->datepicker->dpText->TEXT_PREV_MONTH  = '上月';
 $lang->datepicker->dpText->TEXT_PREV_WEEK   = '上周';
 $lang->datepicker->dpText->TEXT_YESTERDAY   = '昨天';
+$lang->datepicker->dpText->TEXT_THIS_YEAR   = '今年';
 $lang->datepicker->dpText->TEXT_THIS_MONTH  = '本月';
 $lang->datepicker->dpText->TEXT_THIS_WEEK   = '本周';
 $lang->datepicker->dpText->TEXT_TODAY       = '今天';

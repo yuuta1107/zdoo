@@ -37,7 +37,7 @@ include '../../common/view/chosen.html.php';
 
 #selectPeriod {padding: 4px; height: 197px; min-width: 120px}
 #selectPeriod > .dropdown-header {background: #f1f1f1; display: block; text-align: center; padding: 4px 0; line-height: 20px; margin-bottom: 5px; font-size: 14px; border-radius: 2px; color: #333; font-size: 12px}
-#selectPeriod li > a {padding: 4px 15px; border-radius: 2px}
+#selectPeriod li > a {padding: 3px 15px; border-radius: 2px}
 
 #moreOrLite {position: absolute; right: 0; top: 0; bottom: 0}
 #searchlite, #searchmore {width: 50px; padding: 0 5px; line-height: 70px; text-align: center; opacity: 0.7}
@@ -141,7 +141,7 @@ function setDateField(query, fieldNO, type)
 
     if(!$period.length)
     {
-        $period = $("<ul id='selectPeriod' class='dropdown-menu'><li class='dropdown-header'><?php echo $lang->datepicker->dpText->TEXT_OR . ' ' . $lang->datepicker->dpText->TEXT_DATE;?></li><li><a href='#lastWeek'><?php echo $lang->datepicker->dpText->TEXT_PREV_WEEK;?></a></li><li><a href='#thisWeek'><?php echo $lang->datepicker->dpText->TEXT_THIS_WEEK;?></a></li><li><a href='#yesterday'><?php echo $lang->datepicker->dpText->TEXT_YESTERDAY;?></a></li><li><a href='#today'><?php echo $lang->datepicker->dpText->TEXT_TODAY;?></a></li><li><a href='#lastMonth'><?php echo $lang->datepicker->dpText->TEXT_PREV_MONTH;?></a></li><li><a href='#thisMonth'><?php echo $lang->datepicker->dpText->TEXT_THIS_MONTH;?></a></li></ul>").appendTo('body');
+        $period = $("<ul id='selectPeriod' class='dropdown-menu'><li class='dropdown-header'><?php echo $lang->datepicker->dpText->TEXT_OR . ' ' . $lang->datepicker->dpText->TEXT_DATE;?></li><li><a href='#lastWeek'><?php echo $lang->datepicker->dpText->TEXT_PREV_WEEK;?></a></li><li><a href='#thisWeek'><?php echo $lang->datepicker->dpText->TEXT_THIS_WEEK;?></a></li><li><a href='#yesterday'><?php echo $lang->datepicker->dpText->TEXT_YESTERDAY;?></a></li><li><a href='#today'><?php echo $lang->datepicker->dpText->TEXT_TODAY;?></a></li><li><a href='#lastMonth'><?php echo $lang->datepicker->dpText->TEXT_PREV_MONTH;?></a></li><li><a href='#thisMonth'><?php echo $lang->datepicker->dpText->TEXT_THIS_MONTH;?></a></li><li><a href='#thisYear'><?php echo $lang->datepicker->dpText->TEXT_THIS_YEAR;?></a></li><li><a href='#lastYear'><?php echo $lang->datepicker->dpText->TEXT_PREV_YEAR;?></a></li></ul>").appendTo('body');
         $period.find('li > a').click(function(event)
         {
             var target = $('#' + $period.data('target'));
@@ -389,7 +389,7 @@ foreach($fieldParams as $fieldName => $param)
               $fieldValue = $formSession["value$fieldNO"];
               $extraClass = isset($param['class']) ? $param['class'] : '';
 
-              if($fieldValue && strpos('$lastWeek,$thisWeek,$today,$yesterday,$thisMonth,$lastMonth',$fieldValue) !== false)
+              if($fieldValue && strpos('$lastWeek,$thisWeek,$today,$yesterday,$thisMonth,$lastMonth,$thisYear,$lastYear',$fieldValue) !== false)
               {
                   echo html::input("dateValue$fieldNO", '', "class='form-control $extraClass searchInput' placeholder='{$fieldValue}'");
                   echo html::hidden("value$fieldNO", $fieldValue);
@@ -445,7 +445,7 @@ foreach($fieldParams as $fieldName => $param)
               $fieldName  = $formSession["field$fieldNO"];
               $fieldValue = $formSession["value$fieldNO"];
               $extraClass = isset($param['class']) ? $param['class'] : '';
-              if($fieldValue && strpos('$lastWeek,$thisWeek,$today,$yesterday,$thisMonth,$lastMonth',$fieldValue) !== false)
+              if($fieldValue && strpos('$lastWeek,$thisWeek,$today,$yesterday,$thisMonth,$lastMonth,$thisYear,$lastYear',$fieldValue) !== false)
               {
                   echo html::input("dateValue$fieldNO", '', "class='form-control $extraClass searchInput' placeholder='{$fieldValue}'");
                   echo html::hidden("value$fieldNO", $fieldValue);
