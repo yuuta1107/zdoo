@@ -45,7 +45,7 @@
       <div class='panel-body'>
         <table class='table table-info'>
           <tr>
-            <th class='w-60px'><?php echo $lang->trade->date;?></th>
+            <th class='w-70px'><?php echo $lang->trade->date;?></th>
             <td><?php echo formatTime($trade->date, DT_DATE1);?></td>
           </tr>
           <tr>
@@ -67,6 +67,10 @@
           <tr>
             <th><?php echo $lang->trade->handlers;?></th>
             <td title='<?php foreach(explode(',', $trade->handlers) as $handler) echo zget($users, $handler) . ' ';?>'><?php foreach(explode(',', $trade->handlers) as $handler) echo zget($users, $handler) . ' ';?></td>
+          </tr>
+          <tr>
+            <th><?php echo $lang->trade->createdDate;?></th>
+            <td><?php echo $trade->createdDate;?></td>
           </tr>
           <tr>
             <th><?php echo $lang->trade->product;?></th>
