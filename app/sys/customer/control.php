@@ -557,4 +557,18 @@ class customer extends control
         }
         echo $areaID;
     }
+
+    /**
+     * Ajax get customer pairs 
+     * 
+     * @param  string $relation 
+     * @param  int    $emptyOption 
+     * @access public
+     * @return void
+     */
+    public function ajaxGetPairs($relation = '', $emptyOption = true)
+    {
+        $customers = $this->customer->getPairs($relation, $emptyOption);
+        echo html::select('trader', $customers, '', "class='form-control'");
+    }
 }

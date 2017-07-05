@@ -36,6 +36,8 @@ class trade extends control
     {   
         if(!$this->trade->checkPriv($mode)) die(js::error($this->lang->trade->denied) . js::locate('back'));
 
+        $bysearch = false;
+        if(strpos($mode, '_') !== false) list($mode, $bysearch) = explode('_', $mode);
         if($mode == 'all' and $date == '' and $orderBy == 'date_desc') $this->session->set('date', '');
 
         $this->app->loadClass('pager', $static = true);
@@ -46,10 +48,29 @@ class trade extends control
 
         /* Build search form. */
         $this->loadModel('search', 'sys');
-        $this->config->trade->search['actionURL'] = $this->createLink('trade', 'browse', 'mode=bysearch');
+        $this->config->trade->search['actionURL'] = $this->createLink('trade', 'browse', "mode={$mode}_bysearch");
         $this->config->trade->search['params']['depositor']['values'] = array('' => '') + $this->loadModel('depositor', 'cash')->getPairs();
         $this->config->trade->search['params']['product']['values']   = array('' => '') + $this->loadModel('product')->getPairs();
-        $this->config->trade->search['params']['trader']['values']    = $this->loadModel('customer')->getPairs();
+
+        $traders = array('' => '');
+        if($this->session->tradeForm)
+        {
+            foreach($this->session->tradeForm as $formKey => $formValue)
+            {
+                if(strpos($formKey, 'field') !== false and $formValue == 'trader')
+                {
+                    $fieldNO  = substr($formKey, 5);
+                    $traderID = $this->session->tradeForm["value{$fieldNO}"];
+                    if($traderID)
+                    {
+                        $trader = $this->loadModel('customer')->getByID($traderID);
+                        $traders[$traderID] = $trader->name;
+                    }
+                    break;
+                }
+            }
+        }
+        $this->config->trade->search['params']['trader']['values'] = $traders;
 
         $incomeCategories  = $this->loadModel('tree')->getOptionMenu('in', 0, $removeRoot = true);
         $expenseCategories = $this->tree->getOptionMenu('out', 0, $removeRoot = true);
@@ -113,7 +134,7 @@ class trade extends control
         }
         if($currentDate == 'all') $currentDate = '';
 
-        $trades = $this->trade->getList($mode, $currentDate, $orderBy, $pager);
+        $trades = $this->trade->getList($mode, $currentDate, $orderBy, $pager, $bysearch == 'bysearch');
 
         $moduleMenu = "<nav id='menu'><ul class='nav'>";
         if(!empty($tradeYears))
@@ -166,6 +187,7 @@ class trade extends control
         $this->view->productList   = $this->loadModel('product')->getPairs();
         $this->view->currentYear   = $currentYear;
         $this->view->moduleMenu    = $moduleMenu; 
+        $this->view->bysearch      = $bysearch; 
 
         $this->display();
     }   

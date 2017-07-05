@@ -50,4 +50,34 @@ $(document).ready(function()
     }
 
     fixTableFooter($('#tradeList'));
+
+    $(document).on('click', "#querybox td[id^='valueBox']", function()
+    {
+        if($(this).closest('tr').find("select[id^='field']").val() == 'trader')
+        {
+            $valueBox = $(this);
+            if($('#querybox #boxtrader').attr('data-loaded') != 1)
+            {
+                var defaultTrader = $('#querybox #boxtrader').html();
+                $('#querybox #boxtrader').load(createLink('customer', 'ajaxGetPairs'), function()
+                {
+                    $('#querybox #boxtrader #trader').addClass('searchSelect');
+                    $('#querybox #boxtrader #trader').append("<option value='null'>" + v.null + "</option>");
+                    $('#querybox #boxtrader').attr('data-loaded', 1);
+ 
+                    $value  = $valueBox.find("select[id^='value']");
+                    valueID = $value.attr('id');
+                    value   = $value.val();
+ 
+                    $valueBox.html($('#querybox #boxtrader').children().clone());
+                    $valueBox.children().attr({name : valueID, id : valueID});
+ 
+                    $value = $valueBox.find("select[id^='value']");
+                    $value.val(value);
+                    $value.addClass('chosen').chosen(chosenDefaultOptions);
+                    $value.trigger("chosen:open");
+                })
+            }
+        }
+    });
 });

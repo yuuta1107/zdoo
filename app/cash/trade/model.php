@@ -35,9 +35,9 @@ class tradeModel extends model
      * @access public
      * @return array 
      */
-    public function getList($mode = 'all', $date = '', $orderBy = 'id_desc', $pager = null)
+    public function getList($mode = 'all', $date = '', $orderBy = 'id_desc', $pager = null, $bysearch = false)
     {
-        if($mode == 'bysearch') $date = '';
+        if($bysearch) $date = '';
         if($this->session->tradeQuery === false) $this->session->set('tradeQuery', ' 1 = 1');
         $tradeQuery = $this->loadModel('search', 'sys')->replaceDynamic($this->session->tradeQuery);
 
@@ -93,7 +93,7 @@ class tradeModel extends model
             ->beginIF($mode == 'transfer')->andWhere('type', true)->like('transfer%')->orWhere('category')->in(array_keys($feeCategories))->markRight(1)->fi()
             ->beginIF($mode == 'invest')->andWhere('type', true)->in('invest,redeem')->orWhere('category')->in(array_keys($investCategories))->markRight(1)->fi()
             ->beginIF($mode == 'loan')->andWhere('type', true)->in('loan,repay')->orWhere('category')->in(array_keys($interestCategories))->markRight(1)->fi()
-            ->beginIF($mode == 'bysearch')->andWhere($tradeQuery)->fi()
+            ->beginIF($bysearch)->andWhere($tradeQuery)->fi()
             ->beginIF(!empty($denyCategories))->andWhere('category')->notin($denyCategories)
             ->beginIF(!$expensePriv)->andWhere('type')->ne('out')->fi()
             ->orderBy($orderBy)

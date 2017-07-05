@@ -13,7 +13,9 @@
 <?php include '../../common/view/header.html.php';?>
 <?php include '../../../sys/common/view/treeview.html.php';?>
 <?php js::set('modeType', $mode);?>
+<?php js::set('mode', $bysearch);?>
 <?php js::set('date', $date);?>
+<?php js::set('null', $lang->search->null);?>
 <?php js::set('currentYear', $currentYear);?>
 <?php js::set('treeview', !empty($_COOKIE['treeview']) ? $_COOKIE['treeview'] : '');?>
 <li id='bysearchTab'><?php echo html::a('#', "<i class='icon-search icon'></i>" . $lang->search->common)?></li>
@@ -54,7 +56,7 @@
     <table class='table table-hover table-striped table-bordered tablesorter table-data table-fixed' id='tradeList'>
       <thead>
         <tr class='text-center'>
-          <?php $vars = "mode={$mode}&date={$date}&orderBy=%s&recTotal={$pager->recTotal}&recPerPage={$pager->recPerPage}&pageID={$pager->pageID}";?>
+          <?php $vars = "mode={$mode}" . ($bysearch ? '_bysearch' : '') . "&date={$date}&orderBy=%s&recTotal={$pager->recTotal}&recPerPage={$pager->recPerPage}&pageID={$pager->pageID}";?>
           <th class='w-100px'><?php commonModel::printOrderLink('date', $orderBy, $vars, $lang->trade->date);?></th>
           <th class='w-100px'><?php commonModel::printOrderLink('depositor', $orderBy, $vars, $lang->trade->depositor);?></th>
           <th class='w-60px'><?php commonModel::printOrderLink('type', $orderBy, $vars, $lang->trade->type);?></th>
