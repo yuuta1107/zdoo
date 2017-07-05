@@ -84,7 +84,7 @@
           </td>
           <td><?php echo html::input("money[$i]", $trade['money'], "class='form-control'");?></td>
           <td><?php echo html::select("dept[$i]", $deptList, $trade['dept'], "class='form-control chosen'");?></td>
-          <td><?php echo html::select("handlers[$i][]", $users, $this->app->user->account, "class='form-control chosen' id='handlers{$i}' multiple");?></td>
+          <td><?php echo html::select("handlers[$i][]", $users, '', "class='form-control chosen' id='handlers{$i}' multiple");?></td>
           <td><?php echo html::select("product[$i]", $productList, $trade['product'], "class='form-control chosen' id='product{$i}'");?></td>
           <td>
             <?php if(!empty($existTrades[$i])):?>
