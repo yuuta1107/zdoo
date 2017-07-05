@@ -444,7 +444,7 @@ class refundModel extends model
         $trade->handlers    = $refund->related;
         $trade->category    = $refund->category;
         $trade->desc        = $refund->desc;
-        $trade->dept        = $user->dept;
+        $trade->dept        = $this->post->dept;
         $trade->createdBy   = $this->app->user->account;
         $trade->createdDate = helper::now();
         $trade->editedBy    = $this->app->user->account;

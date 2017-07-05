@@ -19,7 +19,7 @@
       <td>
         <div class='input-group'>
           <?php echo html::select('depositor', $depositorList, isset($this->config->refund->depositor) ? $this->config->refund->depositor : '', "class='form-control'");?>
-          <div class='input-group-addon'><?php echo html::checkbox('objectType', $lang->trade->objectTypeList);?></div>
+          <div class='input-group-addon'><div style='padding-right: 20px;'><?php echo html::radio('objectType', $lang->trade->objectTypeList);?></div>
         </div>
       </td>
     </tr>
@@ -41,6 +41,10 @@
           <?php endforeach;?>
         </select>
       </td>
+    </tr>
+    <tr>
+      <th><?php echo $lang->trade->dept;?></th>
+      <td><?php echo html::select('dept', $deptList, '', "class='form-control chosen'");?></td>
     </tr>
     <tr>
       <th></th>
