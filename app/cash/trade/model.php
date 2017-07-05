@@ -480,7 +480,7 @@ class tradeModel extends model
             ->setIf($type == 'in', 'order', 0)
             ->setIf(!$this->post->objectType or !in_array('order', $this->post->objectType), 'order', 0)
             ->setIf(!$this->post->objectType or !in_array('contract', $this->post->objectType), 'contract', 0)
-            ->remove('objectType,customer')
+            ->remove('objectType,customer,productLine')
             ->striptags('desc')
             ->get();
 

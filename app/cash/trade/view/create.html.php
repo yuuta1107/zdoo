@@ -25,6 +25,16 @@
           <th class='w-100px'><?php echo $lang->trade->depositor;?></th>
           <td><?php echo html::select('depositor', $depositorList, '', "class='form-control'");?></td>
         </tr>
+        <?php if(count($lang->product->lineList) > 1):?>
+        <tr>
+          <th><?php echo $lang->product->line;?></th>
+          <td><?php echo html::select('productLine', array('') + $lang->product->lineList, '', "class='form-control chosen'");?></td>
+        </tr>
+        <?php endif;?>
+        <tr>
+          <th><?php echo $lang->trade->product;?></th>
+          <td id='productBox'><?php echo html::select('product', array('') + $productList, '', "class='form-control chosen'");?></td>
+        </tr>
         <?php if($type == 'in'):?>
         <tr class='income'>
           <th><?php echo $lang->trade->category;?></th>
@@ -115,10 +125,6 @@
         <tr>
           <th><?php echo $lang->trade->handlers;?></th>
           <td><?php echo html::select('handlers[]', $users, '', "class='form-control chosen' multiple");?></td>
-        </tr>
-        <tr>
-          <th><?php echo $lang->trade->product;?></th>
-          <td><?php echo html::select('product', array('') + $productList, '', "class='form-control chosen'");?></td>
         </tr>
         <tr>
           <th><?php echo $lang->trade->date;?></th>

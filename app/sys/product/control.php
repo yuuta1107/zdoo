@@ -131,4 +131,19 @@ class product extends control
         if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
         $this->send(array('result' => 'success', 'locate' => inlink('browse')));
     }
+
+    /**
+     * Ajax get product by line.
+     * 
+     * @param  string $status 
+     * @param  string $line 
+     * @access public
+     * @return void
+     */
+    public function ajaxGetByLine($status = '', $line = '')
+    {
+        $products = $this->product->getPairs($status, $line);
+
+        echo html::select('product', array('') + $products, '', "class='form-control chosen'");
+    }
 }

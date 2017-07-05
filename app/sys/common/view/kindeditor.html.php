@@ -77,7 +77,7 @@ function initKindeditor(afterInit)
             items:editorTool,
             filterMode:true, 
             bodyClass:'article-content',
-            urlType:'relative', 
+            urlType:'absolute', 
             uploadJson: createLink('file', 'ajaxUpload', 'uid=' + v.uid),
             fileManagerJson : createLink('file', 'fileManager'),
             imageTabIndex:1,
