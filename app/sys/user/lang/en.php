@@ -93,6 +93,7 @@ $lang->user->lockedForEver = "User has been forbidden permanently.";
 $lang->user->forbidSuccess = 'Forbidden.';
 $lang->user->actionFail    = 'Failed.';
 $lang->user->uploadSuccess = 'Successfully uploaded.';
+$lang->user->actionError   = 'Error, user in the review process.';
 
 $lang->user->forbidUser = 'Manage users';
 $lang->user->operate    = 'Operate';

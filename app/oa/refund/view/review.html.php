@@ -61,7 +61,7 @@
   </table>
   <table class='table table-borderless'>
     <tr class='reviewMoney'>
-      <th class='w-80px text-center text-middle'><?php echo $lang->refund->reviewMoney;?></th>
+      <th class='w-70px text-center text-middle'><?php echo $lang->refund->reviewMoney;?></th>
       <td>
         <div class='input-group'>
           <?php echo html::input('money', $refund->money, "class='form-control'");?>
@@ -70,7 +70,7 @@
       </td>
     </tr>
     <tr class='reason'>
-      <th class='w-50px text-center text-middle'><?php echo $lang->refund->reason;?></th>
+      <th class='w-70px text-center text-middle'><?php echo $lang->refund->reason;?></th>
       <td><?php echo html::textarea("reason", '', "class='form-control rowspan=4'");?></td>
       <td class='text-middle'><?php echo html::submitButton();?></td>
     </tr>
