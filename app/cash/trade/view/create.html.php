@@ -47,7 +47,7 @@
           <td>
             <div class='input-group'>
               <?php echo html::select('category', array('') + (array) $categories, '', "class='form-control chosen'");?>
-              <div class='input-group-addon'><div style='padding-right: 20px;'><?php echo html::checkbox('objectType', $lang->trade->objectTypeList);?></div></div>
+              <div class='input-group-addon'><div style='padding-right: 20px;'><?php echo html::radio('objectType', $lang->trade->objectTypeList);?></div></div>
             </div>
           </td>
         </tr>
