@@ -539,6 +539,48 @@ class userModel extends model
     }
 
     /**
+     * Judge a account in the review process.
+     * 
+     * @param  string $account 
+     * @access public
+     * @return bool
+     */
+    public function inTheReviewProcess($account)
+    {
+        /* attend */
+        $attendCount = $this->dao->select('count(*) as count')->from(TABLE_ATTEND)
+            ->where('reviewStatus')->eq('wait')
+            ->andWhere('account')->eq($account)->fetch('count');
+        if($attendCount) return 'attend';
+
+        /* leave */
+        $leaveCount = $this->dao->select('count(*) as count')->from(TABLE_LEAVE)
+            ->where('status')->eq('wait')
+            ->andWhere('createBy')->eq($account)->fetch('count');
+        if($leaveCount) return 'leave';
+
+        /* overtime and makeup */
+        $overtimeCount = $this->dao->select('count(*) as count')->from(TABLE_OVERTIME)
+            ->where('status')->eq('wait')
+            ->andWhere('createBy')->eq($account)->fetch('count');
+        if($overtimeCount) return 'overtime';
+
+        /* lieu */
+        $lieuCount = $this->dao->select('count(*) as count')->from(TABLE_LIEU)
+            ->where('status')->eq('wait')
+            ->andWhere('createBy')->eq($account)->fetch('count');
+        if($lieuCount) return 'lieu';
+
+        /* refund */
+        $refundCount = $this->dao->select('count(*) as count')->from(TABLE_REFUND)
+            ->where('status')->eq('wait')->orWhere('status')->eq('pass')
+            ->andWhere('createBy')->eq($account)->fetch('count');
+        if($refundCount) return 'refund';
+
+        return false;
+    }
+
+    /**
      * Forbid the user
      *
      * @param  string $account
