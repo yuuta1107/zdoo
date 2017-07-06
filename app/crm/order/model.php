@@ -92,7 +92,7 @@ class orderModel extends model
             ->orWhere('o.signedBy')->eq($this->app->user->account)
             ->markRight(1)
             ->fi()
-            ->beginIF($mode == 'past')->andWhere('o.nextDate')->andWhere('o.nextDate')->lt(helper::today())->andWhere('o.status')->ne('closed')->fi()
+            ->beginIF($mode == 'past')->andWhere('o.nextDate')->ne('0000-00-00')->andWhere('o.nextDate')->lt(helper::today())->andWhere('o.status')->ne('closed')->fi()
             ->beginIF($mode == 'today')->andWhere('o.nextDate')->eq(helper::today())->fi()
             ->beginIF($mode == 'tomorrow')->andWhere('o.nextDate')->eq(formattime(date::tomorrow(), DT_DATE1))->fi()
             ->beginIF($mode == 'thisweek')->andWhere('o.nextDate')->between($thisWeek['begin'], $thisWeek['end'])->fi()

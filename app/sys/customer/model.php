@@ -94,8 +94,8 @@ class customerModel extends model
 
         return $this->dao->select('*')->from(TABLE_CUSTOMER)
             ->where('deleted')->eq(0)
-            ->beginIF($relation == 'client')->andWhere('relation')->ne('provider')
-            ->beginIF($relation == 'provider')->andWhere('relation')->ne('client')
+            ->beginIF($relation == 'client')->andWhere('relation')->ne('provider')->fi()
+            ->beginIF($relation == 'provider')->andWhere('relation')->ne('client')->fi()
             ->beginIF($mode == 'field')->andWhere('mode')->eq($param)->fi()
             ->beginIF($mode == 'past')->andWhere('nextDate')->lt(helper::today())->fi()
             ->beginIF($mode == 'today')->andWhere('nextDate')->eq(helper::today())->fi()
