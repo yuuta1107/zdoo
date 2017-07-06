@@ -250,6 +250,7 @@ class searchModel extends model
             if(empty($params[$fieldName])) continue;
             if($params[$fieldName]['values'] == 'products') $hasProduct = true;
             if($params[$fieldName]['values'] == 'users')    $hasUser    = true;
+            if($params[$fieldName]['values'] == 'depts')    $hasDept    = true;
             if($params[$fieldName]['values'] == 'projects') $hasProject = true;
         }
 
@@ -258,6 +259,7 @@ class searchModel extends model
             $users         = $this->loadModel('user')->getPairs('nodeleted,noforbidden');
             $users['$@me'] = $this->lang->search->me;
         }
+        if($hasDept)    $depts    = array('' => '') + $this->loadModel('tree', 'sys')->getOptionMenu('dept');  
         if($hasProduct) $products = array('' => '') + $this->loadModel('product', 'sys')->getPairs();
         if($hasProject) $projects = array('' => '') + $this->loadModel('project', 'proj')->getPairs();
 
@@ -265,6 +267,7 @@ class searchModel extends model
         {
             if(!isset($params[$fieldName])) $params[$fieldName] = array('operator' => '=', 'control' => 'input', 'values' => '');
             if($params[$fieldName]['values'] == 'users')    $params[$fieldName]['values']  = $users;
+            if($params[$fieldName]['values'] == 'depts')    $params[$fieldName]['values']  = $depts;
             if($params[$fieldName]['values'] == 'products') $params[$fieldName]['values']  = $products;
             if($params[$fieldName]['values'] == 'projects') $params[$fieldName]['values']  = $projects;
             if(is_array($params[$fieldName]['values']))

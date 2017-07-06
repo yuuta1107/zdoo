@@ -28,6 +28,7 @@ $config->trade->search['fields']['type']        = $lang->trade->type;
 $config->trade->search['fields']['trader']      = $lang->trade->trader;
 $config->trade->search['fields']['money']       = $lang->trade->money;
 $config->trade->search['fields']['category']    = $lang->trade->category;
+$config->trade->search['fields']['dept']        = $lang->trade->dept;
 $config->trade->search['fields']['handlers']    = $lang->trade->handlers;
 $config->trade->search['fields']['date']        = $lang->trade->date;
 $config->trade->search['fields']['createdDate'] = $lang->trade->createdDate;
@@ -40,6 +41,7 @@ $config->trade->search['params']['type']        = array('operator' => '=',  'con
 $config->trade->search['params']['trader']      = array('operator' => '=',  'control' => 'select', 'values' => 'set in control');
 $config->trade->search['params']['money']       = array('operator' => '>=', 'control' => 'input',  'values' => '');
 $config->trade->search['params']['category']    = array('operator' => '=',  'control' => 'select', 'values' => 'set in control');
+$config->trade->search['params']['dept']        = array('operator' => '=',  'control' => 'select', 'values' => 'depts');
 $config->trade->search['params']['handlers']    = array('operator' => 'include', 'control' => 'select', 'values' => 'users');
 $config->trade->search['params']['date']        = array('operator' => '>=', 'control' => 'input', 'values' => '', 'class' => 'date');
 $config->trade->search['params']['createdDate'] = array('operator' => '>=', 'control' => 'input', 'values' => '', 'class' => 'date');
