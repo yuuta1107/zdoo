@@ -17,7 +17,16 @@
     <table cellpadding='0' cellspacing='0' width='600' style='border: none; border-collapse: collapse;'>
       <tr>
         <td style='padding: 10px; background-color: #F8FAFE; border: none; font-size: 14px; font-weight: 500; border-bottom: 1px solid #e5e5e5;'>
-          <?php echo html::a(commonModel::getSysURL() . $this->createLink('oa.refund', 'view', "id={$refund->id}"), $mailTitle, "style='color: #333; text-decoration: none;'");?>
+          <?php
+          $mode = '';
+          if($refund->status == 'pass') $mode = 'todo';
+          if($refund->status == 'wait' or $refund->status == 'doing') $mode = 'review';
+
+          $param = "id={$refund->id}";
+          if($mode) $param .= "&mode={$mode}";
+          $refundLink = commonModel::getSysURL() . $this->createLink('oa.refund', 'view', $param);
+          ?>
+          <?php echo html::a($refundLink, $mailTitle, "style='color: #333; text-decoration: underline;'");?>
         </td>
       </tr>
     </table>
@@ -38,7 +47,18 @@
             <th><?php echo $lang->refund->date?></th>
             <td><?php echo $refund->date?></td>
             <th><?php echo $lang->refund->status?></th>
-            <td style='color: red'><?php echo zget($lang->refund->statusList, $refund->status)?></td>
+            <td>
+              <span style='color: red'>
+              <?php
+              if($refund->status == 'doing') echo zget($users, $refund->firstReviewer) . ' ' . $lang->refund->statusList['pass'];
+              if($refund->status != 'doing') echo zget($lang->refund->statusList, $refund->status);
+              ?>
+              </span>
+              <?php
+              if($mode == 'review') echo html::a($refundLink, $lang->refund->review, "text-decoration: underline;'");
+              if($mode == 'todo')   echo html::a($refundLink, $lang->refund->common, "text-decoration: underline;'");
+              ?>
+            </td>
           </tr>
           <tr>
             <th><?php echo $lang->refund->category?></th>

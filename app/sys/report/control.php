@@ -87,4 +87,70 @@ class report extends control
         $this->view->tips          = $tips;
         $this->display();
     }
+
+	/**
+	 * Send daily reminder mail. 
+	 * 
+	 * @access public
+	 * @return void
+	 */
+	public function remind()
+	{
+		$orders = $tasks = $todos = $customers = $contractCounts = array();
+		if($this->config->report->dailyreminder->order)    $orders    = $this->report->getUserOrders();
+		if($this->config->report->dailyreminder->task)     $tasks     = $this->report->getUserTasks();
+		if($this->config->report->dailyreminder->todo)     $todos     = $this->report->getUserTodos();
+		if($this->config->report->dailyreminder->customer) $customers = $this->report->getUserCustomers();
+		$contractCounts = $this->report->getUserContractCount();
+
+		$reminder = array();
+
+		$users = array_unique(array_merge(array_keys($orders), array_keys($tasks), array_keys($todos), array_keys($customers), array_keys($contractCounts)));
+		if(!empty($users)) foreach($users  as $user) $reminder[$user] = new stdclass();
+		if(!empty($orders))foreach($orders as $user => $userOrders) $reminder[$user]->orders = $userOrders;
+		if(!empty($tasks)) foreach($tasks  as $user => $userTasks)  $reminder[$user]->tasks  = $userTasks;
+		if(!empty($todos)) foreach($todos  as $user => $userTodos)  $reminder[$user]->todos  = $userTodos;
+		if(!empty($customers)) foreach($customers as $user => $userCustomers) $reminder[$user]->customers = $userCustomers;
+		if(!empty($contractCounts)) foreach($contractCounts as $user => $contractCount) $reminder[$user]->contractCount = $contractCount;
+
+		$this->loadModel('mail');
+
+		/* Check mail turnon.*/
+		if(!$this->config->mail->turnon)
+		{
+			echo "You should turn on the Email feature first.\n";
+			return false;
+		}
+
+		foreach($reminder as $user => $mail)
+		{
+			/* Reset $this->output. */
+			$this->clear();
+
+			$mailTitle   = $this->lang->report->mailTitle->begin;
+			$mailTitle  .= isset($mail->orders) ? sprintf($this->lang->report->mailTitle->order,    count($mail->orders))    : '';
+			$mailTitle  .= isset($mail->tasks)  ? sprintf($this->lang->report->mailTitle->task,     count($mail->tasks))     : '';
+			$mailTitle  .= isset($mail->todos)  ? sprintf($this->lang->report->mailTitle->todo,     count($mail->todos))     : '';
+			$mailTitle  .= isset($mail->customers) ? sprintf($this->lang->report->mailTitle->customer, count($mail->customers)) : '';
+			$mailTitle  .= isset($mail->contractCount) ? sprintf($this->lang->report->mailTitle->contractCount, $mail->contractCount) : '';
+			$mailTitle   = rtrim($mailTitle, ',');
+
+			/* Get email content and title.*/
+			$this->view->mail = $mail;
+			$oldViewType = $this->viewType;
+			if($oldViewType == 'json') $this->viewType = 'html';
+			$mailContent = $this->parse('report', 'dailyreminder');
+			$this->viewType == $oldViewType;
+
+			/* Send email.*/
+			echo date('Y-m-d H:i:s') . " sending to $user, ";
+			$this->mail->send($user, $mailTitle, $mailContent, '', true);
+			if($this->mail->isError())
+			{
+				echo "fail: \n" ;
+				a($this->mail->getError());
+			}
+			echo "ok\n";
+		}
+	}
 }

@@ -463,7 +463,7 @@ class tradeModel extends model
      * @access public
      * @return void
      */
-    public function create($type)
+    public function create($type, $requireTrader = false)
     {
         $now = helper::now();
         if($type == 'in') $_POST['objectType'] = array('contract');
@@ -491,6 +491,7 @@ class tradeModel extends model
             ->data($trade, $skip = 'createTrader,traderName,files,labels')
             ->autoCheck()
             ->batchCheck($this->config->trade->require->create, 'notempty')
+            ->batchCheckIf($requireTrader, 'traderName', 'notempty')
             ->exec();
 
         $tradeID = $this->dao->lastInsertID();

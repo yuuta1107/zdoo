@@ -144,3 +144,18 @@ $lang->report->contract->value['signedByA']    = '合同金额';
 $lang->report->contract->value['deliveredByA'] = '合同金额';
 $lang->report->contract->value['handlersA']    = '合同金额';
 $lang->report->contract->value['contactedByA'] = '合同金额';
+
+/* daily reminder. */
+$lang->report->idAB         = 'ID';
+$lang->report->orderTitle   = '订单标题';
+$lang->report->taskName     = '任务名称';
+$lang->report->todoName     = '待办名称';
+$lang->report->customerName = '客户名称';
+
+$lang->report->mailTitle           = new stdclass();
+$lang->report->mailTitle->begin    = '提醒：您有';
+$lang->report->mailTitle->order    = " 亟需联系订单(%s),";
+$lang->report->mailTitle->task     = " 任务(%s),";
+$lang->report->mailTitle->todo     = " 待办(%s),";
+$lang->report->mailTitle->customer = " 亟需联系客户(%s),";
+$lang->report->mailTitle->contractCount = " 跟踪的合同数(%s),";

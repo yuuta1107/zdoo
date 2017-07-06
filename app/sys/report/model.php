@@ -81,7 +81,7 @@ class reportModel extends model
         }
         else
         {
-            return common::getSysURL();
+            return commonModel::getSysURL();
         }
     }
 
@@ -218,6 +218,152 @@ class reportModel extends model
         foreach($datas as $key => $data) $temp[$key] = $data;
 
         return $temp;
+    }
+
+    /**
+     * Get user tasks.
+     * 
+     * @access public
+     * @return array
+     */
+    public function getUserTasks()
+    {
+        $tasks = $this->dao->select('t1.id, t1.name, t2.account as user')->from(TABLE_TASK)->alias('t1')
+            ->leftJoin(TABLE_USER)->alias('t2')->on('t1.assignedTo = t2.account')
+            ->leftJoin(TABLE_PROJECT)->alias('t3')->on('t1.project = t3.id')
+            ->where('t1.assignedTo')->ne('')
+            ->andWhere('t1.deleted')->eq(0)
+            ->andWhere('t2.deleted')->eq(0)
+            ->andWhere('t3.deleted')->eq(0)
+            ->andWhere('t1.status')->in('wait, doing')
+            ->andWhere('t3.status')->ne('suspended')
+            ->fetchGroup('user');
+
+        return $tasks;
+    }
+
+    /**
+     * Get user todos.
+     * 
+     * @access public
+     * @return array
+     */
+    public function getUserTodos()
+    {
+        $stmt = $this->dao->select('*')->from(TABLE_TODO)->where('status')->eq('wait')->orWhere('status')->eq('doing')->query();
+
+        /* Get todos and task, customer, order pairs. */
+        $todos = array();
+        while($todo = $stmt->fetch())
+        {
+			if($todo->type == 'task')     $taskTodoPairs[$todo->id]     = $todo->idvalue;
+			if($todo->type == 'customer') $customerTodoPairs[$todo->id] = $todo->idvalue; 
+			if($todo->type == 'order')    $orderTodoPairs[$todo->id]    = $todo->idvalue;
+
+            $todos[$todo->id] = $todo;
+        }
+
+        /* Query by pairs. */
+        $tasks     = $this->dao->select('id,name')->from(TABLE_TASK)->where('id')->in($taskTodoPairs)->fetchPairs('id', 'name');
+        $customers = $this->dao->select('id,name')->from(TABLE_CUSTOMER)->where('id')->in($customerTodoPairs)->fetchPairs('id', 'name');
+        $orders    = $this->dao->select('o.id, c.name, o.createdDate')->from(TABLE_ORDER)->alias('o')
+            ->leftJoin(TABLE_CUSTOMER)->alias('c')->on('o.customer=c.id')
+            ->where('o.id')->in($orderTodoPairs)
+            ->fetchAll('id'); 
+
+        /* Set todo name and group them. */
+        $userTodos = array();
+        foreach($todos as $todoID => $todo)
+        {
+			if($todo->type == 'task')     $todo->name = $tasks[$todo->idvalue];
+			if($todo->type == 'customer') $todo->name = $customers[$todo->idvalue]; 
+			if($todo->type == 'order') 
+			{
+				$order = $orders[$todo->idvalue];
+				$todo->name = $order->name . '|' . substr($order->createdDate, 0, 10);
+			}
+
+            $user = $todo->assignedTo ? $todo->assignedTo : $todo->account;
+            $userTodos[$user][] = $todo;
+        }
+        return $userTodos;
+    }
+
+    /**
+     * Get user orders.
+     * 
+     * @access public
+     * @return array
+     */
+    public function getUserOrders()
+    {
+        $this->app->loadLang('order', 'crm');
+        $today = helper::today();
+
+		/* Get all orders. */
+        $orders = $this->dao->select('o.*, c.name as customerName, c.level as level')->from(TABLE_ORDER)->alias('o')
+            ->leftJoin(TABLE_CUSTOMER)->alias('c')->on("o.customer=c.id")
+            ->where('o.deleted')->eq(0)
+            ->andWhere("((o.nextDate != '0000-00-00' and o.nextDate < '{$today}' and o.status != 'closed') or o.nextDate = '$today')")
+            ->orderBy("o.id")->fetchAll('id');
+
+        /* Process order product. */
+        $products = $this->loadModel('product')->getPairs();
+        foreach($orders as $orderID => $order)
+        {
+            if(empty($order->assignedTo))
+            {
+                unset($orders[$orderID]);
+                continue;
+            }
+
+            $order->products = array();
+            $productList = explode(',', $order->product);
+            foreach($productList as $product) if(isset($products[$product])) $order->products[] = $products[$product];
+        }
+
+        /* Set order title and group them. */
+        $userOrders = array();
+        foreach($orders as $order)
+        {
+            $productName  = count($order->products) > 1 ? current($order->products) . $this->lang->etc : current($order->products);
+            $order->title = sprintf($this->lang->order->titleLBL, $order->customerName, $productName, date('Y-m-d', strtotime($order->createdDate))); 
+
+            $userOrders[$order->assignedTo][] = $order;
+        }
+
+        return $userOrders;
+    }
+
+    /**
+     * Get user customers.
+     * 
+     * @access public
+     * @return array
+     */
+    public function getUserCustomers()
+    {
+        return $this->dao->select('*')->from(TABLE_CUSTOMER)->where('deleted')->eq(0)
+            ->andWhere('relation')->ne('provider')
+            ->andWhere('nextDate')->le(helper::today())->fi()
+			->andWhere('nextDate')->ne('0000-00-00')
+            ->orderBy('id')
+            ->fetchGroup('assignedTo');
+    }
+
+    /**
+     * Get user contract count.
+     * 
+     * @access public
+     * @return array
+     */
+    public function getUserContractCount()
+    {
+        return $this->dao->select('signedBy, count(*) as count')->from(TABLE_CONTRACT)->where('deleted')->eq(0)
+            ->andWhere('signedBy')->ne('')
+            ->andWhere('status')->eq('normal')
+            ->groupBy('signedBy')
+            ->fetchPairs('signedBy', 'count');
     }
 }
 

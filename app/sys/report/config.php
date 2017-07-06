@@ -85,3 +85,11 @@ $config->report->contract->listName['signedByA']    = 'USERS';
 $config->report->contract->listName['deliveredByA'] = 'USERS';
 $config->report->contract->listName['handlersA']    = 'USERS';
 $config->report->contract->listName['contactedByA'] = 'USERS';
+
+/* Open daily reminder.*/
+$config->report->dailyreminder           = new stdclass();
+$config->report->dailyreminder->todo     = true;
+$config->report->dailyreminder->order    = true;
+$config->report->dailyreminder->customer = true;
+$config->report->dailyreminder->task     = true;
+

@@ -144,3 +144,18 @@ $lang->report->contract->value['signedByA']    = 'Amount';
 $lang->report->contract->value['deliveredByA'] = 'Amount';
 $lang->report->contract->value['handlersA']    = 'Amount';
 $lang->report->contract->value['contactedByA'] = 'Amount';
+
+/* daily reminder. */
+$lang->report->idAB         = 'ID';
+$lang->report->orderTitle   = 'Order Title';
+$lang->report->taskName     = 'Task Name';
+$lang->report->todoName     = 'Todo Name';
+$lang->report->customerName = 'Customer Name';
+
+$lang->report->mailTitle           = new stdclass();
+$lang->report->mailTitle->begin    = 'Notice: You have';
+$lang->report->mailTitle->order    = " Urgent orders(%s),";
+$lang->report->mailTitle->task     = " Tasks(%s),";
+$lang->report->mailTitle->todo     = " Todos(%s),";
+$lang->report->mailTitle->customer = " Urgent customers(%s),";
+$lang->report->mailTitle->contractCount = " Tracked contracts(%s),";

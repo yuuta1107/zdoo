@@ -627,7 +627,7 @@ class refund extends control
         $mailContent = $this->parse($this->moduleName, 'sendmail');
 
         /* Send emails. */
-        $this->loadModel('mail')->send($toList, $subject, $mailContent);
+        $this->loadModel('mail')->send($toList, $subject, $mailContent, '', $includeMe = true);
         if($this->mail->isError()) trigger_error(join("\n", $this->mail->getError()));
     }
 
