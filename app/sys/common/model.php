@@ -443,6 +443,11 @@ class commonModel extends model
             }
         }
 
+        if(!$isMobile && $currentModule == 'trade' && $currentMethod == 'tradesetting')
+        {
+            $string = "<nav class='menu leftmenu affix'><ul class='nav nav-primary'>\n";
+        }
+
         $menuOrder = isset($lang->{$currentModule}->menuOrder) ? $lang->{$currentModule}->menuOrder : array();  
 
         /* Get menus of current module. */

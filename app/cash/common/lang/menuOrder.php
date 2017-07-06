@@ -25,3 +25,4 @@ $lang->setting->menuOrder[10] = 'expend';
 $lang->setting->menuOrder[15] = 'currency';
 $lang->setting->menuOrder[20] = 'schema';
 $lang->setting->menuOrder[25] = 'tradePriv';
+$lang->setting->menuOrder[30] = 'tradeSetting';
