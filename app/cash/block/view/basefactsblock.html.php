@@ -12,13 +12,14 @@
 ?>
 <table class='table table-data table-hover block-contract table-fixed'>
   <?php $appid = ($this->get->app == 'sys' and isset($_GET['entry'])) ? "class='app-btn' data-id='{$this->get->entry}'" : ''?>
-  <?php foreach($trades as $id => $trade):?>
+  <?php foreach($annualChartDatas as $currency => $annualChartData):?>
+  <?php foreach($annualChartData as $month => $monthChartData):?>
   <tr>
-    <td class='nobr'><?php echo zget($depositorList, $trade->depositor);?></td>
-    <td class='w-80px text-center'><?php echo zget($lang->trade->typeList, $trade->type);?></td>
-    <td class='w-120px text-center'><?php echo zget($currencySign, $trade->currency) . $trade->money?></td>
-    <td class='w-80px text-center'><?php echo $trade->date;?></td>
+    <td class='w-50px'><?php echo $month . ' ' . $lang->trade->month;?></td>
+    <td class='w-100px text-left'><?php echo $lang->trade->in . ' ' . $currencySign[$currency] . $monthChartData['in'];?></td>
+    <td class='w-100px text-left'><?php echo $lang->trade->out . ' ' . $currencySign[$currency] . $monthChartData['out'];?></td>
+    <td class='w-100px text-left'><?php echo $lang->trade->profit . '/' . $lang->trade->loss . ' ' . $currencySign[$currency] . $monthChartData['profit'];?></td>
   </tr>
   <?php endforeach;?>
+  <?php endforeach;?>
 </table>
-<script>if(!$.ipsStart) $('.block-contract').dataTable();</script>

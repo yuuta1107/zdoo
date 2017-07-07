@@ -11,8 +11,8 @@
  */
 ?>
 <table class='table table-data table-hover block-contract table-fixed'>
-  <?php foreach($providers as $id => $provider):?>
   <?php $appid = ($this->get->app == 'sys' and isset($_GET['entry'])) ? "class='app-btn' data-id='{$this->get->entry}'" : ''?>
+  <?php foreach($providers as $id => $provider):?>
   <tr data-url='<?php echo $this->createLink('cash.provider', 'view', "id=$id");?>' <?php echo $appid;?>>
     <td class='nobr'><?php echo $provider->name;?></td>
     <td class='w-120px text-center'><?php echo zget($areas, $provider->area);?></td>

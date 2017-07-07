@@ -13,25 +13,34 @@
 <?php include './header.html.php';?>
 <?php js::set('type', $type)?>
 <?php js::set('confirmReview', $lang->attend->confirmReview);?>
-<?php if($type == 'attend'):?>
+
+<?php if(($type == 'all' && !empty($attends)) || $type == 'attend'):?>
 <div class='panel'>
   <table class='table table-hover table-striped table-sorter table-data table-fixed text-center'>
     <thead>
       <tr class='text-center'>
-        <th class='w-50px'><?php echo $lang->attend->id;?></th>
+        <?php if($type == 'all'): ?>
+          <th class='w-80px'><?php echo $lang->my->review->module;?></th>
+        <?php else:?>
+          <th class='w-80px'><?php echo $lang->attend->id;?></th>
+        <?php endif;?>
         <th class='w-100px'><?php echo $lang->attend->account;?></th>
         <th class='w-100px'><?php echo $lang->attend->date;?></th>
         <th class='w-100px'><?php echo $lang->attend->status;?></th>
-        <th class='w-80px'><?php echo $lang->attend->manualIn;?></th>
-        <th class='w-80px'><?php echo $lang->attend->manualOut;?></th>
+        <th class='w-100px'><?php echo $lang->attend->manualIn;?></th>
+        <th class='w-100px'><?php echo $lang->attend->manualOut;?></th>
         <th class='w-100px'><?php echo $lang->attend->reason;?></th>
         <th><?php echo $lang->attend->desc;?></th>
-        <th class='w-150px'><?php echo $lang->actions;?></th>
+        <th class='w-80px'><?php echo $lang->actions;?></th>
       </tr>
     </thead>
     <?php foreach($attends as $attend):?>
     <tr>
-      <td><?php echo $attend->id;?></td>
+      <?php if($type == 'all'): ?>
+        <td><?php echo $lang->attend->common;?></td>
+      <?php else:?>
+        <td><?php echo $attend->id;?></td>
+      <?php endif;?>
       <td><?php echo zget($users, $attend->account);?></td>
       <td><?php echo $attend->date?></td>
       <td><?php echo zget($lang->attend->statusList, $attend->status)?></td>
@@ -47,6 +56,7 @@
   </table>
 </div>
 <?php endif;?>
+
 <?php if($type == 'leave'):?>
 <div class='panel'>
   <table class='table table-data table-hover text-center table-fixed tablesorter' id='leaveTable'>
@@ -90,6 +100,7 @@
   </table>
 </div>
 <?php endif;?>
+
 <?php if($type == 'makeup'):?>
 <div class='panel'>
   <table class='table table-data table-hover text-center table-fixed tablesorter' id='makeupTable'>
@@ -124,6 +135,7 @@
   </table>
 </div>
 <?php endif;?>
+
 <?php if($type == 'overtime'):?>
 <div class='panel'>
   <table class='table table-data table-hover text-center table-fixed tablesorter' id='overtimeTable'>
@@ -161,6 +173,7 @@
   </table>
 </div>
 <?php endif;?>
+
 <?php if($type == 'lieu'):?>
 <div class='panel'>
   <table class='table table-data table-hover text-center table-fixed tablesorter' id='lieuTable'>
@@ -196,13 +209,18 @@
   </table>
 </div>
 <?php endif;?>
-<?php if($type == 'refund'):?>
+
+<?php if(($type == 'all' && !empty($refunds)) || $type == 'refund'):?>
 <div class='panel'>
   <table class='table table-hover table-striped table-sorter table-data table-fixed text-center'>
     <thead>
       <tr class='text-center'>
-        <th class='w-50px'><?php echo $lang->refund->id;?></th>
-        <th class='w-150px'><?php echo $lang->refund->name;?></th>
+        <?php if($type == 'all'): ?>
+          <th class='w-80px'><?php echo $lang->my->review->module;?></th>
+        <?php else:?>
+          <th class='w-80px'><?php echo $lang->refund->id;?></th>
+        <?php endif;?>
+        <th class='w-100px'><?php echo $lang->refund->name;?></th>
         <th class='w-100px'><?php echo $lang->refund->category;?></th>
         <th class='w-100px'><?php echo $lang->refund->createdBy;?></th>
         <th class='w-100px'><?php echo $lang->refund->money;?></th>
@@ -214,11 +232,15 @@
     </thead>
     <?php foreach($refunds as $refund):?>
     <tr>
-      <td><?php echo $refund->id;?></td>
-      <td class='text-left'><?php echo $refund->name;?></td>
+      <?php if($type == 'all'): ?>
+        <td><?php echo $lang->refund->common;?></td>
+      <?php else:?>
+        <td><?php echo $refund->id;?></td>
+      <?php endif;?>
+      <td><?php echo $refund->name;?></td>
       <td title='<?php echo zget($categories, $refund->category, '');?>'><?php echo zget($categories, $refund->category, '');?></td>
       <td><?php echo zget($users, $refund->createdBy);?></td>
-      <td class='text-right'><?php echo zget($currencySign, $refund->currency) . $refund->money;?></td>
+      <td><?php echo zget($currencySign, $refund->currency) . $refund->money;?></td>
       <td><?php echo $refund->date;?></td>
       <td><?php echo zget($lang->refund->statusList, $refund->status);?></td>
       <td><?php echo $refund->desc?></td>
@@ -228,4 +250,98 @@
   </table>
 </div>
 <?php endif;?>
+
+<?php if($type == 'all'):?>
+<div class='panel'>
+  <table class='table table-data table-hover text-center table-fixed tablesorter' id='leaveTable'>
+    <thead>
+      <tr class='text-center'>
+        <th class='w-80px'><?php echo $lang->my->review->module;?></th>
+        <th class='w-80px'><?php echo $lang->leave->createdBy;?></th>
+        <th class='w-80px'><?php echo $lang->user->dept;?></th>
+        <th class='w-80px'><?php echo $lang->leave->type;?></th>
+        <th class='w-150px'><?php echo $lang->leave->begin;?></th>
+        <th class='w-150px'><?php echo $lang->leave->end;?></th>
+        <th><?php echo $lang->leave->desc;?></th>
+        <th class='w-100px'><?php echo $lang->leave->status;?></th>
+        <th class='w-80px'><?php echo $lang->leave->reviewedBy;?></th>
+        <th class='w-150px'><?php echo $lang->actions;?></th>
+      </tr>
+    </thead>
+    <?php foreach($leaveList as $leave):?>
+    <tr>
+      <td><?php echo $lang->leave->common;?></td>
+      <td><?php echo zget($users, $leave->createdBy);?></td>
+      <td><?php echo zget($deptList, $leave->dept);?></td>
+      <td><?php echo zget($this->lang->leave->typeList, $leave->type);?></td>
+      <td><?php echo $leave->begin . ' ' . $leave->start;?></td>
+      <td><?php echo $leave->end . ' ' . $leave->finish;?></td>
+      <td title='<?php echo $leave->desc?>'><?php echo $leave->desc;?></td>
+      <td class='leave-<?php echo $leave->status?>'><?php echo zget($this->lang->leave->statusList, $leave->status);?></td>
+      <td><?php echo zget($users, $leave->reviewedBy);?></td>
+      <td>
+        <?php if($leave->status == 'pass'):?>
+        <?php echo html::a($this->createLink('oa.leave', 'review', "id={$leave->id}&type=back"), $lang->leave->statusList['pass'] . $lang->leave->back, "data-status='pass' data-toggle='modal' data-width=800");?>
+        <?php else:?>
+        <?php echo html::a($this->createLink('oa.leave', 'review', "id={$leave->id}&type=review"), $lang->leave->review, "data-status='pass' data-toggle='modal' data-width=800");?>
+        <?php endif;?>
+      </td>
+    </tr>
+    <?php endforeach;?>
+
+    <?php foreach($overtimeList as $overtime):?>
+    <tr>
+      <td><?php echo $lang->overtime->common;?></td>
+      <td><?php echo zget($users, $overtime->createdBy);?></td>
+      <td><?php echo zget($deptList, $overtime->dept);?></td>
+      <td><?php echo zget($this->lang->overtime->typeList, $overtime->type);?></td>
+      <td><?php echo $overtime->begin . ' ' . $overtime->start;?></td>
+      <td><?php echo $overtime->end . ' ' . $overtime->finish;?></td>
+      <td title='<?php echo $overtime->desc?>'><?php echo $overtime->desc;?></td>
+      <td class='overtime-<?php echo $overtime->status?>'><?php echo zget($this->lang->overtime->statusList, $overtime->status);?></td>
+      <td><?php echo zget($users, $overtime->reviewedBy);?></td>
+      <td>
+        <?php echo html::a($this->createLink('oa.overtime', 'review', "id={$overtime->id}"), $lang->overtime->review, "data-status='reject' data-toggle='modal' data-width=800");?>
+      </td>
+    </tr>
+    <?php endforeach;?>
+
+    <?php foreach($makeupList as $makeup):?>
+    <tr>
+      <td><?php echo $lang->makeup->common;?></td>
+      <td><?php echo zget($users, $makeup->createdBy);?></td>
+      <td><?php echo zget($deptList, $makeup->dept);?></td>
+      <td><?php echo zget($this->lang->makeup->typeList, $makeup->type);?></td>
+      <td><?php echo $makeup->begin . ' ' . $makeup->start;?></td>
+      <td><?php echo $makeup->end . ' ' . $makeup->finish;?></td>
+      <td title='<?php echo $makeup->desc?>'><?php echo $makeup->desc;?></td>
+      <td class='leave-<?php echo $leave->status?>'><?php echo zget($this->lang->leave->statusList, $leave->status);?></td>
+      <td><?php echo zget($users, $leave->reviewedBy);?></td>
+      <td>
+        <?php echo html::a($this->createLink('oa.makeup', 'review', "id={$makeup->id}&status=pass"), $lang->makeup->review, "data-status='pass' data-toggle='modal' data-width=800");?>
+      </td>
+    </tr>
+    <?php endforeach;?>
+
+    <?php foreach($lieuList as $lieu):?>
+    <tr>
+      <td><?php echo $lang->lieu->common;?></td>
+      <td><?php echo zget($users, $lieu->createdBy);?></td>
+      <td><?php echo zget($deptList, $lieu->dept);?></td>
+      <td></td>
+      <td><?php echo $lieu->begin . ' ' . $lieu->start;?></td>
+      <td><?php echo $lieu->end . ' ' . $lieu->finish;?></td>
+      <td title='<?php echo $lieu->desc?>'><?php echo $lieu->desc;?></td>
+      <td class='lieu-<?php echo $lieu->status?>'><?php echo zget($this->lang->lieu->statusList, $lieu->status);?></td>
+      <td><?php echo zget($users, $lieu->reviewedBy);?></td>
+      <td>
+        <?php echo html::a($this->createLink('oa.lieu', 'review', "id={$lieu->id}"), $lang->lieu->review, "data-status='pass' data-toggle='modal' data-width=800");?>
+      </td>
+    </tr>
+    <?php endforeach;?>
+
+  </table>
+</div>
+<?php endif;?>
+
 <?php include '../../common/view/footer.html.php';?>

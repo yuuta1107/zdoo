@@ -11,8 +11,8 @@
  */
 ?>
 <div class='list items'>
-  <?php foreach($depositors as $id => $depositor):?>
   <?php $provider = $depositor->type == 'bank' ? $depositor->provider : $lang->depositor->providerList[$depositor->provider]; ?>
+  <?php foreach($depositors as $id => $depositor):?>
   <div class='item'>
      <strong class='item-heading'><?php echo $depositor->title;?></strong>
      <div class='item-content'> 

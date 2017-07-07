@@ -174,6 +174,44 @@ class block extends control
     }
 
     /**
+     * Print base facts block.
+     * 
+     * @access public
+     * @return void
+     */
+    public function printBasefactsBlock()
+    {
+        $this->processParams();
+        $this->loadModel('trade');
+
+        $currentYear  = date('Y');
+
+        $currencySign  = $this->loadModel('common', 'sys')->getCurrencySign();
+        $annualChartDatas = array();
+        foreach($currencySign as $currency => $sign)
+        {
+            $trades = $this->trade->getByYear($currentYear, $currency); 
+            foreach($trades as $month => $monthTrades)
+            {
+                $annualChartDatas[$currency][$month]['in']  = 0;
+                $annualChartDatas[$currency][$month]['out'] = 0;
+                foreach($monthTrades as $trade)
+                {
+                    if($trade->type == 'in')  $annualChartDatas[$currency][$month]['in']  += $trade->money;
+                    if($trade->type == 'out') $annualChartDatas[$currency][$month]['out'] += $trade->money;
+                }
+                $annualChartDatas[$currency][$month]['profit'] = $annualChartDatas[$currency][$month]['in'] - $annualChartDatas[$currency][$month]['out'];
+            }
+        }
+
+        krsort($annualChartDatas, SORT_STRING);
+
+        $this->view->currencySign      = $currencySign;
+        $this->view->annualChartDatas  = $annualChartDatas;
+        $this->display();
+    }
+
+    /**
      * Print provider block.
      * 
      * @access public
@@ -236,6 +274,6 @@ class block extends control
         $this->params = json_decode(base64_decode($params));
 
         $this->view->sso  = base64_decode($this->get->sso);
-        $this->view->code = $this->get->blockid;
+        $this->view->code = strtolower($this->get->blockid);
     }
 }

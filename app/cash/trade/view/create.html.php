@@ -20,7 +20,7 @@
   </div>
   <div class='panel-body'>
     <form method='post' id='ajaxForm' class='form-table'>
-      <table class='table table-form w-p60 table-fixed'>
+      <table class='table table-form w-p60'>
         <tr>
           <th class='w-100px'><?php echo $lang->trade->depositor;?></th>
           <td><?php echo html::select('depositor', $depositorList, '', "class='form-control'");?></td>
@@ -44,10 +44,10 @@
         <?php if($type == 'out'):?>
         <tr class='expense'>
           <th><?php echo $lang->trade->category;?></th>
-          <td style = 'overflow:visible'>
+          <td>
             <div class='input-group'>
               <?php echo html::select('category', array('') + (array) $categories, '', "class='form-control chosen'");?>
-              <div class='input-group-addon'><div style='padding-right: 20px;'><?php echo html::radio('objectType', $lang->trade->objectTypeList);?></div></div>
+              <div class='input-group-addon'><div style='padding-right: 20px;'><?php echo html::checkbox('objectType', $lang->trade->objectTypeList);?></div></div>
             </div>
           </td>
         </tr>
