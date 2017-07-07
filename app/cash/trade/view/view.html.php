@@ -65,12 +65,12 @@
             <td><?php echo zget($currencySign, $trade->currency) . formatMoney($trade->money);?></td>
           </tr>
           <tr>
-            <th><?php echo $lang->trade->handlers;?></th>
-            <td title='<?php foreach(explode(',', $trade->handlers) as $handler) echo zget($users, $handler) . ' ';?>'><?php foreach(explode(',', $trade->handlers) as $handler) echo zget($users, $handler) . ' ';?></td>
+            <th><?php echo $lang->trade->dept;?></th>
+            <td><?php echo zget($deptList, $trade->dept);?></td>
           </tr>
           <tr>
-            <th><?php echo $lang->trade->createdDate;?></th>
-            <td><?php echo $trade->createdDate;?></td>
+            <th><?php echo $lang->trade->handlers;?></th>
+            <td title='<?php foreach(explode(',', $trade->handlers) as $handler) echo zget($users, $handler) . ' ';?>'><?php foreach(explode(',', $trade->handlers) as $handler) echo zget($users, $handler) . ' ';?></td>
           </tr>
           <tr>
             <th><?php echo $lang->trade->product;?></th>
@@ -106,6 +106,14 @@
             <td><?php echo zget($contractList, $trade->contract, '');?></td>
           </tr>
           <?php endif;?>
+          <tr>
+            <th><?php echo $lang->trade->createdDate;?></th>
+            <td><?php echo formatTime($trade->createdDate, DT_DATE1);?></td>
+          </tr>
+          <tr>
+            <th><?php echo $lang->trade->createdBy;?></th>
+            <td><?php echo zget($users, $trade->createdBy);?></td>
+          </tr>
         </table>
       </div>
     </div>
