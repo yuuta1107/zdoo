@@ -556,25 +556,27 @@ class userModel extends model
         /* leave */
         $leaveCount = $this->dao->select('count(*) as count')->from(TABLE_LEAVE)
             ->where('status')->eq('wait')
-            ->andWhere('createBy')->eq($account)->fetch('count');
+            ->andWhere('createdBy')->eq($account)->fetch('count');
         if($leaveCount) return 'leave';
 
         /* overtime and makeup */
         $overtimeCount = $this->dao->select('count(*) as count')->from(TABLE_OVERTIME)
             ->where('status')->eq('wait')
-            ->andWhere('createBy')->eq($account)->fetch('count');
+            ->andWhere('createdBy')->eq($account)->fetch('count');
         if($overtimeCount) return 'overtime';
 
         /* lieu */
         $lieuCount = $this->dao->select('count(*) as count')->from(TABLE_LIEU)
             ->where('status')->eq('wait')
-            ->andWhere('createBy')->eq($account)->fetch('count');
+            ->andWhere('createdBy')->eq($account)->fetch('count');
         if($lieuCount) return 'lieu';
 
         /* refund */
         $refundCount = $this->dao->select('count(*) as count')->from(TABLE_REFUND)
-            ->where('status')->eq('wait')->orWhere('status')->eq('pass')
-            ->andWhere('createBy')->eq($account)->fetch('count');
+            ->where('createdBy')->eq($account)
+            ->andWhere('status')->eq('wait')
+            ->orWhere('status')->eq('pass')
+            ->fetch('count');
         if($refundCount) return 'refund';
 
         return false;
