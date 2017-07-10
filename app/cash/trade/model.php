@@ -467,6 +467,10 @@ class tradeModel extends model
     {
         $now = helper::now();
         if($type == 'in') $_POST['objectType'] = array('contract');
+        $objectType   = $this->post->objectType;
+        $createTrader = $this->post->createTrader;
+
+        if($objectType[0] == 'contract') $this->post->customer = $this->post->allCustomer;
 
         $trade = fixer::input('post')
             ->add('type', $type)
@@ -480,7 +484,7 @@ class tradeModel extends model
             ->setIf($type == 'in', 'order', 0)
             ->setIf(!$this->post->objectType or !in_array('order', $this->post->objectType), 'order', 0)
             ->setIf(!$this->post->objectType or !in_array('contract', $this->post->objectType), 'contract', 0)
-            ->remove('objectType,customer,productLine')
+            ->remove('objectType,customer,productLine,allCustomer')
             ->striptags('desc')
             ->get();
 
@@ -491,7 +495,10 @@ class tradeModel extends model
             ->data($trade, $skip = 'createTrader,traderName,files,labels')
             ->autoCheck()
             ->batchCheck($this->config->trade->require->create, 'notempty')
-            ->batchCheckIf($requireTrader, 'traderName', 'notempty')
+            ->checkIf($requireTrader && empty($objectType) && empty($createTrader), 'trader', 'notempty')
+            ->checkIf($requireTrader && empty($objectType) && !empty($createTrader), 'traderName', 'notempty')
+            ->checkIf($requireTrader && !empty($objectType), 'trader', 'notempty')
+            ->checkIf($requireTrader && $type == 'in', 'trader', 'notempty')
             ->exec();
 
         $tradeID = $this->dao->lastInsertID();

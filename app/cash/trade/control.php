@@ -220,6 +220,7 @@ class trade extends control
 
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => inlink('browse', "type=$type")));
         }
+
         $orderList = $this->loadModel('order', 'crm')->getList();
         $orders    = $this->order->getPairs();
         foreach($orderList as $id => $order) $order->name = $orders[$id];
