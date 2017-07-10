@@ -28,6 +28,12 @@
           ?>
           <?php echo html::a($refundLink, $mailTitle, "style='color: #333; text-decoration: underline;'");?>
         </td>
+        <td style='width:50px; background-color: #F8FAFE; border: none; font-size: 14px; border-bottom: 1px solid #e5e5e5;'>
+          <?php
+          if($mode == 'review') echo html::a($refundLink, $lang->refund->review);
+          if($mode == 'todo')   echo html::a($refundLink, $lang->refund->common);
+          ?>
+        </td>
       </tr>
     </table>
   </td>
@@ -54,10 +60,6 @@
               if($refund->status != 'doing') echo zget($lang->refund->statusList, $refund->status);
               ?>
               </span>
-              <?php
-              if($mode == 'review') echo html::a($refundLink, $lang->refund->review, "text-decoration: underline;'");
-              if($mode == 'todo')   echo html::a($refundLink, $lang->refund->common, "text-decoration: underline;'");
-              ?>
             </td>
           </tr>
           <tr>
@@ -76,19 +78,19 @@
             <th><?php echo $lang->refund->firstReviewer?></th>
             <td><?php echo zget($users, $refund->firstReviewer)?></td>
             <th><?php echo $lang->refund->firstReviewDate?></th>
-            <td><?php echo $refund->firstReviewDate?></td>
+            <td><?php echo formatTime($refund->firstReviewDate)?></td>
           </tr>
           <tr>
             <th><?php echo $lang->refund->secondReviewer?></th>
             <td><?php echo zget($users, $refund->secondReviewer)?></td>
             <th><?php echo $lang->refund->secondReviewDate?></th>
-            <td><?php echo $refund->secondReviewDate?></td>
+            <td><?php echo formatTime($refund->secondReviewDate)?></td>
           </tr>
           <tr>
             <th><?php echo $lang->refund->refundBy?></th>
             <td><?php echo zget($users, $refund->refundBy)?></td>
             <th><?php echo $lang->refund->refundDate?></th>
-            <td><?php echo $refund->refundDate?></td>
+            <td><?php echo formatTime($refund->refundDate)?></td>
           </tr>
           <tr>
             <th><?php echo $lang->refund->reason?></th>
