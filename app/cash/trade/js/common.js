@@ -41,29 +41,33 @@ $(document).ready(function()
     })
 
     /* Highlight submenu. */
-    if(config.requestType == 'GET')
+    if(v.modeType && v.modeType != 'undefined')
     {
-        if(v.modeType == 'in')
+        if(config.requestType == 'GET')
         {
-            $('#mainNavbar li').removeClass('active').find("[href*='mode\\=" + v.modeType + "']").not('[href*=mode\\=invest]').parent().addClass('active');
+            if(v.modeType == 'in')
+            {
+                $('#mainNavbar li').removeClass('active').find("[href*='mode\\=" + v.modeType + "']").not('[href*=mode\\=invest]').parent().addClass('active');
+            }
+            else
+            {
+                $('#mainNavbar li').removeClass('active').find("[href*='mode\\=" + v.modeType + "']").parent().addClass('active');
+            }
         }
         else
         {
-            $('#mainNavbar li').removeClass('active').find("[href*='mode\\=" + v.modeType + "']").parent().addClass('active');
+            $('#mainNavbar li').removeClass('active');
+            if(v.modeType == 'in')
+            {
+                $('#mainNavbar li').find("[href*='trade-browse-in.html']").parent().addClass('active');
+            }
+            else
+            {
+                $('#mainNavbar li').find("[href*='-" + v.modeType + "']").parent().addClass('active');
+            }
         }
     }
-    else
-    {
-        $('#mainNavbar li').removeClass('active');
-        if(v.modeType == 'in')
-        {
-            $('#mainNavbar li').find("[href*='trade-browse-in.html']").parent().addClass('active');
-        }
-        else
-        {
-            $('#mainNavbar li').find("[href*='-" + v.modeType + "']").parent().addClass('active');
-        }
-    }
+    
 
     $(document).on('change', '#customer,#trader', function()
     {

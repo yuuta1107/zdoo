@@ -108,6 +108,7 @@ $lang->action->desc->transform             = '$date, 由 <strong>$actor</strong>
 $lang->action->desc->ignored               = '$date, 由 <strong>$actor</strong> 忽略。' . "\n";
 $lang->action->desc->createtrip            = '$date, 由 <strong>$actor</strong> 创建出差：<strong>$extra</strong>。' . "\n";
 $lang->action->desc->createegress          = '$date, 由 <strong>$actor</strong> 创建外出：<strong>$extra</strong>。' . "\n";
+$lang->action->desc->imported              = '$date, 由 <strong>$actor</strong> 导入。' . "\n";
 
 /* 用来显示动态信息。*/
 $lang->action->label = new stdclass();
@@ -139,6 +140,7 @@ $lang->action->label->reported    = '销假了';
 $lang->action->label->forbidden   = '禁用了';
 $lang->action->label->transform   = '转换了';
 $lang->action->label->ignored     = '忽略了';
+$lang->action->label->imported    = '导入了';
 $lang->action->label->login       = '登录系统';
 $lang->action->label->logout      = "退出登录";
 

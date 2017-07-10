@@ -53,12 +53,13 @@ $lang->action->menuOrder = $lang->system->menuOrder;
 $lang->cron->menuOrder   = $lang->system->menuOrder;
 $lang->backup->menuOrder = $lang->system->menuOrder;
 
-$lang->my->review->menuOrder[5]  = 'attend';
-$lang->my->review->menuOrder[10] = 'leave';
-$lang->my->review->menuOrder[15] = 'overtime';
-$lang->my->review->menuOrder[16] = 'makeup';
-$lang->my->review->menuOrder[20] = 'lieu';
-$lang->my->review->menuOrder[25] = 'refund';
+$lang->my->review->menuOrder[5]  = 'all';
+$lang->my->review->menuOrder[10] = 'attend';
+$lang->my->review->menuOrder[15] = 'leave';
+$lang->my->review->menuOrder[20] = 'overtime';
+$lang->my->review->menuOrder[25] = 'makeup';
+$lang->my->review->menuOrder[30] = 'lieu';
+$lang->my->review->menuOrder[45] = 'refund';
 
 $lang->my->order->menuOrder[5]  = 'past';
 $lang->my->order->menuOrder[10] = 'today';

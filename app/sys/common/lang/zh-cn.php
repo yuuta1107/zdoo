@@ -300,6 +300,7 @@ $lang->todo->menu->future          = '待定|todo|browse|mode=future';
 $lang->my = new stdclass();
 $lang->my->review = new stdclass();
 $lang->my->review->menu = new stdclass();
+$lang->my->review->menu->all      = '所有|my|review|type=all';
 $lang->my->review->menu->attend   = '考勤|my|review|type=attend';
 $lang->my->review->menu->leave    = '请假|my|review|type=leave';
 $lang->my->review->menu->overtime = '加班|my|review|type=overtime';

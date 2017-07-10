@@ -1,1 +1,2 @@
-.chosen-container[id^="category"] .chosen-drop {min-width: 350px;!important}
+.chosen-container[id^="category"] .chosen-drop {min-width: 450px;!important}
+.expense .chosen-container-single {max-width:233px}

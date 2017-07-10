@@ -170,8 +170,15 @@ class trade extends control
         }
         $moduleMenu .= "</ul></nav>";
 
-        $treeModel = $this->loadModel('tree');
-        $this->view->categories    = $treeModel->getOptionMenu('in', 0, $removeRoot = true) + $treeModel->getOptionMenu('out', 0, $removeRoot = true);
+        if(strpos(',in,all,', ",$mode,") !== false)
+        {
+            $this->view->categories    = $this->lang->trade->categoryList + $this->tree->getPairs(0, 'out') + $this->tree->getPairs(0, 'in');
+        }
+        else
+        {
+            $this->view->categories = $this->tree->getOptionMenu('in', 0, $removeRoot = true) + $this->tree->getOptionMenu('out', 0, $removeRoot = true);
+        }
+
         $this->view->title         = $this->lang->trade->browse;
         $this->view->trades        = $trades;
         $this->view->mode          = $mode;

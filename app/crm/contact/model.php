@@ -648,7 +648,7 @@ class contactModel extends model
             }
 
             $contactID = $this->dao->lastInsertID();
-            $this->loadModel('action', 'sys')->create('contact', $contactID, 'Created', $this->lang->import);
+            $this->loadModel('action', 'sys')->create('contact', $contactID, 'imported');
         }
         $this->session->set('errorList', $errorList);
 

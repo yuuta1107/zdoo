@@ -70,6 +70,30 @@ class cashblockModel extends blockModel
         return json_encode($params);
     }
 
+    /*
+     * Get base facts params.
+     * 
+     * @access public
+     * @return string
+     */
+    public function getBaseFactsParams()
+    {
+        $this->app->loadLang('trade', 'cash');
+
+        $params = new stdclass();
+
+        $params->num['name']        = $this->lang->block->num;
+        $params->num['default']     = 15; 
+        $params->num['control']     = 'input';
+
+        $params->orderBy['name']    = $this->lang->block->orderBy;
+        $params->orderBy['default'] = 'id_desc';
+        $params->orderBy['options'] = $this->lang->block->orderByList->trade;
+        $params->orderBy['control'] = 'select';
+
+        return json_encode($params);
+    }
+
     /**
      * Get report params.
      * 

@@ -904,6 +904,8 @@ class tradeModel extends model
         foreach($trades as $trade)
         {
             $this->dao->insert(TABLE_TRADE)->data($trade, $skip = 'createTrader,traderName,createCustomer,customerName')->autoCheck()->exec();
+            $tradeID = $this->dao->lastInsertId();
+            $this->action->create('trade', $tradeID, 'imported');
         }
 
         if(!dao::isError()) return array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => inlink('browse'));

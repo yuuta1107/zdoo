@@ -14,8 +14,8 @@ $lang->app->name = 'OA';
 
 $lang->menu->oa = new stdclass();
 $lang->menu->oa->dashboard = '首页|dashboard|index|';
-$lang->menu->oa->announce  = '公告|announce|browse|';
 $lang->menu->oa->my        = '审批|my|review|';
+$lang->menu->oa->announce  = '公告|announce|browse|';
 $lang->menu->oa->attend    = '考勤|attend|personal|';
 $lang->menu->oa->leave     = '请假|leave|personal|';
 $lang->menu->oa->makeup    = '补班|makeup|personal|';
