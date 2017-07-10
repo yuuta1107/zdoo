@@ -19,41 +19,47 @@ class entry extends control
      */
     public function admin($category = 0)
     {
-        $entries      = $this->entry->getEntries($type = 'custom', $category);
-        $categories   = $this->dao->select('id, name')->from(TABLE_CATEGORY)->where('type')->eq('entry')->orderBy('`order`')->fetchPairs();
-        $tmpEntries   = array();
-        $showCategory = false;
+        $entries    = $this->entry->getEntries($type = 'custom', $category);
+        $categories = $this->dao->select('id, name')->from(TABLE_CATEGORY)->where('type')->eq('entry')->orderBy('`order`')->fetchPairs();
+        $tmpEntries = array();
+        $maxOrder   = 0;
         foreach($entries as $key => $entry)
         {
-            /* Remove category. */
-            if($entry->code == '') 
+            if($maxOrder < $entry->order) $maxOrder = $entry->order;
+
+            /* Remove category that has in entries. */
+            if($entry->code == '' and isset($categories[$entry->id])) unset($categories[$entry->id]);
+
+            /* add web root if logo not start with /  */
+            if(!empty($entry->logo) && substr($entry->logo, 0, 1) != '/') $entry->logo = $this->config->webRoot . $entry->logo;
+            if($entry->category)
             {
-                unset($entries[$key]);
-                continue;
-            }
-            if(isset($categories[$entry->category]))
-            {
-                $showCategory = true;
                 $tmpEntries[$entry->category][] = $entry;
                 unset($entries[$key]);
             }
         }
-        foreach($tmpEntries as $categoryEntries)
+
+        /* Append children for category. */
+        $categoryEntry = '';
+        foreach($entries as $key => $entry)
         {
-            foreach($categoryEntries as $entry)
-            {
-                $entries[] = $entry;
-            }
+            if($entry->code == '' and empty($categoryEntry)) $categoryEntry = json_decode(json_encode($entry));
+            if($entry->code == '' and isset($tmpEntries[$entry->id])) $entry->children = $tmpEntries[$entry->id];
         }
 
-        /* add web root if logo not start with /  */
-        foreach($entries as $entry) if(!empty($entry->logo) && substr($entry->logo, 0, 1) != '/') $entry->logo = $this->config->webRoot . $entry->logo;
+        /* Merge category. */
+        foreach($categories as $categoryID => $category)
+        {
+            $entry = json_decode(json_encode($categoryEntry));
+            $entry->id    = $categoryID;
+            $entry->name  = $category;
+            $entry->abbr  = $category;
+            $entry->order = $maxOrder ++;
+            $entries[]    = $entry;
+        }
         
-        $this->view->title        = $this->lang->entry->common . $this->lang->colon . $this->lang->entry->admin;
-        $this->view->treeMenu     = $this->loadModel('tree')->getTreeMenu('entry', 0, array('treeModel', 'createEntryAdminLink'));
-        $this->view->entries      = $entries;
-        $this->view->categories   = $categories;
-        $this->view->showCategory = $showCategory;
+        $this->view->title   = $this->lang->entry->common . $this->lang->colon . $this->lang->entry->admin;
+        $this->view->entries = $entries;
         $this->display();
     }
 
@@ -543,7 +549,7 @@ class entry extends control
                 $allEntries->{$id}->order = $order * 10;
             }
             $this->loadModel('setting')->setItem("{$this->app->user->account}.sys.common.customApp", json_encode($allEntries));
-            if(dao::isError()) $this->send(array('result' => 'fael', 'message' => dao::getError()));
+            if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
         }
         $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess));
     }

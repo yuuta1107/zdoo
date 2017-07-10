@@ -510,4 +510,58 @@ class entryModel extends model
         }
         return json_encode($allEntries);
     }
+
+    /**
+     * Print entry info.
+     * 
+     * @param  object $entry 
+     * @param  int    $parent 
+     * @access public
+     * @return void
+     */
+    public function printInfo($entry, $parent = 0)
+    {
+        echo "<li data-entryid='{$entry->id}'><div class='text-left row-table'>";
+		echo "<div class='col-table w-30px'>";
+        if(!$parent) echo "<i class='icon-move sort-handler-1'></i>";
+        echo "</div>";
+        echo "<div class='col-table w-200px'>";
+        if($parent) echo "<span style='padding:6px 8px'><i class='icon-move sort-handler-2'></i></span>";
+        if($entry->logo) 
+        {
+            echo "<img src=\"{$entry->logo}\" class='small-icon'/>";
+        }
+        else
+        {
+            $name = $entry->abbr ? $entry->abbr : $entry->name;
+            $entryName = validater::checkCode(substr($name, 0, 1)) ? strtoupper(substr($name, 0, 1)) : substr($name, 0, 3);
+            if(validater::checkCode(substr($name, 0, 1)) and validater::checkCode(substr($name, 1, 1)))   $entryName .= strtoupper(substr($name, 1, 1));
+            if(validater::checkCode(substr($name, 0, 1)) and !validater::checkCode(substr($name, 1, 1)))  $entryName .= strtoupper(substr($name, 1, 3));
+            if(!validater::checkCode(substr($name, 0, 1)) and validater::checkCode(substr($name, 3, 1)))  $entryName .= strtoupper(substr($name, 3, 1));
+            if(!validater::checkCode(substr($name, 0, 1)) and !validater::checkCode(substr($name, 3, 1))) $entryName .= substr($name, 3, 3);
+            echo "<i class='icon icon-default' style='background-color: hsl(" . ($entry->id * 47 % 360) . ", 100%, 40%)'><span>{$entryName}</span></i>";
+        }
+        echo $entry->name;
+        echo "</div>";
+        echo "<div class='col-table w-80px'>{$entry->code}</div>";
+        echo "<div class='col-table w-240px'>" . ($entry->integration ? $entry->key : '') . '</div>';
+        echo "<div class='col-table text-center'>{$entry->ip}</div>";
+        echo "<div class='col-table w-260px'>";
+        echo html::a(helper::createLink('group', 'manageAppPriv', "type=byApp&appCode=$entry->code"), $this->lang->entry->priv);
+        echo html::a(helper::createLink('entry', 'style', "code=$entry->code"), $this->lang->entry->style);
+        if(!$entry->buildin)
+        {
+            echo html::a(helper::createLink('entry', 'integration', "code=$entry->code"), $this->lang->entry->integration);
+            echo html::a(helper::createLink('entry', 'edit', "code=$entry->code"), $this->lang->edit);
+            echo html::a(helper::createLink('entry', 'delete', "code=$entry->code"), $this->lang->delete, 'class="entry-deleter"');
+        }
+        else
+        {
+            echo html::a('javascript:;', $this->lang->entry->integration, "disabled='disabled'");
+            echo html::a(helper::createLink('entry', 'edit', "code=$entry->code"), $this->lang->edit);
+            echo html::a('javascript:;', $this->lang->delete, "disabled='disabled'");
+        }
+        if($entry->zentao) echo html::a(helper::createLink('entry', 'zentaoAdmin', "id={$entry->id}"), $this->lang->entry->bindUser);
+        echo '</div></div></li>';
+    }
 }
