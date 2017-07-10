@@ -41,10 +41,7 @@
       <td><?php echo substr($attend->manualOut, 0, 5)?></td>
       <td><?php echo zget($lang->attend->reasonList, $attend->reason)?></td>
       <td><?php echo $attend->desc?></td>
-      <td>
-        <?php commonModel::printLink('attend', 'review', "attendID={$attend->id}&status=pass", $lang->attend->reviewStatusList['pass'], "class='pass'")?>
-        <?php commonModel::printLink('attend', 'review', "attendID={$attend->id}&status=reject", $lang->attend->reviewStatusList['reject'], "class='reject'")?>
-      </td>
+      <td><?php commonModel::printLink('attend', 'review', "attendID={$attend->id}", $lang->attend->review, "data-toggle='modal' data-width='800'")?></td>
     </tr>
     <?php endforeach;?>
   </table>

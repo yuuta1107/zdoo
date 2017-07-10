@@ -74,8 +74,7 @@
             <?php echo html::a($this->createLink('oa.lieu', 'view', "id={$lieu->id}&type=$type"), $lang->lieu->view, "data-toggle='modal'");?>
 
             <?php if($type == 'browseReview' and $lieu->status == 'wait'):?>
-            <?php echo html::a($this->createLink('oa.lieu', 'review', "id={$lieu->id}&status=pass"), $lang->lieu->statusList['pass'], "class='reviewPass'");?>
-            <?php echo html::a($this->createLink('oa.lieu', 'review', "id={$lieu->id}&status=reject"), $lang->lieu->statusList['reject'], "class='reviewReject'");?>
+            <?php echo html::a($this->createLink('oa.lieu', 'review', "id={$lieu->id}"), $lang->lieu->review, "data-toggle='modal' data-width='800'");?>
             <?php endif;?>
 
             <?php if($type == 'personal' and ($lieu->status == 'wait' or $lieu->status == 'draft')):?>

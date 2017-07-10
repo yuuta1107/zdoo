@@ -76,8 +76,7 @@
             <?php commonModel::printLink('oa.makeup', 'view', "id=$makeup->id&type=$type", $lang->detail, "data-toggle='modal'");?>
             <?php if($type != 'company'):?>
             <?php if($type == 'browseReview' and $makeup->status == 'wait'):?>
-            <?php commonModel::printLink('oa.makeup', 'review', "id=$makeup->id&status=pass", $lang->makeup->statusList['pass'], "class='reviewPass'");?>
-            <?php commonModel::printLink('oa.makeup', 'review', "id=$makeup->id&status=reject", $lang->makeup->statusList['reject'], "data-toggle='modal'");?>
+            <?php commonModel::printLink('oa.makeup', 'review', "id=$makeup->id", $lang->makeup->review, "data-toggle='modal' data-width='800'");?>
             <?php endif;?>
             <?php if($type == 'personal' and ($makeup->status == 'wait' or $makeup->status == 'draft')):?>
             <?php if($makeup->status == 'wait' or $makeup->status == 'draft') commonModel::printLink('oa.makeup', 'switchstatus', "id=$makeup->id", $makeup->status == 'wait' ? $lang->makeup->cancel : $lang->makeup->commit, "class='reload'");?>

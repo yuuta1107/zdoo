@@ -78,8 +78,7 @@
             <?php commonModel::printLink('oa.overtime', 'view', "id=$overtime->id&type=$type", $lang->detail, "data-toggle='modal'");?>
             <?php if($type != 'company'):?>
             <?php if($type == 'browseReview' and $overtime->status == 'wait'):?>
-            <?php commonModel::printLink('oa.overtime', 'review', "id=$overtime->id&status=pass", $lang->overtime->statusList['pass'], "class='reviewPass'");?>
-            <?php commonModel::printLink('oa.overtime', 'review', "id=$overtime->id&status=reject", $lang->overtime->statusList['reject'], "data-toggle='modal'");?>
+            <?php commonModel::printLink('oa.overtime', 'review', "id=$overtime->id", $lang->overtime->review, "data-toggle='modal' data-width='800'");?>
             <?php endif;?>
             <?php if($type == 'personal' and ($overtime->status == 'wait' or $overtime->status == 'draft')):?>
             <?php if($overtime->status == 'wait' or $overtime->status == 'draft') commonModel::printLink('oa.overtime', 'switchstatus', "id=$overtime->id", $overtime->status == 'wait' ? $lang->overtime->cancel : $lang->overtime->commit, "class='reload'");?>
