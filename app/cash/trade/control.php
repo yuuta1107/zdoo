@@ -1238,18 +1238,14 @@ class trade extends control
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
         }
 
-        $getSetting = $this->loadModel('setting')->getItem('owner=system&app=cash&module=trade&key=setting');
-        if(isset($getSetting))
+        $savedSetting = !empty($this->config->trade->setting) ? json_decode($this->config->trade->setting) : array();
+        foreach($this->lang->trade->cashSettingList as $code => $value)
         {
-            $getSetting = json_decode($getSetting);
-            foreach($this->lang->trade->cashSettingList as $code => $value)
+            $cashSetting[$code]['name'] = $value;
+            foreach($savedSetting as $key => $userSetting)
             {
-                $cashSetting[$code]['name']    = $value;
-                foreach($getSetting as $key => $userSetting)
-                {
-                    if($userSetting != $code) continue;
-                    $cashSetting[$code]['setting'] = 1;
-                }
+                if($userSetting != $code) continue;
+                $cashSetting[$code]['setting'] = 1;
             }
         }
 
