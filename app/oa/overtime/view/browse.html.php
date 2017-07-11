@@ -74,7 +74,7 @@
           <?php if($type != 'browseReview'):?>
           <td><?php echo zget($users, $overtime->reviewedBy);?></td>
           <?php endif;?>
-          <td class='actionTD'>
+          <td class='actionTD text-left'>
             <?php commonModel::printLink('oa.overtime', 'view', "id=$overtime->id&type=$type", $lang->detail, "data-toggle='modal'");?>
             <?php if($type != 'company'):?>
             <?php if($type == 'browseReview' and $overtime->status == 'wait'):?>

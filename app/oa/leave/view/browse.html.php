@@ -80,7 +80,7 @@
           <?php if($type != 'browseReview'):?>
           <td><?php echo zget($users, $leave->reviewedBy);?></td>
           <?php endif;?>
-          <td class='actionTD'>
+          <td class='actionTD text-left'>
             <?php echo html::a($this->createLink('oa.leave', 'view', "id={$leave->id}&type=$type"), $lang->detail, "data-toggle='modal'");?>
             <?php if($type == 'browseReview' and $leave->status == 'wait'):?>
             <?php echo html::a($this->createLink('oa.leave', 'edit', "id={$leave->id}"), $lang->edit, "data-toggle='modal'");?>

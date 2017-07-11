@@ -72,7 +72,7 @@
           <?php if($type != 'browseReview'):?>
           <td><?php echo zget($users, $makeup->reviewedBy);?></td>
           <?php endif;?>
-          <td class='actionTD'>
+          <td class='actionTD text-left'>
             <?php commonModel::printLink('oa.makeup', 'view', "id=$makeup->id&type=$type", $lang->detail, "data-toggle='modal'");?>
             <?php if($type != 'company'):?>
             <?php if($type == 'browseReview' and $makeup->status == 'wait'):?>

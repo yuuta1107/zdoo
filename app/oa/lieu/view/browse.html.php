@@ -70,7 +70,7 @@
           <?php if($type != 'browseReview'):?>
           <td><?php echo zget($users, $lieu->reviewedBy);?></td>
           <?php endif;?>
-          <td class='actionTD'>
+          <td class='actionTD text-left'>
             <?php echo html::a($this->createLink('oa.lieu', 'view', "id={$lieu->id}&type=$type"), $lang->lieu->view, "data-toggle='modal'");?>
 
             <?php if($type == 'browseReview' and $lieu->status == 'wait'):?>

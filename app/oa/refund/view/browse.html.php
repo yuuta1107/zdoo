@@ -85,7 +85,7 @@
           <td><?php echo zget($userPairs, $refund->firstReviewer) . ' ' . zget($userPairs, $refund->secondReviewer);?></td>
           <td><?php echo zget($userPairs, $refund->refundBy);?></td>
           <td><?php echo formatTime($refund->refundDate, DT_DATE1)?></td>
-          <td>
+          <td class='text-left'>
             <?php if($mode == 'personal'):?>
             <?php if($refund->createdBy == $this->app->user->account and ($refund->status == 'wait' or $refund->status == 'draft')):?>
             <?php echo html::a($this->createLink('refund', 'edit',   "refundID={$refund->id}"), $lang->edit, "")?>

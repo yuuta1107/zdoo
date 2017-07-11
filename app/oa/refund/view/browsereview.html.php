@@ -65,7 +65,7 @@
           <td><?php echo formatTime($refund->date, DT_DATE1);?></td>
           <td class='refund-<?php echo $refund->status;?>'><?php echo zget($lang->refund->statusList, $refund->status);?></td>
           <td><?php echo $refund->desc?></td>
-          <td>
+          <td class='text-left'>
             <?php echo html::a($this->createLink('refund', 'view',   "refundID={$refund->id}&mode=review"), $lang->detail, "")?>
             <?php if($refund->status == 'wait' or $refund->status == 'doing') echo html::a($this->createLink('refund', 'review', "refundID={$refund->id}"), $lang->refund->review, "data-toggle='modal'")?>
           </td>
