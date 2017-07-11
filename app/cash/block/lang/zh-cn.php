@@ -19,7 +19,7 @@ $lang->block->orderBy   = '排序';
 $lang->block->availableBlocks = new stdclass();
 $lang->block->availableBlocks->depositor = '付款账号';
 $lang->block->availableBlocks->trade     = '账目';
-$lang->block->availableBlocks->baseFacts = '收入概况';
+$lang->block->availableBlocks->baseFacts = '收支概况';
 $lang->block->availableBlocks->provider  = '供应商';
 $lang->block->availableBlocks->report    = '报表';
 
