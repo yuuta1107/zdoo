@@ -75,16 +75,29 @@
         </tr>
         <tr class='customerTR hide'>
           <th><?php echo $lang->trade->customer;?></th>
-          <td><?php echo html::select('customer', $customerList, '', "class='form-control chosen' onchange='getContract(this.value)'");?></td>
+          <td>
+          <?php if($requireTrader): ?>
+            <div class = 'required required-wrapper'></div>
+          <?php endif;?>
+          <?php echo html::select('customer', $customerList, '', "class='form-control chosen' onchange='getContract(this.value)'");?>
+          </td>
         </tr>
         <tr class='allCustomerTR hide'>
           <th><?php echo $lang->trade->customer;?></th>
-          <td><?php echo html::select('customer', ($customerList + $traderList), '', "class='form-control chosen' onchange='getContract(this.value)'");?></td>
+          <td>
+          <?php if($requireTrader): ?>
+            <div class = 'required required-wrapper'></div>
+          <?php endif;?>
+          <?php echo html::select('allCustomer', ($customerList + $traderList), '', "class='form-control chosen' onchange='getContract(this.value)'");?>
+          </td>
         </tr>
         <tr class='traderTR'>
           <th><?php echo $lang->trade->trader;?></th>
           <td>
             <?php if(count($traderList) > 1):?>
+            <?php if($requireTrader): ?>
+              <div class = 'required required-wrapper'></div>
+            <?php endif;?>
             <div class='input-group'>
               <?php  echo html::select('trader', $traderList, '', "class='form-control chosen'");?>
               <?php  echo html::input('traderName', '', "class='form-control' style='display:none'");?>
@@ -106,7 +119,12 @@
         <?php if($type == 'in'):?>
         <tr>
           <th><?php echo $lang->trade->customer;?></th>
-          <td><?php echo html::select('trader', $customerList, '', "class='form-control chosen' onchange='getContract(this.value)'");?></td>
+          <td>
+          <?php if($requireTrader): ?>
+            <div class = 'required required-wrapper'></div>
+          <?php endif;?>
+          <?php echo html::select('trader', $customerList, '', "class='form-control chosen' onchange='getContract(this.value)'");?>
+          </td>
         </tr>
         <tr class='customer-depositor hide'>
           <th><?php echo $lang->customer->depositor;?></th>

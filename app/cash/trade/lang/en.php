@@ -80,7 +80,7 @@ $lang->trade->export2Excel  = 'Export Excel';
 $lang->trade->compare       = 'Annual Compare';
 $lang->trade->setReportUnit = 'Report Unit';
 
-$lang->trade->cashSettingList['trader']   = 'select spending merchants';
+$lang->trade->cashSettingList['trader']   = 'select merchants';
 $lang->trade->cashSettingList['category'] = 'select final subjects';
 
 $lang->trade->report = new stdclass();

@@ -11,15 +11,30 @@
  */
 ?>
 <table class='table table-data table-hover block-contract table-fixed'>
-  <?php $appid = ($this->get->app == 'sys' and isset($_GET['entry'])) ? "class='app-btn' data-id='{$this->get->entry}'" : ''?>
+<?php $appid = ($this->get->app == 'sys' and isset($_GET['entry'])) ? "class='app-btn' data-id='{$this->get->entry}'" : ''?>
+<div style="overflow:auto;" class='table-wrapper'>
+  <table id='barChart' class='table table-condensed table-hover table-striped table-bordered table-chart' data-chart='bar' data-target='#myBarChar
+t' data-animation='false'>
+  <thead>
+    <tr class='text-center'>
+      <th><?php echo $lang->trade->month;?></th>
+      <th class='chart-label-in'><i class='chart-color-dot-in icon-circle' style='color: green;'></i> <?php echo $lang->trade->in;?></th>
+      <th class='chart-label-out'><i class='chart-color-dot-out icon-circle' style="color: red;"></i> <?php echo $lang->trade->out;?></th>
+      <th class='chart-label-profit'><?php echo $lang->trade->profit . '/' . $lang->trade->loss;?></th>
+    </tr>
+  </thead>
+  <tbody>
   <?php foreach($annualChartDatas as $currency => $annualChartData):?>
   <?php foreach($annualChartData as $month => $monthChartData):?>
   <tr>
     <td class='w-50px'><?php echo $month . ' ' . $lang->trade->month;?></td>
-    <td class='w-100px text-left'><?php echo $lang->trade->in . ' ' . $currencySign[$currency] . $monthChartData['in'];?></td>
-    <td class='w-100px text-left'><?php echo $lang->trade->out . ' ' . $currencySign[$currency] . $monthChartData['out'];?></td>
-    <td class='w-100px text-left'><?php echo $lang->trade->profit . '/' . $lang->trade->loss . ' ' . $currencySign[$currency] . $monthChartData['profit'];?></td>
+    <td class='w-100px text-center'><?php echo $currencySign[$currency] . $monthChartData['in'];?></td>
+    <td class='w-100px text-center'><?php echo $currencySign[$currency] . $monthChartData['out'];?></td>
+    <td class='w-100px text-center'><?php echo  $currencySign[$currency] . $monthChartData['profit'];?></td>
   </tr>
   <?php endforeach;?>
   <?php endforeach;?>
+  </tbody>
+  </table>
+</div>
 </table>
