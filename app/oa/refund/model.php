@@ -126,7 +126,7 @@ class refundModel extends model
         }
 
         $this->dao->insert(TABLE_REFUND)
-            ->data($refund, $skip='files,labels')
+            ->data($refund, $skip = 'files,labels')
             ->autoCheck()
             ->batchCheck($this->config->refund->require->create, 'notempty')
             ->exec();

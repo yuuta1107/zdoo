@@ -242,6 +242,9 @@ class upgradeModel extends model
                 $sql = str_replace('CHARACTER SET utf8 COLLATE utf8_general_ci', '', $sql);
             }
 
+            /* Add table prefix. */
+            if($this->config->db->prefix) $sql = preg_replace('/`(\w+)_/', "`{$this->config->db->prefix}\${1}_", $sql);
+
             try
             {
                 $this->dbh->exec($sql);

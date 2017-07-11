@@ -84,7 +84,11 @@
       <div class='panel-body'>
         <table class='table table-info'>
           <tr>
-            <th class='w-80px'><?php echo $lang->refund->category;?></th>
+            <th class='w-80px'><?php echo $lang->refund->dept;?></th>
+            <td><?php echo zget($deptList, $refund->dept, ' ')?></td>
+          </tr>
+          <tr>
+            <th><?php echo $lang->refund->category;?></th>
             <td><?php echo zget($categories, $refund->category, ' ')?></td>
           </tr>
           <tr>

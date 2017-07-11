@@ -26,6 +26,7 @@ $lang->refund->id               = '编号';
 $lang->refund->name             = '名称';
 $lang->refund->category         = '科目';
 $lang->refund->date             = '日期';
+$lang->refund->dept             = '部门';
 $lang->refund->money            = '金额';
 $lang->refund->reviewMoney      = '报销额度';
 $lang->refund->currency         = '货币';
