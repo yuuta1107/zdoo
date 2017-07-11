@@ -38,13 +38,11 @@ class my extends control
         $tmpDept = $this->loadModel('tree')->getDeptManagedByMe($account);
         foreach($tmpDept as $d) $managedDeptList[$d->id] = $d->name;
 
-        /* Get deptments managed by me. used when get attend and leave. */
-        $deptList = array();
-
         /* Get attend list. */
         $attends  = array();
         if($type == 'all' || $type == 'attend')
         {
+            $deptList = array();
             if(!empty($this->config->attend->reviewedBy) and $this->config->attend->reviewedBy == $account) $deptList = $allDeptList;
             if(empty($this->config->attend->reviewedBy)) $deptList = $managedDeptList;
             $attends = $this->attend->getWaitAttends(array_keys($deptList));
@@ -54,6 +52,7 @@ class my extends control
         $leaves = array();
         if($type == 'all' || $type == 'leave')
         {
+            $deptList = array();
             $reviewedBy = $this->leave->getReviewedBy();
             if($reviewedBy and $reviewedBy == $account) $deptList = $allDeptList;
             if(!$reviewedBy) $deptList = $managedDeptList;
@@ -65,6 +64,7 @@ class my extends control
         $overtimes = array();
         if($type == 'all' || $type == 'overtime')
         {
+            $deptList = array();
             $reviewedBy = $this->overtime->getReviewedBy();
             if($reviewedBy and $reviewedBy == $account) $deptList = $allDeptList;
             if(!$reviewedBy) $deptList = $managedDeptList;
@@ -76,6 +76,7 @@ class my extends control
         $makeups = array();
         if($type == 'all' || $type == 'makeup')
         {
+            $deptList = array();
             $reviewedBy = $this->makeup->getReviewedBy();
             if($reviewedBy and $reviewedBy == $account) $deptList = $allDeptList;
             if(!$reviewedBy) $deptList = $managedDeptList;
@@ -87,6 +88,7 @@ class my extends control
         $lieus = array();
         if($type == 'all' || $type == 'lieu') 
         {
+            $deptList = array();
             $reviewedBy = $this->lieu->getReviewedBy();
             if($reviewedBy and $reviewedBy == $account) $deptList = $allDeptList;
             if(!$reviewedBy) $deptList = $managedDeptList;
@@ -98,6 +100,7 @@ class my extends control
         $refunds = array();
         if($type == 'all' || $type == 'refund')
         {
+            $deptList = array();
             /* Get refund list for secondReviewer. */
             $secondRefunds = array();
             if(!empty($this->config->refund->secondReviewer) and $this->config->refund->secondReviewer == $account)

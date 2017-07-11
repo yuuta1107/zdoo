@@ -14,9 +14,10 @@
 <?php js::set('type', $type)?>
 <?php js::set('confirmReview', $lang->attend->confirmReview);?>
 
+<?php $appendClass = $type == 'all' ? 'table-noFixedHeader' : 'table-fixedHeader'?>
 <?php if(($type == 'all' && !empty($attends)) || $type == 'attend'):?>
 <div class='panel'>
-  <table class='table table-hover table-striped table-sorter table-data table-fixed text-center'>
+  <table class='table table-hover table-striped table-sorter table-data table-fixed text-center <?php echo $appendClass?>'>
     <thead>
       <tr class='text-center'>
         <?php if($type == 'all'): ?>
@@ -59,7 +60,7 @@
 
 <?php if($type == 'leave'):?>
 <div class='panel'>
-  <table class='table table-data table-hover text-center table-fixed tablesorter' id='leaveTable'>
+  <table class='table table-data table-hover text-center table-fixed tablesorter <?php echo $appendClass?>' id='leaveTable'>
     <thead>
       <tr class='text-center'>
         <?php $vars = "type={$type}&orderBy=%s";?>
@@ -101,7 +102,7 @@
 
 <?php if($type == 'makeup'):?>
 <div class='panel'>
-  <table class='table table-data table-hover text-center table-fixed tablesorter' id='makeupTable'>
+  <table class='table table-data table-hover text-center table-fixed tablesorter <?php echo $appendClass?>' id='makeupTable'>
     <thead>
       <tr class='text-center'>
         <?php $vars = "type={$type}&orderBy=%s";?>
@@ -136,7 +137,7 @@
 
 <?php if($type == 'overtime'):?>
 <div class='panel'>
-  <table class='table table-data table-hover text-center table-fixed tablesorter' id='overtimeTable'>
+  <table class='table table-data table-hover text-center table-fixed tablesorter <?php echo $appendClass?>' id='overtimeTable'>
     <thead>
       <tr class='text-center'>
         <?php $vars = "type={$type}&orderBy=%s";?>
@@ -172,7 +173,7 @@
 
 <?php if($type == 'lieu'):?>
 <div class='panel'>
-  <table class='table table-data table-hover text-center table-fixed tablesorter' id='lieuTable'>
+  <table class='table table-data table-hover text-center table-fixed tablesorter <?php echo $appendClass?>' id='lieuTable'>
     <thead>
       <tr class='text-center'>
         <?php $vars = "type={$type}&orderBy=%s";?>
@@ -206,7 +207,7 @@
 
 <?php if(($type == 'all' && !empty($refunds)) || $type == 'refund'):?>
 <div class='panel'>
-  <table class='table table-hover table-striped table-sorter table-data table-fixed text-center'>
+  <table class='table table-hover table-striped table-sorter table-data table-fixed text-center <?php echo $appendClass?>'>
     <thead>
       <tr class='text-center'>
         <?php if($type == 'all'): ?>
@@ -247,7 +248,7 @@
 
 <?php if($type == 'all'):?>
 <div class='panel'>
-  <table class='table table-data table-hover text-center table-fixed tablesorter' id='leaveTable'>
+  <table class='table table-data table-hover text-center table-fixed tablesorter <?php echo $appendClass?>' id='leaveTable'>
     <thead>
       <tr class='text-center'>
         <th class='w-80px'><?php echo $lang->my->review->module;?></th>

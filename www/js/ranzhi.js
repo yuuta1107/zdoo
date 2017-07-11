@@ -37,12 +37,12 @@ $.extend(
             
             success: function(response)
             {
-                $("body").click(function(){ $.enableForm(formID); });
                 var submitButton = $(formID).find(':input[type=submit], .submit');
 
                 /* The response is not an object, some error occers, bootbox.alert it. */
                 if($.type(response) != 'object')
                 {
+                    $.enableForm(formID);
                     if(response) return bootbox.alert(response);
                     return bootbox.alert('No response.');
                 }
@@ -742,7 +742,7 @@ function selectLang(lang)
  */
 function fixTableHeader()
 {
-    var table = $('.page-content > .panel > .table, #tradeList, #todoList, #attendStat, .calendar-view .table, .table-fixedHeader');
+    var table = $('.page-content > .panel > .table:not(.table-noFixedHeader), #tradeList, #todoList, #attendStat, .calendar-view .table, .table-fixedHeader');
 
     if(!table.length) return;
     if(table.parent('.panel').css('display') == 'none') return;
