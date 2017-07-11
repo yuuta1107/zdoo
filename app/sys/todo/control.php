@@ -316,6 +316,7 @@ class todo extends control
         $this->view->times      = date::buildTimeList($this->config->todo->times->begin, $this->config->todo->times->end, $this->config->todo->times->delta);
         $this->view->users      = $this->loadModel('user')->getPairs();
         $this->view->actions    = $this->loadModel('action')->getList('todo', $todoID);
+        $this->view->moduleMenu = commonModel::createModuleMenu($this->moduleName);
         $this->view->from       = $from;
 
         $this->display();

@@ -10,12 +10,24 @@
  * @link        http://www.ranzhico.com
  */
 ?>
+<?php if(helper::isAjaxRequest()):?>
 <?php include '../../../sys/common/view/header.modal.html.php';?>
+<?php else:?>
+<?php include '../../../sys/my/view/header.html.php';?>
+<?php endif;?>
 <?php include '../../../sys/common/view/kindeditor.html.php';?>
 <?php if(!$todo->private or ($todo->private and $todo->account == $app->user->account)):?>
 <div class='container mw-700px'>
   <div class='row-table'>
     <div class='col-main'>
+      <?php if(!helper::isAjaxRequest()):?>
+      <fieldset>
+        <legend>
+          <?php echo $lang->todo->name;?>
+        </legend>
+        <?php echo "#$todo->id $todo->name";?>
+      </fieldset>
+      <?php endif;?>
       <div class='main'>
         <fieldset>
           <legend>
