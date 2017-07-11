@@ -5,3 +5,6 @@ $config->overtime->require->edit   = 'year,begin,end,type,hours';
 
 $config->overtime->list = new stdclass();
 $config->overtime->list->exportFields = 'id, createdBy, dept, type, begin, end, hours, desc, status, reviewedBy';
+
+$config->overtime->editor = new stdclass();
+$config->overtime->editor->review = array('id' => 'comment', 'tools' => 'simple');

@@ -12,5 +12,8 @@ $config->attend->signInClient  = 'all';
 $config->attend->beginDate = new stdclass();
 $config->attend->beginDate->company = '';
 
+$config->attend->editor = new stdclass();
+$config->attend->editor->review = array('id' => 'comment', 'tools' => 'simple');
+
 $config->attend->list = new stdclass();
 $config->attend->list->exportFields = 'dept, realname, date, dayName, status, signIn, signOut, ip, desc';

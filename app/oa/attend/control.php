@@ -407,7 +407,7 @@ class attend extends control
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
         }
 
-        $this->view->title = $this->lang->attend->review;
+        $this->view->title  = $this->lang->attend->review;
         $this->view->attend = $attend;
         $this->view->users  = $this->loadModel('user')->getPairs();
         $this->display();

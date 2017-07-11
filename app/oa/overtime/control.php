@@ -182,6 +182,7 @@ class overtime extends control
 
         $this->view->title    = $this->lang->overtime->review;
         $this->view->overtime = $overtime;
+        $this->view->users    = $this->loadModel('user')->getPairs();
         $this->display();
     }
 

@@ -134,14 +134,17 @@ class lieu extends control
      */
     public function view($id, $type = '')
     {
+        $lieu = $this->lieu->getById($id);
+
         $overtimePairs = array();
-        $overtimeList  = $this->loadModel('overtime', 'oa')->getList('company', '', '', $this->app->user->account, '', 'pass');
+        $overtimeList  = $this->loadModel('overtime', 'oa')->getByIdList(trim($lieu->overtime, ','));
         foreach($overtimeList as $overtime) 
         {
             $overtimePairs[$overtime->id] = formatTime($overtime->begin . ' ' . $overtime->start, DT_DATETIME2) . ' ~ ' . formatTime($overtime->end . ' ' . $overtime->finish, DT_DATETIME2);
         }
+
         $this->view->title         = $this->lang->lieu->view;
-        $this->view->lieu          = $this->lieu->getById($id);
+        $this->view->lieu          = $lieu;
         $this->view->users         = $this->loadModel('user', 'sys')->getPairs();
         $this->view->overtimePairs = $overtimePairs;
         $this->view->type          = $type;
@@ -322,8 +325,17 @@ class lieu extends control
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
         }
 
-        $this->view->title = $this->lang->lieu->review;
-        $this->view->lieu = $lieu;
+        $overtimePairs = array();
+        $overtimeList  = $this->loadModel('overtime', 'oa')->getByIdList(trim($lieu->overtime, ','));
+        foreach($overtimeList as $overtime) 
+        {
+            $overtimePairs[$overtime->id] = formatTime($overtime->begin . ' ' . $overtime->start, DT_DATETIME2) . ' ~ ' . formatTime($overtime->end . ' ' . $overtime->finish, DT_DATETIME2);
+        }
+
+        $this->view->title         = $this->lang->lieu->review;
+        $this->view->lieu          = $lieu;
+        $this->view->users         = $this->loadModel('user')->getPairs();
+        $this->view->overtimePairs = $overtimePairs;
         $this->display();
     }
 

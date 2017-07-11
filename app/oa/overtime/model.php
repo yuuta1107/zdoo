@@ -24,6 +24,18 @@ class overtimeModel extends model
     }
 
     /**
+     * Get by idList 
+     * 
+     * @param  array|string $idList 
+     * @access public
+     * @return array
+     */
+    public function getByIdList($idList)
+    {
+        return $this->dao->select('*')->from(TABLE_OVERTIME)->where('type')->ne('compensate')->andWhere('id')->in($idList)->fetchAll();
+    }
+
+    /**
      * Get overtime list. 
      * 
      * @param  string $type 

@@ -11,8 +11,7 @@
  */
 ?>
 <?php include '../../../sys/common/view/header.modal.html.php';?>
-<?php include '../../../sys/common/view/datepicker.html.php';?>
-<?php include '../../../sys/common/view/chosen.html.php';?>
+<?php include '../../../sys/common/view/kindeditor.html.php';?>
 <form method='post' id='ajaxForm' action='<?php echo inlink('review', "id={$overtime->id}")?>'>
   <table class='table table-fixed table-bordered'>
 
@@ -28,7 +27,7 @@
     </thead>
 
     <tr class='text-center'>
-      <td><?php echo $overtime->createdBy;?></td>
+      <td><?php echo zget($users, $overtime->createdBy);?></td>
       <td class='text-right'><?php echo $lang->overtime->typeList[$overtime->type];?></td>
       <td><?php echo $overtime->begin . ' ' . $overtime->start;?></td>
       <td><?php echo $overtime->end . ' ' . $overtime->finish;?></td>
@@ -39,8 +38,8 @@
   </table>
   <table class='table table-borderless'>
     <tr class='comment'>
-      <th class='w-50px text-center text-middle'><?php echo $lang->overtime->comment;?></th>
-      <td><?php echo html::textarea("comment", '', "class='form-control rowspan=4'");?></td>
+      <th class='w-50px text-center text-middle'><?php echo $lang->comment;?></th>
+      <td><?php echo html::textarea("comment", '', "class='form-control'");?></td>
       <td class='text-middle'><?php echo html::submitButton();?></td>
     </tr>
   </table>

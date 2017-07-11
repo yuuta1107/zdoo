@@ -11,8 +11,7 @@
  */
 ?>
 <?php include '../../../sys/common/view/header.modal.html.php';?>
-<?php include '../../../sys/common/view/datepicker.html.php';?>
-<?php include '../../../sys/common/view/chosen.html.php';?>
+<?php include '../../../sys/common/view/kindeditor.html.php';?>
 <?php js::set('detail', !empty($refund->detail) ? true : false);?>
 <form method='post' id='ajaxForm' action='<?php echo inlink('review', "refundID={$refund->id}")?>'>
   <table class='table table-fixed table-bordered'>
@@ -70,8 +69,8 @@
       </td>
     </tr>
     <tr class='reason'>
-      <th class='w-70px text-center text-middle'><?php echo $lang->refund->reason;?></th>
-      <td><?php echo html::textarea("reason", '', "class='form-control rowspan=4'");?></td>
+      <th class='w-70px text-center text-middle'><?php echo $lang->comment;?></th>
+      <td><?php echo html::textarea("reason", '', "class='form-control'");?></td>
       <td class='text-middle'><?php echo html::submitButton();?></td>
     </tr>
   </table>

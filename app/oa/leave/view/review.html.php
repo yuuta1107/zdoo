@@ -11,8 +11,7 @@
  */
 ?>
 <?php include '../../../sys/common/view/header.modal.html.php';?>
-<?php include '../../../sys/common/view/datepicker.html.php';?>
-<?php include '../../../sys/common/view/chosen.html.php';?>
+<?php include '../../../sys/common/view/kindeditor.html.php';?>
 <form method='post' id='ajaxForm' action='<?php echo inlink('review', "id={$leave->id}&type={$type}")?>'>
   <table class='table table-fixed table-bordered'>
 
@@ -28,8 +27,8 @@
     </thead>
 
     <tr class='text-center'>
-      <td><?php echo $leave->createdBy;?></td>
-      <td class='text-right'><?php echo $leave->type;?></td>
+      <td><?php echo zget($users, $leave->createdBy);?></td>
+      <td class='text-right'><?php echo zget($lang->leave->typeList, $leave->type);?></td>
       <td><?php echo $leave->begin . ' ' . $leave->start;?></td>
       <td><?php echo $leave->end . ' ' . $leave->finish;?></td>
       <td class='text-ellipsis' title="<?php echo $leave->desc;?>"><?php echo $leave->desc;?></td>
@@ -39,8 +38,8 @@
   </table>
   <table class='table table-borderless'>
     <tr class='comment'>
-      <th class='w-50px text-center text-middle'><?php echo $lang->leave->comment;?></th>
-      <td><?php echo html::textarea("comment", '', "class='form-control rowspan=4'");?></td>
+      <th class='w-50px text-center text-middle'><?php echo $lang->comment;?></th>
+      <td><?php echo html::textarea("comment", '', "class='form-control'");?></td>
       <td class='text-middle'><?php echo html::submitButton();?></td>
     </tr>
   </table>

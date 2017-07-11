@@ -53,8 +53,7 @@
 <?php echo $this->fetch('action', 'history', "objectType=lieu&objectID=$lieu->id");?>
 <div class='page-actions'>
   <?php if($type == 'browseReview' and $lieu->status == 'wait'):?>
-  <?php echo html::a($this->createLink('oa.lieu', 'review', "id={$lieu->id}&status=pass"), $lang->lieu->statusList['pass'], "class='btn reviewPass'");?>
-  <?php echo html::a($this->createLink('oa.lieu', 'review', "id={$lieu->id}&status=reject"), $lang->lieu->statusList['reject'], "class='btn reviewReject'");?>
+  <?php echo html::a($this->createLink('oa.lieu', 'review', "id={$lieu->id}"), $lang->lieu->review, "class='btn loadInModal' data-width='800'");?>
   <?php endif;?>
 
   <?php if($type == 'personal' and ($lieu->status == 'wait' or $lieu->status == 'draft')):?>

@@ -179,9 +179,17 @@ class makeup extends control
             }
         }
         
+        $leavePairs = array('');
+        $leaveList  = $this->loadModel('leave', 'oa')->getByIdList(trim($makeup->leave, ','));
+        foreach($leaveList as $key => $leave)
+        {
+            $leavePairs[$leave->id] = formatTime($leave->begin . ' ' . $leave->start, DT_DATETIME2) . ' ~ ' . formatTime($leave->end . ' ' . $leave->finish, DT_DATETIME2);
+        }
 
-        $this->view->title  = $this->lang->makeup->review;
-        $this->view->makeup = $makeup;
+        $this->view->title      = $this->lang->makeup->review;
+        $this->view->makeup     = $makeup;
+        $this->view->users      = $this->loadModel('user')->getPairs();
+        $this->view->leavePairs = $leavePairs;
         $this->display();
     }
 
@@ -281,14 +289,16 @@ class makeup extends control
      */
     public function view($id, $type = '')
     {
+        $makeup = $this->makeup->getById($id);
+
         $leavePairs = array('');
-        $leaveList  = $this->loadModel('leave', 'oa')->getList('company', '', '', $this->app->user->account, '', 'pass');
+        $leaveList  = $this->loadModel('leave', 'oa')->getByIdList(trim($makeup->leave, ','));
         foreach($leaveList as $key => $leave)
         {
             $leavePairs[$leave->id] = formatTime($leave->begin . ' ' . $leave->start, DT_DATETIME2) . ' ~ ' . formatTime($leave->end . ' ' . $leave->finish, DT_DATETIME2);
         }
         $this->view->title      = $this->lang->makeup->view;
-        $this->view->makeup     = $this->makeup->getById($id);
+        $this->view->makeup     = $makeup;
         $this->view->users      = $this->loadModel('user')->getPairs();
         $this->view->leavePairs = $leavePairs;
         $this->view->type       = $type;

@@ -24,6 +24,18 @@ class leaveModel extends model
     }
 
     /**
+     * Get by idList.
+     * 
+     * @param  array|string $idList 
+     * @access public
+     * @return array
+     */
+    public function getByIdList($idList)
+    {
+        return $this->dao->select('*')->from(TABLE_LEAVE)->where('id')->in($idList)->fetchAll();
+    }
+
+    /**
      * Get leave list. 
      * 
      * @param  string $type 

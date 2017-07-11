@@ -57,8 +57,7 @@
   <?php
   if($type == 'browseReview' and $overtime->status == 'wait')
   {
-      commonModel::printLink('oa.overtime', 'review', "id=$overtime->id&status=pass", $lang->overtime->statusList['pass'], "class='reviewPass btn'");
-      commonModel::printLink('oa.overtime', 'review', "id=$overtime->id&status=reject", $lang->overtime->statusList['reject'], "class='reviewReject btn'");
+      commonModel::printLink('oa.overtime', 'review', "id=$overtime->id", $lang->overtime->review, "class='loadInModal btn' data-width='800'");
   }
 
   if($type == 'personal' and ($overtime->status == 'wait' or $overtime->status == 'draft'))

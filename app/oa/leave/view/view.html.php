@@ -51,8 +51,7 @@
 <div class='page-actions'>
   <?php if($type == 'browseReview' and $leave->status == 'wait'):?>
   <?php echo html::a($this->createLink('oa.leave', 'edit', "id={$leave->id}"), $lang->edit, "class='btn loadInModal'");?>
-  <?php echo html::a($this->createLink('oa.leave', 'review', "id={$leave->id}&status=pass"), $lang->leave->statusList['pass'], "class='btn reviewPass'");?>
-  <?php echo html::a($this->createLink('oa.leave', 'review', "id={$leave->id}&status=reject"), $lang->leave->statusList['reject'], "class='btn reviewReject'");?>
+  <?php echo html::a($this->createLink('oa.leave', 'review', "id={$leave->id}&status=review"), $lang->leave->review, "class='btn loadInModal' data-width='800'");?>
   <?php endif;?>
 
   <?php if($type == 'personal' and ($leave->status == 'wait' or $leave->status == 'draft')):?>
@@ -64,7 +63,7 @@
   <?php endif;?>
 
   <?php if($type == 'browseReview' and $leave->status == 'pass' and $leave->backDate != '0000-00-00 00:00:00' and $leave->backDate != "$leave->end $leave->finish"):?>
-  <?php echo html::a($this->createLink('oa.leave', 'review', "id={$leave->id}&status=back"), $lang->leave->statusList['pass'] . $lang->leave->back, "class='btn reviewPass'");?>
+  <?php echo html::a($this->createLink('oa.leave', 'review', "id={$leave->id}&status=back"), $lang->leave->statusList['pass'] . $lang->leave->back, "class='btn loadInModal' data-width='800'");?>
   <?php endif;?>
 
   <?php if($type == 'personal' and $leave->status == 'pass' and date('Y-m-d H:i:s') < "$leave->end $leave->finish" && $leave->backDate != "$leave->end $leave->finish") echo html::a($this->createLink('oa.leave', 'back', "id={$leave->id}"), $lang->leave->back, "class='btn loadInModal'");?>

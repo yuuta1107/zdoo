@@ -194,6 +194,7 @@ class leave extends control
         $this->view->title = $this->lang->leave->review;
         $this->view->leave = $leave;
         $this->view->type  = $type;
+        $this->view->users = $this->loadModel('user')->getPairs();
         $this->display();
     }
 

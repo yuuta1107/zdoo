@@ -62,8 +62,7 @@
   <?php
   if($type == 'browseReview' and $makeup->status == 'wait')
   {
-      commonModel::printLink('oa.makeup', 'review', "id=$makeup->id&status=pass", $lang->makeup->statusList['pass'], "class='reviewPass btn'");
-      commonModel::printLink('oa.makeup', 'review', "id=$makeup->id&status=reject", $lang->makeup->statusList['reject'], "class='reviewReject btn'");
+      commonModel::printLink('oa.makeup', 'review', "id=$makeup->id", $lang->makeup->review, "class='loadInModal btn' data-width='800'");
   }
 
   if($type == 'personal' and ($makeup->status == 'wait' or $makeup->status == 'draft'))

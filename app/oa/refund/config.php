@@ -7,6 +7,9 @@ $config->refund->require->edit   = 'name,money';
 $config->refund->list = new stdclass();
 $config->refund->list->exportFields = 'id, createdBy, createdDate, dept, name, category, money, status, related, reviewer, refundBy, refundDate';
 
+$config->refund->editor = new stdclass();
+$config->refund->editor->review = array('id' => 'reason', 'tools' => 'simple');
+
 global $lang, $app;
 $app->loadLang('refund', 'oa');
 

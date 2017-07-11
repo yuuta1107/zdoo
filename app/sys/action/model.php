@@ -42,7 +42,7 @@ class actionModel extends model
         $action->actor      = $actor ? $actor : $this->app->user->account;
         $action->action     = strtolower($actionType);
         $action->date       = helper::now();
-        $action->comment    = trim(strip_tags($comment, "<img>")) ? $comment : '';
+        $action->comment    = trim(strip_tags($comment, "<img>")) ? trim(strip_tags($comment, $this->config->allowedTags)) : '';
         $action->extra      = $extra;
         $action->nextDate   = $this->post->nextDate;
 
