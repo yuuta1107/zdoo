@@ -286,7 +286,8 @@ class customer extends control
     public function contact($customerID)
     {
         $this->app->loadLang('resume', 'crm');
-        $this->app->user->canEditContactIdList = ',' . implode(',', $this->loadModel('contact', 'crm')->getContactsSawByMe('edit')) . ',';
+        $this->app->user->canEditContactIdList  = ',' . implode(',', $this->loadModel('contact', 'crm')->getContactsSawByMe('edit')) . ',';
+        $this->app->user->canEditCustomerIdList = ',' . implode(',', $this->customer->getCustomersSawByMe('edit', (array)$customerID)) . ',';
 
         $this->view->title      = $this->lang->customer->contact;
         $this->view->modalWidth = 'lg';
