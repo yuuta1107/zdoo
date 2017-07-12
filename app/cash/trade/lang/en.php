@@ -79,10 +79,10 @@ $lang->trade->quarter       = 'Quarter';
 $lang->trade->export2Excel  = 'Export Excel';
 $lang->trade->compare       = 'Annual Compare';
 $lang->trade->setReportUnit = 'Report Unit';
-$lang->trade->cashSetting   = 'Cash Setting';
+$lang->trade->settings      = 'Trade Setting';
 
-$lang->trade->cashSettingList['trader']   = 'select merchants';
-$lang->trade->cashSettingList['category'] = 'select final subjects';
+$lang->trade->settingList['trader']   = 'select merchants';
+$lang->trade->settingList['category'] = 'select final subjects';
 
 $lang->trade->report = new stdclass();
 $lang->trade->report->common      = 'Report'; 

@@ -34,7 +34,6 @@ $lang->makeup->reviewedDate = '审核时间';
 $lang->makeup->date         = '日期';
 $lang->makeup->time         = '时间';
 $lang->makeup->rejectReason = '拒绝理由';
-$lang->makeup->comment      = '说明';
 
 $lang->makeup->typeList['compensate'] = '补班';
 

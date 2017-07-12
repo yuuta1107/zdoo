@@ -31,7 +31,6 @@ $lang->lieu->reviewedBy   = '審核者';
 $lang->lieu->reviewedDate = '審核時間';
 $lang->lieu->date         = '日期';
 $lang->lieu->time         = '時間';
-$lang->lieu->comment      = '說明';
 
 $lang->lieu->statusList['draft']  = '草稿';
 $lang->lieu->statusList['wait']   = '等待審核';

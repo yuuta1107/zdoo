@@ -35,7 +35,6 @@ $lang->leave->reviewedBy   = '审核者';
 $lang->leave->reviewedDate = '审核时间';
 $lang->leave->date         = '日期';
 $lang->leave->time         = '时间';
-$lang->leave->comment      = '说明';
 
 $lang->leave->typeList['affairs']   = '事假';
 $lang->leave->typeList['sick']      = '病假';

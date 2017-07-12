@@ -27,7 +27,7 @@ t' data-animation='false'>
   <?php foreach($annualChartDatas as $currency => $annualChartData):?>
   <?php foreach($annualChartData as $month => $monthChartData):?>
   <tr>
-    <td class='w-50px'><?php echo $month . ' ' . $lang->trade->month;?></td>
+    <td class='w-50px text-center'><?php echo $month;?></td>
     <td class='w-100px text-center'><?php echo $currencySign[$currency] . $monthChartData['in'];?></td>
     <td class='w-100px text-center'><?php echo $currencySign[$currency] . $monthChartData['out'];?></td>
     <td class='w-100px text-center'><?php echo  $currencySign[$currency] . $monthChartData['profit'];?></td>

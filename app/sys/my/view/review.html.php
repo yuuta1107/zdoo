@@ -82,8 +82,8 @@
       <td><?php echo zget($users, $leave->createdBy);?></td>
       <td><?php echo zget($deptList, $leave->dept);?></td>
       <td><?php echo zget($this->lang->leave->typeList, $leave->type);?></td>
-      <td><?php echo $leave->begin . ' ' . substr($leave->start,0,5);?></td>
-      <td><?php echo $leave->end . ' ' . substr($leave->finish,0,5);?></td>
+      <td><?php echo $leave->begin . ' ' . substr($leave->start, 0, 5);?></td>
+      <td><?php echo $leave->end . ' ' . substr($leave->finish, 0, 5);?></td>
       <td><?php echo formatTime($leave->backDate);?></td>
       <td title='<?php echo $leave->desc?>'><?php echo $leave->desc;?></td>
       <td class='leave-<?php echo $leave->status?>'><?php echo zget($this->lang->leave->statusList, $leave->status);?></td>
@@ -122,8 +122,8 @@
       <td><?php echo zget($users, $makeup->createdBy);?></td>
       <td><?php echo zget($deptList, $makeup->dept);?></td>
       <td><?php echo zget($this->lang->makeup->typeList, $makeup->type);?></td>
-      <td><?php echo $makeup->begin . ' ' . substr($makeup->start,0,5);?></td>
-      <td><?php echo $makeup->end . ' ' . substr($makeup->finish,0,5);?></td>
+      <td><?php echo $makeup->begin . ' ' . substr($makeup->start, 0, 5);?></td>
+      <td><?php echo $makeup->end . ' ' . substr($makeup->finish, 0, 5);?></td>
       <td title='<?php echo $makeup->desc?>'><?php echo $makeup->desc;?></td>
       <td>
         <?php echo html::a($this->createLink('oa.makeup', 'view', "id={$makeup->id}"), $lang->view, "data-toggle='modal'");?>
@@ -158,8 +158,8 @@
       <td><?php echo zget($users, $overtime->createdBy);?></td>
       <td><?php echo zget($deptList, $overtime->dept);?></td>
       <td><?php echo zget($this->lang->overtime->typeList, $overtime->type);?></td>
-      <td><?php echo $overtime->begin . ' ' . substr($overtime->start,0,5);?></td>
-      <td><?php echo $overtime->end . ' ' . substr($overtime->finish,0,5);?></td>
+      <td><?php echo $overtime->begin . ' ' . substr($overtime->start, 0, 5);?></td>
+      <td><?php echo $overtime->end . ' ' . substr($overtime->finish, 0, 5);?></td>
       <td title='<?php echo $overtime->desc?>'><?php echo $overtime->desc;?></td>
       <td class='overtime-<?php echo $overtime->status?>'><?php echo zget($this->lang->overtime->statusList, $overtime->status);?></td>
       <td>
@@ -192,8 +192,8 @@
       <td><?php echo $lieu->id;?></td>
       <td><?php echo zget($users, $lieu->createdBy);?></td>
       <td><?php echo zget($deptList, $lieu->dept);?></td>
-      <td><?php echo $lieu->begin . ' ' . substr($lieu->start,0,5);?></td>
-      <td><?php echo $lieu->end . ' ' . substr($lieu->finish,0,5);?></td>
+      <td><?php echo $lieu->begin . ' ' . substr($lieu->start, 0, 5);?></td>
+      <td><?php echo $lieu->end . ' ' . substr($lieu->finish, 0, 5);?></td>
       <td title='<?php echo $lieu->desc?>'><?php echo $lieu->desc;?></td>
       <td class='lieu-<?php echo $lieu->status?>'><?php echo zget($this->lang->lieu->statusList, $lieu->status);?></td>
       <td>
@@ -268,8 +268,8 @@
       <td><?php echo zget($users, $leave->createdBy);?></td>
       <td><?php echo zget($deptList, $leave->dept);?></td>
       <td><?php echo zget($this->lang->leave->typeList, $leave->type);?></td>
-      <td><?php echo $leave->begin . ' ' . substr($leave->start,0,5);?></td>
-      <td><?php echo $leave->end . ' ' . substr($leave->finish,0,5);?></td>
+      <td><?php echo $leave->begin . ' ' . substr($leave->start, 0, 5);?></td>
+      <td><?php echo $leave->end . ' ' . substr($leave->finish, 0, 5);?></td>
       <td title='<?php echo $leave->desc?>'>
       <?php echo $leave->desc;?>
       </td>
@@ -290,8 +290,8 @@
       <td><?php echo zget($users, $overtime->createdBy);?></td>
       <td><?php echo zget($deptList, $overtime->dept);?></td>
       <td><?php echo zget($this->lang->overtime->typeList, $overtime->type);?></td>
-      <td><?php echo $overtime->begin . ' ' . substr($overtime->start,0,5);?></td>
-      <td><?php echo $overtime->end . ' ' . substr($overtime->finish,0,5);?></td>
+      <td><?php echo $overtime->begin . ' ' . substr($overtime->start, 0, 5);?></td>
+      <td><?php echo $overtime->end . ' ' . substr($overtime->finish, 0, 5);?></td>
       <td title='<?php echo $overtime->desc?>'><?php echo $overtime->desc;?></td>
       <td class='overtime-<?php echo $overtime->status?>'><?php echo zget($this->lang->overtime->statusList, $overtime->status);?></td>
       <td>
@@ -306,8 +306,8 @@
       <td><?php echo zget($users, $makeup->createdBy);?></td>
       <td><?php echo zget($deptList, $makeup->dept);?></td>
       <td><?php echo zget($this->lang->makeup->typeList, $makeup->type);?></td>
-      <td><?php echo $makeup->begin . ' ' . substr($makeup->start,0,5);?></td>
-      <td><?php echo $makeup->end . ' ' . substr($makeup->finish,0,5);?></td>
+      <td><?php echo $makeup->begin . ' ' . substr($makeup->start, 0, 5);?></td>
+      <td><?php echo $makeup->end . ' ' . substr($makeup->finish, 0, 5);?></td>
       <td title='<?php echo $makeup->desc?>'><?php echo $makeup->desc;?></td>
       <td class='leave-<?php echo $leave->status?>'><?php echo zget($this->lang->leave->statusList, $leave->status);?></td>
       <td>
@@ -322,8 +322,8 @@
       <td><?php echo zget($users, $lieu->createdBy);?></td>
       <td><?php echo zget($deptList, $lieu->dept);?></td>
       <td></td>
-      <td><?php echo $lieu->begin . ' ' . substr($lieu->start,0,5);?></td>
-      <td><?php echo $lieu->end . ' ' . substr($lieu->finish,0,5);?></td>
+      <td><?php echo $lieu->begin . ' ' . substr($lieu->start, 0, 5);?></td>
+      <td><?php echo $lieu->end . ' ' . substr($lieu->finish, 0, 5);?></td>
       <td title='<?php echo $lieu->desc?>'><?php echo $lieu->desc;?></td>
       <td class='lieu-<?php echo $lieu->status?>'><?php echo zget($this->lang->lieu->statusList, $lieu->status);?></td>
       <td>

@@ -79,10 +79,10 @@ $lang->trade->quarter       = '季度';
 $lang->trade->export2Excel  = '導出Excel';
 $lang->trade->compare       = '年度對比表';
 $lang->trade->setReportUnit = '設置報表單位';
-$lang->trade->cashSetting   = '記賬設置';
+$lang->trade->settings      = '記賬設置';
 
-$lang->trade->cashSettingList['trader']   = '必須選擇商戶';
-$lang->trade->cashSettingList['category'] = '必須選擇末級科目';
+$lang->trade->settingList['trader']   = '必須選擇商戶';
+$lang->trade->settingList['category'] = '必須選擇末級科目';
 
 $lang->trade->report = new stdclass();
 $lang->trade->report->common      = '報表'; 

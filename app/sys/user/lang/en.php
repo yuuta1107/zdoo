@@ -93,7 +93,14 @@ $lang->user->lockedForEver = "User has been forbidden permanently.";
 $lang->user->forbidSuccess = 'Forbidden.';
 $lang->user->actionFail    = 'Failed.';
 $lang->user->uploadSuccess = 'Successfully uploaded.';
-$lang->user->actionError   = 'Error, user in the review process.';
+$lang->user->actionError   = 'Error, user in the %s  review process.';
+
+$lang->user->reviewProcess['attend']     = 'Attend';
+$lang->user->reviewProcess['leave']      = 'Leave';
+$lang->user->reviewProcess['time']       = 'Overtime';
+$lang->user->reviewProcess['compensate'] = 'Makeup';
+$lang->user->reviewProcess['lieu']       = 'Lieu';
+$lang->user->reviewProcess['refund']     = 'Refund';
 
 $lang->user->forbidUser = 'Manage users';
 $lang->user->operate    = 'Operate';

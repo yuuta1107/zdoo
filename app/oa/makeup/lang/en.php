@@ -34,7 +34,6 @@ $lang->makeup->reviewedDate = 'Reviewed Date';
 $lang->makeup->date         = 'Date';
 $lang->makeup->time         = 'Time';
 $lang->makeup->rejectReason = 'Reject Reason';
-$lang->makeup->comment      = 'Comment';
 
 $lang->makeup->typeList['compensate'] = 'Compensated Leave';
 

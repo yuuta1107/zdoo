@@ -287,7 +287,11 @@ class customer extends control
     {
         $this->app->loadLang('resume', 'crm');
         $this->app->user->canEditContactIdList  = ',' . implode(',', $this->loadModel('contact', 'crm')->getContactsSawByMe('edit')) . ',';
-        $this->app->user->canEditCustomerIdList = ',' . implode(',', $this->customer->getCustomersSawByMe('edit', (array)$customerID)) . ',';
+
+        if(!$this->app->user->canEditCustomerIdList)
+        {
+            $this->app->user->canEditCustomerIdList = ',' . implode(',', $this->customer->getCustomersSawByMe('edit', (array)$customerID)) . ',';
+        }
 
         $this->view->title      = $this->lang->customer->contact;
         $this->view->modalWidth = 'lg';
