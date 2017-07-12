@@ -75,12 +75,52 @@ class installModel extends model
      * Check the temp root.
      * 
      * @access public
-     * @return bool
+     * @return array
      */
     public function checkTmpRoot()
     {
         $tmpRoot = $this->app->getTmpRoot();
-        return $result = (is_dir($tmpRoot) and is_writable($tmpRoot)) ? 'ok' : 'fail';
+
+        $pathArray = $this->getDir($tmpRoot);
+        if(is_dir($tmpRoot)) $pathArray[] = $tmpRoot;
+
+        $pathResult = array();
+        foreach($pathArray as $path)
+        {
+            if(!is_writable($path)) $pathResult[] = $path;
+        }
+
+        return $pathResult;
+    }
+
+    /**
+     * Get the temp subdirectory. 
+     * 
+     * @param  string $dir 
+     * @access public
+     * @return array
+     */
+    public function getDir($dir)
+    {
+        static $arr = array();
+        if(is_dir($dir))
+        {
+            $hadle = @opendir($dir);
+            while($file = readdir($hadle))
+            {
+                if(!in_array($file, array('.', '..')))
+                {
+                    $dirr = $dir . $file . "/";
+                    if(is_dir($dirr))
+                    {
+                        array_push($arr, $dirr);
+                        $this->getDir($dirr);
+                    }
+                }
+            }
+        }
+
+        return $arr;
     }
 
     /**
@@ -176,8 +216,10 @@ class installModel extends model
         {
             if(!$this->createDB($version))
             {
+                $dbhError = $this->dbh->errorInfo();
+
                 $return->result = 'fail';
-                $return->error  = $this->lang->install->errorCreateDB;
+                $return->error  = $this->lang->install->errorCreateDB . $dbhError[2];
                 return $return;
             }
         }
@@ -235,7 +277,7 @@ class installModel extends model
         }
         catch (PDOException $exception)
         {
-             return $exception->getMessage();
+            return $exception->getMessage();
         }
     }
 
@@ -275,7 +317,14 @@ class installModel extends model
     {
         $sql = "CREATE DATABASE `{$this->config->db->name}`";
         if($version > 4.1) $sql .= " DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci";
-        return $this->dbh->query($sql);
+        try 
+        {
+            return $this->dbh->query($sql);
+        }
+        catch(PDOException $exception)
+        {
+            return false;
+        }
     }
 
     /**

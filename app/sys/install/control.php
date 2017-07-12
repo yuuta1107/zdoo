@@ -63,13 +63,23 @@ class install extends control
         $this->view->phpResult         = $this->install->checkPHP();
         $this->view->pdoResult         = $this->install->checkPDO();
         $this->view->pdoMySQLResult    = $this->install->checkPDOMySQL();
-        $this->view->tmpRootInfo       = $this->install->getTmpRoot();
-        $this->view->tmpRootResult     = $this->install->checkTmpRoot();
         $this->view->dataRootInfo      = $this->install->getDataRoot();
         $this->view->dataRootResult    = $this->install->checkDataRoot();
         $this->view->iniInfo           = $this->install->getIniInfo();
         $this->view->sessionRoot       = session_save_path();
         $this->view->sessionRootResult = $this->install->checkSessionRoot();
+        $this->view->tmpRootInfo       = $this->install->getTmpRoot();
+        $this->view->tmpFailPaths      = $this->install->checkTmpRoot();
+
+        $this->view->tmpRootResult  = 'fail';
+        $this->view->tmpRootInfo['writable'] = false;
+
+        if(!count($this->view->tmpFailPaths))
+        {
+            $this->view->tmpRootResult  = 'ok';
+            $this->view->tmpRootInfo['writable'] = true;
+        }
+
         $this->display();
     }
 
