@@ -167,7 +167,7 @@ function setDateField(query, fieldNO, type)
     {
         var $e = $(e.target);
         var ePos = $e.offset();
-        $period.css({'left': ePos.left + 192, 'top': ePos.top + 29, 'min-height': $('.datetimepicker').outerHeight()}).show().data('target', $e.attr('id')).data('fieldNO', fieldNO).find('li.active').removeClass('active');
+        $period.css({'left': ePos.left + 193, 'top': ePos.top + 29, 'min-height': $('.datetimepicker').outerHeight()}).show().data('target', $e.attr('id')).data('fieldNO', fieldNO).find('li.active').removeClass('active');
         if($e.attr('placeholder'))
         {
             $period.find("li > a[href='" + $e.attr('placeholder').replace('$', '#') + "']").closest('li').addClass('active');
