@@ -364,7 +364,7 @@ class lieu extends control
         if($action->action == 'reviewed')
         {
             $toList = $lieu->createdBy;
-            $subject = "{$this->lang->lieu->common}{$this->lang->lieu->statusList[$lieu->status]}#{$lieu->id} " . zget($users, $lieu->createdBy) . " {$lieu->begin}~{$lieu->end}";
+            $subject = "{$this->lang->lieu->common}{$this->lang->lieu->statusList[$lieu->status]}#{$lieu->id} " . zget($users, $lieu->createdBy);
         }
         if($action->action == 'created' or $action->action == 'revoked' or $action->action == 'commited')
         {
@@ -379,7 +379,7 @@ class lieu extends control
                $toList = isset($dept->moderators) ? trim($dept->moderators, ',') : '';
             }
 
-            $subject = "{$this->lang->lieu->common}#{$lieu->id} " . zget($users, $lieu->createdBy) . " {$lieu->begin}~{$lieu->end}";
+            $subject = "{$this->lang->lieu->common}#{$lieu->id} " . zget($users, $lieu->createdBy);
         }
 
         /* send notice if user is online and return failed accounts. */

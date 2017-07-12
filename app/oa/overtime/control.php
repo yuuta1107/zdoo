@@ -354,7 +354,7 @@ class overtime extends control
         if($action->action == 'reviewed')
         {
             $toList = $overtime->createdBy;
-            $subject = "{$this->lang->overtime->common}{$this->lang->overtime->statusList[$overtime->status]}#{$overtime->id} " . zget($users, $overtime->createdBy) . " {$overtime->begin}~{$overtime->end}";
+            $subject = "{$this->lang->overtime->common}{$this->lang->overtime->statusList[$overtime->status]}#{$overtime->id} " . zget($users, $overtime->createdBy);
         }
         if($action->action == 'created' or $action->action == 'revoked' or $action->action == 'commited')
         {
@@ -369,7 +369,7 @@ class overtime extends control
                if($dept) $toList = trim($dept->moderators, ',');
             }
 
-            $subject = "{$this->lang->overtime->common}#{$overtime->id} " . zget($users, $overtime->createdBy) . " {$overtime->begin}~{$overtime->end}";
+            $subject = "{$this->lang->overtime->common}#{$overtime->id} " . zget($users, $overtime->createdBy);
         }
 
         /* send notice if user is online and return failed accounts. */

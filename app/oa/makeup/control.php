@@ -386,7 +386,7 @@ class makeup extends control
         if($action->action == 'reviewed')
         {
             $toList  = $makeup->createdBy;
-            $subject = "{$this->lang->makeup->common}{$this->lang->makeup->statusList[$makeup->status]}#{$makeup->id} " . zget($users, $makeup->createdBy) . " {$makeup->begin}~{$makeup->end}";
+            $subject = "{$this->lang->makeup->common}{$this->lang->makeup->statusList[$makeup->status]}#{$makeup->id} " . zget($users, $makeup->createdBy);
         }
         if($action->action == 'created' or $action->action == 'revoked' or $action->action == 'commited')
         {
@@ -401,7 +401,7 @@ class makeup extends control
                if($dept) $toList = trim($dept->moderators, ',');
             }
 
-            $subject = "{$this->lang->makeup->common}#{$makeup->id} " . zget($users, $makeup->createdBy) . " {$makeup->begin}~{$makeup->end}";
+            $subject = "{$this->lang->makeup->common}#{$makeup->id} " . zget($users, $makeup->createdBy);
         }
 
         /* send notice if user is online and return failed accounts. */

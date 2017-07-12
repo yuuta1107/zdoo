@@ -352,7 +352,7 @@ class leave extends control
         if($action->action == 'reviewed')
         {
             $toList = $leave->createdBy;
-            $subject = "{$this->lang->leave->common}{$this->lang->leave->statusList[$leave->status]}#{$leave->id} " . zget($users, $leave->createdBy) . " {$leave->begin}~{$leave->end}";
+            $subject = "{$this->lang->leave->common}{$this->lang->leave->statusList[$leave->status]}#{$leave->id} " . zget($users, $leave->createdBy);
         }
         elseif(strpos(',created,revoked,commited,reported,', ",$action->action,") !== false)
         {
@@ -367,7 +367,7 @@ class leave extends control
                $toList = isset($dept->moderators) ? trim($dept->moderators, ',') : '';
             }
 
-            $subject = "{$this->lang->leave->common}#{$leave->id} " . zget($users, $leave->createdBy) . " {$leave->begin}~{$leave->end}";
+            $subject = "{$this->lang->leave->common}#{$leave->id} " . zget($users, $leave->createdBy);
         }
 
         /* send notice if user is online and return failed accounts. */
