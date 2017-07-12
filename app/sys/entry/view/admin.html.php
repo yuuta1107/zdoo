@@ -26,7 +26,7 @@ include '../../common/view/header.html.php';
       <div class='col-table thead w-80px'><?php echo $lang->entry->code;?></div>
       <div class='col-table thead w-240px'><?php echo $lang->entry->key;?></div>
       <div class='col-table thead'><?php echo $lang->entry->ip;?></div>
-      <div class='col-table thead w-260px'><?php echo $lang->actions;?></div>
+      <div class='col-table thead w-220px'><?php echo $lang->actions;?></div>
     </div>
     <ul id='entryList'>
       <?php foreach($entries as $entry):?>
