@@ -34,6 +34,7 @@ $lang->overtime->reviewedDate = '審核時間';
 $lang->overtime->date         = '日期';
 $lang->overtime->time         = '時間';
 $lang->overtime->rejectReason = '拒絶理由';
+$lang->overtime->comment      = '說明';
 
 $lang->overtime->typeList['time']    = '工作日加班';
 $lang->overtime->typeList['rest']    = '休息日加班';
@@ -54,3 +55,6 @@ $lang->overtime->confirmReview['reject'] = '您確定要執行拒絶操作嗎？
 
 $lang->overtime->hoursTip = '小時';
 $lang->overtime->baseInfo = '基本信息';
+
+$lang->overtime->reviewStatusList['pass']   = '通過';
+$lang->overtime->reviewStatusList['reject'] = '拒絶';

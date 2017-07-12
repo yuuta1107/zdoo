@@ -14,6 +14,7 @@ $lang->app->name = 'OA';
 
 $lang->menu->oa = new stdclass();
 $lang->menu->oa->dashboard = '首頁|dashboard|index|';
+$lang->menu->oa->my        = '審批|my|review|';
 $lang->menu->oa->announce  = '公告|announce|browse|';
 $lang->menu->oa->attend    = '考勤|attend|personal|';
 $lang->menu->oa->leave     = '請假|leave|personal|';
@@ -25,6 +26,8 @@ $lang->menu->oa->egress    = '外出|egress|personal|';
 $lang->menu->oa->refund    = '報銷|refund|personal|';
 $lang->menu->oa->holiday   = '節假日|holiday|browse|';
 $lang->menu->oa->setting   = '設置|setting|modules|app=oa';
+
+$lang->menu->dashboard = $lang->menu->oa;
 
 $lang->dashboard = new stdclass();
 

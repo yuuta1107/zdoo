@@ -35,6 +35,7 @@ $lang->leave->reviewedBy   = '審核者';
 $lang->leave->reviewedDate = '審核時間';
 $lang->leave->date         = '日期';
 $lang->leave->time         = '時間';
+$lang->leave->comment      = '說明';
 
 $lang->leave->typeList['affairs']   = '事假';
 $lang->leave->typeList['sick']      = '病假';
@@ -63,3 +64,6 @@ $lang->leave->confirmReview['pass']   = '您確定要執行通過操作嗎？';
 $lang->leave->confirmReview['reject'] = '您確定要執行拒絶操作嗎？';
 
 $lang->leave->hoursTip = '小時';
+
+$lang->leave->reviewStatusList['pass']   = '通過';
+$lang->leave->reviewStatusList['reject'] = '拒絶';

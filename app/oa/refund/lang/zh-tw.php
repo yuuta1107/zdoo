@@ -26,6 +26,7 @@ $lang->refund->id               = '編號';
 $lang->refund->name             = '名稱';
 $lang->refund->category         = '科目';
 $lang->refund->date             = '日期';
+$lang->refund->dept             = '部門';
 $lang->refund->money            = '金額';
 $lang->refund->reviewMoney      = '報銷額度';
 $lang->refund->currency         = '貨幣';

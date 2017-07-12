@@ -93,6 +93,7 @@ $lang->user->lockedForEver = "成員已經被永久禁用。";
 $lang->user->forbidSuccess = '禁用成功';
 $lang->user->actionFail    = '操作失敗';
 $lang->user->uploadSuccess = '上傳成功';
+$lang->user->actionError   = '操作失敗，用戶在審批流程中。';
 
 $lang->user->forbidUser = '禁用管理';
 $lang->user->operate    = '操作';

@@ -34,6 +34,7 @@ $lang->makeup->reviewedDate = '審核時間';
 $lang->makeup->date         = '日期';
 $lang->makeup->time         = '時間';
 $lang->makeup->rejectReason = '拒絶理由';
+$lang->makeup->comment      = '說明';
 
 $lang->makeup->typeList['compensate'] = '補班';
 
@@ -52,3 +53,6 @@ $lang->makeup->confirmReview['reject'] = '您確定要執行拒絶操作嗎？';
 
 $lang->makeup->hoursTip = '小時';
 $lang->makeup->baseInfo = '基本信息';
+
+$lang->makeup->reviewStatusList['pass']   = '通過';
+$lang->makeup->reviewStatusList['reject'] = '拒絶';

@@ -55,4 +55,5 @@ $lang->setting->menu->expend    = '支出科目|tree|browse|type=out|';
 $lang->setting->menu->currency  = '貨幣類型|setting|lang|module=common&field=currencyList';
 $lang->setting->menu->schema    = '導入模板設置|schema|browse|';
 $lang->setting->menu->tradePriv = '支出瀏覽權限設置|group|managetradepriv|';
+$lang->setting->menu->tradeSet  = '記賬設置|trade|tradeSetting|';
 include(dirname(__FILE__) . '/menuOrder.php');

@@ -321,6 +321,7 @@ $lang->resource->trade->report        = 'report';
 $lang->resource->trade->compare       = 'compare';
 $lang->resource->trade->export2Excel  = 'export2Excel';
 $lang->resource->trade->setReportUnit = 'setReportUnit';
+$lang->resource->trade->tradeSetting  = 'cashSetting';
 
 $lang->trade->methodOrder[10] = 'browse';
 $lang->trade->methodOrder[11] = 'view';
@@ -340,6 +341,7 @@ $lang->trade->methodOrder[60] = 'report';
 $lang->trade->methodOrder[61] = 'compare';
 $lang->trade->methodOrder[65] = 'export2Excel';
 $lang->trade->methodOrder[70] = 'setReportUnit';
+$lang->trade->methodOrder[75] = 'tradeSetting';
 
 /* Depositor. */
 $lang->resource->depositor = new stdclass();
