@@ -41,6 +41,7 @@
     <?php foreach($refund->detail as $detail):?>
     <tr class='text-center'>
       <td><?php echo $detail->date;?></td>
+      <td><?php echo zget($deptList, $refund->dept);?></td>
       <td class='text-right'><?php echo zget($currencySign, $detail->currency) . "<span class='detailMoney'>" . $detail->money . "</span>";?></td>
       <td><?php echo $lang->refund->statusList[$detail->status];?></td>
       <td class='text-ellipsis' title="<?php echo zget($categories, $detail->category, ' ');?>"><?php echo zget($categories, $detail->category, ' ');?></td>

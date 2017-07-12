@@ -321,7 +321,7 @@ $lang->resource->trade->report        = 'report';
 $lang->resource->trade->compare       = 'compare';
 $lang->resource->trade->export2Excel  = 'export2Excel';
 $lang->resource->trade->setReportUnit = 'setReportUnit';
-$lang->resource->trade->tradeSetting  = 'cashSetting';
+$lang->resource->trade->tradeSetting  = 'settings';
 
 $lang->trade->methodOrder[10] = 'browse';
 $lang->trade->methodOrder[11] = 'view';

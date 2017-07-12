@@ -93,7 +93,14 @@ $lang->user->lockedForEver = "成員已經被永久禁用。";
 $lang->user->forbidSuccess = '禁用成功';
 $lang->user->actionFail    = '操作失敗';
 $lang->user->uploadSuccess = '上傳成功';
-$lang->user->actionError   = '操作失敗，用戶在審批流程中。';
+$lang->user->actionError   = '操作失敗，用戶在 %s 審批流程中。';
+
+$lang->user->reviewProcess['attend']     = '考勤';
+$lang->user->reviewProcess['leave']      = '請假';
+$lang->user->reviewProcess['time']       = '加班';
+$lang->user->reviewProcess['compensate'] = '補休';
+$lang->user->reviewProcess['lieu']       = '調休';
+$lang->user->reviewProcess['refund']     = '報銷';
 
 $lang->user->forbidUser = '禁用管理';
 $lang->user->operate    = '操作';

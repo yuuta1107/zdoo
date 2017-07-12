@@ -59,7 +59,7 @@ $lang->my->review->menuOrder[15] = 'leave';
 $lang->my->review->menuOrder[20] = 'overtime';
 $lang->my->review->menuOrder[25] = 'makeup';
 $lang->my->review->menuOrder[30] = 'lieu';
-$lang->my->review->menuOrder[45] = 'refund';
+$lang->my->review->menuOrder[35] = 'refund';
 
 $lang->my->order->menuOrder[5]  = 'past';
 $lang->my->order->menuOrder[10] = 'today';

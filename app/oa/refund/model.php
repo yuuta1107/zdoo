@@ -321,8 +321,7 @@ class refundModel extends model
         $newCategories = array();
         foreach($categories as $key => $category)
         {
-            if(isset($refundCategories[$key]))
-                $newCategories[$key] = $categories[$key];
+            if(isset($refundCategories[$key])) $newCategories[$key] = $categories[$key];
         }
 
         return $newCategories;

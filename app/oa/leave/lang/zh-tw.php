@@ -35,7 +35,6 @@ $lang->leave->reviewedBy   = '審核者';
 $lang->leave->reviewedDate = '審核時間';
 $lang->leave->date         = '日期';
 $lang->leave->time         = '時間';
-$lang->leave->comment      = '說明';
 
 $lang->leave->typeList['affairs']   = '事假';
 $lang->leave->typeList['sick']      = '病假';
