@@ -135,6 +135,7 @@ class upgradeModel extends model
             case '4_2_1': $this->execSQL($this->getUpgradeFile('4.2.1'));
             case '4_2_2':
             case '4_2_3':
+            case '4_3_beta': $this->execSQL($this->getUpgradeFile('4.3.beta'));
             default: if(!$this->isError()) $this->loadModel('setting')->updateVersion($this->config->version);
         }
 
@@ -181,6 +182,7 @@ class upgradeModel extends model
             case '4_2_1'   : $confirmContent .= file_get_contents($this->getUpgradeFile('4.2.1'));
             case '4_2_2'   :
             case '4_2_3'   :
+            case '4_3_beta': $confirmContent .= file_get_contents($this->getUpgradeFile('4.3.beta'));
         }
         return $confirmContent;
     }

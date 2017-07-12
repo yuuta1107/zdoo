@@ -310,13 +310,14 @@ class todo extends control
             $this->lang->todo->typeList["{$code}_bug"]  = $name . $this->lang->todo->bug;
         }
 
+        if(!helper::isAjaxRequest())$this->view->moduleMenu = commonModel::createModuleMenu($this->moduleName);
+
         $this->view->title      = "{$this->lang->todo->common} #$todo->id $todo->name";
         $this->view->modalWidth = '80%';
         $this->view->todo       = $todo;
         $this->view->times      = date::buildTimeList($this->config->todo->times->begin, $this->config->todo->times->end, $this->config->todo->times->delta);
         $this->view->users      = $this->loadModel('user')->getPairs();
         $this->view->actions    = $this->loadModel('action')->getList('todo', $todoID);
-        $this->view->moduleMenu = commonModel::createModuleMenu($this->moduleName);
         $this->view->from       = $from;
 
         $this->display();

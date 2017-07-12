@@ -14,6 +14,7 @@ $lang->app->name = 'OA';
 
 $lang->menu->oa = new stdclass();
 $lang->menu->oa->dashboard = 'Home|dashboard|index|';
+$lang->menu->oa->my        = 'Review|my|review|';
 $lang->menu->oa->announce  = 'Announce|announce|index|';
 $lang->menu->oa->attend    = 'Attendance|attend|personal|';
 $lang->menu->oa->leave     = 'Leave|leave|personal|';
@@ -25,6 +26,8 @@ $lang->menu->oa->egress    = 'Egress|egress|personal|';
 $lang->menu->oa->refund    = 'Reimburse|refund|personal|';
 $lang->menu->oa->holiday   = 'Holiday|holiday|browse|';
 $lang->menu->oa->setting   = 'Settings|setting|module|app=oa';
+
+$lang->menu->dashboard = $lang->menu->oa;
 
 $lang->dashboard = new stdclass();
 

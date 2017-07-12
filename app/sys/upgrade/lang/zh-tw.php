@@ -81,6 +81,7 @@ $lang->upgrade->fromVersions['4_2']      = '4.2';
 $lang->upgrade->fromVersions['4_2_1']    = '4.2.1';
 $lang->upgrade->fromVersions['4_2_2']    = '4.2.2';
 $lang->upgrade->fromVersions['4_2_3']    = '4.2.3';
+$lang->upgrade->fromVersions['4_3_beta'] = '4.3.beta';
 
 $lang->upgrade->deleteTips   = '需要刪除部分檔案。linux下面命令為：<br />';
 $lang->upgrade->deleteDir    = '<code>rm -fr %s</code>';

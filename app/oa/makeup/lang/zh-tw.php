@@ -52,3 +52,6 @@ $lang->makeup->confirmReview['reject'] = '您確定要執行拒絶操作嗎？';
 
 $lang->makeup->hoursTip = '小時';
 $lang->makeup->baseInfo = '基本信息';
+
+$lang->makeup->reviewStatusList['pass']   = '通過';
+$lang->makeup->reviewStatusList['reject'] = '拒絶';

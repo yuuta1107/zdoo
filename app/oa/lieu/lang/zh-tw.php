@@ -46,3 +46,6 @@ $lang->lieu->sameMonth = '不支持跨月份調休';
 $lang->lieu->wrongEnd  = '結束時間應該大於開始時間';
 
 $lang->lieu->hoursTip = '小時';
+
+$lang->lieu->reviewStatusList['pass']   = '通過';
+$lang->lieu->reviewStatusList['reject'] = '拒絶';

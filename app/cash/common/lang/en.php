@@ -55,4 +55,5 @@ $lang->setting->menu->expend    = 'Expense|tree|browse|type=out|';
 $lang->setting->menu->currency  = 'Currency|setting|lang|module=common&field=currencyList';
 $lang->setting->menu->schema    = 'Template|schema|browse|';
 $lang->setting->menu->tradePriv = 'View Expense|group|managetradepriv|';
+$lang->setting->menu->tradeSet  = 'Trade Set|trade|tradeSetting|';
 include(dirname(__FILE__) . '/menuOrder.php');

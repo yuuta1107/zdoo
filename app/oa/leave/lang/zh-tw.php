@@ -63,3 +63,6 @@ $lang->leave->confirmReview['pass']   = '您確定要執行通過操作嗎？';
 $lang->leave->confirmReview['reject'] = '您確定要執行拒絶操作嗎？';
 
 $lang->leave->hoursTip = '小時';
+
+$lang->leave->reviewStatusList['pass']   = '通過';
+$lang->leave->reviewStatusList['reject'] = '拒絶';

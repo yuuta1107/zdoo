@@ -54,3 +54,6 @@ $lang->overtime->confirmReview['reject'] = '您確定要執行拒絶操作嗎？
 
 $lang->overtime->hoursTip = '小時';
 $lang->overtime->baseInfo = '基本信息';
+
+$lang->overtime->reviewStatusList['pass']   = '通過';
+$lang->overtime->reviewStatusList['reject'] = '拒絶';

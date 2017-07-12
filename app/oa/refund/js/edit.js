@@ -48,8 +48,7 @@ $(document).ready(function()
         $(this).closest('tr').after($('#detailTpl').html().replace(/key/g, v.key));
         $(this).closest('tr').next().find("select").chosen();
         var options = window.datetimepickerDefaultOptions;
-        $.extend(options, {startView: 2, minView: 2, maxView: 1, format: 'yyyy-mm-dd'})
-        $(this).closest('tr').next().find("[name^='dateList']").fixedDate().datetimepicker(options);
+        $(this).closest('tr').next().find(".form-date").fixedDate().datetimepicker($.extend(options, {eleClass:'', startView: 2, minView: 2, maxView: 1, format: 'yyyy-mm-dd'}));
         $('input[name^=moneyList]').change(updateMoney);
         v.key++;
         return false;

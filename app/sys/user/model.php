@@ -560,10 +560,10 @@ class userModel extends model
         if($leaveCount) return 'leave';
 
         /* overtime and makeup */
-        $overtimeCount = $this->dao->select('count(*) as count')->from(TABLE_OVERTIME)
+        $processType = $this->dao->select('type')->from(TABLE_OVERTIME)
             ->where('status')->eq('wait')
-            ->andWhere('createdBy')->eq($account)->fetch('count');
-        if($overtimeCount) return 'overtime';
+            ->andWhere('createdBy')->eq($account)->fetchAll();
+        if(!empty($processType)) return $processType[0]->type;
 
         /* lieu */
         $lieuCount = $this->dao->select('count(*) as count')->from(TABLE_LIEU)

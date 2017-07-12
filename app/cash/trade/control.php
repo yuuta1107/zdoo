@@ -172,7 +172,7 @@ class trade extends control
 
         if(strpos(',in,all,', ",$mode,") !== false)
         {
-            $this->view->categories    = $this->lang->trade->categoryList + $this->tree->getPairs(0, 'out') + $this->tree->getPairs(0, 'in');
+            $this->view->categories = $this->lang->trade->categoryList + $this->tree->getPairs(0, 'out') + $this->tree->getPairs(0, 'in');
         }
         else
         {
@@ -208,13 +208,14 @@ class trade extends control
      */
     public function create($type = '')
     {
-        $getSetting    = $this->loadModel('setting')->getItem('owner=system&app=cash&module=trade&key=setting');
+
+        $getSetting = !empty($this->config->trade->setting) ? $this->config->trade->setting : array();
         $requireTrader = strpos($getSetting,'trader') !== false ? true : false;
 
         if($_POST)
         {
             $tradeID = $this->trade->create($type,$requireTrader); 
-            if(dao::isError())$this->send(array('result' => 'fail', 'message' => dao::getError()));
+            if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
 
             $this->loadModel('action')->create('trade', $tradeID, 'Created', '');
 
@@ -1227,30 +1228,30 @@ class trade extends control
         
         if($_POST)
         {
-            $cashSetting = $this->post->cashSetting;
-            if(isset($cashSetting))
+            $settings = $this->post->settings;
+            if(isset($settings))
             {
-                $cashSetting = helper::jsonEncode($this->post->cashSetting);
+                $settings = helper::jsonEncode($this->post->settings);
             }
 
-            $this->loadModel('setting')->setItem('system.cash.trade.setting', $cashSetting);
+            $this->loadModel('setting')->setItem('system.cash.trade.setting', $settings);
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
         }
 
         $savedSetting = !empty($this->config->trade->setting) ? json_decode($this->config->trade->setting) : array();
-        foreach($this->lang->trade->cashSettingList as $code => $value)
+        foreach($this->lang->trade->settingList as $code => $value)
         {
-            $cashSetting[$code]['name'] = $value;
+            $settings[$code]['name'] = $value;
             foreach($savedSetting as $key => $userSetting)
             {
                 if($userSetting != $code) continue;
-                $cashSetting[$code]['setting'] = 1;
+                $settings[$code]['setting'] = 1;
             }
         }
 
-        $this->view->title       = $this->lang->trade->cashSetting;
-        $this->view->cashSetting = $cashSetting;
+        $this->view->title    = $this->lang->trade->settings;
+        $this->view->settings = $settings;
 
         $this->display();
     }

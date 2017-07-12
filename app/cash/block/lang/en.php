@@ -19,6 +19,7 @@ $lang->block->orderBy   = 'Order';
 $lang->block->availableBlocks = new stdclass();
 $lang->block->availableBlocks->depositor = 'Checking Account';
 $lang->block->availableBlocks->trade     = 'Trade';
+$lang->block->availableBlocks->baseFacts = 'Income and expenses';
 $lang->block->availableBlocks->provider  = 'Suppliers';
 $lang->block->availableBlocks->report    = 'Report';
 

@@ -33,7 +33,7 @@ $filter->rules->character  = '/^[a-zA-Z_\-]+$/';
 $filter->rules->browseType = '/^by[a-z]+$/';
 $filter->rules->key        = '/^[a-z0-9]{32}+$/';
 $filter->rules->path       = '/(^//.|^/|^[a-zA-Z])?:?/.+(/$)?/';
-$filter->rules->callback   = '/^[a-zA-Z0-9\%\.]+$/';
+$filter->rules->callback   = '/^[a-zA-Z0-9\%\.\/\-\:]+$/';
 
 $filter->default->moduleName = 'code';
 $filter->default->methodName = 'code';
