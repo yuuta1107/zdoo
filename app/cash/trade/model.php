@@ -491,6 +491,22 @@ class tradeModel extends model
         $depositor = $this->loadModel('depositor', 'cash')->getByID($trade->depositor);
         if(!empty($depositor)) $trade->currency = $depositor->currency;
 
+        if($this->post->createTrader and $type == 'out')
+        {
+            $trader = new stdclass();
+            $trader->relation    = 'provider';
+            $trader->name        = $this->post->traderName;
+            $trader->createdBy   = $this->app->user->account;
+            $trader->createdDate = helper::now();
+            $trader->public      = 1;
+
+            $this->dao->insert(TABLE_CUSTOMER)->data($trader)->check('name', 'notempty')->exec();
+            $traderID = $this->dao->lastInsertID();
+            $this->loadModel('action')->create('customer', $traderID, 'Created');
+
+            $trade->trader = $traderID;
+        }
+
         $this->dao->insert(TABLE_TRADE)
             ->data($trade, $skip = 'createTrader,traderName,files,labels')
             ->autoCheck()
@@ -503,22 +519,6 @@ class tradeModel extends model
 
         $tradeID = $this->dao->lastInsertID();
         if(!dao::isError()) $this->loadModel('file')->saveUpload('trade', $tradeID);
-
-        if($this->post->createTrader and $type == 'out')
-        {
-            $trader = new stdclass();
-            $trader->relation    = 'provider';
-            $trader->name        = $this->post->traderName;
-            $trader->createdBy   = $this->app->user->account;
-            $trader->createdDate = helper::now();
-            $trader->public      = 1;
-
-            $this->dao->insert(TABLE_CUSTOMER)->data($trader)->check('name', 'notempty')->exec();
-            $trader = $this->dao->lastInsertID();
-            $this->loadModel('action')->create('customer', $trader, 'Created');
-
-            $this->dao->update(TABLE_TRADE)->set('trader')->eq($trader)->where('id')->eq($tradeID)->exec();
-        }
 
         return $tradeID;
     }
