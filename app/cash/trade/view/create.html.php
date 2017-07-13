@@ -76,18 +76,12 @@
         <tr class='customerTR hide'>
           <th><?php echo $lang->trade->customer;?></th>
           <td>
-          <?php if($requireTrader): ?>
-            <div class = 'required required-wrapper'></div>
-          <?php endif;?>
           <?php echo html::select('customer', $customerList, '', "class='form-control chosen' onchange='getContract(this.value)'");?>
           </td>
         </tr>
         <tr class='allCustomerTR hide'>
           <th><?php echo $lang->trade->customer;?></th>
           <td>
-          <?php if($requireTrader): ?>
-            <div class = 'required required-wrapper'></div>
-          <?php endif;?>
           <?php echo html::select('allCustomer', ($customerList + $traderList), '', "class='form-control chosen' onchange='getContract(this.value)'");?>
           </td>
         </tr>
@@ -95,18 +89,12 @@
           <th><?php echo $lang->trade->trader;?></th>
           <td>
             <?php if(count($traderList) > 1):?>
-            <?php if($requireTrader): ?>
-              <div class = 'required required-wrapper'></div>
-            <?php endif;?>
             <div class='input-group'>
               <?php  echo html::select('trader', $traderList, '', "class='form-control chosen'");?>
               <?php  echo html::input('traderName', '', "class='form-control' style='display:none'");?>
               <div class='input-group-addon'><?php echo html::checkbox('createTrader', array( 1 => $lang->trade->newTrader));?></div>
             </div>
             <?php else:?>
-            <?php if($requireTrader): ?>
-              <div class = 'required required-wrapper'></div>
-            <?php endif;?>
             <?php echo html::input('traderName', '', "class='form-control'") . html::hidden('createTrader', '1');?>
             <?php endif;?>
           </td>
@@ -120,9 +108,6 @@
         <tr>
           <th><?php echo $lang->trade->customer;?></th>
           <td>
-          <?php if($requireTrader): ?>
-            <div class = 'required required-wrapper'></div>
-          <?php endif;?>
           <?php echo html::select('trader', $customerList, '', "class='form-control chosen' onchange='getContract(this.value)'");?>
           </td>
         </tr>
