@@ -463,14 +463,25 @@ class tradeModel extends model
      * @access public
      * @return void
      */
-    public function create($type, $requireTrader = false)
+    public function create($type)
     {
         $now = helper::now();
-        if($type == 'in') $_POST['objectType'] = array('contract');
-        $objectType   = $this->post->objectType;
-        $createTrader = $this->post->createTrader;
+        $objectType = $this->post->objectType;
+
+        if(!empty($objectType) && $objectType[0] != 'contract'&& !$this->post->customer)
+        {
+            dao::$errors['customer'][] = $this->lang->trade->notempty; 
+            return false;
+        }
+
+        if(!empty($objectType) && $objectType[0] == 'contract' && !$this->post->allCustomer)
+        {
+            dao::$errors['allCustomer'][] = $this->lang->trade->notempty; 
+            return false;
+        }
 
         if($objectType[0] == 'contract') $this->post->customer = $this->post->allCustomer;
+        if($type == 'in') $_POST['objectType'] = array('contract');
 
         $trade = fixer::input('post')
             ->add('type', $type)
@@ -511,10 +522,6 @@ class tradeModel extends model
             ->data($trade, $skip = 'createTrader,traderName,files,labels')
             ->autoCheck()
             ->batchCheck($this->config->trade->require->create, 'notempty')
-            ->checkIf($requireTrader && empty($objectType) && empty($createTrader), 'trader', 'notempty')
-            ->checkIf($requireTrader && empty($objectType) && !empty($createTrader), 'traderName', 'notempty')
-            ->checkIf($requireTrader && !empty($objectType), 'trader', 'notempty')
-            ->checkIf($requireTrader && $type == 'in', 'trader', 'notempty')
             ->exec();
 
         $tradeID = $this->dao->lastInsertID();
@@ -681,6 +688,21 @@ class tradeModel extends model
      */
     public function update($tradeID)
     {
+        $objectType = $this->post->objectType;
+
+        if(!empty($objectType) && $objectType[0] != 'contract'&& !$this->post->customer)
+        {
+            dao::$errors['customer'][] = $this->lang->trade->notempty; 
+            return false;
+        }
+
+        if(!empty($objectType) && $objectType[0] == 'contract' && !$this->post->allCustomer)
+        {
+            dao::$errors['allCustomer'][] = $this->lang->trade->notempty; 
+            return false;
+        }
+
+        if($objectType[0] == 'contract') $this->post->customer = $this->post->allCustomer;
         $oldTrade = $this->getByID($tradeID);
 
         if($oldTrade->type == 'in') $_POST['objectType'] = array('contract');
@@ -701,12 +723,7 @@ class tradeModel extends model
             ->striptags('desc')
             ->get();
 
-        $this->dao->update(TABLE_TRADE)
-            ->data($trade, $skip = 'createTrader,traderName,files,labels,invests,redeems,profits,interest,investCategory,investMoney')
-            ->autoCheck()
-            ->batchCheck($this->config->trade->require->edit, 'notempty')
-            ->where('id')->eq($tradeID)->exec();
-
+        
         if($this->post->createTrader and $trade->type == 'out')
         {
             $trader = new stdclass();
@@ -719,8 +736,14 @@ class tradeModel extends model
 
             $this->loadModel('action')->create('customer', $traderID, 'Created');
 
-            $this->dao->update(TABLE_TRADE)->set('trader')->eq($traderID)->where('id')->eq($tradeID)->exec();
+            $trade->trader = $traderID;
         }
+
+        $this->dao->update(TABLE_TRADE)
+            ->data($trade, $skip = 'createTrader,traderName,files,labels,invests,redeems,profits,interest,investCategory,investMoney')
+            ->autoCheck()
+            ->batchCheck($this->config->trade->require->edit, 'notempty')
+            ->where('id')->eq($tradeID)->exec();
 
         if($trade->type == 'invest')
         {

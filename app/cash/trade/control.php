@@ -211,10 +211,14 @@ class trade extends control
 
         $getSetting = !empty($this->config->trade->setting) ? $this->config->trade->setting : array();
         $requireTrader = strpos($getSetting,'trader') !== false ? true : false;
+        if($requireTrader)
+        {
+            $this->config->trade->require->create .= ',trader,customer,allCustomer';
+        }
 
         if($_POST)
         {
-            $tradeID = $this->trade->create($type,$requireTrader); 
+            $tradeID = $this->trade->create($type); 
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
 
             $this->loadModel('action')->create('trade', $tradeID, 'Created', '');
@@ -314,6 +318,13 @@ class trade extends control
         if(empty($trade)) die();
         if($trade->type == 'out' and $trade->category != 'loss' and $trade->category != 'fee') $this->loadModel('tree')->checkRight($trade->category);
 
+        $getSetting = !empty($this->config->trade->setting) ? $this->config->trade->setting : array();
+        $requireTrader = strpos($getSetting,'trader') !== false ? true : false;
+        if($requireTrader)
+        {
+            $this->config->trade->require->edit .= ',trader,customer,allCustomer';
+        }
+
         if($_POST)
         {
             $changes = $this->trade->update($tradeID);
@@ -333,9 +344,21 @@ class trade extends control
         $orders    = $this->order->getPairs();
         foreach($orderList as $id => $order) $order->name = $orders[$id];
         
-        $objectType = array();
-        if($trade->order)    $objectType[] = 'order';
-        if($trade->contract) $objectType[] = 'contract';
+        $objectType = '';
+        if($trade->order)
+        {
+            $objectType = 'order';
+        }
+        elseif($trade->contract)
+        {
+            $objectType = 'contract';
+        }
+        else
+        {
+            $relation = $this->dao->select('relation')->from(TABLE_CUSTOMER)->where('id')->eq($trade->trader)->fetch();
+            if($relation->relation == 'client') $objectType = 'customer';
+        }
+
         $this->view->objectType = $objectType;
 
         $depositorList = $this->loadModel('depositor', 'cash')->getPairs();

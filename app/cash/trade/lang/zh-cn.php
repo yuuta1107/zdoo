@@ -84,6 +84,8 @@ $lang->trade->settings      = '记账设置';
 $lang->trade->settingList['trader']   = '必须选择商户';
 $lang->trade->settingList['category'] = '必须选择末级科目';
 
+$lang->trade->notempty = '<strong>客户</strong>不能为空';
+
 $lang->trade->report = new stdclass();
 $lang->trade->report->common      = '报表'; 
 $lang->trade->report->annual      = '年度收支表'; 

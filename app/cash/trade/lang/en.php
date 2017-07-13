@@ -84,6 +84,8 @@ $lang->trade->settings      = 'Trade Setting';
 $lang->trade->settingList['trader']   = 'select merchants';
 $lang->trade->settingList['category'] = 'select final subjects';
 
+$lang->trade->notempty = '<strong>Customer</strong>can not be empty';
+
 $lang->trade->report = new stdclass();
 $lang->trade->report->common      = 'Report'; 
 $lang->trade->report->annual      = ' Annual Report'; 
