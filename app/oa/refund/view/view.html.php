@@ -71,7 +71,7 @@
           commonModel::printLink('refund', 'reimburse', "refundID={$refund->id}", $lang->refund->common, "class='btn btn-default refund'");
       }
 
-      if($mode == 'review' and ($refund->status == 'wait' or $refund->status == 'doing')) commonModel::printLink('refund', 'review', "refundID={$refund->id}", $lang->refund->review, "class='btn btn-default' data-toggle='modal'");
+      if($mode == 'review' and ($refund->status == 'wait' or $refund->status == 'doing')) commonModel::printLink('refund', 'review', "refundID={$refund->id}", $lang->refund->review, "class='btn btn-default' data-toggle='modal' data-width='800'");
 
       $browseLink = $this->session->refundList ? $this->session->refundList : inlink('personal');
       commonModel::printRPN($browseLink, $preAndNext);
