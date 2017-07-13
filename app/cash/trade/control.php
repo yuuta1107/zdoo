@@ -208,13 +208,7 @@ class trade extends control
      */
     public function create($type = '')
     {
-
-        $getSetting = !empty($this->config->trade->setting) ? $this->config->trade->setting : array();
-        $requireTrader = strpos($getSetting,'trader') !== false ? true : false;
-        if($requireTrader)
-        {
-            $this->config->trade->require->create .= ',trader,customer,allCustomer';
-        }
+        if(!empty($this->config->trade->settings->trader)) $this->config->trade->require->create .= ',trader,customer,allCustomer';
 
         if($_POST)
         {
@@ -1251,31 +1245,16 @@ class trade extends control
         
         if($_POST)
         {
-            $settings = $this->post->settings;
-            if(isset($settings))
-            {
-                $settings = helper::jsonEncode($this->post->settings);
-            }
+            $settings = new stdclass();
+            $settings->trader   = $this->post->trader ? 1 : 0;
+            $settings->category = $this->post->category ? 1 : 0;
 
-            $this->loadModel('setting')->setItem('system.cash.trade.setting', $settings);
+            $this->loadModel('setting')->setItems('system.cash.trade.settings', $settings);
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
         }
 
-        $savedSetting = !empty($this->config->trade->setting) ? json_decode($this->config->trade->setting) : array();
-        foreach($this->lang->trade->settingList as $code => $value)
-        {
-            $settings[$code]['name'] = $value;
-            foreach($savedSetting as $key => $userSetting)
-            {
-                if($userSetting != $code) continue;
-                $settings[$code]['setting'] = 1;
-            }
-        }
-
-        $this->view->title    = $this->lang->trade->settings;
-        $this->view->settings = $settings;
-
+        $this->view->title = $this->lang->trade->settings;
         $this->display();
     }
 }
