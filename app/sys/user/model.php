@@ -219,8 +219,6 @@ class userModel extends model
 
         $user = fixer::input('post')
             ->setForce('join', date('Y-m-d H:i:s'))
-            ->setForce('last', helper::now())
-            ->setForce('visits', 1)
             ->setIF($this->post->password1 == false, 'password', '')
             ->remove('admin, ip')
             ->get();
