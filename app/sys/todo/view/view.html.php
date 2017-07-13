@@ -127,4 +127,8 @@
 <?php else:?>
 <?php echo $lang->todo->thisIsPrivate;?>
 <?php endif;?>
+<?php if(helper::isAjaxRequest()):?>
 <?php include '../../../sys/common/view/footer.modal.html.php';?>
+<?php else:?>
+<?php include $app->getModuleRoot() . 'common/view/footer.html.php';?>
+<?php endif;?>
