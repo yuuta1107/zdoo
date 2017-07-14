@@ -470,13 +470,13 @@ class tradeModel extends model
 
         if(!empty($objectType) && $objectType[0] != 'contract'&& !$this->post->customer)
         {
-            dao::$errors['customer'][] = strip_tags(sprintf($this->lang->error->notempty, $this->lang->trade->customer)); 
+            dao::$errors['customer'][] = sprintf($this->lang->error->notempty, $this->lang->trade->customer); 
             return false;
         }
 
         if(!empty($objectType) && $objectType[0] == 'contract' && !$this->post->allCustomer)
         {
-            dao::$errors['allCustomer'][] = strip_tags(sprintf($this->lang->error->notempty, $this->lang->trade->customer)); 
+            dao::$errors['allCustomer'][] = sprintf($this->lang->error->notempty, $this->lang->trade->customer); 
             return false;
         }
 
@@ -590,7 +590,7 @@ class tradeModel extends model
             $trades[$key] = $trade;
         }
 
-        if(empty($trades)) return array('result' => 'fail', 'message' => $this->lang->trade->notempty);
+        if(empty($trades)) return array('result' => 'fail', 'message' => $this->lang->trade->emptyData);
 
         $errors = $this->batchCheck($trades);
         if(!empty($errors)) return array('result' => 'fail', 'message' => $errors);
@@ -647,7 +647,7 @@ class tradeModel extends model
             $trades[$key] = $trade;
         }
 
-        if(empty($trades)) return array('result' => 'fail', 'message' => $this->lang->trade->notempty);
+        if(empty($trades)) return array('result' => 'fail', 'message' => $this->lang->trade->emptyData);
 
         $errors = $this->batchCheck($trades);
         if(!empty($errors)) return array('result' => 'fail', 'message' => $errors);
@@ -702,13 +702,13 @@ class tradeModel extends model
 
         if(!empty($objectType) && $objectType[0] != 'contract'&& !$this->post->customer)
         {
-            dao::$errors['customer'][] = $this->lang->trade->notempty; 
+            dao::$errors['customer'][] = sprintf($this->lang->error->notempty, $this->lang->trade->customer); 
             return false;
         }
 
         if(!empty($objectType) && $objectType[0] == 'contract' && !$this->post->allCustomer)
         {
-            dao::$errors['allCustomer'][] = $this->lang->trade->notempty; 
+            dao::$errors['allCustomer'][] = sprintf($this->lang->error->notempty, $this->lang->trade->customer); 
             return false;
         }
 

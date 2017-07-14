@@ -84,8 +84,6 @@ $lang->trade->settings      = 'Trade Setting';
 $lang->trade->settingList['trader']   = 'select merchants';
 $lang->trade->settingList['category'] = 'select final subjects';
 
-$lang->trade->notempty = 'Data cannot be empty.';
-
 $lang->trade->report = new stdclass();
 $lang->trade->report->common      = 'Report'; 
 $lang->trade->report->annual      = ' Annual Report'; 
@@ -200,6 +198,7 @@ $lang->trade->noTraderMatch = 'No matched trader，click to create';
 $lang->trade->unique        = 'There has been same record';
 $lang->trade->ignore        = 'Ignore';
 $lang->trade->denied        = 'You have no permission to browse the list, please ask admin to set privilege.';
+$lang->trade->emptyData     = 'The fields with * cannot be empty.';
 
 $lang->trade->chartList['productLine'] = 'by product line';
 $lang->trade->chartList['category']    = 'by category';
