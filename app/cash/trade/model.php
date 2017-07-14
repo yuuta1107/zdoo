@@ -503,7 +503,7 @@ class tradeModel extends model
         if(!empty($depositor)) $trade->currency = $depositor->currency;
 
         if($this->post->traderName && $this->post->createTrader && $type == 'out' || 
-           $this->config->trade->setting->trader && $this->post->createTrader && $type == 'out')
+           $this->config->trade->settings->trader && $this->post->createTrader && $type == 'out')
         {
             $trader = new stdclass();
             $trader->relation    = 'provider';
