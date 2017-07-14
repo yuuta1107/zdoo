@@ -40,6 +40,9 @@ $filter->default->methodName = 'code';
 $filter->default->paramName  = 'reg::paramName';
 $filter->default->paramValue = 'reg::paramValue';
 
+$filter->user->admin = new stdclass();
+$filter->user->admin->paramValue['query'] = 'reg::any';
+
 $filter->default->get['onlybody']              = 'equal::yes';
 $filter->default->get['lang']                  = 'reg::lang';
 $filter->default->get['HTTP_X_REQUESTED_WITH'] = 'equal::XMLHttpRequest';
