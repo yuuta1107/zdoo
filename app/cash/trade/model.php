@@ -470,13 +470,13 @@ class tradeModel extends model
 
         if(!empty($objectType) && $objectType[0] != 'contract'&& !$this->post->customer)
         {
-            dao::$errors['customer'][] = $this->lang->trade->notempty; 
+            dao::$errors['customer'][] = strip_tags(sprintf($this->lang->error->notempty, $this->lang->trade->customer)); 
             return false;
         }
 
         if(!empty($objectType) && $objectType[0] == 'contract' && !$this->post->allCustomer)
         {
-            dao::$errors['allCustomer'][] = $this->lang->trade->notempty; 
+            dao::$errors['allCustomer'][] = strip_tags(sprintf($this->lang->error->notempty, $this->lang->trade->customer)); 
             return false;
         }
 
@@ -502,7 +502,8 @@ class tradeModel extends model
         $depositor = $this->loadModel('depositor', 'cash')->getByID($trade->depositor);
         if(!empty($depositor)) $trade->currency = $depositor->currency;
 
-        if($this->post->createTrader and $type == 'out')
+        if($this->post->traderName && $this->post->createTrader && $type == 'out' || 
+           $this->config->trade->setting->trader && $this->post->createTrader && $type == 'out')
         {
             $trader = new stdclass();
             $trader->relation    = 'provider';
@@ -548,13 +549,17 @@ class tradeModel extends model
         foreach($this->post->type as $key => $type)
         {
             if(empty($type)) break;
-            if(!$this->post->money[$key]) continue;
-
+            
             $depositor = $this->post->depositor[$key] == 'ditto' ? $depositor : $this->post->depositor[$key];
             $category  = $this->post->category[$key]  == 'ditto' ? $category : $this->post->category[$key];
             $dept      = $this->post->dept[$key]      == 'ditto' ? $dept : $this->post->dept[$key];
             $trader    = $this->post->trader[$key]    == 'ditto' ? $trader : ($this->post->trader[$key] ? $this->post->trader[$key] : 0);
             $product   = $this->post->product[$key]   == 'ditto' ? $product : $this->post->product[$key];
+
+            if(empty($this->post->depositor[$key])) continue;
+            if(!$this->post->money[$key]) continue;
+            if(empty($this->post->handlers[$key][1])) continue;
+            if(empty($trader) && empty($this->post->traderName[$key]) && $this->config->trade->settings->trader) continue;
 
             $trade = new stdclass();
             $trade->type           = $type;
@@ -584,7 +589,7 @@ class tradeModel extends model
             $trades[$key] = $trade;
         }
 
-        if(empty($trades)) return array('result' => 'fail');
+        if(empty($trades)) return array('result' => 'fail', 'message' => $this->lang->trade->notempty);
 
         $errors = $this->batchCheck($trades);
         if(!empty($errors)) return array('result' => 'fail', 'message' => $errors);
@@ -618,6 +623,11 @@ class tradeModel extends model
         foreach($this->post->type as $key => $type)
         {
             if(empty($type)) break;
+            if(empty($this->post->depositor[$key])) continue;
+            if(!$this->post->money[$key]) continue;
+            if(empty($this->post->handlers[$key][1])) continue;
+            if(empty($trader) && $this->config->trade->settings->trader) continue;
+
             $trade = new stdclass();
             $trade->depositor      = $this->post->depositor[$key];
             $trade->money          = $this->post->money[$key];
@@ -626,7 +636,6 @@ class tradeModel extends model
             $trade->trader         = $this->post->trader[$key] ? $this->post->trader[$key] : 0;
             $trade->createTrader   = false;
             $trade->createCustomer = false;
-            $trade->traderName     = $this->post->traderName[$key];
             $trade->handlers       = !empty($this->post->handlers[$key]) ? join(',', $this->post->handlers[$key]) : '';
             $trade->product        = $this->post->product[$key];
             $trade->date           = $this->post->date[$key];
@@ -645,7 +654,7 @@ class tradeModel extends model
         $tradeIDList = array();
         foreach($trades as $tradeID => $trade)
         {
-            $this->dao->update(TABLE_TRADE)->data($trade, $skip = 'createTrader,traderName,createCustomer')->where('id')->eq($tradeID)->autoCheck()->exec();
+            $this->dao->update(TABLE_TRADE)->data($trade, $skip = 'createTrader,createCustomer')->where('id')->eq($tradeID)->autoCheck()->exec();
         }
         if(!dao::isError()) return array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => inlink('browse'));
         return array('result' => 'fail', 'message' => dao::getError());
