@@ -505,6 +505,12 @@ class tradeModel extends model
         if($this->post->traderName && $this->post->createTrader && $type == 'out' || 
            $this->config->trade->settings->trader && $this->post->createTrader && $type == 'out')
         {
+            if(!$this->post->traderName)
+            {
+                dao::$errors['traderName'][] = sprintf($this->lang->error->notempty, $this->lang->trade->trader); 
+                return false;
+            }
+
             $trader = new stdclass();
             $trader->relation    = 'provider';
             $trader->name        = $this->post->traderName;
@@ -517,6 +523,16 @@ class tradeModel extends model
             $this->loadModel('action')->create('customer', $traderID, 'Created');
 
             $trade->trader = $traderID;
+        }
+
+        if(!empty($trade->trader))
+        {
+            $this->config->trade->require->create = str_replace(',traderName', '', $this->config->trade->require->create);
+        }
+
+        if(empty($this->post->createTrader) && empty($trade->trader))
+        {
+            $this->config->trade->require->create = str_replace(',traderName', '', $this->config->trade->require->create);
         }
 
         $this->dao->insert(TABLE_TRADE)
@@ -729,13 +745,19 @@ class tradeModel extends model
             ->setIf($oldTrade->type == 'in', 'order', 0)
             ->setIf(!$this->post->objectType or !in_array('order', $this->post->objectType), 'order', 0)
             ->setIf(!$this->post->objectType or !in_array('contract', $this->post->objectType), 'contract', 0)
-            ->remove('objectType,customer')
+            ->remove('objectType,customer,allCustomer')
             ->striptags('desc')
             ->get();
 
-        
-        if($this->post->createTrader and $trade->type == 'out')
+        if($this->post->traderName && $this->post->createTrader && $trade->type == 'out' || 
+           $this->config->trade->settings->trader && $this->post->createTrader && $trade->type == 'out')
         {
+            if(!$this->post->traderName)
+            {
+                dao::$errors['traderName'][] = sprintf($this->lang->error->notempty, $this->lang->trade->trader); 
+                return false;
+            }
+
             $trader = new stdclass();
             $trader->relation = 'provider';
             $trader->name     = $this->post->traderName;

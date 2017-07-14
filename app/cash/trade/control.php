@@ -313,7 +313,7 @@ class trade extends control
         $trade = $this->trade->getByID($tradeID);
         if(empty($trade)) die();
         if($trade->type == 'out' and $trade->category != 'loss' and $trade->category != 'fee') $this->loadModel('tree')->checkRight($trade->category);
-        if($this->config->trade->settings->trader) $this->config->trade->require->create .= ',trader,customer,allCustomer,traderName';
+        if($this->config->trade->settings->trader) $this->config->trade->require->edit .= ',trader,customer,allCustomer';
 
         if($_POST)
         {
@@ -346,7 +346,7 @@ class trade extends control
         else
         {
             $relation = $this->dao->select('relation')->from(TABLE_CUSTOMER)->where('id')->eq($trade->trader)->fetch();
-            if($relation->relation == 'client') $objectType = 'customer';
+            if(!empty($relation->relation) && $relation->relation == 'client') $objectType = 'customer';
         }
 
         $this->view->objectType = $objectType;
