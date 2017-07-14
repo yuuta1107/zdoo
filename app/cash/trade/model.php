@@ -549,12 +549,13 @@ class tradeModel extends model
         foreach($this->post->type as $key => $type)
         {
             if(empty($type)) break;
+            $traderkey = $type . 'trader';
             
-            $depositor = $this->post->depositor[$key] == 'ditto' ? $depositor : $this->post->depositor[$key];
-            $category  = $this->post->category[$key]  == 'ditto' ? $category : $this->post->category[$key];
-            $dept      = $this->post->dept[$key]      == 'ditto' ? $dept : $this->post->dept[$key];
-            $trader    = $this->post->trader[$key]    == 'ditto' ? $trader : ($this->post->trader[$key] ? $this->post->trader[$key] : 0);
-            $product   = $this->post->product[$key]   == 'ditto' ? $product : $this->post->product[$key];
+            $depositor = $this->post->depositor[$key]    == 'ditto' ? $depositor : $this->post->depositor[$key];
+            $category  = $this->post->category[$key]     == 'ditto' ? $category  : $this->post->category[$key];
+            $dept      = $this->post->dept[$key]         == 'ditto' ? $dept      : $this->post->dept[$key];
+            $trader    = $this->post->{$traderkey}[$key] == 'ditto' ? $trader    : ($this->post->{$traderkey}[$key] ? $this->post->{$traderkey}[$key] : 0);
+            $product   = $this->post->product[$key]      == 'ditto' ? $product   : $this->post->product[$key];
 
             if(empty($this->post->depositor[$key])) continue;
             if(!$this->post->money[$key]) continue;
@@ -625,8 +626,8 @@ class tradeModel extends model
             if(empty($type)) break;
             if(empty($this->post->depositor[$key])) continue;
             if(!$this->post->money[$key]) continue;
-            if(empty($this->post->handlers[$key][1])) continue;
-            if(empty($trader) && $this->config->trade->settings->trader) continue;
+            if(empty($this->post->handlers[$key][0]) and empty($this->post->handlers[$key][1])) continue;
+            if(empty($this->post->trader[$key]) && $this->config->trade->settings->trader) continue;
 
             $trade = new stdclass();
             $trade->depositor      = $this->post->depositor[$key];
@@ -646,7 +647,7 @@ class tradeModel extends model
             $trades[$key] = $trade;
         }
 
-        if(empty($trades)) return array('result' => 'fail');
+        if(empty($trades)) return array('result' => 'fail', 'message' => $this->lang->trade->notempty);
 
         $errors = $this->batchCheck($trades);
         if(!empty($errors)) return array('result' => 'fail', 'message' => $errors);
