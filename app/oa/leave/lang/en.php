@@ -35,7 +35,6 @@ $lang->leave->reviewedBy   = 'Reviewer';
 $lang->leave->reviewedDate = 'Reviewed on';
 $lang->leave->date         = 'Date';
 $lang->leave->time         = 'Time';
-$lang->leave->comment      = 'Comment';
 
 $lang->leave->typeList['affairs']   = 'Private';
 $lang->leave->typeList['sick']      = 'Sick';

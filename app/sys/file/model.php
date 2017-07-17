@@ -96,16 +96,17 @@ class fileModel extends model
      */    
     public function processFile($file)
     {
-        $file->fullURL   = $this->webPath . $file->pathname;
+        $realPathName    = $this->getRealPathName($file->pathname);
+        $file->fullURL   = $this->webPath . $realPathName;
         $file->middleURL = '';
         $file->smallURL  = '';
         $file->isImage   = false;
 
         if(in_array(strtolower($file->extension), $this->config->file->imageExtensions) !== false)
         {
-            $file->middleURL = $this->webPath . str_replace('f_', 'm_', $file->pathname);
-            $file->smallURL  = $this->webPath . str_replace('f_', 's_', $file->pathname);
-            $file->largeURL  = $this->webPath . str_replace('f_', 'l_', $file->pathname);
+            $file->middleURL = $this->webPath . str_replace('f_', 'm_', $realPathName);
+            $file->smallURL  = $this->webPath . str_replace('f_', 's_', $realPathName);
+            $file->largeURL  = $this->webPath . str_replace('f_', 'l_', $realPathName);
 
             if(!file_exists(str_replace($this->webPath, $this->savePath, $file->middleURL))) $file->middleURL = $file->fullURL;
             if(!file_exists(str_replace($this->webPath, $this->savePath, $file->smallURL)))  $file->smallURL  = $file->fullURL;

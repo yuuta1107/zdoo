@@ -55,9 +55,9 @@ js::set('wholeResult', $wholeResult);
             </td>
             <td class='<?php echo $tmpRootResult;?>'><?php echo $lang->install->$tmpRootResult;?></td>
             <td class='f-12px'>
-              <?php 
+              <?php
               if(!$tmpRootInfo['exists'])   printf($lang->install->mkdir, $tmpRootInfo['path'], $tmpRootInfo['path']);
-              if(!$tmpRootInfo['writable']) printf($lang->install->chmod, $tmpRootInfo['path'], $tmpRootInfo['path']);
+              foreach($tmpFailPaths as $path) printf($lang->install->chmod, $path, $path);
               ?>
             </td>
           </tr>

@@ -19,19 +19,19 @@
       <td>
         <div class='input-group'>
           <?php echo html::select('depositor', $depositorList, isset($this->config->refund->depositor) ? $this->config->refund->depositor : '', "class='form-control'");?>
-          <div class='input-group-addon'><div style='padding-right: 20px;'><?php echo html::checkbox('objectType', $lang->trade->objectTypeList);?></div>
+          <div class='input-group-addon' style='padding-right: 20px;'><?php echo html::checkbox('objectType', $lang->trade->objectTypeList);?></div>
         </div>
       </td>
     </tr>
-    <tr>
+    <tr class='hide'>
       <th><?php echo $lang->trade->customer;?></th>
       <td><?php echo html::select('customer', $customerList, '', "class='form-control chosen'");?></td>
     </tr>
-    <tr>
+    <tr class='hide'>
       <th><?php echo $lang->trade->order;?></th>
       <td><?php echo html::select('order', array('') + (array) $orderList, '', "class='form-control chosen'");?></td>
     </tr>
-    <tr>
+    <tr class='hide'>
       <th><?php echo $lang->trade->contract;?></th>
       <td>
         <select class='form-control chosen' id='contract' name='contract'>
@@ -44,7 +44,7 @@
     </tr>
     <tr>
       <th><?php echo $lang->trade->dept;?></th>
-      <td><?php echo html::select('dept', $deptList, '', "class='form-control chosen'");?></td>
+      <td><?php echo html::select('dept', $deptList, $refund->dept, "class='form-control chosen'");?></td>
     </tr>
     <tr>
       <th></th>

@@ -9,6 +9,10 @@
  * @version     $Id$
  * @link        http://www.ranzhico.com
  */
+$config->trade->settings = new stdclass();
+$config->trade->settings->trader   = false;
+$config->trade->settings->category = false;
+
 $config->trade->require = new stdclass();
 $config->trade->require->create = 'depositor,money,type,handlers';
 $config->trade->require->edit   = 'depositor,money,type,handlers';

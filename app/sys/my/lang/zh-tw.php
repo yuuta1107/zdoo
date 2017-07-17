@@ -35,3 +35,5 @@ $lang->my->project = new stdclass();
 $lang->my->project->common = '我的項目';
 
 $lang->my->dynamic->common = '我的動態';
+
+$lang->my->review->module = '模組';

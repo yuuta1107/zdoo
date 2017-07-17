@@ -508,7 +508,8 @@ CREATE TABLE IF NOT EXISTS `oa_todo` (
 CREATE TABLE IF NOT EXISTS `oa_refund` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `name` char(150) NOT NULL,
-  `parent`  mediumint(8) NOT NULL DEFAULT 0,
+  `parent`  mediumint(8) unsigned NOT NULL DEFAULT 0,
+  `dept`  mediumint(8) unsigned NOT NULL DEFAULT 0,
   `category` char(30) NOT NULL,
   `date` date NOT NULL,
   `money` decimal(12,2) NOT NULL,
@@ -676,6 +677,7 @@ CREATE TABLE `sys_block` (
   `params` text NOT NULL,
   `order` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `grid` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `height` smallint(5) unsigned NOT NULL DEFAULT '0',
   `hidden` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `accountAppOrder` (`account`, `app`, `order`),
@@ -1714,4 +1716,5 @@ INSERT INTO `sys_grouppriv` (`group`, `module`, `method`) VALUES
 INSERT INTO `sys_cron` (`m`, `h`, `dom`, `mon`, `dow`, `command`, `remark`, `type`, `buildin`, `status`, `lastTime`) VALUES
 ('*', '*', '*', '*', '*', '', '监控定时任务', 'ranzhi', 1, 'normal', '0000-00-00 00:00:00'),
 ('1', '1', '*', '*', '*', 'appName=sys&moduleName=backup&methodName=backup&reload=0', '定时备份任务', 'ranzhi', 0, 'normal', '0000-00-00 00:00:00'),
-('1', '1', '*', '*', '*', 'appName=sys&moduleName=backup&methodName=batchdelete&saveDays=30', '删除30天前的备份', 'ranzhi', 0, 'normal', '0000-00-00 00:00:00');
+('1', '1', '*', '*', '*', 'appName=sys&moduleName=backup&methodName=batchdelete&saveDays=30', '删除30天前的备份', 'ranzhi', 0, 'normal', '0000-00-00 00:00:00'),
+('1', '7', '*', '*', '*', 'appName=sys&moduleName=report&methodName=remind', '每日提醒', 'ranzhi', 1, 'normal', '0000-00-00 00:00:00');

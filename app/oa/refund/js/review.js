@@ -1,5 +1,57 @@
 $(document).ready(function()
 {
+    if(v.detail)
+    {
+        $('.all-pass').click(function()
+        {
+            $('input[id^=status][id$=pass]').each(function(){$(this).prop('checked', 'checked')});
+            $('.reviewMoney').show();
+            $('.reason').hide();
+        })
+
+        $('.all-reject').click(function()
+        {
+            $('input[id^=status][id$=reject]').each(function(){$(this).prop('checked', 'checked')});
+            $('.reviewMoney').hide();
+            $('.reason').show();
+        })
+
+        $('input[name^=status]').click(function()
+        {
+            var reviewStatus = 'reject';
+
+            $('input[name^=status]').each(function()
+            {
+                if($(this).prop('checked'))
+                {
+                    if(reviewStatus != $(this).val())
+                    {
+                        reviewStatus = $(this).val();
+                        return false;
+                    }
+                }
+
+            })
+        })
+
+        $('input[name^=status], .all-pass').click(function()
+        {
+            var money = 0;
+            $('input[name^=status]').each(function()
+            {
+                if($(this).prop('checked'))
+                {
+                    if($(this).val() == 'pass')
+                    {
+                        money += parseInt($(this).parents('tr').find('.detailMoney').html());
+                    }
+                }
+            })
+
+            $('#money').val(money);
+        })
+    }
+
     $('#submit').click(function()
     {
         $('input[name^=status]').each(function()

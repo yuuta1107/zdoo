@@ -79,10 +79,10 @@ $lang->trade->quarter       = '季度';
 $lang->trade->export2Excel  = '导出Excel';
 $lang->trade->compare       = '年度对比表';
 $lang->trade->setReportUnit = '设置报表单位';
-$lang->trade->cashSetting   = '记账设置';
+$lang->trade->settings      = '记账设置';
 
-$lang->trade->cashSettingList['trader']   = '必须选择商户';
-$lang->trade->cashSettingList['category'] = '必须选择末级科目';
+$lang->trade->settingList['trader']   = '必须选择商户';
+$lang->trade->settingList['category'] = '必须选择末级科目';
 
 $lang->trade->report = new stdclass();
 $lang->trade->report->common      = '报表'; 
@@ -198,6 +198,7 @@ $lang->trade->noTraderMatch = '没有匹配到相应的商户，点击新建';
 $lang->trade->unique        = '今天已经有相同金额的账目';
 $lang->trade->ignore        = '忽略';
 $lang->trade->denied        = '您没有权限浏览此类账目，请联系管理员设置权限。';
+$lang->trade->emptyData     = '带有*的内容不能为空';
 
 $lang->trade->chartList['productLine'] = '按产品线统计';
 $lang->trade->chartList['category']    = '按科目统计';

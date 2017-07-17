@@ -135,6 +135,7 @@ class upgradeModel extends model
             case '4_2_1': $this->execSQL($this->getUpgradeFile('4.2.1'));
             case '4_2_2':
             case '4_2_3':
+            case '4_3_beta': $this->execSQL($this->getUpgradeFile('4.3.beta'));
             default: if(!$this->isError()) $this->loadModel('setting')->updateVersion($this->config->version);
         }
 
@@ -181,6 +182,7 @@ class upgradeModel extends model
             case '4_2_1'   : $confirmContent .= file_get_contents($this->getUpgradeFile('4.2.1'));
             case '4_2_2'   :
             case '4_2_3'   :
+            case '4_3_beta': $confirmContent .= file_get_contents($this->getUpgradeFile('4.3.beta'));
         }
         return $confirmContent;
     }
@@ -241,6 +243,9 @@ class upgradeModel extends model
                 $sql = str_replace('DEFAULT CHARSET=utf8', '', $sql);
                 $sql = str_replace('CHARACTER SET utf8 COLLATE utf8_general_ci', '', $sql);
             }
+
+            /* Add table prefix. */
+            if($this->config->db->prefix) $sql = preg_replace('/`(\w+)_/', "`{$this->config->db->prefix}\${1}_", $sql);
 
             try
             {

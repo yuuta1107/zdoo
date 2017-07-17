@@ -18,6 +18,7 @@
     <thead>
     <tr class='text-center'>
       <th class='w-80px'><?php echo $lang->refund->date;?></th>
+      <th class='w-100px'><?php echo $lang->refund->dept;?></th>
       <th class='w-100px'><?php echo $lang->refund->money;?></th>
       <th class='w-100px'><?php echo $lang->refund->status;?></th>
       <th class='w-120px'><?php echo $lang->refund->category;?></th>
@@ -40,6 +41,7 @@
     <?php foreach($refund->detail as $detail):?>
     <tr class='text-center'>
       <td><?php echo $detail->date;?></td>
+      <td><?php echo zget($deptList, $refund->dept);?></td>
       <td class='text-right'><?php echo zget($currencySign, $detail->currency) . "<span class='detailMoney'>" . $detail->money . "</span>";?></td>
       <td><?php echo $lang->refund->statusList[$detail->status];?></td>
       <td class='text-ellipsis' title="<?php echo zget($categories, $detail->category, ' ');?>"><?php echo zget($categories, $detail->category, ' ');?></td>
@@ -50,6 +52,7 @@
     <?php else:?>
     <tr class='text-center'>
       <td><?php echo $refund->date;?></td>
+      <td><?php echo zget($deptList, $refund->dept);?></td>
       <td class='text-right'><?php echo zget($currencySign, $refund->currency) . "<span class='detailMoney'>" . $refund->money . "</span>";?></td>
       <td><?php echo $lang->refund->statusList[$refund->status];?></td>
       <td class='text-ellipsis' title="<?php echo zget($categories, $detail->category, ' ');?>"><?php echo zget($categories, $refund->category, ' ');?></td>

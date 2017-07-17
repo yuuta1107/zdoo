@@ -14,12 +14,14 @@
 <form class='form' id='ajaxForm' method='post'>
   <div class='panel'>
     <div class='panel-heading'>
-      <strong><?php echo $this->lang->trade->cashSetting?></strong>
+      <strong><?php echo $this->lang->trade->settings?></strong>
     </div>
     <div class='panel-body'>
-    <?php foreach($cashSetting as $code => $value):?>
-      <div class='group-item'><?php echo html::checkbox('cashSetting', array($code => $value['name']), isset($value['setting']) ? $code : '');?></div>
-    <?php endforeach?>
+    <?php foreach($lang->trade->settingList as $key => $value):?>
+      <label class='checkbox-inline'>
+        <input type='checkbox' name='<?php echo $key;?>' value='1' <?php if(!empty($config->trade->settings->$key)) echo "checked='checked'";?>><?php echo $value;?>
+      </label>
+    <?php endforeach;?>
     </div>
     <div class='panel-footer'><?php echo html::submitButton() . html::hidden('foo'); // Just a var, to make sure $_POST is not empty.?></div>
   </div>

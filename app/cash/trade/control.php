@@ -172,7 +172,7 @@ class trade extends control
 
         if(strpos(',in,all,', ",$mode,") !== false)
         {
-            $this->view->categories    = $this->lang->trade->categoryList + $this->tree->getPairs(0, 'out') + $this->tree->getPairs(0, 'in');
+            $this->view->categories = $this->lang->trade->categoryList + $this->tree->getPairs(0, 'out') + $this->tree->getPairs(0, 'in');
         }
         else
         {
@@ -208,13 +208,12 @@ class trade extends control
      */
     public function create($type = '')
     {
-        $getSetting    = $this->loadModel('setting')->getItem('owner=system&app=cash&module=trade&key=setting');
-        $requireTrader = strpos($getSetting,'trader') !== false ? true : false;
+        if($this->config->trade->settings->trader) $this->config->trade->require->create .= ',trader,customer,allCustomer,traderName';
 
         if($_POST)
         {
-            $tradeID = $this->trade->create($type,$requireTrader); 
-            if(dao::isError())$this->send(array('result' => 'fail', 'message' => dao::getError()));
+            $tradeID = $this->trade->create($type); 
+            if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
 
             $this->loadModel('action')->create('trade', $tradeID, 'Created', '');
 
@@ -229,7 +228,7 @@ class trade extends control
         {
             $categories = $this->loadModel('tree')->getOptionMenu($type, 0, $removeRoot = true);
 
-            if(strpos($getSetting,'category') !== false)
+            if($this->config->trade->settings->category)
             {
                 $allCategories = $this->loadModel('tree')->getListByType($type, 'grade_desc');
                 foreach($allCategories as $category)
@@ -249,7 +248,6 @@ class trade extends control
         unset($this->lang->trade->menu);
         $this->view->title         = $this->lang->trade->{$type};
         $this->view->type          = $type;
-        $this->view->requireTrader = $requireTrader;
         $this->view->depositorList = array('' => '') + $this->loadModel('depositor', 'cash')->getPairs();
         $this->view->productList   = $this->loadModel('product')->getPairs();
         $this->view->orderList     = $orderList;
@@ -270,6 +268,8 @@ class trade extends control
      */
     public function batchCreate()
     {
+        if($this->config->trade->settings->trader) $this->config->trade->require->create .= ',trader,customer,allCustomer,traderName';
+
         if($_POST)
         {
             $result = $this->trade->batchCreate();
@@ -286,15 +286,16 @@ class trade extends control
         unset($this->lang->trade->typeList['loan']);
         unset($this->lang->trade->typeList['repay']);
 
-        $this->view->title        = $this->lang->trade->batchCreate;
-        $this->view->depositors   = array('' => '') + $this->loadModel('depositor', 'cash')->getPairs();
-        $this->view->users        = $this->loadModel('user')->getPairs('nodeleted,noforbidden,noclosed');
-        $this->view->customerList = $this->loadModel('customer')->getPairs('client');
-        $this->view->traderList   = $this->loadModel('customer')->getPairs('provider');
-        $this->view->expenseTypes = array('' => '') + $this->loadModel('tree')->getOptionMenu('out', 0, $removeRoot = true);
-        $this->view->incomeTypes  = array('' => '') + $this->loadModel('tree')->getOptionMenu('in', 0, $removeRoot = true);
-        $this->view->deptList     = $this->loadModel('tree')->getOptionMenu('dept', 0, $removeRoot = true);
-        $this->view->productList  = array(0 => '') + $this->loadModel('product')->getPairs();
+        $this->view->title         = $this->lang->trade->batchCreate;
+        $this->view->depositors    = array('' => '') + $this->loadModel('depositor', 'cash')->getPairs();
+        $this->view->users         = $this->loadModel('user')->getPairs('nodeleted,noforbidden,noclosed');
+        $this->view->customerList  = $this->loadModel('customer')->getPairs('client');
+        $this->view->traderList    = $this->loadModel('customer')->getPairs('provider');
+        $this->view->expenseTypes  = array('' => '') + $this->loadModel('tree')->getOptionMenu('out', 0, $removeRoot = true);
+        $this->view->incomeTypes   = array('' => '') + $this->loadModel('tree')->getOptionMenu('in', 0, $removeRoot = true);
+        $this->view->deptList      = $this->loadModel('tree')->getOptionMenu('dept', 0, $removeRoot = true);
+        $this->view->requireTrader = $this->config->trade->settings->trader;
+        $this->view->productList   = array(0 => '') + $this->loadModel('product')->getPairs();
 
         $this->display();
     }
@@ -312,6 +313,7 @@ class trade extends control
         $trade = $this->trade->getByID($tradeID);
         if(empty($trade)) die();
         if($trade->type == 'out' and $trade->category != 'loss' and $trade->category != 'fee') $this->loadModel('tree')->checkRight($trade->category);
+        if($this->config->trade->settings->trader) $this->config->trade->require->edit .= ',trader,customer,allCustomer';
 
         if($_POST)
         {
@@ -332,9 +334,21 @@ class trade extends control
         $orders    = $this->order->getPairs();
         foreach($orderList as $id => $order) $order->name = $orders[$id];
         
-        $objectType = array();
-        if($trade->order)    $objectType[] = 'order';
-        if($trade->contract) $objectType[] = 'contract';
+        $objectType = '';
+        if($trade->order)
+        {
+            $objectType = 'order';
+        }
+        elseif($trade->contract)
+        {
+            $objectType = 'contract';
+        }
+        else
+        {
+            $relation = $this->dao->select('relation')->from(TABLE_CUSTOMER)->where('id')->eq($trade->trader)->fetch();
+            if(!empty($relation->relation) && $relation->relation == 'client') $objectType = 'customer';
+        }
+
         $this->view->objectType = $objectType;
 
         $depositorList = $this->loadModel('depositor', 'cash')->getPairs();
@@ -665,6 +679,7 @@ class trade extends control
         $this->view->incomeTypes        = array('' => '') + $this->loadModel('tree')->getOptionMenu('in', 0, $removeRoot = true);
         $this->view->deptList           = $this->loadModel('tree')->getOptionMenu('dept', 0, $removeRoot = true);
         $this->view->productList        = array(0 => '') + $this->loadModel('product')->getPairs();
+        $this->view->requireTrader      = $this->config->trade->settings->trader;
         $this->view->disabledCategories = $this->dao->select('*')->from(TABLE_CATEGORY)->where('major')->in('5,6,7,8')->fetchAll('id');
 
         $this->display();
@@ -1227,35 +1242,16 @@ class trade extends control
         
         if($_POST)
         {
-            $cashSetting = $this->post->cashSetting;
-            if(isset($cashSetting))
-            {
-                $cashSetting = helper::jsonEncode($this->post->cashSetting);
-            }
+            $settings = new stdclass();
+            $settings->trader   = $this->post->trader ? 1 : 0;
+            $settings->category = $this->post->category ? 1 : 0;
 
-            $this->loadModel('setting')->setItem('system.cash.trade.setting', $cashSetting);
+            $this->loadModel('setting')->setItems('system.cash.trade.settings', $settings);
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
         }
 
-        $getSetting = $this->loadModel('setting')->getItem('owner=system&app=cash&module=trade&key=setting');
-        if(isset($getSetting))
-        {
-            $getSetting = json_decode($getSetting);
-            foreach($this->lang->trade->cashSettingList as $code => $value)
-            {
-                $cashSetting[$code]['name']    = $value;
-                foreach($getSetting as $key => $userSetting)
-                {
-                    if($userSetting != $code) continue;
-                    $cashSetting[$code]['setting'] = 1;
-                }
-            }
-        }
-
-        $this->view->title       = $this->lang->trade->cashSetting;
-        $this->view->cashSetting = $cashSetting;
-
+        $this->view->title = $this->lang->trade->settings;
         $this->display();
     }
 }

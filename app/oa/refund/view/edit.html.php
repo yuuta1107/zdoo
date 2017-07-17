@@ -23,6 +23,10 @@
           <td class='w-400px'><?php echo html::input('name', $refund->name, "class='form-control'")?></td>
           <td></td>
         </tr>
+        <tr>
+          <th><?php echo $lang->refund->dept?></th>
+          <td><?php echo html::select('dept', $deptList, $refund->dept, "class='form-control chosen'")?></td>
+        </tr>
         <?php if($categories):?>
         <tr>
           <th><?php echo $lang->refund->category?></th>

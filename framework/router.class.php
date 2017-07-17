@@ -134,6 +134,8 @@ class router extends baseRouter
     {
         $mobile = new mobile();
         $this->clientDevice = ($mobile->isMobile() and !$mobile->isTablet()) ? 'mobile' : 'desktop';
+
+        return $this->clientDevice;
     }
 
     /**

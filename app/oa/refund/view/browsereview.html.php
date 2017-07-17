@@ -41,7 +41,7 @@
           <tr class='text-center'>
             <?php $vars = "date=$date&status=$status&type=&orderBy=%s&recTotal={$pager->recTotal}&recPerPage={$pager->recPerPage}&pageID={$pager->pageID}";?>
             <th class='w-50px'><?php commonModel::printOrderLink('id', $orderBy, $vars, $lang->refund->id);?></th>
-            <th class='w-100px'><?php echo $lang->user->dept;?></th>
+            <th class='w-100px'><?php commonModel::printOrderLink('dept', $orderBy, $vars, $lang->refund->dept);?></th>
             <th class='w-150px'><?php commonModel::printOrderLink('name', $orderBy, $vars, $lang->refund->name);?></th>
             <th class='w-100px'><?php commonModel::printOrderLink('category', $orderBy, $vars, $lang->refund->category);?></th>
             <th class='w-100px'><?php commonModel::printOrderLink('createdBy', $orderBy, $vars, $lang->user->realname);?></th>
@@ -67,7 +67,7 @@
           <td><?php echo $refund->desc?></td>
           <td class='text-left'>
             <?php echo html::a($this->createLink('refund', 'view',   "refundID={$refund->id}&mode=review"), $lang->detail, "")?>
-            <?php if($refund->status == 'wait' or $refund->status == 'doing') echo html::a($this->createLink('refund', 'review', "refundID={$refund->id}"), $lang->refund->review, "data-toggle='modal'")?>
+            <?php if($refund->status == 'wait' or $refund->status == 'doing') echo html::a($this->createLink('refund', 'review', "refundID={$refund->id}"), $lang->refund->review, "data-toggle='modal' data-width='800'")?>
           </td>
         </tr>
         <?php endforeach;?>

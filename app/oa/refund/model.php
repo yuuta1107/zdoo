@@ -126,7 +126,7 @@ class refundModel extends model
         }
 
         $this->dao->insert(TABLE_REFUND)
-            ->data($refund, $skip='files,labels')
+            ->data($refund, $skip = 'files,labels')
             ->autoCheck()
             ->batchCheck($this->config->refund->require->create, 'notempty')
             ->exec();
@@ -321,8 +321,7 @@ class refundModel extends model
         $newCategories = array();
         foreach($categories as $key => $category)
         {
-            if(isset($refundCategories[$key]))
-                $newCategories[$key] = $categories[$key];
+            if(isset($refundCategories[$key])) $newCategories[$key] = $categories[$key];
         }
 
         return $newCategories;

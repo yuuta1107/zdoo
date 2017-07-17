@@ -51,6 +51,7 @@ class refund extends control
         $this->view->currencySign = $this->loadModel('common', 'sys')->getCurrencySign();
         $this->view->categories   = $this->refund->getCategoryPairs();
         $this->view->users        = $this->loadModel('user')->getPairs('noclosed,nodeleted,noforbidden');
+        $this->view->deptList     = $this->loadModel('tree')->getOptionMenu('dept');
         $this->display();
     }
 
@@ -95,6 +96,7 @@ class refund extends control
         $this->view->categories   = $this->refund->getCategoryPairs();
         $this->view->refund       = $refund;
         $this->view->users        = $this->loadModel('user')->getPairs('noclosed,nodeleted,noforbidden');
+        $this->view->deptList     = $this->loadModel('tree')->getOptionMenu('dept');
         $this->display();
     }
 
@@ -179,16 +181,8 @@ class refund extends control
         $monthList    = $this->refund->getAllMonth();
         $yearList     = array_reverse(array_keys($monthList));
 
-        $deptList    = $this->loadModel('tree')->getPairs('', 'dept');
-        $deptList[0] = '/';
-        $users       = $this->loadModel('user')->getList();
-        $userPairs   = array();
-        $userDept    = array();
-        foreach($users as $key => $user) 
-        {
-            $userPairs[$user->account] = $user->realname;
-            $userDept[$user->account] = zget($deptList, $user->dept);
-        }
+        $deptList    = $this->loadModel('tree')->getOptionMenu('dept');
+        $users       = $this->loadModel('user')->getPairs();
 
         $refunds = array();
         if($mode == 'personal') $refunds = $this->refund->getList($mode, $type, $currentDate, '', '', $this->app->user->account, $orderBy, $pager);
@@ -206,13 +200,14 @@ class refund extends control
         $this->view->pager        = $pager;
         $this->view->categories   = $categories;
         $this->view->currencySign = $this->loadModel('common', 'sys')->getCurrencySign();
-        $this->view->userPairs    = $userPairs;
-        $this->view->userDept     = $userDept;
+        $this->view->userPairs    = $users;
+        $this->view->deptList     = $deptList;
         $this->view->currentYear  = $currentYear;
         $this->view->currentMonth = $currentMonth;
         $this->view->monthList    = $monthList;
         $this->view->yearList     = $yearList;
         $this->view->date         = $date;
+        $this->view->type         = $type;
         $this->display('refund', 'browse');
     }
     
@@ -234,6 +229,7 @@ class refund extends control
         $this->view->users        = $this->loadModel('user')->getPairs();
         $this->view->currencySign = $this->loadModel('common', 'sys')->getCurrencySign();
         $this->view->categories   = $this->refund->getCategoryPairs();
+        $this->view->deptList     = $this->loadModel('tree')->getOptionMenu('dept');
         $this->view->preAndNext   = $this->loadModel('common', 'sys')->getPreAndNextObject('refund', $refundID);
         $this->display();
     }
@@ -381,6 +377,7 @@ class refund extends control
         $this->view->title        = $this->lang->refund->review;
         $this->view->refund       = $refund;
         $this->view->categories   = $this->refund->getCategoryPairs();
+        $this->view->deptList     = $this->loadModel('tree')->getOptionMenu('dept');
         $this->view->currencySign = $this->loadModel('common', 'sys')->getCurrencySign();
         $this->display();
     }
@@ -426,11 +423,12 @@ class refund extends control
 
         $this->view->title         = $this->lang->refund->common;
         $this->view->refundID      = $refundID;
+        $this->view->refund        = $this->refund->getById($refundID);
         $this->view->depositorList = $this->loadModel('depositor', 'cash')->getPairs();
         $this->view->orderList     = $this->loadModel('order', 'crm')->getPairs($customerID = 0);
         $this->view->contractList  = $this->loadModel('contract', 'crm')->getList($customerID = 0);
         $this->view->customerList  = $this->loadModel('customer')->getPairs('client');
-        $this->view->deptList      = $this->loadModel('tree')->getOptionMenu('dept', 0, $removeRoot = true);
+        $this->view->deptList      = $this->loadModel('tree')->getOptionMenu('dept');
 
         $this->display();
     }

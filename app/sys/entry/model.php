@@ -546,7 +546,7 @@ class entryModel extends model
         echo "<div class='col-table w-80px'>{$entry->code}</div>";
         echo "<div class='col-table w-240px'>" . ($entry->integration ? $entry->key : '') . '</div>';
         echo "<div class='col-table text-center'>{$entry->ip}</div>";
-        echo "<div class='col-table w-260px'>";
+        echo "<div class='col-table w-220px'>";
         echo html::a(helper::createLink('group', 'manageAppPriv', "type=byApp&appCode=$entry->code"), $this->lang->entry->priv);
         echo html::a(helper::createLink('entry', 'style', "code=$entry->code"), $this->lang->entry->style);
         if(!$entry->buildin)

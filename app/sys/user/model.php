@@ -219,8 +219,6 @@ class userModel extends model
 
         $user = fixer::input('post')
             ->setForce('join', date('Y-m-d H:i:s'))
-            ->setForce('last', helper::now())
-            ->setForce('visits', 1)
             ->setIF($this->post->password1 == false, 'password', '')
             ->remove('admin, ip')
             ->get();
@@ -560,10 +558,10 @@ class userModel extends model
         if($leaveCount) return 'leave';
 
         /* overtime and makeup */
-        $overtimeCount = $this->dao->select('count(*) as count')->from(TABLE_OVERTIME)
+        $processType = $this->dao->select('type')->from(TABLE_OVERTIME)
             ->where('status')->eq('wait')
-            ->andWhere('createdBy')->eq($account)->fetch('count');
-        if($overtimeCount) return 'overtime';
+            ->andWhere('createdBy')->eq($account)->fetchAll();
+        if(!empty($processType)) return $processType[0]->type;
 
         /* lieu */
         $lieuCount = $this->dao->select('count(*) as count')->from(TABLE_LIEU)

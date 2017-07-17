@@ -450,7 +450,7 @@ class attend extends control
         $label = '';
         if($action->action == 'commited') $label = $this->lang->attend->edit;
         if($action->action == 'reviewed') $label = $this->lang->attend->review;
-        $subject = "{$this->lang->attend->common} - $label#" . zget($users, $attend->account) . " {$attend->date}";
+        $subject = "{$this->lang->attend->common} - $label#" . zget($users, $attend->account);
 
         /* send notice if user is online and return failed accounts. */
         $toList = $this->loadModel('action')->sendNotice($actionID, $toList);

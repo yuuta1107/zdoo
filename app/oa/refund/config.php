@@ -33,16 +33,16 @@ $config->refund->search['fields']['refundDate']       = $lang->refund->refundDat
 
 $config->refund->search['params']['name']             = array('operator' => 'include', 'control' => 'input',  'values' => '');
 $config->refund->search['params']['category']         = array('operator' => '=', 'control' => 'select',  'values' => '');
-$config->refund->search['params']['date']             = array('operator' => '>=', 'control' => 'select',  'values' => '', 'class' => 'date');
+$config->refund->search['params']['date']             = array('operator' => '>=', 'control' => 'input',  'values' => '', 'class' => 'date');
 $config->refund->search['params']['money']            = array('operator' => '=', 'control' => 'input', 'values' => '');
 $config->refund->search['params']['status']           = array('operator' => '=', 'control' => 'select', 'values' => array('' => '') + $lang->refund->statusList);
 $config->refund->search['params']['related']          = array('operator' => 'include', 'control' => 'select', 'values' => '');
 $config->refund->search['params']['id']               = array('operator' => '=', 'control' => 'input', 'values' => '');
 $config->refund->search['params']['createdBy']        = array('operator' => '=', 'control' => 'select', 'values' => '');
-$config->refund->search['params']['createdDate']      = array('operator' => '>=', 'control' => 'select',  'values' => '', 'class' => 'date');
+$config->refund->search['params']['createdDate']      = array('operator' => '>=', 'control' => 'input',  'values' => '', 'class' => 'date');
 $config->refund->search['params']['firstReviewer']    = array('operator' => '=', 'control' => 'select', 'values' => '');
-$config->refund->search['params']['firstReviewDate']  = array('operator' => '>=', 'control' => 'select',  'values' => '', 'class' => 'date');
+$config->refund->search['params']['firstReviewDate']  = array('operator' => '>=', 'control' => 'input',  'values' => '', 'class' => 'date');
 $config->refund->search['params']['secondReviewer']   = array('operator' => '=', 'control' => 'select', 'values' => '');
-$config->refund->search['params']['secondReviewDate'] = array('operator' => '>=', 'control' => 'select',  'values' => '', 'class' => 'date');
+$config->refund->search['params']['secondReviewDate'] = array('operator' => '>=', 'control' => 'input',  'values' => '', 'class' => 'date');
 $config->refund->search['params']['refundBy']         = array('operator' => '=', 'control' => 'select', 'values' => '');
-$config->refund->search['params']['refundDate']       = array('operator' => '>=', 'control' => 'select',  'values' => '', 'class' => 'date');
+$config->refund->search['params']['refundDate']       = array('operator' => '>=', 'control' => 'input',  'values' => '', 'class' => 'date');

@@ -35,3 +35,5 @@ $lang->my->project = new stdclass();
 $lang->my->project->common = 'My Project';
 
 $lang->my->dynamic->common = 'My Dynamic';
+
+$lang->my->review->module = 'Module';

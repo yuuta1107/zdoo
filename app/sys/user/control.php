@@ -313,7 +313,12 @@ class user extends control
      */
     public function delete($account = '')
     {
-        if($this->user->inTheReviewProcess($account) !== false) $this->send(array('result' => 'fail', 'message' => $this->lang->user->actionError));
+        $inTheReview = $this->user->inTheReviewProcess($account);
+        if($inTheReview !== false) 
+        {
+            $this->send(array('result' => 'fail', 'message' => sprintf($this->lang->user->actionError,$this->lang->user->reviewProcess[$inTheReview])));
+        }
+
         if($this->user->delete($account)) $this->send(array('result' => 'success'));
         $this->send(array('result' => 'fail', 'message' => dao::getError()));
     }
@@ -392,7 +397,12 @@ class user extends control
     public function forbid($account = '')
     {
         if(!$account) $this->send(array('result'=>'fail', 'message' => $this->lang->user->actionFail));
-        if($this->user->inTheReviewProcess($account) !== false) $this->send(array('result' => 'fail', 'message' => $this->lang->user->actionError));
+
+        $inTheReview = $this->user->inTheReviewProcess($account);
+        if($inTheReview !== false) 
+        {
+            $this->send(array('result' => 'fail', 'message' => sprintf($this->lang->user->actionError,$this->lang->user->reviewProcess[$inTheReview])));
+        }
 
         $result = $this->user->forbid($account);
         if($result) die($this->send(array('result'=>'success', 'locate' => $this->server->http_referer)));

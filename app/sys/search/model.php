@@ -243,6 +243,7 @@ class searchModel extends model
         $hasProduct = false;
         $hasProject = false;
         $hasUser    = false;
+        $hasDept    = false;
 
         $fields     = array_keys($fields);
         foreach($fields as $fieldName)

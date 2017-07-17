@@ -112,7 +112,7 @@ class depositorModel extends model
             ->removeIF($this->post->type == 'cash', 'public')
             ->get();
 
-        $depositor->tags = trim(str_replace('，', ',', $depositor->tags), ',');
+        $depositor->tags = trim(str_replace(array('，', ' '), array(',', ''), $depositor->tags), ',');
 
         $this->dao->insert(TABLE_DEPOSITOR)
             ->data($depositor)
@@ -140,7 +140,7 @@ class depositorModel extends model
             ->removeIF($this->post->type == 'cash', 'public')
             ->get();
 
-        $depositor->tags = trim(str_replace('，', ',', $depositor->tags), ',');
+        $depositor->tags = trim(str_replace(array('，', ' '), array(',', ''), $depositor->tags), ',');
 
         $this->dao->update(TABLE_DEPOSITOR)
             ->data($depositor)

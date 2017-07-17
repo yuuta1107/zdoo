@@ -24,12 +24,10 @@ js::set('from', 'admin');
           <div class="panel">
             <div class="panel-heading">
               <strong><i class="icon-group"></i> <?php echo $lang->user->list;?></strong>
-              <div class="pull-right panel-actions search">
-                <form method='post' class='form-inline form-search w-300px'>
-                  <div class="input-group">
-                    <span class='input-group-btn'>
-                      <?php echo html::a(inlink('admin', 'dept=&mode=forbid'), $lang->user->forbidList, "class='btn btn-primary'");?>
-                    </span>
+              <div class="pull-right panel-actions">
+                <?php echo html::a(inlink('admin', 'dept=&mode=forbid'), $lang->user->forbidList, "class='btn btn-primary pull-left'");?>
+                <form method='post' class='form-inline form-search w-200px pull-right'>
+                  <div class="input-group" style='padding-left:10px'>
                     <?php echo html::input('query', $query, "class='form-control search-query' placeholder='{$lang->user->inputAccount}'"); ?>
                     <span class="input-group-btn">
                       <?php echo html::submitButton($lang->user->searchUser,"btn btn-primary"); ?>

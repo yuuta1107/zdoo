@@ -10,7 +10,11 @@
  * @link        http://www.ranzhico.com
  */
 ?>
+<?php if(helper::isAjaxRequest()):?>
 <?php include '../../../sys/common/view/header.modal.html.php';?>
+<?php else:?>
+<?php include '../../../sys/my/view/header.html.php';?>
+<?php endif;?>
 <?php include '../../../sys/common/view/datepicker.html.php';?>
 <?php include '../../../sys/common/view/kindeditor.html.php';?>
 <div class='container mw-700px'>
@@ -83,4 +87,8 @@
 <script language='Javascript'>
 $(document).ready(function(){switchDateFeature(document.getElementById('dateSwitcher'))});
 </script>
+<?php if(helper::isAjaxRequest()):?>
 <?php include '../../../sys/common/view/footer.modal.html.php';?>
+<?php else:?>
+<?php include $app->getModuleRoot() . 'common/view/footer.html.php';?>
+<?php endif;?>

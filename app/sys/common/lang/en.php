@@ -300,6 +300,7 @@ $lang->todo->menu->future          = 'Pending|todo|browse|mode=future';
 $lang->my = new stdclass();
 $lang->my->review = new stdclass();
 $lang->my->review->menu = new stdclass();
+$lang->my->review->menu->all      = 'All|my|review|type=all';
 $lang->my->review->menu->attend   = 'Attend|my|review|type=attend';
 $lang->my->review->menu->leave    = 'Leave|my|review|type=leave';
 $lang->my->review->menu->overtime = 'Overtime|my|review|type=overtime';

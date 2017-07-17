@@ -11,7 +11,7 @@
  */
 ?>
 <?php include '../../common/view/header.html.php';?>
-<?php js::set('mode', $mode);?>
+<?php js::set('mode', $type);?>
 <?php js::set('createTradeTip', $lang->refund->createTradeTip);?>
 <li id='bysearchTab'><?php echo html::a('#', "<i class='icon-search icon'></i>" . $lang->search->common)?></li>
 <?php $secondReviewerClass = empty($this->config->refund->secondReviewer) ? 'hidden' : '';?>
@@ -55,7 +55,7 @@
           <tr class='text-center'>
             <?php $vars = "date=$date&type=&orderBy=%s&recTotal={$pager->recTotal}&recPerPage={$pager->recPerPage}&pageID={$pager->pageID}";?>
             <th class='w-50px'><?php commonModel::printOrderLink('id', $orderBy, $vars, $lang->refund->id);?></th>
-            <th class='w-100px visible-lg'><?php echo $lang->user->dept;?></th>
+            <th class='w-100px visible-lg'><?php commonModel::printOrderLink('dept', $orderBy, $vars, $lang->refund->dept);?></th>
             <th><?php commonModel::printOrderLink('name', $orderBy, $vars, $lang->refund->name);?></th>
             <th class='w-100px'><?php commonModel::printOrderLink('category', $orderBy, $vars, $lang->refund->category);?></th>
             <th class='w-100px text-right'><?php commonModel::printOrderLink('money', $orderBy, $vars, $lang->refund->money);?></th>
@@ -75,7 +75,7 @@
         <?php foreach($refunds as $refund):?>
         <tr data-url='<?php echo $this->createLink('refund', 'view', "refundID={$refund->id}&mode={$mode}");?>'>
           <td><?php echo $refund->id;?></td>
-          <td class='visible-lg'><?php echo zget($userDept, $refund->createdBy);?></td>
+          <td class='visible-lg'><?php echo zget($deptList, $refund->dept);?></td>
           <td class='text-left' title='<?php echo $refund->name;?>'><?php echo $refund->name?></td>
           <td title='<?php echo zget($categories, $refund->category);?>'><?php echo zget($categories, $refund->category, ' ');?></td>
           <td class='text-right'><?php echo zget($currencySign, $refund->currency) . $refund->money?></td>

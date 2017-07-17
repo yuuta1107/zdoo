@@ -237,6 +237,8 @@ class todo extends control
             $this->lang->todo->typeList["{$code}_task"] = $name . $this->lang->todo->task;
             $this->lang->todo->typeList["{$code}_bug"]  = $name . $this->lang->todo->bug;
         }
+
+        if(!helper::isAjaxRequest())$this->view->moduleMenu = commonModel::createModuleMenu($this->moduleName);
        
         if($todo->date != '00000000') $todo->date = strftime("%Y-%m-%d", strtotime($todo->date));
         $this->view->title      = $this->lang->todo->edit;
@@ -309,6 +311,8 @@ class todo extends control
             $this->lang->todo->typeList["{$code}_task"] = $name . $this->lang->todo->task;
             $this->lang->todo->typeList["{$code}_bug"]  = $name . $this->lang->todo->bug;
         }
+
+        if(!helper::isAjaxRequest())$this->view->moduleMenu = commonModel::createModuleMenu($this->moduleName);
 
         $this->view->title      = "{$this->lang->todo->common} #$todo->id $todo->name";
         $this->view->modalWidth = '80%';

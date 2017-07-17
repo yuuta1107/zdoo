@@ -25,7 +25,7 @@ $lang->trade->product     = '產品';
 $lang->trade->order       = '訂單';
 $lang->trade->contract    = '合同';
 $lang->trade->category    = '科目';
-$lang->trade->date        = '時間';
+$lang->trade->date        = '交易時間';
 $lang->trade->handlers    = '經手人';
 $lang->trade->dept        = '部門';
 $lang->trade->receipt     = '收款賬戶';
@@ -37,7 +37,7 @@ $lang->trade->schema      = '模板';
 $lang->trade->importFile  = '導入檔案';
 $lang->trade->encode      = '編碼';
 $lang->trade->createdBy   = '由誰創建';
-$lang->trade->createdDate = '創建時間';
+$lang->trade->createdDate = '創建日期';
 $lang->trade->editedBy    = '由誰編輯';
 $lang->trade->editedDate  = '編輯時間';
 $lang->trade->month       = '月份';
@@ -79,6 +79,12 @@ $lang->trade->quarter       = '季度';
 $lang->trade->export2Excel  = '導出Excel';
 $lang->trade->compare       = '年度對比表';
 $lang->trade->setReportUnit = '設置報表單位';
+$lang->trade->settings      = '記賬設置';
+
+$lang->trade->settingList['trader']   = '必須選擇商戶';
+$lang->trade->settingList['category'] = '必須選擇末級科目';
+
+$lang->trade->notempty = '數據不能為空';
 
 $lang->trade->report = new stdclass();
 $lang->trade->report->common      = '報表'; 
