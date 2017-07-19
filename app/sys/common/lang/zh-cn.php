@@ -283,10 +283,10 @@ $lang->provider->menu->browse = array('link' => '供应商列表|provider|browse
 /* Menu of product module. */
 if(!isset($lang->product)) $lang->product = new stdclass();
 $lang->product->menu = new stdclass();
-$lang->product->menu->browse     = '所有产品|product|browse|mode=all';
-$lang->product->menu->normal     = '正常|product|browse|mode=normal';
-$lang->product->menu->developing = '研发中|product|browse|mode=developing';
-$lang->product->menu->offline    = '下线|product|browse|mode=offline';
+$lang->product->menu->browse     = '所有产品|product|browse|mode=browse&status=all';
+$lang->product->menu->normal     = '正常|product|browse|mode=browse&status=normal';
+$lang->product->menu->developing = '研发中|product|browse|mode=browse&status=developing';
+$lang->product->menu->offline    = '下线|product|browse|mode=browse&status=offline';
 
 $lang->todo = new stdclass();
 $lang->todo->menu = new stdclass();

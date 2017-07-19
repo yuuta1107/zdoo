@@ -84,8 +84,6 @@ $lang->trade->settings      = '記賬設置';
 $lang->trade->settingList['trader']   = '必須選擇商戶';
 $lang->trade->settingList['category'] = '必須選擇末級科目';
 
-$lang->trade->notempty = '數據不能為空';
-
 $lang->trade->report = new stdclass();
 $lang->trade->report->common      = '報表'; 
 $lang->trade->report->annual      = '年度收支表'; 
@@ -200,6 +198,7 @@ $lang->trade->noTraderMatch = '沒有匹配到相應的商戶，點擊新建';
 $lang->trade->unique        = '今天已經有相同金額的賬目';
 $lang->trade->ignore        = '忽略';
 $lang->trade->denied        = '您沒有權限瀏覽此類賬目，請聯繫管理員設置權限。';
+$lang->trade->emptyData     = '帶有*的內容不能為空';
 
 $lang->trade->chartList['productLine'] = '按產品綫統計';
 $lang->trade->chartList['category']    = '按科目統計';
