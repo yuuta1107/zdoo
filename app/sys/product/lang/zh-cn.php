@@ -42,7 +42,7 @@ $lang->product->statusList['developing'] = '研发中';
 $lang->product->statusList['normal']     = '正常';
 $lang->product->statusList['offline']    = '下线';
 
-$lang->product->lineList['default'] = '';
+$lang->product->lineList[''] = '';
 
 $lang->product->placeholder = new stdclass();
 $lang->product->placeholder->code = '产品代号，必须为英文、数字或下划线的组合';

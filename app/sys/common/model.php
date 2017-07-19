@@ -456,11 +456,6 @@ class commonModel extends model
         if(!empty($menuOrder))
         {
             ksort($menuOrder);
-            foreach($lang->{$currentModule}->menuOrder as $methodName => $methodMenu)
-            {
-                if(!in_array($methodName, $menuOrder)) $menuOrder[] = $methodName;
-            }
-
             foreach($menuOrder as $name)
             {
                 if(isset($lang->{$currentModule}->menu->$name)) $moduleMenus->$name = $lang->{$currentModule}->menu->$name;

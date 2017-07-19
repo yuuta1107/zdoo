@@ -25,10 +25,10 @@
           <th class='w-100px'><?php echo $lang->trade->depositor;?></th>
           <td><?php echo html::select('depositor', $depositorList, '', "class='form-control'");?></td>
         </tr>
-        <?php if(count($lang->product->lineList) > 1):?>
+        <?php if(count($lang->product->lineList) > 2):?>
         <tr>
           <th><?php echo $lang->product->line;?></th>
-          <td><?php echo html::select('productLine', array('') + $lang->product->lineList, '', "class='form-control chosen'");?></td>
+          <td><?php echo html::select('productLine', $lang->product->lineList, '', "class='form-control chosen'");?></td>
         </tr>
         <?php endif;?>
         <tr>
