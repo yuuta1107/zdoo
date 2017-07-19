@@ -234,7 +234,7 @@ class overtimeModel extends model
         foreach($overtimeList as $overtime)
         {
             if($overtime->id == $id) continue;
-            if($overtime->status == 'rejcet') continue;
+            if($overtime->status == 'reject') continue;
 
             $begin = $overtime->begin . ' ' . $overtime->start;
             $end   = $overtime->end   . ' ' . $overtime->finish;
