@@ -157,7 +157,8 @@ class excel extends model
                         }
                         if(isset($this->rawExcelData->colspan[$num][$key]) && is_int($this->rawExcelData->colspan[$num][$key]))
                         {
-                            $excelSheet->mergeCells($this->excelKey[$key] . $i . ":" . chr(ord($this->excelKey[$key]) + $this->rawExcelData->colspan[$num][$key] - 1) . $i);
+                            $column = $this->setExcelField($this->rawExcelData->colspan[$num][$key] - 1, $this->excelKey[$key]);
+                            $excelSheet->mergeCells($this->excelKey[$key] . $i . ":" . $column . $i);
                         }
 
                         /* Wipe off html tags.*/
@@ -367,12 +368,12 @@ class excel extends model
      * Set excel filed name.
      *
      * @param  int    $count
+     * @param  string $letter
      * @access public
      * @return string
      */
-    public function setExcelField($count)
+    public function setExcelField($count, $letter = 'A')
     {
-        $letter = 'A';
         for($i = 1; $i <= $count; $i++) $letter++;
         return $letter;
     }
