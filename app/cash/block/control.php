@@ -150,10 +150,7 @@ class block extends control
         $denyCategories  = array();
         $outCategories   = $this->dao->select('*')->from(TABLE_CATEGORY)->where('type')->eq('out')->fetchAll('id');
         $allowCategories = $this->loadModel('tree')->process($outCategories);
-        foreach(array_diff($outCategories, $allowCategories) as $id => $category)
-        {
-            $denyCategories[] = $id; 
-        }
+        $denyCategories  = array_diff(array_keys($outCategories), array_keys($allowCategories));
 
         $rights = $this->app->user->rights;
         $expensePriv = (isset($rights['tradebrowse']['out']) or $this->app->user->admin == 'super') ? true : false; 
