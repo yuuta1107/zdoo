@@ -48,7 +48,11 @@
       <tbody>
         <?php foreach($customers as $customer):?>
         <tr class='text-center'>
-          <td class='text-left'><label class='checkbox-inline'><input type='checkbox' name='customerIDList[]' value='<?php echo $customer->id;?>'/> <?php echo $customer->id;?></label></td>
+          <?php if(commonModel::hasPriv('customer', 'batchAssign')):?>
+          <td><?php echo html::checkbox('customerIDList', array($customer->id => $customer->id));?></td>
+          <?php else:?>
+          <td><?php echo $customer->id;?></td>
+          <?php endif;?>
           <td class='text-left'><?php if(!commonModel::printLink('customer', 'view', "customerID={$customer->id}", $customer->name)) echo $customer->name;?></td>
           <td><?php if(isset($users[$customer->assignedTo])) echo $users[$customer->assignedTo];?></td>
           <td><?php echo isset($lang->customer->levelNameList[$customer->level]) ? $lang->customer->levelNameList[$customer->level] : '';?></td>
@@ -78,20 +82,15 @@
       </tbody>
     </table>
     <div class='table-footer'>
+      <?php if(commonModel::hasPriv('customer', 'batchAssign')):?>
       <div class='pull-left batch-actions'>
         <div class='pull-left'><?php echo html::selectButton();?></div>
-        <?php
-        if(commonModel::hasPriv('customer', 'batchAssign'))
-        {
-            echo "<div class='input-group assign-action'>";
-            echo html::select('assignedTo', $users, '', "class='form-control chosen'");
-            echo "<span class='input-group-btn'>";
-            echo html::a('#', $lang->customer->assign, "class='btn btn-primary batchAssign'");
-            echo '</span>';
-            echo '</div>';
-        }
-        ?>
+          <div class='input-group assign-action'>
+            <?php echo html::select('assignedTo', $users, '', "class='form-control chosen'");?>
+            <span class='input-group-btn'><?php echo html::a('#', $lang->customer->assign, "class='btn btn-primary batchAssign'");?></span>
+        </div>
       </div>
+      <?php endif;?>
       <?php $pager->show();?>
     </div>
   </form>
