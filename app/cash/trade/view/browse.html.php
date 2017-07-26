@@ -60,7 +60,7 @@
           <th class='w-100px'><?php commonModel::printOrderLink('date', $orderBy, $vars, $lang->trade->date);?></th>
           <th class='w-100px'><?php commonModel::printOrderLink('depositor', $orderBy, $vars, $lang->trade->depositor);?></th>
           <th class='w-60px'><?php commonModel::printOrderLink('type', $orderBy, $vars, $lang->trade->type);?></th>
-          <th class='w-60px'><?php commonModel::printOrderLink('trader', $orderBy, $vars, $lang->trade->trader);?></th>
+          <th><?php commonModel::printOrderLink('trader', $orderBy, $vars, $lang->trade->trader);?></th>
           <th class='w-120px'><?php commonModel::printOrderLink('money', $orderBy, $vars, $lang->trade->money);?></th>
           <th class='w-100px'><?php commonModel::printOrderLink('dept', $orderBy, $vars, $lang->trade->dept);?></th>
           <th class='w-100px'><?php commonModel::printOrderLink('handlers', $orderBy, $vars, $lang->trade->handlers);?></th>
@@ -69,7 +69,7 @@
           <?php else:?>
           <th class='w-200px'><?php commonModel::printOrderLink('category', $orderBy, $vars, $lang->trade->category);?></th>
           <?php endif;?>
-          <th class='w-100px visible-lg'><?php echo $lang->trade->desc;?></th>
+          <th class='w-200px visible-lg'><?php echo $lang->trade->desc;?></th>
           <?php if($mode == 'invest' or $mode == 'loan'):?>
           <th class='w-80px'><?php echo $lang->trade->status;?></th>
           <?php endif;?>
