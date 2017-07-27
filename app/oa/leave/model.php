@@ -280,12 +280,19 @@ class leaveModel extends model
      * 
      * @param  int    $id 
      * @access public
-     * @return bool
+     * @return bool | array
      */
     public function back($id)
     {
+        $oldLeave = $this->getById($id);
+        $leave    = clone $oldLeave;
+        $leave->backDate = $this->post->backDate;
+
         $this->dao->update(TABLE_LEAVE)->set('backDate')->eq($this->post->backDate)->autoCheck()->where('id')->eq($id)->exec();
-        return !dao::isError();
+
+        if(dao::isError()) return false;
+
+        return commonModel::createChanges($oldLeave, $leave);
     }
 
     /**
@@ -321,12 +328,22 @@ class leaveModel extends model
      * Review back date.
      * 
      * @param  int    $id 
+     * @param  string $status
      * @access public
      * @return void
      */
-    public function reviewBackDate($id)
+    public function reviewBackDate($id, $status)
     {
         $oldLeave = $this->getById($id);
+        if($status == 'reject')
+        {
+            $this->dao->update(TABLE_LEAVE)->set('backDate')->eq('0000-00-00 00:00:00')->where('id')->eq($id)->exec();
+            $leave = clone $oldLeave;
+            $leave->backDate = '0000-00-00 00:00:00';
+
+            return commonModel::createChanges($oldLeave, $leave);
+        }
+
         $begin    = $oldLeave->begin;
         $start    = $oldLeave->start;
         $end      = substr($oldLeave->backDate, 0, 10);
@@ -358,19 +375,19 @@ class leaveModel extends model
 
         $this->dao->update(TABLE_LEAVE)->data($data)->where('id')->eq($id)->exec();
 
-        if(!dao::isError())
-        {
-            $leave = $this->getById($id);
-            $dates = range(strtotime($leave->begin), strtotime($leave->end), 60*60*24);
-            $this->loadModel('attend', 'oa')->batchUpdate($dates, $leave->createdBy, 'leave', '', $leave);
+        if(dao::isError()) return false;
 
-            if($oldLeave->end > $leave->end)
-            {
-                $oldDates = range(strtotime($leave->end), strtotime($oldLeave->end), 60*60*24);
-                $this->loadModel('attend', 'oa')->batchUpdate($oldDates, $leave->createdBy);
-            }
+        $leave = $this->getById($id);
+        $dates = range(strtotime($leave->begin), strtotime($leave->end), 60*60*24);
+        $this->loadModel('attend', 'oa')->batchUpdate($dates, $leave->createdBy, 'leave', '', $leave);
+
+        if($oldLeave->end > $leave->end)
+        {
+            $oldDates = range(strtotime($leave->end), strtotime($oldLeave->end), 60*60*24);
+            $this->loadModel('attend', 'oa')->batchUpdate($oldDates, $leave->createdBy);
         }
-        return !dao::isError();
+
+        return commonModel::createChanges($oldLeave, $leave);
     }
 
     /**

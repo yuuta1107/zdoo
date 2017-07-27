@@ -297,46 +297,57 @@ class lieu extends control
      * @access public
      * @return void
      */
-    public function review($id)
+    public function review($id, $status)
     {
         $lieu = $this->lieu->getById($id);
-
-        if($_POST)
+        /* Check privilage. */
+        $canReview  = false;
+        $reviewedBy = $this->lieu->getReviewedBy();
+        if($reviewedBy)
+        { 
+            if($reviewedBy == $this->app->user->account) $canReview = true;
+        }
+        else
         {
-            /* Check privilage. */
-            $reviewedBy = $this->lieu->getReviewedBy();
-            if($reviewedBy)
-            { 
-                if($reviewedBy != $this->app->user->account) $this->send(array('result' => 'fail', 'message' => $this->lang->lieu->denied));
-            }
-            else
-            {
-                $createdUser = $this->loadModel('user')->getByAccount($lieu->createdBy);
-                $dept = $this->loadModel('tree')->getById($createdUser->dept);
-                if((empty($dept) or ",{$this->app->user->account}," != $dept->moderators)) $this->send(array('result' => 'fail', 'message' => $this->lang->lieu->denied));
-            }
+            $createdUser = $this->loadModel('user')->getByAccount($lieu->createdBy);
+            $dept = $this->loadModel('tree')->getById($createdUser->dept);
+            if($dept && $this->app->user->account == trim($dept->moderators, ',')) $canReview = true;
+        }
 
-            $this->lieu->review($id, $this->post->status);
+        if($status == 'pass')
+        {
+            if(!$canReview) $this->send(array('result' => 'fail', 'message' => $this->lang->lieu->denied));
+
+            $this->lieu->review($id, $status);
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
 
-            $actionID = $this->loadModel('action')->create('lieu', $id, 'reviewed', $this->post->comment, zget($this->lang->lieu->statusList, $this->post->status));
+            $actionID = $this->loadModel('action')->create('lieu', $id, 'reviewed', '', $this->lang->lieu->statusList[$status]);
             $this->sendmail($id, $actionID);
 
-            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
+            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess));
         }
-
-        $overtimePairs = array();
-        $overtimeList  = $this->loadModel('overtime', 'oa')->getByIdList(trim($lieu->overtime, ','));
-        foreach($overtimeList as $overtime) 
+        
+        if($status == 'reject')
         {
-            $overtimePairs[$overtime->id] = formatTime($overtime->begin . ' ' . $overtime->start, DT_DATETIME2) . ' ~ ' . formatTime($overtime->end . ' ' . $overtime->finish, DT_DATETIME2);
-        }
+            if($_POST)
+            {
+                if(!$canReview) $this->send(array('result' => 'fail', 'message' => $this->lang->lieu->denied));
 
-        $this->view->title         = $this->lang->lieu->review;
-        $this->view->lieu          = $lieu;
-        $this->view->users         = $this->loadModel('user')->getPairs();
-        $this->view->overtimePairs = $overtimePairs;
-        $this->display();
+                if(!$this->post->comment) $this->send(array('result' => 'fail', 'message' => array('comment' => sprintf($this->lang->error->notempty, $this->lang->lieu->rejectReason))));
+
+                $this->lieu->review($id, $status);
+                if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
+
+                $actionID = $this->loadModel('action')->create('lieu', $id, 'reviewed', $this->post->comment, $this->lang->lieu->statusList[$status]);
+                $this->sendmail($id, $actionID);
+
+                $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
+            }
+
+            $this->view->title = $this->lang->lieu->review;
+            $this->view->id    = $id;
+            $this->display();
+        }
     }
 
     /**

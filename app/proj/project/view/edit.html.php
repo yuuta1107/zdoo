@@ -15,10 +15,10 @@
 <?php include '../../../sys/common/view/datepicker.html.php';?>
 <?php include '../../../sys/common/view/chosen.html.php';?>
 <form method='post' id='ajaxForm' action='<?php echo inlink('edit', "projectID={$project->id}")?>' class='form'>
-  <table class='table-form w-p90'>
+  <table class='table-form'>
     <tr>
       <th class='w-80px'><?php echo $lang->project->name;?></th>
-      <td class='w-p60'>
+      <td class='w-p50'>
         <div class='required required-wrapper'></div>
         <?php echo html::input('name', $project->name, "class='form-control'");?>
       </td><td></td>

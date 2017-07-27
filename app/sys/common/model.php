@@ -572,12 +572,9 @@ class commonModel extends model
                 $hasPriv = false;
                 foreach($lang->my->review->menu as $methodName => $methodMenu)
                 {
-                    if($methodName == 'leave') $methodName = 'attend';
-
                     if(commonModel::hasPriv($methodName, 'review'))
                     {
                         $hasPriv = true;
-                        list($reviewLabel, $reviewModule, $reviewMethod, $vars) = explode('|', $methodMenu);
                         break;
                     }
                 }

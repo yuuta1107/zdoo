@@ -639,14 +639,14 @@ EOT;
     /**
      * add manual sign in and sign out date.
      * 
+     * @param  object $oldAttend
      * @param  string $date 
      * @param  string $account 
      * @access public
-     * @return void
+     * @return int | bool | array
      */
-    public function update($date, $account)
+    public function update($oldAttend, $date, $account)
     {
-        $oldAttend = $this->getByDate($date, $account);
         $attend = fixer::input('post')
             ->remove('date,account,signIn,signOut,status,reviewStatus')
             ->setDefault('manualIn', '')
@@ -655,8 +655,8 @@ EOT;
             ->add('reason', 'normal')
             ->get();
 
-        $attend->manualIn  = date("H:i", strtotime("{$date} {$attend->manualIn}"));
-        $attend->manualOut = date("H:i", strtotime("{$date} {$attend->manualOut}"));
+        $attend->manualIn  = date(DT_TIME1, strtotime("{$date} {$attend->manualIn}"));
+        $attend->manualOut = date(DT_TIME1, strtotime("{$date} {$attend->manualOut}"));
 
         if(isset($oldAttend->new))
         {
@@ -678,9 +678,11 @@ EOT;
                 ->where('date')->eq($date)
                 ->andWhere('account')->eq($account)
                 ->exec();
-        }
 
-        return !dao::isError();
+            if(dao::isError()) return false;
+
+            return commonModel::createChanges($oldAttend, $attend);
+        }
     }
 
     /**

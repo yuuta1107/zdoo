@@ -303,8 +303,8 @@ $lang->my->review->menu = new stdclass();
 $lang->my->review->menu->all      = 'All|my|review|type=all';
 $lang->my->review->menu->attend   = 'Attend|my|review|type=attend';
 $lang->my->review->menu->leave    = 'Leave|my|review|type=leave';
-$lang->my->review->menu->overtime = 'Overtime|my|review|type=overtime';
 $lang->my->review->menu->makeup   = 'Makeup|my|review|type=makeup';
+$lang->my->review->menu->overtime = 'Overtime|my|review|type=overtime';
 $lang->my->review->menu->lieu     = 'Lieu|my|review|type=lieu';
 $lang->my->review->menu->refund   = 'Refund|my|review|type=refund';
 

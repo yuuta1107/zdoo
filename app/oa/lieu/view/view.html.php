@@ -11,6 +11,7 @@
  */
 ?>
 <?php include '../../../sys/common/view/header.modal.html.php';?>
+<?php include '../../../sys/common/view/kindeditor.html.php';?>
 <table class='table table-bordered'>
   <tr>
     <th><?php echo $lang->lieu->status;?></th>
@@ -52,17 +53,25 @@
 </table>
 <?php echo $this->fetch('action', 'history', "objectType=lieu&objectID=$lieu->id");?>
 <div class='page-actions'>
-  <?php if($type == 'browseReview' and $lieu->status == 'wait'):?>
-  <?php echo html::a($this->createLink('oa.lieu', 'review', "id={$lieu->id}"), $lang->lieu->review, "class='btn loadInModal' data-width='800'");?>
-  <?php endif;?>
-
-  <?php if($type == 'personal' and ($lieu->status == 'wait' or $lieu->status == 'draft')):?>
-  <?php echo html::a($this->createLink('oa.lieu', 'switchstatus', "id={$lieu->id}"), $lieu->status == 'wait' ? $lang->lieu->cancel : $lang->lieu->commit, "class='btn'");?>
-  <div class='btn-group'>
-  <?php echo html::a($this->createLink('oa.lieu', 'edit', "id={$lieu->id}"), $lang->edit, "class='btn loadInModal'");?>
-  <?php echo html::a($this->createLink('oa.lieu', 'delete', "id={$lieu->id}"), $lang->delete, "class='btn deleteLieu'");?>
-  </div>
-  <?php endif;?>
-  <?php echo html::a('###', $lang->goback, "class='btn' data-dismiss='modal'");?>
+<?php 
+if($type == 'personal')
+{
+    $switchLabel = $lieu->status == 'wait' ? $lang->lieu->cancel : $lang->lieu->commit;
+    if($lieu->status == 'wait' or $lieu->status == 'draft')
+    {
+        commonModel::printLink('oa.lieu', 'switchstatus', "id={$lieu->id}", $switchLabel, "class='btn'");
+        echo "<div class='btn-group'>";
+        commonModel::printLink('oa.lieu', 'edit',   "id={$lieu->id}", $lang->edit,   "class='btn loadInModal'");
+        commonModel::printLink('oa.lieu', 'delete', "id={$lieu->id}", $lang->delete, "class='btn deleteLieu'");
+        echo '</div>';
+    }
+}
+elseif($lieu->status == 'wait')
+{
+    commonModel::printLink('oa.lieu', 'review', "id={$lieu->id}status=pass",   $lang->lieu->status['pass'],   "class='btn reviewPass'");
+    commonModel::printLink('oa.lieu', 'review', "id={$lieu->id}status=reject", $lang->lieu->status['reject'], "class='btn loadInModal'");
+}
+echo html::a('###', $lang->goback, "class='btn' data-dismiss='modal'");i
+?>
 </div>
 <?php include '../../../sys/common/view/footer.modal.html.php';?>

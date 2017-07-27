@@ -24,7 +24,7 @@
       <th class='w-100px'><?php commonModel::printOrderLink('createdBy', $orderBy, $vars, $lang->project->createdBy);?></th>
       <th class='w-80px'><?php commonModel::printOrderLink('status', $orderBy, $vars, $lang->project->status);?></th>
       <th><?php echo $lang->project->desc;?></th>
-      <th class='w-160px text-right createProductTH'><?php commonModel::printLink('proj.project', 'create', '', '<i class="icon-plus"></i> ' . $this->lang->project->create, "id='createButton' class='btn btn-primary'");?></th>
+      <th class='w-160px text-right createProjectTH'><?php commonModel::printLink('proj.project', 'create', '', '<i class="icon-plus"></i> ' . $this->lang->project->create, "class='btn btn-primary'");?></th>
     </tr>
     </thead>
     <?php foreach($projects as $project):?>

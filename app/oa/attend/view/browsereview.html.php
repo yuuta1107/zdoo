@@ -16,16 +16,16 @@
   <table class='table table-hover table-striped table-sorter table-data table-fixed text-center'>
     <thead>
       <tr class='text-center'>
-        <th class='w-50px'><?php echo $lang->user->id;?></th>
+        <th class='w-50px'><?php echo $lang->attend->id;?></th>
         <th class='w-100px'><?php echo $lang->user->dept;?></th>
-        <th class='w-100px'><?php echo $lang->user->realname;?></th>
+        <th class='w-100px'><?php echo $lang->attend->account;?></th>
         <th class='w-100px'><?php echo $lang->attend->date;?></th>
-        <th class='w-100px'><?php echo $lang->attend->status;?></th>
         <th class='w-80px'><?php echo $lang->attend->manualIn;?></th>
         <th class='w-80px'><?php echo $lang->attend->manualOut;?></th>
         <th class='w-100px'><?php echo $lang->attend->reason;?></th>
         <th><?php echo $lang->attend->desc;?></th>
-        <th class='w-150px'><?php echo $lang->actions;?></th>
+        <th class='w-100px'><?php echo $lang->attend->status;?></th>
+        <th class='w-100px'><?php echo $lang->actions;?></th>
       </tr>
     </thead>
     <?php foreach($attends as $attend):?>
@@ -36,12 +36,15 @@
       <td><?php echo $deptList[$currentDept];?></td>
       <td><?php echo isset($users[$account]) ? $users[$account]->realname : '';?></td>
       <td><?php echo $attend->date?></td>
-      <td><?php echo zget($lang->attend->statusList, $attend->status)?></td>
       <td><?php echo substr($attend->manualIn, 0, 5)?></td>
       <td><?php echo substr($attend->manualOut, 0, 5)?></td>
       <td><?php echo zget($lang->attend->reasonList, $attend->reason)?></td>
       <td><?php echo $attend->desc?></td>
-      <td><?php commonModel::printLink('attend', 'review', "attendID={$attend->id}", $lang->attend->review, "data-toggle='modal' data-width='800'")?></td>
+      <td><?php echo zget($lang->attend->statusList, $attend->status)?></td>
+      <td>
+        <?php commonModel::printLink('oa.attend', 'review', "attendID={$attend->id}&status=pass",   $lang->attend->reviewStatusList['pass'],   "class='pass'")?>
+        <?php commonModel::printLink('oa.attend', 'review', "attendID={$attend->id}&status=reject", $lang->attend->reviewStatusList['reject'], "data-toggle='modal'")?>
+      </td>
     </tr>
     <?php endforeach;?>
   </table>

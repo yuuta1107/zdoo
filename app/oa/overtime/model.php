@@ -284,7 +284,7 @@ class overtimeModel extends model
         $data->status       = $status;
         $data->reviewedBy   = $this->app->user->account;
         $data->reviewedDate = helper::now();
-        $data->rejectReason = $status == 'reject' ? $this->post->rejectReason : '';
+        $data->rejectReason = $status == 'reject' ? $this->post->comment: '';
 
         $this->dao->update(TABLE_OVERTIME)->data($data)->autoCheck()->where('id')->eq($id)->exec();
 

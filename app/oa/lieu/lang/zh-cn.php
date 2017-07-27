@@ -31,6 +31,7 @@ $lang->lieu->reviewedBy   = '审核者';
 $lang->lieu->reviewedDate = '审核时间';
 $lang->lieu->date         = '日期';
 $lang->lieu->time         = '时间';
+$lang->lieu->rejectReason = '拒绝原因';
 
 $lang->lieu->statusList['draft']  = '草稿';
 $lang->lieu->statusList['wait']   = '等待审核';

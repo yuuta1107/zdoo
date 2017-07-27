@@ -139,51 +139,57 @@ class overtime extends control
      * @access public
      * @return void
      */
-    public function review($id)
+    public function review($id, $status)
     {
         $overtime = $this->overtime->getById($id);
-
-        if($_POST)
-        {
-            /* Check privilage. */
-            $reviewedBy = $this->overtime->getReviewedBy();
-            if($reviewedBy)
-            { 
-                if($reviewedBy != $this->app->user->account) $this->send(array('result' => 'fail', 'message' => $this->lang->overtime->denied));
-            }
-            else
-            {
-                $createdUser = $this->loadModel('user')->getByAccount($overtime->createdBy);
-                $dept = $this->loadModel('tree')->getById($createdUser->dept);
-                if((empty($dept) or ",{$this->app->user->account}," != $dept->moderators)) $this->send(array('result' => 'fail', 'message' => $this->lang->overtime->denied));
-            }
-
-            if($this->post->status == 'reject')
-            {
-                $this->overtime->review($id, $this->post->status);
-                if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
-
-                $actionID = $this->loadModel('action')->create('overtime', $id, 'reviewed', $this->post->comment, zget($this->lang->overtime->statusList, $this->post->status));
-                $this->sendmail($id, $actionID);
-                $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
-            }
-            else
-            {
-                $this->overtime->review($id, $this->post->status);
-                if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
-
-                $actionID = $this->loadModel('action')->create('overtime', $id, 'reviewed', $this->post->comment, zget($this->lang->overtime->statusList, $this->post->status));
-                $this->sendmail($id, $actionID);
-
-                $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
-            }
+        /* Check privilage. */
+        $canReview  = false;
+        $reviewedBy = $this->overtime->getReviewedBy();
+        if($reviewedBy)
+        { 
+            if($reviewedBy == $this->app->user->account) $canReview = true;
         }
-        
+        else
+        {
+            $createdUser = $this->loadModel('user')->getByAccount($overtime->createdBy);
+            $dept = $this->loadModel('tree')->getById($createdUser->dept);
+            if($dept && $this->app->user->account == trim($dept->moderators, ',')) $canReview = true; 
+        }
 
-        $this->view->title    = $this->lang->overtime->review;
-        $this->view->overtime = $overtime;
-        $this->view->users    = $this->loadModel('user')->getPairs();
-        $this->display();
+        if($status == 'pass')
+        {
+            if(!$canReview) $this->send(array('result' => 'fail', 'message' => $this->lang->overtime->denied));
+
+            $this->overtime->review($id, $status);
+            if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
+
+            $actionID = $this->loadModel('action')->create('overtime', $id, 'reviewed', '', $this->lang->overtime->statusList[$status]);
+            $this->sendmail($id, $actionID);
+
+            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess));
+        }
+
+        if($status == 'reject')
+        {
+            if($_POST)
+            {
+                if(!$canReview) $this->send(array('result' => 'fail', 'message' => $this->lang->overtime->denied));
+
+                if(!$this->post->comment) $this->send(array('result' => 'fail', 'message' => array('comment' => sprintf($this->lang->error->notempty, $this->lang->overtime->rejectReason))));
+
+                $this->overtime->review($id, $status);
+                if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
+
+                $actionID = $this->loadModel('action')->create('overtime', $id, 'reviewed', $this->post->comment, $this->lang->overtime->statusList[$status]);
+                $this->sendmail($id, $actionID);
+                
+                $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
+            }
+
+            $this->view->title = $this->lang->overtime->review;
+            $this->view->id    = $id;
+            $this->display();
+        }
     }
 
     /**

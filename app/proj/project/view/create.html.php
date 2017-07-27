@@ -15,7 +15,7 @@
 <?php include '../../../sys/common/view/datepicker.html.php';?>
 <?php include '../../../sys/common/view/chosen.html.php';?>
 <form method='post' id='ajaxForm' action='<?php echo inlink('create')?>' class='form'>
-  <table class='table-form w-p90'>
+  <table class='table-form'>
     <tr>
       <th class='w-70px'><?php echo $lang->project->name;?></th>
       <td class='w-p60'>

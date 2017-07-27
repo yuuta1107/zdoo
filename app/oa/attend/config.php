@@ -12,6 +12,9 @@ $config->attend->signInClient  = 'all';
 $config->attend->beginDate = new stdclass();
 $config->attend->beginDate->company = '';
 
+$config->attend->require = new stdclass();
+$config->attend->require->review = 'comment';
+
 $config->attend->editor = new stdclass();
 $config->attend->editor->review = array('id' => 'comment', 'tools' => 'simple');
 

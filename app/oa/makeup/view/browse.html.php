@@ -14,8 +14,8 @@
 <?php include '../../../sys/common/view/treeview.html.php';?>
 <?php js::set('confirmReview', $lang->makeup->confirmReview)?>
 <div id='menuActions'>
-  <?php commonModel::printLink('makeup', 'export', "mode=all&orderBy={$orderBy}", $lang->exportIcon . $lang->export, "class='btn btn-primary iframe' data-width='700'");?>
-  <?php commonModel::printLink('makeup', 'create', "", "<i class='icon icon-plus'></i> {$lang->makeup->create}", "data-toggle='modal' class='btn btn-primary'")?>
+  <?php commonModel::printLink('oa.makeup', 'export', "mode=all&orderBy={$orderBy}", $lang->exportIcon . $lang->export, "class='btn btn-primary iframe' data-width='700'");?>
+  <?php commonModel::printLink('oa.makeup', 'create', "", "<i class='icon icon-plus'></i> {$lang->makeup->create}", "data-toggle='modal' class='btn btn-primary'")?>
 </div>
 <div class='with-side'>
   <div class='side'>
@@ -24,11 +24,11 @@
         <ul class='tree' data-collapsed='true'>
           <?php foreach($yearList as $year):?>
           <li class='<?php echo $year == $currentYear ? 'active' : ''?>'>
-            <?php commonModel::printLink('makeup', $type, "date=$year", $year);?>
+            <?php commonModel::printLink('oa.makeup', $type, "date=$year", $year);?>
             <ul>
               <?php foreach($monthList[$year] as $month):?>
               <li class='<?php echo ($year == $currentYear and $month == $currentMonth) ? 'active' : ''?>'>
-                <?php commonModel::printLink('makeup', $type, "date=$year$month", $year . $month);?>
+                <?php commonModel::printLink('oa.makeup', $type, "date=$year$month", $year . $month);?>
               </li>
               <?php endforeach;?>
             </ul>
@@ -44,19 +44,22 @@
         <thead>
           <tr class='text-center'>
             <?php $vars = "&date={$date}&orderBy=%s";?>
-            <th class='w-80px'><?php commonModel::printOrderLink('id', $orderBy, $vars, $lang->makeup->id);?></th>
+            <th class='w-50px'><?php commonModel::printOrderLink('id', $orderBy, $vars, $lang->makeup->id);?></th>
             <th class='w-80px'><?php commonModel::printOrderLink('createdBy', $orderBy, $vars, $lang->makeup->createdBy);?></th>
             <th class='w-80px visible-lg'><?php echo $lang->user->dept;?></th>
-            <th class='w-150px'><?php commonModel::printOrderLink('begin', $orderBy, $vars, $lang->makeup->begin);?></th>
-            <th class='w-150px'><?php commonModel::printOrderLink('end', $orderBy, $vars, $lang->makeup->end);?></th>
+            <th class='w-120px'><?php commonModel::printOrderLink('begin', $orderBy, $vars, $lang->makeup->begin);?></th>
+            <th class='w-120px'><?php commonModel::printOrderLink('end', $orderBy, $vars, $lang->makeup->end);?></th>
             <th class='w-50px visible-lg'><?php commonModel::printOrderLink('hours', $orderBy, $vars, $lang->makeup->hours);?></th>
             <th><?php echo $lang->makeup->desc;?></th>
             <th class='w-80px'><?php commonModel::printOrderLink('status', $orderBy, $vars, $lang->makeup->status);?></th>
             <?php if($type != 'browseReview'):?>
             <th class='w-80px'><?php commonModel::printOrderLink('reviewedBy', $orderBy, $vars, $lang->makeup->reviewedBy);?></th>
             <?php endif;?>
-            <?php $class = $type == 'personal' ? 'w-130px' : ($type == 'browseReview' ? 'w-100px' : 'w-40px');?>
-            <th class='<?php echo $class;?>'><?php echo $lang->actions;?></th>
+            <?php if($type == 'personal'):?>
+            <th class='w-130px'><?php echo $lang->actions;?></th>
+            <?php else:?>
+            <th class='w-100px'><?php echo $lang->actions;?></th>
+            <?php endif;?>
           </tr>
         </thead>
         <?php foreach($makeupList as $makeup):?>
@@ -73,17 +76,38 @@
           <td><?php echo zget($users, $makeup->reviewedBy);?></td>
           <?php endif;?>
           <td class='actionTD text-left'>
-            <?php commonModel::printLink('oa.makeup', 'view', "id=$makeup->id&type=$type", $lang->detail, "data-toggle='modal'");?>
-            <?php if($type != 'company'):?>
-            <?php if($type == 'browseReview' and $makeup->status == 'wait'):?>
-            <?php commonModel::printLink('oa.makeup', 'review', "id=$makeup->id", $lang->makeup->review, "data-toggle='modal' data-width='800'");?>
-            <?php endif;?>
-            <?php if($type == 'personal' and ($makeup->status == 'wait' or $makeup->status == 'draft')):?>
-            <?php if($makeup->status == 'wait' or $makeup->status == 'draft') commonModel::printLink('oa.makeup', 'switchstatus', "id=$makeup->id", $makeup->status == 'wait' ? $lang->makeup->cancel : $lang->makeup->commit, "class='reload'");?>
-            <?php commonModel::printLink('oa.makeup', 'edit', "id=$makeup->id", $lang->edit, "data-toggle='modal'");?>
-            <?php commonModel::printLink('oa.makeup', 'delete', "id=$makeup->id", $lang->delete, "class='deleter'");?>
-            <?php endif;?>
-            <?php endif;?>
+            <?php
+            commonModel::printLink('oa.makeup', 'view', "id=$makeup->id&type=$type", $lang->detail, "data-toggle='modal'");
+            if($type == 'personal')
+            {
+                $switchLabel = $makeup->status == 'wait' ? $lang->makeup->cancel : $lang->makeup->commit;
+                if($makeup->status == 'wait' or $makeup->status == 'draft') 
+                {
+                    commonModel::printLink('oa.makeup', 'switchstatus', "id=$makeup->id", $switchLabel,  "class='reload'");
+                    commonModel::printLink('oa.makeup', 'edit',         "id=$makeup->id", $lang->edit,   "data-toggle='modal'");
+                    commonModel::printLink('oa.makeup', 'delete',       "id=$makeup->id", $lang->delete, "class='deleter'");
+                }
+                else
+                {
+                    echo html::a('###', $switchLabel,  "disabled='disabled'");
+                    echo html::a('###', $lang->edit,   "disabled='disabled'");
+                    echo html::a('###', $lang->delete, "disabled='disabled'");
+                }
+            }
+            else
+            {
+                if($makeup->status == 'wait')
+                {
+                    commonModel::printLink('oa.makeup', 'review', "id=$makeup->id&status=pass",   $lang->makeup->statusList['pass'],   "class='reviewPass'");
+                    commonModel::printLink('oa.makeup', 'review', "id=$makeup->id&status=reject", $lang->makeup->statusList['reject'], "data-toggle='modal'");
+                }
+                else
+                {
+                    echo html::a('###', $lang->makeup->statusList['pass'],   "disabled='disabled'");
+                    echo html::a('###', $lang->makeup->statusList['reject'], "disabled='disabled'");
+                }
+            }
+            ?>
           </td>
         </tr>
         <?php endforeach;?>

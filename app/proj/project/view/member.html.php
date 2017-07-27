@@ -20,7 +20,7 @@
     <tr>
       <td><?php echo html::select("member[$key]", $members, $member->account, "class='form-control chosen' onchange='updateMember()'")?></td>
       <td class='w-180px'><?php echo html::select("role[$key]", $lang->project->roleList, $member->role, "class='form-control chosen'")?></td>
-      <td class='w-100px'></td>
+      <td class='w-70px'></td>
     </tr>
     <?php $key++;?>
     <?php endforeach;?>
@@ -28,7 +28,7 @@
     <tr>
       <td><?php echo html::select("member[$key]", $users, '', "class='form-control chosen' onchange='updateMember()'")?></td>
       <td class='w-180px'><?php echo html::select("role[$key]", $lang->project->roleList, 'member', "class='form-control chosen'")?></td>
-      <td class='w-100px'><i class='btn btn-mini icon-plus'></i> <i class='btn btn-mini icon-remove'></i></td>
+      <td class='w-60px'><i class='btn btn-mini icon-plus'></i> <i class='btn btn-mini icon-remove'></i></td>
     </tr>
     <?php $key++;?>
     <?php endfor;?>
