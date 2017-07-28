@@ -280,7 +280,7 @@ class contract extends control
         if(!empty($_POST))
         {
             $return = $this->contract->receive($contractID);
-            if($return['result'] == 'fail') $this->send($return);
+            if(!empty($return['result']) && $return['result'] == 'fail') $this->send($return);
 
             $actionExtra = html::a($this->createLink('contract', 'view', "contractID=$contractID"), $contract->name) . $this->lang->contract->return . zget($currencySign, $contract->currency, '') . $this->post->amount;
 
@@ -312,7 +312,7 @@ class contract extends control
         $this->view->contract      = $contract;
         $this->view->users         = $this->loadModel('user')->getPairs('nodeleted,noforbidden');
         $this->view->currencySign  = $currencySign;
-        $this->view->depositorList = $this->loadModel('depositor', 'cash')->getPairs();
+        $this->view->depositorList = array('') + $this->loadModel('depositor', 'cash')->getPairs();
         $this->view->deptList      = $this->loadModel('tree')->getOptionMenu('dept', 0, $removeRoot = true);
         $this->view->categories    = $this->loadModel('tree')->getOptionMenu('in', 0);
         $this->view->productList   = array(0 => '') + $productList;

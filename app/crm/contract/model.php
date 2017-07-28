@@ -522,6 +522,8 @@ class contractModel extends model
 
         if(!$this->post->continue and $this->post->createTrade)
         {
+            if(!$this->post->depositor) return array('result' => 'fail', 'message' => array('depositor' => sprintf($this->lang->error->notempty, $this->lang->trade->depositor)));
+
             $existTrades = $this->dao->select('*')->from(TABLE_TRADE)
                 ->where('money')->eq($data->amount)
                 ->andWhere('date')->eq(substr($data->returnedDate, 0, 10))

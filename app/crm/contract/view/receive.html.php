@@ -32,11 +32,17 @@
             <label class='checkbox-inline'><input type='checkbox' id='createTrade' name='createTrade' value='1' checked='checked'> <?php echo $lang->trade->create;?></label>
           </div>
         </div>
-      </td><td></td>
+      </td>
+      <td></td>
     </tr>
     <tr class='tradeTR'>
       <th><?php echo $lang->trade->depositor;?></th>
       <td><?php echo html::select('depositor', $depositorList, '', "class='form-control'");?></td>
+      <td>
+        <?php unset($depositorList[0]);?>
+        <?php unset($depositorList['']);?>
+        <?php if(!$depositorList) commonModel::printLink('cash.depositor', 'browse', '', $lang->depositor->create, "class='btn createDepositor'");?>
+      </td>
     </tr>
     <tr class='tradeTR'>
       <th><?php echo $lang->trade->category;?></th>

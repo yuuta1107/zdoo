@@ -41,4 +41,23 @@ $(document).ready(function()
             }
         }
     });
+
+    $('.createDepositor').click(function()
+    {
+        var skip = false;
+        if($(this).data('toggle') == 'modal') skip = true;
+        if($(this).hasClass('deleter')) skip = true;
+        if($(this).hasClass('reloadDeleter')) skip = true;
+        if($(this).hasClass('switcher')) skip = true;
+
+        var href = $(this).prop('href');
+        var app  = '';
+        if(href.indexOf('/cash/') != -1) app = 'cash';
+
+        if(!skip && app != '')
+        {
+            $.openEntry(app, href);
+            return false;
+        }
+    });
 })

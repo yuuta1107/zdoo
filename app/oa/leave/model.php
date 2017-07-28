@@ -341,6 +341,8 @@ class leaveModel extends model
             $leave = clone $oldLeave;
             $leave->backDate = '0000-00-00 00:00:00';
 
+            if(dao::isError()) return false;
+
             return commonModel::createChanges($oldLeave, $leave);
         }
 
