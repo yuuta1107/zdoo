@@ -144,7 +144,7 @@ class leaveModel extends model
     public function getReviewedBy()
     {
         $this->app->loadModuleConfig('attend');
-        return empty($this->config->leave->reviewedBy) ? (empty($this->config->attend->reviewedBy) ? '' : $this->config->attend->reviewedBy) : $this->config->leave->reviewedBy;
+        return !isset($this->config->leave->reviewedBy) ? (!isset($this->config->attend->reviewedBy) ? '' : $this->config->attend->reviewedBy) : $this->config->leave->reviewedBy;
     }
 
     /**

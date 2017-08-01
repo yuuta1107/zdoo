@@ -104,7 +104,7 @@ class makeupModel extends model
     public function getReviewedBy()
     {
         $this->app->loadModuleConfig('attend');
-        return empty($this->config->makeup->reviewedBy) ? (empty($this->config->attend->reviewedBy) ? '' : $this->config->attend->reviewedBy) : $this->config->makeup->reviewedBy;
+        return !isset($this->config->makeup->reviewedBy) ? (!isset($this->config->attend->reviewedBy) ? '' : $this->config->attend->reviewedBy) : $this->config->makeup->reviewedBy;
     }
 
     /**
