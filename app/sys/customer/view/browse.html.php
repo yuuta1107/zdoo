@@ -82,7 +82,7 @@
       </tbody>
     </table>
     <div class='table-footer'>
-      <?php if(commonModel::hasPriv('customer', 'batchAssign')):?>
+      <?php if($customers && commonModel::hasPriv('customer', 'batchAssign')):?>
       <div class='pull-left batch-actions'>
         <div class='pull-left'><?php echo html::selectButton();?></div>
           <div class='input-group assign-action'>

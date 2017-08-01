@@ -52,7 +52,9 @@
   <?php if($mode == 'all' || $mode == 'in' || $mode == 'out') commonModel::printLink('trade', 'batchcreate', '', "<i class='icon-sitemap'> </i>" . $lang->trade->batchCreate, "class='btn btn-primary'")?>
 </div>
 <div class='panel'>
-  <form method='post' action='<?php echo inlink('batchedit', 'step=form')?>'>
+  <?php if(commonModel::hasPriv('trade', 'batchEdit')):?>
+  <form method='post' action='<?php echo inlink('batchEdit', 'step=form')?>'>
+  <?php endif;?>
     <table class='table table-hover table-striped table-bordered tablesorter table-data table-fixed' id='tradeList'>
       <thead>
         <tr class='text-center'>
@@ -120,10 +122,12 @@
       </tbody>
     </table>
     <div class='table-footer'>
+      <?php if($trades):?>
       <div class='pull-left'>
-        <?php echo html::selectButton() . html::submitButton($lang->edit);?>
+        <?php if(commonModel::hasPriv('trade', 'batchEdit')) echo html::selectButton() . html::submitButton($lang->edit);?>
         <span class='text-danger'><?php $this->trade->countMoney($trades, $mode);?></span>
       </div>
+      <?php endif;?>
       <?php echo $pager->get();?>
     </div>
   </form>

@@ -81,7 +81,9 @@
       <tfoot>
         <tr>
           <td colspan='10'>
+            <?php if($tasks):?>
             <div class='pull-left'><?php echo html::selectButton() . html::submitButton($lang->close);?></div>
+            <?php endif;?>
             <?php $pager->show();?>
           </td>
         </tr>
