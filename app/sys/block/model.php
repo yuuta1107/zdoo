@@ -235,7 +235,8 @@ class blockModel extends model
 
         foreach($blocks as $key => $block)
         {
-            if(strpos('html,allEntries,dynamic,attend', $block->block) !== false) continue;
+            $openBlocks = $this->app->clientDevice == 'mobile' ? 'html,allEntries,dynamic' : 'html,allEntries,dynamic,attend';
+            if(strpos($openBlocks, $block->block) !== false) continue;
 
             $entry = $this->loadModel('entry')->getByCode($block->source);
             if($entry && !$entry->buildin) continue;
