@@ -33,7 +33,7 @@ $lang->overtime->reviewedBy   = '审核者';
 $lang->overtime->reviewedDate = '审核时间';
 $lang->overtime->date         = '日期';
 $lang->overtime->time         = '时间';
-$lang->overtime->rejectReason = '拒绝理由';
+$lang->overtime->rejectReason = '拒绝原因';
 
 $lang->overtime->typeList['time']    = '工作日加班';
 $lang->overtime->typeList['rest']    = '休息日加班';

@@ -13,7 +13,6 @@
 <?php include './header.html.php';?>
 <?php js::set('type', $type)?>
 <?php js::set('confirmReview', $lang->attend->confirmReview);?>
-
 <?php $appendClass = $type == 'all' ? 'table-noFixedHeader' : 'table-fixedHeader'?>
 <?php if(($type == 'all' && !empty($attends)) || $type == 'attend'):?>
 <div class='panel'>
@@ -25,14 +24,14 @@
         <?php else:?>
           <th class='w-80px'><?php echo $lang->attend->id;?></th>
         <?php endif;?>
-        <th class='w-80px'><?php echo $lang->attend->account;?></th>
-        <th class='w-80px'><?php echo $lang->attend->date;?></th>
-        <th class='w-100px'><?php echo $lang->attend->manualIn;?></th>
-        <th class='w-120px'><?php echo $lang->attend->manualOut;?></th>
-        <th class='w-120px'><?php echo $lang->attend->reason;?></th>
+        <th class='w-100px'><?php echo $lang->attend->account;?></th>
+        <th class='w-100px'><?php echo $lang->attend->date;?></th>
+        <th class='w-80px'><?php echo $lang->attend->manualIn;?></th>
+        <th class='w-80px'><?php echo $lang->attend->manualOut;?></th>
+        <th class='w-100px'><?php echo $lang->attend->reason;?></th>
         <th><?php echo $lang->attend->desc;?></th>
         <th class='w-100px'><?php echo $lang->attend->status;?></th>
-        <th class='w-150px'><?php echo $lang->actions;?></th>
+        <th class='w-100px'><?php echo $lang->actions;?></th>
       </tr>
     </thead>
     <?php foreach($attends as $attend):?>
@@ -50,7 +49,8 @@
       <td><?php echo $attend->desc?></td>
       <td><?php echo zget($lang->attend->statusList, $attend->status)?></td>
       <td>
-        <?php if(commonModel::hasPriv('oa.attend', 'review')) echo html::a($this->createLink('oa.attend', 'review', "attendID={$attend->id}"), $lang->attend->review, "data-status='pass' data-toggle='modal'")?>
+        <?php commonModel::printLink('oa.attend', 'review', "attendID={$attend->id}&status=pass",   $lang->attend->reviewStatusList['pass'],   "data-status='pass' data-toggle='ajax'")?>
+        <?php commonModel::printLink('oa.attend', 'review', "attendID={$attend->id}&status=reject", $lang->attend->reviewStatusList['reject'], "data-toggle='modal'")?>
       </td>
     </tr>
     <?php endforeach;?>
@@ -73,7 +73,7 @@
         <th class='w-140px'><?php commonModel::printOrderLink('backDate', $orderBy, $vars, $lang->leave->backDate);?></th>
         <th><?php echo $lang->leave->desc;?></th>
         <th class='w-80px'><?php commonModel::printOrderLink('status', $orderBy, $vars, $lang->leave->status);?></th>
-        <th class='w-150px'><?php echo $lang->actions;?></th>
+        <th class='w-100px'><?php echo $lang->actions;?></th>
       </tr>
     </thead>
     <?php foreach($leaveList as $leave):?>
@@ -88,13 +88,9 @@
       <td title='<?php echo $leave->desc?>'><?php echo $leave->desc;?></td>
       <td class='leave-<?php echo $leave->status?>'><?php echo zget($this->lang->leave->statusList, $leave->status);?></td>
       <td>
-        <?php if(commonModel::hasPriv('oa.leave', 'review')):?>
-        <?php if($leave->status == 'pass'):?>
-        <?php echo html::a($this->createLink('oa.leave', 'review', "id={$leave->id}&type=back"), $lang->leave->statusList['pass'] . $lang->leave->back, "data-status='pass' data-toggle='modal' data-width=800");?>
-        <?php else:?>
-        <?php echo html::a($this->createLink('oa.leave', 'review', "id={$leave->id}&type=review"), $lang->leave->review, "data-status='pass' data-toggle='modal' data-width=800");?>
-        <?php endif;?>
-        <?php endif;?>
+        <?php $mode = $leave->status == 'pass' ? 'back' : '';?>
+        <?php commonModel::printLink('oa.leave', 'review', "id={$leave->id}&status=pass&mode=$mode",   $lang->leave->statusList['pass'],   "data-status='pass' data-toggle='ajax'");?>
+        <?php commonModel::printLink('oa.leave', 'review', "id={$leave->id}&status=reject&mode=$mode", $lang->leave->statusList['reject'], "data-toggle='modal'");?>
       </td>
     </tr>
     <?php endforeach;?>
@@ -115,7 +111,7 @@
         <th class='w-150px'><?php commonModel::printOrderLink('begin', $orderBy, $vars, $lang->makeup->begin);?></th>
         <th class='w-150px'><?php commonModel::printOrderLink('begin', $orderBy, $vars, $lang->makeup->end);?></th>
         <th><?php echo $lang->makeup->desc;?></th>
-        <th class='w-150px'><?php echo $lang->actions;?></th>
+        <th class='w-100px'><?php echo $lang->actions;?></th>
       </tr>
     </thead>
     <?php foreach($makeupList as $makeup):?>
@@ -128,8 +124,8 @@
       <td><?php echo $makeup->end . ' ' . substr($makeup->finish, 0, 5);?></td>
       <td title='<?php echo $makeup->desc?>'><?php echo $makeup->desc;?></td>
       <td>
-        <?php echo html::a($this->createLink('oa.makeup', 'view', "id={$makeup->id}"), $lang->view, "data-toggle='modal'");?>
-        <?php if(commonModel::hasPriv('oa.makeup', 'review')) echo html::a($this->createLink('oa.makeup', 'review', "id={$makeup->id}&status=pass"), $lang->makeup->review, "data-status='pass' data-toggle='modal' data-width=800");?>
+        <?php commonModel::printLink('oa.makeup', 'review', "id={$makeup->id}&status=pass",   $lang->makeup->statusList['pass'],   "data-status='pass' data-toggle='ajax'");?>
+        <?php commonModel::printLink('oa.makeup', 'review', "id={$makeup->id}&status=reject", $lang->makeup->statusList['reject'], "data-toggle='modal'");?>
       </td>
     </tr>
     <?php endforeach;?>
@@ -151,7 +147,7 @@
         <th class='w-150px'><?php commonModel::printOrderLink('begin', $orderBy, $vars, $lang->overtime->end);?></th>
         <th><?php echo $lang->overtime->desc;?></th>
         <th class='w-80px'><?php commonModel::printOrderLink('status', $orderBy, $vars, $lang->overtime->status);?></th>
-        <th class='w-150px'><?php echo $lang->actions;?></th>
+        <th class='w-100px'><?php echo $lang->actions;?></th>
       </tr>
     </thead>
     <?php foreach($overtimeList as $overtime):?>
@@ -165,7 +161,8 @@
       <td title='<?php echo $overtime->desc?>'><?php echo $overtime->desc;?></td>
       <td class='overtime-<?php echo $overtime->status?>'><?php echo zget($this->lang->overtime->statusList, $overtime->status);?></td>
       <td>
-        <?php if(commonModel::hasPriv('oa.overtime', 'review')) echo html::a($this->createLink('oa.overtime', 'review', "id={$overtime->id}"), $lang->overtime->review, "data-status='reject' data-toggle='modal' data-width=800");?>
+        <?php commonModel::printLink('oa.overtime', 'review', "id={$overtime->id}&status=pass",   $lang->overtime->statusList['pass'],   "data-status='reject' data-toggle='ajax'");?>
+        <?php commonModel::printLink('oa.overtime', 'review', "id={$overtime->id}&status=reject", $lang->overtime->statusList['reject'], "data-toggle='modal'");?>
       </td>
     </tr>
     <?php endforeach;?>
@@ -186,7 +183,7 @@
         <th class='w-150px'><?php commonModel::printOrderLink('begin', $orderBy, $vars, $lang->lieu->end);?></th>
         <th><?php echo $lang->lieu->desc;?></th>
         <th class='w-80px'><?php commonModel::printOrderLink('status', $orderBy, $vars, $lang->lieu->status);?></th>
-        <th class='w-150px'><?php echo $lang->actions;?></th>
+        <th class='w-100px'><?php echo $lang->actions;?></th>
       </tr>
     </thead>
     <?php foreach($lieuList as $lieu):?>
@@ -199,7 +196,8 @@
       <td title='<?php echo $lieu->desc?>'><?php echo $lieu->desc;?></td>
       <td class='lieu-<?php echo $lieu->status?>'><?php echo zget($this->lang->lieu->statusList, $lieu->status);?></td>
       <td>
-        <?php if(commonModel::hasPriv('oa.lieu', 'review')) echo html::a($this->createLink('oa.lieu', 'review', "id={$lieu->id}"), $lang->lieu->review, "data-status='pass' data-toggle='modal' data-width=800");?>
+        <?php commonModel::printLink('oa.lieu', 'review', "id={$lieu->id}&status=pass",   $lang->lieu->statusList['pass'],   "data-status='pass' data-toggle='ajax'");?>
+        <?php commonModel::printLink('oa.lieu', 'review', "id={$lieu->id}&status=reject", $lang->lieu->statusList['reject'], "data-toggle='modal'");?>
       </td>
     </tr>
     <?php endforeach;?>
@@ -213,9 +211,9 @@
     <thead>
       <tr class='text-center'>
         <?php if($type == 'all'): ?>
-          <th class='w-80px'><?php echo $lang->my->review->module;?></th>
+        <th class='w-80px'><?php echo $lang->my->review->module;?></th>
         <?php else:?>
-          <th class='w-80px'><?php echo $lang->refund->id;?></th>
+        <th class='w-80px'><?php echo $lang->refund->id;?></th>
         <?php endif;?>
         <th class='w-80px'><?php echo $lang->refund->createdBy;?></th>
         <th class='w-80px'><?php echo $lang->refund->name;?></th>
@@ -224,7 +222,7 @@
         <th class='w-120px'><?php echo $lang->refund->date;?></th>
         <th><?php echo $lang->refund->desc;?></th>
         <th class='w-100px'><?php echo $lang->refund->status;?></th>
-        <th class='w-150px'><?php echo $lang->actions;?></th>
+        <th class='w-100px'><?php echo $lang->actions;?></th>
       </tr>
     </thead>
     <?php foreach($refunds as $refund):?>
@@ -241,7 +239,7 @@
       <td><?php echo $refund->date;?></td>
       <td><?php echo $refund->desc?></td>
       <td><?php echo zget($lang->refund->statusList, $refund->status);?></td>
-      <td><?php if(commonModel::hasPriv('oa.refund', 'review')) echo html::a($this->createLink('oa.refund', 'review', "refundID={$refund->id}"), $lang->refund->review, "data-toggle='modal' data-width=800")?></td>
+      <td><?php commonModel::printLink('oa.refund', 'review', "refundID={$refund->id}", $lang->refund->review, "data-toggle='modal' data-width=800")?></td>
     </tr>
     <?php endforeach;?>
   </table>
@@ -259,9 +257,10 @@
         <th class='w-100px'><?php echo $lang->leave->type;?></th>
         <th class='w-120px'><?php echo $lang->leave->begin;?></th>
         <th class='w-120px'><?php echo $lang->leave->end;?></th>
+        <th class='w-60px'><?php echo $lang->leave->hours;?></th>
         <th><?php echo $lang->leave->desc;?></th>
         <th class='w-100px'><?php echo $lang->leave->status;?></th>
-        <th class='w-150px'><?php echo $lang->actions;?></th>
+        <th class='w-100px'><?php echo $lang->actions;?></th>
       </tr>
     </thead>
     <?php foreach($leaveList as $leave):?>
@@ -272,34 +271,15 @@
       <td><?php echo zget($this->lang->leave->typeList, $leave->type);?></td>
       <td><?php echo $leave->begin . ' ' . substr($leave->start, 0, 5);?></td>
       <td><?php echo $leave->end . ' ' . substr($leave->finish, 0, 5);?></td>
+      <td><?php echo $leave->hours;?></td>
       <td title='<?php echo $leave->desc?>'>
       <?php echo $leave->desc;?>
       </td>
       <td class='leave-<?php echo $leave->status?>'><?php echo zget($this->lang->leave->statusList, $leave->status);?></td>
       <td>
-        <?php if(commonModel::hasPriv('oa.leave', 'review')):?>
-        <?php if($leave->status == 'pass'):?>
-        <?php echo html::a($this->createLink('oa.leave', 'review', "id={$leave->id}&type=back"), $lang->leave->statusList['pass'] . $lang->leave->back, "data-status='pass' data-toggle='modal' data-width=800");?>
-        <?php else:?>
-        <?php echo html::a($this->createLink('oa.leave', 'review', "id={$leave->id}&type=review"), $lang->leave->review, "data-status='pass' data-toggle='modal' data-width=800");?>
-        <?php endif;?>
-        <?php endif;?>
-      </td>
-    </tr>
-    <?php endforeach;?>
-
-    <?php foreach($overtimeList as $overtime):?>
-    <tr>
-      <td><?php echo $lang->overtime->common;?></td>
-      <td><?php echo zget($users, $overtime->createdBy);?></td>
-      <td><?php echo zget($deptList, $overtime->dept);?></td>
-      <td><?php echo zget($this->lang->overtime->typeList, $overtime->type);?></td>
-      <td><?php echo $overtime->begin . ' ' . substr($overtime->start, 0, 5);?></td>
-      <td><?php echo $overtime->end . ' ' . substr($overtime->finish, 0, 5);?></td>
-      <td title='<?php echo $overtime->desc?>'><?php echo $overtime->desc;?></td>
-      <td class='overtime-<?php echo $overtime->status?>'><?php echo zget($this->lang->overtime->statusList, $overtime->status);?></td>
-      <td>
-        <?php if(commonModel::hasPriv('oa.overtime', 'review')) echo html::a($this->createLink('oa.overtime', 'review', "id={$overtime->id}"), $lang->overtime->review, "data-status='reject' data-toggle='modal' data-width=800");?>
+        <?php $mode = $leave->status == 'pass' ? 'back' : '';?>
+        <?php commonModel::printLink('oa.leave', 'review', "id={$leave->id}&status=pass&mode=$mode",   $lang->leave->statusList['pass'],   "data-status='pass' data-toggle='ajax'");?>
+        <?php commonModel::printLink('oa.leave', 'review', "id={$leave->id}&status=reject&mode=$mode", $lang->leave->statusList['reject'], "data-toggle='modal'");?>
       </td>
     </tr>
     <?php endforeach;?>
@@ -312,10 +292,30 @@
       <td><?php echo zget($this->lang->makeup->typeList, $makeup->type);?></td>
       <td><?php echo $makeup->begin . ' ' . substr($makeup->start, 0, 5);?></td>
       <td><?php echo $makeup->end . ' ' . substr($makeup->finish, 0, 5);?></td>
+      <td><?php echo $makeup->hours;?></td>
       <td title='<?php echo $makeup->desc?>'><?php echo $makeup->desc;?></td>
-      <td class='leave-<?php echo $leave->status?>'><?php echo zget($this->lang->leave->statusList, $leave->status);?></td>
+      <td class='leave-<?php echo $makeup->status?>'><?php echo zget($this->lang->leave->statusList, $makeup->status);?></td>
       <td>
-        <?php if(commonModel::hasPriv('oa.makeup', 'review')) echo html::a($this->createLink('oa.makeup', 'review', "id={$makeup->id}&status=pass"), $lang->makeup->review, "data-status='pass' data-toggle='modal' data-width=800");?>
+        <?php commonModel::printLink('oa.makeup', 'review', "id={$makeup->id}&status=pass",   $lang->makeup->statusList['pass'],   "data-status='pass' data-toggle='ajax'");?>
+        <?php commonModel::printLink('oa.makeup', 'review', "id={$makeup->id}&status=reject", $lang->makeup->statusList['reject'], "data-toggle='modal'");?>
+      </td>
+    </tr>
+    <?php endforeach;?>
+
+    <?php foreach($overtimeList as $overtime):?>
+    <tr>
+      <td><?php echo $lang->overtime->common;?></td>
+      <td><?php echo zget($users, $overtime->createdBy);?></td>
+      <td><?php echo zget($deptList, $overtime->dept);?></td>
+      <td><?php echo zget($this->lang->overtime->typeList, $overtime->type);?></td>
+      <td><?php echo $overtime->begin . ' ' . substr($overtime->start, 0, 5);?></td>
+      <td><?php echo $overtime->end . ' ' . substr($overtime->finish, 0, 5);?></td>
+      <td><?php echo $overtime->hours;?></td>
+      <td title='<?php echo $overtime->desc?>'><?php echo $overtime->desc;?></td>
+      <td class='overtime-<?php echo $overtime->status?>'><?php echo zget($this->lang->overtime->statusList, $overtime->status);?></td>
+      <td>
+        <?php commonModel::printLink('oa.overtime', 'review', "id={$overtime->id}&status=pass",   $lang->overtime->statusList['pass'],   "data-status='reject' data-toggle='ajax'");?>
+        <?php commonModel::printLink('oa.overtime', 'review', "id={$overtime->id}&status=reject", $lang->overtime->statusList['reject'], "data-toggle='modal'");?>
       </td>
     </tr>
     <?php endforeach;?>
@@ -328,10 +328,12 @@
       <td></td>
       <td><?php echo $lieu->begin . ' ' . substr($lieu->start, 0, 5);?></td>
       <td><?php echo $lieu->end . ' ' . substr($lieu->finish, 0, 5);?></td>
+      <td><?php echo $lieu->hours;?></td>
       <td title='<?php echo $lieu->desc?>'><?php echo $lieu->desc;?></td>
       <td class='lieu-<?php echo $lieu->status?>'><?php echo zget($this->lang->lieu->statusList, $lieu->status);?></td>
       <td>
-        <?php if(commonModel::hasPriv('oa.lieu', 'review')) echo html::a($this->createLink('oa.lieu', 'review', "id={$lieu->id}"), $lang->lieu->review, "data-status='pass' data-toggle='modal' data-width=800");?>
+        <?php commonModel::printLink('oa.lieu', 'review', "id={$lieu->id}&status=pass",   $lang->lieu->statusList['pass'],   "data-status='pass' data-toggle='ajax'");?>
+        <?php commonModel::printLink('oa.lieu', 'review', "id={$lieu->id}&status=reject", $lang->lieu->statusList['reject'], "data-toggle='modal'");?>
       </td>
     </tr>
     <?php endforeach;?>

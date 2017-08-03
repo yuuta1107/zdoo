@@ -52,7 +52,9 @@
   <?php if($mode == 'all' || $mode == 'in' || $mode == 'out') commonModel::printLink('trade', 'batchcreate', '', "<i class='icon-sitemap'> </i>" . $lang->trade->batchCreate, "class='btn btn-primary'")?>
 </div>
 <div class='panel'>
-  <form method='post' action='<?php echo inlink('batchedit', 'step=form')?>'>
+  <?php if(commonModel::hasPriv('trade', 'batchEdit')):?>
+  <form method='post' action='<?php echo inlink('batchEdit', 'step=form')?>'>
+  <?php endif;?>
     <table class='table table-hover table-striped table-bordered tablesorter table-data table-fixed' id='tradeList'>
       <thead>
         <tr class='text-center'>
@@ -60,7 +62,7 @@
           <th class='w-100px'><?php commonModel::printOrderLink('date', $orderBy, $vars, $lang->trade->date);?></th>
           <th class='w-100px'><?php commonModel::printOrderLink('depositor', $orderBy, $vars, $lang->trade->depositor);?></th>
           <th class='w-60px'><?php commonModel::printOrderLink('type', $orderBy, $vars, $lang->trade->type);?></th>
-          <th class='w-60px'><?php commonModel::printOrderLink('trader', $orderBy, $vars, $lang->trade->trader);?></th>
+          <th><?php commonModel::printOrderLink('trader', $orderBy, $vars, $lang->trade->trader);?></th>
           <th class='w-120px'><?php commonModel::printOrderLink('money', $orderBy, $vars, $lang->trade->money);?></th>
           <th class='w-100px'><?php commonModel::printOrderLink('dept', $orderBy, $vars, $lang->trade->dept);?></th>
           <th class='w-100px'><?php commonModel::printOrderLink('handlers', $orderBy, $vars, $lang->trade->handlers);?></th>
@@ -69,7 +71,7 @@
           <?php else:?>
           <th class='w-200px'><?php commonModel::printOrderLink('category', $orderBy, $vars, $lang->trade->category);?></th>
           <?php endif;?>
-          <th class='w-100px visible-lg'><?php echo $lang->trade->desc;?></th>
+          <th class='w-200px visible-lg'><?php echo $lang->trade->desc;?></th>
           <?php if($mode == 'invest' or $mode == 'loan'):?>
           <th class='w-80px'><?php echo $lang->trade->status;?></th>
           <?php endif;?>
@@ -120,10 +122,12 @@
       </tbody>
     </table>
     <div class='table-footer'>
+      <?php if($trades):?>
       <div class='pull-left'>
-        <?php echo html::selectButton() . html::submitButton($lang->edit);?>
+        <?php if(commonModel::hasPriv('trade', 'batchEdit')) echo html::selectButton() . html::submitButton($lang->edit);?>
         <span class='text-danger'><?php $this->trade->countMoney($trades, $mode);?></span>
       </div>
+      <?php endif;?>
       <?php echo $pager->get();?>
     </div>
   </form>

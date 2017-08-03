@@ -42,6 +42,7 @@ $lang->attend->PM            = '下午';
 $lang->attend->ipList        = 'IP列表';
 $lang->attend->noAttendUsers = '無需考勤者';
 $lang->attend->signInClient  = '簽到途徑';
+$lang->attend->rejectReason  = '拒絶原因';
 
 $lang->attend->user          = '用戶';
 $lang->attend->begin         = '開始';

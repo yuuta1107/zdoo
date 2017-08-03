@@ -12,7 +12,7 @@
 $config->contract->require = new stdclass();
 $config->contract->require->create  = 'customer, name';
 $config->contract->require->edit    = 'customer, name';
-$config->contract->require->receive = 'amount';
+$config->contract->require->receive = 'amount, depositor';
 
 $config->contract->editor = new stdclass();
 $config->contract->editor->create       = array('id' => 'items', 'tools' => 'full');

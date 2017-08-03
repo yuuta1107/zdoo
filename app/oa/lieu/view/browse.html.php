@@ -14,7 +14,7 @@
 <?php include '../../../sys/common/view/treeview.html.php';?>
 <?php js::set('confirmReview', $lang->lieu->confirmReview)?>
 <div id='menuActions'>
-  <?php commonModel::printLink('lieu', 'create', "", "<i class='icon icon-plus'></i> {$lang->lieu->create}", "data-toggle='modal' class='btn btn-primary'")?>
+  <?php commonModel::printLink('oa.lieu', 'create', "", "<i class='icon icon-plus'></i> {$lang->lieu->create}", "data-toggle='modal' class='btn btn-primary'")?>
 </div>
 <div class='with-side'>
   <div class='side'>
@@ -23,11 +23,11 @@
         <ul class='tree' data-collapsed='true'>
           <?php foreach($yearList as $year):?>
           <li class='<?php echo $year == $currentYear ? 'active' : ''?>'>
-            <?php commonModel::printLink('lieu', $type, "date=$year", $year);?>
+            <?php commonModel::printLink('oa.lieu', $type, "date=$year", $year);?>
             <ul>
               <?php foreach($monthList[$year] as $month):?>
               <li class='<?php echo ($year == $currentYear and $month == $currentMonth) ? 'active' : ''?>'>
-                <?php commonModel::printLink('lieu', $type, "date=$year$month", $year . $month);?>
+                <?php commonModel::printLink('oa.lieu', $type, "date=$year$month", $year . $month);?>
               </li>
               <?php endforeach;?>
             </ul>
@@ -54,7 +54,11 @@
             <?php if($type != 'browseReview'):?>
             <th class='w-80px'><?php commonModel::printOrderLink('reviewedBy', $orderBy, $vars, $lang->lieu->reviewedBy);?></th>
             <?php endif;?>
+            <?php if($type == 'personal'):?>
             <th class='w-130px'><?php echo $lang->actions;?></th>
+            <?php else:?>
+            <th class='w-100px'><?php echo $lang->actions;?></th>
+            <?php endif;?>
           </tr>
         </thead>
         <?php foreach($lieuList as $lieu):?>
@@ -71,17 +75,38 @@
           <td><?php echo zget($users, $lieu->reviewedBy);?></td>
           <?php endif;?>
           <td class='actionTD text-left'>
-            <?php echo html::a($this->createLink('oa.lieu', 'view', "id={$lieu->id}&type=$type"), $lang->lieu->view, "data-toggle='modal'");?>
-
-            <?php if($type == 'browseReview' and $lieu->status == 'wait'):?>
-            <?php echo html::a($this->createLink('oa.lieu', 'review', "id={$lieu->id}"), $lang->lieu->review, "data-toggle='modal' data-width='800'");?>
-            <?php endif;?>
-
-            <?php if($type == 'personal' and ($lieu->status == 'wait' or $lieu->status == 'draft')):?>
-            <?php echo html::a($this->createLink('oa.lieu', 'switchstatus', "id={$lieu->id}"), $lieu->status == 'wait' ? $lang->lieu->cancel : $lang->lieu->commit, "class='reload'");?>
-            <?php echo html::a($this->createLink('oa.lieu', 'edit', "id={$lieu->id}"), $lang->edit, "data-toggle='modal'");?>
-            <?php echo html::a($this->createLink('oa.lieu', 'delete', "id={$lieu->id}"), $lang->delete, "class='deleter'");?>
-            <?php endif;?>
+            <?php
+            commonModel::printLink('oa.lieu', 'view', "id={$lieu->id}&type=$type", $lang->lieu->view, "data-toggle='modal'");
+            if($type == 'personal')
+            {
+                $switchLabel = $lieu->status == 'wait' ? $lang->lieu->cancel : $lang->lieu->commit;
+                if($lieu->status == 'wait' or $lieu->status == 'draft')
+                {
+                    commonModel::printLink('oa.lieu', 'switchstatus', "id={$lieu->id}", $switchLabel,  "class='reload'");
+                    commonModel::printLink('oa.lieu', 'edit',         "id={$lieu->id}", $lang->edit,   "data-toggle='modal'");
+                    commonModel::printLink('oa.lieu', 'delete',       "id={$lieu->id}", $lang->delete, "class='deleter'");
+                }
+                else
+                {
+                    echo html::a('###', $switchLabel,  "disabled='disabled'");
+                    echo html::a('###', $lang->edit,   "disabled='disabled'");
+                    echo html::a('###', $lang->delete, "disabled='disabled'");
+                }
+            }
+            else
+            {
+                if($lieu->status == 'wait')
+                {
+                    commonModel::printLink('oa.lieu', 'review', "id={$lieu->id}status=pass",   $lang->lieu->statusList['pass'],   "class='reviewPass'");
+                    commonModel::printLink('oa.lieu', 'review', "id={$lieu->id}status=reject", $lang->lieu->statusList['reject'], "data-toggle='modal'");
+                }
+                else
+                {
+                    echo html::a('###', $lang->lieu->statusList['pass'],   "disabled='diasbled'");
+                    echo html::a('###', $lang->lieu->statusList['reject'], "disabled='diasbled'");
+                }
+            }
+            ?>
           </td>
         </tr>
         <?php endforeach;?>

@@ -56,8 +56,7 @@ class myModel extends model
 
             if($method == 'review')
             {
-                if($methodName == 'leave') $methodName = 'attend';
-                if(!commonModel::hasPriv($methodName, 'review')) continue;
+                if($methodName != 'all' && !commonModel::hasPriv($methodName, 'review')) continue;
             }
 
             $class = '';

@@ -20,7 +20,7 @@
       <?php if(!empty($attend->reviewStatus)):?>
       <tr>
         <th><?php echo $lang->attend->reviewStatus?></th>
-        <td><?php echo zget($lang->attend->reviewStatusList, $attend->reviewStatus) . " " . $attend->reviewedBy . " " . $attend->reviewedDate?></td>
+        <td><?php echo zget($lang->attend->reviewStatusList, $attend->reviewStatus) . " " . $attend->reviewedBy . " " . formatTime($attend->reviewedDate, DT_DATETIME2);?></td>
       </tr>
       <?php endif;?>
       <tr>
@@ -51,13 +51,13 @@
       <?php if(strpos(',late,both,absent', $attend->status) !== false):?>
       <tr id='trIn'>
         <th><?php echo $lang->attend->manualIn?></th>
-        <td><?php echo $attend->manualIn;?></td>
+        <td><?php echo formatTime($attend->manualIn, DT_TIME2);?></td>
       </tr>
       <?php endif;?>
       <?php if(strpos(',early,both,absent', $attend->status) !== false):?>
       <tr id='trOut'>
         <th><?php echo $lang->attend->manualOut?></th>
-        <td><?php echo $attend->manualOut;?></td>
+        <td><?php echo formatTime($attend->manualOut, DT_TIME2);?></td>
       </tr> 
       <?php endif;?>
       <tr>
@@ -68,6 +68,7 @@
       <tr><th></th><td clospan='3'><?php echo html::commonButton($lang->edit, "btn btn-primary edit");?></td></tr>
       <?php endif;?>
     </table>
+    <?php if(!empty($attend->id)) echo $this->fetch('action', 'history', "objectType=attend&objectID=$attend->id");?>
   </form>
 </div>
 <?php include '../../../sys/common/view/footer.modal.html.php';?>

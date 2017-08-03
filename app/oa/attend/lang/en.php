@@ -42,6 +42,7 @@ $lang->attend->PM            = 'PM';
 $lang->attend->ipList        = 'IP List';
 $lang->attend->noAttendUsers = 'Clock-in/out not required';
 $lang->attend->signInClient  = 'Clockin Client';
+$lang->attend->rejectReason  = 'Reject Reason';
 
 $lang->attend->user          = 'User';
 $lang->attend->begin         = 'Begin';

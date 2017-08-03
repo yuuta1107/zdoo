@@ -456,11 +456,6 @@ class commonModel extends model
         if(!empty($menuOrder))
         {
             ksort($menuOrder);
-            foreach($lang->{$currentModule}->menuOrder as $methodName => $methodMenu)
-            {
-                if(!in_array($methodName, $menuOrder)) $menuOrder[] = $methodName;
-            }
-
             foreach($menuOrder as $name)
             {
                 if(isset($lang->{$currentModule}->menu->$name)) $moduleMenus->$name = $lang->{$currentModule}->menu->$name;
@@ -577,12 +572,9 @@ class commonModel extends model
                 $hasPriv = false;
                 foreach($lang->my->review->menu as $methodName => $methodMenu)
                 {
-                    if($methodName == 'leave') $methodName = 'attend';
-
                     if(commonModel::hasPriv($methodName, 'review'))
                     {
                         $hasPriv = true;
-                        list($reviewLabel, $reviewModule, $reviewMethod, $vars) = explode('|', $methodMenu);
                         break;
                     }
                 }

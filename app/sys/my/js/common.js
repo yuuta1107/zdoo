@@ -3,7 +3,7 @@ $(document).ready(function()
     $('#menu .nav > li').removeClass('active').find('a[href*=' + v.type + ']').parent('li').addClass('active');
 
     /* process actions. */
-    $('.actions a').click(function()
+    $('.actions a, .createProjectTH a').click(function()
     {
         var skip = false;
         if($(this).data('toggle') == 'modal') skip = true;

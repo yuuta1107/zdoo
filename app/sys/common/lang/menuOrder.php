@@ -56,8 +56,8 @@ $lang->backup->menuOrder = $lang->system->menuOrder;
 $lang->my->review->menuOrder[5]  = 'all';
 $lang->my->review->menuOrder[10] = 'attend';
 $lang->my->review->menuOrder[15] = 'leave';
-$lang->my->review->menuOrder[20] = 'overtime';
-$lang->my->review->menuOrder[25] = 'makeup';
+$lang->my->review->menuOrder[20] = 'makeup';
+$lang->my->review->menuOrder[25] = 'overtime';
 $lang->my->review->menuOrder[30] = 'lieu';
 $lang->my->review->menuOrder[35] = 'refund';
 

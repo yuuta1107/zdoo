@@ -106,3 +106,6 @@ $lang->contract->returnInfo         = "<p>%s, received by <strong>%s</strong>, %
 $lang->contract->deliveryInfo       = "<p>%s, delivered by %s.</p>";
 $lang->contract->deleteReturnInfo   = "%s in %s";
 $lang->contract->deleteDeliveryInfo = "in %s";
+
+$lang->plan = new stdclass();
+$lang->plan->amount = $lang->contract->thisAmount;

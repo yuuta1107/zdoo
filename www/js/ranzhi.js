@@ -583,20 +583,22 @@ function setRequiredFields()
 }
 
 /**
- * Set language.
+ * Select lang.
  * 
+ * @param  string $lang 
  * @access public
  * @return void
  */
-function selectLang(lang)
-{
-    $.cookie('lang', lang, {expires:config.cookieLife, path:config.webRoot});
-    location.href = removeAnchor(location.href);
-}
+function selectLang(lang)                                                                                                
+{                                                                                                                        
+    $.cookie('lang', lang, {expires:config.cookieLife, path:config.webRoot});                                            
+    location.href = removeAnchor(location.href);                                                                         
+}                                                                                                                        
 
 /**
  * Set theme.
  * 
+ * @param  string theme
  * @access public
  * @return void
  */
@@ -728,19 +730,6 @@ function showNotice(notice)
         return false;
     });
 }
-
-/**
- * Select lang.
- * 
- * @param  string $lang 
- * @access public
- * @return void
- */
-function selectLang(lang)                                                                                                
-{                                                                                                                        
-    $.cookie('lang', lang, {expires:config.cookieLife, path:config.webRoot});                                            
-    location.href = removeAnchor(location.href);                                                                         
-}                                                                                                                        
 
 /**
  * Fix table header in admin page

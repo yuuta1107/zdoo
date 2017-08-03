@@ -110,7 +110,7 @@ class refund extends control
      * @access public
      * @return void
      */
-    public function personal($date = '', $type = '', $orderBy = 'status, id_desc', $recTotal = 0, $recPerPage = 20, $pageID = 1)
+    public function personal($date = '', $type = '', $orderBy = 'status,id_desc', $recTotal = 0, $recPerPage = 20, $pageID = 1)
     {
         $this->browse('personal', $date, $type, $orderBy, $recTotal, $recPerPage, $pageID);
     }
@@ -125,7 +125,7 @@ class refund extends control
      * @access public
      * @return void
      */
-    public function company($date = '', $type = '', $orderBy = 'status, id_desc', $recTotal = 0, $recPerPage = 20, $pageID = 1)
+    public function company($date = '', $type = '', $orderBy = 'status,id_desc', $recTotal = 0, $recPerPage = 20, $pageID = 1)
     {
         $this->browse('company', $date, $type, $orderBy, $recTotal, $recPerPage, $pageID);
     }

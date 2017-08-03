@@ -47,7 +47,7 @@ class order extends control
 
         /* Build search form. */
         $this->loadModel('search', 'sys');
-        $this->config->order->search['actionURL'] = $this->createLink('order', 'browse', 'mode=bysearch');
+        $this->config->order->search['actionURL'] = inlink('browse', 'mode=bysearch');
         $this->config->order->search['params']['o.customer']['values'] = $this->loadModel('customer')->getPairs('client', true);
         $this->config->order->search['params']['o.product']['values']  = array('' => '') + $this->loadModel('product')->getPairs();
         $this->search->setSearchParams($this->config->order->search);

@@ -106,3 +106,6 @@ $lang->contract->returnInfo         = "<p>%s, 由 <strong>%s</strong> 回款%s�
 $lang->contract->deliveryInfo       = "<p>%s由%s交付。</p>";
 $lang->contract->deleteReturnInfo   = "%s的回款%s";
 $lang->contract->deleteDeliveryInfo = "%s的交付";
+
+$lang->plan = new stdclass();
+$lang->plan->amount = $lang->contract->thisAmount;

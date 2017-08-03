@@ -1,5 +1,5 @@
 -- DROP TABLE IF EXISTS `crm_address`;
-CREATE TABLE `crm_address` (
+CREATE TABLE IF NOT EXISTS `crm_address` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `objectType` char(30) NOT NULL,
   `objectID` mediumint(8) unsigned NOT NULL,
@@ -10,7 +10,7 @@ CREATE TABLE `crm_address` (
   KEY `objectType` (`objectType`,`objectID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `crm_contact`;
-CREATE TABLE `crm_contact` (
+CREATE TABLE IF NOT EXISTS `crm_contact` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `realname` char(30) NOT NULL DEFAULT '',
   `nickname` char(30) NOT NULL,
@@ -60,7 +60,7 @@ CREATE TABLE `crm_contact` (
   KEY `nextDate` (`nextDate`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `crm_delivery`;
-CREATE TABLE `crm_delivery` (
+CREATE TABLE IF NOT EXISTS `crm_delivery` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `contract` mediumint(8) unsigned NOT NULL,
   `deliveredBy` char(30) COLLATE 'utf8_general_ci' NOT NULL,
@@ -70,7 +70,7 @@ CREATE TABLE `crm_delivery` (
   KEY `contract` (`contract`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `crm_plan`;
-CREATE TABLE `crm_plan` (
+CREATE TABLE IF NOT EXISTS `crm_plan` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `amount` decimal(12,2) NOT NULL,
   `contract` mediumint(8) unsigned NOT NULL,
@@ -80,7 +80,7 @@ CREATE TABLE `crm_plan` (
   KEY `contract` (`contract`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `crm_contract`;
-CREATE TABLE `crm_contract` (
+CREATE TABLE IF NOT EXISTS `crm_contract` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `customer` mediumint(8) unsigned NOT NULL,
   `name` char(100) NOT NULL,
@@ -128,13 +128,13 @@ CREATE TABLE `crm_contract` (
   KEY `nextDate` (`nextDate`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `crm_contractorder`;
-CREATE TABLE `crm_contractorder` (
+CREATE TABLE IF NOT EXISTS `crm_contractorder` (
   `contract` mediumint(8) unsigned NOT NULL,
   `order` mediumint(8) unsigned NOT NULL,
   UNIQUE KEY `contract` (`contract`,`order`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `crm_customer`;
-CREATE TABLE `crm_customer` (
+CREATE TABLE IF NOT EXISTS `crm_customer` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `name` char(100) NOT NULL,
   `type` char(30) NOT NULL,
@@ -179,7 +179,7 @@ CREATE TABLE `crm_customer` (
   KEY `nextDate` (`nextDate`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `crm_order`;
-CREATE TABLE `crm_order` (
+CREATE TABLE IF NOT EXISTS `crm_order` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `product` char(255) NOT NULL,
   `customer` mediumint(8) unsigned NOT NULL,
@@ -219,7 +219,7 @@ CREATE TABLE `crm_order` (
   KEY `nextDate` (`nextDate`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `crm_resume`;
-CREATE TABLE `crm_resume` (
+CREATE TABLE IF NOT EXISTS `crm_resume` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `contact` mediumint(8) unsigned NOT NULL,
   `customer` mediumint(8) unsigned NOT NULL,
@@ -237,14 +237,14 @@ CREATE TABLE `crm_resume` (
   KEY `maker` (`maker`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `crm_service`;
-CREATE TABLE `crm_service` (
+CREATE TABLE IF NOT EXISTS `crm_service` (
   `customer` mediumint(8) unsigned NOT NULL,
   `product` mediumint(8) unsigned NOT NULL,
   `expire` date NOT NULL,
   UNIQUE KEY `customer` (`customer`,`product`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `crm_salesgroup`;
-CREATE TABLE `crm_salesgroup` (
+CREATE TABLE IF NOT EXISTS `crm_salesgroup` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `desc` varchar(255) NOT NULL,
@@ -252,14 +252,14 @@ CREATE TABLE `crm_salesgroup` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `crm_salespriv`;
-CREATE TABLE `crm_salespriv` (
+CREATE TABLE IF NOT EXISTS `crm_salespriv` (
   `account` char(30) NOT NULL,
   `salesgroup` mediumint(8) unsigned NOT NULL,
   `priv` enum('view','edit') NOT NULL,
   KEY `account` (`account`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `oa_doc`;
-CREATE TABLE `oa_doc` (
+CREATE TABLE IF NOT EXISTS `oa_doc` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `product` mediumint(8) unsigned NOT NULL,
   `project` mediumint(8) unsigned NOT NULL,
@@ -294,7 +294,7 @@ CREATE TABLE IF NOT EXISTS `oa_doccontent` (
   UNIQUE KEY `docVersion` (`doc`,`version`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `oa_doclib`;
-CREATE TABLE `oa_doclib` (
+CREATE TABLE IF NOT EXISTS `oa_doclib` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `project` mediumint(8) unsigned NOT NULL,
   `name` varchar(60) NOT NULL,
@@ -311,7 +311,7 @@ CREATE TABLE `oa_doclib` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `oa_project`;
-CREATE TABLE `oa_project` (
+CREATE TABLE IF NOT EXISTS `oa_project` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(90) NOT NULL,
   `desc` text NOT NULL,
@@ -327,7 +327,7 @@ CREATE TABLE `oa_project` (
   PRIMARY KEY (`id`)
 ) ENGINE='MyISAM' COLLATE 'utf8_general_ci'; 
 -- DROP TABLE IF EXISTS `oa_attend`;
-CREATE TABLE `oa_attend` (
+CREATE TABLE IF NOT EXISTS `oa_attend` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `account` char(30) NOT NULL,
   `date` date NOT NULL,
@@ -354,7 +354,7 @@ CREATE TABLE `oa_attend` (
   UNIQUE KEY `attend` (`date`,`account`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `oa_attendstat`;
-CREATE TABLE `oa_attendstat` (
+CREATE TABLE IF NOT EXISTS `oa_attendstat` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `account` char(30) NOT NULL,
   `month` char(10) NOT NULL DEFAULT '',
@@ -380,7 +380,7 @@ CREATE TABLE `oa_attendstat` (
   UNIQUE KEY `attend` (`month`,`account`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `oa_overtime`;
-CREATE TABLE `oa_overtime` (
+CREATE TABLE IF NOT EXISTS `oa_overtime` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `year` char(4) NOT NULL,
   `begin` date NOT NULL,
@@ -404,7 +404,7 @@ CREATE TABLE `oa_overtime` (
   KEY `createdBy` (`createdBy`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `oa_holiday`;
-CREATE TABLE `oa_holiday` (
+CREATE TABLE IF NOT EXISTS `oa_holiday` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(30) NOT NULL DEFAULT '',
   `type` enum('holiday', 'working') NOT NULL DEFAULT 'holiday',
@@ -417,7 +417,7 @@ CREATE TABLE `oa_holiday` (
   KEY `name` (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `oa_leave`;
-CREATE TABLE `oa_leave` (
+CREATE TABLE IF NOT EXISTS `oa_leave` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `year` char(4) NOT NULL,
   `begin` date NOT NULL,
@@ -440,7 +440,7 @@ CREATE TABLE `oa_leave` (
   KEY `createdBy` (`createdBy`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `oa_lieu`;
-CREATE TABLE `oa_lieu` (
+CREATE TABLE IF NOT EXISTS `oa_lieu` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `year` char(4) NOT NULL,
   `begin` date NOT NULL,
@@ -461,7 +461,7 @@ CREATE TABLE `oa_lieu` (
   KEY `createdBy` (`createdBy`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `oa_trip`;
-CREATE TABLE `oa_trip` (
+CREATE TABLE IF NOT EXISTS `oa_trip` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `type` enum('trip', 'egress') NOT NULL DEFAULT 'trip',
   `customers` varchar(20) NOT NULL,
@@ -537,14 +537,14 @@ CREATE TABLE IF NOT EXISTS `oa_refund` (
   KEY `date` (`date`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `sys_relation`;
-CREATE TABLE `sys_relation` (
+CREATE TABLE IF NOT EXISTS `sys_relation` (
   `type` char(20) NOT NULL,
   `id` mediumint(8) NOT NULL,
   `category` mediumint(8) NOT NULL,
   UNIQUE KEY `relation` (`type`,`id`,`category`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `cash_depositor`;
-CREATE TABLE `cash_depositor` (
+CREATE TABLE IF NOT EXISTS `cash_depositor` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `abbr` char(60) NOT NULL,
   `provider` char(100) NOT NULL,
@@ -563,7 +563,7 @@ CREATE TABLE `cash_depositor` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `cash_balance`;
-CREATE TABLE `cash_balance` ( 
+CREATE TABLE IF NOT EXISTS `cash_balance` ( 
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `depositor` mediumint(8) unsigned NOT NULL,
   `date` date NOT NULL,
@@ -577,7 +577,7 @@ CREATE TABLE `cash_balance` (
   UNIQUE KEY `depositor` (`depositor`,`date`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `cash_trade`;
-CREATE TABLE `cash_trade` (
+CREATE TABLE IF NOT EXISTS `cash_trade` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT, 
   `depositor` mediumint(8) unsigned NOT NULL,
   `parent`  mediumint(8) unsigned NOT NULL DEFAULT 0,
@@ -646,7 +646,7 @@ CREATE TABLE IF NOT EXISTS `team_reply` (
   KEY `author` (`author`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `sys_action`;
-CREATE TABLE `sys_action` (
+CREATE TABLE IF NOT EXISTS `sys_action` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `customer` mediumint(8) unsigned DEFAULT NULL,
   `contact` mediumint(8) unsigned DEFAULT NULL,
@@ -667,7 +667,7 @@ CREATE TABLE `sys_action` (
   KEY `date` (`date`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `sys_block`;
-CREATE TABLE `sys_block` (
+CREATE TABLE IF NOT EXISTS `sys_block` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `account` char(30) NOT NULL,
   `app` varchar(20) NOT NULL,
@@ -684,7 +684,7 @@ CREATE TABLE `sys_block` (
   KEY `account` (`account`, `app`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `sys_category`;
-CREATE TABLE `sys_category` (
+CREATE TABLE IF NOT EXISTS `sys_category` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `name` char(30) NOT NULL DEFAULT '',
   `alias` varchar(100) NOT NULL,
@@ -737,7 +737,7 @@ CREATE TABLE IF NOT EXISTS `sys_package` (
   KEY `addedTime` (`installedTime`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `sys_config`;
-CREATE TABLE `sys_config` (
+CREATE TABLE IF NOT EXISTS `sys_config` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `owner` char(30) NOT NULL DEFAULT '',
   `app` varchar(30) NOT NULL DEFAULT 'sys',
@@ -749,7 +749,7 @@ CREATE TABLE `sys_config` (
   UNIQUE KEY `unique` (`owner`,`app`,`module`,`section`,`key`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `sys_entry`;
-CREATE TABLE `sys_entry` (
+CREATE TABLE IF NOT EXISTS `sys_entry` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `abbr` char(6) NOT NULL,
@@ -774,7 +774,7 @@ CREATE TABLE `sys_entry` (
   UNIQUE KEY `code` (`code`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `sys_article`;
-CREATE TABLE `sys_article` (
+CREATE TABLE IF NOT EXISTS `sys_article` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(150) NOT NULL,
   `alias` varchar(100) NOT NULL,
@@ -803,7 +803,7 @@ CREATE TABLE `sys_article` (
   KEY `sticky` (`sticky`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `sys_tag`;
-CREATE TABLE `sys_tag` (
+CREATE TABLE IF NOT EXISTS `sys_tag` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `tag` varchar(50) NOT NULL,
   `rank` smallint(5) unsigned NOT NULL,
@@ -829,7 +829,7 @@ CREATE TABLE IF NOT EXISTS `sys_message` (
   KEY `object` (`objectType`,`objectID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `sys_file`;
-CREATE TABLE `sys_file` (
+CREATE TABLE IF NOT EXISTS `sys_file` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `pathname` char(50) NOT NULL,
   `title` char(90) NOT NULL,
@@ -848,7 +848,7 @@ CREATE TABLE `sys_file` (
   KEY `object` (`objectType`,`objectID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `sys_history`;
-CREATE TABLE `sys_history` (
+CREATE TABLE IF NOT EXISTS `sys_history` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `action` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `field` varchar(30) NOT NULL DEFAULT '',
@@ -859,7 +859,7 @@ CREATE TABLE `sys_history` (
   KEY `action` (`action`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `sys_lang`;
-CREATE TABLE `sys_lang` (
+CREATE TABLE IF NOT EXISTS `sys_lang` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `lang` varchar(30) NOT NULL,
   `app` varchar(30) NOT NULL DEFAULT 'sys',
@@ -872,7 +872,7 @@ CREATE TABLE `sys_lang` (
   UNIQUE KEY `lang` (`app`,`lang`,`module`,`section`,`key`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `sys_product`;
-CREATE TABLE `sys_product` (
+CREATE TABLE IF NOT EXISTS `sys_product` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(150) NOT NULL,
   `code` varchar(20) NOT NULL, 
@@ -891,7 +891,7 @@ CREATE TABLE `sys_product` (
   KEY `status` (`status`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `sys_schema`;
-CREATE TABLE `sys_schema` (
+CREATE TABLE IF NOT EXISTS `sys_schema` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `category` char(10) NOT NULL,
@@ -906,7 +906,7 @@ CREATE TABLE `sys_schema` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `sys_sso`;
-CREATE TABLE `sys_sso` (
+CREATE TABLE IF NOT EXISTS `sys_sso` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `sid` char(32) NOT NULL,
   `entry` mediumint(8) unsigned NOT NULL,
@@ -916,7 +916,7 @@ CREATE TABLE `sys_sso` (
   KEY `sid` (`sid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `sys_task`;
-CREATE TABLE `sys_task` (
+CREATE TABLE IF NOT EXISTS `sys_task` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `project` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `customer` mediumint(8) unsigned NOT NULL,
@@ -961,7 +961,7 @@ CREATE TABLE `sys_task` (
   KEY `type` (`type`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `sys_team`;
-CREATE TABLE `sys_team` (
+CREATE TABLE IF NOT EXISTS `sys_team` (
   `type` char(30) NOT NULL,
   `id` mediumint(8) NOT NULL DEFAULT '0',
   `account` char(30) NOT NULL DEFAULT '',
@@ -976,7 +976,7 @@ CREATE TABLE `sys_team` (
   PRIMARY KEY (`type`,`id`,`account`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `sys_user`;
-CREATE TABLE `sys_user` (
+CREATE TABLE IF NOT EXISTS `sys_user` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `dept` mediumint(8) unsigned NOT NULL,
   `account` char(30) NOT NULL DEFAULT '',
@@ -1021,7 +1021,7 @@ CREATE TABLE IF NOT EXISTS `sys_group` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `sys_usergroup`;
-CREATE TABLE `sys_usergroup` (
+CREATE TABLE IF NOT EXISTS `sys_usergroup` (
   `account` char(30) NOT NULL DEFAULT '',
   `group` mediumint(8) unsigned NOT NULL DEFAULT '0',
   UNIQUE KEY `account` (`account`,`group`)
@@ -1304,6 +1304,7 @@ INSERT INTO `sys_grouppriv` (`group`, `module`, `method`) VALUES
 (1,'trade','compare'),
 (1,'trade','export2Excel'),
 (1,'trade','setReportUnit'),
+(1,'trade','tradeSetting'),
 (1,'tree','browse'),
 (1,'tree','children'),
 (1,'tree','delete'),
@@ -1432,6 +1433,7 @@ INSERT INTO `sys_grouppriv` (`group`, `module`, `method`) VALUES
 (2,'trade','compare'),
 (2,'trade','export2Excel'),
 (2,'trade','setReportUnit'),
+(2,'trade','tradeSetting'),
 (2,'tree','browse'),
 (2,'tree','children'),
 (2,'tree','edit'),
@@ -1715,6 +1717,6 @@ INSERT INTO `sys_grouppriv` (`group`, `module`, `method`) VALUES
 
 INSERT INTO `sys_cron` (`m`, `h`, `dom`, `mon`, `dow`, `command`, `remark`, `type`, `buildin`, `status`, `lastTime`) VALUES
 ('*', '*', '*', '*', '*', '', '监控定时任务', 'ranzhi', 1, 'normal', '0000-00-00 00:00:00'),
-('1', '1', '*', '*', '*', 'appName=sys&moduleName=backup&methodName=backup&reload=0', '定时备份任务', 'ranzhi', 0, 'normal', '0000-00-00 00:00:00'),
-('1', '1', '*', '*', '*', 'appName=sys&moduleName=backup&methodName=batchdelete&saveDays=30', '删除30天前的备份', 'ranzhi', 0, 'normal', '0000-00-00 00:00:00'),
+('1', '1', '*', '*', '*', 'appName=sys&moduleName=backup&methodName=backup&reload=0', '定时备份任务', 'ranzhi', 1, 'normal', '0000-00-00 00:00:00'),
+('1', '1', '*', '*', '*', 'appName=sys&moduleName=backup&methodName=batchdelete&saveDays=30', '删除30天前的备份', 'ranzhi', 1, 'normal', '0000-00-00 00:00:00'),
 ('1', '7', '*', '*', '*', 'appName=sys&moduleName=report&methodName=remind', '每日提醒', 'ranzhi', 1, 'normal', '0000-00-00 00:00:00');

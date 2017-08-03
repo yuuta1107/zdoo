@@ -14,8 +14,8 @@
 <?php include '../../../sys/common/view/treeview.html.php';?>
 <?php js::set('confirmReview', $lang->leave->confirmReview)?>
 <div id='menuActions'>
-  <?php commonModel::printLink('leave', 'export', "mode=all&orderBy={$orderBy}", $lang->exportIcon . $lang->export, "class='btn btn-primary iframe' data-width='700'");?>
-  <?php commonModel::printLink('leave', 'create', "", "<i class='icon icon-plus'></i> {$lang->leave->create}", "data-toggle='modal' class='btn btn-primary'")?>
+  <?php commonModel::printLink('oa.leave', 'export', "mode=all&orderBy={$orderBy}", $lang->exportIcon . $lang->export, "class='btn btn-primary iframe' data-width='700'");?>
+  <?php commonModel::printLink('oa.leave', 'create', "", "<i class='icon icon-plus'></i> {$lang->leave->create}", "data-toggle='modal' class='btn btn-primary'")?>
 </div>
 <div class='with-side'>
   <div class='side'>
@@ -24,11 +24,11 @@
         <ul class='tree' data-collapsed='true'>
           <?php foreach($yearList as $year):?>
           <li class='<?php echo $year == $currentYear ? 'active' : ''?>'>
-            <?php commonModel::printLink('leave', $type, "date=$year", $year);?>
+            <?php commonModel::printLink('oa.leave', $type, "date=$year", $year);?>
             <ul>
               <?php foreach($monthList[$year] as $month):?>
               <li class='<?php echo ($year == $currentYear and $month == $currentMonth) ? 'active' : ''?>'>
-                <?php commonModel::printLink('leave', $type, "date=$year$month", $year . $month);?>
+                <?php commonModel::printLink('oa.leave', $type, "date=$year$month", $year . $month);?>
               </li>
               <?php endforeach;?>
             </ul>
@@ -57,8 +57,8 @@
             <?php if($type != 'browseReview'):?>
             <th class='w-80px'><?php commonModel::printOrderLink('reviewedBy', $orderBy, $vars, $lang->leave->reviewedBy);?></th>
             <?php endif;?>
-            <?php if($type == 'company'):?>
-            <th class='w-50px'><?php echo $lang->actions;?></th>
+            <?php if($type == 'personal'):?>
+            <th class='w-160px'><?php echo $lang->actions;?></th>
             <?php else:?>
             <th class='w-130px'><?php echo $lang->actions;?></th>
             <?php endif;?>
@@ -81,23 +81,54 @@
           <td><?php echo zget($users, $leave->reviewedBy);?></td>
           <?php endif;?>
           <td class='actionTD text-left'>
-            <?php echo html::a($this->createLink('oa.leave', 'view', "id={$leave->id}&type=$type"), $lang->detail, "data-toggle='modal'");?>
-            <?php if($type == 'browseReview' and $leave->status == 'wait'):?>
-            <?php echo html::a($this->createLink('oa.leave', 'edit', "id={$leave->id}"), $lang->edit, "data-toggle='modal'");?>
-            <?php echo html::a($this->createLink('oa.leave', 'review', "id={$leave->id}&type=review"), $lang->leave->review, "data-toggle='modal' data-width='800'");?>
-            <?php endif;?>
-
-            <?php if($type == 'personal' and ($leave->status == 'wait' or $leave->status == 'draft')):?>
-            <?php echo html::a($this->createLink('oa.leave', 'switchstatus', "id={$leave->id}"), $leave->status == 'wait' ? $lang->leave->cancel : $lang->leave->commit, "class='reload'");?>
-            <?php echo html::a($this->createLink('oa.leave', 'edit', "id={$leave->id}"), $lang->edit, "data-toggle='modal'");?>
-            <?php echo html::a($this->createLink('oa.leave', 'delete', "id={$leave->id}"), $lang->delete, "class='deleter'");?>
-            <?php endif;?>
-
-            <?php if($type == 'browseReview' and $leave->status == 'pass' and $leave->backDate != '0000-00-00 00:00:00' and $leave->backDate != "$leave->end $leave->finish"):?>
-            <?php echo html::a($this->createLink('oa.leave', 'review', "id={$leave->id}&type=review"), $lang->leave->review, "data-toggle='modal' data-width='800'");?>
-            <?php endif;?>
-
-            <?php if($type == 'personal' and $leave->status == 'pass' and date('Y-m-d H:i:s') < "$leave->end $leave->finish" && $leave->backDate != "$leave->end $leave->finish") echo html::a($this->createLink('oa.leave', 'back', "id={$leave->id}"), $lang->leave->back, "data-toggle='modal'");?>
+            <?php 
+            commonModel::printLink('oa.leave', 'view', "id={$leave->id}&type=$type", $lang->detail, "data-toggle='modal'");
+            if($type == 'personal')
+            { 
+                if($leave->status == 'pass' and date('Y-m-d H:i:s') > "$leave->begin $leave->start" && date('Y-m-d H:i:s') < "$leave->end $leave->finish" && $leave->backDate != "$leave->end $leave->finish") 
+                {
+                    commonModel::printLink('oa.leave', 'back', "id={$leave->id}", $lang->leave->back, "data-toggle='modal'");
+                }
+                else
+                {
+                    echo html::a('###', $lang->leave->back, "disabled='disabled'");
+                }
+                $switchLabel = $leave->status == 'wait' ? $lang->leave->cancel : $lang->leave->commit;
+                if($leave->status == 'wait' or $leave->status == 'draft')
+                {
+                    commonModel::printLink('oa.leave', 'switchstatus', "id={$leave->id}", $switchLabel,  "class='reload'");
+                    commonModel::printLink('oa.leave', 'edit',         "id={$leave->id}", $lang->edit,   "data-toggle='modal'");
+                    commonModel::printLink('oa.leave', 'delete',       "id={$leave->id}", $lang->delete, "class='deleter'");
+                }
+                else
+                {
+                    echo html::a('###', $switchLabel,  "disabled='disabled'");
+                    echo html::a('###', $lang->edit,   "disabled='disabled'");
+                    echo html::a('###', $lang->delete, "disabled='disabled'");
+                }
+            }
+            else
+            {
+                if($leave->status == 'wait')
+                {
+                    commonModel::printLink('oa.leave', 'edit',   "id={$leave->id}",               $lang->edit,                        "data-toggle='modal'");
+                    commonModel::printLink('oa.leave', 'review', "id={$leave->id}&status=pass",   $lang->leave->statusList['pass'],   "class='reviewPass'");
+                    commonModel::printLink('oa.leave', 'review', "id={$leave->id}&status=reject", $lang->leave->statusList['reject'], "data-toggle='modal'");
+                }
+                elseif($leave->status == 'pass' and $leave->backDate != '0000-00-00 00:00:00' and $leave->backDate != "$leave->end $leave->finish")
+                {
+                    echo html::a('###', $lang->edit, "disabled='disabled'");
+                    commonModel::printLink('oa.leave', 'review', "id={$leave->id}&status=pass&mode=back",   $lang->leave->statusList['pass'],   "class='reviewPass'");
+                    commonModel::printLink('oa.leave', 'review', "id={$leave->id}&status=reject&mode=back", $lang->leave->statusList['reject'], "data-toggle='modal'");
+                }
+                else
+                {
+                    echo html::a('###', $lang->edit,                        "disabled='disabled'");
+                    echo html::a('###', $lang->leave->statusList['pass'],   "disabled='disabled'");
+                    echo html::a('###', $lang->leave->statusList['reject'], "disabled='disabled'");
+                }
+            }
+            ?>
           </td>
         </tr>
         <?php endforeach;?>

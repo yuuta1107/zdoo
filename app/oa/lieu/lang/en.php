@@ -31,6 +31,7 @@ $lang->lieu->reviewedBy   = 'Reviewed By';
 $lang->lieu->reviewedDate = 'Reviewed On';
 $lang->lieu->date         = 'Date';
 $lang->lieu->time         = 'Time';
+$lang->lieu->rejectReason = 'Reject Reason';
 
 $lang->lieu->statusList['draft']  = 'Draft';
 $lang->lieu->statusList['wait']   = 'Wait';

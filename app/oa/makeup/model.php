@@ -104,7 +104,7 @@ class makeupModel extends model
     public function getReviewedBy()
     {
         $this->app->loadModuleConfig('attend');
-        return empty($this->config->makeup->reviewedBy) ? (empty($this->config->attend->reviewedBy) ? '' : $this->config->attend->reviewedBy) : $this->config->makeup->reviewedBy;
+        return !isset($this->config->makeup->reviewedBy) ? (!isset($this->config->attend->reviewedBy) ? '' : $this->config->attend->reviewedBy) : $this->config->makeup->reviewedBy;
     }
 
     /**
@@ -228,7 +228,7 @@ class makeupModel extends model
         foreach($makeupList as $makeup)
         {
             if($makeup->id == $id) continue;
-            if($makeup->status == 'rejcet') continue;
+            if($makeup->status == 'reject') continue;
 
             $begin = $makeup->begin . ' ' . $makeup->start;
             $end   = $makeup->end   . ' ' . $makeup->finish;
@@ -278,7 +278,7 @@ class makeupModel extends model
         $data->status       = $status;
         $data->reviewedBy   = $this->app->user->account;
         $data->reviewedDate = helper::now();
-        $data->rejectReason = $status == 'reject' ? $this->post->rejectReason : '';
+        $data->rejectReason = $status == 'reject' ? $this->post->comment: '';
 
         $this->dao->update(TABLE_OVERTIME)->data($data)->autoCheck()->where('id')->eq($id)->exec();
 

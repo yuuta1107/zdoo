@@ -27,7 +27,7 @@ js::set('deptID', $deptID);
       <div class="panel-heading">
         <strong><i class="icon-group"></i> <?php echo $lang->user->colleague;?></strong>
         <div class="pull-right panel-actions search">
-          <form method='post' class='form-inline form-search w-300px'>
+          <form method='post' class='form-search w-300px'>
             <div class="input-group">
               <?php echo html::input('query', $query, "class='form-control search-query' placeholder='{$lang->user->inputColleague}'"); ?>
               <span class="input-group-btn">

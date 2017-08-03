@@ -62,6 +62,7 @@
       </tbody>
     </table>
     <div class='table-footer'>
+      <?php if($todos):?>
       <div class='pull-left batch-actions'>
         <div class='pull-left close-action'>
           <?php echo html::selectButton();?>
@@ -101,6 +102,7 @@
         }
         ?>
       </div>
+      <?php endif;?>
       <?php $pager->show();?>
     </div>
   </form>

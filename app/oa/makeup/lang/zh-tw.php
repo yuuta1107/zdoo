@@ -33,7 +33,7 @@ $lang->makeup->reviewedBy   = '審核者';
 $lang->makeup->reviewedDate = '審核時間';
 $lang->makeup->date         = '日期';
 $lang->makeup->time         = '時間';
-$lang->makeup->rejectReason = '拒絶理由';
+$lang->makeup->rejectReason = '拒絶原因';
 
 $lang->makeup->typeList['compensate'] = '補班';
 

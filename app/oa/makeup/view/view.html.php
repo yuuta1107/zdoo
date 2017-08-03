@@ -11,6 +11,7 @@
  */
 ?>
 <?php include '../../../sys/common/view/header.modal.html.php';?>
+<?php include '../../../sys/common/view/kindeditor.html.php';?>
 <?php js::set('confirmReview', $lang->makeup->confirmReview)?>
 <table class='table table-bordered'>
   <tr>
@@ -60,20 +61,25 @@
 <?php echo $this->fetch('action', 'history', "objectType=makeup&objectID=$makeup->id");?>
 <div class='page-actions'>
   <?php
-  if($type == 'browseReview' and $makeup->status == 'wait')
+  if($type == 'personal')
   {
-      commonModel::printLink('oa.makeup', 'review', "id=$makeup->id", $lang->makeup->review, "class='loadInModal btn' data-width='800'");
+      $switchLabel = $makeup->status == 'wait' ? $lang->makeup->cancel : $lang->makeup->commit;
+      if($makeup->status == 'wait' or $makeup->status == 'draft') 
+      {
+          commonModel::printLink('oa.makeup', 'switchstatus', "id=$makeup->id", $switchLabel, "class='switch-status btn'");
+          echo "<div class='btn-group'>";
+          commonModel::printLink('oa.makeup', 'edit',   "id=$makeup->id", $lang->edit,   "class='btn loadInModal'");
+          commonModel::printLink('oa.makeup', 'delete', "id=$makeup->id", $lang->delete, "class='btn deleteMakeup'");
+          echo '</div>';
+      }
   }
-
-  if($type == 'personal' and ($makeup->status == 'wait' or $makeup->status == 'draft'))
+  elseif($makeup->status == 'wait')
   {
-      if($makeup->status == 'wait' or $makeup->status == 'draft') commonModel::printLink('oa.makeup', 'switchstatus', "id=$makeup->id", $makeup->status == 'wait' ? $lang->makeup->cancel : $lang->makeup->commit, "class='switch-status btn'");
       echo "<div class='btn-group'>";
-      commonModel::printLink('oa.makeup', 'edit', "id=$makeup->id", $lang->edit, "class='btn loadInModal'");
-      commonModel::printLink('oa.makeup', 'delete', "id=$makeup->id", $lang->delete, "class='btn deleteMakeup'");
+      commonModel::printLink('oa.makeup', 'review', "id=$makeup->id&status=pass",   $lang->makeup->statusList['pass'],   "class='btn reviewPass'");
+      commonModel::printLink('oa.makeup', 'review', "id=$makeup->id&status=reject", $lang->makeup->statusList['reject'], "class='btn loadInModal'");
       echo '</div>';
   }
-
   echo html::a('#', $lang->goback, "class='btn' data-dismiss='modal'");
   ?>
 </div>

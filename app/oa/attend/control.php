@@ -331,12 +331,27 @@ class attend extends control
 
         if($_POST)
         {
-            $result = $this->attend->update($date, $account);
+            $result = $this->attend->update($attend, $date, $account);
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
 
-            if(isset($attend->new)) $attend->id = $result;
-            $actionID = $this->loadModel('action')->create('attend', $attend->id, 'commited');
-            $this->sendmail($attend->id, $actionID);
+            if(isset($attend->new)) 
+            {
+                $attendID = $result;
+                $actionID = $this->loadModel('action')->create('attend', $attendID, 'commited');
+                $this->sendmail($attendID, $actionID);
+            }
+            else
+            {
+                $attendID = $attend->id;
+                $changes  = $result;
+                if($changes)
+                {
+                    $actionID = $this->loadModel('action')->create('attend', $attendID, 'commited');
+                    $this->action->logHistory($actionID, $changes);
+                    $this->sendmail($attendID, $actionID);
+                }
+            }
+
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => inlink('personal')));
         }
 
@@ -393,24 +408,35 @@ class attend extends control
      * @access public
      * @return void
      */
-    public function review($attendID)
+    public function review($attendID, $reviewStatus)
     {
-        $attend = $this->attend->getById($attendID);
-
-        if($_POST)
+        if($reviewStatus == 'pass')
         {
-            $result = $this->attend->review($attendID, $this->post->status);
-            if(!$result) $this->send(array('result' => 'fail', 'message' => dao::getError()));
-
-            $actionID = $this->loadModel('action')->create('attend', $attendID, 'reviewed', $this->post->comment, $this->post->status);
+            $this->attend->review($attendID, $reviewStatus);
+            if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
+            $actionID = $this->loadModel('action')->create('attend', $attendID, 'reviewed', '', $this->lang->attend->reviewStatusList[$reviewStatus]);
             $this->sendmail($attendID, $actionID);
-            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
+            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess));
         }
 
-        $this->view->title  = $this->lang->attend->review;
-        $this->view->attend = $attend;
-        $this->view->users  = $this->loadModel('user')->getPairs();
-        $this->display();
+        if($reviewStatus == 'reject')
+        {
+            if($_POST)
+            {
+                if(!$this->post->comment) $this->send(array('result' => 'fail', 'message' => array('comment' => sprintf($this->lang->error->notempty, $this->lang->attend->rejectReason))));
+
+                $this->attend->review($attendID, $reviewStatus);
+                if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
+
+                $actionID = $this->loadModel('action')->create('attend', $attendID, 'reviewed', $this->post->comment, $this->lang->attend->reviewStatusList[$reviewStatus]);
+                $this->sendmail($attendID, $actionID);
+                $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
+            }
+
+            $this->view->title    = $this->lang->attend->review;
+            $this->view->attendID = $attendID;
+            $this->display();
+        }
     }
 
     /**

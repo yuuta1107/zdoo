@@ -11,6 +11,7 @@
  */
 ?>
 <?php include '../../../sys/common/view/header.modal.html.php';?>
+<?php include '../../../sys/common/view/kindeditor.html.php';?>
 <?php js::set('confirmReview', $lang->overtime->confirmReview)?>
 <table class='table table-bordered'>
   <tr>
@@ -55,20 +56,23 @@
 <?php echo $this->fetch('action', 'history', "objectType=overtime&objectID=$overtime->id");?>
 <div class='page-actions'>
   <?php
-  if($type == 'browseReview' and $overtime->status == 'wait')
+  if($type == 'personal')
   {
-      commonModel::printLink('oa.overtime', 'review', "id=$overtime->id", $lang->overtime->review, "class='loadInModal btn' data-width='800'");
+      $switchLabel = $overtime->status == 'wait' ? $lang->overtime->cancel : $lang->overtime->commit;
+      if($overtime->status == 'wait' or $overtime->status == 'draft') 
+      {
+          commonModel::printLink('oa.overtime', 'switchstatus', "id=$overtime->id", $switchLabel, "class='switch-status btn'");
+          echo "<div class='btn-group'>";
+          commonModel::printLink('oa.overtime', 'edit',   "id=$overtime->id", $lang->edit,   "class='btn loadInModal'");
+          commonModel::printLink('oa.overtime', 'delete', "id=$overtime->id", $lang->delete, "class='btn deleteOvertime'");
+          echo '</div>';
+      }
   }
-
-  if($type == 'personal' and ($overtime->status == 'wait' or $overtime->status == 'draft'))
+  elseif($overtime->status == 'wait')
   {
-      if($overtime->status == 'wait' or $overtime->status == 'draft') commonModel::printLink('oa.overtime', 'switchstatus', "id=$overtime->id", $overtime->status == 'wait' ? $lang->overtime->cancel : $lang->overtime->commit, "class='switch-status btn'");
-      echo "<div class='btn-group'>";
-      commonModel::printLink('oa.overtime', 'edit', "id=$overtime->id", $lang->edit, "class='btn loadInModal'");
-      commonModel::printLink('oa.overtime', 'delete', "id=$overtime->id", $lang->delete, "class='btn deleteOvertime'");
-      echo '</div>';
+      commonModel::printLink('oa.overtime', 'review', "id=$overtime->id&status=pass",   $lang->overtime->statusList['pass'],   "class='btn reviewPass'");
+      commonModel::printLink('oa.overtime', 'review', "id=$overtime->id&status=reject", $lang->overtime->statusList['reject'], "class='btn loadInModal'");
   }
-
   echo html::a('#', $lang->goback, "class='btn' data-dismiss='modal'");
   ?>
 </div>

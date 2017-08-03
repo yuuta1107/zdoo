@@ -283,10 +283,10 @@ $lang->provider->menu->browse = array('link' => 'All Providers|provider|browse|'
 /* Menu of product module. */
 if(!isset($lang->product)) $lang->product = new stdclass();
 $lang->product->menu = new stdclass();
-$lang->product->menu->browse     = 'All Products|product|browse|mode=all';
-$lang->product->menu->normal     = 'Normal|product|browse|mode=normal';
-$lang->product->menu->developing = 'Developing|product|browse|mode=developing';
-$lang->product->menu->offline    = 'Offline|product|browse|mode=offline';
+$lang->product->menu->browse     = 'All Products|product|browse|mode=browse&status=all';
+$lang->product->menu->normal     = 'Normal|product|browse|mode=browse&status=normal';
+$lang->product->menu->developing = 'Developing|product|browse|mode=browse&status=developing';
+$lang->product->menu->offline    = 'Offline|product|browse|mode=browse&status=offline';
 
 $lang->todo = new stdclass();
 $lang->todo->menu = new stdclass();
@@ -303,8 +303,8 @@ $lang->my->review->menu = new stdclass();
 $lang->my->review->menu->all      = 'All|my|review|type=all';
 $lang->my->review->menu->attend   = 'Attend|my|review|type=attend';
 $lang->my->review->menu->leave    = 'Leave|my|review|type=leave';
-$lang->my->review->menu->overtime = 'Overtime|my|review|type=overtime';
 $lang->my->review->menu->makeup   = 'Makeup|my|review|type=makeup';
+$lang->my->review->menu->overtime = 'Overtime|my|review|type=overtime';
 $lang->my->review->menu->lieu     = 'Lieu|my|review|type=lieu';
 $lang->my->review->menu->refund   = 'Refund|my|review|type=refund';
 

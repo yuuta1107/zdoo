@@ -14,8 +14,8 @@
 <?php include '../../../sys/common/view/treeview.html.php';?>
 <?php js::set('confirmReview', $lang->overtime->confirmReview)?>
 <div id='menuActions'>
-  <?php commonModel::printLink('overtime', 'export', "mode=all&orderBy={$orderBy}", $lang->exportIcon . $lang->export, "class='btn btn-primary iframe' data-width='700'");?>
-  <?php commonModel::printLink('overtime', 'create', "", "<i class='icon icon-plus'></i> {$lang->overtime->create}", "data-toggle='modal' class='btn btn-primary'")?>
+  <?php commonModel::printLink('oa.overtime', 'export', "mode=all&orderBy={$orderBy}", $lang->exportIcon . $lang->export, "class='btn btn-primary iframe' data-width='700'");?>
+  <?php commonModel::printLink('oa.overtime', 'create', "", "<i class='icon icon-plus'></i> {$lang->overtime->create}", "data-toggle='modal' class='btn btn-primary'")?>
 </div>
 <div class='with-side'>
   <div class='side'>
@@ -24,11 +24,11 @@
         <ul class='tree' data-collapsed='true'>
           <?php foreach($yearList as $year):?>
           <li class='<?php echo $year == $currentYear ? 'active' : ''?>'>
-            <?php commonModel::printLink('overtime', $type, "date=$year", $year);?>
+            <?php commonModel::printLink('oa.overtime', $type, "date=$year", $year);?>
             <ul>
               <?php foreach($monthList[$year] as $month):?>
               <li class='<?php echo ($year == $currentYear and $month == $currentMonth) ? 'active' : ''?>'>
-                <?php commonModel::printLink('overtime', $type, "date=$year$month", $year . $month);?>
+                <?php commonModel::printLink('oa.overtime', $type, "date=$year$month", $year . $month);?>
               </li>
               <?php endforeach;?>
             </ul>
@@ -56,8 +56,11 @@
             <?php if($type != 'browseReview'):?>
             <th class='w-80px'><?php commonModel::printOrderLink('reviewedBy', $orderBy, $vars, $lang->overtime->reviewedBy);?></th>
             <?php endif;?>
-            <?php $class = $type == 'personal' ? 'w-130px' : ($type == 'browseReview' ? 'w-100px' : 'w-40px');?>
-            <th class='<?php echo $class;?>'><?php echo $lang->actions;?></th>
+            <?php if($type == 'personal'):?>
+            <th class='w-130px'><?php echo $lang->actions;?></th>
+            <?php else:?>
+            <th class='w-100px'><?php echo $lang->actions;?></th>
+            <?php endif;?>
           </tr>
         </thead>
         <?php foreach($overtimeList as $overtime):?>
@@ -75,17 +78,38 @@
           <td><?php echo zget($users, $overtime->reviewedBy);?></td>
           <?php endif;?>
           <td class='actionTD text-left'>
-            <?php commonModel::printLink('oa.overtime', 'view', "id=$overtime->id&type=$type", $lang->detail, "data-toggle='modal'");?>
-            <?php if($type != 'company'):?>
-            <?php if($type == 'browseReview' and $overtime->status == 'wait'):?>
-            <?php commonModel::printLink('oa.overtime', 'review', "id=$overtime->id", $lang->overtime->review, "data-toggle='modal' data-width='800'");?>
-            <?php endif;?>
-            <?php if($type == 'personal' and ($overtime->status == 'wait' or $overtime->status == 'draft')):?>
-            <?php if($overtime->status == 'wait' or $overtime->status == 'draft') commonModel::printLink('oa.overtime', 'switchstatus', "id=$overtime->id", $overtime->status == 'wait' ? $lang->overtime->cancel : $lang->overtime->commit, "class='reload'");?>
-            <?php commonModel::printLink('oa.overtime', 'edit', "id=$overtime->id", $lang->edit, "data-toggle='modal'");?>
-            <?php commonModel::printLink('oa.overtime', 'delete', "id=$overtime->id", $lang->delete, "class='deleter'");?>
-            <?php endif;?>
-            <?php endif;?>
+            <?php 
+            commonModel::printLink('oa.overtime', 'view', "id=$overtime->id&type=$type", $lang->detail, "data-toggle='modal'");
+            if($type == 'personal')
+            {
+                $switchLabel = $overtime->status == 'wait' ? $lang->overtime->cancel : $lang->overtime->commit;
+                if($overtime->status == 'wait' or $overtime->status == 'draft')
+                {
+                    commonModel::printLink('oa.overtime', 'switchstatus', "id=$overtime->id", $switchLabel,  "class='reload'");
+                    commonModel::printLink('oa.overtime', 'edit',         "id=$overtime->id", $lang->edit,   "data-toggle='modal'");
+                    commonModel::printLink('oa.overtime', 'delete',       "id=$overtime->id", $lang->delete, "class='deleter'");
+                }
+                else
+                {
+                    echo html::a('###', $switchLabel,  "disabled='disabled'");
+                    echo html::a('###', $lang->edit,   "disabled='disabled'");
+                    echo html::a('###', $lang->delete, "disabled='disabled'");
+                }
+            }
+            else
+            {
+                if($overtime->status == 'wait')
+                {
+                    commonModel::printLink('oa.overtime', 'review', "id=$overtime->id&status=pass",   $lang->overtime->statusList['pass'],   "class='reivewPass'");
+                    commonModel::printLink('oa.overtime', 'review', "id=$overtime->id&status=reject", $lang->overtime->statusList['reject'], "data-toggle='modal'");
+                }
+                else
+                {
+                    echo html::a('###', $lang->overtime->statusList['pass'],   "disabled='disabled'");
+                    echo html::a('###', $lang->overtime->statusList['reject'], "disabled='disabled'");
+                }
+            }
+            ?>
           </td>
         </tr>
         <?php endforeach;?>

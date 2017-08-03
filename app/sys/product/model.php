@@ -28,6 +28,7 @@ class productModel extends model
     /** 
      * Get product list.
      * 
+     * @param  string  $mode
      * @param  string  $status
      * @param  string  $line
      * @param  string  $orderBy 
@@ -35,14 +36,19 @@ class productModel extends model
      * @access public
      * @return array
      */
-    public function getList($status = '', $line = '', $orderBy = 'id_desc', $pager = null)
+    public function getList($mode = 'browse', $status = '', $line = '', $orderBy = 'id_desc', $pager = null)
     {
+        /* Process search condition. */
+        if($this->session->productQuery == false) $this->session->set('productQuery', ' 1 = 1');
+        $productQuery = $this->loadModel('search', 'sys')->replaceDynamic($this->session->productQuery);
+
         if(strpos($orderBy, 'id') === false) $orderBy .= ', id_desc';
 
         return $this->dao->select('*')->from(TABLE_PRODUCT)
             ->where('deleted')->eq(0)
-            ->beginIF($status && $status != 'all')->andWhere('status')->eq($status)->fi()
-            ->beginIF($line)->andWhere('line')->eq($line)->fi()
+            ->beginIF($mode == 'browse' && $status && $status != 'all')->andWhere('status')->eq($status)->fi()
+            ->beginIF($mode == 'browse' && $line)->andWhere('line')->eq($line)->fi()
+            ->beginIF($mode == 'bysearch')->andWhere($productQuery)->fi()
             ->orderBy($orderBy)
             ->page($pager)
             ->fetchAll('id');

@@ -25,6 +25,7 @@ class product extends control
     /**
      * Browse product.
      * 
+     * @param string $mode
      * @param string $staus
      * @param string $line
      * @param string $orderBy     the order by
@@ -34,19 +35,25 @@ class product extends control
      * @access public
      * @return void
      */
-    public function browse($status = 'all', $line = '', $orderBy = 'id_desc', $recTotal = 0, $recPerPage = 20, $pageID = 1)
+    public function browse($mode = 'browse', $status = 'all', $line = '', $orderBy = 'id_desc', $recTotal = 0, $recPerPage = 20, $pageID = 1)
     {   
         $this->app->loadClass('pager', $static = true);
         $pager = new pager($recTotal, $recPerPage, $pageID);
 
         $this->session->set('productList', $this->app->getURI(true));
+
+        /* Build search form. */
+        $this->loadModel('search', 'sys');
+        $this->config->product->search['actionURL'] = $this->createLink('product', 'browse', 'mode=bysearch');
+        $this->search->setSearchParams($this->config->product->search);
         
         $this->view->title    = $this->lang->product->browse;
-        $this->view->products = $this->product->getList($status, $line, $orderBy, $pager);
-        $this->view->pager    = $pager;
-        $this->view->orderBy  = $orderBy;
+        $this->view->products = $this->product->getList($mode, $status, $line, $orderBy, $pager);
+        $this->view->mode     = $mode;
         $this->view->status   = $status;
         $this->view->line     = $line;
+        $this->view->orderBy  = $orderBy;
+        $this->view->pager    = $pager;
         $this->display();
     }   
 

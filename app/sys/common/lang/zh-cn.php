@@ -283,10 +283,10 @@ $lang->provider->menu->browse = array('link' => '供应商列表|provider|browse
 /* Menu of product module. */
 if(!isset($lang->product)) $lang->product = new stdclass();
 $lang->product->menu = new stdclass();
-$lang->product->menu->browse     = '所有产品|product|browse|mode=all';
-$lang->product->menu->normal     = '正常|product|browse|mode=normal';
-$lang->product->menu->developing = '研发中|product|browse|mode=developing';
-$lang->product->menu->offline    = '下线|product|browse|mode=offline';
+$lang->product->menu->browse     = '所有产品|product|browse|mode=browse&status=all';
+$lang->product->menu->normal     = '正常|product|browse|mode=browse&status=normal';
+$lang->product->menu->developing = '研发中|product|browse|mode=browse&status=developing';
+$lang->product->menu->offline    = '下线|product|browse|mode=browse&status=offline';
 
 $lang->todo = new stdclass();
 $lang->todo->menu = new stdclass();
@@ -303,8 +303,8 @@ $lang->my->review->menu = new stdclass();
 $lang->my->review->menu->all      = '所有|my|review|type=all';
 $lang->my->review->menu->attend   = '考勤|my|review|type=attend';
 $lang->my->review->menu->leave    = '请假|my|review|type=leave';
-$lang->my->review->menu->overtime = '加班|my|review|type=overtime';
 $lang->my->review->menu->makeup   = '补班|my|review|type=makeup';
+$lang->my->review->menu->overtime = '加班|my|review|type=overtime';
 $lang->my->review->menu->lieu     = '调休|my|review|type=lieu';
 $lang->my->review->menu->refund   = '报销|my|review|type=refund';
 

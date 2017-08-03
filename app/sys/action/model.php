@@ -121,6 +121,7 @@ class actionModel extends model
      */
     public function getList($objectType, $objectID, $action = '', $pager = null, $origin = '')
     {
+        $orderBy = $origin == '' ? 'id' : '`date`_desc';
         $actions = $this->dao->select('*')->from(TABLE_ACTION)
             ->where('1 = 1')
             ->beginIF($objectType == 'customer' || $objectType == 'provider')->andWhere('customer')->eq($objectID)->fi()
@@ -130,7 +131,7 @@ class actionModel extends model
               ->andWhere('objectID')->eq($objectID)
             ->fi()
             ->beginIF($action)->andWhere('action')->eq($action)->fi()
-            ->orderBy('id_desc')
+            ->orderBy($orderBy)
             ->page($pager)
             ->fetchAll('id');
 
