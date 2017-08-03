@@ -405,7 +405,7 @@ class fileModel extends model
         foreach($out[3] as $key => $base64Image)
         {
             $extension = strtolower($out[2][$key]);
-            if(!in_array($extension, $this->config->file->imageExtensions)) die();
+            if(!in_array($extension, $this->config->file->imageExtensions)) return false;
             $imageData = base64_decode($base64Image);
 
             $file['extension']   = $extension;
@@ -640,7 +640,9 @@ class fileModel extends model
 
             $imgURL = $this->config->requestType == 'GET' ? '{$2.$1}' : '{$1.$2}';
 
-            $data->$editorID = $this->pasteImage($data->$editorID, $uid);
+            $pasteData = $this->pasteImage($data->$editorID, $uid);
+            if($pasteData) $data->$editorID = $pasteData;
+
             $data->$editorID = preg_replace("/ src=\"$readLinkReg\" /", ' src="' . $imgURL . '" ', $data->$editorID);
             $data->$editorID = preg_replace("/ src=\"" . htmlspecialchars($readLinkReg) . "\" /", ' src="' . $imgURL . '" ', $data->$editorID);
         }
