@@ -857,18 +857,18 @@ class baseJS
 
     /**
      * 显示一个确认框，点击确定跳转到$okURL，点击取消跳转到$cancelURL。
-     * show a confirm box, press ok go to okURL, else go to cancleURL.
+     * show a confirm box, press ok go to okURL, else go to cancelURL.
      *
      * @param  string $message      显示的内容。              the text to be showed.
      * @param  string $okURL        点击确定后跳转的地址。    the url to go to when press 'ok'.
-     * @param  string $cancleURL    点击取消后跳转的地址。    the url to go to when press 'cancle'.
+     * @param  string $cancelURL    点击取消后跳转的地址。    the url to go to when press 'cancel'.
      * @param  string $okTarget     点击确定后跳转的target。  the target to go to when press 'ok'.
-     * @param  string $cancleTarget 点击取消后跳转的target。  the target to go to when press 'cancle'.
+     * @param  string $cancelTarget 点击取消后跳转的target。  the target to go to when press 'cancel'.
      * @static
      * @access public
      * @return string
      */
-    static public function confirm($message = '', $okURL = '', $cancleURL = '', $okTarget = "self", $cancleTarget = "self")
+    static public function confirm($message = '', $okURL = '', $cancelURL = '', $okTarget = "self", $cancelTarget = "self")
     {
         $js = self::start();
 
@@ -882,14 +882,14 @@ class baseJS
             $confirmAction = "$okTarget.location = '$okURL';";
         }
 
-        $cancleAction = '';
-        if(strtolower($cancleURL) == "back")
+        $cancelAction = '';
+        if(strtolower($cancelURL) == "back")
         {
-            $cancleAction = "history.back(-1);";
+            $cancelAction = "history.back(-1);";
         }
-        elseif(!empty($cancleURL))
+        elseif(!empty($cancelURL))
         {
-            $cancleAction = "$cancleTarget.location = '$cancleURL';";
+            $cancelAction = "$cancelTarget.location = '$cancelURL';";
         }
 
         $js .= <<<EOT
@@ -899,7 +899,7 @@ if(confirm("$message"))
 }
 else
 {
-    $cancleAction
+    $cancelAction
 }
 EOT;
         $js .= self::end();
