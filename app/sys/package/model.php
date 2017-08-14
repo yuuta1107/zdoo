@@ -808,7 +808,7 @@ class packageModel extends model
         {
             $sql = trim($sql);
             if(empty($sql)) continue;
-            $sql = preg_replace('/`(\w+)_/', "{$this->config->db->prefix}\${1}_", $sql);
+            $sql = preg_replace('/`(\w+)_/', $this->config->db->name . ".`{$this->config->db->prefix}\${1}_", $sql);
 
             try
             {
