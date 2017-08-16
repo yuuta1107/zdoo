@@ -63,6 +63,7 @@ $lang->action->desc->finished              = '$date, 由 <strong>$actor</strong>
 $lang->action->desc->transfered            = '$date, 由 <strong>$actor</strong> 转交。' . "\n";
 $lang->action->desc->reviewed              = '$date, 由 <strong>$actor</strong> 审核 $extra。' . "\n";
 $lang->action->desc->reimburse             = '$date, 由 <strong>$actor</strong> 报销 $extra。' . "\n";
+$lang->action->desc->createtrade           = '$date, 由 <strong>$actor</strong> 记账 $extra。' . "\n";
 $lang->action->desc->revoked               = '$date, 由 <strong>$actor</strong> 撤销。' . "\n";
 $lang->action->desc->commited              = '$date, 由 <strong>$actor</strong> 提交。' . "\n";
 $lang->action->desc->reported              = '$date, 由 <strong>$actor</strong> 销假。' . "\n";
@@ -127,7 +128,8 @@ $lang->action->label->marked      = '编辑了';
 $lang->action->label->started     = '开始了';
 $lang->action->label->canceled    = '取消了';
 $lang->action->label->finished    = '完成了';
-$lang->action->label->reimbursed  = '报销了';
+$lang->action->label->reimburse   = '报销了';
+$lang->action->label->createtrade = '报销记账';
 $lang->action->label->record      = '沟通了';
 $lang->action->label->signed      = '签约了';
 $lang->action->label->commited    = '提交了';
@@ -222,6 +224,7 @@ $lang->action->label->refund['created']     = '报销审批|refund|view|refundID
 $lang->action->label->refund['edited']      = '报销审批|refund|view|refundID=%s&mode=review';
 $lang->action->label->refund['reviewed']    = '报销审批|refund|view|refundID=%s&mode=review';
 $lang->action->label->refund['reimburse']   = '报销审批|refund|view|refundID=%s';
+$lang->action->label->refund['createtrade'] = '报销记账|refund|view|refundID=%s';
 $lang->action->label->refund['deletedfile'] = '报销审批|refund|view|refundID=%s';
 $lang->action->label->user = array();
 $lang->action->label->user['login']  = '登录|user|login|';

@@ -12,13 +12,22 @@
 ?>
 <?php include '../../../sys/common/view/header.modal.html.php';?>
 <?php include '../../../sys/common/view/chosen.html.php';?>
+<?php include '../../../sys/common/view/datepicker.html.php';?>
 <form method='post' id='ajaxForm' action='<?php echo inlink('createtrade', "refundid={$refundID}")?>'>
   <table class='table table-form'>
     <tr>
       <th class='w-60px'><?php echo $lang->trade->depositor;?></th>
       <td>
+        <div class='required required-wrapper'></div>
+        <?php echo html::select('depositor', $depositorList, isset($this->config->refund->depositor) ? $this->config->refund->depositor : '', "class='form-control chosen'");?>
+      </td>
+      <td class='w-20px'></td>
+    </tr>
+    <tr>
+      <th class='w-60px'><?php echo $lang->trade->category;?></th>
+      <td>
         <div class='input-group'>
-          <?php echo html::select('depositor', $depositorList, isset($this->config->refund->depositor) ? $this->config->refund->depositor : '', "class='form-control'");?>
+          <?php echo html::select('category', $categoryList, $refund->category, "class='form-control chosen'");?>
           <div class='input-group-addon' style='padding-right: 20px;'><?php echo html::checkbox('objectType', $lang->trade->objectTypeList);?></div>
         </div>
       </td>
@@ -45,6 +54,13 @@
     <tr>
       <th><?php echo $lang->trade->dept;?></th>
       <td><?php echo html::select('dept', $deptList, $refund->dept, "class='form-control chosen'");?></td>
+    </tr>
+    <tr>
+      <th><?php echo $lang->trade->handlers;?></th>
+      <td>
+        <div class='required required-wrapper'></div>
+        <?php echo html::select('handlers[]', $userList, $refund->related, "class='form-control chosen' multiple");?>
+      </td>
     </tr>
     <tr>
       <th></th>

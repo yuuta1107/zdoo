@@ -27,6 +27,7 @@
   <?php endif;?>
   <?php commonModel::printLink('refund', 'create', '', '<i class="icon-plus"></i> ' . $lang->refund->create, 'class="btn btn-primary"');?>
 </div>
+<?php if($mode != 'todo'):?>
 <div class='with-side'>
   <div class='side'>
     <div class='panel panel-sm'>
@@ -49,15 +50,16 @@
     </div>
   </div>
   <div class='main'>
+<?php endif;?>
     <div class='panel'>
       <table class='table table-hover table-striped tablesorter table-data table-fixed text-center' id='refundTable'>
         <thead>
           <tr class='text-center'>
             <?php $vars = "date=$date&type=&orderBy=%s&recTotal={$pager->recTotal}&recPerPage={$pager->recPerPage}&pageID={$pager->pageID}";?>
             <th class='w-50px'><?php commonModel::printOrderLink('id', $orderBy, $vars, $lang->refund->id);?></th>
-            <th class='w-100px visible-lg'><?php commonModel::printOrderLink('dept', $orderBy, $vars, $lang->refund->dept);?></th>
+            <th class='w-80px text-left visible-lg'><?php commonModel::printOrderLink('dept', $orderBy, $vars, $lang->refund->dept);?></th>
             <th><?php commonModel::printOrderLink('name', $orderBy, $vars, $lang->refund->name);?></th>
-            <th class='w-100px'><?php commonModel::printOrderLink('category', $orderBy, $vars, $lang->refund->category);?></th>
+            <th class='w-120px'><?php commonModel::printOrderLink('category', $orderBy, $vars, $lang->refund->category);?></th>
             <th class='w-100px text-right'><?php commonModel::printOrderLink('money', $orderBy, $vars, $lang->refund->money);?></th>
             <th class='w-80px'><?php commonModel::printOrderLink('status', $orderBy, $vars, $lang->refund->status);?></th>
             <th class='w-80px'><?php commonModel::printOrderLink('createdBy', $orderBy, $vars, $lang->refund->createdBy);?></th>
@@ -67,42 +69,62 @@
             <th class='w-80px'><?php commonModel::printOrderLink('refundDate', $orderBy, $vars, $lang->refund->refundDate);?></th>
             <?php if($mode == 'personal'):?>
             <th class='w-130px'><?php echo $lang->actions;?></th>
-            <?php else:?>
+            <?php elseif($mode == 'todo'):?>
             <th class='w-80px'><?php echo $lang->actions;?></th>
+            <?php else:?>
+            <th class='w-40px'><?php echo $lang->actions;?></th>
             <?php endif;?>
           </tr>
         </thead>
         <?php foreach($refunds as $refund):?>
         <tr data-url='<?php echo $this->createLink('refund', 'view', "refundID={$refund->id}&mode={$mode}");?>'>
           <td><?php echo $refund->id;?></td>
-          <td class='visible-lg'><?php echo zget($deptList, $refund->dept);?></td>
+          <td class='text-left visible-lg'><?php echo zget($deptList, $refund->dept);?></td>
           <td class='text-left' title='<?php echo $refund->name;?>'><?php echo $refund->name?></td>
-          <td title='<?php echo zget($categories, $refund->category);?>'><?php echo zget($categories, $refund->category, ' ');?></td>
+          <td class='text-left' title='<?php echo zget($categories, $refund->category);?>'><?php echo zget($categories, $refund->category, ' ');?></td>
           <td class='text-right'><?php echo zget($currencySign, $refund->currency) . $refund->money?></td>
           <td class='refund-<?php echo $refund->status?>'><?php echo zget($lang->refund->statusList, $refund->status)?></td>
           <td><?php echo zget($userPairs, $refund->createdBy);?></td>
-          <td><?php echo formatTime($refund->createdDate, DT_DATE1)?></td>
+          <td><?php echo formatTime($refund->createdDate, DT_DATE1);?></td>
           <td><?php echo zget($userPairs, $refund->firstReviewer) . ' ' . zget($userPairs, $refund->secondReviewer);?></td>
           <td><?php echo zget($userPairs, $refund->refundBy);?></td>
           <td><?php echo formatTime($refund->refundDate, DT_DATE1)?></td>
           <td class='text-left'>
-            <?php if($mode == 'personal'):?>
-            <?php if($refund->createdBy == $this->app->user->account and ($refund->status == 'wait' or $refund->status == 'draft')):?>
-            <?php echo html::a($this->createLink('refund', 'edit',   "refundID={$refund->id}"), $lang->edit, "")?>
-            <?php echo html::a($this->createLink('refund', 'delete', "refundID={$refund->id}"), $lang->delete, "class='deleter'")?>
-            <?php if($refund->status == 'wait' or $refund->status == 'draft'):?>
-            <?php echo html::a($this->createLink('refund', 'switchstatus', "id=$refund->id"), $refund->status == 'wait' ? $lang->refund->cancel : $lang->refund->commit, "class='reload'");?>
-            <?php else:?>
-            <?php echo html::a('javascript:;', $lang->refund->cancel, "class='disabled'");?>
-            <?php endif;?>
-            <?php else:?>
-            <?php echo html::a('javascript:;', $lang->edit, "class='disabled'")?>
-            <?php echo html::a('javascript:;', $lang->delete, "class='disabled'")?>
-            <?php echo html::a('javascript:;', $lang->refund->cancel, "class='disabled'");?>
-            <?php endif;?>
-            <?php endif;?>
-            <?php echo html::a($this->createLink('refund', 'view',   "refundID={$refund->id}&mode={$mode}"), $lang->detail, "")?>
-            <?php if($mode == 'todo') echo html::a($this->createLink('refund', 'reimburse', "refundID={$refund->id}"), $lang->refund->common, "class='refund'");?>
+            <?php 
+            echo html::a($this->createLink('refund', 'view', "refundID={$refund->id}&mode={$mode}"), $lang->detail);
+            if($mode == 'personal')
+            {
+                $switchLabel = $refund->status == 'wait' ? $lang->refund->cancel : $lang->refund->commit;
+                if($this->app->user->admin == 'super' or $refund->createdBy == $this->app->user->account)
+                {
+                    if(strpos(',wait,draft,', ",$refund->status,") !== false)
+                    {
+                        echo html::a($this->createLink('refund', 'switchstatus', "id=$refund->id"), $switchLabel, "class='reload'");
+                    }
+                    else
+                    {
+                        echo html::a('javascript:;', $switchLabel, "class='disabled'");
+                    }
+                    if(strpos(',wait,draft,reject,', ",$refund->status,") !== false)
+                    {
+                        echo html::a($this->createLink('refund', 'edit',   "refundID={$refund->id}"), $lang->edit);
+                        echo html::a($this->createLink('refund', 'delete', "refundID={$refund->id}"), $lang->delete, "class='deleter'");
+                    }
+                    else
+                    {
+                        echo html::a('javascript:;', $lang->edit,   "class='disabled'");
+                        echo html::a('javascript:;', $lang->delete, "class='disabled'");
+                    }
+                }
+                else
+                {
+                    echo html::a('javascript:;', $switchLabel,  "class='disabled'");
+                    echo html::a('javascript:;', $lang->edit,   "class='disabled'");
+                    echo html::a('javascript:;', $lang->delete, "class='disabled'");
+                }
+            }
+            if($mode == 'todo') echo html::a($this->createLink('refund', 'reimburse', "refundID={$refund->id}"), $lang->refund->common, "class='refund'");
+            ?>
           </td>
         </tr>
         <?php endforeach;?>
@@ -115,6 +137,8 @@
         <?php $pager->show();?>
       </div>
     </div>
+<?php if($mode != 'todo'):?>
   </div>
 </div>
+<?php endif;?>
 <?php include '../../common/view/footer.html.php';?>

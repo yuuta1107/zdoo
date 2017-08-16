@@ -11,7 +11,7 @@
  */
 ?>
 <?php include '../../common/view/header.html.php'; ?>
-<?php js::set('mode', $mode);?>
+<?php js::set('mode', $mode == 'review' ? $status : $mode);?>
 <?php js::set('createTradeTip', $lang->refund->createTradeTip);?>
 <div class='row-table'>
   <div class='col-main'>
@@ -59,20 +59,29 @@
     <?php echo $this->fetch('action', 'history', "objectType=refund&objectID={$refund->id}");?>
     <div class='page-actions'>
       <?php
-      if($this->app->user->admin == 'super' or (($refund->status == 'wait' or $refund->status == 'draft') && $refund->createdBy == $this->app->user->account))
+      $switchLabel = $refund->status == 'wait' ? $lang->refund->cancel : $lang->refund->commit;
+      if($this->app->user->admin == 'super' or $refund->createdBy == $this->app->user->account)
       {
-          echo "<div class='btn-group'>";
-          commonModel::printLink('refund', 'edit', "refundID=$refund->id", $lang->edit, "class='btn btn-default'");
-          commonModel::printLink('refund', 'delete', "refundID=$refund->id", $lang->delete, "class='btn btn-default deleter'");
-          echo '</div>';
+          if(strpos(',wait,draft,', ",$refund->status,") !== false)
+          {
+              commonModel::printLink('refund', 'switchstatus', "id=$refund->id", $switchLabel, "class='btn reload'");
+          }
+          if(strpos(',wait,draft,reject,', ",$refund->status,") !== false)
+          {
+              echo "<div class='btn-group'>";
+              commonModel::printLink('refund', 'edit', "refundID=$refund->id", $lang->edit, "class='btn btn-default'");
+              commonModel::printLink('refund', 'delete', "refundID=$refund->id", $lang->delete, "class='btn btn-default deleter'");
+              echo '</div>';
+          }
       }
-      if($mode == 'todo' && $refund->status == 'pass')
+      if(strpos(',wait,doing,', $refund->status) !== false) 
+      {
+          commonModel::printLink('refund', 'review', "refundID={$refund->id}", $lang->refund->review, "class='btn btn-default' data-toggle='modal' data-width='800'");
+      }
+      if($refund->status == 'pass')
       {
           commonModel::printLink('refund', 'reimburse', "refundID={$refund->id}", $lang->refund->common, "class='btn btn-default refund'");
       }
-
-      if($mode == 'review' and ($refund->status == 'wait' or $refund->status == 'doing')) commonModel::printLink('refund', 'review', "refundID={$refund->id}", $lang->refund->review, "class='btn btn-default' data-toggle='modal' data-width='800'");
-
       $browseLink = $this->session->refundList ? $this->session->refundList : inlink('personal');
       commonModel::printRPN($browseLink, $preAndNext);
       ?>
@@ -85,11 +94,11 @@
         <table class='table table-info'>
           <tr>
             <th class='w-80px'><?php echo $lang->refund->dept;?></th>
-            <td><?php echo zget($deptList, $refund->dept, ' ')?></td>
+            <td><?php echo zget($deptList, $refund->dept, '')?></td>
           </tr>
           <tr>
             <th><?php echo $lang->refund->category;?></th>
-            <td><?php echo zget($categories, $refund->category, ' ')?></td>
+            <td><?php echo zget($categories, $refund->category, '')?></td>
           </tr>
           <tr>
             <th><?php echo $lang->refund->money;?></th>

@@ -10,5 +10,5 @@
  * @link        http://www.ranzhico.com
  */
 $config->user->require = new stdclass();
-$config->user->require->create = 'account,realname,email,password1,role';
-$config->user->require->edit   = 'realname,email,role';
+$config->user->require->create = 'account,realname,email,password1';
+$config->user->require->edit   = 'realname,email';

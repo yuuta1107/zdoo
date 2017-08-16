@@ -15,8 +15,9 @@
 <?php js::set('confirmReview', $lang->makeup->confirmReview)?>
 <div id='menuActions'>
   <?php commonModel::printLink('oa.makeup', 'export', "mode=all&orderBy={$orderBy}", $lang->exportIcon . $lang->export, "class='btn btn-primary iframe' data-width='700'");?>
-  <?php commonModel::printLink('oa.makeup', 'create', "", "<i class='icon icon-plus'></i> {$lang->makeup->create}", "data-toggle='modal' class='btn btn-primary'")?>
+  <?php commonModel::printLink('oa.makeup', 'create', '', "<i class='icon icon-plus'></i> {$lang->makeup->create}", "data-toggle='modal' class='btn btn-primary'")?>
 </div>
+<?php if($type != 'browseReview'):?>
 <div class='with-side'>
   <div class='side'>
     <div class='panel panel-sm'>
@@ -39,6 +40,7 @@
     </div>
   </div>
   <div class='main'>
+<?php endif;?>
     <div class='panel'>
       <table class='table table-data table-hover text-center table-fixed tablesorter' id='makeupTable'>
         <thead>
@@ -81,15 +83,21 @@
             if($type == 'personal')
             {
                 $switchLabel = $makeup->status == 'wait' ? $lang->makeup->cancel : $lang->makeup->commit;
-                if($makeup->status == 'wait' or $makeup->status == 'draft') 
+                if(strpos(',wait,draft,', ",$makeup->status,") !== false) 
                 {
-                    commonModel::printLink('oa.makeup', 'switchstatus', "id=$makeup->id", $switchLabel,  "class='reload'");
-                    commonModel::printLink('oa.makeup', 'edit',         "id=$makeup->id", $lang->edit,   "data-toggle='modal'");
-                    commonModel::printLink('oa.makeup', 'delete',       "id=$makeup->id", $lang->delete, "class='deleter'");
+                    commonModel::printLink('oa.makeup', 'switchstatus', "id=$makeup->id", $switchLabel, "class='reload'");
                 }
                 else
                 {
                     echo html::a('###', $switchLabel,  "disabled='disabled'");
+                }
+                if(strpos(',wait,draft,reject,', ",$makeup->status,") !== false) 
+                {
+                    commonModel::printLink('oa.makeup', 'edit',   "id=$makeup->id", $lang->edit,   "data-toggle='modal'");
+                    commonModel::printLink('oa.makeup', 'delete', "id=$makeup->id", $lang->delete, "class='deleter'");
+                }
+                else
+                {
                     echo html::a('###', $lang->edit,   "disabled='disabled'");
                     echo html::a('###', $lang->delete, "disabled='disabled'");
                 }
@@ -113,6 +121,8 @@
         <?php endforeach;?>
       </table>
     </div>
+<?php if($type != 'browseReview'):?>
   </div>
 </div>
+<?php endif;?>
 <?php include '../../common/view/footer.html.php';?>

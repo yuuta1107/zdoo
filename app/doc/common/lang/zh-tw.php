@@ -10,7 +10,7 @@
  * @link        http://www.ranzhico.com
  */
 $lang->app = new stdclass();
-$lang->app->name = 'DOC';
+$lang->app->name = '文檔';
 
 $lang->menu->doc = new stdclass();
 $lang->menu->doc->dashboard = '首頁|doc|index|';

@@ -16,7 +16,7 @@
 <table class='table table-bordered'>
   <tr>
     <th><?php echo $lang->makeup->status;?></th>
-    <td class='text-warning'><?php echo $lang->makeup->statusList[$makeup->status];?></td>
+    <td class='makeup-<?php echo $makeup->status;?>'><?php echo $lang->makeup->statusList[$makeup->status];?></td>
     <th><?php echo $lang->makeup->hours?></th>
     <td><?php echo $makeup->hours . $lang->makeup->hoursTip;?></td>
   </tr> 
@@ -64,9 +64,12 @@
   if($type == 'personal')
   {
       $switchLabel = $makeup->status == 'wait' ? $lang->makeup->cancel : $lang->makeup->commit;
-      if($makeup->status == 'wait' or $makeup->status == 'draft') 
+      if(strpos(',wait,draft,', ",$makeup->status,") !== false) 
       {
           commonModel::printLink('oa.makeup', 'switchstatus', "id=$makeup->id", $switchLabel, "class='switch-status btn'");
+      }
+      if(strpos(',wait,draft,reject,', ",$makeup->status,") !== false) 
+      {
           echo "<div class='btn-group'>";
           commonModel::printLink('oa.makeup', 'edit',   "id=$makeup->id", $lang->edit,   "class='btn loadInModal'");
           commonModel::printLink('oa.makeup', 'delete', "id=$makeup->id", $lang->delete, "class='btn deleteMakeup'");

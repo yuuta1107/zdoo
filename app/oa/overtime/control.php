@@ -72,13 +72,30 @@ class overtime extends control
      */
     public function browse($type = 'personal', $date = '', $orderBy = 'id_desc')
     {
-        if($date == '' or (strlen($date) != 6 and strlen($date) != 4)) $date = date("Ym");
-        $currentYear  = substr($date, 0, 4);
-        $currentMonth = strlen($date) == 6 ? substr($date, 4, 2) : '';
-        $monthList    = $this->overtime->getAllMonth($type);
-        $yearList     = array_keys($monthList);
-        $deptList     = $this->loadModel('tree')->getPairs(0, 'dept');
+        /* If type is browseReview, display all overtimes wait to review. */
+        if($type == 'browseReview')
+        {
+            $date         = '';
+            $currentYear  = '';
+            $currentMonth = '';
+        }
+        else
+        {
+            if($date == '' or (strlen($date) != 6 and strlen($date) != 4)) $date = date("Ym");
+            $currentYear  = substr($date, 0, 4);
+            $currentMonth = strlen($date) == 6 ? substr($date, 4, 2) : '';
+            $monthList    = $this->overtime->getAllMonth($type);
+            $yearList     = array_keys($monthList);
+
+            $this->view->currentYear  = $currentYear;
+            $this->view->currentMonth = $currentMonth;
+            $this->view->monthList    = $monthList;
+            $this->view->yearList     = $yearList;
+        }
+
         $overtimeList = array();
+        $deptList     = $this->loadModel('tree')->getPairs(0, 'dept');
+        $deptList[0]  = '';
 
         if($type == 'personal')
         {
@@ -86,27 +103,31 @@ class overtime extends control
         }
         elseif($type == 'browseReview')
         {
-            $reviewedBy = $this->overtime->getReviewedBy();
-            if($reviewedBy)
-            { 
-                if($reviewedBy == $this->app->user->account)
-                {
-                    $deptList     = $this->loadModel('tree')->getPairs('', 'dept');
-                    $deptList[0]  = '';
-                    $overtimeList = $this->overtime->getList($type, $currentYear, $currentMonth, '', array_keys($deptList), '', $orderBy);
-                }
+            if($this->app->user->admin == 'super')
+            {
+                $overtimeList = $this->overtime->getList($type, $currentYear, $currentMonth, '', '', '', $orderBy);
             }
             else
             {
-                $deptList = $this->loadModel('tree')->getDeptManagedByMe($this->app->user->account);
-                if(empty($deptList))
-                {
-                    $overtimeList = array();
+                $reviewedBy = $this->overtime->getReviewedBy();
+                if($reviewedBy)
+                { 
+                    if($reviewedBy == $this->app->user->account)
+                    {
+                        $overtimeList = $this->overtime->getList($type, $currentYear, $currentMonth, '', array_keys($deptList), '', $orderBy);
+                    }
                 }
                 else
                 {
-                    foreach($deptList as $key => $value) $deptList[$key] = $value->name;
-                    $overtimeList = $this->overtime->getList($type, $currentYear, $currentMonth, '', array_keys($deptList), '', $orderBy);
+                    $depts = $this->loadModel('tree')->getDeptManagedByMe($this->app->user->account);
+                    if(empty($depts))
+                    {
+                        $overtimeList = array();
+                    }
+                    else
+                    {
+                        $overtimeList = $this->overtime->getList($type, $currentYear, $currentMonth, '', array_keys($depts), '', $orderBy);
+                    }
                 }
             }
         }
@@ -119,10 +140,6 @@ class overtime extends control
 
         $this->view->title        = $this->lang->overtime->browse;
         $this->view->type         = $type;
-        $this->view->currentYear  = $currentYear;
-        $this->view->currentMonth = $currentMonth;
-        $this->view->monthList    = $monthList;
-        $this->view->yearList     = $yearList;
         $this->view->deptList     = $deptList;
         $this->view->users        = $this->loadModel('user')->getPairs();
         $this->view->overtimeList = $overtimeList;
@@ -141,19 +158,26 @@ class overtime extends control
      */
     public function review($id, $status)
     {
-        $overtime = $this->overtime->getById($id);
         /* Check privilage. */
-        $canReview  = false;
-        $reviewedBy = $this->overtime->getReviewedBy();
-        if($reviewedBy)
-        { 
-            if($reviewedBy == $this->app->user->account) $canReview = true;
+        $canReview = false;
+        if($this->app->user->admin == 'super')
+        {
+            $canReview = true;
         }
         else
         {
-            $createdUser = $this->loadModel('user')->getByAccount($overtime->createdBy);
-            $dept = $this->loadModel('tree')->getById($createdUser->dept);
-            if($dept && $this->app->user->account == trim($dept->moderators, ',')) $canReview = true; 
+            $reviewedBy = $this->overtime->getReviewedBy();
+            if($reviewedBy)
+            { 
+                if($reviewedBy == $this->app->user->account) $canReview = true;
+            }
+            else
+            {
+                $overtime    = $this->overtime->getById($id);
+                $createdUser = $this->loadModel('user')->getByAccount($overtime->createdBy);
+                $dept        = $this->loadModel('tree')->getById($createdUser->dept);
+                if($dept && $this->app->user->account == trim($dept->moderators, ',')) $canReview = true; 
+            }
         }
 
         if($status == 'pass')

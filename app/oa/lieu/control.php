@@ -68,13 +68,30 @@ class lieu extends control
      */
     public function browse($type = 'personal', $date = '', $orderBy = 'id_desc')
     {
-        if($date == '' or (strlen($date) != 6 and strlen($date) != 4)) $date = date("Ym");
-        $currentYear  = substr($date, 0, 4);
-        $currentMonth = strlen($date) == 6 ? substr($date, 4, 2) : '';
-        $monthList    = $this->lieu->getAllMonth($type);
-        $yearList     = array_keys($monthList);
-        $deptList     = $this->loadModel('tree')->getPairs(0, 'dept');
-        $lieuList     = array();
+        /* If type is browseReview, display all lieus wait to review. */
+        if($type == 'browseRview')
+        {
+            $date         = '';
+            $currentYear  = ''; 
+            $currentMonth = ''; 
+        }
+        else
+        {
+            if($date == '' or (strlen($date) != 6 and strlen($date) != 4)) $date = date("Ym");
+            $currentYear  = substr($date, 0, 4);
+            $currentMonth = strlen($date) == 6 ? substr($date, 4, 2) : '';
+            $monthList    = $this->lieu->getAllMonth($type);
+            $yearList     = array_keys($monthList);
+
+            $this->view->currentYear  = $currentYear;
+            $this->view->currentMonth = $currentMonth;
+            $this->view->monthList    = $monthList;
+            $this->view->yearList     = $yearList;
+        }
+
+        $lieuList    = array();
+        $deptList    = $this->loadModel('tree')->getPairs(0, 'dept');
+        $deptList[0] = '/';
 
         if($type == 'personal')
         {
@@ -82,27 +99,31 @@ class lieu extends control
         }
         elseif($type == 'browseReview')
         {
-            $reviewedBy = $this->lieu->getReviewedBy();
-            if($reviewedBy)
-            { 
-                if($reviewedBy == $this->app->user->account)
-                {
-                    $deptList    = $this->loadModel('tree')->getPairs('', 'dept');
-                    $deptList[0] = '/';
-                    $lieuList    = $this->lieu->getList($type, $currentYear, $currentMonth, '', array_keys($deptList), '', $orderBy);
-                }
+            if($this->app->user->account == 'super')
+            {
+                $lieuList = $this->lieu->getList($type, $currentYear, $currentMonth, '', '', '', $orderBy);
             }
             else
             {
-                $deptList = $this->loadModel('tree')->getDeptManagedByMe($this->app->user->account);
-                if(empty($deptList))
-                {
-                    $lieuList = array();
+                $reviewedBy = $this->lieu->getReviewedBy();
+                if($reviewedBy)
+                { 
+                    if($reviewedBy == $this->app->user->account)
+                    {
+                        $lieuList = $this->lieu->getList($type, $currentYear, $currentMonth, '', array_keys($deptList), '', $orderBy);
+                    }
                 }
                 else
                 {
-                    foreach($deptList as $key => $value) $deptList[$key] = $value->name;
-                    $lieuList = $this->lieu->getList($type, $currentYear, $currentMonth, '', array_keys($deptList), '', $orderBy);
+                    $depts = $this->loadModel('tree')->getDeptManagedByMe($this->app->user->account);
+                    if(empty($depts))
+                    {
+                        $lieuList = array();
+                    }
+                    else
+                    {
+                        $lieuList = $this->lieu->getList($type, $currentYear, $currentMonth, '', array_keys($depts), '', $orderBy);
+                    }
                 }
             }
         }
@@ -111,17 +132,13 @@ class lieu extends control
             $lieuList = $this->lieu->getList($type, $currentYear, $currentMonth, '', '', '', $orderBy);
         }
 
-        $this->view->title        = $this->lang->lieu->browse;
-        $this->view->type         = $type;
-        $this->view->currentYear  = $currentYear;
-        $this->view->currentMonth = $currentMonth;
-        $this->view->monthList    = $monthList;
-        $this->view->yearList     = $yearList;
-        $this->view->deptList     = $deptList;
-        $this->view->users        = $this->loadModel('user')->getPairs();
-        $this->view->lieuList     = $lieuList;
-        $this->view->date         = $date;
-        $this->view->orderBy      = $orderBy;
+        $this->view->title    = $this->lang->lieu->browse;
+        $this->view->type     = $type;
+        $this->view->deptList = $deptList;
+        $this->view->users    = $this->loadModel('user')->getPairs();
+        $this->view->lieuList = $lieuList;
+        $this->view->date     = $date;
+        $this->view->orderBy  = $orderBy;
         $this->display();
     }
 
@@ -299,19 +316,26 @@ class lieu extends control
      */
     public function review($id, $status)
     {
-        $lieu = $this->lieu->getById($id);
         /* Check privilage. */
-        $canReview  = false;
-        $reviewedBy = $this->lieu->getReviewedBy();
-        if($reviewedBy)
-        { 
-            if($reviewedBy == $this->app->user->account) $canReview = true;
+        $canReview = false;
+        if($this->app->user->admin == 'super') 
+        {
+            $canReview = true;
         }
         else
         {
-            $createdUser = $this->loadModel('user')->getByAccount($lieu->createdBy);
-            $dept = $this->loadModel('tree')->getById($createdUser->dept);
-            if($dept && $this->app->user->account == trim($dept->moderators, ',')) $canReview = true;
+            $reviewedBy = $this->lieu->getReviewedBy();
+            if($reviewedBy)
+            { 
+                if($reviewedBy == $this->app->user->account) $canReview = true;
+            }
+            else
+            {
+                $lieu        = $this->lieu->getById($id);
+                $createdUser = $this->loadModel('user')->getByAccount($lieu->createdBy);
+                $dept        = $this->loadModel('tree')->getById($createdUser->dept);
+                if($dept && $this->app->user->account == trim($dept->moderators, ',')) $canReview = true;
+            }
         }
 
         if($status == 'pass')

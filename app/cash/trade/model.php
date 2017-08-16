@@ -537,8 +537,8 @@ class tradeModel extends model
 
         $this->dao->insert(TABLE_TRADE)
             ->data($trade, $skip = 'createTrader,traderName,files,labels')
-            ->autoCheck()
             ->batchCheck($this->config->trade->require->create, 'notempty')
+            ->autoCheck()
             ->exec();
 
         $tradeID = $this->dao->lastInsertID();

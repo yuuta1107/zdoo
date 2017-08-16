@@ -1,8 +1,9 @@
 <?php
 if(!isset($config->refund)) $config->refund = new stdclass();
 $config->refund->require = new stdclass();
-$config->refund->require->create = 'name,money';
-$config->refund->require->edit   = 'name,money';
+$config->refund->require->create      = 'name,dept,money';
+$config->refund->require->edit        = 'name,dept,money';
+$config->refund->require->createTrade = 'depositor,handlers,date';
 
 $config->refund->list = new stdclass();
 $config->refund->list->exportFields = 'id, createdBy, createdDate, dept, name, category, money, status, related, reviewer, refundBy, refundDate';

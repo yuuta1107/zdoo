@@ -59,7 +59,8 @@ class leaveModel extends model
             ->beginIf($account != '')->andWhere('t1.createdBy')->eq($account)->fi()
             ->beginIf($dept != '')->andWhere('t2.dept')->in($dept)->fi()
             ->beginIf($status != '')->andWhere('t1.status')->in($status)->fi()
-            ->beginIf($type != 'personal')->andWhere('t1.status')->ne('draft')->fi()
+            ->beginIf($type == 'browseReview')->andWhere('t1.status')->eq('wait')->fi()
+            ->beginIf($type == 'company')->andWhere('t1.status')->ne('draft')->fi()
             ->orderBy("t2.dept,t1.{$orderBy}")
             ->fetchAll();
         $this->session->set('leaveQueryCondition', $this->dao->get());
@@ -193,6 +194,7 @@ class leaveModel extends model
             ->get();
 
         if(isset($leave->begin) and $leave->begin != '') $leave->year = substr($leave->begin, 0, 4);
+        if($oldLeave->status == 'reject') $leave->status = 'wait';
 
         $result = $this->checkDate($leave, $id);
         if(!empty($result['result']) && $result['result'] == 'fail') return $result;

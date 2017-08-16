@@ -68,13 +68,30 @@ class leave extends control
      */
     public function browse($type = 'personal', $date = '', $orderBy = 'id_desc')
     {
-        if($date == '' or (strlen($date) != 6 and strlen($date) != 4)) $date = date("Ym");
-        $currentYear  = substr($date, 0, 4);
-        $currentMonth = strlen($date) == 6 ? substr($date, 4, 2) : '';
-        $monthList    = $this->leave->getAllMonth($type);
-        $yearList     = array_keys($monthList);
-        $deptList     = $this->loadModel('tree')->getPairs(0, 'dept');
-        $leaveList    = array();
+        /* If type is browseReview, display all leaves wait to review. */
+        if($type == 'browseReview')
+        {
+            $date         = '';
+            $currentYear  = '';
+            $currentMonth = '';
+        }
+        else
+        {
+            if($date == '' or (strlen($date) != 6 and strlen($date) != 4)) $date = date("Ym");
+            $currentYear  = substr($date, 0, 4);
+            $currentMonth = strlen($date) == 6 ? substr($date, 4, 2) : '';
+            $monthList    = $this->leave->getAllMonth($type);
+            $yearList     = array_keys($monthList);
+
+            $this->view->currentYear  = $currentYear;
+            $this->view->currentMonth = $currentMonth;
+            $this->view->monthList    = $monthList;
+            $this->view->yearList     = $yearList;
+        }
+
+        $leaveList   = array();
+        $deptList    = $this->loadModel('tree')->getPairs(0, 'dept');
+        $deptList[0] = '/';
 
         if($type == 'personal')
         {
@@ -82,27 +99,31 @@ class leave extends control
         }
         elseif($type == 'browseReview')
         {
-            $reviewedBy = $this->leave->getReviewedBy();
-            if($reviewedBy)
-            { 
-                if($reviewedBy == $this->app->user->account)
-                {
-                    $deptList = $this->loadModel('tree')->getPairs('', 'dept');
-                    $deptList[0] = '/';
-                    $leaveList = $this->leave->getList($type, $currentYear, $currentMonth, '', array_keys($deptList), '', $orderBy);
-                }
+            if($this->app->user->admin == 'super')
+            {
+                $leaveList = $this->leave->getList($type, $currentYear, $currentMonth, '', '', '', $orderBy);
             }
             else
             {
-                $deptList = $this->loadModel('tree')->getDeptManagedByMe($this->app->user->account);
-                if(empty($deptList))
-                {
-                    $leaveList = array();
+                $reviewedBy = $this->leave->getReviewedBy();
+                if($reviewedBy)
+                { 
+                    if($reviewedBy == $this->app->user->account)
+                    {
+                        $leaveList = $this->leave->getList($type, $currentYear, $currentMonth, '', array_keys($deptList), '', $orderBy);
+                    }
                 }
                 else
                 {
-                    foreach($deptList as $key => $value) $deptList[$key] = $value->name;
-                    $leaveList = $this->leave->getList($type, $currentYear, $currentMonth, '', array_keys($deptList), '', $orderBy);
+                    $depts = $this->loadModel('tree')->getDeptManagedByMe($this->app->user->account);
+                    if(empty($depts))
+                    {
+                        $leaveList = array();
+                    }
+                    else
+                    {
+                        $leaveList = $this->leave->getList($type, $currentYear, $currentMonth, '', array_keys($depts), '', $orderBy);
+                    }
                 }
             }
         }
@@ -111,17 +132,13 @@ class leave extends control
             $leaveList = $this->leave->getList($type, $currentYear, $currentMonth, '', '', '', $orderBy);
         }
 
-        $this->view->title        = $this->lang->leave->browse;
-        $this->view->type         = $type;
-        $this->view->currentYear  = $currentYear;
-        $this->view->currentMonth = $currentMonth;
-        $this->view->monthList    = $monthList;
-        $this->view->yearList     = $yearList;
-        $this->view->deptList     = $deptList;
-        $this->view->users        = $this->loadModel('user')->getPairs();
-        $this->view->leaveList    = $leaveList;
-        $this->view->date         = $date;
-        $this->view->orderBy      = $orderBy;
+        $this->view->title     = $this->lang->leave->browse;
+        $this->view->type      = $type;
+        $this->view->deptList  = $deptList;
+        $this->view->users     = $this->loadModel('user')->getPairs();
+        $this->view->leaveList = $leaveList;
+        $this->view->date      = $date;
+        $this->view->orderBy   = $orderBy;
         $this->display();
     }
 
@@ -154,19 +171,26 @@ class leave extends control
     public function review($id, $status, $mode = '')
     {
         /* Check privilage. */
-        $canReview  = false;
-        $reviewedBy = $this->leave->getReviewedBy();
-        if($reviewedBy)
-        { 
-            if($reviewedBy == $this->app->user->account) $canReview = true;
+        $canReview = false;
+        if($this->app->user->admin = 'super') 
+        {
+            $canReview = true;
         }
         else
         {
-            $leave       = $this->leave->getById($id);
-            $createdUser = $this->loadModel('user')->getByAccount($leave->createdBy);
-            $dept        = $this->loadModel('tree')->getByID($createdUser->dept);
+            $reviewedBy = $this->leave->getReviewedBy();
+            if($reviewedBy)
+            { 
+                if($reviewedBy == $this->app->user->account) $canReview = true;
+            }
+            else
+            {
+                $leave       = $this->leave->getById($id);
+                $createdUser = $this->loadModel('user')->getByAccount($leave->createdBy);
+                $dept        = $this->loadModel('tree')->getByID($createdUser->dept);
 
-            if($dept && $this->app->user->account == trim($dept->moderators, ',')) $canReview = true; 
+                if($dept && $this->app->user->account == trim($dept->moderators, ',')) $canReview = true; 
+            }
         }
 
         if($status == 'pass')
@@ -181,7 +205,7 @@ class leave extends control
                 if($changes)
                 {
                     $actionID = $this->loadModel('action')->create('leave', $id, 'reviewed', '', $this->lang->leave->statusList[$status]);
-                    $this->aciton->logHistory($actionID, $changes);
+                    $this->action->logHistory($actionID, $changes);
                     $this->sendmail($id, $actionID);
                 }
             }
@@ -281,19 +305,22 @@ class leave extends control
         $leave = $this->leave->getById($id);
 
         /* check privilage. */
-        $reviewedBy = $this->leave->getReviewedBy();
-        if(!$reviewedBy)
+        if($this->app->user->admin != 'super' && $leave->createdBy != $this->app->user->account)
         {
-            $createdUser = $this->loadModel('user')->getByAccount($leave->createdBy);
-            $dept        = $this->loadModel('tree')->getByID($createdUser->dept);
-            $reviewedBy  = empty($dept) ? '' : trim($dept->moderators, ',');
-        }
+            $reviewedBy = $this->leave->getReviewedBy();
+            if(!$reviewedBy)
+            {
+                $createdUser = $this->loadModel('user')->getByAccount($leave->createdBy);
+                $dept        = $this->loadModel('tree')->getByID($createdUser->dept);
+                $reviewedBy  = empty($dept) ? '' : trim($dept->moderators, ',');
+            }
 
-        if($leave->createdBy != $this->app->user->account and $this->app->user->account != $reviewedBy) 
-        {
-            $locate     = helper::safe64Encode(helper::createLink('oa.leave', 'browse'));
-            $noticeLink = helper::createLink('notice', 'index', "type=accessLimited&locate={$locate}");
-            die(js::locate($noticeLink));
+            if($this->app->user->account != $reviewedBy) 
+            {
+                $locate     = helper::safe64Encode(helper::createLink('oa.leave', 'browse'));
+                $noticeLink = helper::createLink('notice', 'index', "type=accessLimited&locate={$locate}");
+                die(js::locate($noticeLink));
+            }
         }
 
         if($_POST)

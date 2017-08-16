@@ -10,7 +10,7 @@
  * @link        http://www.ranzhico.com
  */
 $lang->app = new stdclass();
-$lang->app->name = 'CRM';
+$lang->app->name = '客户管理';
 
 $lang->menu->crm = new stdclass();
 $lang->menu->crm->dashboard = '首页|dashboard|index|';

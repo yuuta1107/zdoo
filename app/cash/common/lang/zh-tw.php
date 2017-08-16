@@ -10,7 +10,7 @@
  * @link        http://www.ranzhico.com
  */
 $lang->app = new stdclass();
-$lang->app->name = 'CASH';
+$lang->app->name = '現金記賬';
 
 $lang->menu->cash = new stdclass();
 $lang->menu->cash->dashboard = '首頁|dashboard|index|';

@@ -174,15 +174,30 @@ class refund extends control
         $this->config->refund->search['params']['refundBy']['values']       = $users;
         $this->search->setSearchParams($this->config->refund->search);
 
-        if($date == '' or (strlen($date) != 6 and strlen($date) != 4)) $date = date("Y");
-        $currentYear  = substr($date, 0, 4);
-        $currentMonth = strlen($date) == 6 ? substr($date, 4, 2) : '';
-        $currentDate  = $currentYear . '-' . $currentMonth;
-        $monthList    = $this->refund->getAllMonth();
-        $yearList     = array_reverse(array_keys($monthList));
+        if($mode == 'todo')
+        {
+            $date         = '';
+            $currentYear  = ''; 
+            $currentMonth = ''; 
+            $currentDate  = '';
+        }
+        else
+        {
+            if($date == '' or (strlen($date) != 6 and strlen($date) != 4)) $date = date("Y");
+            $currentYear  = substr($date, 0, 4);
+            $currentMonth = strlen($date) == 6 ? substr($date, 4, 2) : '';
+            $currentDate  = $currentYear . '-' . $currentMonth;
+            $monthList    = $this->refund->getAllMonth($mode);
+            $yearList     = array_keys($monthList);
 
-        $deptList    = $this->loadModel('tree')->getOptionMenu('dept');
-        $users       = $this->loadModel('user')->getPairs();
+            $this->view->currentYear  = $currentYear;
+            $this->view->currentMonth = $currentMonth;
+            $this->view->monthList    = $monthList;
+            $this->view->yearList     = $yearList;
+        }
+
+        $deptList = $this->loadModel('tree')->getOptionMenu('dept');
+        $users    = $this->loadModel('user')->getPairs();
 
         $refunds = array();
         if($mode == 'personal') $refunds = $this->refund->getList($mode, $type, $currentDate, '', '', $this->app->user->account, $orderBy, $pager);
@@ -202,10 +217,6 @@ class refund extends control
         $this->view->currencySign = $this->loadModel('common', 'sys')->getCurrencySign();
         $this->view->userPairs    = $users;
         $this->view->deptList     = $deptList;
-        $this->view->currentYear  = $currentYear;
-        $this->view->currentMonth = $currentMonth;
-        $this->view->monthList    = $monthList;
-        $this->view->yearList     = $yearList;
         $this->view->date         = $date;
         $this->view->type         = $type;
         $this->display('refund', 'browse');
@@ -216,21 +227,23 @@ class refund extends control
      * 
      * @param  int    $refundID 
      * @param  string $mode
+     * @param  string $status
      * @access public
      * @return void
      */
-    public function view($refundID = 0, $mode = '')
+    public function view($refundID = 0, $mode = '', $status = '')
     {
         $refund = $this->refund->getByID($refundID);
 
         $this->view->title        = $this->lang->refund->view;
-        $this->view->refund       = $refund;
-        $this->view->mode         = $mode;
         $this->view->users        = $this->loadModel('user')->getPairs();
         $this->view->currencySign = $this->loadModel('common', 'sys')->getCurrencySign();
         $this->view->categories   = $this->refund->getCategoryPairs();
         $this->view->deptList     = $this->loadModel('tree')->getOptionMenu('dept');
         $this->view->preAndNext   = $this->loadModel('common', 'sys')->getPreAndNextObject('refund', $refundID);
+        $this->view->refund       = $refund;
+        $this->view->mode         = $mode;
+        $this->view->status       = $status;
         $this->display();
     }
 
@@ -257,7 +270,7 @@ class refund extends control
      * @access public
      * @return void
      */
-    public function browseReview($date = '', $status = 'unreviewed', $type = '', $orderBy = 'id_desc', $recTotal = 0, $recPerPage = 20, $pageID = 1)
+    public function browseReview($status = 'unreviewed', $date = '', $type = '', $orderBy = 'id_desc', $recTotal = 0, $recPerPage = 20, $pageID = 1)
     {
         $this->app->loadClass('pager', $static = true);
         $pager = new pager($recTotal, $recPerPage, $pageID);
@@ -267,7 +280,7 @@ class refund extends control
         /* Build search form. */
         $this->loadModel('search', 'sys');
         $users = $this->loadModel('user')->getPairs('noclosed');
-        $this->config->refund->search['actionURL'] = $this->createLink('refund', 'browseReview', "date=&status=$status&type=bysearch");
+        $this->config->refund->search['actionURL'] = $this->createLink('refund', 'browseReview', "status=$status&date=&type=bysearch");
         $this->config->refund->search['params']['category']['values']       = array('' => '') + $categories;
         $this->config->refund->search['params']['createdBy']['values']      = $users;
         $this->config->refund->search['params']['firstReviewer']['values']  = $users;
@@ -275,12 +288,27 @@ class refund extends control
         $this->config->refund->search['params']['refundBy']['values']       = $users;
         $this->search->setSearchParams($this->config->refund->search);
 
-        if($date == '' or (strlen($date) != 6 and strlen($date) != 4)) $date = date("Y");
-        $currentYear  = substr($date, 0, 4);
-        $currentMonth = strlen($date) == 6 ? substr($date, 4, 2) : '';
-        $currentDate  = $currentYear . '-' . $currentMonth;
-        $monthList    = $this->refund->getAllMonth();
-        $yearList     = array_reverse(array_keys($monthList));
+        if($status == 'unreviewed')
+        {
+            $date         = '';
+            $currentYear  = ''; 
+            $currentMonth = ''; 
+            $currentDate  = '';
+        }
+        else
+        {
+            if($date == '' or (strlen($date) != 6 and strlen($date) != 4)) $date = date("Y");
+            $currentYear  = substr($date, 0, 4);
+            $currentMonth = strlen($date) == 6 ? substr($date, 4, 2) : '';
+            $currentDate  = $currentYear . '-' . $currentMonth;
+            $monthList    = $this->refund->getAllMonth('', $status);
+            $yearList     = array_keys($monthList);
+
+            $this->view->currentYear  = $currentYear;
+            $this->view->currentMonth = $currentMonth;
+            $this->view->monthList    = $monthList;
+            $this->view->yearList     = $yearList;
+        }
 
         $account  = $this->app->user->account;
         $refunds  = array();
@@ -330,10 +358,6 @@ class refund extends control
         $this->view->deptList     = $allDeptList;
         $this->view->categories   = $categories;
         $this->view->currencySign = $this->loadModel('common', 'sys')->getCurrencySign();
-        $this->view->currentYear  = $currentYear;
-        $this->view->currentMonth = $currentMonth;
-        $this->view->monthList    = $monthList;
-        $this->view->yearList     = $yearList;
         $this->view->status       = $status;
         $this->view->date         = $date;
         $this->view->orderBy      = $orderBy;
@@ -395,7 +419,7 @@ class refund extends control
         if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
             
         /* send email. */
-        $actionID = $this->loadModel('action')->create('refund', $refundID, 'reimburse', '', '');
+        $actionID = $this->loadModel('action')->create('refund', $refundID, 'reimburse');
         $this->sendmail($refundID, $actionID);
 
         $this->send(array('result' => 'success', 'refundID' => $refundID));
@@ -416,19 +440,23 @@ class refund extends control
 
         if($_POST)
         {
-            $this->refund->createTrade($refundID);
+            $tradeID = $this->refund->createTrade($refundID);
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
+            $extra = html::a($this->createLink('cash.trade', 'view', "tradeID=$tradeID"), $this->lang->trade->out . $tradeID);
+            $this->loadModel('action')->create('refund', $refundID, 'createTrade', '', $extra);
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
         }
 
         $this->view->title         = $this->lang->refund->common;
         $this->view->refundID      = $refundID;
         $this->view->refund        = $this->refund->getById($refundID);
-        $this->view->depositorList = $this->loadModel('depositor', 'cash')->getPairs();
+        $this->view->depositorList = array('') + $this->loadModel('depositor', 'cash')->getPairs();
+        $this->view->categoryList  = $this->refund->getCategoryPairs();
         $this->view->orderList     = $this->loadModel('order', 'crm')->getPairs($customerID = 0);
         $this->view->contractList  = $this->loadModel('contract', 'crm')->getList($customerID = 0);
         $this->view->customerList  = $this->loadModel('customer')->getPairs('client');
         $this->view->deptList      = $this->loadModel('tree')->getOptionMenu('dept');
+        $this->view->userList      = $this->loadModel('user')->getPairs('noclosed,nodeleted,noempty,noforbidden');
 
         $this->display();
     }

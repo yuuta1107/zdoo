@@ -47,7 +47,8 @@ class makeupModel extends model
             ->beginIf($account != '')->andWhere('t1.createdBy')->eq($account)->fi()
             ->beginIf($dept != '')->andWhere('t2.dept')->in($dept)->fi()
             ->beginIf($status != '')->andWhere('t1.status')->eq($status)->fi()
-            ->beginIf($type != 'personal')->andWhere('t1.status')->ne('draft')->fi()
+            ->beginIf($type == 'browseReview')->andWhere('t1.status')->eq('wait')->fi()
+            ->beginIf($type == 'company')->andWhere('t1.status')->ne('draft')->fi()
             ->orderBy("t2.dept,t1.{$orderBy}")
             ->fetchAll();
         $this->session->set('makeupQueryCondition', $this->dao->get());
@@ -160,6 +161,7 @@ class makeupModel extends model
 
         $makeup->leave = isset($makeup->leave) ? ',' . trim($makeup->leave, ',') . ',' : '';
         if(isset($makeup->begin) and $makeup->begin != '') $makeup->year = substr($makeup->begin, 0, 4);
+        if($oldMakeup->status == 'reject') $makeup->status = 'wait';
 
         $return = $this->checkDate($makeup, $id);
         if($return['result'] == 'fail') return $return;

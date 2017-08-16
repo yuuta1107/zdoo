@@ -54,14 +54,17 @@
   <?php 
   if($type == 'personal')
   {
-      $switchLabel = $leave->status == 'wait' ? $lang->leave->cancel : $lang->leave->commit;
       if($leave->status == 'pass' and date('Y-m-d H:i:s') > "$leave->begin $leave->start" && date('Y-m-d H:i:s') < "$leave->end $leave->finish" && $leave->backDate != "$leave->end $leave->finish")
       {
           commonModel::printLink('oa.leave', 'back', "id={$leave->id}", $lang->leave->back, "class='btn loadInModal'");
       }
-      elseif($leave->status == 'wait' or $leave->status == 'draft')
+      $switchLabel = $leave->status == 'wait' ? $lang->leave->cancel : $lang->leave->commit;
+      if(strpos(',wait,draft,', ",$leave->status,") !== false)
       {
           commonModel::printLink('oa.leave', 'switchstatus', "id={$leave->id}", $switchLabel, "class='btn'");
+      }
+      if(strpos(',wait,draft,reject,', ",$leave->status,") !== false)
+      {
           echo "<div class='btn-group'>";
           commonModel::printLink('oa.leave', 'edit',   "id={$leave->id}", $lang->edit,   "class='btn loadInModal'");
           commonModel::printLink('oa.leave', 'delete', "id={$leave->id}", $lang->delete, "class='btn deleteLeave'");

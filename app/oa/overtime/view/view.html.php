@@ -16,7 +16,7 @@
 <table class='table table-bordered'>
   <tr>
     <th><?php echo $lang->overtime->status;?></th>
-    <td class='text-warning'><?php echo $lang->overtime->statusList[$overtime->status];?></td>
+    <td class='overtime-<?php echo $overtime->status;?>'><?php echo $lang->overtime->statusList[$overtime->status];?></td>
     <th><?php echo $lang->overtime->type?></th>
     <td><?php echo zget($lang->overtime->typeList, $overtime->type);?></td>
   </tr> 
@@ -59,9 +59,12 @@
   if($type == 'personal')
   {
       $switchLabel = $overtime->status == 'wait' ? $lang->overtime->cancel : $lang->overtime->commit;
-      if($overtime->status == 'wait' or $overtime->status == 'draft') 
+      if(strpos(',wait,draft,', ",$overtime->status,") !== false)
       {
           commonModel::printLink('oa.overtime', 'switchstatus', "id=$overtime->id", $switchLabel, "class='switch-status btn'");
+      }
+      if(strpos(',wait,draft,reject,', ",$overtime->status,") !== false)
+      {
           echo "<div class='btn-group'>";
           commonModel::printLink('oa.overtime', 'edit',   "id=$overtime->id", $lang->edit,   "class='btn loadInModal'");
           commonModel::printLink('oa.overtime', 'delete', "id=$overtime->id", $lang->delete, "class='btn deleteOvertime'");

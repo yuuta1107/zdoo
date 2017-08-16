@@ -10,7 +10,7 @@
  * @link        http://www.ranzhico.com
  */
 $lang->app = new stdclass();
-$lang->app->name = 'OA';
+$lang->app->name = '日常辦公';
 
 $lang->menu->oa = new stdclass();
 $lang->menu->oa->dashboard = '首頁|dashboard|index|';
@@ -89,8 +89,8 @@ $lang->egress->menu->company    = '公司|egress|company|';
 if(!isset($lang->refund)) $lang->refund = new stdclass();
 $lang->refund->menu = new stdclass();
 $lang->refund->menu->personal = array('link' => '我的報銷|refund|personal|', 'alias' => 'create,edit');
-$lang->refund->menu->review     = '待審批|refund|browsereview|';
-$lang->refund->menu->reviewedBy = '由我審批|refund|browsereview|date=&status=reviewed';
+$lang->refund->menu->review     = '待審批|refund|browsereview|status=unreviewed';
+$lang->refund->menu->reviewedBy = '由我審批|refund|browsereview|status=reviewed';
 $lang->refund->menu->todo       = '待報銷|refund|todo|';
 $lang->refund->menu->company    = '所有報銷|refund|company|';
 $lang->refund->menu->settings   = array('link' => '設置|refund|setreviewer|', 'alias' => 'setcategory,setmoney,setdepositor,setrefundby');

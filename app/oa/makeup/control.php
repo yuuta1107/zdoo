@@ -72,13 +72,30 @@ class makeup extends control
      */
     public function browse($type = 'personal', $date = '', $orderBy = 'id_desc')
     {
-        if($date == '' or (strlen($date) != 6 and strlen($date) != 4)) $date = date("Ym");
-        $currentYear  = substr($date, 0, 4);
-        $currentMonth = strlen($date) == 6 ? substr($date, 4, 2) : '';
-        $monthList    = $this->makeup->getAllMonth($type);
-        $yearList     = array_keys($monthList);
-        $deptList     = $this->loadModel('tree')->getPairs(0, 'dept');
-        $makeupList = array();
+        /* If type is browseReview, display all makeups wait to review. */
+        if($type == 'browseReview')
+        {
+            $date         = '';
+            $currentYear  = ''; 
+            $currentMonth = ''; 
+        }
+        else
+        {
+            if($date == '' or (strlen($date) != 6 and strlen($date) != 4)) $date = date("Ym");
+            $currentYear  = substr($date, 0, 4);
+            $currentMonth = strlen($date) == 6 ? substr($date, 4, 2) : '';
+            $monthList    = $this->makeup->getAllMonth($type);
+            $yearList     = array_keys($monthList);
+
+            $this->view->currentYear  = $currentYear;
+            $this->view->currentMonth = $currentMonth;
+            $this->view->monthList    = $monthList;
+            $this->view->yearList     = $yearList;
+        }
+
+        $makeupList  = array();
+        $deptList    = $this->loadModel('tree')->getPairs(0, 'dept');
+        $deptList[0] = '';
 
         if($type == 'personal')
         {
@@ -86,27 +103,31 @@ class makeup extends control
         }
         elseif($type == 'browseReview')
         {
-            $reviewedBy = $this->makeup->getReviewedBy();
-            if($reviewedBy)
-            { 
-                if($reviewedBy == $this->app->user->account)
-                {
-                    $deptList    = $this->loadModel('tree')->getPairs('', 'dept');
-                    $deptList[0] = '';
-                    $makeupList  = $this->makeup->getList($type, $currentYear, $currentMonth, '', array_keys($deptList), '', $orderBy);
-                }
+            if($this->app->user->admin == 'super')
+            {
+                $makeupList = $this->makeup->getList($type, $currentYear, $currentMonth, '', '', '', $orderBy);
             }
             else
             {
-                $deptList = $this->loadModel('tree')->getDeptManagedByMe($this->app->user->account);
-                if(empty($deptList))
-                {
-                    $makeupList = array();
+                $reviewedBy = $this->makeup->getReviewedBy();
+                if($reviewedBy)
+                { 
+                    if($reviewedBy == $this->app->user->account)
+                    {
+                        $makeupList = $this->makeup->getList($type, $currentYear, $currentMonth, '', array_keys($deptList), '', $orderBy);
+                    }
                 }
                 else
                 {
-                    foreach($deptList as $key => $value) $deptList[$key] = $value->name;
-                    $makeupList = $this->makeup->getList($type, $currentYear, $currentMonth, '', array_keys($deptList), '', $orderBy);
+                    $depts = $this->loadModel('tree')->getDeptManagedByMe($this->app->user->account);
+                    if(empty($depts))
+                    {
+                        $makeupList = array();
+                    }
+                    else
+                    {
+                        $makeupList = $this->makeup->getList($type, $currentYear, $currentMonth, '', array_keys($depts), '', $orderBy);
+                    }
                 }
             }
         }
@@ -117,17 +138,13 @@ class makeup extends control
 
         $this->session->set('makeupList', $this->app->getURI(true));
 
-        $this->view->title        = $this->lang->makeup->browse;
-        $this->view->type         = $type;
-        $this->view->currentYear  = $currentYear;
-        $this->view->currentMonth = $currentMonth;
-        $this->view->monthList    = $monthList;
-        $this->view->yearList     = $yearList;
-        $this->view->deptList     = $deptList;
-        $this->view->users        = $this->loadModel('user')->getPairs();
-        $this->view->makeupList   = $makeupList;
-        $this->view->date         = $date;
-        $this->view->orderBy      = $orderBy;
+        $this->view->title      = $this->lang->makeup->browse;
+        $this->view->type       = $type;
+        $this->view->deptList   = $deptList;
+        $this->view->users      = $this->loadModel('user')->getPairs();
+        $this->view->makeupList = $makeupList;
+        $this->view->date       = $date;
+        $this->view->orderBy    = $orderBy;
         $this->display();
     }
 
@@ -141,19 +158,26 @@ class makeup extends control
      */
     public function review($id, $status)
     {
-        $makeup = $this->makeup->getById($id);
         /* Check privilage. */
-        $canReview  = false;
-        $reviewedBy = $this->makeup->getReviewedBy();
-        if($reviewedBy)
-        { 
-            if($reviewedBy == $this->app->user->account) $canReview = true;
+        $canReview = false;
+        if($this->app->user->admin == 'super') 
+        {
+            $canReview = true;
         }
         else
         {
-            $createdUser = $this->loadModel('user')->getByAccount($makeup->createdBy);
-            $dept        = $this->loadModel('tree')->getById($createdUser->dept);
-            if($dept && $this->app->user->account == trim($dept->moderators, ',')) $canReview = true;
+            $reviewedBy = $this->makeup->getReviewedBy();
+            if($reviewedBy)
+            { 
+                if($reviewedBy == $this->app->user->account) $canReview = true;
+            }
+            else
+            {
+                $makeup      = $this->makeup->getById($id);
+                $createdUser = $this->loadModel('user')->getByAccount($makeup->createdBy);
+                $dept        = $this->loadModel('tree')->getById($createdUser->dept);
+                if($dept && $this->app->user->account == trim($dept->moderators, ',')) $canReview = true;
+            }
         }
 
         if($status == 'pass')

@@ -14,8 +14,8 @@ $config->trade->settings->trader   = false;
 $config->trade->settings->category = false;
 
 $config->trade->require = new stdclass();
-$config->trade->require->create = 'depositor,money,type,handlers';
-$config->trade->require->edit   = 'depositor,money,type,handlers';
+$config->trade->require->create = 'depositor,money,type,handlers,date';
+$config->trade->require->edit   = 'depositor,money,type,handlers,date';
 $config->trade->require->invest = 'depositor,money,type,handlers';
 $config->trade->require->loan   = 'depositor,money,type,handlers';
 

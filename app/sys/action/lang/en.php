@@ -63,6 +63,7 @@ $lang->action->desc->finished              = '$date, finished by <strong>$actor<
 $lang->action->desc->transfered            = '$date, transfered by <strong>$actor</strong>.' . "\n";
 $lang->action->desc->reviewed              = '$date, reviewed by <strong>$actor</strong>.' . "\n";
 $lang->action->desc->reimburse             = '$date, reimbursed $extra by <strong>$actor</strong>.' . "\n";
+$lang->action->desc->createtrade           = '$date, created trade $extra by <strong>$actor</strong>.' . "\n";
 $lang->action->desc->revoked               = '$date, revoked by <strong>$actor</strong>.' . "\n";
 $lang->action->desc->commited              = '$date, commited by <strong>$actor</strong>.' . "\n";
 $lang->action->desc->reported              = '$date, 由 <strong>$actor</strong> 销假。' . "\n";
@@ -127,7 +128,8 @@ $lang->action->label->marked      = 'edited';
 $lang->action->label->started     = 'started';
 $lang->action->label->canceled    = 'cancelled';
 $lang->action->label->finished    = 'finished';
-$lang->action->label->reimbursed  = 'reimbursed';
+$lang->action->label->reimburse   = 'reimbursed';
+$lang->action->label->createtrade = 'created trade';
 $lang->action->label->record      = 'record';
 $lang->action->label->signed      = 'signed';
 $lang->action->label->commited    = 'commited';
@@ -222,6 +224,7 @@ $lang->action->label->refund['created']     = 'refund review|refund|view|refundI
 $lang->action->label->refund['edited']      = 'refund review|refund|view|refundID=%s&mode=review';
 $lang->action->label->refund['reviewed']    = 'refund review|refund|view|refundID=%s&mode=review';
 $lang->action->label->refund['reimburse']   = 'refund review|refund|view|refundID=%s';
+$lang->action->label->refund['createtrade'] = 'refund review|refund|view|refundID=%s';
 $lang->action->label->refund['deletedfile'] = 'refund review|refund|view|refundID=%s';
 $lang->action->label->user = array();
 $lang->action->label->user['login']  = 'login|user|login|';

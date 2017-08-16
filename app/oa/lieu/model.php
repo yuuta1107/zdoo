@@ -47,7 +47,8 @@ class lieuModel extends model
             ->beginIf($account != '')->andWhere('t1.createdBy')->eq($account)->fi()
             ->beginIf($dept != '')->andWhere('t2.dept')->in($dept)->fi()
             ->beginIf($status != '')->andWhere('t1.status')->eq($status)->fi()
-            ->beginIf($type != 'personal')->andWhere('t1.status')->ne('draft')->fi()
+            ->beginIf($type == 'browseReview')->andWhere('t1.status')->eq('wait')->fi()
+            ->beginIf($type == 'company')->andWhere('t1.status')->ne('draft')->fi()
             ->orderBy("t2.dept,t1.{$orderBy}")
             ->fetchAll();
     }
@@ -156,6 +157,7 @@ class lieuModel extends model
 
         $lieu->overtime = isset($lieu->overtime) ? ',' . trim($lieu->overtime, ',') . ',' : '';
         if(isset($lieu->begin) and $lieu->begin != '') $lieu->year = substr($lieu->begin, 0, 4);
+        if($oldLieu->status == 'reject') $lieu->status = 'wait';
 
         $return = $this->checkDate($lieu, $id);
         if($return['result'] == 'fail') return $return;

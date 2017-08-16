@@ -75,13 +75,25 @@ class refundModel extends model
     /**
      * Get all month of refund.
      * 
+     * @param  string $mode
+     * @param  string $status
      * @access public
      * @return array
      */
-    public function getAllMonth()
+    public function getAllMonth($mode = '', $status = '')
     {
         $monthList = array();
-        $dateList  = $this->dao->select('date')->from(TABLE_REFUND)->groupBy('date')->orderBy('date_asc')->fetchAll('date');
+        $dateList  = $this->dao->select('date')->from(TABLE_REFUND)
+            ->where(1)
+            ->beginIF($mode == 'personal')->andWhere('createdBy')->eq($this->app->user->account)->fi()
+            ->beginIF($status == 'reviewed')
+            ->andWhere('firstReviewer', true)->eq($this->app->user->account)
+            ->orWhere('secondReviewer')->eq($this->app->user->account)
+            ->markRight(1)
+            ->fi()
+            ->groupBy('date')
+            ->orderBy('date_desc')
+            ->fetchAll('date');
         foreach($dateList as $date)
         {
             $year  = substr($date->date, 0, 4);
@@ -197,6 +209,7 @@ class refundModel extends model
                 $refund->secondReviewDate = $now;
             }
         }
+        if($oldRefund->status == 'reject') $refund->status = 'wait';
 
         $this->dao->update(TABLE_REFUND)
             ->data($refund)
@@ -321,10 +334,15 @@ class refundModel extends model
         $newCategories = array();
         foreach($categories as $key => $category)
         {
-            if(isset($refundCategories[$key])) $newCategories[$key] = $categories[$key];
+            if(isset($refundCategories[$key])) 
+            {
+                $path = explode('/', trim($category, '/'));
+                $path = array_slice($path, 1);
+                $newCategories[$key] = '/' . implode('/', $path);
+            }
         }
 
-        return $newCategories;
+        return array('/') + $newCategories;
     }
 
     /**
@@ -440,17 +458,20 @@ class refundModel extends model
         $trade->money       = $refund->money;
         $trade->currency    = $refund->currency;
         $trade->date        = date('Y-m-d');
-        $trade->handlers    = $refund->related;
-        $trade->category    = $refund->category;
-        $trade->desc        = $refund->desc;
+        $trade->handlers    = $this->post->handlers ? trim(implode(',', $this->post->handlers), ',') : '';
+        $trade->category    = $this->post->category;
         $trade->dept        = $this->post->dept;
+        $trade->desc        = $refund->desc;
         $trade->createdBy   = $this->app->user->account;
         $trade->createdDate = helper::now();
-        $trade->editedBy    = $this->app->user->account;
-        $trade->editedDate  = helper::now();
 
-        $this->dao->insert(TABLE_TRADE)->data($trade)->autoCheck()->exec();
+        $this->dao->insert(TABLE_TRADE)->data($trade)->batchCheck($this->config->refund->require->createTrade, 'notempty')->autoCheck()->exec();
+        if(dao::isError()) return false;
+
         $tradeID = $this->dao->lastInsertID();
+        $extra   = html::a(helper::createLink('oa.refund', 'view', "refundID=$refundID"), $refund->name);
+        $this->loadModel('action')->create('trade', $tradeID, 'reimburse', '', $extra);
+
 
         if(!empty($refund->detail))
         {
@@ -475,7 +496,7 @@ class refundModel extends model
             }
         }
 
-        return !dao::isError();
+        return $tradeID;
     }
 
     /**

@@ -10,7 +10,7 @@
  * @link        http://www.ranzhico.com
  */
 $lang->app = new stdclass();
-$lang->app->name = 'TEAM';
+$lang->app->name = '团队';
 
 $lang->menu->team = new stdclass();
 $lang->menu->team->dashboard = '首页|dashboard|index|';

@@ -10,7 +10,7 @@
  * @link        http://www.ranzhico.com
  */
 $lang->app = new stdclass();
-$lang->app->name = 'PROJ';
+$lang->app->name = '項目';
 
 $lang->menu->proj = new stdclass();
 $lang->menu->proj->dashboard = '首頁|dashboard|index|';

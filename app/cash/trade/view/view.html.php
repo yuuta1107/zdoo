@@ -107,12 +107,20 @@
           </tr>
           <?php endif;?>
           <tr>
+            <th><?php echo $lang->trade->createdBy;?></th>
+            <td><?php echo zget($users, $trade->createdBy);?></td>
+          </tr>
+          <tr>
             <th><?php echo $lang->trade->createdDate;?></th>
             <td><?php echo formatTime($trade->createdDate, DT_DATE1);?></td>
           </tr>
           <tr>
-            <th><?php echo $lang->trade->createdBy;?></th>
-            <td><?php echo zget($users, $trade->createdBy);?></td>
+            <th><?php echo $lang->trade->editedBy;?></th>
+            <td><?php echo zget($users, $trade->editedBy);?></td>
+          </tr>
+          <tr>
+            <th><?php echo $lang->trade->editedDate;?></th>
+            <td><?php echo formatTime($trade->editedDate, DT_DATE1);?></td>
           </tr>
         </table>
       </div>

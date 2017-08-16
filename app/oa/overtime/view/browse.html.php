@@ -17,6 +17,7 @@
   <?php commonModel::printLink('oa.overtime', 'export', "mode=all&orderBy={$orderBy}", $lang->exportIcon . $lang->export, "class='btn btn-primary iframe' data-width='700'");?>
   <?php commonModel::printLink('oa.overtime', 'create', "", "<i class='icon icon-plus'></i> {$lang->overtime->create}", "data-toggle='modal' class='btn btn-primary'")?>
 </div>
+<?php if($type != 'browseReview'):?>
 <div class='with-side'>
   <div class='side'>
     <div class='panel panel-sm'>
@@ -39,6 +40,7 @@
     </div>
   </div>
   <div class='main'>
+<?php endif;?>
     <div class='panel'>
       <table class='table table-data table-hover text-center table-fixed tablesorter' id='overtimeTable'>
         <thead>
@@ -83,15 +85,21 @@
             if($type == 'personal')
             {
                 $switchLabel = $overtime->status == 'wait' ? $lang->overtime->cancel : $lang->overtime->commit;
-                if($overtime->status == 'wait' or $overtime->status == 'draft')
+                if(strpos(',wait,draft,', ",$overtime->status,") !== false)
                 {
-                    commonModel::printLink('oa.overtime', 'switchstatus', "id=$overtime->id", $switchLabel,  "class='reload'");
-                    commonModel::printLink('oa.overtime', 'edit',         "id=$overtime->id", $lang->edit,   "data-toggle='modal'");
-                    commonModel::printLink('oa.overtime', 'delete',       "id=$overtime->id", $lang->delete, "class='deleter'");
+                    commonModel::printLink('oa.overtime', 'switchstatus', "id=$overtime->id", $switchLabel, "class='reload'");
                 }
                 else
                 {
                     echo html::a('###', $switchLabel,  "disabled='disabled'");
+                }
+                if(strpos(',wait,draft,reject,', ",$overtime->status,") !== false)
+                {
+                    commonModel::printLink('oa.overtime', 'edit',   "id=$overtime->id", $lang->edit,   "data-toggle='modal'");
+                    commonModel::printLink('oa.overtime', 'delete', "id=$overtime->id", $lang->delete, "class='deleter'");
+                }
+                else
+                {
                     echo html::a('###', $lang->edit,   "disabled='disabled'");
                     echo html::a('###', $lang->delete, "disabled='disabled'");
                 }
@@ -115,6 +123,8 @@
         <?php endforeach;?>
       </table>
     </div>
+<?php if($type != 'browseReview'):?>
   </div>
 </div>
+<?php endif;?>
 <?php include '../../common/view/footer.html.php';?>
