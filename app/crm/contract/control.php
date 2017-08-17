@@ -175,6 +175,7 @@ class contract extends control
         $this->view->customers      = $this->loadModel('customer')->getPairs('client');
         $this->view->contacts       = $this->loadModel('contact', 'crm')->getPairs($contract->customer);
         $this->view->users          = $this->loadModel('user', 'sys')->getPairs('nodeleted,noforbidden,noclosed');
+        $this->view->addresses      = $this->loadModel('address', 'crm')->getPairsByObject('customer', $contract->customer); 
         $this->view->currencyList   = $this->loadModel('common', 'sys')->getCurrencyList();
         $this->view->currencySign   = $this->loadModel('common', 'sys')->getCurrencySign();
         $this->display();
@@ -462,6 +463,7 @@ class contract extends control
         $this->view->contacts     = $this->loadModel('contact', 'crm')->getPairs($contract->customer);
         $this->view->products     = $this->loadModel('product')->getPairs();
         $this->view->users        = $this->loadModel('user')->getPairs();
+        $this->view->addresses    = $this->loadModel('address', 'crm')->getPairsByObject('customer', $contract->customer); 
         $this->view->contract     = $contract;
         $this->view->actions      = $this->loadModel('action')->getList('contract', $contractID);
         $this->view->currencySign = $this->loadModel('common', 'sys')->getCurrencySign();
@@ -694,5 +696,16 @@ class contract extends control
         }
 
         $this->display();
+    }
+
+    public function ajaxGetAddresses($customer = 0)
+    {
+        $html      = '<option></option>';
+        $addresses = $this->loadModel('address', 'crm')->getPairsByObject('customer', $customer);
+        foreach($addresses as $id => $location)
+        {
+            $html .= "<option value='$id'>$location</option>";
+        }
+        echo $html;
     }
 }

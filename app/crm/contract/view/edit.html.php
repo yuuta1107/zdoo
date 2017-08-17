@@ -122,7 +122,7 @@
           </tr>
           <tr>
             <th><?php echo $lang->contract->address;?></th>
-            <td><?php echo html::input('address', $contract->address, "class='form-control'");?></td>
+            <td><?php echo html::select('address', $addresses, $contract->address, "class='form-control'");?></td>
           </tr>
           <tr>
             <th><?php echo $lang->contract->begin;?></th>

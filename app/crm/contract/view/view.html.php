@@ -100,7 +100,7 @@
           </tr>
           <tr>
             <th><?php echo $lang->contract->address;?></th>
-            <td><?php echo $contract->address;?></td>
+            <td><?php echo zget($addresses, $contract->address);?></td>
           </tr>
           <tr>
             <th><?php echo $lang->contract->begin;?></th>

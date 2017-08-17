@@ -206,7 +206,24 @@ class contractModel extends model
             ->setDefault('signedDate', substr($now, 0, 10))
             ->join('handlers', ',')
             ->stripTags('items', $this->config->allowedTags)
+            ->remove('createAddress, newAddress')
             ->get();
+
+        if($this->post->createAddress)
+        {
+            $address = new stdclass();
+            $address->objectType = 'customer';
+            $address->objectID   = $contract->customer;
+            $address->title      = $this->lang->contract->address;
+            $address->location   = $this->post->newAddress;
+
+            $this->dao->insert(TABLE_ADDRESS)->data($address)->autoCheck()->exec();
+
+            if(dao::isError()) return false;
+
+            $addressID = $this->dao->lastInsertId();
+            $contract->address = $addressID;
+        }
 
         $contract = $this->loadModel('file', 'sys')->processImgURL($contract, $this->config->contract->editor->create['id']);
         $this->dao->insert(TABLE_CONTRACT)->data($contract, 'order,uid,files,labels,real')
@@ -215,43 +232,39 @@ class contractModel extends model
             ->checkIF($contract->end != '0000-00-00', 'end', 'ge', $contract->begin)
             ->exec();
 
+        if(dao::isError()) return false;
+
         $contractID = $this->dao->lastInsertID();
-
-        if(!dao::isError())
+        foreach($contract->order as $key => $orderID)
         {
-            foreach($contract->order as $key => $orderID)
+            if($orderID)
             {
-                if($orderID)
-                {
-                    $data = new stdclass();
-                    $data->contract = $contractID;
-                    $data->order    = $orderID;
-                    $this->dao->insert(TABLE_CONTRACTORDER)->data($data)->exec();
+                $data = new stdclass();
+                $data->contract = $contractID;
+                $data->order    = $orderID;
+                $this->dao->insert(TABLE_CONTRACTORDER)->data($data)->exec();
 
-                    $order = new stdclass();
-                    $order->status     = 'signed';
-                    $order->real       = $contract->real[$key];
-                    $order->signedBy   = $contract->signedBy;
-                    $order->signedDate = $contract->signedDate;
-                    $this->dao->update(TABLE_ORDER)->data($order)->where('id')->eq($orderID)->exec();
+                $order = new stdclass();
+                $order->status     = 'signed';
+                $order->real       = $contract->real[$key];
+                $order->signedBy   = $contract->signedBy;
+                $order->signedDate = $contract->signedDate;
+                $this->dao->update(TABLE_ORDER)->data($order)->where('id')->eq($orderID)->exec();
 
-                    if(dao::isError()) return false;
-                    $this->loadModel('action', 'sys')->create('order', $orderID, 'Signed', '', $contract->real[$key]);
-                }
+                if(dao::isError()) return false;
+                $this->loadModel('action', 'sys')->create('order', $orderID, 'Signed', '', $contract->real[$key]);
             }
-
-            /* Update customer info. */
-            $customer = new stdclass();
-            $customer->status = 'signed';
-            $customer->editedDate = helper::now();
-            $this->dao->update(TABLE_CUSTOMER)->data($customer)->where('id')->eq($contract->customer)->exec();
-
-            $this->loadModel('file', 'sys')->saveUpload('contract', $contractID);
-
-            return $contractID;
         }
 
-        return false;
+        /* Update customer info. */
+        $customer = new stdclass();
+        $customer->status = 'signed';
+        $customer->editedDate = helper::now();
+        $this->dao->update(TABLE_CUSTOMER)->data($customer)->where('id')->eq($contract->customer)->exec();
+
+        $this->loadModel('file', 'sys')->saveUpload('contract', $contractID);
+
+        return $contractID;
     }
 
     /**

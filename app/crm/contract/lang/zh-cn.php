@@ -51,6 +51,7 @@ $lang->contract->nextDate      = '下次联系';
 $lang->contract->product       = '产品';
 $lang->contract->productLine   = '产品线';
 $lang->contract->files         = '附件';
+$lang->contract->createAddress = '新建';
 
 $lang->contract->browse           = '浏览合同';
 $lang->contract->receive          = '回款';

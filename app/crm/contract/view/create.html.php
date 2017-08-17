@@ -82,7 +82,17 @@
         </tr>
         <tr>
           <th><?php echo $lang->contract->address;?></th>
-          <td><?php echo html::input('address', '', "class='form-control'");?></td>
+          <td>
+            <div class='input-group'>
+              <?php echo html::select('address', '', '', "class='form-control chosen'");?>
+              <?php echo html::input('newAddress', '', "class='form-control'");?>
+              <span class='input-group-addon'>
+                <label class='checkbox-inline'>
+                  <input type='checkbox' name='createAddress' id='createAddress' value='1' /> <?php echo $lang->contract->createAddress;?>
+                </label>
+              </span>
+            </div>
+          </td>
         </tr>
         <tr>
           <th><?php echo $lang->contract->signedBy;?></th>

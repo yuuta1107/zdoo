@@ -37,6 +37,19 @@ class addressModel extends model
     }
 
     /**
+     * Get pairs by object.
+     * 
+     * @param  string  $objectType 
+     * @param  int     $objectID 
+     * @access public
+     * @return array
+     */
+    public function getPairsByObject($objectType = '', $objectID = 0)
+    {
+        return $this->dao->select('id, location')->from(TABLE_ADDRESS)->where('objectType')->eq($objectType)->andWhere('objectID')->eq($objectID)->fetchPairs();
+    }
+
+    /**
      * Get addresses saw by me.  
      * 
      * @param  string $type  view|edit

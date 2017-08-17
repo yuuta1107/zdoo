@@ -136,6 +136,8 @@ class upgradeModel extends model
             case '4_2_2':
             case '4_2_3':
             case '4_3_beta': $this->execSQL($this->getUpgradeFile('4.3.beta'));
+            case '4_4': $this->processContractAddress();
+                $this->execSQL($this->getUpgradeFile('4.4'));
             default: if(!$this->isError()) $this->loadModel('setting')->updateVersion($this->config->version);
         }
 
@@ -183,6 +185,7 @@ class upgradeModel extends model
             case '4_2_2'   :
             case '4_2_3'   :
             case '4_3_beta': $confirmContent .= file_get_contents($this->getUpgradeFile('4.3.beta'));
+            case '4_4'     : $confirmContent .= file_get_contents($this->getUpgradeFile('4.4'));
         }
         return $confirmContent;
     }
@@ -288,7 +291,7 @@ class upgradeModel extends model
      * create cash entry.
      * 
      * @access public
-     * @return void
+     * @return bool
      */
     public function createCashEntry()
     {
@@ -312,13 +315,15 @@ class upgradeModel extends model
         $entry->block = $this->config->webRoot . $block;
 
         $this->dao->insert(TABLE_ENTRY)->data($entry)->exec();
+
+        return !dao::isError();
     }
 
     /**
      * create team entry.
      * 
      * @access public
-     * @return void
+     * @return bool
      */
     public function createTeamEntry()
     {
@@ -341,6 +346,8 @@ class upgradeModel extends model
         $entry->block = $this->config->webRoot . $block;
 
         $this->dao->insert(TABLE_ENTRY)->data($entry)->exec();
+
+        return !dao::isError();
     }
 
     /**
@@ -419,7 +426,7 @@ class upgradeModel extends model
      * Compute contacteddate and contactedby fields.
      * 
      * @access public
-     * @return void
+     * @return bool
      */
     public function computeContactInfo()
     {
@@ -482,7 +489,7 @@ class upgradeModel extends model
      * Set content of company when upgrade from 1.3.beta.
      * 
      * @access public
-     * @return void
+     * @return bool
      */
     public function setCompanyContent()
     {
@@ -498,7 +505,7 @@ class upgradeModel extends model
      * Set name of contract when upgrade from 1.4.beta.
      * 
      * @access public
-     * @return void
+     * @return bool
      */
     public function upgradeContractName()
     {
@@ -517,7 +524,7 @@ class upgradeModel extends model
      * Update project member.
      * 
      * @access public
-     * @return void
+     * @return bool
      */
     public function upgradeProjectMember()
     {
@@ -559,7 +566,7 @@ class upgradeModel extends model
      * Change system application logo path to relative path.
      * 
      * @access public
-     * @return void
+     * @return bool
      */
     public function upgradeEntryLogo()
     {
@@ -570,6 +577,7 @@ class upgradeModel extends model
             $path     = substr($entryObj->logo, strpos($entryObj->logo, 'theme'));
             $this->dao->update(TABLE_ENTRY)->set('logo')->eq($path)->where('code')->eq($entry)->exec();
         }
+        return !dao::isError();
     }
 
     /**
@@ -625,7 +633,7 @@ class upgradeModel extends model
      * Add search priv when upgrade 1.5.beta.
      * 
      * @access public
-     * @return void
+     * @return bool
      */
     public function addSearchPriv()
     {
@@ -686,7 +694,7 @@ class upgradeModel extends model
      * Add app priv when upgrade from 1.6.
      * 
      * @access public
-     * @return void
+     * @return bool
      */
     public function addPrivs()
     {
@@ -814,7 +822,7 @@ class upgradeModel extends model
      * Update app orders.
      * 
      * @access public
-     * @return void
+     * @return bool
      */
     public function updateAppOrder()
     {
@@ -832,7 +840,7 @@ class upgradeModel extends model
      * Set assignedTo is closed if the task is closed when upgrade from 2.0.
      * 
      * @access public
-     * @return int
+     * @return bool
      */
     public function fixClosedTask()
     {
@@ -845,7 +853,7 @@ class upgradeModel extends model
      * Set default salesGroup when upgrade from 2.0.
      * 
      * @access public
-     * @return int
+     * @return bool
      */
     public function setSalesGroup()
     {
@@ -900,7 +908,7 @@ class upgradeModel extends model
      * Format product for order when upgrade from 2.0.
      * 
      * @access public
-     * @return int
+     * @return bool
      */
     public function fixOrderProduct()
     {
@@ -918,7 +926,7 @@ class upgradeModel extends model
      * Process desc of trade when upgrade from 2.2.
      * 
      * @access public
-     * @return void
+     * @return bool
      */
     public function processTradeDesc()
     {
@@ -937,7 +945,7 @@ class upgradeModel extends model
      * Process customer edited date when upgrade from 2.3.
      * 
      * @access public
-     * @return void
+     * @return bool
      */
     public function processCustomerEditedDate()
     {
@@ -971,7 +979,7 @@ class upgradeModel extends model
 
             if($editedDate != $customer->editedDate) $this->dao->update(TABLE_CUSTOMER)->set('editedDate')->eq($editedDate)->where('id')->eq($customer->id)->exec();
         }
-        return true;
+        return !dao::isError();
     }
 
     /**
@@ -1070,7 +1078,7 @@ class upgradeModel extends model
      * Process status for contact when upgrade from 3.1.
      * 
      * @access public
-     * @return void
+     * @return bool
      */
     public function processStatusForContact()
     {
@@ -1174,7 +1182,7 @@ class upgradeModel extends model
      * Set sales admin privileges.
      * 
      * @access public
-     * @return void
+     * @return bool
      */
     public function setSalesAdminPrivileges()
     {
@@ -1187,13 +1195,14 @@ class upgradeModel extends model
             $grouppriv->group = $group;
             $this->dao->insert(TABLE_GROUPPRIV)->data($grouppriv)->exec();
         }
+        return !dao::isError();
     }
 
     /**
      * Set doc entry privileges when upgrade from 3.7.
      * 
      * @access public
-     * @return void
+     * @return bool
      */
     public function updateDocPrivileges()
     {
@@ -1301,7 +1310,7 @@ class upgradeModel extends model
      * Add privilege of proj app when upgrade from 4.0.
      * 
      * @access public
-     * @return void
+     * @return bool
      */
     public function addProjPrivilege()
     {
@@ -1324,7 +1333,7 @@ class upgradeModel extends model
      * Update makeup actions. 
      * 
      * @access public
-     * @return void
+     * @return bool
      */
     public function updateMakeupActions()
     {
@@ -1334,6 +1343,33 @@ class upgradeModel extends model
             $this->dao->update(TABLE_ACTION)->set('objectType')->eq('makeup')->where('objectType')->eq('overtime')->andWhere('objectID')->eq($makeup->id)->exec();
         }
 
+        return !dao::isError();
+    }
+
+    /**
+     * Process addresses of contracts. 
+     * 
+     * @access public
+     * @return bool
+     */
+    public function processContractAddress()
+    {
+        $address = new stdclass();
+        $address->objectType = 'customer';
+    
+        $this->app->loadLang('contract', 'crm');
+        $contracts = $this->dao->select('*')->from(TABLE_CONTRACT)->where('address')->ne('')->fetchAll();
+        foreach($contracts as $contract)
+        {
+            $address->objectID = $contract->customer;
+            $address->title    = $this->lang->contract->address;
+            $address->location = $contract->address;
+
+            $this->dao->insert(TABLE_ADDRESS)->data($address)->exec();
+            $addressID = $this->dao->lastInsertId();
+
+            $this->dao->update(TABLE_CONTRACT)->set('address')->eq($addressID)->where('id')->eq($contract->id)->exec();
+        }
         return !dao::isError();
     }
 }

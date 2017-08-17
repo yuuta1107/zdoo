@@ -671,7 +671,7 @@ class userModel extends model
     public function uploadAvatar()
     {
         $fileModel = $this->loadModel('file');
-        $uploadResult = $fileModel->saveUpload('files');
+        $uploadResult = $fileModel->saveUpload('avatar');
         if(!$uploadResult) return array('result' => 'fail', 'message' => $this->lang->fail);
 
         $fileIdList = array_keys($uploadResult);

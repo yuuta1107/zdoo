@@ -38,4 +38,12 @@ $(document).ready(function()
         $(this).parents('tr').remove();
         $('.order-real').change();
     });
+
+    $('#customer').change(function()
+    {
+        $('#address').load(createLink('contract', 'ajaxGetAddresses', 'customer=' + $(this).val()), function()
+        {
+            $('#address').trigger('chosen:updated');
+        }); 
+    });
 })
