@@ -40,8 +40,7 @@
             <div style="overflow:auto; height: 270px;" class='table-wrapper'>
               <table class='table table-condensed table-hover table-striped table-bordered table-chart' data-chart='<?php echo $chartOption->type; ?>' data-target='#chart-<?php echo $chartType ?>' data-animation='false'>
                 <thead>
-                  <tr>
-                    <th class='w-20px'></th>
+                  <tr class='text-center'>
                     <th><?php echo $tips['item'][$chartType];?></th>
                     <th><?php echo $tips['value'][$chartType];?></th>
                     <th><?php echo $lang->report->percent;?></th>
@@ -50,8 +49,7 @@
                 <tbody>
                 <?php foreach($datas[$chartType] as $key => $data):?>
                 <tr class='text-center'>
-                  <td class='chart-color'><i class='chart-color-dot icon-circle'></i></td>
-                  <td class='chart-label text-left'><?php echo $data->name;?></td>
+                  <td class='chart-label text-left'><i class='chart-color-dot icon-circle'></i><?php echo $data->name;?></td>
                   <td class='chart-value'><?php echo $data->value;?></td>
                   <td><?php echo ($data->percent * 100) . '%';?></td>
                 </tr>

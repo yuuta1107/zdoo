@@ -33,3 +33,5 @@ td .deviation{padding-left:20px; text-align:left;}
 #titlebar {display: none}
 
 .panel .table-bordered {border: 1px solid rgb(221, 221, 221);}
+
+.chart-color-dot.icon-circle {margin-right: 10px;}
