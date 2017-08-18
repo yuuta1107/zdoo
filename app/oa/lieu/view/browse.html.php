@@ -40,7 +40,11 @@
   </div>
   <div class='main'>
 <?php endif;?>
+<?php $batchReview = $type == 'browseReview' && commonModel::hasPriv('lieu', 'batchReview');?>
     <div class='panel'>
+      <?php if($batchReview):?>
+      <form id='ajaxForm' method='post' action='<?php echo inlink('batchReview', 'status=pass');?>'>
+      <?php endif;?>
       <table class='table table-data table-hover text-center table-fixed tablesorter' id='lieuTable'>
         <thead>
           <tr class='text-center'>
@@ -65,7 +69,13 @@
         </thead>
         <?php foreach($lieuList as $lieu):?>
         <tr>
-          <td><?php echo $lieu->id;?></td>
+          <td class='idTD'>
+            <?php if($batchReview):?>
+            <label class='checkbox-inline'><input type='checkbox' name='lieuIDList[]' value='<?php echo $lieu->id;?>'/> <?php echo $lieu->id;?></label>
+            <?php else:?>
+            <?php echo $lieu->id;?>
+            <?php endif;?>
+          </td>
           <td><?php echo zget($users, $lieu->createdBy);?></td>
           <td class='visible-lg'><?php echo zget($deptList, $lieu->dept, '');?></td>
           <td><?php echo formatTime($lieu->begin . ' ' . $lieu->start, DT_DATETIME2);?></td>
@@ -119,6 +129,14 @@
         </tr>
         <?php endforeach;?>
       </table>
+      <?php if($lieuList && $batchReview):?>
+      <div class='table-footer'>
+        <div class='pull-left'>
+          <?php echo html::selectButton();?>
+          <?php echo html::submitButton($lang->lieu->batchReview);?> 
+        </div>
+      </div>
+      <?php endif;?>
     </div>
 <?php if($type != 'browseReview'):?>
   </div>

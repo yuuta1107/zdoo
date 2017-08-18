@@ -216,6 +216,62 @@ class makeup extends control
     }
 
     /**
+     * Batch review makeups. 
+     * 
+     * @param  string $status
+     * @access public
+     * @return void
+     */
+    public function batchReview($status = 'pass')
+    {
+        if(!$this->post->makeupIDList) $this->send(array('result' => 'fail', 'message' => $this->lang->makeup->nodata));
+
+        /* Check privilage. */
+        $canReview      = false;
+        $makeupIDList = $this->post->makeupIDList;
+        if($this->app->user->admin == 'super')
+        {
+            $canReview = true;
+        }
+        else
+        {
+            $reviewedBy = $this->makeup->getReviewedBy();
+            if($reviewedBy)
+            { 
+                if($reviewedBy == $this->app->user->account) $canReview = true;
+            }
+            else
+            {
+                $makeupIDList = $this->dao->select('t1.id')->from(TABLE_OVERTIME)->alias('t1')
+                    ->leftJoin(TABLE_USER)->alias('t2')->on('t1.createdBy=t2.account')
+                    ->leftJoin(TABLE_CATEGORY)->alias('t3')->on('t2.dept=t3.id')
+                    ->where('t1.id')->in($makeupIDList)
+                    ->andWhere('t3.type')->eq('dept')
+                    ->andWhere('t3.moderators')->eq(",{$this->app->user->account},")
+                    ->fetchPairs();
+                if(!$makeupIDList) $canReview = false;
+            }
+        }
+
+        if($status == 'pass')
+        {
+            if(!$canReview) $this->send(array('result' => 'fail', 'message' => $this->lang->makeup->denied));
+
+            foreach($makeupIDList as $id)
+            {
+                $this->makeup->review($id, $status);
+                if(dao::isError()) continue;
+
+                $actionID = $this->loadModel('action')->create('makeup', $id, 'reviewed', '', $this->lang->makeup->statusList[$status]);
+                $this->sendmail($id, $actionID);
+            }
+            if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
+
+            $this->send(array('result' => 'success', 'message' => $this->lang->makeup->reviewSuccess, 'locate' => 'reload'));
+        }
+    }
+
+    /**
      * Create an makeup.
      * 
      * @param  string $date

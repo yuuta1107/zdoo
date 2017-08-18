@@ -309,14 +309,14 @@ class leaveModel extends model
     {
         if(!isset($this->lang->leave->statusList[$status])) return false;
 
-        $this->dao->update(TABLE_LEAVE)
-            ->set('status')->eq($status)
-            ->set('reviewedBy')->eq($this->app->user->account)
-            ->set('reviewedDate')->eq(helper::now())
-            ->where('id')->eq($id)
-            ->exec();
+        $data = new stdclass();
+        $data->status       = $status;
+        $data->reviewedBy   = $this->app->user->account;
+        $data->reviewedDate = helper::now();
 
-        if(!dao::isError() and $status == 'pass')
+        $this->dao->update(TABLE_LEAVE)->data($data)->autoCheck()->where('id')->eq($id)->exec();
+
+        if(!dao::isError() && $status == 'pass')
         {
             $leave = $this->getById($id);
             $dates = range(strtotime($leave->begin), strtotime($leave->end), 60*60*24);

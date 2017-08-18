@@ -14,6 +14,8 @@ $lang->lieu->personal     = 'My Lieus';
 $lang->lieu->browseReview = 'Reviews';
 $lang->lieu->company      = 'All';
 $lang->lieu->setReviewer  = 'Set Reviewer';
+$lang->lieu->batchReview  = 'Batch Review';
+$lang->lieu->batchPass    = 'Batch Pass';
 
 $lang->lieu->id           = 'ID';
 $lang->lieu->year         = 'Year';
@@ -41,10 +43,12 @@ $lang->lieu->statusList['reject'] = 'Reject';
 $lang->lieu->confirmReview['pass']   = 'Are you sure to pass it?';
 $lang->lieu->confirmReview['reject'] = 'Are you sure to reject it?';
 
-$lang->lieu->denied    = 'Access denied.';
-$lang->lieu->unique    = 'There was a record of lieu in %s.';
-$lang->lieu->sameMonth = 'Lieu must be in the same month.';
-$lang->lieu->wrongEnd  = 'End time should be greater than begin time.';
+$lang->lieu->denied        = 'Access denied.';
+$lang->lieu->unique        = 'There was a record of lieu in %s.';
+$lang->lieu->sameMonth     = 'Lieu must be in the same month.';
+$lang->lieu->wrongEnd      = 'End time should be greater than begin time.';
+$lang->lieu->nodata        = 'Select no data.';
+$lang->lieu->reviewSuccess = 'Review success';
 
 $lang->lieu->hoursTip = 'Hours';
 

@@ -99,7 +99,7 @@ class lieu extends control
         }
         elseif($type == 'browseReview')
         {
-            if($this->app->user->account == 'super')
+            if($this->app->user->admin == 'super')
             {
                 $lieuList = $this->lieu->getList($type, $currentYear, $currentMonth, '', '', '', $orderBy);
             }
@@ -371,6 +371,62 @@ class lieu extends control
             $this->view->title = $this->lang->lieu->review;
             $this->view->id    = $id;
             $this->display();
+        }
+    }
+
+    /**
+     * Batch review lieus. 
+     * 
+     * @param  string $status
+     * @access public
+     * @return void
+     */
+    public function batchReview($status = 'pass')
+    {
+        if(!$this->post->lieuIDList) $this->send(array('result' => 'fail', 'message' => $this->lang->lieu->nodata));
+
+        /* Check privilage. */
+        $canReview      = false;
+        $lieuIDList = $this->post->lieuIDList;
+        if($this->app->user->admin == 'super')
+        {
+            $canReview = true;
+        }
+        else
+        {
+            $reviewedBy = $this->lieu->getReviewedBy();
+            if($reviewedBy)
+            { 
+                if($reviewedBy == $this->app->user->account) $canReview = true;
+            }
+            else
+            {
+                $lieuIDList = $this->dao->select('t1.id')->from(TABLE_LIEU)->alias('t1')
+                    ->leftJoin(TABLE_USER)->alias('t2')->on('t1.createdBy=t2.account')
+                    ->leftJoin(TABLE_CATEGORY)->alias('t3')->on('t2.dept=t3.id')
+                    ->where('t1.id')->in($lieuIDList)
+                    ->andWhere('t3.type')->eq('dept')
+                    ->andWhere('t3.moderators')->eq(",{$this->app->user->account},")
+                    ->fetchPairs();
+                if(!$lieuIDList) $canReview = false;
+            }
+        }
+
+        if($status == 'pass')
+        {
+            if(!$canReview) $this->send(array('result' => 'fail', 'message' => $this->lang->lieu->denied));
+
+            foreach($lieuIDList as $id)
+            {
+                $this->lieu->review($id, $status);
+                if(dao::isError()) continue;
+
+                $actionID = $this->loadModel('action')->create('lieu', $id, 'reviewed', '', $this->lang->lieu->statusList[$status]);
+                $this->sendmail($id, $actionID);
+            }
+            if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
+
+            $this->send(array('result' => 'success', 'message' => $this->lang->leave->reviewSuccess, 'locate' => 'reload'));
         }
     }
 

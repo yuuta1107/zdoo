@@ -14,6 +14,8 @@ $lang->lieu->personal     = '我的调休';
 $lang->lieu->browseReview = '审核列表';
 $lang->lieu->company      = '所有调休';
 $lang->lieu->setReviewer  = '设置审核者';
+$lang->lieu->batchReview  = '批量审核';
+$lang->lieu->batchPass    = '批量通过';
 
 $lang->lieu->id           = '编号';
 $lang->lieu->year         = '年';
@@ -41,10 +43,12 @@ $lang->lieu->statusList['reject'] = '拒绝';
 $lang->lieu->confirmReview['pass']   = '您确定要执行通过操作吗？';
 $lang->lieu->confirmReview['reject'] = '您确定要执行拒绝操作吗？';
 
-$lang->lieu->denied    = '信息访问受限';
-$lang->lieu->unique    = '%s 已经存在调休记录';
-$lang->lieu->sameMonth = '不支持跨月份调休';
-$lang->lieu->wrongEnd  = '结束时间应该大于开始时间';
+$lang->lieu->denied        = '信息访问受限';
+$lang->lieu->unique        = '%s 已经存在调休记录';
+$lang->lieu->sameMonth     = '不支持跨月份调休';
+$lang->lieu->wrongEnd      = '结束时间应该大于开始时间';
+$lang->lieu->nodata        = '没有选择数据';
+$lang->lieu->reviewSuccess = '审核成功';
 
 $lang->lieu->hoursTip = '小时';
 

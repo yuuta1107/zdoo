@@ -17,6 +17,8 @@ $lang->leave->personal     = 'My Leave';
 $lang->leave->browseReview = 'Review List';
 $lang->leave->company      = 'All';
 $lang->leave->setReviewer  = 'Set Reviewer';
+$lang->leave->batchReview  = 'Batch Review';
+$lang->leave->batchPass    = 'Batch Pass';
 
 $lang->leave->id           = 'ID';
 $lang->leave->year         = 'Year';
@@ -59,6 +61,8 @@ $lang->leave->unique        = 'There was a record of Leave in %s.';
 $lang->leave->sameMonth     = 'Leave must be in the same month.';
 $lang->leave->wrongEnd      = 'End time should be greater than begin time.';
 $lang->leave->wrongBackDate = 'Back time should be greater than begin time.';
+$lang->leave->nodata        = 'Select no data.';
+$lang->leave->reviewSuccess = 'Review success';
 
 $lang->leave->confirmReview['pass']   = 'Do you want to pass it?';
 $lang->leave->confirmReview['reject'] = 'Do you want to reject it?';

@@ -190,7 +190,7 @@ class overtime extends control
             $actionID = $this->loadModel('action')->create('overtime', $id, 'reviewed', '', $this->lang->overtime->statusList[$status]);
             $this->sendmail($id, $actionID);
 
-            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess));
+            $this->send(array('result' => 'success'));
         }
 
         if($status == 'reject')
@@ -213,6 +213,62 @@ class overtime extends control
             $this->view->title = $this->lang->overtime->review;
             $this->view->id    = $id;
             $this->display();
+        }
+    }
+
+    /**
+     * Batch review overtimes. 
+     * 
+     * @param  string $status
+     * @access public
+     * @return void
+     */
+    public function batchReview($status = 'pass')
+    {
+        if(!$this->post->overtimeIDList) $this->send(array('result' => 'fail', 'message' => $this->lang->overtime->nodata));
+
+        /* Check privilage. */
+        $canReview      = false;
+        $overtimeIDList = $this->post->overtimeIDList;
+        if($this->app->user->admin == 'super')
+        {
+            $canReview = true;
+        }
+        else
+        {
+            $reviewedBy = $this->overtime->getReviewedBy();
+            if($reviewedBy)
+            { 
+                if($reviewedBy == $this->app->user->account) $canReview = true;
+            }
+            else
+            {
+                $overtimeIDList = $this->dao->select('t1.id')->from(TABLE_OVERTIME)->alias('t1')
+                    ->leftJoin(TABLE_USER)->alias('t2')->on('t1.createdBy=t2.account')
+                    ->leftJoin(TABLE_CATEGORY)->alias('t3')->on('t2.dept=t3.id')
+                    ->where('t1.id')->in($overtimeIDList)
+                    ->andWhere('t3.type')->eq('dept')
+                    ->andWhere('t3.moderators')->eq(",{$this->app->user->account},")
+                    ->fetchPairs();
+                if(!$overtimeIDList) $canReview = false;
+            }
+        }
+
+        if($status == 'pass')
+        {
+            if(!$canReview) $this->send(array('result' => 'fail', 'message' => $this->lang->overtime->denied));
+
+            foreach($overtimeIDList as $id)
+            {
+                $this->overtime->review($id, $status);
+                if(dao::isError()) continue;
+
+                $actionID = $this->loadModel('action')->create('overtime', $id, 'reviewed', '', $this->lang->overtime->statusList[$status]);
+                $this->sendmail($id, $actionID);
+            }
+            if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
+
+            $this->send(array('result' => 'success', 'message' => $this->lang->overtime->reviewSuccess, 'locate' => 'reload'));
         }
     }
 
@@ -436,7 +492,7 @@ class overtime extends control
             foreach($users as $key => $user) 
             {
                 $userPairs[$user->account] = $user->realname;
-                $userDepts[$user->account] = zget($deptList, $user->dept, ' ');
+                $userDepts[$user->account] = zget($deptList, $user->dept, '');
             }
 
             /* Create field lists. */

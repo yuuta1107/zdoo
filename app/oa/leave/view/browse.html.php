@@ -41,7 +41,11 @@
   </div>
   <div class='main'>
 <?php endif;?>
+<?php $batchReview = $type == 'browseReview' && commonModel::hasPriv('leave', 'batchReview');?>
     <div class='panel'>
+      <?php if($batchReview):?>
+      <form id='ajaxForm' method='post' action='<?php echo inlink('batchReview', 'status=pass');?>'>
+      <?php endif;?>
       <table class='table table-data table-hover text-center table-fixed tablesorter' id='leaveTable'>
         <thead>
           <tr class='text-center'>
@@ -68,7 +72,13 @@
         </thead>
         <?php foreach($leaveList as $leave):?>
         <tr>
-          <td><?php echo $leave->id;?></td>
+          <td class='idTD'>
+            <?php if($batchReview):?>
+            <label class='checkbox-inline'><input type='checkbox' name='leaveIDList[]' value='<?php echo $leave->id;?>'/> <?php echo $leave->id;?></label>
+            <?php else:?>
+            <?php echo $leave->id;?>
+            <?php endif;?>
+          </td>
           <td><?php echo zget($users, $leave->createdBy);?></td>
           <td class='visible-lg'><?php echo zget($deptList, $leave->dept);?></td>
           <td><?php echo zget($this->lang->leave->typeList, $leave->type);?></td>
@@ -141,6 +151,14 @@
         </tr>
         <?php endforeach;?>
       </table>
+      <?php if($leaveList && $batchReview):?>
+      <div class='table-footer'>
+        <div class='pull-left'>
+          <?php echo html::selectButton();?>
+          <?php echo html::submitButton($lang->leave->batchReview);?> 
+        </div>
+      </div>
+      <?php endif;?>
     </div>
 <?php if($type != 'browseReview'):?>
   </div>

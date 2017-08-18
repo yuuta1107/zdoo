@@ -15,6 +15,8 @@ $lang->makeup->personal     = '我的補班';
 $lang->makeup->browseReview = '審核列表';
 $lang->makeup->company      = '所有補班';
 $lang->makeup->setReviewer  = '設置審核者';
+$lang->makeup->batchReview  = '批量審核';
+$lang->makeup->batchPass    = '批量通過';
 
 $lang->makeup->id           = '編號';
 $lang->makeup->year         = '年';
@@ -42,16 +44,17 @@ $lang->makeup->statusList['wait']   = '等待審核';
 $lang->makeup->statusList['pass']   = '通過';
 $lang->makeup->statusList['reject'] = '拒絶';
 
-$lang->makeup->denied    = '信息訪問受限';
-$lang->makeup->unique    = '%s 已經存在補班記錄';
-$lang->makeup->sameMonth = '不支持跨月份補班';
-$lang->makeup->wrongEnd  = '結束時間應該大於開始時間';
+$lang->makeup->denied        = '信息訪問受限';
+$lang->makeup->unique        = '%s 已經存在補班記錄';
+$lang->makeup->sameMonth     = '不支持跨月份補班';
+$lang->makeup->wrongEnd      = '結束時間應該大於開始時間';
+$lang->makeup->nodata        = '沒有選擇數據';
+$lang->makeup->reviewSuccess = '審核成功';
 
 $lang->makeup->confirmReview['pass']   = '您確定要執行通過操作嗎？';
 $lang->makeup->confirmReview['reject'] = '您確定要執行拒絶操作嗎？';
 
 $lang->makeup->hoursTip = '小時';
-$lang->makeup->baseInfo = '基本信息';
 
 $lang->makeup->reviewStatusList['pass']   = '通過';
 $lang->makeup->reviewStatusList['reject'] = '拒絶';

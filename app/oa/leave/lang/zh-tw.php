@@ -17,6 +17,8 @@ $lang->leave->personal     = '我的請假';
 $lang->leave->browseReview = '審核列表';
 $lang->leave->company      = '所有請假';
 $lang->leave->setReviewer  = '設置審核者';
+$lang->leave->batchReview  = '批量審核';
+$lang->leave->batchPass    = '批量通過';
 
 $lang->leave->id           = '編號';
 $lang->leave->year         = '年';
@@ -59,6 +61,8 @@ $lang->leave->unique        = '%s 已經存在請假記錄';
 $lang->leave->sameMonth     = '不支持跨月份請假';
 $lang->leave->wrongEnd      = '結束時間應該大於開始時間';
 $lang->leave->wrongBackDate = '報到時間應該大於開始時間';
+$lang->leave->nodata        = '沒有選擇數據';
+$lang->leave->reviewSuccess = '審核成功';
 
 $lang->leave->confirmReview['pass']   = '您確定要執行通過操作嗎？';
 $lang->leave->confirmReview['reject'] = '您確定要執行拒絶操作嗎？';

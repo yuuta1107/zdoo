@@ -15,6 +15,8 @@ $lang->overtime->personal     = 'My Overtime';
 $lang->overtime->browseReview = 'Review List';
 $lang->overtime->company      = 'All';
 $lang->overtime->setReviewer  = 'Set Reviewer';
+$lang->overtime->batchReview  = 'Batch Review';
+$lang->overtime->batchPass    = 'Batch Pass';
 
 $lang->overtime->id           = 'ID';
 $lang->overtime->year         = 'Year';
@@ -44,16 +46,17 @@ $lang->overtime->statusList['wait']   = 'Wait';
 $lang->overtime->statusList['pass']   = 'Pass';
 $lang->overtime->statusList['reject'] = 'Reject';
 
-$lang->overtime->denied    = 'Access denied';
-$lang->overtime->unique    = 'There was a record of overtime in %s.';
-$lang->overtime->sameMonth = 'Overtime must be in the same month.';
-$lang->overtime->wrongEnd  = 'End time should be greater than begin time.';
+$lang->overtime->denied        = 'Access denied';
+$lang->overtime->unique        = 'There was a record of overtime in %s.';
+$lang->overtime->sameMonth     = 'Overtime must be in the same month.';
+$lang->overtime->wrongEnd      = 'End time should be greater than begin time.';
+$lang->overtime->nodata        = 'Select no data.';
+$lang->overtime->reviewSuccess = 'Review success';
 
 $lang->overtime->confirmReview['pass']   = 'Are you sure to pass it?';
 $lang->overtime->confirmReview['reject'] = 'Are you sure to reject it?';
 
 $lang->overtime->hoursTip = 'Hours';
-$lang->overtime->baseInfo = 'Basic Info';
 
 $lang->overtime->reviewStatusList['pass']   = 'Pass';
 $lang->overtime->reviewStatusList['reject'] = 'Reject';

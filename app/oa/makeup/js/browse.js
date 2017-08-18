@@ -1,6 +1,6 @@
 $(document).ready(function()
 {
-    $(document).on('click', '#makeupTable td:not(.actionTD)', function()
+    $(document).on('click', '#makeupTable td:not(.idTD,.actionTD)', function()
     {
         $(this).parent().find('.actionTD a[href*=view]:not([href*=review])').click();
     });

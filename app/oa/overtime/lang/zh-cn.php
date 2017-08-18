@@ -15,6 +15,8 @@ $lang->overtime->personal     = '我的加班';
 $lang->overtime->browseReview = '审核列表';
 $lang->overtime->company      = '所有加班';
 $lang->overtime->setReviewer  = '设置审核者';
+$lang->overtime->batchReview  = '批量审核';
+$lang->overtime->batchPass    = '批量通过';
 
 $lang->overtime->id           = '编号';
 $lang->overtime->year         = '年';
@@ -44,16 +46,17 @@ $lang->overtime->statusList['wait']   = '等待审核';
 $lang->overtime->statusList['pass']   = '通过';
 $lang->overtime->statusList['reject'] = '拒绝';
 
-$lang->overtime->denied    = '信息访问受限';
-$lang->overtime->unique    = '%s 已经存在加班记录';
-$lang->overtime->sameMonth = '不支持跨月份加班';
-$lang->overtime->wrongEnd  = '结束时间应该大于开始时间';
+$lang->overtime->denied        = '信息访问受限';
+$lang->overtime->unique        = '%s 已经存在加班记录';
+$lang->overtime->sameMonth     = '不支持跨月份加班';
+$lang->overtime->wrongEnd      = '结束时间应该大于开始时间';
+$lang->overtime->nodata        = '没有选择数据';
+$lang->overtime->reviewSuccess = '审核成功';
 
 $lang->overtime->confirmReview['pass']   = '您确定要执行通过操作吗？';
 $lang->overtime->confirmReview['reject'] = '您确定要执行拒绝操作吗？';
 
 $lang->overtime->hoursTip = '小时';
-$lang->overtime->baseInfo = '基本信息';
 
 $lang->overtime->reviewStatusList['pass']   = '通过';
 $lang->overtime->reviewStatusList['reject'] = '拒绝';

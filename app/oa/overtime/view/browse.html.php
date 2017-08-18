@@ -41,7 +41,11 @@
   </div>
   <div class='main'>
 <?php endif;?>
+<?php $batchReview = $type == 'browseReview' && commonModel::hasPriv('overtime', 'batchReview');?>
     <div class='panel'>
+      <?php if($batchReview):?>
+      <form id='ajaxForm' method='post' action='<?php echo inlink('batchReview', 'status=pass');?>'>
+      <?php endif;?>
       <table class='table table-data table-hover text-center table-fixed tablesorter' id='overtimeTable'>
         <thead>
           <tr class='text-center'>
@@ -67,9 +71,15 @@
         </thead>
         <?php foreach($overtimeList as $overtime):?>
         <tr>
-          <td><?php echo $overtime->id;?></td>
+          <td class='idTD'>
+            <?php if($batchReview):?>
+            <label class='checkbox-inline'><input type='checkbox' name='overtimeIDList[]' value='<?php echo $overtime->id;?>'/> <?php echo $overtime->id;?></label>
+            <?php else:?>
+            <?php echo $overtime->id;?>
+            <?php endif;?>
+          </td>
           <td><?php echo zget($users, $overtime->createdBy);?></td>
-          <td class='visible-lg'><?php echo zget($deptList, $overtime->dept, ' ');?></td>
+          <td class='visible-lg'><?php echo zget($deptList, $overtime->dept);?></td>
           <td><?php echo zget($this->lang->overtime->typeList, $overtime->type);?></td>
           <td><?php echo formatTime($overtime->begin . ' ' . $overtime->start, DT_DATETIME2);?></td>
           <td><?php echo formatTime($overtime->end . ' ' . $overtime->finish, DT_DATETIME2);?></td>
@@ -108,7 +118,7 @@
             {
                 if($overtime->status == 'wait')
                 {
-                    commonModel::printLink('oa.overtime', 'review', "id=$overtime->id&status=pass",   $lang->overtime->statusList['pass'],   "class='reivewPass'");
+                    commonModel::printLink('oa.overtime', 'review', "id=$overtime->id&status=pass",   $lang->overtime->statusList['pass'],   "class='reviewPass'");
                     commonModel::printLink('oa.overtime', 'review', "id=$overtime->id&status=reject", $lang->overtime->statusList['reject'], "data-toggle='modal'");
                 }
                 else
@@ -122,6 +132,14 @@
         </tr>
         <?php endforeach;?>
       </table>
+      <?php if($overtimeList && $batchReview):?>
+      <div class='table-footer'>
+        <div class='pull-left'>
+          <?php echo html::selectButton();?>
+          <?php echo html::submitButton($lang->overtime->batchPass);?>
+        </div>
+      </div>
+      <?php endif;?>
     </div>
 <?php if($type != 'browseReview'):?>
   </div>

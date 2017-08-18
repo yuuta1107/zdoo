@@ -15,6 +15,8 @@ $lang->makeup->personal     = 'My Makeup';
 $lang->makeup->browseReview = 'Review List';
 $lang->makeup->company      = 'All';
 $lang->makeup->setReviewer  = 'Set Reviewer';
+$lang->makeup->batchReview  = 'Batch Review';
+$lang->makeup->batchPass    = 'Batch Pass';
 
 $lang->makeup->id           = 'ID';
 $lang->makeup->year         = 'Year';
@@ -42,16 +44,17 @@ $lang->makeup->statusList['wait']   = 'Wait';
 $lang->makeup->statusList['pass']   = 'Pass';
 $lang->makeup->statusList['reject'] = 'Reject';
 
-$lang->makeup->denied    = 'Access denied';
-$lang->makeup->unique    = 'There was a record of makeup in %s.';
-$lang->makeup->sameMonth = 'Makeup must be in the same month.';
-$lang->makeup->wrongEnd  = 'End time should be greater than begin time.';
+$lang->makeup->denied        = 'Access denied';
+$lang->makeup->unique        = 'There was a record of makeup in %s.';
+$lang->makeup->sameMonth     = 'Makeup must be in the same month.';
+$lang->makeup->wrongEnd      = 'End time should be greater than begin time.';
+$lang->makeup->nodata        = 'Select no data.';
+$lang->makeup->reviewSuccess = 'Review success';
 
 $lang->makeup->confirmReview['pass']   = 'Are you sure to pass it?';
 $lang->makeup->confirmReview['reject'] = 'Are you sure to reject it?';
 
 $lang->makeup->hoursTip = 'Hours';
-$lang->makeup->baseInfo = 'Basic Info';
 
 $lang->makeup->reviewStatusList['pass']   = 'Pass';
 $lang->makeup->reviewStatusList['reject'] = 'Reject';

@@ -271,17 +271,17 @@ class lieuModel extends model
     {
         if(!isset($this->lang->lieu->statusList[$status])) return false;
 
-        $this->dao->update(TABLE_LIEU)
-            ->set('status')->eq($status)
-            ->set('reviewedBy')->eq($this->app->user->account)
-            ->set('reviewedDate')->eq(helper::now())
-            ->where('id')->eq($id)
-            ->exec();
+        $data = new stdclass();
+        $data->status       = $status;
+        $data->reviewedBy   = $this->app->user->account;
+        $data->reviewedDate = helper::now();
+
+        $this->dao->update(TABLE_LIEU)->data($data)->autoCheck()->where('id')->eq($id)->exec();
 
         if(!dao::isError() and $status == 'pass')
         {
             $lieu  = $this->getById($id);
-            $dates = range(strtotime($lieu->begin), strtotime($lieu->end), 60*60*24);
+            $dates = range(strtotime($lieu->begin), strtotime($lieu->end), 60 * 60 * 24);
             $this->loadModel('attend', 'oa')->batchUpdate($dates, $lieu->createdBy, 'lieu', '', $lieu);
         }
 
