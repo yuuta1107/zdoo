@@ -42,7 +42,7 @@ $lang->setting->customer->fields['levelNameList'] = 'Customer Level';
 $lang->setting->customer->fields['statusList']    = 'Customer Status';
 
 $lang->setting->system = new stdclass();
-$lang->setting->system->setCurrency            = 'Set currency';
+$lang->setting->system->mainCurrency           = 'Main currency';
 $lang->setting->system->fields['currencyList'] = 'Currency list';
 
 $lang->setting->allLang     = 'For all language';
@@ -71,7 +71,8 @@ $lang->setting->placeholder->lineList->key   = 'Key should be intergers or lette
 $lang->setting->placeholder->lineList->value = 'Brief description';
 
 $lang->setting->reserveDays    = 'Hold days in customer pools.';
-$lang->setting->reserveDaysTip = "Customer will be automatically saved in customer pools, if customer info is not updated within certain days. It will be disabled if it is set as'0' days.";
+$lang->setting->reserveDaysTip = "Customer will be automatically saved in customer pools, if customer info is not updated within certain days. It will be disabled if it is set as '0' days.";
+$lang->setting->currencyTip    = 'When create trade with a depositor whose currency is not main currency, you need to record the exchange rate.';
 
 $lang->setting->moduleList['attend']   = 'Attend';
 $lang->setting->moduleList['leave']    = 'Leave';

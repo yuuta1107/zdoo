@@ -14,6 +14,7 @@
 <?php include '../../../sys/common/view/datepicker.html.php';?>
 <?php include '../../../sys/common/view/chosen.html.php';?>
 <?php js::set('modeType', $type);?>
+<?php js::set('mainCurrency', $config->setting->mainCurrency);?>
 <div class='panel'>
   <div class='panel-heading'>
     <strong><i class="icon-plus"></i> <?php echo $lang->trade->{$type};?></strong>
@@ -122,7 +123,16 @@
         <?php endif;?>
         <tr>
           <th><?php echo $lang->trade->money;?></th>
-          <td><?php echo html::input('money', '', "class='form-control'");?></td>
+          <td>
+            <div class='input-group'>
+              <?php echo html::input('money', '', "class='form-control'");?>
+              <span class='input-group-addon fix-border'><?php echo $lang->trade->currency;?></span>
+              <?php echo html::select('currencyLabel', $lang->currencyList, '', "class='form-control' readonly");?>
+              <?php echo html::hidden('currency');?>
+              <span class='input-group-addon fix-border exchangeRate'><?php echo $lang->trade->exchangeRate;?></span>
+              <?php echo html::input('exchangeRate', '', "class='form-control exchangeRate'");?> 
+            </div>
+          </td>
         </tr>
         <tr>
           <th><?php echo $lang->trade->dept;?></th>

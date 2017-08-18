@@ -18,10 +18,10 @@ class tradeModel extends model
      * @access public
      * @return object
      */
-    public function getByID($id)
+    public function getByID($id, $getFiles = true)
     {
         $trade = $this->dao->select('*')->from(TABLE_TRADE)->where('id')->eq($id)->fetch();
-        if($trade) $trade->files = $this->loadModel('file')->getByObject('trade', $id);
+        if($trade && $getFiles) $trade->files = $this->loadModel('file')->getByObject('trade', $id);
         return $trade;
     }
 
@@ -495,12 +495,9 @@ class tradeModel extends model
             ->setIf($type == 'in', 'order', 0)
             ->setIf(!$this->post->objectType or !in_array('order', $this->post->objectType), 'order', 0)
             ->setIf(!$this->post->objectType or !in_array('contract', $this->post->objectType), 'contract', 0)
-            ->remove('objectType,customer,productLine,allCustomer')
+            ->remove('objectType,customer,productLine,allCustomer,currencyLabel')
             ->striptags('desc')
             ->get();
-
-        $depositor = $this->loadModel('depositor', 'cash')->getByID($trade->depositor);
-        if(!empty($depositor)) $trade->currency = $depositor->currency;
 
         if($this->post->traderName && $this->post->createTrader && $type == 'out' || 
            $this->config->trade->settings->trader && $this->post->createTrader && $type == 'out')
@@ -538,6 +535,7 @@ class tradeModel extends model
         $this->dao->insert(TABLE_TRADE)
             ->data($trade, $skip = 'createTrader,traderName,files,labels')
             ->batchCheck($this->config->trade->require->create, 'notempty')
+            ->checkIF(isset($trade->currency) && $trade->currency != $this->config->setting->mainCurrency, 'exchangeRate', 'notempty')
             ->autoCheck()
             ->exec();
 
@@ -729,7 +727,7 @@ class tradeModel extends model
         }
 
         if($objectType[0] == 'contract') $this->post->customer = $this->post->allCustomer;
-        $oldTrade = $this->getByID($tradeID);
+        $oldTrade = $this->getByID($tradeID, $getFiles = false);
 
         if($oldTrade->type == 'in') $_POST['objectType'] = array('contract');
 
@@ -745,7 +743,7 @@ class tradeModel extends model
             ->setIf($oldTrade->type == 'in', 'order', 0)
             ->setIf(!$this->post->objectType or !in_array('order', $this->post->objectType), 'order', 0)
             ->setIf(!$this->post->objectType or !in_array('contract', $this->post->objectType), 'contract', 0)
-            ->remove('objectType,customer,allCustomer')
+            ->remove('objectType,customer,allCustomer,currencyLabel')
             ->striptags('desc')
             ->get();
 
@@ -775,6 +773,7 @@ class tradeModel extends model
             ->data($trade, $skip = 'createTrader,traderName,files,labels,invests,redeems,profits,interest,investCategory,investMoney')
             ->autoCheck()
             ->batchCheck($this->config->trade->require->edit, 'notempty')
+            ->checkIF(isset($trade->currency) && $trade->currency != $this->config->setting->mainCurrency, 'exchangeRate', 'notempty')
             ->where('id')->eq($tradeID)->exec();
 
         if($trade->type == 'invest')

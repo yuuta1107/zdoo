@@ -15,6 +15,7 @@ $lang->trade->id          = 'ID';
 $lang->trade->depositor   = 'Account';
 $lang->trade->type        = 'Type';
 $lang->trade->currency    = 'Currency';
+$lang->trade->exchangeRate= 'Exchange rate';
 $lang->trade->trader      = 'Provider';
 $lang->trade->customer    = 'Customer';
 $lang->trade->money       = 'Amount';

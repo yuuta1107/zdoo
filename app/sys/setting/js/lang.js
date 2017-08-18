@@ -23,4 +23,23 @@ $(function()
     {
         $(this).parent().parent().remove();
     })
+
+    $('[name*=currency]').change(function()
+    {
+        var mainCurrency = $('#mainCurrency').val();
+        $('#mainCurrency').empty().append('<option></option>');
+        $('[name*=currency]').each(function()
+        {
+            if($(this).prop('checked')) 
+            {
+                var text = $(this).parent().html();
+                text = $.trim(text.substr(text.lastIndexOf('>') + 1));
+                $('#mainCurrency').append("<option value='" + $(this).val() + "'>" + text + '</option>');
+            }
+        });
+
+        $('#mainCurrency').val(mainCurrency);
+    });
+
+    $('[name*=currency]').change();
 })

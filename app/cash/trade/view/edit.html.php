@@ -15,6 +15,7 @@
 <?php include '../../../sys/common/view/chosen.html.php';?>
 <?php js::set('modeType', $mode);?>
 <?php js::set('contract', $trade->contract);?>
+<?php js::set('mainCurrency', $config->setting->mainCurrency);?>
 <ul id='menuTitle'>
   <li><?php commonModel::printLink('trade', 'browse', "mode=$mode", $lang->trade->browse);?></li>
   <li class='divider angle'></li>
@@ -165,10 +166,26 @@
           </td>
         </tr>
         <?php endif;?>
+        <?php if($trade->type == 'in' or $trade->type == 'out'):?>
+        <tr>
+          <th><?php echo $lang->trade->money;?></th>
+          <td>
+            <div class='input-group'>
+              <?php echo html::input('money', $trade->money, "class='form-control'");?>
+              <span class='input-group-addon fix-border'><?php echo $lang->trade->currency;?></span>
+              <?php echo html::select('currencyLabel', $lang->currencyList, '', "class='form-control' readonly");?>
+              <?php echo html::hidden('currency');?>
+              <span class='input-group-addon fix-border exchangeRate'><?php echo $lang->trade->exchangeRate;?></span>
+              <?php echo html::input('exchangeRate', $trade->exchangeRate, "class='form-control exchangeRate'");?> 
+            </div>
+          </td>
+        </tr>
+        <?php else:?>
         <tr>
           <th><?php echo $lang->trade->money;?></th>
           <td><?php echo html::input('money', $trade->money, "class='form-control'");?></td>
         </tr>
+        <?php endif;?>
         <?php if($trade->type == 'repay'):?>
         <tr>
           <th><?php echo $lang->trade->interest;?></th>

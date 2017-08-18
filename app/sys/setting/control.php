@@ -32,6 +32,7 @@ class setting extends control
         {
             if($module == 'common' and $field == 'currencyList')
             {
+                if(!$this->post->mainCurrency) $this->send(array('result' => 'fail', 'message' => array('mainCurrency' => sprintf($this->lang->error->notempty, $this->lang->setting->system->mainCurrency))));
                 $setting = fixer::input('post')->join('currency', ',')->setDefault('currency', '')->remove('module,field')->get();
                 $this->setting->setItems('system.sys.setting', $setting);
                 if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));

@@ -15,6 +15,7 @@ $lang->trade->id          = '編號';
 $lang->trade->depositor   = '賬號';
 $lang->trade->type        = '交易';
 $lang->trade->currency    = '貨幣';
+$lang->trade->exchangeRate= '匯率';
 $lang->trade->trader      = '商戶';
 $lang->trade->customer    = '客戶';
 $lang->trade->money       = '金額';

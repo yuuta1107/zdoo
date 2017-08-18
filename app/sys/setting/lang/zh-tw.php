@@ -42,7 +42,7 @@ $lang->setting->customer->fields['levelNameList'] = '客戶等級';
 $lang->setting->customer->fields['statusList']    = '客戶狀態';
 
 $lang->setting->system = new stdclass();
-$lang->setting->system->setCurrency            = '使用的貨幣';
+$lang->setting->system->mainCurrency           = '主要貨幣';
 $lang->setting->system->fields['currencyList'] = '貨幣設置';
 
 $lang->setting->allLang     = '適用所有語言';
@@ -72,6 +72,7 @@ $lang->setting->placeholder->lineList->value = '簡短描述';
 
 $lang->setting->reserveDays    = '進入客戶池（天）';
 $lang->setting->reserveDaysTip = '在設定天數內沒有更新客戶信息（未簽約客戶），該客戶將自動進入客戶池。值設為0時禁用此功能。';
+$lang->setting->currencyTip    = '以非主要貨幣記賬時需要錄入匯率。';
 
 $lang->setting->moduleList['attend']   = '考勤';
 $lang->setting->moduleList['leave']    = '請假';

@@ -64,6 +64,12 @@
             <th><?php echo $lang->trade->money;?></th>
             <td><?php echo zget($currencySign, $trade->currency) . formatMoney($trade->money);?></td>
           </tr>
+          <?php if($trade->currency != $config->setting->mainCurrency):?>
+          <tr>
+            <th><?php echo $lang->trade->exchangeRate;?></th>
+            <td><?php echo $trade->exchangeRate;?></td>
+          </tr>
+          <?php endif;?>
           <tr>
             <th><?php echo $lang->trade->dept;?></th>
             <td><?php echo zget($deptList, $trade->dept);?></td>

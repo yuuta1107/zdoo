@@ -21,10 +21,18 @@
     <div class='panel-body'>
       <table class='table table-form table-condensed table-currency'>
         <tr>
-          <td><?php echo html::checkbox('currency', $lang->currencyList, isset($this->config->setting->currency) ? $this->config->setting->currency : '', '', 'block');?></td>
+          <td colspan='3'><?php echo html::checkbox('currency', $lang->currencyList, isset($this->config->setting->currency) ? $this->config->setting->currency : '', '', 'block');?></td>
         </tr>
         <tr>
-          <td>
+          <th class='w-60px'><?php echo $lang->setting->system->mainCurrency;?></th>
+          <td class='w-200px'>
+            <div class='required required-wrapper'></div>
+            <?php echo html::select('mainCurrency', array('') + $lang->currencyList, isset($this->config->setting->mainCurrency) ? $this->config->setting->mainCurrency : '', "class='form-control chosen'");?>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td colspan='3'>
             <?php echo html::hidden('module', $module);?>
             <?php echo html::hidden('field', $field);?>
             <?php echo html::submitButton();?>

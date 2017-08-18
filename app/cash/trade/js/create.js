@@ -1,5 +1,17 @@
 $(document).ready(function()
 {
+    $('#depositor').change(function()
+    {
+        $.get(createLink('trade', 'ajaxGetCurrency', 'depositorID=' + $(this).val()), function(currency)
+        {
+            if(!currency) return false;
+
+            $('#currency').val(currency);
+            $('#currencyLabel').val(currency);
+            $('.exchangeRate').toggle(currency != v.mainCurrency);
+        });
+    });
+
     $('#order, #contract').change(function()
     {
         $('#money').val($(this).find('option:selected').attr('data-amount'));
@@ -14,4 +26,6 @@ $(document).ready(function()
             $('#product').chosen(chosenDefaultOptions);
         })
     })
+
+    $('.exchangeRate').hide();
 })
