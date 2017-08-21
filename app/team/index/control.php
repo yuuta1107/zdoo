@@ -11,6 +11,17 @@
  */
 class index extends control
 {
+    /**
+     * The construct method.
+     * 
+     * @access public
+     * @return void
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     public function index()
     {
         $this->locate($this->createLink('dashboard', 'index'));

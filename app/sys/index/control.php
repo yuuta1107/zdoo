@@ -12,7 +12,7 @@
 class index extends control
 {
     /**
-     * Construct.
+     * The construct method.
      * 
      * @access public
      * @return void

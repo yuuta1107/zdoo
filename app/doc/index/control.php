@@ -11,6 +11,12 @@
  */
 class index extends control
 {
+    /**
+     * The construct method.
+     * 
+     * @access public
+     * @return void
+     */
     public function __construct()
     {
         parent::__construct();

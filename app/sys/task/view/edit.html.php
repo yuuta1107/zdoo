@@ -96,7 +96,7 @@
               </tr>
               <tr>
                 <th><?php echo $lang->task->deadline;?></th>
-                <td><?php echo html::input('deadline', $task->deadline, "class='form-control form-date'");?></td>
+                <td><?php echo html::input('deadline', $task->deadline == '0000-00-00' ? '' : $task->deadline, "class='form-control form-date'");?></td>
               </tr>
               <tr>
                 <th><?php echo $lang->task->estimate;?></th>
