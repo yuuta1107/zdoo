@@ -54,7 +54,7 @@
     </tr>
     <tr>
       <th></th>
-      <td><?php echo html::a(inlink('edit'), "<i class='icon-pencil'></i> " . $lang->user->editProfile, "class='btn btn-primary loadInModal'");?></td>
+      <td><?php echo html::a(inlink('editself'), "<i class='icon-pencil'></i> " . $lang->user->editProfile, "class='btn btn-primary loadInModal'");?></td>
     </tr>
   </table>
 </div>

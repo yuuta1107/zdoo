@@ -26,21 +26,21 @@ $config->rights->member['entry']['printblock']      = 'printblock';
 $config->rights->member['entry']['customsort']      = 'customsort';
 $config->rights->member['entry']['updateentrymenu'] = 'updateentrymenu';
 
-$config->rights->member['user']['profile']                = 'profile';
-$config->rights->member['user']['thread']                 = 'thread';
-$config->rights->member['user']['reply']                  = 'reply';
-$config->rights->member['user']['message']                = 'message';
-$config->rights->member['user']['setreferer']             = 'setreferer';
-$config->rights->member['user']['changepassword']         = 'changepassword';
-$config->rights->member['user']['vcard']                  = 'vcard';
-$config->rights->member['user']['uploadavatar']           = 'uploadavatar';
-$config->rights->member['user']['cropavatar']             = 'cropavatar';
-$config->rights->member['user']['edit']                   = 'edit';
+$config->rights->member['user']['profile']        = 'profile';
+$config->rights->member['user']['thread']         = 'thread';
+$config->rights->member['user']['reply']          = 'reply';
+$config->rights->member['user']['message']        = 'message';
+$config->rights->member['user']['setreferer']     = 'setreferer';
+$config->rights->member['user']['changepassword'] = 'changepassword';
+$config->rights->member['user']['vcard']          = 'vcard';
+$config->rights->member['user']['uploadavatar']   = 'uploadavatar';
+$config->rights->member['user']['cropavatar']     = 'cropavatar';
+$config->rights->member['user']['editself']       = 'editself';
 
-$config->rights->member['search']['buildform']            = 'buildform';
-$config->rights->member['search']['buildquery']           = 'buildquery';
-$config->rights->member['search']['savequery']            = 'savequery';
-$config->rights->member['search']['deletequery']          = 'deletequery';
+$config->rights->member['search']['buildform']   = 'buildform';
+$config->rights->member['search']['buildquery']  = 'buildquery';
+$config->rights->member['search']['savequery']   = 'savequery';
+$config->rights->member['search']['deletequery'] = 'deletequery';
 
 $config->rights->member['misc']['qrcode']            = 'qrcode';
 $config->rights->member['misc']['about']             = 'about';
@@ -102,10 +102,10 @@ $config->rights->member['todo']['batchclose']   = 'batchclose';
 $config->rights->member['todo']['activate']     = 'activate';
 $config->rights->member['todo']['import2today'] = 'import2today';
 
-$config->rights->member['reply']['post']          = 'post';
-$config->rights->member['reply']['edit']          = 'edit';
-$config->rights->member['reply']['delete']        = 'delete';
-$config->rights->member['reply']['deletefile']    = 'deletefile';
+$config->rights->member['reply']['post']       = 'post';
+$config->rights->member['reply']['edit']       = 'edit';
+$config->rights->member['reply']['delete']     = 'delete';
+$config->rights->member['reply']['deletefile'] = 'deletefile';
 
 $config->rights->member['message']['comment'] = 'comment';
 $config->rights->member['message']['post']    = 'post';
@@ -133,7 +133,7 @@ $config->rights->member['attend']['edit']             = 'edit';
 $config->rights->member['attend']['ajaxgetdeptusers'] = 'ajaxgetdeptusers';
 $config->rights->member['attend']['read']             = 'read';
 
-$config->rights->member['holiday']['browse']  = 'browse';
+$config->rights->member['holiday']['browse'] = 'browse';
 
 $config->rights->member['leave']['personal']     = 'personal';
 $config->rights->member['leave']['create']       = 'create';

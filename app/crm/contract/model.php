@@ -525,7 +525,7 @@ class contractModel extends model
     {
         $contract = $this->getByID($contractID);
 
-        $now = helper::now();
+        $now  = helper::now();
         $data = fixer::input('post')
             ->add('contract', $contractID)
             ->setDefault('returnedBy', $this->app->user->account)
@@ -570,17 +570,15 @@ class contractModel extends model
             if($this->post->createTrade)
             {
                 $trade = fixer::input('post')
-                    ->add('money', $this->post->amount)
                     ->add('type', 'in')
-                    ->add('date', substr($contractData->returnedDate, 0, 10))
-                    ->add('createdBy', $this->app->user->account)
-                    ->add('createdDate', $now)
-                    ->add('editedBy', $this->app->user->account)
-                    ->add('editedDate', $now)
-                    ->join('handlers', ',')
                     ->add('trader', $contract->customer)
                     ->add('contract', $contractID)
+                    ->add('money', $this->post->amount)
+                    ->add('handlers', $contractData->returnedBy)
+                    ->add('date', substr($contractData->returnedDate, 0, 10))
                     ->add('desc', strip_tags($this->post->comment))
+                    ->add('createdBy', $this->app->user->account)
+                    ->add('createdDate', $now)
                     ->remove('finish,amount,returnedBy,returnedDate,createTrade,continue')
                     ->get();
 
@@ -588,6 +586,9 @@ class contractModel extends model
                 $trade->currency = $depositor->currency;
                 
                 $this->dao->insert(TABLE_TRADE)->data($trade, $skip = 'uid,comment')->autoCheck()->exec();
+                $tradeID     = $this->dao->lastInsertId();
+                $actionExtra = html::a(helper::createLink('contract', 'view', "contractID=$contractID"), $contract->name) . $this->lang->contract->return . ' ' . zget($this->lang->currencySymbols, $trade->currency, '') . $this->post->amount;
+                $this->loadModel('action')->create('trade', $tradeID, 'receiveContract', $this->post->comment, $actionExtra, $this->post->returnedBy);
             }
             
             if(dao::isError()) return array('result' => 'fail', 'message' => dao::getError());

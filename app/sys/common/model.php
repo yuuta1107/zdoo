@@ -1150,7 +1150,7 @@ class commonModel extends model
             $id = 'id';
             $title = isset($preAndNext->pre->title) ? $preAndNext->pre->title : (isset($preAndNext->pre->name) ? $preAndNext->pre->name : '');
             $title = '#' . $preAndNext->pre->$id . ' ' . $title;
-            $link  = $linkTemplate ? sprintf($linkTemplate, $preAndNext->pre->$id) : inLink('view', "ID={$preAndNext->pre->$id}");
+            $link  = $linkTemplate ? sprintf($linkTemplate, $preAndNext->pre->$id) : inlink('view', "ID={$preAndNext->pre->$id}");
             echo html::a($link, '<i class="icon-pre icon-chevron-left"></i>', "id='pre' class='btn' title='{$title}'");
         }
         if(isset($preAndNext->next) and $preAndNext->next) 
@@ -1158,7 +1158,7 @@ class commonModel extends model
             $id = 'id';
             $title = isset($preAndNext->next->title) ? $preAndNext->next->title : (isset($preAndNext->next->name) ? $preAndNext->next->name : '');
             $title = '#' . $preAndNext->next->$id . ' ' . $title;
-            $link  = $linkTemplate ? sprintf($linkTemplate, $preAndNext->next->$id) : inLink('view', "ID={$preAndNext->next->$id}");
+            $link  = $linkTemplate ? sprintf($linkTemplate, $preAndNext->next->$id) : inlink('view', "ID={$preAndNext->next->$id}");
             echo html::a($link, '<i class="icon-pre icon-chevron-right"></i>', "id='next' class='btn' title='$title'");
         }
     }
@@ -1192,7 +1192,7 @@ class commonModel extends model
         $preAndNextObject->next = '';
         while($object = $queryObjects->fetch())
         {
-            $id  = $object->id;
+            $id = $object->id;
 
             /* Get next object. */
             if($preOBJ === true)

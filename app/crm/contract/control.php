@@ -298,15 +298,20 @@ class contract extends control
             $this->send($return);
         }
 
-        $user    = $this->loadModel('user', 'sys')->getByAccount($contract->createdBy);
-        $dept    = $this->loadModel('tree')->getByID($user->dept);
-        $orderID = $this->dao->select('`order`')->from(TABLE_CONTRACTORDER)->where('contract')->eq($contractID)->fetch('order');
-        $order   = $this->loadModel('order', 'crm')->getByID($orderID);
+        $user   = $this->loadModel('user', 'sys')->getByAccount($contract->createdBy);
+        $dept   = $this->loadModel('tree')->getByID($user->dept);
+        $orders = $this->dao->select('`order`')->from(TABLE_CONTRACTORDER)->where('contract')->eq($contractID)->fetchPairs();
 
         $productList = $this->loadModel('product')->getPairs();
-        if(isset($order->product))
+        if($orders)
         {
-            $productList = $this->dao->select('id, name')->from(TABLE_PRODUCT)->where('id')->in($order->product)->fetchPairs();
+            $productList = array();
+            $this->loadModel('order', 'crm');
+            foreach($orders as $orderID)
+            {
+                $order = $this->order->getByID($orderID);
+                if($order->product) $productList += $this->dao->select('id, name')->from(TABLE_PRODUCT)->where('id')->in($order->product)->fetchPairs();
+            }
         }
 
         $this->view->title         = $contract->name;

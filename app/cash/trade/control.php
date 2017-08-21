@@ -867,7 +867,7 @@ class trade extends control
         $this->view->title        = $this->lang->trade->showImport;
         $this->view->trades       = $dataList;
         $this->view->depositor    = $this->loadModel('depositor', 'cash')->getByID($depositorID);
-        $this->view->users        = $this->loadModel('user')->getPairs('nodeleted,noforbidden');
+        $this->view->users        = $this->loadModel('user')->getPairs('noclosed,nodeleted,noforbidden');
         $this->view->customerList = $customerList;
         $this->view->traderList   = $traderList;
         $this->view->expenseTypes = $expenseTypes;

@@ -21,13 +21,13 @@
     <div class='panel-body'>
       <table class='table table-form table-condensed table-currency'>
         <tr>
-          <td colspan='3'><?php echo html::checkbox('currency', $lang->currencyList, isset($this->config->setting->currency) ? $this->config->setting->currency : '', '', 'block');?></td>
+          <td colspan='3'><?php echo html::checkbox('currency', $lang->currencyList, isset($config->setting->currency) ? $config->setting->currency : '', '', 'block');?></td>
         </tr>
         <tr>
           <th class='w-60px'><?php echo $lang->setting->system->mainCurrency;?></th>
           <td class='w-200px'>
             <div class='required required-wrapper'></div>
-            <?php echo html::select('mainCurrency', array('') + $lang->currencyList, isset($this->config->setting->mainCurrency) ? $this->config->setting->mainCurrency : '', "class='form-control chosen'");?>
+            <?php echo html::select('mainCurrency', array('') + $lang->currencyList, isset($config->setting->mainCurrency) ? $config->setting->mainCurrency : '', "class='form-control chosen'");?>
           </td>
           <td></td>
         </tr>

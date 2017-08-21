@@ -280,7 +280,7 @@ class user extends control
     {
         if($this->app->user->account == 'guest') $this->locate(inlink('login'));
         if(!$account) $account = $this->app->user->account;
-        if($account != $this->app->user->account and $this->app->user->admin != 'super') die(js::locate($this->createLink('user', 'deny', "module=user&method=edit")));
+        if(!commonModel::hasPriv('user', 'edit')) die(js::locate($this->createLink('user', 'deny', "module=user&method=edit")));
 
         if(!empty($_POST))
         {
@@ -302,6 +302,17 @@ class user extends control
         {
             $this->display();
         }
+    }
+
+    /**
+     * Edit login user. 
+     * 
+     * @access public
+     * @return void
+     */
+    public function editself()
+    {
+        die($this->fetch('user', 'edit', "account={$this->app->user->account}"));
     }
 
     /**
