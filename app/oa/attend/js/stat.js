@@ -19,4 +19,7 @@ $(document).ready(function()
         $(this).parents('tr').next('tr.edit').children('td.singleSave').show();
         $(this).parents('tr').hide();
     })
+
+    /* expand active tree. */
+    $('.tree li.active .hitarea').click();
 })
