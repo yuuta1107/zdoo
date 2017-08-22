@@ -54,13 +54,16 @@ class myModel extends model
             /* Split the methodMenu to label, module, method, vars. */
             list($label, $module, $method, $vars) = explode('|', $methodMenu);
 
+            $class = '';
+            if($method == $currentMethod) $class = "class='active'";
+
             if($method == 'review')
             {
                 if($methodName != 'all' && !commonModel::hasPriv($methodName, 'review')) continue;
-            }
 
-            $class = '';
-            if($method == $currentMethod) $class = "class='active'";
+                $params = $this->app->getParams();
+                $class  = isset($params['type']) && "type={$params['type']}" == $vars ? 'active' : '';
+            }
 
             $hasPriv = commonModel::hasPriv($module, $method);
             if($module == 'my' and $method == 'order')    $hasPriv = commonModel::hasPriv('order', 'browse');
