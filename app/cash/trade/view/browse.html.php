@@ -52,7 +52,8 @@
   <?php if($mode == 'all' || $mode == 'in' || $mode == 'out') commonModel::printLink('trade', 'batchcreate', '', "<i class='icon-sitemap'> </i>" . $lang->trade->batchCreate, "class='btn btn-primary'")?>
 </div>
 <div class='panel'>
-  <?php if(commonModel::hasPriv('trade', 'batchEdit')):?>
+  <?php $batchEdit = ($mode == 'in' or $mode == 'out') && commonModel::hasPriv('trade', 'batchEdit');?>
+  <?php if($batchEdit):?>
   <form method='post' action='<?php echo inlink('batchEdit', 'step=form')?>'>
   <?php endif;?>
     <table class='table table-hover table-striped table-bordered tablesorter table-data table-fixed' id='tradeList'>
@@ -87,8 +88,12 @@
       <tbody>
         <?php foreach($trades as $trade):?>
         <tr class='text-center'>
-          <td class='text-left'>
+          <td>
+          <?php if($batchEdit):?>
           <label class='checkbox-inline'><input type='checkbox' name='tradeIDList[]' value='<?php echo $trade->id;?>'/> <?php echo formatTime($trade->date, DT_DATE1);?></label>
+          <?php else:?>
+          <?php echo formatTime($trade->date, DT_DATE1);?>
+          <?php endif;?>
           </td>
           <td class='text-left'><?php echo zget($depositorList, $trade->depositor, ' ');?></td>
           <td><?php echo $lang->trade->typeList[$trade->type];?></td>
@@ -124,7 +129,7 @@
     <div class='table-footer'>
       <?php if($trades):?>
       <div class='pull-left'>
-        <?php if(commonModel::hasPriv('trade', 'batchEdit')) echo html::selectButton() . html::submitButton($lang->edit);?>
+        <?php if($batchEdit) echo html::selectButton() . html::submitButton($lang->edit);?>
         <span class='text-danger'><?php $this->trade->countMoney($trades, $mode);?></span>
       </div>
       <?php endif;?>

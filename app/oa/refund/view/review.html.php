@@ -74,7 +74,10 @@
     <tr class='reason'>
       <th class='w-70px text-center text-middle'><?php echo $lang->comment;?></th>
       <td><?php echo html::textarea("reason", '', "class='form-control'");?></td>
-      <td class='text-middle'><?php echo html::submitButton();?></td>
+    </tr>
+    <tr>
+      <th></th>
+      <td><?php echo html::submitButton();?></td>
     </tr>
   </table>
 </form>

@@ -488,7 +488,8 @@ $.extend(
         setTimeout(function()
         {
             var modal = $('#ajaxModal');
-            modal.load(modal.attr('ref'), function(){$(this).find('.modal-dialog').css('width', $(this).data('width')); $.zui.ajustModalPosition()})}, duration);
+            modal.load(modal.attr('ref'), function(){$(this).find('.modal-dialog').css('width', $(this).data('width')); $.zui.ajustModalPosition()})
+        }, duration);
     }
 });
 

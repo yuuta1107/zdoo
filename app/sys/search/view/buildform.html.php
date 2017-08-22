@@ -244,6 +244,7 @@ function resetForm()
     {
         $('#value' + i).val('');
         $('#value' + i).trigger("chosen:updated");
+        $('#dateValue' + i).attr('placeholder', '');
     }
 }
 
