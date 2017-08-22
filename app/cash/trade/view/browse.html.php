@@ -64,9 +64,9 @@
           <th class='w-100px'><?php commonModel::printOrderLink('depositor', $orderBy, $vars, $lang->trade->depositor);?></th>
           <th class='w-60px'><?php commonModel::printOrderLink('type', $orderBy, $vars, $lang->trade->type);?></th>
           <th><?php commonModel::printOrderLink('trader', $orderBy, $vars, $lang->trade->trader);?></th>
-          <th class='w-120px'><?php commonModel::printOrderLink('money', $orderBy, $vars, $lang->trade->money);?></th>
-          <th class='w-100px'><?php commonModel::printOrderLink('dept', $orderBy, $vars, $lang->trade->dept);?></th>
-          <th class='w-100px'><?php commonModel::printOrderLink('handlers', $orderBy, $vars, $lang->trade->handlers);?></th>
+          <th class='w-80px'><?php commonModel::printOrderLink('money', $orderBy, $vars, $lang->trade->money);?></th>
+          <th class='w-80px'><?php commonModel::printOrderLink('dept', $orderBy, $vars, $lang->trade->dept);?></th>
+          <th class='w-80px'><?php commonModel::printOrderLink('handlers', $orderBy, $vars, $lang->trade->handlers);?></th>
           <?php if(strpos(',in,all,', ",$mode,") !== false):?>
           <th class='w-200px'><?php commonModel::printOrderLink('product', $orderBy, $vars,  $lang->trade->product . $lang->slash . $lang->trade->category);?></th>
           <?php else:?>
@@ -98,7 +98,7 @@
           <td class='text-left'><?php echo zget($depositorList, $trade->depositor, ' ');?></td>
           <td><?php echo $lang->trade->typeList[$trade->type];?></td>
           <td class='text-left' title="<?php echo zget($customerList, $trade->trader, '');?>"><?php if($trade->trader) echo zget($customerList, $trade->trader, ' ');?></td>
-          <td><?php echo zget($currencySign, $trade->currency) . formatMoney($trade->money);?></td>
+          <td class='text-right'><?php echo zget($currencySign, $trade->currency) . formatMoney($trade->money);?></td>
           <td><?php echo zget($deptList, $trade->dept);?></td>
           <td title='<?php foreach(explode(',', $trade->handlers) as $handler) echo zget($users, $handler) . ' ';?>'><?php foreach(explode(',', $trade->handlers) as $handler) echo zget($users, $handler) . ' ';?></td>
           <?php if(strpos(',in,all,', ",$mode,") !== false):?>
