@@ -1038,14 +1038,14 @@ class commonModel extends model
     }
  
     /**
-     * Verfy administrator through ok file.
+     * Verify administrator through ok file.
      * 
      * @access public
      * @return array
      */
-    public function verfyAdmin()
+    public function verifyAdmin()
     {
-        $okFile = $this->app->getWwwRoot() . 'ok';
+        $okFile = $this->app->getWwwRoot() . 'ok.txt';
         if(!file_exists($okFile) or time() - filemtime($okFile) > 3600)
         {
             return array('result' => 'fail', 'okFile' => $okFile);

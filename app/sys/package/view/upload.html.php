@@ -11,7 +11,7 @@
  */
 ?>
 <?php include '../../common/view/header.modal.html.php';?>
-<?php if($canMange['result'] == 'success'):?>
+<?php if($canManage['result'] == 'success'):?>
 <form method='post' enctype='multipart/form-data' id='uploadForm' action='<?php echo inlink('upload')?>'>
   <div id='responser'></div>
   <div class='input-group'>
@@ -21,7 +21,7 @@
 </form>
 <?php else:?>
 <div>
-  <?php printf($lang->setOkFile, $canMange['okFile']);?>
+  <?php printf($lang->setOkFile, $canManage['okFile']);?>
   <div class='text-right'><?php echo html::a($this->inlink('upload'), $lang->confirm, "class='btn btn-primary loadInModal'");?></div>
 </div>
 <?php endif;?>
