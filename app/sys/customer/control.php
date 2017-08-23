@@ -552,6 +552,13 @@ class customer extends control
         die(json_encode($customers));
     }
 
+    /**
+     * Get area by ajax. 
+     * 
+     * @param  string $location 
+     * @access public
+     * @return void
+     */
     public function ajaxGetArea($location)
     {
         $areaID    = 0;
@@ -564,16 +571,47 @@ class customer extends control
     }
 
     /**
-     * Ajax get customer pairs 
+     * Search customer by ajax.
      * 
-     * @param  string $relation 
-     * @param  int    $emptyOption 
+     * @param  string $key 
      * @access public
      * @return void
      */
-    public function ajaxGetPairs($relation = '', $emptyOption = true)
+    public function ajaxSearchCustomer($key = '')
     {
-        $customers = $this->customer->getPairs($relation, $emptyOption);
-        echo html::select('trader', $customers, '', "class='form-control'");
+        $this->view->title = $this->lang->customer->search;
+        $this->view->key   = $key;
+        $this->display();
+    }
+
+    /**
+     * Ajax get customer pairs 
+     * 
+     * @param  string $key
+     * @param  string $relation 
+     * @param  int    $limit
+     * @access public
+     * @return void
+     */
+    public function ajaxGetPairs($key = '', $relation = 'client', $limit = 50)
+    {
+        $customers = $this->customer->getPairs($relation);
+        $result = array();
+        $i = 0;
+        foreach ($customers as $id => $customer)
+        {
+            if($limit > 0 && $i > $limit) break;
+            if(stripos($customer,  $key) !== false)
+            {
+                $result[$id] = $customer;
+                $i++;
+            }
+        }
+        if($i < 1)
+        {
+            $result['info'] = $this->lang->noResultsMatch;
+        }
+
+        die(json_encode($result));
     }
 }

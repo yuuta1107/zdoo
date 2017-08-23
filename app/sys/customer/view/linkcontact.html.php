@@ -10,8 +10,8 @@
  * @link        http://www.ranzhico.com
  */
 ?>
-<?php include '../../../sys/common/view/header.modal.html.php';?>
-<?php include '../../../sys/common/view/chosen.html.php';?>
+<?php include '../../common/view/header.modal.html.php';?>
+<?php include '../../common/view/chosen.html.php';?>
 <form id='linkContactForm' method='post' action='<?php echo inlink('linkContact', "customerID=$customerID")?>'>
   <table class='table table-form'>
     <tbody>
@@ -64,4 +64,4 @@
     <button type='submit' class='btn btn-default' id='continueSubmit'><?php echo $lang->continueSave;?></button>
   </div>
 </div>
-<?php include '../../../sys/common/view/footer.modal.html.php';?>
+<?php include '../../common/view/footer.modal.html.php';?>

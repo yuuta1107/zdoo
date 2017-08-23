@@ -75,11 +75,11 @@
         </tr>
         <tr class='customerTR hide'>
           <th><?php echo $lang->trade->customer;?></th>
-          <td><?php echo html::select('customer', $customerList, $trade->trader, "class='form-control chosen' onchange='getContract(this.value)'");?></td>
+          <td><?php echo html::select('customer', $customerList, $trade->trader, "class='form-control chosen' onchange='getContract(this.value) data-no_results_text='" . $lang->searchMore . "''");?></td>
         </tr>
         <tr class='allCustomerTR hide'>
           <th><?php echo $lang->trade->customer;?></th>
-          <td><?php echo html::select('allCustomer', ($customerList + $traderList), $trade->trader, "class='form-control chosen' onchange='getContract(this.value)'");?></td>
+          <td><?php echo html::select('allCustomer', ($traderList+ $customerList), $trade->trader, "class='form-control chosen' onchange='getContract(this.value)' data-no_results_text='" . $lang->searchMore . "'");?></td>
         </tr>
         <tr class='traderTR'>
           <th><?php echo $lang->trade->trader;?></th>
@@ -99,7 +99,7 @@
         <?php if($trade->type == 'in'):?>
         <tr>
           <th><?php echo $lang->trade->customer;?></th>
-          <td><?php echo html::select('trader', $customerList, $trade->trader, "class='form-control chosen' onchange='getContract(this.value)'");?></td>
+          <td><?php echo html::select('trader', $customerList, $trade->trader, "class='form-control chosen' onchange='getContract(this.value)' data-no_results_text='" . $lang->searchMore . "'");?></td>
         </tr>
         <tr class='customer-depositor hide'>
           <th><?php echo $lang->customer->depositor;?></th>
@@ -115,8 +115,8 @@
           <th><?php echo $lang->trade->trader;?></th>
           <td>
             <div class='input-group'>
-              <?php  echo html::select('trader', ($customerList + $traderList), $trade->trader, "class='form-control chosen'");?>
-              <?php  echo html::input('traderName', '', "class='form-control' style='display:none'");?>
+              <?php echo html::select('trader', ($traderList + $customerList), $trade->trader, "class='form-control chosen' data-no_results_text='" . $lang->searchMore . "'");?>
+              <?php echo html::input('traderName', '', "class='form-control' style='display:none'");?>
               <div class='input-group-addon'><?php echo html::checkbox('createTrader', array( 1 => $lang->trade->newTrader));?></div>
             </div>
           </td>
@@ -150,8 +150,8 @@
           <th><?php echo $lang->trade->trader;?></th>
           <td>
             <div class='input-group'>
-              <?php  echo html::select('trader', ($customerList + $traderList), $trade->trader, "class='form-control chosen'");?>
-              <?php  echo html::input('traderName', '', "class='form-control' style='display:none'");?>
+              <?php echo html::select('trader', ($traderList + $customerList), $trade->trader, "class='form-control chosen' data-no_results_text='" . $lang->searchMore . "'");?>
+              <?php echo html::input('traderName', '', "class='form-control' style='display:none'");?>
               <div class='input-group-addon'><?php echo html::checkbox('createTrader', array( 1 => $lang->trade->newTrader));?></div>
             </div>
           </td>
@@ -197,9 +197,9 @@
           <th><?php echo $lang->trade->in;?></th>
           <td>
             <div class='input-group'>
-              <?php echo html::select('investCategory', $investCategoryList, $investTrade->category, "class='form-control'");?>
+              <?php echo html::select('investCategory', $investCategoryList, !empty($investTrade->category) ? $investTrade->category : '', "class='form-control'");?>
               <span class="input-group-addon fix-border fix-padding"></span>
-              <?php echo html::input('investMoney', $investTrade->money, "class='form-control'");?>
+              <?php echo html::input('investMoney', !empty($investTrade->money) ? $investTrade->money : '', "class='form-control'");?>
             </div>
           </td>
         </tr>
@@ -234,4 +234,7 @@
     </form>
   </div>
 </div>
+<script>
+<?php helper::import('../js/searchcustomer.js');?>
+</script>
 <?php include '../../common/view/footer.html.php';?>

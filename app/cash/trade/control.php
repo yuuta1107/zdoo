@@ -251,8 +251,8 @@ class trade extends control
         $this->view->depositorList = array('' => '') + $this->loadModel('depositor', 'cash')->getPairs();
         $this->view->productList   = $this->loadModel('product')->getPairs();
         $this->view->orderList     = $orderList;
-        $this->view->customerList  = $this->loadModel('customer')->getPairs('client');
-        $this->view->traderList    = $this->customer->getPairs('provider');
+        $this->view->customerList  = $this->loadModel('customer')->getPairs('client', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->trade->customerLimit);
+        $this->view->traderList    = $this->customer->getPairs('provider', $emptyOption = true);
         $this->view->contractList  = $this->loadModel('contract', 'crm')->getList($customerID = 0);
         $this->view->deptList      = $this->loadModel('tree')->getOptionMenu('dept', 0, $removeRoot = true);
         $this->view->users         = $this->loadModel('user')->getPairs('nodeleted,noforbidden,noclosed');
@@ -289,7 +289,7 @@ class trade extends control
         $this->view->title         = $this->lang->trade->batchCreate;
         $this->view->depositors    = array('' => '') + $this->loadModel('depositor', 'cash')->getPairs();
         $this->view->users         = $this->loadModel('user')->getPairs('nodeleted,noforbidden,noclosed');
-        $this->view->customerList  = $this->loadModel('customer')->getPairs('client');
+        $this->view->customerList  = $this->loadModel('customer')->getPairs('client', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->trade->customerLimit);
         $this->view->traderList    = $this->loadModel('customer')->getPairs('provider');
         $this->view->expenseTypes  = array('' => '') + $this->loadModel('tree')->getOptionMenu('out', 0, $removeRoot = true);
         $this->view->incomeTypes   = array('' => '') + $this->loadModel('tree')->getOptionMenu('in', 0, $removeRoot = true);
@@ -356,7 +356,7 @@ class trade extends control
        
         $this->view->title         = $this->lang->trade->edit;
         $this->view->productList   = $this->loadModel('product')->getPairs();
-        $this->view->customerList  = $this->loadModel('customer')->getPairs('client');
+        $this->view->customerList  = $this->loadModel('customer')->getPairs('client', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->trade->customerLimit);
         $this->view->traderList    = $this->customer->getPairs('provider');
         $this->view->contractList  = $this->loadModel('contract', 'crm')->getList($customerID = 0);
         $this->view->tradeContract = array('' => '') + $this->loadModel('contract', 'crm')->getPairs($customerID = $trade->trader);
@@ -522,7 +522,7 @@ class trade extends control
         $this->view->users              = $this->loadModel('user')->getPairs('nodeleted,noforbidden');
         $this->view->deptList           = $this->loadModel('tree')->getOptionMenu('dept', 0, $removeRoot = true);
         $this->view->depositorList      = $depositorList;
-        $this->view->traderList         = $this->loadModel('customer')->getPairs();
+        $this->view->traderList         = $this->loadModel('customer')->getPairs('', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->trade->customerLimit);
         $this->view->investCategoryList = $investCategories;
         $this->view->investList         = $investList;
 
@@ -563,7 +563,7 @@ class trade extends control
         $this->view->users         = $this->loadModel('user')->getPairs('nodeleted,noforbidden');
         $this->view->deptList      = $this->loadModel('tree')->getOptionMenu('dept', 0, $removeRoot = true);
         $this->view->depositorList = $depositorList;
-        $this->view->traderList    = $this->loadModel('customer')->getPairs();
+        $this->view->traderList    = $this->loadModel('customer')->getPairs('', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->trade->customerLimit);
         $this->view->loanList      = $loanList;
 
         $this->display();

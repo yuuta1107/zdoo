@@ -77,13 +77,13 @@
         <tr class='customerTR hide'>
           <th><?php echo $lang->trade->customer;?></th>
           <td>
-          <?php echo html::select('customer', $customerList, '', "class='form-control chosen' onchange='getContract(this.value)'");?>
+          <?php echo html::select('customer', $customerList, '', "class='form-control chosen' onchange='getContract(this.value)' data-no_results_text='" . $lang->searchMore . "'");?>
           </td>
         </tr>
         <tr class='allCustomerTR hide'>
           <th><?php echo $lang->trade->customer;?></th>
           <td>
-          <?php echo html::select('allCustomer', ($customerList + $traderList), '', "class='form-control chosen' onchange='getContract(this.value)'");?>
+          <?php echo html::select('allCustomer', ($traderList + $customerList), '', "class='form-control chosen' onchange='getContract(this.value)' data-no_results_text='" . $lang->searchMore . "'");?>
           </td>
         </tr>
         <tr class='traderTR'>
@@ -109,7 +109,7 @@
         <tr>
           <th><?php echo $lang->trade->customer;?></th>
           <td>
-          <?php echo html::select('trader', $customerList, '', "class='form-control chosen' onchange='getContract(this.value)'");?>
+          <?php echo html::select('trader', $customerList, '', "class='form-control chosen' onchange='getContract(this.value)' data-no_results_text='" . $lang->searchMore . "'");?>
           </td>
         </tr>
         <tr class='customer-depositor hide'>
@@ -164,4 +164,7 @@
     </form>
   </div>
 </div>
+<script>
+<?php helper::import('../js/searchcustomer.js');?>
+</script>
 <?php include '../../common/view/footer.html.php';?>

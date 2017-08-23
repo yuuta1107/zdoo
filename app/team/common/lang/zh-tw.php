@@ -35,5 +35,5 @@ $lang->setting->menu = new stdclass();
 $lang->setting->menu->board = '論壇版塊|tree|browse|type=forum|';
 $lang->setting->menu->blog  = '博客類目|tree|browse|type=blog|';
 $lang->setting->menu->dept  = '維護部門|tree|browse|type=dept|';
-$lang->setting->menu->role  = '維護角色|setting|lang|module=user&field=roleList&appName=team|';
+$lang->setting->menu->role  = '維護角色|setting|lang|module=user&field=roleList&appName=sys|';
 include(dirname(__FILE__) . '/menuOrder.php');

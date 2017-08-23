@@ -108,4 +108,6 @@ $lang->customer->relationList['client']   = 'Client';
 $lang->customer->relationList['provider'] = 'Provider';
 $lang->customer->relationList['partner']  = 'Partner';
 
-$lang->customer->mergeTip = 'Merge this customer to selected customer.';
+$lang->customer->search      = 'Search';
+$lang->customer->searchInput = 'Input search words.';
+$lang->customer->mergeTip    = 'Merge this customer to selected customer.';

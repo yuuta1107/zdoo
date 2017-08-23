@@ -10,7 +10,7 @@
  * @link        http://www.ranzhico.com
  */
 ?>
-<?php include '../../../sys/common/view/header.modal.html.php';?>
+<?php include '../../common/view/header.modal.html.php';?>
 <table class='table table-bordered table-data'>
   <tr class='text-center'>
     <th class='w-50px'><?php echo $lang->contact->id;?></th>
@@ -45,4 +45,4 @@
   </tr>
   <?php endforeach;?>
 </table>
-<?php include '../../../sys/common/view/footer.modal.html.php';?>
+<?php include '../../common/view/footer.modal.html.php';?>

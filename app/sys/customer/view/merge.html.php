@@ -10,8 +10,8 @@
  * @link        http://www.ranzhico.com
  */
 ?>
-<?php include '../../../sys/common/view/header.modal.html.php';?>
-<?php include '../../../sys/common/view/chosen.html.php';?>
+<?php include '../../common/view/header.modal.html.php';?>
+<?php include '../../common/view/chosen.html.php';?>
 <form method='post' id='ajaxForm' action='<?php echo $this->createLink('customer', 'merge', "customerID=$customerID")?>'>
   <table class='table table-form'>
     <tr>
@@ -30,4 +30,4 @@
     </tr>
   </table>
 </form>
-<?php include '../../../sys/common/view/footer.modal.html.php';?>
+<?php include '../../common/view/footer.modal.html.php';?>

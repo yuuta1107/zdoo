@@ -10,7 +10,7 @@
  * @link        http://www.ranzhico.com
  */
 ?>
-<?php include '../../../sys/common/view/header.modal.html.php';?>
+<?php include '../../common/view/header.modal.html.php';?>
 <table class='table table-bordered table-hover table-striped table-data'>
   <thead>
     <tr class='text-center'>
@@ -37,4 +37,4 @@
     <?php endforeach;?>
   </tbody>
 </table>
-<?php include '../../../sys/common/view/footer.modal.html.php';?>
+<?php include '../../common/view/footer.modal.html.php';?>

@@ -10,8 +10,11 @@
  * @link        http://www.ranzhico.com
  */
 $lang->colon      = ' : ';
+$lang->ellipsis   = '…';
 $lang->prev       = '‹';
 $lang->next       = '›';
+$lang->unfold     = '+';
+$lang->fold       = '-';
 $lang->percent    = '%';
 $lang->laquo      = '&laquo;';
 $lang->raquo      = '&raquo;';
@@ -132,9 +135,7 @@ $lang->setSuccess     = '设置成功';
 $lang->sendSuccess    = '发送成功';
 $lang->fail           = '失败';
 $lang->noResultsMatch = '没有匹配的选项';
-$lang->alias          = '搜索引擎优化使用，可使用英文、数字';
-$lang->unfold         = '+';
-$lang->fold           = '-';
+$lang->searchMore     = "搜索此关键字的更多结果：";
 $lang->files          = '附件';
 $lang->addFiles       = '上传了附件 ';
 $lang->comment        = '备注';
@@ -217,12 +218,12 @@ $lang->package = new stdclass();
 $lang->admin->common = '后台管理';
 
 $lang->menu->sys = new stdclass();
-$lang->menu->sys->company   = '公司|company|setbasic|';
-$lang->menu->sys->user      = '组织|user|admin|';
-$lang->menu->sys->group     = '权限|group|browse|';
-$lang->menu->sys->entry     = '应用|entry|admin|';
-$lang->menu->sys->system    = '系统|mail|admin|';
-$lang->menu->sys->package   = '扩展|package|browse|';
+$lang->menu->sys->company = '公司|company|setbasic|';
+$lang->menu->sys->user    = '组织|user|admin|';
+$lang->menu->sys->group   = '权限|group|browse|';
+$lang->menu->sys->entry   = '应用|entry|admin|';
+$lang->menu->sys->system  = '系统|mail|admin|';
+$lang->menu->sys->package = '扩展|package|browse|';
 
 $lang->message = new stdclass(); 
 $lang->blog    = new stdclass(); 
@@ -265,15 +266,15 @@ $lang->menu->dashboard->dynamic  = '动态|my|dynamic|';
 /* Menu of customer module. */
 if(!isset($lang->customer)) $lang->customer = new stdclass();
 $lang->customer->menu = new stdclass();
-$lang->customer->menu->browse       = '所有客户|customer|browse|mode=all';
-$lang->customer->menu->assignedTo   = '指派给我|customer|browse|mode=assignedTo';
-$lang->customer->menu->past         = '亟需联系|customer|browse|mode=past';
-$lang->customer->menu->today        = '今天联系|customer|browse|mode=today';
-$lang->customer->menu->tomorrow     = '明天联系|customer|browse|mode=tomorrow';
-$lang->customer->menu->thisweek     = '本周内联系|customer|browse|mode=thisweek';
-$lang->customer->menu->thismonth    = '本月内联系|customer|browse|mode=thismonth';
-$lang->customer->menu->public       = '客户池|customer|browse|mode=public';
-$lang->customer->menu->report       = '报表|report|browse|module=customer';
+$lang->customer->menu->browse     = '所有客户|customer|browse|mode=all';
+$lang->customer->menu->assignedTo = '指派给我|customer|browse|mode=assignedTo';
+$lang->customer->menu->past       = '亟需联系|customer|browse|mode=past';
+$lang->customer->menu->today      = '今天联系|customer|browse|mode=today';
+$lang->customer->menu->tomorrow   = '明天联系|customer|browse|mode=tomorrow';
+$lang->customer->menu->thisweek   = '本周内联系|customer|browse|mode=thisweek';
+$lang->customer->menu->thismonth  = '本月内联系|customer|browse|mode=thismonth';
+$lang->customer->menu->public     = '客户池|customer|browse|mode=public';
+$lang->customer->menu->report     = '报表|report|browse|module=customer';
 
 /* Menu of provider module. */
 if(!isset($lang->provider)) $lang->provider = new stdclass();

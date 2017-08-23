@@ -11,7 +11,7 @@
  */
 ?>
 <?php $mailTitle = 'CUSTOMER #' . $customer->id . ' ' . $customer->name;?>
-<?php include '../../../sys/common/view/mail.header.html.php';?>
+<?php include '../../common/view/mail.header.html.php';?>
 <tr>
   <td>
     <table cellpadding='0' cellspacing='0' width='600' style='border: none; border-collapse: collapse;'>
@@ -37,4 +37,4 @@
     </fieldset>
   </td>
 </tr>
-<?php include '../../../sys/common/view/mail.footer.html.php';?>
+<?php include '../../common/view/mail.footer.html.php';?>

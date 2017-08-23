@@ -11,8 +11,8 @@
  */
 ?>
 <?php include $app->getModuleRoot() . 'common/view/header.html.php';?>
-<?php include '../../../sys/common/view/kindeditor.html.php';?>
-<?php include '../../../sys/common/view/chosen.html.php';?>
+<?php include '../../common/view/kindeditor.html.php';?>
+<?php include '../../common/view/chosen.html.php';?>
 <div class='panel'>
   <div class='panel-heading'>
     <strong><i class="icon-plus"></i> <?php echo $lang->customer->create;?></strong>
@@ -119,4 +119,4 @@
     <button type='submit' class='btn btn-default' id='continueSubmit'><?php echo $lang->continueSave;?></button>
   </div>
 </div>
-<?php include '../../common/view/footer.html.php';?>
+<?php include $app->getAppRoot() . 'common/view/footer.html.php';?>

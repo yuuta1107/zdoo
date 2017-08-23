@@ -11,8 +11,8 @@
  */
 ?>
 <?php include $app->appRoot . 'common/view/header.html.php';?>
-<?php include '../../../sys/common/view/kindeditor.html.php';?>
-<?php include '../../../sys/common/view/chosen.html.php';?>
+<?php include '../../common/view/kindeditor.html.php';?>
+<?php include '../../common/view/chosen.html.php';?>
 <ul id='menuTitle'>
   <li><?php commonModel::printLink('provider', 'browse', '', $lang->provider->list);?></li>
   <li class='divider angle'></li>

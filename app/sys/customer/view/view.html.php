@@ -11,7 +11,7 @@
  */
 ?>
 <?php include $app->getModuleRoot() . 'common/view/header.html.php';?>
-<?php include '../../../sys/common/view/kindeditor.html.php';?>
+<?php include '../../common/view/kindeditor.html.php';?>
 <ul id='menuTitle'>
   <li><?php commonModel::printLink('customer', 'browse', '', $lang->customer->list);?></li>
   <li class='divider angle'></li>
@@ -173,4 +173,4 @@
     </div>
   </div>
 </div>
-<?php include '../../common/view/footer.html.php';?>
+<?php include $app->getAppRoot() . 'common/view/footer.html.php';?>

@@ -121,30 +121,36 @@ class customerModel extends model
      * @access public
      * @return array
      */
-    public function getPairs($relation = '', $emptyOption = true)
+    public function getPairs($relation = '', $emptyOption = true, $orderBy = 'id_desc', $limit = 0)
     {
+        $customerList   = array();
         $customerIdList = $this->getCustomersSawByMe();
 
-        if(empty($customerIdList))
-        {
-           $customers = array();
-        }
-        else
+        if($customerIdList)
         {
             $customers = $this->dao->select('id, name')->from(TABLE_CUSTOMER)
                 ->where('deleted')->eq(0)
                 ->beginIF($relation == 'client')->andWhere('relation')->ne('provider')->fi()
                 ->beginIF($relation == 'provider')->andWhere('relation')->ne('client')->fi()
+                ->orderBy($orderBy)
                 ->fetchPairs();
+            $i = 0;
             foreach($customers as $id => $name)
             {
-                if(!isset($customerIdList[$id])) unset($customers[$id]);
+                if(!isset($customerIdList[$id])) continue;
+
+                $customerList[$id] = $name;
+                if($limit > 0 && ++$i > $limit)
+                {
+                    $customerList['showmore'] = $this->lang->more . $this->lang->ellipsis;
+                    break;
+                }
             }
-            krsort($customers);
+            krsort($customerList);
         }
 
-        if($emptyOption) $customers = array('' => '') + $customers;
-        return $customers;
+        if($emptyOption) $customerList = array('' => '') + $customerList;
+        return $customerList;
     }
 
     /**

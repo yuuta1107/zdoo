@@ -31,7 +31,7 @@
           <td>
             <?php if(count($traderList) > 1):?>
             <div class='input-group'>
-              <?php  echo html::select('trader', $traderList, '', "class='form-control chosen'");?>
+              <?php  echo html::select('trader', $traderList, '', "class='form-control chosen' data-no_results_text='" . $lang->searchMore . "'");?>
               <?php  echo html::input('traderName', '', "class='form-control' style='display:none'");?>
               <div class='input-group-addon'><?php echo html::checkbox('createTrader', array( 1 => $lang->trade->newTrader));?></div>
             </div>
@@ -85,4 +85,7 @@
     </form>
   </div>
 </div>
+<script>
+<?php helper::import('../js/searchcustomer.js');?>
+</script>
 <?php include '../../common/view/footer.html.php';?>
