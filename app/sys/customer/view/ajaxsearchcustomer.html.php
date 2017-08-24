@@ -27,6 +27,7 @@
 </style>
 <div class='searchInput '>
   <?php echo html::input('customerSearchInput', $key, "class='form-control' placeholder='{$lang->customer->searchInput}'");?>
+  <?php echo html::hidden('relation', $relation);?>
   <i class='icon icon-search'></i>
 </div>
 <ul id='searchResult'></ul>
@@ -49,13 +50,14 @@ $searchInput.on('paste change keyup', function()
     if(lastSearchFn) clearTimeout(lastSearchFn);
     lastSearchFn = setTimeout(function()
     {
-        var key = $searchInput.val() || '';
+        var key      = $searchInput.val() || '';
+        var relation = $('#relation').val() || '';
         if(key && key != $searchInput.data('lastkey'))
         {
             $searchResult.empty().append('<li class="loading"><i class="icon-spin icon-spinner icon-2x"></i></li>');
             var branch = $('#branch').val();
             if(typeof(branch) == 'undefined') branch = 0;
-            var link = createLink('customer', 'ajaxGetPairs', 'key=' + key);
+            var link = createLink('customer', 'ajaxGetPairs', 'key=' + key + '&relation=' + relation);
             $.getJSON(link, function(result)
             {
                 $searchResult.empty();

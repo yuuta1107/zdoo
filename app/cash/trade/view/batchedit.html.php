@@ -40,7 +40,7 @@
         <?php foreach($trades as $id => $trade):?>
         <tr>
           <td>
-            <?php echo html::input("", zget($lang->trade->typeList, $trade->type), "class='form-control' readonly");?>
+            <?php echo html::input('', zget($lang->trade->typeList, $trade->type), "class='form-control' readonly");?>
             <?php echo html::hidden("type[{$id}]", $trade->type);?>
           </td>
           <td><?php echo html::select("depositor[{$id}]", $depositors, $trade->depositor, "class='form-control' id='depositor{$id}'");?></td>

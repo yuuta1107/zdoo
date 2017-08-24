@@ -39,7 +39,7 @@
               <th><?php echo $lang->contact->customer;?></th>
               <td>
                 <div class='input-group'>
-                  <?php echo html::select('customer', $customers, !empty($customer) ? $customer : '', "class='form-control chosen'");?>
+                  <?php echo html::select('customer', $customers, !empty($customer) ? $customer : '', "class='form-control chosen' data-no_results_text='" . $lang->searchMore . "'");?>
                   <?php echo html::input('name', '', "class='form-control' style='display:none'");?>
                   <span class='input-group-addon'>
                     <label class='checkbox-inline'>
@@ -128,4 +128,7 @@
     <button type='submit' class='btn btn-default' id='continueSubmit'><?php echo $lang->continueSave;?></button>
   </div>
 </div>
+<script>
+<?php helper::import('../js/searchcustomer.js');?>
+</script>
 <?php include '../../common/view/footer.html.php';?>

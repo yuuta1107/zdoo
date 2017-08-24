@@ -50,7 +50,7 @@
           </tr>
           <tr>
             <th><?php echo $lang->trade->depositor;?></th>
-            <td><?php echo zget($depositorList, $trade->depositor, '');?></td>
+            <td><?php echo !empty($depositor->name) ? $depositor->name : '';?></td>
           </tr>
           <tr>
             <th><?php echo $lang->trade->type;?></th>
@@ -58,7 +58,7 @@
           </tr>
           <tr>
             <th><?php echo $lang->trade->trader;?></th>
-            <td title="<?php echo zget($customerList, $trade->trader, '');?>"><?php if($trade->trader) echo zget($customerList, $trade->trader, ' ');?></td>
+            <td title="<?php echo !empty($trader->name) ? $trader->name : '';?>"><?php echo !empty($trader->name) ? $trader->name : '';?></td>
           </tr>
           <tr>
             <th><?php echo $lang->trade->money;?></th>
@@ -72,7 +72,7 @@
           <?php endif;?>
           <tr>
             <th><?php echo $lang->trade->dept;?></th>
-            <td><?php echo zget($deptList, $trade->dept);?></td>
+            <td><?php echo !empty($dept->name) ? $dept->name : '';?></td>
           </tr>
           <tr>
             <th><?php echo $lang->trade->handlers;?></th>
@@ -80,24 +80,24 @@
           </tr>
           <tr>
             <th><?php echo $lang->trade->product;?></th>
-            <td><?php echo zget($productList, $trade->product, ' ');?></td>
+            <td><?php echo !empty($product->name) ? $product->name : '';?></td>
           </tr>
           <?php if($trade->type == 'in' or $trade->type == 'out'):?>
           <tr>
             <th><?php echo $lang->trade->category;?></th>
-            <td><?php echo zget($categories, $trade->category, ' ');?></td>
+            <td><?php echo !empty($category->name) ? $category->name : '';?></td>
           </tr>
           <?php endif;?>
           <?php if($trade->trader and $trade->type == 'out'):?>
           <tr>
-            <th><?php echo isset($customerList[$trade->trader]) ? $lang->trade->customer : $lang->trade->trader;?></th>
-            <td><?php echo isset($customerList[$trade->trader]) ? $customerList[$trade->trader] : zget($traderList, $trade->trader, '');?></td>
+            <th><?php echo (!empty($trader->type) && $trader->type != 'provider') ? $lang->trade->customer : $lang->trade->trader;?></th>
+            <td><?php echo !empty($trader->name) ? $trader->name : '';?></td>
           </tr>
           <?php endif;?>
           <?php if($trade->trader and $trade->type == 'in'):?>
           <tr>
             <th><?php echo $lang->trade->customer;?></th>
-            <td><?php echo zget($customerList, $trade->trader, '');?></td>
+            <td><?php echo !empty($trader->name) ? $trader->name : '';?></td>
           </tr>
           <?php endif;?>
           <?php if($trade->order):?>
@@ -109,7 +109,7 @@
           <?php if($trade->contract):?>
           <tr>
             <th><?php echo $lang->trade->contract;?></th>
-            <td><?php echo zget($contractList, $trade->contract, '');?></td>
+            <td><?php echo !empty($contract->name) ? $contract->name : '';?></td>
           </tr>
           <?php endif;?>
           <tr>

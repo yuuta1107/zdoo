@@ -65,7 +65,7 @@
             </tr>
             <tr>
               <th><?php echo $lang->contact->customer;?></th>
-              <td><?php echo html::select('customer', $customers, $contact->customer, "class='form-control chosen'");?></td>
+              <td><?php echo html::select('customer', $customers, $contact->customer, "class='form-control chosen' data-no_results_text='" . $lang->searchMore . "'");?></td>
             </tr>
             <tr>
               <th><?php echo $lang->resume->dept;?></th>
@@ -114,6 +114,9 @@
     </div>
   </div>
 </form>
+<script>
+<?php helper::import('../js/searchcustomer.js');?>
+</script>
 <?php if(helper::isAjaxRequest()):?>
 <?php include '../../../sys/common/view/footer.modal.html.php';?>
 <?php else:?>

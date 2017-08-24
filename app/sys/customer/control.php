@@ -577,10 +577,11 @@ class customer extends control
      * @access public
      * @return void
      */
-    public function ajaxSearchCustomer($key = '')
+    public function ajaxSearchCustomer($key = '', $relation = '')
     {
-        $this->view->title = $this->lang->customer->search;
-        $this->view->key   = $key;
+        $this->view->title    = $this->lang->customer->search;
+        $this->view->relation = $relation;
+        $this->view->key      = $key;
         $this->display();
     }
 
@@ -593,11 +594,12 @@ class customer extends control
      * @access public
      * @return void
      */
-    public function ajaxGetPairs($key = '', $relation = 'client', $limit = 50)
+    public function ajaxGetPairs($key = '', $relation = '', $limit = 0)
     {
-        $customers = $this->customer->getPairs($relation);
+        $i      = 0;
         $result = array();
-        $i = 0;
+        if(!$limit) $limit = $this->config->searchLimit;
+        $customers = $this->customer->getPairs($relation);
         foreach ($customers as $id => $customer)
         {
             if($limit > 0 && $i > $limit) break;

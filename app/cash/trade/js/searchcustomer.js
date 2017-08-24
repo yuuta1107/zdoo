@@ -10,9 +10,10 @@ $(document).ready(function()
     var showSearchModal = function()
     {
         var objectType = $('[name*=objectType]:checked').val();
-        var e    = objectType !== undefined ? (objectType == 'contract' ? 'allCustomer' : 'customer') : 'trader';
-        var key  = $('#' + e + '_chosen .chosen-results > li.no-results > span').text();
-        var link = createLink('customer', 'searchCustomer', 'key=' + key);
+        var e          = objectType !== undefined ? (objectType == 'contract' ? 'allCustomer' : 'customer') : 'trader';
+        var key        = $('#' + e + '_chosen .chosen-results > li.no-results > span').text();
+        var relation   = v.modeType == 'in' ? 'client' : (v.modeType == 'out' ? (objectType === undefined ? 'provider' : (objectType == 'contract' ? '' : 'client')) : '');
+        var link       = createLink('customer', 'ajaxSearchCustomer', 'key=' + key + '&relation=' + relation);
         $.zui.modalTrigger.show({url : link});
     };
 
@@ -30,9 +31,9 @@ $(document).ready(function()
 
     $(document).on('hide.zui.modal', '#triggerModal', function()
     {
-        var key = '';
+        var key        = '';
         var objectType = $('[name*=objectType]:checked').val();
-        var $trader = objectType !== undefined ? (objectType == 'contract' ? $('#allCustomer') : $('#customer')) : $('#trader');
+        var $trader    = objectType === undefined ? $('#trader') : (objectType == 'contract' ? $('#allCustomer') : $('#customer'));
         if($selectedItem && $selectedItem.length)
         {
             key = $selectedItem.data('key');

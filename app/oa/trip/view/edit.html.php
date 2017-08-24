@@ -23,7 +23,7 @@
       </tr>
       <tr>
         <th><?php echo $lang->$type->customer;?></th>
-        <td><?php echo html::select('customers[]', $customers, $trip->customers, "class='form-contorl chosen' multiple")?></td>
+        <td><?php echo html::select('customers[]', $customers, $trip->customers, "class='form-contorl chosen' multiple data-no_results_text='" . $lang->searchMore . "'")?></td>
         <td></td>
       </tr>
       <tr>
@@ -75,4 +75,7 @@
     </table>
   </form>
 </div>
+<script>
+<?php helper::import('../js/searchcustomer.js');?>
+</script>
 <?php include '../../../sys/common/view/footer.modal.html.php';?>

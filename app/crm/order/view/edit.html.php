@@ -37,7 +37,7 @@
           <table class='table table-info'>
             <tr>
               <th class='w-70px'><?php echo $lang->order->customer;?></th>
-              <td><?php echo html::select('customer', $customers, $order->customer, "class='form-control chosen'");?></td>
+              <td><?php echo html::select('customer', $customers, $order->customer, "class='form-control chosen' data-no_results_text='" . $lang->searchMore . "'");?></td>
             </tr>
             <tr>
               <th><?php echo $lang->order->product;?></th>
@@ -124,4 +124,7 @@
     </div>
   </div>
 </form>
+<script>
+<?php helper::import('../js/searchcustomer.js');?>
+</script>
 <?php include '../../common/view/footer.html.php';?>

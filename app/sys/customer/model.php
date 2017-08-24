@@ -118,10 +118,13 @@ class customerModel extends model
      * 
      * @param  string  $relation
      * @param  bool    $emptyOption 
+     * @param  string  $orderBy
+     * @param  int     $limit
+     * @param  int     $customerID
      * @access public
      * @return array
      */
-    public function getPairs($relation = '', $emptyOption = true, $orderBy = 'id_desc', $limit = 0)
+    public function getPairs($relation = '', $emptyOption = true, $orderBy = 'id_desc', $limit = 0, $customerID = 0)
     {
         $customerList   = array();
         $customerIdList = $this->getCustomersSawByMe();
@@ -134,6 +137,18 @@ class customerModel extends model
                 ->beginIF($relation == 'provider')->andWhere('relation')->ne('client')->fi()
                 ->orderBy($orderBy)
                 ->fetchPairs();
+            if(!$limit) 
+            {
+                if($emptyOption) return array('' => '') + $customers;
+                return $customers;
+            }
+
+            if($customerID)
+            {
+                $idList = explode(',', trim($customerID, ','));
+                foreach($idList as $id) if(isset($customers[$id])) $customerList[$id] = $customers[$id];
+            }
+                
             $i = 0;
             foreach($customers as $id => $name)
             {

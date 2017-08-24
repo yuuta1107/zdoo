@@ -83,7 +83,7 @@ class order extends control
         unset($this->lang->order->menu);
         $products = $this->loadModel('product')->getPairs($status = 'normal');
         $this->view->products     = array( 0 => '') + $products;
-        $this->view->customers    = $this->loadModel('customer')->getPairs('client');
+        $this->view->customers    = $this->loadModel('customer')->getPairs('client', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit);
         $this->view->title        = $this->lang->order->create;
         $this->view->currencyList = $this->loadModel('common', 'sys')->getCurrencyList();
         $this->view->customer     = $customer;
@@ -128,7 +128,7 @@ class order extends control
         $this->view->title        = $this->lang->order->edit;
         $this->view->order        = $order;
         $this->view->products     = $this->loadModel('product')->getPairs();
-        $this->view->customers    = $this->loadModel('customer')->getPairs('client');
+        $this->view->customers    = $this->loadModel('customer')->getPairs('client', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit, $order->customer);
         $this->view->users        = $this->loadModel('user')->getPairs('nodeleted,noforbidden,noclosed');
         $this->view->currencyList = $this->loadModel('common', 'sys')->getCurrencyList();
 

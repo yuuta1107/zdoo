@@ -83,7 +83,7 @@ class contact extends control
         unset($this->lang->contact->menu);
         $this->view->title     = $this->lang->contact->create;
         $this->view->customer  = $customer;
-        $this->view->customers = $this->loadModel('customer')->getPairs('client');
+        $this->view->customers = $this->loadModel('customer')->getPairs('client', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit);
         $this->view->sizeList  = $this->customer->combineSizeList();
         $this->view->levelList = $this->customer->combineLevelList();
         $this->display();
@@ -130,7 +130,7 @@ class contact extends control
         $this->app->loadLang('resume', 'crm');
 
         $this->view->title      = $this->lang->contact->edit;
-        $this->view->customers  = $this->loadModel('customer')->getPairs();
+        $this->view->customers  = $this->loadModel('customer')->getPairs('client', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit, $contact->customer);
         $this->view->contact    = $contact;
         $this->view->modalWidth = 1000;
 

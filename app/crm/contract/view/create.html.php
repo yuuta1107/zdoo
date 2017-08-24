@@ -25,7 +25,7 @@
       <table class='table table-form'>
         <tr>
           <th><?php echo $lang->contract->customer;?></th>
-          <td><?php echo html::select('customer', $customers, isset($customer) ? $customer : '', "class='form-control chosen' onchange='getOrder(this.value)'");?></td>
+          <td><?php echo html::select('customer', $customers, isset($customer) ? $customer : '', "class='form-control chosen' onchange='getOrder(this.value)' data-no_results_text='" . $lang->searchMore . "'");?></td>
         </tr>
         <?php if(isset($currentOrder)):?>
         <tr>

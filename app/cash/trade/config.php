@@ -9,8 +9,6 @@
  * @version     $Id$
  * @link        http://www.ranzhico.com
  */
-$config->trade->customerLimit = 50;
-
 $config->trade->settings = new stdclass();
 $config->trade->settings->trader   = false;
 $config->trade->settings->category = false;

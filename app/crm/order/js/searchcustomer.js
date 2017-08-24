@@ -5,12 +5,12 @@ var selectItem = function(item)
     $('#triggerModal').modal('hide');
 };
 
-$(function()
+$(document).ready(function()
 {
     var showSearchModal = function()
     {
         var key      = $('#customer_chosen .chosen-results > li.no-results > span').text();
-        var relation = 'client';
+        var relation = 'client'
         var link     = createLink('customer', 'ajaxSearchCustomer', 'key=' + key + '&relation=' + relation);
         $.zui.modalTrigger.show({url : link});
     };
@@ -40,24 +40,4 @@ $(function()
         $customer.val(key).change().trigger("chosen:updated");
         $selectedItem = null;
     });
-
-    $('#selectCustomer').change(function()
-    {
-        if($(this).prop('checked'))
-        {
-            $('#customer_chosen').show();
-            $(this).parents('.input-group').find('input[type=text][id=name]').hide();
-
-            $('#customer').trigger("chosen:updated");
-        }
-        else
-        {
-            $(this).parents('.input-group').find('select').hide();
-            $('#customer_chosen').hide();
-            $(this).parents('.input-group').find('input[type=text][id=name]').show();
-
-            $('#customer').trigger("chosen:updated");
-        }
-    });
-    $('#selectCustomer').change();
 })

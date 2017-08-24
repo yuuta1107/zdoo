@@ -151,7 +151,7 @@ class trip extends control
         $this->app->loadModuleConfig('attend');
         $this->view->title     = $this->lang->{$this->type}->create;
         $this->view->type      = $this->type;
-        $this->view->customers = $this->loadModel('customer')->getPairs();
+        $this->view->customers = $this->loadModel('customer')->getPairs('', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit);
         $this->display('trip', 'create');
     }
 
@@ -189,7 +189,7 @@ class trip extends control
         $this->view->title     = $this->lang->{$this->type}->edit;
         $this->view->trip      = $trip;
         $this->view->type      = $this->type;
-        $this->view->customers = $this->loadModel('customer')->getPairs();
+        $this->view->customers = $this->loadModel('customer')->getPairs('', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit, $trip->customers);
         $this->display('trip', 'edit');
     }
 

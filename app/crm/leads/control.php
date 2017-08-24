@@ -261,7 +261,7 @@ class leads extends control
 
         $this->view->title     = $this->lang->confirm . $this->lang->contact->common;
         $this->view->contact   = $this->contact->getByID($contactID, 'wait');
-        $this->view->customers = $this->loadModel('customer')->getPairs('client');
+        $this->view->customers = $this->loadModel('customer')->getPairs('client', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit);
         $this->display();
     }
 

@@ -1,58 +1,5 @@
-//var $selectedItem;
-//var selectItem = function(item)
-//{
-//    $selectedItem = $(item).first();
-//    $('#triggerModal').modal('hide');
-//};
-//
-/**
- * Get contract of a trader. 
- * 
- * @param  int    $traderID 
- * @access public
- * @return void
- */
-function getContract(traderID)
-{
-    if(traderID == '') return false;
-    $('.contractTD select').empty().load(createLink('crm.contract', 'getOptionMenu', 'traderID=' + traderID));
-}
-
 $(document).ready(function()
 {
-//    var showSearchModal = function()
-//    {
-//        var key  = $('#trader_chosen .chosen-results > li.no-results > span').text();
-//        var link = createLink('customer', 'searchCustomer', 'key=' + key);
-//        $.zui.modalTrigger.show({url : link});
-//    };
-//
-//    $(document).on('change', '#trader', function()
-//    {
-//       if($(this).val() === 'showmore')
-//       {
-//            showSearchModal();
-//       }
-//    });
-//
-//    $(document).on('click', '#trader_chosen .chosen-results > li.no-results', showSearchModal);
-//
-//    $(document).on('hide.zui.modal', '#triggerModal', function()
-//    {
-//        var key = '';
-//        var $trader = $('#trader');
-//        if($selectedItem && $selectedItem.length)
-//        {
-//            key = $selectedItem.data('key');
-//            if(!$trader.children('option[value="' + key + '"]').length)
-//            {
-//                $trader.prepend('<option value="' + key + '">' + $selectedItem.text() + '</option>');
-//            }
-//        }
-//        $trader.val(key).trigger("chosen:updated");
-//        $selectedItem = null;
-//    });
-
     $('#menu a[href*=setReportUnit]').attr({'data-toggle' : 'modal', 'data-width' : 400});
 
     $('[name*=objectType]').change(function()
@@ -140,3 +87,16 @@ $(document).ready(function()
 
     $('#customer,#trader').change();
 })
+
+/**
+ * Get contract of a trader. 
+ * 
+ * @param  int    $traderID 
+ * @access public
+ * @return void
+ */
+function getContract(traderID)
+{
+    if(traderID == '') return false;
+    $('.contractTD select').empty().load(createLink('crm.contract', 'getOptionMenu', 'traderID=' + traderID));
+}
