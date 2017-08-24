@@ -28,6 +28,7 @@
 <div class='searchInput '>
   <?php echo html::input('customerSearchInput', $key, "class='form-control' placeholder='{$lang->customer->searchInput}'");?>
   <?php echo html::hidden('relation', $relation);?>
+  <?php echo html::hidden('customers', $customers);?>
   <i class='icon icon-search'></i>
 </div>
 <ul id='searchResult'></ul>

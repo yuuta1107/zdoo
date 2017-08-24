@@ -119,10 +119,11 @@ class trip extends control
     /**
      * create trip.
      * 
+     * @param  string $customers
      * @access public
      * @return void
      */
-    public function create()
+    public function create($customers = '')
     {
         if($_POST)
         {
@@ -148,10 +149,12 @@ class trip extends control
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => inlink('personal')));
         }
 
+        $customers = trim($customers, ',');
         $this->app->loadModuleConfig('attend');
-        $this->view->title     = $this->lang->{$this->type}->create;
-        $this->view->type      = $this->type;
-        $this->view->customers = $this->loadModel('customer')->getPairs('', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit);
+        $this->view->title        = $this->lang->{$this->type}->create;
+        $this->view->type         = $this->type;
+        $this->view->customerList = $this->loadModel('customer')->getPairs('', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit, $customers);
+        $this->view->customers    = $customers;
         $this->display('trip', 'create');
     }
 
@@ -159,10 +162,11 @@ class trip extends control
      * Edit trip.
      * 
      * @param  int    $id 
+     * @param  string $customers
      * @access public
      * @return void
      */
-    public function edit($id)
+    public function edit($id, $customers = '')
     {
         $trip = $this->trip->getById($id);
         /* check privilage. */
@@ -176,7 +180,7 @@ class trip extends control
         if($_POST)
         {
             $result = $this->trip->update($id);
-            if(is_array($result) && $result['result'] == 'fail') $this->send($result);
+            if(!empty($result['result']) && $result['result'] == 'fail') $this->send($result);
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
             if($result)
             {
@@ -186,10 +190,14 @@ class trip extends control
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
         }
 
-        $this->view->title     = $this->lang->{$this->type}->edit;
-        $this->view->trip      = $trip;
-        $this->view->type      = $this->type;
-        $this->view->customers = $this->loadModel('customer')->getPairs('', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit, $trip->customers);
+        $customers = trim($customers, ',');
+        if(!$customers) $customers = $trip->customers;
+
+        $this->view->title        = $this->lang->{$this->type}->edit;
+        $this->view->trip         = $trip;
+        $this->view->type         = $this->type;
+        $this->view->customerList = $this->loadModel('customer')->getPairs('', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit, $customers);
+        $this->view->customers    = $customers;
         $this->display('trip', 'edit');
     }
 

@@ -2,24 +2,27 @@ var $selectedItem;
 var selectItem = function(item)
 {
     $selectedItem = $(item).first();
-    $('#triggerModal').modal('hide');
+    var modal = $('#ajaxModal');
+    var link  = modal.attr('ref') + '&customers=' + $('input[type=hidden][name*=customers]').val() + ',' + $selectedItem.data('key');
+    modal.load(link, function(){$(this).find('.modal-dialog').css('width', $(this).data('width')); $.zui.ajustModalPosition()})
 };
 
 $(document).ready(function()
 {
     var showSearchModal = function()
     {
-        var key  = $('#customers_chosen .chosen-results > li.no-results > span').text();
-        var link = createLink('customer', 'ajaxSearchCustomer', 'key=' + key);
-        $.zui.modalTrigger.show({url : link});
+        var key       = $('#customers_chosen .chosen-results > li.no-results > span').text();
+        var customers = $('[name*=customer]').val().join(',').replace(',showmore', '');
+        var link      = createLink('customer', 'ajaxSearchCustomer', 'key=' + key + '&relation=&customers=' + customers);
+        $('#ajaxModal').load(link);
     };
 
     $(document).on('change', '#customers', function()
     {
-       if($(this).val() === 'showmore')
-       {
-            showSearchModal();
-       }
+        if($.inArray('showmore', $(this).val()) > 0)
+        {
+             showSearchModal();
+        }
     });
 
     $(document).on('click', '#customers_chosen .chosen-results > li.no-results', showSearchModal);

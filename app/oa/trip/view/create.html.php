@@ -23,7 +23,7 @@
       </tr>
       <tr>
         <th><?php echo $lang->$type->customer;?></th>
-        <td><?php echo html::select('customers[]', $customers, '', "class='form-contorl chosen' multiple data-no_results_text='" . $lang->searchMore . "'")?></td>
+        <td><?php echo html::select('customers[]', $customerList, $customers, "class='form-contorl chosen' multiple data-no_results_text='" . $lang->searchMore . "'")?></td>
         <td></td>
       </tr>
       <tr>

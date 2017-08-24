@@ -19,10 +19,10 @@ $(document).ready(function()
 
     $(document).on('change', '#trader, #customer, #allCustomer', function()
     {
-       if($(this).val() === 'showmore')
-       {
-            showSearchModal();
-       }
+        if($(this).val() === 'showmore')
+        {
+             showSearchModal();
+        }
     });
 
     $(document).on('click', '#trader_chosen .chosen-results > li.no-results', showSearchModal);

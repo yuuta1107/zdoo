@@ -244,10 +244,11 @@ class leads extends control
      * Transform contact.
      * 
      * @param  int     $contactID 
+     * @param  int     $customerID
      * @access public
      * @return void
      */
-    public function transform($contactID)
+    public function transform($contactID, $customerID = 0)
     {
         if($_POST)
         {
@@ -259,9 +260,10 @@ class leads extends control
             $this->send(array('result' => 'success', 'message' => $this->lang->importSuccess, 'locate' => $this->server->http_referer));
         }
 
-        $this->view->title     = $this->lang->confirm . $this->lang->contact->common;
-        $this->view->contact   = $this->contact->getByID($contactID, 'wait');
-        $this->view->customers = $this->loadModel('customer')->getPairs('client', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit);
+        $this->view->title      = $this->lang->confirm . $this->lang->contact->common;
+        $this->view->contact    = $this->contact->getByID($contactID, 'wait');
+        $this->view->customers  = $this->loadModel('customer')->getPairs('client', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit, $customerID);
+        $this->view->customerID = $customerID;
         $this->display();
     }
 

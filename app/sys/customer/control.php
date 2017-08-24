@@ -574,14 +574,17 @@ class customer extends control
      * Search customer by ajax.
      * 
      * @param  string $key 
+     * @param  string $relation
+     * @param  string $customers
      * @access public
      * @return void
      */
-    public function ajaxSearchCustomer($key = '', $relation = '')
+    public function ajaxSearchCustomer($key = '', $relation = '', $customers = '')
     {
-        $this->view->title    = $this->lang->customer->search;
-        $this->view->relation = $relation;
-        $this->view->key      = $key;
+        $this->view->title     = $this->lang->customer->search;
+        $this->view->customers = $customers;
+        $this->view->relation  = $relation;
+        $this->view->key       = $key;
         $this->display();
     }
 

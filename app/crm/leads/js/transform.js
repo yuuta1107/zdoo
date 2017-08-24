@@ -2,7 +2,9 @@ var $selectedItem;
 var selectItem = function(item)
 {
     $selectedItem = $(item).first();
-    $('#triggerModal').modal('hide');
+    var modal = $('#ajaxModal');
+    var link  = modal.attr('ref') + '&customerID=' + $selectedItem.data('key');
+    modal.load(link, function(){$(this).find('.modal-dialog').css('width', $(this).data('width')); $.zui.ajustModalPosition()})
 };
 
 $(function()
@@ -12,15 +14,15 @@ $(function()
         var key      = $('#customer_chosen .chosen-results > li.no-results > span').text();
         var relation = 'client';
         var link     = createLink('customer', 'ajaxSearchCustomer', 'key=' + key + '&relation=' + relation);
-        $.zui.modalTrigger.show({url : link});
+        $('#ajaxModal').load(link);
     };
 
     $(document).on('change', '#customer', function()
     {
-       if($(this).val() === 'showmore')
-       {
-            showSearchModal();
-       }
+        if($(this).val() === 'showmore')
+        {
+             showSearchModal();
+        }
     });
 
     $(document).on('click', '#customer_chosen .chosen-results > li.no-results', showSearchModal);

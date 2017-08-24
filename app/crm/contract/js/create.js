@@ -43,10 +43,10 @@ $(document).ready(function()
 
     $(document).on('change', '#customer', function()
     {
-       if($(this).val() === 'showmore')
-       {
-            showSearchModal();
-       }
+        if($(this).val() === 'showmore')
+        {
+             showSearchModal();
+        }
     });
 
     $(document).on('click', '#customer_chosen .chosen-results > li.no-results', showSearchModal);
