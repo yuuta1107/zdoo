@@ -324,10 +324,10 @@ class user extends control
      */
     public function delete($account = '')
     {
-        $inTheReview = $this->user->inTheReviewProcess($account);
-        if($inTheReview !== false) 
+        $result = $this->user->inTheReviewProcess($account);
+        if($result!== false) 
         {
-            $this->send(array('result' => 'fail', 'message' => sprintf($this->lang->user->actionError,$this->lang->user->reviewProcess[$inTheReview])));
+            $this->send(array('result' => 'fail', 'message' => sprintf($this->lang->user->actionError, $result)));
         }
 
         if($this->user->delete($account)) $this->send(array('result' => 'success'));
@@ -409,10 +409,10 @@ class user extends control
     {
         if(!$account) $this->send(array('result'=>'fail', 'message' => $this->lang->user->actionFail));
 
-        $inTheReview = $this->user->inTheReviewProcess($account);
-        if($inTheReview !== false) 
+        $result = $this->user->inTheReviewProcess($account);
+        if($result !== false) 
         {
-            $this->send(array('result' => 'fail', 'message' => sprintf($this->lang->user->actionError,$this->lang->user->reviewProcess[$inTheReview])));
+            $this->send(array('result' => 'fail', 'message' => sprintf($this->lang->user->actionError, $result)));
         }
 
         $result = $this->user->forbid($account);

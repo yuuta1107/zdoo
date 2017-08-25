@@ -93,14 +93,14 @@ $lang->user->lockedForEver = "成员已经被永久禁用。";
 $lang->user->forbidSuccess = '禁用成功';
 $lang->user->actionFail    = '操作失败';
 $lang->user->uploadSuccess = '上传成功';
-$lang->user->actionError   = '操作失败，用户在 %s 审批流程中。';
+$lang->user->actionError   = '操作失败，原因是 %s 存在该用户未审批的数据。';
 
-$lang->user->reviewProcess['attend']     = '考勤';
-$lang->user->reviewProcess['leave']      = '请假';
-$lang->user->reviewProcess['time']       = '加班';
-$lang->user->reviewProcess['compensate'] = '补休';
-$lang->user->reviewProcess['lieu']       = '调休';
-$lang->user->reviewProcess['refund']     = '报销';
+$lang->user->reviewProcess['attend']   = '考勤';
+$lang->user->reviewProcess['leave']    = '请假';
+$lang->user->reviewProcess['makeup']   = '补班';
+$lang->user->reviewProcess['overtime'] = '加班';
+$lang->user->reviewProcess['lieu']     = '调休';
+$lang->user->reviewProcess['refund']   = '报销';
 
 $lang->user->forbidUser = '禁用管理';
 $lang->user->operate    = '操作';
