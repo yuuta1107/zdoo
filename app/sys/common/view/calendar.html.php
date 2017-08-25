@@ -63,7 +63,7 @@ $(function()
         {
             if(event.event.click != undefined)
             {
-                $.zui.modalTrigger.show(event.event.click);
+                $.zui.modalTrigger.show($.extend({backdrop: 'static'},event.event.click));
             }
         }
 

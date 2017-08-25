@@ -12,7 +12,7 @@ $(document).ready(function()
         var key      = $('#customer_chosen .chosen-results > li.no-results > span').text();
         var relation = 'client';
         var link     = createLink('customer', 'ajaxSearchCustomer', 'key=' + key + '&relation=' + relation);
-        $.zui.modalTrigger.show({url : link});
+        $.zui.modalTrigger.show({url: link, backdrop: 'static'});
     };
 
     $(document).on('change', '#customer', function()
@@ -37,7 +37,7 @@ $(document).ready(function()
                 $customer.prepend('<option value="' + key + '">' + $selectedItem.text() + '</option>');
             }
         }
-        $customer.val(key).change().trigger("chosen:updated");
+        $customer.val(key).trigger("chosen:updated");
         $selectedItem = null;
     });
 })

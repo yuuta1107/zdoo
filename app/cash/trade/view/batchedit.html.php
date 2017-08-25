@@ -51,8 +51,8 @@
             <?php if(in_array($trade->type, array_keys($lang->trade->categoryList))) echo html::select("category[$id]", $lang->trade->categoryList, $trade->category, "class='form-control' disabled");?>
           </td>
           <td>
-            <?php if($trade->type == 'in' and !isset($disabledCategories[$trade->category])) echo html::select("trader[{$id}]", $customerList, $trade->trader, "class='form-control chosen'");?>
-            <?php if($trade->type == 'out' and !isset($disabledCategories[$trade->category])) echo html::select("trader[{$id}]", $traderList, $trade->trader, "class='form-control chosen'");?>
+            <?php if($trade->type == 'in' and !isset($disabledCategories[$trade->category])) echo html::select("trader[{$id}]", $customerList, $trade->trader, "class='form-control chosen' data-no_results_text='" . $lang->searchMore . "'");?>
+            <?php if($trade->type == 'out' and !isset($disabledCategories[$trade->category])) echo html::select("trader[{$id}]", $traderList, $trade->trader, "class='form-control chosen' data-no_results_text='" . $lang->searchMore . "'");?>
             <?php if(in_array($trade->type, array_keys($lang->trade->categoryList)) or isset($disabledCategories[$trade->category])) echo html::hidden("trader[$id]", 0);?>
           </td>
           <td><?php echo html::input("money[$id]", $trade->money, "class='form-control' id='money{$id}'");?></td>
@@ -68,4 +68,7 @@
     </table>
   </div>
 </form>
+<script>
+<?php helper::import('../js/batchsearchcustomer.js');?>
+</script>
 <?php include $app->getModuleRoot() . 'common/view/footer.html.php';?>

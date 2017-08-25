@@ -14,7 +14,7 @@ $(document).ready(function()
         var key        = $('#' + e + '_chosen .chosen-results > li.no-results > span').text();
         var relation   = v.modeType == 'in' ? 'client' : (v.modeType == 'out' ? (objectType === undefined ? 'provider' : (objectType == 'contract' ? '' : 'client')) : '');
         var link       = createLink('customer', 'ajaxSearchCustomer', 'key=' + key + '&relation=' + relation);
-        $.zui.modalTrigger.show({url : link});
+        $.zui.modalTrigger.show({url: link, backdrop: 'static'});
     };
 
     $(document).on('change', '#trader, #customer, #allCustomer', function()
@@ -42,7 +42,7 @@ $(document).ready(function()
                 $trader.prepend('<option value="' + key + '">' + $selectedItem.text() + '</option>');
             }
         }
-        $trader.val(key).change().trigger("chosen:updated");
+        $trader.val(key).trigger("chosen:updated");
         $selectedItem = null;
     });
 })

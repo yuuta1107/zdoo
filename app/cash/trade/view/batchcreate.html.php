@@ -66,7 +66,7 @@
           </td>
           <td>
             <div class='input-group out'>
-              <?php echo html::select("outtrader[$i]", $traderList, $trader, "class='form-control chosen' id='trader{$i}'");?>
+              <?php echo html::select("outtrader[$i]", $traderList, $trader, "class='form-control chosen' id='trader{$i}' data-no_results_text='" . $lang->searchMore . "'");?>
               <?php  echo html::input("traderName[$i]", '', "class='form-control' id='traderName{$i}' style='display:none'");?>
               <span class='input-group-addon'>
                 <label class="checkbox-inline">
@@ -74,7 +74,7 @@
                 </label>
               </span>
             </div>
-            <div class='in'><?php echo html::select("intrader[$i]", $customerList, $customer, "class='form-control in chosen' id='trader{$i}' style='display:none'");?></div>
+            <div class='in'><?php echo html::select("intrader[$i]", $customerList, $customer, "class='form-control in chosen' id='trader{$i}' style='display:none' data-no_results_text='" . $lang->searchMore . "'");?></div>
           </td>
           <td><?php echo html::input("money[$i]", '', "class='form-control'");?></td>
           <td><?php echo html::select("dept[$i]", $deptList, $dept, "class='form-control chosen'");?></td>
@@ -89,4 +89,7 @@
     </table>
   </div>
 </form>
+<script>
+<?php helper::import('../js/batchsearchcustomer.js');?>
+</script>
 <?php include $app->getModuleRoot() . 'common/view/footer.html.php';?>

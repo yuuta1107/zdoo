@@ -290,7 +290,7 @@ class trade extends control
         $this->view->depositors    = array('' => '') + $this->loadModel('depositor', 'cash')->getPairs();
         $this->view->users         = $this->loadModel('user')->getPairs('nodeleted,noforbidden,noclosed');
         $this->view->customerList  = $this->loadModel('customer')->getPairs('client', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit);
-        $this->view->traderList    = $this->customer->getPairs('provider', $orderBy = 'id_desc', $limit = $this->config->customerLimit);
+        $this->view->traderList    = $this->customer->getPairs('provider', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit);
         $this->view->expenseTypes  = array('' => '') + $this->loadModel('tree')->getOptionMenu('out', 0, $removeRoot = true);
         $this->view->incomeTypes   = array('' => '') + $this->loadModel('tree')->getOptionMenu('in', 0, $removeRoot = true);
         $this->view->deptList      = $this->loadModel('tree')->getOptionMenu('dept', 0, $removeRoot = true);
@@ -667,13 +667,17 @@ class trade extends control
         }
 
         unset($this->lang->trade->menu);
+        $customerIDList = array();
+        $trades = $this->trade->getByIdList($this->post->tradeIDList);
+        foreach($trades as $trade) $customerIDList[$trade->trader] = $trade->trader;
+        $customerIDList = implode(',', $customerIDList);
 
         $this->view->title              = $this->lang->trade->batchCreate;
-        $this->view->trades             = $this->trade->getByIdList($this->post->tradeIDList);
+        $this->view->trades             = $trades;
         $this->view->depositors         = $this->loadModel('depositor', 'cash')->getPairs();
         $this->view->users              = $this->loadModel('user')->getPairs('nodeleted,noforbidden,noclosed');
-        $this->view->customerList       = $this->loadModel('customer')->getPairs('client', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit);
-        $this->view->traderList         = $this->customer->getPairs('provider', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit);
+        $this->view->customerList       = $this->loadModel('customer')->getPairs('client', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit, $customerIDList);
+        $this->view->traderList         = $this->customer->getPairs('provider', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit, $customerIDList);
         $this->view->expenseTypes       = array('' => '') + $this->loadModel('tree')->getOptionMenu('out', 0, $removeRoot = true);
         $this->view->incomeTypes        = array('' => '') + $this->loadModel('tree')->getOptionMenu('in', 0, $removeRoot = true);
         $this->view->deptList           = $this->loadModel('tree')->getOptionMenu('dept', 0, $removeRoot = true);

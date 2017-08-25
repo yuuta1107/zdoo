@@ -10,3 +10,7 @@
 .chosen-container[id^="handlers"] .chosen-drop {min-width: 200px !important}
 .chosen-container[id^="product"] .chosen-single{width: 104px !important;}
 .chosen-container[id^="product"] .chosen-drop {min-width: 200px !important}
+
+.chosen-container[id^="trader"] .chosen-results > li.no-results {cursor: pointer;}
+.chosen-container[id^="trader"] .chosen-results > li.no-results:hover {color: #1a4f85; background-color: #ddd;}
+.chosen-container[id^="trader"] .chosen-results > li.no-results > span {font-weight: bold;}

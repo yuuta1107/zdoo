@@ -39,7 +39,7 @@ $(document).ready(function()
                 $customer.prepend('<option value="' + key + '">' + $selectedItem.text() + '</option>');
             }
         }
-        $customer.val(key).change().trigger("chosen:updated");
+        $customer.val(key).trigger("chosen:updated");
         $selectedItem = null;
     });
 })

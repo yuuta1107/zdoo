@@ -1,7 +1,7 @@
 /* open view page. */
 function viewTodo(obj)
 {
-    $.zui.modalTrigger.show($(obj).data());
+    $.zui.modalTrigger.show($.extend({backdrop: 'static'}, $(obj).data()));
 }
 
 $(document).ready(function()

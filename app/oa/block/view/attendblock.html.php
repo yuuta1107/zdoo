@@ -140,7 +140,7 @@ $(document).ready(function()
     calendar.find('.event').click(function()
     {
         var todourl = createLink('sys.todo', 'view', "id=" + $(this).data('id'), '', true);
-        $.zui.modalTrigger.show({width: '85%', url: todourl});
+        $.zui.modalTrigger.show({width: '85%', url: todourl, backdrop: 'static'});
         return false;
     });
     /* Add + */
@@ -171,7 +171,7 @@ $(document).ready(function()
             if(day <= 9) day = '0' + day;
             if(month <= 9) month = '0' + month;
             var todourl = createLink('sys.todo', 'batchCreate', "date=" + year + '' + month + '' + day, '', true);
-            $.zui.modalTrigger.show({width: '85%', url: todourl});
+            $.zui.modalTrigger.show({width: '85%', url: todourl, backdrop: 'static'});
         }
         return false;
     });

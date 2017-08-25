@@ -171,18 +171,18 @@ v.settings.clickCell = function(event)
 {
     if(event.view == 'month')
     {
-        var date = event.date;
-        var year   = date.getFullYear();
-        var month  = date.getMonth();
-        var day    = date.getDate();
+        var date  = event.date;
+        var year  = date.getFullYear();
+        var month = date.getMonth();
+        var day   = date.getDate();
         if(year > v.y || (year == v.y && month > v.m) || (year == v.y && month == v.m && day >= v.d))
         {
             month = month + 1;
-            if(day <= 9) day = '0' + day;
+            if(day <= 9)   day   = '0' + day;
             if(month <= 9) month = '0' + month;
             var todourl = createLink('todo', 'batchCreate', "date=" + year + '' + month + '' + day, '', true);
 
-            $.zui.modalTrigger.show({width: '85%', url: todourl});
+            $.zui.modalTrigger.show({width: '85%', url: todourl, backdrop: 'static'});
         }
     }
 };
