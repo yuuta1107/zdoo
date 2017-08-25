@@ -55,7 +55,7 @@
       <tfoot>
         <tr>
           <td></td>
-          <td colspan='5'><?php echo html::submitButton() . html::backButton();?></td>
+          <td colspan='5'><?php echo html::submitButton() . ' ' . html::backButton();?></td>
         </tr>
       </tfoot>
     </table>

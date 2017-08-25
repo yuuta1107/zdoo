@@ -53,7 +53,7 @@ include '../../common/view/header.html.php';
           <td></td>
         </tr>
         </tbody>
-        <tr><th></th><td><?php echo html::submitButton() . html::backButton();?></td><td></td></tr>
+        <tr><th></th><td><?php echo html::submitButton() . ' ' . html::backButton();?></td><td></td></tr>
       </table>
     </form>
   </div>

@@ -75,7 +75,7 @@
         </tr>  
         <tr>
           <th></th>
-          <td colspan='2'><?php echo html::submitButton() . html::backButton() . html::hidden('lib', $libID) . html::hidden('project', $projectID);?></td>
+          <td colspan='2'><?php echo html::submitButton() . ' ' . html::backButton() . html::hidden('lib', $libID) . html::hidden('project', $projectID);?></td>
         </tr>
       </table>
     </form>

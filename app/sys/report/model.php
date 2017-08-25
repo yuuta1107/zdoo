@@ -268,7 +268,9 @@ class reportModel extends model
         $customers = $this->dao->select('id,name')->from(TABLE_CUSTOMER)->where('id')->in($customerTodoPairs)->fetchPairs('id', 'name');
         $orders    = $this->dao->select('o.id, c.name, o.createdDate')->from(TABLE_ORDER)->alias('o')
             ->leftJoin(TABLE_CUSTOMER)->alias('c')->on('o.customer=c.id')
-            ->where('o.id')->in($orderTodoPairs)
+            ->where('o.deleted')->eq(0)
+            ->andWhere('c.deleted')->eq(0)
+            ->andWhere('o.id')->in($orderTodoPairs)
             ->fetchAll('id'); 
 
         /* Set todo name and group them. */
@@ -304,6 +306,7 @@ class reportModel extends model
         $orders = $this->dao->select('o.*, c.name as customerName, c.level as level')->from(TABLE_ORDER)->alias('o')
             ->leftJoin(TABLE_CUSTOMER)->alias('c')->on("o.customer=c.id")
             ->where('o.deleted')->eq(0)
+            ->andWhere('c.deleted')->eq(0)
             ->andWhere("((o.nextDate != '0000-00-00' and o.nextDate < '{$today}' and o.status != 'closed') or o.nextDate = '$today')")
             ->orderBy("o.id")->fetchAll('id');
 
@@ -343,7 +346,8 @@ class reportModel extends model
      */
     public function getUserCustomers()
     {
-        return $this->dao->select('*')->from(TABLE_CUSTOMER)->where('deleted')->eq(0)
+        return $this->dao->select('*')->from(TABLE_CUSTOMER)
+            ->where('deleted')->eq(0)
             ->andWhere('relation')->ne('provider')
             ->andWhere('nextDate')->le(helper::today())->fi()
 			->andWhere('nextDate')->ne('0000-00-00')
@@ -359,7 +363,8 @@ class reportModel extends model
      */
     public function getUserContractCount()
     {
-        return $this->dao->select('signedBy, count(*) as count')->from(TABLE_CONTRACT)->where('deleted')->eq(0)
+        return $this->dao->select('signedBy, count(*) as count')->from(TABLE_CONTRACT)
+            ->where('deleted')->eq(0)
             ->andWhere('signedBy')->ne('')
             ->andWhere('status')->eq('normal')
             ->groupBy('signedBy')

@@ -105,7 +105,7 @@
         </tr>
         <?php endforeach;?>
       </tbody>
-      <tfoot><tr><td colspan='9' class='text-center'><?php echo html::submitButton() . html::backButton();?></td></tr></tfoot>
+      <tfoot><tr><td colspan='9' class='text-center'><?php echo html::submitButton() . ' ' . html::backButton();?></td></tr></tfoot>
     </table>
   </div>
 </form>

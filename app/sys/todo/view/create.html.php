@@ -63,7 +63,7 @@
       <tr>
         <td></td>
         <td colspan='2' class='text-center'>
-          <?php echo html::submitButton() . html::backButton();?>
+          <?php echo html::submitButton() . ' ' . html::backButton();?>
         </td>
       </tr>
     </table>

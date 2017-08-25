@@ -66,7 +66,7 @@
         </div>
       </div>
       <?php echo $this->fetch('action', 'history', "objectType=doc&objectID={$doc->id}");?>
-      <div class='page-actions'><?php echo html::submitButton() . html::backButton() .html::hidden('lib', $doc->lib);?></div>
+      <div class='page-actions'><?php echo html::submitButton() . ' ' . html::backButton() .html::hidden('lib', $doc->lib);?></div>
     </div>
     <div class='col-md-4'>
       <div class='panel'>

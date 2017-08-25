@@ -85,7 +85,7 @@
         </tr>
         <?php endfor;?>
       </tbody>
-      <tr><td colspan='10' class='text-center'><?php echo html::submitButton() . html::backButton();?></td></tr>
+      <tr><td colspan='10' class='text-center'><?php echo html::submitButton() . ' ' . html::backButton();?></td></tr>
     </table>
   </div>
 </form>

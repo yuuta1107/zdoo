@@ -41,7 +41,7 @@
       </div>
       <?php echo $this->fetch('action', 'history', "objectType=contact&objectID={$contact->id}")?>
       <div class='page-actions'>
-        <?php echo html::submitButton() . html::backButton();?>
+        <?php echo html::submitButton() . ' ' . html::backButton();?>
       </div>
     </div>
     <div class='col-side'>

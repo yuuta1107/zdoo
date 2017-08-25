@@ -91,7 +91,7 @@
       </div>
     </div>
     <?php echo $this->fetch('action', 'history', "objectType=contract&objectID={$contract->id}")?>
-    <div class='page-actions'><?php echo html::submitButton() . html::backButton();?></div>
+    <div class='page-actions'><?php echo html::submitButton() . ' ' . html::backButton();?></div>
   </div>
   <div class='col-side'>
     <div class='panel'>
