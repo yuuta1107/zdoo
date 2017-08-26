@@ -43,12 +43,23 @@ class contact extends control
         $this->session->set('customerList', $this->app->getURI(true));
         $this->app->user->canEditContactIdList = ',' . implode(',', $this->contact->getContactsSawByMe('edit', array_keys($contacts))) . ',';
 
-        $customers = $this->loadModel('customer')->getPairs();
-
         /* Build search form. */
+        $traders = '';
+        if($this->session->contactForm)
+        {
+            foreach($this->session->contactForm as $formKey => $formValue)
+            {
+                if(strpos($formKey, 'field') !== false and $formValue == 't1.customer')
+                {
+                    $fieldNO  = substr($formKey, 5);
+                    $traderID = $this->session->contactForm["value{$fieldNO}"];
+                    $traders .= $traderID . ',';
+                }
+            }
+        }
         $this->loadModel('search', 'sys');
         $this->config->contact->search['actionURL'] = $this->createLink('contact', 'browse', 'mode=bysearch');
-        $this->config->contact->search['params']['t2.customer']['values'] = $customers;
+        $this->config->contact->search['params']['t2.customer']['values'] = $this->loadModel('customer')->getPairs('', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit, $traders);
         $this->search->setSearchParams($this->config->contact->search);
 
         $this->app->loadLang('resume', 'crm');
@@ -58,7 +69,7 @@ class contact extends control
         $this->view->status    = $status;
         $this->view->origin    = $origin;
         $this->view->contacts  = $contacts;
-        $this->view->customers = $customers;
+        $this->view->customers = $this->loadModel('customer')->getPairs();
         $this->view->pager     = $pager;
         $this->view->orderBy   = $orderBy;
         $this->display();

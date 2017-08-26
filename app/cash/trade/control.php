@@ -52,7 +52,7 @@ class trade extends control
         $this->config->trade->search['params']['depositor']['values'] = array('' => '') + $this->loadModel('depositor', 'cash')->getPairs();
         $this->config->trade->search['params']['product']['values']   = array('' => '') + $this->loadModel('product')->getPairs();
 
-        $traders = array('' => '');
+        $traders = '';
         if($this->session->tradeForm)
         {
             foreach($this->session->tradeForm as $formKey => $formValue)
@@ -61,16 +61,11 @@ class trade extends control
                 {
                     $fieldNO  = substr($formKey, 5);
                     $traderID = $this->session->tradeForm["value{$fieldNO}"];
-                    if($traderID)
-                    {
-                        $trader = $this->loadModel('customer')->getByID($traderID);
-                        $traders[$traderID] = $trader->name;
-                    }
-                    break;
+                    $traders .= $traderID . ',';
                 }
             }
         }
-        $this->config->trade->search['params']['trader']['values'] = $traders;
+        $this->config->trade->search['params']['trader']['values'] = $this->loadModel('customer')->getPairs('', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit, $traders);
 
         $incomeCategories  = $this->loadModel('tree')->getOptionMenu('in', 0, $removeRoot = true);
         $expenseCategories = $this->tree->getOptionMenu('out', 0, $removeRoot = true);

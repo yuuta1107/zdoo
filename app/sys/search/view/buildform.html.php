@@ -332,6 +332,116 @@ function deleteQuery()
     if(!queryID) return;
     hiddenwin.location.href = createLink('search', 'deleteQuery', 'queryID=' + queryID);
 }
+
+var $selectedItem;
+var selectItem = function(item)
+{
+    $selectedItem = $(item).first();
+    $('#triggerModal').modal('hide');
+};
+
+var relation = '';
+var trader   = 'customer';
+
+$(document).ready(function()
+{
+    switch (config.currentModule)
+    {
+    case 'contact' :
+        relation = 'client';
+        trader   = 't1.customer';
+        break;
+    case 'feedback' :
+        relation = 'client'; 
+        trader   = 'customer';
+        break;
+    case 'order' :
+        relation = 'client'; 
+        trader   = 'o.customer';
+        break;
+    case 'trade' :
+        relation = v.modeType == 'in' ? 'client' : '';
+        trader   = 'trader';
+        break;
+    }
+
+    var showSearchModal = function(e)
+    {
+        $('#searchform td[id^=valueBox] .selected').removeClass('selected');
+        if(e.hasClass('no-results')) 
+        { 
+            var key = e.parents('.chosen-container').find('.chosen-results > li.no-results > span').text();
+            e.parents('.chosen-container').prev('select').addClass('selected');
+        }
+        else
+        {
+            var key = e.next('.chosen-container').find('.chosen-results > li.no-results > span').text();
+            e.addClass('selected');
+        }
+        var link     = createLink('customer', 'ajaxSearchCustomer', 'key=' + key + '&relation=' + relation);
+        $.zui.modalTrigger.show({url: link, backdrop: 'static'});
+    };
+
+    $(document).on('change', '#searchform td[id^=valueBox] select[id^=value]', function()
+    {
+        if($(this).closest('tr').find('select[id^=field]').val() == trader)
+        {
+            if($(this).val() === 'showmore')
+            {
+                 showSearchModal($(this));
+            }
+        }
+    });
+
+    $(document).on('click', '#searchform td[id^=valueBox] .chosen-container[id^=value] .chosen-results > li.no-results', function()
+    {
+        if($(this).closest('tr').find('select[id^=field]').val() == trader) showSearchModal($(this));
+    });
+
+    $(document).on('hide.zui.modal', '#triggerModal', function()
+    {
+        var key     = '';
+        var $trader = $('#searchform td[id^=valueBox] .selected'); 
+        if($selectedItem && $selectedItem.length)
+        {
+            key = $selectedItem.data('key');
+            if(!$trader.children('option[value="' + key + '"]').length)
+            {
+                $trader.prepend('<option value="' + key + '">' + $selectedItem.text() + '</option>');
+            }
+
+            $('#searchform td[id^=valueBox] select[id^=value]').each(function()
+            {
+                if($(this).closest('tr').find('select[id^=field]').val() == trader)
+                {
+                    if(!$(this).children('option[value="' + key + '"]').length)
+                    {
+                        $(this).prepend('<option value="' + key + '">' + $selectedItem.text() + '</option>');
+                        $(this).trigger('chosen:updated');
+                    }
+                }
+            });
+
+            if(trader.indexOf('.') === -1)
+            {
+                if(!$('#querybox [id^=box' + trader + '] #' + trader).children('option[value="' + key + '"]').length)
+                {
+                    $('#querybox [id^=box' + trader + '] #' + trader).prepend('<option value="' + key + '">' + $selectedItem.text() + '</option>');
+                }
+            }
+            else
+            {
+                var subTrader = trader.substr(trader.indexOf('.') + 1);
+                if(!$('#querybox [id^=box][id*=' + subTrader + '] [id*=' + subTrader +']').children('option[value="' + key + '"]').length)
+                {
+                    $('#querybox [id^=box][id*=' + subTrader + '] [id*=' + subTrader +']').prepend('<option value="' + key + '">' + $selectedItem.text() + '</option>');
+                }
+            }
+        }
+        $trader.val(key).trigger('chosen:updated');
+        $selectedItem = null;
+    });
+});
 </script>
 
 <div class='hidden'>

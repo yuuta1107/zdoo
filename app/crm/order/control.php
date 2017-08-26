@@ -46,9 +46,22 @@ class order extends control
         $this->app->user->canEditOrderIdList = ',' . implode(',', $this->order->getOrdersSawByMe('edit', array_keys($orders))) . ',';
 
         /* Build search form. */
+        $traders = '';
+        if($this->session->orderForm)
+        {
+            foreach($this->session->orderForm as $formKey => $formValue)
+            {
+                if(strpos($formKey, 'field') !== false and $formValue == 'o.customer')
+                {
+                    $fieldNO  = substr($formKey, 5);
+                    $traderID = $this->session->orderForm["value{$fieldNO}"];
+                    $traders .= $traderID . ',';
+                }
+            }
+        }
         $this->loadModel('search', 'sys');
         $this->config->order->search['actionURL'] = inlink('browse', 'mode=bysearch');
-        $this->config->order->search['params']['o.customer']['values'] = $this->loadModel('customer')->getPairs('client', true);
+        $this->config->order->search['params']['o.customer']['values'] = $this->loadModel('customer')->getPairs('client', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit, $traders);
         $this->config->order->search['params']['o.product']['values']  = array('' => '') + $this->loadModel('product')->getPairs();
         $this->search->setSearchParams($this->config->order->search);
 
