@@ -14,7 +14,7 @@
 <?php include '../../../sys/common/view/kindeditor.html.php';?>
 <?php include '../../../sys/common/view/datepicker.html.php';?>
 <?php include '../../../sys/common/view/chosen.html.php';?>
-<form method='post' id='ajaxForm' action='<?php echo inlink('create')?>' class='form'>
+<form method='post' id='ajaxForm' action='<?php echo inlink('create')?>'>
   <table class='table-form'>
     <tr>
       <th class='w-70px'><?php echo $lang->project->name;?></th>
