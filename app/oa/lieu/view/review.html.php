@@ -17,10 +17,12 @@
     <tr>
       <th class='w-80px text-middle'><?php echo $lang->lieu->rejectReason;?></th>
       <td><?php echo html::textarea("comment", '', "class='form-control'");?></td>
+      <td></td>
     </tr>
     <tr>
       <th></th>
       <td><?php echo html::submitButton();?></td>
+      <td></td>
     </tr>
   </table>
 </form>

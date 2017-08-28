@@ -51,6 +51,11 @@ $(document).ready(function()
         return false;
     });
 
+    $('.batchPass').on('click', function()
+    {
+        $('#ajaxForm').submit();
+    });
+
     /* expand active tree. */
     $('.tree li.active .hitarea').click();
 });
