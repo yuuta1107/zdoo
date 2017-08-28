@@ -69,7 +69,7 @@ class lieu extends control
     public function browse($type = 'personal', $date = '', $orderBy = 'id_desc')
     {
         /* If type is browseReview, display all lieus wait to review. */
-        if($type == 'browseRview')
+        if($type == 'browseReview')
         {
             $date         = '';
             $currentYear  = ''; 
