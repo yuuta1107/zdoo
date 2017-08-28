@@ -348,7 +348,7 @@ class lieu extends control
             $actionID = $this->loadModel('action')->create('lieu', $id, 'reviewed', '', $this->lang->lieu->statusList[$status]);
             $this->sendmail($id, $actionID);
 
-            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess));
+            $this->send(array('result' => 'success'));
         }
         
         if($status == 'reject')

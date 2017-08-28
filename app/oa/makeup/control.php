@@ -190,7 +190,7 @@ class makeup extends control
             $actionID = $this->loadModel('action')->create('makeup', $id, 'reviewed', '', $this->lang->makeup->statusList[$status]);
             $this->sendmail($id, $actionID);
 
-            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess));
+            $this->send(array('result' => 'success'));
         }
         if($status == 'reject')
         {

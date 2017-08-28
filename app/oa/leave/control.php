@@ -217,7 +217,7 @@ class leave extends control
                 $actionID = $this->loadModel('action')->create('leave', $id, 'reviewed', '', $this->lang->leave->statusList[$status]);
                 $this->sendmail($id, $actionID);
             }
-            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess));
+            $this->send(array('result' => 'success'));
         }
         if($status == 'reject')
         {
