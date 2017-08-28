@@ -32,7 +32,7 @@ class leaveModel extends model
      */
     public function getByIdList($idList)
     {
-        return $this->dao->select('*')->from(TABLE_LEAVE)->where('id')->in($idList)->fetchAll();
+        return $this->dao->select('*')->from(TABLE_LEAVE)->where('id')->in($idList)->fetchAll('id');
     }
 
     /**

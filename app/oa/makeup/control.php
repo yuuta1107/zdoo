@@ -227,7 +227,7 @@ class makeup extends control
         if(!$this->post->makeupIDList) $this->send(array('result' => 'fail', 'message' => $this->lang->makeup->nodata));
 
         /* Check privilage. */
-        $canReview      = false;
+        $canReview    = false;
         $makeupIDList = $this->post->makeupIDList;
         if($this->app->user->admin == 'super')
         {
@@ -249,7 +249,7 @@ class makeup extends control
                     ->andWhere('t3.type')->eq('dept')
                     ->andWhere('t3.moderators')->eq(",{$this->app->user->account},")
                     ->fetchPairs();
-                if(!$makeupIDList) $canReview = false;
+                if($makeupIDList) $canReview = true;
             }
         }
 

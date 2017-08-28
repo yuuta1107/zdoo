@@ -155,7 +155,7 @@
       <div class='table-footer'>
         <div class='pull-left'>
           <?php echo html::selectButton();?>
-          <?php echo html::submitButton($lang->leave->batchReview);?> 
+          <?php echo html::submitButton($lang->leave->batchPass);?> 
         </div>
       </div>
       <?php endif;?>

@@ -386,7 +386,7 @@ class lieu extends control
         if(!$this->post->lieuIDList) $this->send(array('result' => 'fail', 'message' => $this->lang->lieu->nodata));
 
         /* Check privilage. */
-        $canReview      = false;
+        $canReview  = false;
         $lieuIDList = $this->post->lieuIDList;
         if($this->app->user->admin == 'super')
         {
@@ -408,7 +408,7 @@ class lieu extends control
                     ->andWhere('t3.type')->eq('dept')
                     ->andWhere('t3.moderators')->eq(",{$this->app->user->account},")
                     ->fetchPairs();
-                if(!$lieuIDList) $canReview = false;
+                if($lieuIDList) $canReview = true;
             }
         }
 
