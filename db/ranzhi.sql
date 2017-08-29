@@ -590,6 +590,7 @@ CREATE TABLE IF NOT EXISTS `cash_trade` (
   `dept` mediumint(8) unsigned NOT NULL,
   `type` enum('in', 'out', 'transferin', 'transferout', 'invest', 'redeem', 'loan', 'repay') NOT NULL,
   `money` decimal(12,2) NOT NULL,
+  `exchangeRate` decimal(12,4) NOT NULL,
   `currency` varchar(30) NOT NULL,
   `date` date NOT NULL,
   `handlers` varchar(255) NOT NULL,
