@@ -94,6 +94,7 @@ $lang->user->forbidSuccess = '禁用成功';
 $lang->user->actionFail    = '操作失败';
 $lang->user->uploadSuccess = '上传成功';
 $lang->user->actionError   = '操作失败，原因是 %s 存在该用户未审批的数据。';
+$lang->user->retainAccount = '不能使用 <strong>%s</strong> 作为用户名。';
 
 $lang->user->reviewProcess['attend']   = '考勤';
 $lang->user->reviewProcess['leave']    = '请假';

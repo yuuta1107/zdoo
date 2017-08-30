@@ -94,6 +94,7 @@ $lang->user->forbidSuccess = 'Forbidden.';
 $lang->user->actionFail    = 'Failed.';
 $lang->user->uploadSuccess = 'Successfully uploaded.';
 $lang->user->actionError   = 'Error, there are records created by this user.';
+$lang->user->retainAccount = 'Can not set <strong>%s</strong> as an account.';
 
 $lang->user->reviewProcess['attend']   = 'Attend';
 $lang->user->reviewProcess['leave']    = 'Leave';
@@ -176,11 +177,8 @@ div{padding-left:30px;}
 <body>
 <div style='padding-top:20px;height:60px;background:#fafafa;border-bottom:1px solid #ddd;font-size:18px;font-weight:bold'> 密码修改 </div>
 <div style='margin-top:20px;'>
-<p>
-Hello, %s 
-<br>
-Please click the link to change your password:
-<br>
+<p>Hello, %s <br />
+Please click the link to change your password: <br />
 <a href='%s' target='_blank'>%s</a>
 </p>
 <p>Reset Key: %s</p>

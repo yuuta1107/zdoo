@@ -143,7 +143,7 @@ class user extends control
         /* Save sign out info. */
         if(commonModel::isAvailable('attend') and isset($this->config->attend->mustSignOut) and $this->config->attend->mustSignOut == 'no') $this->loadModel('attend', 'oa')->signOut();
 
-        if(!empty($this->app->user->id)) $this->loadModel('action')->create('user', $this->app->user->id, 'logout');
+        if($this->app->user->account == 'guest') $this->loadModel('action')->create('user', $this->app->user->id, 'logout');
 
         session_destroy();
         setcookie('keepLogin', 'false', $this->config->cookieLife, $this->config->webRoot);
@@ -258,6 +258,8 @@ class user extends control
     {                          
         if(!empty($_POST))     
         {   
+            if(in_array(trim($this->post->account), $this->config->user->retainAccount)) $this->send(array('result' => 'fail', 'message' => array('account' => sprintf($this->lang->user->retainAccount, trim($this->post->account)))));
+
             $this->user->create();          
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError())); 
             /* Go to the referer. */        
