@@ -654,6 +654,7 @@ class attend extends control
             /* Trips don't record hours, need to compute it. */
             foreach($trips as $trip)
             {
+                if(!isset($stat[$trip->createdBy])) continue;
                 /* If start time is less than sign in limit, start from sign in limit. */
                 if($trip->start < $this->config->attend->signInLimit)  $trip->start  = $this->config->attend->signInLimit;
                 /* If start time is greater than sign out limit, start from the next day. */
@@ -709,6 +710,7 @@ class attend extends control
             /* Leave's start and finish time has been checked when create or edit. */
             foreach($leaves as $leave)
             {
+                if(!isset($stat[$leave->createdBy])) continue;
                 $leaveDays = round($leave->hours / $workingHours, 2);
                 if(strpos('affairs,sick', $leave->type) !== false)
                 {
@@ -733,6 +735,7 @@ class attend extends control
             /* Makeup should be seemed as a normal working day. */
             foreach($makeups as $makeup)
             {
+                if(!isset($stat[$makeup->createdBy])) continue;
                 if($makeup->type == 'compensate') 
                 {
                     $stat[$makeup->createdBy]->normal += round($makeup->hours / $workingHours, 2);
@@ -744,6 +747,7 @@ class attend extends control
             /* Overtime don't need to update absentDates. */
             foreach($overtimes as $overtime)
             {
+                if(!isset($stat[$overtime->createdBy])) continue;
                 $hasLieu = false;
                 foreach($allLieus as $lieu)
                 {
@@ -776,6 +780,7 @@ class attend extends control
 
             foreach($lieus as $lieu)
             {
+                if(!isset($stat[$lieu->createdBy])) continue;
                 $lieuDays = round($lieu->hours / $workingHours, 2);
                 $stat[$lieu->createdBy]->lieu   += $lieuDays;
 
