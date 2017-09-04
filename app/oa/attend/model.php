@@ -880,7 +880,7 @@ EOT;
      */
     public function isRestDay($date)
     {
-        if($this->loadModel('holiday')->isHoliday($date)) return true;
+        if($this->loadModel('holiday', 'oa')->isHoliday($date)) return true;
         if($this->isWeekend($date))
         {
             if($this->holiday->isWorkingDay($date)) return false;

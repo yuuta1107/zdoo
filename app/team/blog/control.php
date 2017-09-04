@@ -11,9 +11,9 @@
  */
 class blog extends control
 {
-    public function __CONSTRUCT()
+    public function __construct($moduleName = '', $methodName = '', $appName = '')
     {
-        parent::__CONSTRUCT();
+        parent::__construct($moduleName, $methodName, $appName);
 
         $this->app->loadClass('pager', $static = true);
         $pager = new pager(0, 8, 1);

@@ -11,9 +11,9 @@
  */
 class trip extends control
 {
-    public function __construct()
+    public function __construct($moduleName = '', $methodName = '', $appName = '')
     {
-        parent::__construct();
+        parent::__construct($moduleName, $methodName, $appName);
         $this->type = 'trip';
     }
 

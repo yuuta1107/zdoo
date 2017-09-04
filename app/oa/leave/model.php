@@ -11,9 +11,9 @@
  */
 class leaveModel extends model
 {
-    public function __construct()
+    public function __construct($appName = '')
     {
-        parent::__construct();
+        parent::__construct($appName);
         $this->app->loadModuleConfig('attend', 'oa');
     }
 

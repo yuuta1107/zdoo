@@ -139,7 +139,7 @@ class user extends control
      */
     public function logout($referer = 0)
     {
-        $this->app->loadModuleConfig('attend');
+        $this->app->loadModuleConfig('attend', 'oa');
         /* Save sign out info. */
         if(commonModel::isAvailable('attend') and isset($this->config->attend->mustSignOut) and $this->config->attend->mustSignOut == 'no') $this->loadModel('attend', 'oa')->signOut();
 

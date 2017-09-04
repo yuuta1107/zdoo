@@ -11,15 +11,9 @@
  */
 class index extends control
 {
-    /**
-     * The construct method.
-     * 
-     * @access public
-     * @return void
-     */
-    public function __construct()
+    public function __construct($moduleName = '', $methodName = '', $appName = '')
     {
-        parent::__construct();
+        parent::__construct($moduleName, $methodName, $appName);
     }
 
     /**
