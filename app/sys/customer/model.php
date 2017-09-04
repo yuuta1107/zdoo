@@ -45,8 +45,9 @@ class customerModel extends model
         $customerList = $this->dao->select('id')->from(TABLE_CUSTOMER)
             ->where('deleted')->eq(0)
             ->beginIF(!isset($this->app->user->rights['crm']['manageall']) and ($this->app->user->admin != 'super'))
-            ->andWhere('assignedTo')->in($accountsSawByMe)
+            ->andWhere('assignedTo', true)->in($accountsSawByMe)
             ->orWhere('public')->eq('1')
+            ->markRight(1)
             ->fi()
             ->fetchPairs();
 
