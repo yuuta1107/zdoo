@@ -11,6 +11,12 @@
  */
 class makeupModel extends model
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->app->loadModuleConfig('attend', 'oa');
+    }
+
     /**
      * Get a makeup by id. 
      * 
@@ -104,7 +110,6 @@ class makeupModel extends model
      */
     public function getReviewedBy()
     {
-        $this->app->loadModuleConfig('attend');
         return !isset($this->config->makeup->reviewedBy) ? (!isset($this->config->attend->reviewedBy) ? '' : $this->config->attend->reviewedBy) : $this->config->makeup->reviewedBy;
     }
 

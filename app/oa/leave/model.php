@@ -11,6 +11,12 @@
  */
 class leaveModel extends model
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->app->loadModuleConfig('attend', 'oa');
+    }
+
     /**
      * Get a leave by id. 
      * 
@@ -144,7 +150,6 @@ class leaveModel extends model
      */
     public function getReviewedBy()
     {
-        $this->app->loadModuleConfig('attend');
         return !isset($this->config->leave->reviewedBy) ? (!isset($this->config->attend->reviewedBy) ? '' : $this->config->attend->reviewedBy) : $this->config->leave->reviewedBy;
     }
 

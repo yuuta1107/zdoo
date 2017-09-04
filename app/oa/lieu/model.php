@@ -11,6 +11,12 @@
  */
 class lieuModel extends model
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->app->loadModuleConfig('attend', 'oa');
+    }
+
     /**
      * Get lieu By id. 
      * 
@@ -100,7 +106,6 @@ class lieuModel extends model
      */
     public function getReviewedBy()
     {
-        $this->app->loadModuleConfig('attend');
         return !isset($this->config->lieu->reviewedBy) ? (!isset($this->config->attend->reviewedBy) ? '' : $this->config->attend->reviewedBy) : $this->config->lieu->reviewedBy;
     }
 

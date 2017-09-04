@@ -150,7 +150,7 @@ class trip extends control
         }
 
         $customers = trim($customers, ',');
-        $this->app->loadModuleConfig('attend');
+        $this->app->loadModuleConfig('attend', 'oa');
         $this->view->title        = $this->lang->{$this->type}->create;
         $this->view->type         = $this->type;
         $this->view->customerList = $this->loadModel('customer')->getPairs('', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit, $customers);
