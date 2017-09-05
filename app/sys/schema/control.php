@@ -11,9 +11,9 @@
  */
 class schema extends control
 {
-    public function __construct()
+    public function __construct($moduleName = '', $methodName = '', $appName = '')
     {
-        parent::__construct();
+        parent::__construct($moduleName, $methodName, $appName);
 
         $this->lang->schema->menu = $this->lang->setting->menu;
         $this->lang->menuGroups->schema = 'setting';

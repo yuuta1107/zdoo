@@ -12,9 +12,9 @@
 include '../trip/control.php';
 class egress extends trip 
 {
-    public function __construct()
+    public function __construct($moduleName = '', $methodName = '', $appName = '')
     {
-        parent::__construct();
+        parent::__construct($moduleName, $methodName, $appName);
         $this->loadModel('trip');
         $this->type = 'egress';
     }

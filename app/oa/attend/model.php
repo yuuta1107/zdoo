@@ -565,6 +565,8 @@ EOT;
     public function signOut($account = '', $date = '')
     {
         if(!$this->checkIP()) return false;
+        /* If current user is guest return true. */
+        if($this->app->user->account == 'guest') return true;
         if($account == '') $account = $this->app->user->account;
         if($date == '')    $date    = date('Y-m-d');
 
@@ -878,7 +880,7 @@ EOT;
      */
     public function isRestDay($date)
     {
-        if($this->loadModel('holiday')->isHoliday($date)) return true;
+        if($this->loadModel('holiday', 'oa')->isHoliday($date)) return true;
         if($this->isWeekend($date))
         {
             if($this->holiday->isWorkingDay($date)) return false;

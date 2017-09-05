@@ -69,7 +69,7 @@ class lieu extends control
     public function browse($type = 'personal', $date = '', $orderBy = 'id_desc')
     {
         /* If type is browseReview, display all lieus wait to review. */
-        if($type == 'browseRview')
+        if($type == 'browseReview')
         {
             $date         = '';
             $currentYear  = ''; 
@@ -348,7 +348,7 @@ class lieu extends control
             $actionID = $this->loadModel('action')->create('lieu', $id, 'reviewed', '', $this->lang->lieu->statusList[$status]);
             $this->sendmail($id, $actionID);
 
-            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess));
+            $this->send(array('result' => 'success'));
         }
         
         if($status == 'reject')
@@ -386,7 +386,7 @@ class lieu extends control
         if(!$this->post->lieuIDList) $this->send(array('result' => 'fail', 'message' => $this->lang->lieu->nodata));
 
         /* Check privilage. */
-        $canReview      = false;
+        $canReview  = false;
         $lieuIDList = $this->post->lieuIDList;
         if($this->app->user->admin == 'super')
         {
@@ -408,7 +408,7 @@ class lieu extends control
                     ->andWhere('t3.type')->eq('dept')
                     ->andWhere('t3.moderators')->eq(",{$this->app->user->account},")
                     ->fetchPairs();
-                if(!$lieuIDList) $canReview = false;
+                if($lieuIDList) $canReview = true;
             }
         }
 

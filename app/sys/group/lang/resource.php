@@ -508,54 +508,62 @@ $lang->resource->leave = new stdclass();
 $lang->resource->leave->browseReview = 'browseReview';
 $lang->resource->leave->company      = 'company';
 $lang->resource->leave->review       = 'review';
+$lang->resource->leave->batchReview  = 'batchReview';
 $lang->resource->leave->export       = 'export';
 $lang->resource->leave->setReviewer  = 'setReviewer';
 
 $lang->leave->methodOrder[0]  = 'browseReview';
 $lang->leave->methodOrder[5]  = 'company';
 $lang->leave->methodOrder[10] = 'review';
-$lang->leave->methodOrder[15] = 'export';
-$lang->leave->methodOrder[20] = 'setReviewer';
+$lang->leave->methodOrder[15] = 'batchReview';
+$lang->leave->methodOrder[20] = 'export';
+$lang->leave->methodOrder[25] = 'setReviewer';
 
 /* Overtime */
 $lang->resource->makeup = new stdclass();
 $lang->resource->makeup->browseReview = 'browseReview';
 $lang->resource->makeup->company      = 'company';
 $lang->resource->makeup->review       = 'review';
+$lang->resource->makeup->batchReview  = 'batchReview';
 $lang->resource->makeup->export       = 'export';
 $lang->resource->makeup->setReviewer  = 'setReviewer';
 
 $lang->makeup->methodOrder[0]  = 'browseReview';
 $lang->makeup->methodOrder[5]  = 'company';
 $lang->makeup->methodOrder[10] = 'review';
-$lang->makeup->methodOrder[15] = 'export';
-$lang->makeup->methodOrder[15] = 'setReviewer';
+$lang->makeup->methodOrder[15] = 'batchReview';
+$lang->makeup->methodOrder[20] = 'export';
+$lang->makeup->methodOrder[25] = 'setReviewer';
 
 /* Overtime */
 $lang->resource->overtime = new stdclass();
 $lang->resource->overtime->browseReview = 'browseReview';
 $lang->resource->overtime->company      = 'company';
 $lang->resource->overtime->review       = 'review';
+$lang->resource->overtime->batchReview  = 'batchReview';
 $lang->resource->overtime->export       = 'export';
 $lang->resource->overtime->setReviewer  = 'setReviewer';
 
 $lang->overtime->methodOrder[0]  = 'browseReview';
 $lang->overtime->methodOrder[5]  = 'company';
 $lang->overtime->methodOrder[10] = 'review';
-$lang->overtime->methodOrder[15] = 'export';
-$lang->overtime->methodOrder[20] = 'setReviewer';
+$lang->overtime->methodOrder[15] = 'batchReview';
+$lang->overtime->methodOrder[20] = 'export';
+$lang->overtime->methodOrder[25] = 'setReviewer';
 
 /* Lieu */
 $lang->resource->lieu = new stdclass();
 $lang->resource->lieu->browseReview = 'browseReview';
 $lang->resource->lieu->company      = 'company';
 $lang->resource->lieu->review       = 'review';
+$lang->resource->lieu->batchReview  = 'batchReview';
 $lang->resource->lieu->setReviewer  = 'setReviewer';
 
 $lang->lieu->methodOrder[0]  = 'browseReview';
 $lang->lieu->methodOrder[5]  = 'company';
 $lang->lieu->methodOrder[10] = 'review';
-$lang->lieu->methodOrder[15] = 'setReviewer';
+$lang->lieu->methodOrder[15] = 'batchReview';
+$lang->lieu->methodOrder[20] = 'setReviewer';
 
 /* Trip */
 $lang->resource->trip = new stdclass();

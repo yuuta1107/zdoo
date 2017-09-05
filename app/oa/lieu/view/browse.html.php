@@ -133,7 +133,7 @@
       <div class='table-footer'>
         <div class='pull-left'>
           <?php echo html::selectButton();?>
-          <?php echo html::submitButton($lang->lieu->batchReview);?> 
+          <?php echo html::a('javascript:;', $lang->lieu->batchPass, "class='btn btn-primary batchPass'");?> 
         </div>
       </div>
       <?php endif;?>

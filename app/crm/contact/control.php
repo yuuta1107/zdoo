@@ -59,7 +59,7 @@ class contact extends control
         }
         $this->loadModel('search', 'sys');
         $this->config->contact->search['actionURL'] = $this->createLink('contact', 'browse', 'mode=bysearch');
-        $this->config->contact->search['params']['t2.customer']['values'] = $this->loadModel('customer')->getPairs('', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit, $traders);
+        $this->config->contact->search['params']['t2.customer']['values'] = $this->loadModel('customer')->getPairs('', $emptyOption = true, 'id_desc', $limit = $this->config->customerLimit, $traders);
         $this->search->setSearchParams($this->config->contact->search);
 
         $this->app->loadLang('resume', 'crm');

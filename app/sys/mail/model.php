@@ -18,9 +18,9 @@ class mailModel extends model
     public $mtaType;
     public $errors = array();
 
-    public function __construct()
+    public function __construct($appName = '')
     {
-        parent::__construct();
+        parent::__construct($appName);
         $this->app->loadClass('phpmailer', $static = true);
         $this->setMTA();
     }

@@ -362,14 +362,16 @@ class baseDAO
         $sql        = str_replace($fields, " COUNT($countField) AS recTotal ", substr($sql, 0, $fromPOS)) . substr($sql, $fromPOS);
 
         /*
-         * 去掉SQL语句中order和limit之后的部分。
-         * Remove the part after order and limit.
+         * 去掉SQL语句中group, order和limit之后的部分。
+         * Remove the part after group, order and limit.
          **/
         $subLength = strlen($sql);
+        $groupPOS  = strripos($sql, 'group by');
         $orderPOS  = strripos($sql, 'order by');
         $limitPOS  = strripos($sql, 'limit');
         if($limitPOS) $subLength = $limitPOS;
         if($orderPOS) $subLength = $orderPOS;
+        if($groupPOS) $subLength = $groupPOS;
         $sql = substr($sql, 0, $subLength);
         self::$querys[] = $sql;
 

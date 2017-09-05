@@ -17,10 +17,10 @@ class install extends control
      * @access public
      * @return array
      */
-    public function __construct()
+    public function __construct($moduleName = '', $methodName = '', $appName = '')
     {
         if(!defined('RUN_MODE') or RUN_MODE != 'install') die('error');
-        parent::__construct();
+        parent::__construct($moduleName, $methodName, $appName);
     }
 
     /**

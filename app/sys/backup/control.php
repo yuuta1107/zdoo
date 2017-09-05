@@ -17,9 +17,9 @@ class backup extends control
      * @access public
      * @return void
      */
-    public function __construct($moduleName = '', $methodName = '')
+    public function __construct($moduleName = '', $methodName = '', $appName = '')
     {
-        parent::__construct($moduleName, $methodName);
+        parent::__construct($moduleName, $methodName, $appName);
 
         $this->backupPath = $this->app->getTmpRoot() . 'backup/';
         if(!is_dir($this->backupPath))

@@ -250,7 +250,7 @@ class overtime extends control
                     ->andWhere('t3.type')->eq('dept')
                     ->andWhere('t3.moderators')->eq(",{$this->app->user->account},")
                     ->fetchPairs();
-                if(!$overtimeIDList) $canReview = false;
+                if($overtimeIDList) $canReview = true;
             }
         }
 

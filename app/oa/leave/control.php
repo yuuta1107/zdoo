@@ -217,7 +217,7 @@ class leave extends control
                 $actionID = $this->loadModel('action')->create('leave', $id, 'reviewed', '', $this->lang->leave->statusList[$status]);
                 $this->sendmail($id, $actionID);
             }
-            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess));
+            $this->send(array('result' => 'success'));
         }
         if($status == 'reject')
         {
@@ -270,7 +270,8 @@ class leave extends control
         if(!$this->post->leaveIDList) $this->send(array('result' => 'fail', 'message' => $this->lang->leave->nodata));
 
         /* Check privilage. */
-        $canReview      = false;
+        $canReview   = false;
+        $leaveList   = array();
         $leaveIDList = $this->post->leaveIDList;
         if($this->app->user->admin == 'super')
         {
@@ -285,14 +286,14 @@ class leave extends control
             }
             else
             {
-                $leaveIDList = $this->dao->select('t1.*')->from(TABLE_LEAVE)->alias('t1')
+                $leaveList = $this->dao->select('t1.*')->from(TABLE_LEAVE)->alias('t1')
                     ->leftJoin(TABLE_USER)->alias('t2')->on('t1.createdBy=t2.account')
                     ->leftJoin(TABLE_CATEGORY)->alias('t3')->on('t2.dept=t3.id')
                     ->where('t1.id')->in($leaveIDList)
                     ->andWhere('t3.type')->eq('dept')
                     ->andWhere('t3.moderators')->eq(",{$this->app->user->account},")
                     ->fetchAll('id');
-                if(!$leaveIDList) $canReview = false;
+                if($leaveList) $canReview = true;
             }
         }
 
@@ -300,7 +301,8 @@ class leave extends control
         {
             if(!$canReview) $this->send(array('result' => 'fail', 'message' => $this->lang->leave->denied));
 
-            foreach($leaveIDList as $id => $leave)
+            if(!$leaveList) $leaveList = $this->leave->getByIdList($leaveIDList);
+            foreach($leaveList as $id => $leave)
             {
                 if($leave->status == 'pass' and $leave->backDate != '0000-00-00 00:00:00' and $leave->backDate != "$leave->end $leave->finish")
                 {

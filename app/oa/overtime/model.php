@@ -11,6 +11,12 @@
  */
 class overtimeModel extends model
 {
+    public function __construct($appName = '')
+    {
+        parent::__construct($appName);
+        $this->app->loadModuleConfig('attend', 'oa');
+    }
+
     /**
      * Get a overtime by id. 
      * 
@@ -116,7 +122,6 @@ class overtimeModel extends model
      */
     public function getReviewedBy()
     {
-        $this->app->loadModuleConfig('attend');
         return !isset($this->config->overtime->reviewedBy) ? (!isset($this->config->attend->reviewedBy) ? '' : $this->config->attend->reviewedBy) : $this->config->overtime->reviewedBy;
     }
 

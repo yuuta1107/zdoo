@@ -65,7 +65,7 @@ class trade extends control
                 }
             }
         }
-        $this->config->trade->search['params']['trader']['values'] = $this->loadModel('customer')->getPairs('', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit, $traders);
+        $this->config->trade->search['params']['trader']['values'] = $this->loadModel('customer')->getPairs('', $emptyOption = true, 'id_desc', $limit = $this->config->customerLimit, $traders);
 
         $incomeCategories  = $this->loadModel('tree')->getOptionMenu('in', 0, $removeRoot = true);
         $expenseCategories = $this->tree->getOptionMenu('out', 0, $removeRoot = true);

@@ -138,6 +138,7 @@ class upgradeModel extends model
             case '4_3_beta': $this->execSQL($this->getUpgradeFile('4.3.beta'));
             case '4_4': $this->processContractAddress();
                 $this->execSQL($this->getUpgradeFile('4.4'));
+            case '4_5': $this->execSQL($this->getUpgradeFile('4.5'));
             default: if(!$this->isError()) $this->loadModel('setting')->updateVersion($this->config->version);
         }
 
@@ -186,6 +187,7 @@ class upgradeModel extends model
             case '4_2_3'   :
             case '4_3_beta': $confirmContent .= file_get_contents($this->getUpgradeFile('4.3.beta'));
             case '4_4'     : $confirmContent .= file_get_contents($this->getUpgradeFile('4.4'));
+            case '4_5'     : $confirmContent .= file_get_contents($this->getUpgradeFile('4.5'));
         }
         return $confirmContent;
     }

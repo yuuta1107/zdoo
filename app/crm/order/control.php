@@ -61,7 +61,7 @@ class order extends control
         }
         $this->loadModel('search', 'sys');
         $this->config->order->search['actionURL'] = inlink('browse', 'mode=bysearch');
-        $this->config->order->search['params']['o.customer']['values'] = $this->loadModel('customer')->getPairs('client', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit, $traders);
+        $this->config->order->search['params']['o.customer']['values'] = $this->loadModel('customer')->getPairs('client', $emptyOption = true, 'id_desc', $limit = $this->config->customerLimit, $traders);
         $this->config->order->search['params']['o.product']['values']  = array('' => '') + $this->loadModel('product')->getPairs();
         $this->search->setSearchParams($this->config->order->search);
 
