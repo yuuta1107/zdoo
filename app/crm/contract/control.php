@@ -113,7 +113,7 @@ class contract extends control
         unset($this->lang->contract->menu);
         $this->view->title        = $this->lang->contract->create;
         $this->view->orderID      = $orderID;
-        $this->view->customers    = $this->loadModel('customer')->getPairs('client', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit);
+        $this->view->customers    = $this->loadModel('customer')->getPairs('client', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit, $customerID);
         $this->view->users        = $this->loadModel('user', 'crm')->getPairs('nodeleted,noclosed');
         $this->view->currencyList = $this->loadModel('common', 'sys')->getCurrencyList();
         $this->view->currencySign = $this->loadModel('common', 'sys')->getCurrencySign();

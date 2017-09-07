@@ -28,9 +28,9 @@ else if(isset($modalSizeList[$modalWidth]))
 if(isset($pageCSS)) css::internal($pageCSS);
 
 /* set requiredField. */
-if(isset($this->config->$moduleName->require->$methodName)) 
+if(isset($config->$moduleName->require->$methodName)) 
 {
-    $requiredFields = str_replace(' ', '', $this->config->$moduleName->require->$methodName);
+    $requiredFields = str_replace(' ', '', $config->$moduleName->require->$methodName);
     js::execute("config.requiredFields = \"$requiredFields\"; setRequiredFields();");
 }
 ?>
