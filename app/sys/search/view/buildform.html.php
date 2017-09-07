@@ -55,8 +55,104 @@ include '../../common/view/chosen.html.php';
 .search-field input.date::-moz-placeholder{color: #000000; opacity: 1;} 
 .search-field input.date:-ms-input-placeholder{color: #000000; opacity: 1;}
 
+.trader_chosen .chosen-results > li.no-results {cursor: pointer;}
+.trader_chosen .chosen-results > li.no-results:hover {color: #1a4f85; background-color: #ddd;}
+.trader_chosen .chosen-results > li.no-results > span {font-weight: bold;}
 </style>
 <script language='Javascript'>
+var $selectedItem;
+var selectItem = function(item)
+{
+    $selectedItem = $(item).first();
+    $('#triggerModal').modal('hide');
+};
+
+var relation = '';
+var trader   = 'customer';
+
+$(document).ready(function()
+{
+    switch (config.currentModule)
+    {
+    case 'contact' :
+        relation = 'client';
+        trader   = 't2.customer';
+        break;
+    case 'feedback' :
+        relation = 'client';
+        trader   = 'customer';
+        break;
+    case 'order' :
+        relation = 'client';
+        trader   = 'o.customer';
+        break;
+    case 'trade' :
+        relation = v.modeType == 'in' ? 'client' : '';
+        trader   = 'trader';
+        break;
+    }
+
+    var showSearchModal = function(e)
+    {
+        $('#searchform .trader.selected').removeClass('selected');
+        if(e.hasClass('no-results'))
+        {
+            var key = e.parents('.chosen-container').find('.chosen-results > li.no-results > span').text();
+            e.parents('.chosen-container').prev('select').addClass('selected');
+        }
+        else
+        {
+            var key = e.next('.chosen-container').find('.chosen-results > li.no-results > span').text();
+            e.addClass('selected');
+        }
+        var link = createLink('customer', 'ajaxSearchCustomer', 'key=' + key + '&relation=' + relation);
+        $.zui.modalTrigger.show({url: link, backdrop: 'static'});
+    };
+
+    $(document).on('change', '#searchform .trader', function()
+    {
+        if($(this).val() === 'showmore')
+        {
+            showSearchModal($(this));
+        }
+    });
+
+    $(document).on('click', '#searchform .trader_chosen .chosen-results > li.no-results', function()
+    {
+        if($(this).closest('tr').find('select[id^=field]').val() == trader) showSearchModal($(this));
+    });
+
+    $(document).on('hide.zui.modal', '#triggerModal', function()
+    {
+        var key     = '';
+        var $trader = $('#searchform .trader.selected');
+        if($selectedItem && $selectedItem.length)
+        {
+            key = $selectedItem.data('key');
+            if(!$trader.children('option[value="' + key + '"]').length)
+            {
+                $trader.prepend('<option value="' + key + '">' + $selectedItem.text() + '</option>');
+            }
+
+            $('#searchform .trader').each(function()
+            {
+                if(!$(this).children('option[value="' + key + '"]').length)
+                {
+                    $(this).prepend('<option value="' + key + '">' + $selectedItem.text() + '</option>');
+                    $(this).trigger('chosen:updated');
+                }
+            });
+
+                if(!$('#querybox [id^=box] .trader').children('option[value="' + key + '"]').length)
+                {
+                    $('#querybox [id^=box] .trader').prepend('<option value="' + key + '">' + $selectedItem.text() + '</option>');
+                }
+        }
+        $trader.val(key).trigger('chosen:updated');
+        $selectedItem = null;
+    });
+});
+
 var dtOptions = 
 {
     language: '<?php echo $this->app->getClientLang();?>',
@@ -226,9 +322,12 @@ function setField(fieldName, fieldNO)
         }
     }
 
+    if(fieldName == trader) $('#valueBox' + fieldNO).children().addClass('trader').attr('data-no_results_text', '<?php echo $lang->searchMore;?>');
+
     if(params[fieldName]['control'] == 'select' && (typeof(params[fieldName]['class']) == 'undefined' || params[fieldName]['class'] == 'chosen'))
     {
         $("#value" + fieldNO).addClass('chosen').chosen(chosenDefaultOptions);
+        if(fieldName == trader) $('#value' + fieldNO).next('.chosen-container').addClass('trader_chosen');
     }
 }
 
@@ -332,125 +431,32 @@ function deleteQuery()
     if(!queryID) return;
     hiddenwin.location.href = createLink('search', 'deleteQuery', 'queryID=' + queryID);
 }
-
-var $selectedItem;
-var selectItem = function(item)
-{
-    $selectedItem = $(item).first();
-    $('#triggerModal').modal('hide');
-};
-
-var relation = '';
-var trader   = 'customer';
-
-$(document).ready(function()
-{
-    switch (config.currentModule)
-    {
-    case 'contact' :
-        relation = 'client';
-        trader   = 't1.customer';
-        break;
-    case 'feedback' :
-        relation = 'client'; 
-        trader   = 'customer';
-        break;
-    case 'order' :
-        relation = 'client'; 
-        trader   = 'o.customer';
-        break;
-    case 'trade' :
-        relation = v.modeType == 'in' ? 'client' : '';
-        trader   = 'trader';
-        break;
-    }
-
-    var showSearchModal = function(e)
-    {
-        $('#searchform td[id^=valueBox] .selected').removeClass('selected');
-        if(e.hasClass('no-results')) 
-        { 
-            var key = e.parents('.chosen-container').find('.chosen-results > li.no-results > span').text();
-            e.parents('.chosen-container').prev('select').addClass('selected');
-        }
-        else
-        {
-            var key = e.next('.chosen-container').find('.chosen-results > li.no-results > span').text();
-            e.addClass('selected');
-        }
-        var link     = createLink('customer', 'ajaxSearchCustomer', 'key=' + key + '&relation=' + relation);
-        $.zui.modalTrigger.show({url: link, backdrop: 'static'});
-    };
-
-    $(document).on('change', '#searchform td[id^=valueBox] select[id^=value]', function()
-    {
-        if($(this).closest('tr').find('select[id^=field]').val() == trader)
-        {
-            if($(this).val() === 'showmore')
-            {
-                 showSearchModal($(this));
-            }
-        }
-    });
-
-    $(document).on('click', '#searchform td[id^=valueBox] .chosen-container[id^=value] .chosen-results > li.no-results', function()
-    {
-        if($(this).closest('tr').find('select[id^=field]').val() == trader) showSearchModal($(this));
-    });
-
-    $(document).on('hide.zui.modal', '#triggerModal', function()
-    {
-        var key     = '';
-        var $trader = $('#searchform td[id^=valueBox] .selected'); 
-        if($selectedItem && $selectedItem.length)
-        {
-            key = $selectedItem.data('key');
-            if(!$trader.children('option[value="' + key + '"]').length)
-            {
-                $trader.prepend('<option value="' + key + '">' + $selectedItem.text() + '</option>');
-            }
-
-            $('#searchform td[id^=valueBox] select[id^=value]').each(function()
-            {
-                if($(this).closest('tr').find('select[id^=field]').val() == trader)
-                {
-                    if(!$(this).children('option[value="' + key + '"]').length)
-                    {
-                        $(this).prepend('<option value="' + key + '">' + $selectedItem.text() + '</option>');
-                        $(this).trigger('chosen:updated');
-                    }
-                }
-            });
-
-            if(trader.indexOf('.') === -1)
-            {
-                if(!$('#querybox [id^=box' + trader + '] #' + trader).children('option[value="' + key + '"]').length)
-                {
-                    $('#querybox [id^=box' + trader + '] #' + trader).prepend('<option value="' + key + '">' + $selectedItem.text() + '</option>');
-                }
-            }
-            else
-            {
-                var subTrader = trader.substr(trader.indexOf('.') + 1);
-                if(!$('#querybox [id^=box][id*=' + subTrader + '] [id*=' + subTrader +']').children('option[value="' + key + '"]').length)
-                {
-                    $('#querybox [id^=box][id*=' + subTrader + '] [id*=' + subTrader +']').prepend('<option value="' + key + '">' + $selectedItem.text() + '</option>');
-                }
-            }
-        }
-        $trader.val(key).trigger('chosen:updated');
-        $selectedItem = null;
-    });
-});
 </script>
 
 <div class='hidden'>
 <?php
+$trader = '';
+switch($module)
+{
+case 'contact' :
+    $trader = 't2.customer';
+    break;
+case 'feedback' :
+    $trader = 'customer';
+    break;
+case 'order' :
+    $trader = 'o.customer';
+    break;
+case 'trade' :
+    $trader = 'trader';
+    break;
+}
 /* Print every field as an html object, select or input. Thus when setFiled is called, copy it's html to build the search form. */
 foreach($fieldParams as $fieldName => $param)
 {
+    $class = $fieldName == $trader ? 'trader' : '';
     echo "<span id='box$fieldName'>";
-    if($param['control'] == 'select') echo html::select($fieldName, $param['values'], '', "class='form-control searchSelect'");
+    if($param['control'] == 'select') echo html::select($fieldName, $param['values'], '', "class='form-control searchSelect $class'");
     if($param['control'] == 'input')  echo html::input($fieldName, '', "class='form-control searchInput'");
     echo '</span>';
 }
@@ -491,8 +497,10 @@ foreach($fieldParams as $fieldName => $param)
           echo "<td id='valueBox$fieldNO'>";
           if($param['control'] == 'select')
           {
-              $extraClass = isset($param['class']) ? $param['class'] : 'chosen';
-              echo html::select("value$fieldNO", $param['values'], $formSession["value$fieldNO"], "class='form-control searchSelect $extraClass'");
+              $extraClass  = isset($param['class']) ? $param['class'] : 'chosen';
+              $traderClass = $currentField == $trader ? 'trader' : '';
+              $noResults   = $currentField == $trader ? "data-no_results_text='{$lang->searchMore}'" : '';
+              echo html::select("value$fieldNO", $param['values'], $formSession["value$fieldNO"], "class='form-control searchSelect $extraClass $traderClass' $noResults");
           }
           if($param['control'] == 'input') 
           {
@@ -547,8 +555,10 @@ foreach($fieldParams as $fieldName => $param)
           echo "<td id='valueBox$fieldNO'>";
           if($param['control'] == 'select')
           {
-              $extraClass = isset($param['class']) ? $param['class'] : 'chosen';
-              echo html::select("value$fieldNO", $param['values'], $formSession["value$fieldNO"], "class='form-control searchSelect $extraClass'");
+              $extraClass  = isset($param['class']) ? $param['class'] : 'chosen';
+              $traderClass = $currentField == $trader ? 'trader' : '';
+              $noResults   = $currentField == $trader ? "data-no_results_text='{$lang->searchMore}'" : '';
+              echo html::select("value$fieldNO", $param['values'], $formSession["value$fieldNO"], "class='form-control searchSelect $extraClass $traderClass' $noResults");
           }
 
           if($param['control'] == 'input')
@@ -603,6 +613,10 @@ foreach($fieldParams as $fieldName => $param)
 </div>
 </form>
 <script language='Javascript'>
-<?php if(isset($formSession['formType'])) echo "show{$formSession['formType']}()";?>
+<?php if(isset($formSession['formType'])) echo "show{$formSession['formType']}();";?>
+$('#searchform .trader').each(function()
+{
+    $(this).next('.chosen-container').addClass('trader_chosen');
+});
 </script>
 <iframe id='hiddenwin' name='hiddenwin' class='hidden'></iframe>
