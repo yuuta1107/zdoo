@@ -95,12 +95,12 @@
                 </td>
                 <td>
                   <?php
-                  if(strpos(',rest,normal,leave,makeup,overtime,lieu,trip,egress,', ",$status,") === false):
                   $edit       = $reviewStatus == 'wait' ? $lang->attend->edited : $lang->attend->edit;
                   $leave      = $reason == 'leave' ? $lang->attend->leaved : $lang->attend->leave;
                   $makeup     = $reason == 'makeup' ? $lang->attend->makeuped : $lang->attend->makeup;
                   $overtime   = $reason == 'overtime' ? $lang->attend->overtimed : $lang->attend->overtime;
                   $lieu       = $reason == 'lieu' ? $lang->attend->lieud : $lang->attend->lieu;
+                  if(strpos(',rest,normal,leave,makeup,overtime,lieu,trip,egress,', ",$status,") === false):
                   ?>
                   <?php if($reviewStatus == 'wait' or strpos(',late,early,both,', ",$status,") !== false):?>
                   <?php echo html::a($this->createLink('attend', 'edit', "date=" . str_replace('-', '', $currentDate)), $edit, "data-toggle='modal' data-width='500px'");?>
