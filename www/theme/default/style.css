@@ -170,18 +170,6 @@ body.page-actions-fixed {padding-bottom: 70px}
 
 .dropdown-menu > li > a > .icon {display: inline-block; width: 18px; text-align: center; opacity: .9}
 
-/* tree */
-.tree {padding: 0; margin: 0;}
-.tree li,.tree ul {margin: 0; padding: 0; display: block; position: relative;}
-.tree > li {margin-right: 20px; font-weight: 400; padding-bottom: 10px;}
-.tree > li > ul li {padding: 10px 15px 0; margin: 0;}
-.tree li:before {display: inline-block; margin-right: 6px; content: '\e6ec'; font-family: ZenIcon; color: #ddd;}
-.tree > li ul {border-left: 1px dashed #ccc; margin-left: 7px; font-weight: normal;}
-.tree > li ul > li:before {content: '\e6e8';}
-.tree > li ul > li:hover:before {content: '\e6ec';}
-.tree > li ul > li:after {position: absolute; display: block; content: ""; width: 15px; left: -1px; top: 20px; height: 20px; border-top: 1px dashed #ccc;}
-.tree > li > ul li:last-child:after {border-left: 1px solid #fff;}
-
 /* unorder list */
 .ul-list {margin: 0; padding: 0; display: block;}
 

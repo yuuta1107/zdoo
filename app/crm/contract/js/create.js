@@ -63,14 +63,9 @@ $(document).ready(function()
                 $customer.prepend('<option value="' + key + '">' + $selectedItem.text() + '</option>');
             }
         }
-        $customer.val(key).trigger("chosen:updated");
+        $customer.val(key).change().trigger("chosen:updated");
         $selectedItem = null;
     });
-
-    if(v.customer)
-    {
-        getOrder(v.customer);
-    }
 
     $(document).on('change', 'select.select-order:first', function()
     {
@@ -116,6 +111,7 @@ $(document).ready(function()
 
     $('#customer').change(function()
     {
+        getOrder($(this).val());
         $('#address').load(createLink('contract', 'ajaxGetAddresses', 'customer=' + $(this).val()), function()
         {
             $('#address').trigger('chosen:updated');
@@ -127,6 +123,11 @@ $(document).ready(function()
         $('#address_chosen').toggle(!$(this).prop('checked'));
         $('#newAddress').toggle($(this).prop('checked'));
     });
+
+    if(v.customer)
+    {
+        $('#customer').change();
+    }
 
     $('select.select-order:first').change();
     $('#createAddress').change();
