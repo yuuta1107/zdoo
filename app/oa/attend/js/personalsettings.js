@@ -4,6 +4,7 @@ $(function()
     {
         $(this).parents('tr').after('<tr>' + $(this).parents('tr').html() + '</tr>');
         $(this).parents('tr').next('tr').find('.chosen-container').remove();
+        $(this).parents('tr').next('tr').find('select').show();
         $(this).parents('tr').next('tr').find('.chosen').chosen(window.chosenDefaultOptions);
         $(this).parents('tr').next('tr').find('.form-date').fixedDate().datetimepicker(
         {
