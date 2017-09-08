@@ -14,7 +14,7 @@
 <?php js::set('type', $type)?>
 <div class='row page-content'>
   <div class='panel'>
-    <form id='ajaxForm' method='post' action="<?php echo $this->createLink('oa.todo', 'batchClose');?>">
+    <form id='ajaxForm' method='post' action="<?php echo $this->createLink('todo', 'batchClose');?>">
       <table class='table table-hover table-striped table-bordered tablesorter table-data table-fixed' id='todoList'>
         <thead>
           <tr class='text-center'>
@@ -45,16 +45,16 @@
             <td><?php echo zget($lang->todo->statusList, $todo->status);?></td>
             <td class='text-left'>
               <?php 
-                echo html::a($this->createLink('oa.todo', 'view', "todoID={$todo->id}"), $lang->view, "data-toggle='modal' data-width='80%'");
+                echo html::a($this->createLink('todo', 'view', "todoID={$todo->id}"), $lang->view, "data-toggle='modal' data-width='80%'");
                 $disabled = ($this->todo->checkPriv($todo, 'finish') && $this->todo->isClickable($todo, 'finish')) ? '' : 'disabled';
-                echo html::a($this->createLink('oa.todo', 'finish', "todoID={$todo->id}"), $lang->todo->finish, "class='$disabled' data-toggle='ajax'");
-                echo html::a($this->createLink('oa.todo', 'assignTo', "todoID={$todo->id}"), $lang->todo->assignTo, "data-toggle='modal'");
+                echo html::a($this->createLink('todo', 'finish', "todoID={$todo->id}"), $lang->todo->finish, "class='$disabled' data-toggle='ajax'");
+                echo html::a($this->createLink('todo', 'assignTo', "todoID={$todo->id}"), $lang->todo->assignTo, "data-toggle='modal'");
                 $disabled = ($this->todo->checkPriv($todo, 'activate') and $this->todo->isClickable($todo, 'activate')) ? '' : 'disabled';
-                echo html::a($this->createLink('oa.todo', 'activate', "todoID={$todo->id}"), $lang->activate, "class='$disabled' data-toggle='ajax'");
+                echo html::a($this->createLink('todo', 'activate', "todoID={$todo->id}"), $lang->activate, "class='$disabled' data-toggle='ajax'");
                 $disabled = ($this->todo->checkPriv($todo, 'close') and $this->todo->isClickable($todo, 'close')) ? '' : 'disabled';
-                echo html::a($this->createLink('oa.todo', 'close', "todoID={$todo->id}"), $lang->close, "class='$disabled' data-toggle='ajax'");
-                echo html::a($this->createLink('oa.todo', 'edit', "todoID={$todo->id}"), $lang->edit, "data-toggle='modal'");
-                echo html::a($this->createLink('oa.todo', 'delete', "todoID={$todo->id}"), $lang->delete, "class='deleter'");
+                echo html::a($this->createLink('todo', 'close', "todoID={$todo->id}"), $lang->close, "class='$disabled' data-toggle='ajax'");
+                echo html::a($this->createLink('todo', 'edit', "todoID={$todo->id}"), $lang->edit, "data-toggle='modal'");
+                echo html::a($this->createLink('todo', 'delete', "todoID={$todo->id}"), $lang->delete, "class='deleter'");
               ?>
             </td>
           </tr>

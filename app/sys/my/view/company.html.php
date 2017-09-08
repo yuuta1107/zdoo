@@ -69,7 +69,7 @@
               <div class='text-nowrap text-ellipsis w-180px <?php echo $todo->status?>' title='<?php echo $todo->name?>'>
                 <?php if(!empty($todo->begin)) echo "{$todo->begin}~{$todo->end}"?>
                 <?php if($todo->type != 'leave' and $todo->type != 'trip'):?>
-                <?php echo html::a($this->createLink('oa.todo', 'view', "todoID={$todo->id}"), $todo->name, "data-toggle='modal' data-width='80%'")?>
+                <?php echo html::a($this->createLink('todo', 'view', "todoID={$todo->id}"), $todo->name, "data-toggle='modal' data-width='80%'")?>
                 <?php elseif($todo->type == 'leave'):?>
                 <div class='text-danger'><?php echo $todo->name;?>
                 <?php else:?>
