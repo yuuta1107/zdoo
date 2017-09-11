@@ -172,7 +172,7 @@ class leave extends control
     {
         /* Check privilage. */
         $canReview = false;
-        if($this->app->user->admin = 'super') 
+        if($this->app->user->admin == 'super') 
         {
             $canReview = true;
         }
