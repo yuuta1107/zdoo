@@ -2,7 +2,7 @@
 if(!isset($lang->trip)) $lang->trip = new stdclass();
 $lang->trip->common = '出差';
 $lang->trip->browse = '出差列表';
-$lang->trip->create = '新建';
+$lang->trip->create = '新建出差';
 $lang->trip->edit   = '編輯';
 $lang->trip->view   = '出差詳情';
 $lang->trip->delete = '刪除';

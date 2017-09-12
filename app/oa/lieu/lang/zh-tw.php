@@ -2,7 +2,7 @@
 if(!isset($lang->lieu)) $lang->lieu = new stdclass();
 $lang->lieu->common = '調休';
 $lang->lieu->browse = '調休列表';
-$lang->lieu->create = '調休';
+$lang->lieu->create = '申請調休';
 $lang->lieu->edit   = '編輯';
 $lang->lieu->view   = '詳情';
 $lang->lieu->delete = '刪除';

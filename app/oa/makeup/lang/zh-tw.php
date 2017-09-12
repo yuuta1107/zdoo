@@ -2,7 +2,7 @@
 if(!isset($lang->makeup)) $lang->makeup = new stdclass();
 $lang->makeup->common = '補班';
 $lang->makeup->browse = '補班列表';
-$lang->makeup->create = '申請';
+$lang->makeup->create = '申請補班';
 $lang->makeup->edit   = '編輯';
 $lang->makeup->view   = '詳情';
 $lang->makeup->delete = '刪除';

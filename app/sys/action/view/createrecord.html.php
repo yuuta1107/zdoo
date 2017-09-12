@@ -98,7 +98,7 @@
     </tr>
     <tr>
       <th><?php echo $lang->action->record->comment;?></th>
-      <td><?php echo html::textarea('comment', '', "class='form-control' rows='2'");?></td>
+      <td><?php echo html::textarea('comment', '', "class='form-control' rows='3'");?></td>
     </tr>
     <?php if(commonModel::hasPriv('file', 'upload')):?>
     <tr>

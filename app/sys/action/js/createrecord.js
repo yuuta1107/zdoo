@@ -85,6 +85,11 @@ $(document).ready(function()
         }
     });
 
+    $('#nextDate').change(function()
+    {
+        $('[name*=delta]').removeAttr('checked');
+    });
+
     $('#fileform > .text-danger').remove();
 });
 
@@ -98,11 +103,11 @@ $(document).ready(function()
 function computeNextDate(delta)
 {
     today = new Date();
-    today = today.toString('yyyy-M-dd');
+    today = today.toString('yyyy-MM-dd');
     if(!today) return;
 
     nextDate = convertStringToDate(today).addDays(parseInt(delta));
-    nextDate = nextDate.toString('yyyy-M-dd');
+    nextDate = nextDate.toString('yyyy-MM-dd');
 
     if(delta == 365000)
     {

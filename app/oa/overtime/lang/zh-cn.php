@@ -2,7 +2,7 @@
 if(!isset($lang->overtime)) $lang->overtime = new stdclass();
 $lang->overtime->common = '加班';
 $lang->overtime->browse = '加班列表';
-$lang->overtime->create = '申请';
+$lang->overtime->create = '申请加班';
 $lang->overtime->edit   = '编辑';
 $lang->overtime->view   = '详情';
 $lang->overtime->delete = '删除';
