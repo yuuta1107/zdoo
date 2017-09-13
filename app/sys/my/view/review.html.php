@@ -161,7 +161,7 @@
       <td title='<?php echo $overtime->desc?>'><?php echo $overtime->desc;?></td>
       <td class='overtime-<?php echo $overtime->status?>'><?php echo zget($this->lang->overtime->statusList, $overtime->status);?></td>
       <td>
-        <?php commonModel::printLink('oa.overtime', 'review', "id={$overtime->id}&status=pass",   $lang->overtime->statusList['pass'],   "data-status='reject' data-toggle='ajax'");?>
+        <?php commonModel::printLink('oa.overtime', 'review', "id={$overtime->id}&status=pass",   $lang->overtime->statusList['pass'],   "data-status='pass' data-toggle='ajax'");?>
         <?php commonModel::printLink('oa.overtime', 'review', "id={$overtime->id}&status=reject", $lang->overtime->statusList['reject'], "data-toggle='modal'");?>
       </td>
     </tr>
@@ -314,7 +314,7 @@
       <td title='<?php echo $overtime->desc?>'><?php echo $overtime->desc;?></td>
       <td class='overtime-<?php echo $overtime->status?>'><?php echo zget($this->lang->overtime->statusList, $overtime->status);?></td>
       <td>
-        <?php commonModel::printLink('oa.overtime', 'review', "id={$overtime->id}&status=pass",   $lang->overtime->statusList['pass'],   "data-status='reject' data-toggle='ajax'");?>
+        <?php commonModel::printLink('oa.overtime', 'review', "id={$overtime->id}&status=pass",   $lang->overtime->statusList['pass'],   "data-status='pass' data-toggle='ajax'");?>
         <?php commonModel::printLink('oa.overtime', 'review', "id={$overtime->id}&status=reject", $lang->overtime->statusList['reject'], "data-toggle='modal'");?>
       </td>
     </tr>
