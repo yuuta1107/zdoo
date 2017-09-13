@@ -12,7 +12,7 @@
 ?>
 <?php include '../../common/view/header.html.php';?>
 <div id='menuActions'>
-  <?php commonModel::printLink('holiday', 'create', "", "{$lang->create}", "data-toggle='modal' class='btn btn-primary'")?>
+  <?php commonModel::printLink('holiday', 'create', "", "<i class='icon icon-plus'> </i>" . $lang->create, "data-toggle='modal' class='btn btn-primary'")?>
 </div>
 <div class='with-side'>
   <div class='side'>
