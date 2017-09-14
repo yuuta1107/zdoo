@@ -96,6 +96,8 @@ $lang->todo->periods['future']     = '待定';
 $lang->todo->periods['before']     = '未完';
 $lang->todo->periods['all']        = '所有';
 
+$this->lang->todo->batchedittips = '未选择编辑项目';
+
 $lang->todo->action = new stdclass();
 $lang->todo->action->finished  = array('main' => '$date, 由 <strong>$actor</strong>完成');
 $lang->todo->action->marked    = array('main' => '$date, 由 <strong>$actor</strong> 标记为<strong>$extra</strong>。', 'extra' => 'statusList');

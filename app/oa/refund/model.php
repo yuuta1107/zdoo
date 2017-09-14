@@ -232,6 +232,7 @@ class refundModel extends model
                 $detail->createdBy   = $this->app->user->account;
                 $detail->createdDate = $now;
                 $detail->money       = $money;
+                $detail->related     = implode(',', $_POST['relatedList'][$key]);
                 $detail->date        = empty($_POST['dateList'][$key]) ? $refund->date : $_POST['dateList'][$key];
                 $detail->currency    = $refund->currency;
                 $detail->category    = !empty($_POST['categoryList'][$key]) ? $_POST['categoryList'][$key] : '';

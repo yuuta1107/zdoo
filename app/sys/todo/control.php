@@ -259,6 +259,11 @@ class todo extends control
     public function batchEdit($mode = 'all')
     {
         $todoIDList = $this->post->todoIDList ? $this->post->todoIDList : array();
+        if(empty($todoIDList))
+        {
+            die(js::alert($this->lang->todo->batchedittips) . js::locate('back'));
+        }
+        
 
         if($this->post->names)
         {
