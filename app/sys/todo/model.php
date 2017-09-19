@@ -72,7 +72,7 @@ class todoModel extends model
                 $todo->pri        = $todos->pris[$i];
                 $todo->assignedTo = $todos->assignedTo[$i];
                 $todo->name       = isset($todos->names[$i]) ? $todos->names[$i] : '';
-                $todo->desc       = $todos->descs[$i];
+                $todo->desc       = nl2br($todos->descs[$i]);
                 $todo->begin      = isset($todos->begins[$i]) ? $todos->begins[$i] : 2400;
                 $todo->end        = isset($todos->ends[$i]) ? $todos->ends[$i] : 2400;
                 $todo->status     = "wait";
