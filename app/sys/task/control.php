@@ -724,7 +724,7 @@ class task extends control
 
             if(isset($skipTasks)) $this->send(array('result' => 'fail', 'message' => sprintf($this->lang->task->skipClose, join(',', $skipTasks))));
         }
-        $this->send(array('result' => 'success', 'locate' => $this->server->http_referer));
+        $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => $this->server->http_referer));
     }
 
     /**

@@ -22,5 +22,6 @@ function updateMember()
 
 $(document).ready(function()
 {
+    $.setAjaxForm('#teamForm');
     updateMember();
 });

@@ -9,6 +9,24 @@ $(document).ready(function()
     /* Adjust calendar' startDate. */
     $('.calendar').data('zui.calendar').display('month', v.settings.startDate);
 
+    $('.calendar').droppable(
+    {
+        selector: '.event',
+        target: '.trash',
+        drop : function(e)
+           {
+               url = createLink('todo', 'delete', 'id=' + e.element.data('id'));
+               $.get(url, function(response)
+               {
+                   if(response.result == 'success')
+                   {
+                       if(response.message) $.zui.messager.success(response.message);
+                       updateCalendar();
+                   }
+               }, 'json');
+           }
+    });
+
     /* dropable setting. */
     var dropSetting = {drop: function(event)
     {
