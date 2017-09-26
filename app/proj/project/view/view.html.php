@@ -11,16 +11,37 @@
  */
 ?>
 <?php include '../../../sys/common/view/header.modal.html.php';?>
-<div class='panel project-block'>
-  <div class='panel-heading'>
-    <strong><?php echo $project->name;?></strong>
-  </div>
-  <div class='panel-body'>
-    <p class='info'><?php echo $project->desc;?></p>
-    <div class='footerbar text-important'>
-      <span><?php foreach($project->members as $member) if($member->role == 'manager') echo "<i class='icon icon-user'> </i>" . $users[$member->account];?></span>
-      <span class=''><i class='icon icon-time'> </i><?php echo formatTime($project->begin, 'm-d') . ' ~ ' .  formatTime($project->end, 'm-d');?></span>
-    </div>
-  </div>
-</div>
+<table class="table table-form">
+  <tr>
+     <th class='w-70px'><?php echo $lang->project->status;?></th>
+     <td><?php echo zget($lang->project->statusList, $project->status);?></td>
+  </tr>
+  <tr>
+     <th><?php echo $lang->project->desc;?></th>
+     <td><?php echo $project->desc;?></td>
+  </tr>
+  <tr>
+     <th><?php echo $lang->project->begin;?></th>
+     <td><?php echo $project->begin;?></td>
+  </tr>
+  <tr>
+     <th><?php echo $lang->project->end;?></th>
+     <td><?php echo $project->end;?></td>
+  </tr>
+  <tr>
+     <th><?php echo $lang->project->manager;?></th>
+     <td><?php foreach($project->members as $member) if($member->role == 'manager') echo  zget($users, $member->account);?></td>
+  </tr>
+     <th><?php echo $lang->project->member;?></th>
+     <td><?php foreach($project->members as $member) if($member->role == 'member') echo  zget($users, $member->account) . " ";?></td>
+  </tr>
+  <tr>
+     <th><?php echo $lang->project->createdBy;?></th>
+     <td><?php echo zget($users, $project->createdBy);?></td>
+  </tr>
+  <tr>
+     <th><?php echo $lang->project->createdDate;?></th>
+     <td><?php echo formatTime($project->createdDate, DT_DATE1);?></td>
+  </tr>
+</table>
 <?php include '../../../sys/common/view/footer.modal.html.php';?>
