@@ -50,7 +50,7 @@
           </tr>
           <tr>
             <th><?php echo $lang->trade->depositor;?></th>
-            <td><?php echo !empty($depositor->name) ? $depositor->name : '';?></td>
+            <td><?php echo !empty($depositor->abbr) ? $depositor->abbr : '';?></td>
           </tr>
           <tr>
             <th><?php echo $lang->trade->type;?></th>
