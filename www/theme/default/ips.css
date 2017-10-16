@@ -80,7 +80,7 @@ body[class*='dropdown-mode-'] .s-menu-tooltip, body.mute-tooltip .s-menu-tooltip
 #bottomBar {height: 36px; background-color: #0a2e66; background-color: rgba(0,0,0,0.2); z-index: 50000; left: 40px; right: 0}
 #desktop.menu-auto #bottomBar {left: 2px}
 #bottomBar .bar-menu li {min-width: 50px; text-align: center; font-size: 16px; height: 36px; margin-right:4px; overflow: hidden; white-space: nowrap; background-color: #444; background-color: rgba(0,0,0,0.20); -o-transition: width 1s;-moz-transition: width 1s;-webkit-transition: width 1s;transition: width 1s;}
-#bottomBar .bar-menu li > button {line-height: 28px; font-size: 12px; font-weight: normal; margin-right: 0; width: 100%;}
+#bottomBar .bar-menu li > button {float:left; line-height: 28px; font-size: 12px; font-weight: normal; margin-right: 0; width: 100%;}
 #taskbar {padding-right: 220px;}
 #taskbar .bar-menu li {text-align: left; min-width: 90px; max-width: 300px; position: relative;}
 #taskbar .bar-menu li .actions {position: absolute; right: 0; top: 0;}
@@ -98,7 +98,7 @@ body[class*='dropdown-mode-'] .s-menu-tooltip, body.mute-tooltip .s-menu-tooltip
 #bottomRightBar {position: absolute; right: 0; top: 0; background: none;}
 #bottomRightBar .bar-menu {float: right; border-left: 1px solid rgba(255,255,255,0.10);}
 #bottomRightBar .bar-menu li {background: none; margin-right: 0;}
-#bottomRightBar .bar-menu li a{width: 100%; height: 100%; line-height: 28px; font-size: 15px;}
+#bottomRightBar .bar-menu li a{float:left; width: 100%; height: 100%; line-height: 28px; font-size: 15px;}
 #bottomRightBar .bar-menu li .sign {font-size: 12px; color: #f1f1f1;}
 #bottomRightBar .copyright {float: right; line-height: 40px; padding-right: 10px;}
 #bottomRightBar .copyright a{text-decoration: none; color: rgba(255,255,255,0.5)}
