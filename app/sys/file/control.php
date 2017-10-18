@@ -220,7 +220,14 @@ class file extends control
         /* If the mode is open, locate directly. */
         if($mode == 'open')
         {
-            if(file_exists($file->realPath)) $this->locate($file->webPath);
+            if(file_exists($file->realPath)) 
+            {
+                /* If the web server is nginx, it will download the file because the extension of file is empty. Use php to output file to avoid this situation. */
+                $mime = mime_content_type($file->realPath);
+                header("content-type: $mime");
+                echo file_get_contents($file->realPath);
+                exit;
+            }
             $this->app->triggerError("The file you visit $fileID not found.", __FILE__, __LINE__, true);
         }
         else
