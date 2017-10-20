@@ -922,7 +922,7 @@ class trade extends control
             if($mode == 'all')
             {
                 $tradeQueryCondition = $this->session->tradeQueryCondition;
-                if(strpos($tradeQueryCondition, 'limit') !== false) $tradeQueryCondition = substr($tradeQueryCondition, 0, strpos($tradeQueryCondition, 'limit'));
+                if(strpos($tradeQueryCondition, 'LIMIT') !== false) $tradeQueryCondition = substr($tradeQueryCondition, 0, strpos($tradeQueryCondition, 'LIMIT'));
                 $stmt = $this->dbh->query($tradeQueryCondition);
                 while($row = $stmt->fetch()) $trades[$row->id] = $row;
             }

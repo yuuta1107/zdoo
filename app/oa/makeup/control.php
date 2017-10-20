@@ -533,7 +533,7 @@ class makeup extends control
             if($mode == 'all')
             {
                 $makeupQueryCondition = $this->session->makeupQueryCondition;
-                if(strpos($makeupQueryCondition, 'limit') !== false) $makeupQueryCondition = substr($makeupQueryCondition, 0, strpos($makeupQueryCondition, 'limit'));
+                if(strpos($makeupQueryCondition, 'LIMIT') !== false) $makeupQueryCondition = substr($makeupQueryCondition, 0, strpos($makeupQueryCondition, 'LIMIT'));
                 $stmt = $this->dbh->query($makeupQueryCondition);
                 while($row = $stmt->fetch()) $makeups[$row->id] = $row;
             }

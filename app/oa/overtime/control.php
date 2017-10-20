@@ -509,7 +509,7 @@ class overtime extends control
             if($mode == 'all')
             {
                 $overtimeQueryCondition = $this->session->overtimeQueryCondition;
-                if(strpos($overtimeQueryCondition, 'limit') !== false) $overtimeQueryCondition = substr($overtimeQueryCondition, 0, strpos($overtimeQueryCondition, 'limit'));
+                if(strpos($overtimeQueryCondition, 'LIMIT') !== false) $overtimeQueryCondition = substr($overtimeQueryCondition, 0, strpos($overtimeQueryCondition, 'LIMIT'));
                 $stmt = $this->dbh->query($overtimeQueryCondition);
                 while($row = $stmt->fetch()) $overtimes[$row->id] = $row;
             }

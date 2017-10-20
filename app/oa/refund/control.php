@@ -764,7 +764,7 @@ class refund extends control
             if($mode == 'all')
             {
                 $refundQueryCondition = $this->session->refundQueryCondition;
-                if(strpos($refundQueryCondition, 'limit') !== false) $refundQueryCondition = substr($refundQueryCondition, 0, strpos($refundQueryCondition, 'limit'));
+                if(strpos($refundQueryCondition, 'LIMIT') !== false) $refundQueryCondition = substr($refundQueryCondition, 0, strpos($refundQueryCondition, 'LIMIT'));
                 $stmt = $this->dbh->query($refundQueryCondition);
                 while($row = $stmt->fetch()) $refunds[$row->id] = $row;
             }
