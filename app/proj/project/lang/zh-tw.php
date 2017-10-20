@@ -69,7 +69,7 @@ $lang->project->roleList['senior']  = '管理員';
 $lang->project->roleList['limited'] = '受限';
 
 $lang->project->whitelistTip        = '參觀者可以查看項目和任務';
-$lang->project->roleTip             = "管理員擁有所有權限，預設成員不可刪除任務，受限成員僅可操作自己相關任務。";
+$lang->project->roleTip             = "管理員擁有所有權限，預設成員可刪除任務，受限成員僅可操作自己相關任務。";
 $lang->project->roleTips['senior']  = "管理員：可以查看、編輯、刪除所有任務。";
 $lang->project->roleTips['member']  = "預設：可以查看、編輯所有任務，刪除與自己相關的任務。";
 $lang->project->roleTips['limited'] = "受限：只能查看、編輯與自己相關的任務。";

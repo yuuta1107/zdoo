@@ -65,8 +65,6 @@ $lang->todo->statusList['wait']     = 'Wait';
 $lang->todo->statusList['doing']    = 'Doing';
 $lang->todo->statusList['done']     = 'Done';
 $lang->todo->statusList['closed']   = 'Closed';
-//$lang->todo->statusList['cancel']   = '已取消';
-//$lang->todo->statusList['postpone'] = '已延期';
 
 $lang->todo->priList[3] = '3';
 $lang->todo->priList[1] = '1';
@@ -96,7 +94,7 @@ $lang->todo->periods['future']     = 'Pending';
 $lang->todo->periods['before']     = 'Undone';
 $lang->todo->periods['all']        = 'All';
 
-$this->lang->todo->batchedittips = 'The editing item is not selected';
+$lang->todo->batchedittips = 'The editing item is not selected';
 
 $lang->todo->action = new stdclass();
 $lang->todo->action->finished = array('main' => '$date, Finished by <strong>$actor</strong>');
