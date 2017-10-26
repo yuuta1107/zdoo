@@ -62,7 +62,7 @@ class leads extends control
         $this->config->leads->search['actionURL'] = $this->createLink('leads', 'browse', 'mode=bysearch');
         $this->search->setSearchParams($this->config->leads->search);
 
-        $this->view->title    = $this->lang->contact->list;
+        $this->view->title    = $this->lang->leads->list;
         $this->view->mode     = $mode;
         $this->view->origin   = $origin;
         $this->view->status   = $status;
@@ -132,7 +132,7 @@ class leads extends control
             $this->send(array('result' => 'success', 'message' => $message, 'locate' => $locate));
         }
 
-        $this->view->title      = $this->lang->contact->edit;
+        $this->view->title      = $this->lang->leads->edit;
         $this->view->mode       = $mode;
         $this->view->status     = $status;
         $this->view->contact    = $contact;
@@ -161,7 +161,7 @@ class leads extends control
             foreach($files as $file) $fileList[$file->id] = $file;
         }
 
-        $this->view->title      = $this->lang->contact->view;
+        $this->view->title      = $this->lang->leads->view;
         $this->view->mode       = $mode;
         $this->view->status     = $status;
         $this->view->contact    = $this->contact->getByID($contactID, $status);
@@ -234,7 +234,7 @@ class leads extends control
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => $this->server->http_referer));
         }
 
-        $this->view->title     = $this->lang->contact->assign;
+        $this->view->title     = $this->lang->leads->assign;
         $this->view->users     = $this->loadModel('user')->getPairs('nodeleted,noforbidden,noclosed');
         $this->view->contactID = $contactID;
         $this->display();
@@ -260,7 +260,7 @@ class leads extends control
             $this->send(array('result' => 'success', 'message' => $this->lang->importSuccess, 'locate' => $this->server->http_referer));
         }
 
-        $this->view->title      = $this->lang->confirm . $this->lang->contact->common;
+        $this->view->title      = $this->lang->confirm . $this->lang->leads->common;
         $this->view->contact    = $this->contact->getByID($contactID, 'wait');
         $this->view->customers  = $this->loadModel('customer')->getPairs('client', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit, $customerID);
         $this->view->customerID = $customerID;

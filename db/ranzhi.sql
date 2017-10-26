@@ -879,7 +879,7 @@ CREATE TABLE IF NOT EXISTS `sys_product` (
   `code` varchar(20) NOT NULL, 
   `type` varchar(10) NOT NULL,
   `status` varchar(10) NOT NULL,
-  `line` varchar(30) NOT NULL DEFAULT 'default',
+  `line` varchar(30) NOT NULL DEFAULT,
   `desc` text NOT NULL,
   `createdBy` varchar(30) NOT NULL,
   `createdDate` datetime NOT NULL,
