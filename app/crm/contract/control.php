@@ -703,9 +703,16 @@ class contract extends control
         $this->display();
     }
 
+    /**
+     * Get addresses by ajax. 
+     * 
+     * @param  int    $customer 
+     * @access public
+     * @return void
+     */
     public function ajaxGetAddresses($customer = 0)
     {
-        $html      = '<option></option>';
+        $html      = "<option value='0'></option>";
         $addresses = $this->loadModel('address', 'crm')->getPairsByObject('customer', $customer);
         foreach($addresses as $id => $location)
         {

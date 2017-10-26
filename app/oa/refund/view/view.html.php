@@ -41,15 +41,15 @@
             <th><?php echo $lang->refund->desc;?></th>
           </tr>
           <?php foreach($refund->detail as $d):?>
-          <?php $related = ''; foreach(explode(',', trim($d->related, ',')) as $account) $related .= ' ' . zget($users, $account)?>
           <tr>
-            <td><?php echo $d->id?></td>
-            <td><?php echo zget($currencySign, $d->currency) . $d->money?></td>
-            <td><?php echo formatTime($d->date, DT_DATE1)?></td>
-            <td><?php echo zget($categories, $d->category, ' ')?></td>
-            <td title='<?php echo $related;?>'><?php echo $related?></td>
-            <td><span data-toggle='tooltip' data-original-title="<?php echo $d->reason?>"><?php echo zget($lang->refund->statusList, $d->status)?></span></td>
-            <td><?php echo $d->desc?></td>
+            <td><?php echo $d->id;?></td>
+            <td><?php echo zget($currencySign, $d->currency) . $d->money;?></td>
+            <td><?php echo formatTime($d->date, DT_DATE1);?></td>
+            <td><?php echo zget($categories, $d->category, '');?></td>
+            <?php $related = ''; foreach(explode(',', trim($d->related, ',')) as $account) $related .= ' ' . zget($users, $account);?>
+            <td title='<?php echo $related;?>'><?php echo $related;?></td>
+            <td><span data-toggle='tooltip' data-original-title="<?php echo $d->reason;?>"><?php echo zget($lang->refund->statusList, $d->status);?></span></td>
+            <td><?php echo $d->desc;?></td>
           </tr>
           <?php endforeach;?>
         </table>
