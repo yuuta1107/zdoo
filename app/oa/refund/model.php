@@ -298,7 +298,7 @@ class refundModel extends model
     /**
      * Set refund category. 
      * 
-     * @parsm  array   $expenseIdList 
+     * @param  array   $expenseIdList 
      * @access public
      * @return void
      */
