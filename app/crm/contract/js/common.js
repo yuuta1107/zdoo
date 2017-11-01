@@ -17,7 +17,14 @@ $(document).ready(function()
         $('#currency').val($('.order-real:first').parent().parent().prev('span').find('select').find('option:selected').attr('data-currency'));
     });
 
-    $('#menu li').removeClass('active').find('[href*=' + v.mode + ']').parent().addClass('active');
+    if(config.requestType == 'PATH_INFO')
+    {
+        $('#menu li').removeClass('active').find('[href*=browse-' + v.mode + ']').parent().addClass('active');
+    }
+    else
+    {
+        $('#menu li').removeClass('active').find("[href*=mode\\=" + v.mode + ']').parent().addClass('active');
+    }
     /* fix submenu active class if v.mode equal expire. */
     if(v.mode == 'expire') $('#menu li').find('[href*=expired]').parent().removeClass('active');
 })

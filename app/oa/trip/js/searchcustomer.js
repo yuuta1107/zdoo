@@ -2,8 +2,9 @@ var $selectedItem;
 var selectItem = function(item)
 {
     $selectedItem = $(item).first();
-    var modal = $('#ajaxModal');
-    var link  = modal.attr('ref') + '&customers=' + $('input[type=hidden][name*=customers]').val() + ',' + $selectedItem.data('key');
+    var modal  = $('#ajaxModal');
+    var params = v.params + 'customers=' + $('input[type=hidden][name*=customers]').val() + ',' + $selectedItem.data('key')
+    var link   = createLink(v.module, v.method, params);
     modal.load(link, function(){$(this).find('.modal-dialog').css('width', $(this).data('width')); $.zui.ajustModalPosition()})
 };
 

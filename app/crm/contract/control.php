@@ -576,7 +576,7 @@ class contract extends control
             if($mode == 'all')
             {
                 $contractQueryCondition = $this->session->contractQueryCondition;
-                if(strpos($contractQueryCondition, 'limit') !== false) $contractQueryCondition = substr($contractQueryCondition, 0, strpos($contractQueryCondition, 'limit'));
+                if(strpos($contractQueryCondition, 'LIMIT') !== false) $contractQueryCondition = substr($contractQueryCondition, 0, strpos($contractQueryCondition, 'LIMIT'));
                 $stmt = $this->dbh->query($contractQueryCondition);
                 while($row = $stmt->fetch()) $contracts[$row->id] = $row;
             }
@@ -703,9 +703,16 @@ class contract extends control
         $this->display();
     }
 
+    /**
+     * Get addresses by ajax. 
+     * 
+     * @param  int    $customer 
+     * @access public
+     * @return void
+     */
     public function ajaxGetAddresses($customer = 0)
     {
-        $html      = '<option></option>';
+        $html      = "<option value='0'></option>";
         $addresses = $this->loadModel('address', 'crm')->getPairsByObject('customer', $customer);
         foreach($addresses as $id => $location)
         {

@@ -289,7 +289,7 @@ END:VCARD";
             $queryCondition = $this->session->{$type . 'QueryCondition'};
             if($mode == 'all')
             {
-                if(strpos($queryCondition, 'limit') !== false) $queryCondition = substr($queryCondition, 0, strpos($queryCondition, 'limit'));
+                if(strpos($queryCondition, 'LIMIT') !== false) $queryCondition = substr($queryCondition, 0, strpos($queryCondition, 'LIMIT'));
                 $stmt = $this->dbh->query($queryCondition);
                 while($row = $stmt->fetch()) $contacts[$row->id] = $row;
             }

@@ -290,6 +290,7 @@ class entryModel extends model
             ->setDefault('integration', 0)
             ->setIF($this->post->allip, 'ip', '*')
             ->stripTags('logout,block', $this->config->allowedTags)
+            ->remove('allip')
             ->get();
 
         $this->dao->update(TABLE_ENTRY)->data($entry)->autoCheck()->where('code')->eq($code)->exec();

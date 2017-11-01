@@ -12,6 +12,7 @@
 $config->task->require = new stdclass();
 $config->task->require->create = 'name';
 $config->task->require->edit   = 'name';
+$config->task->require->activate = 'left';
 
 $config->task->editor = new stdclass();
 $config->task->editor->create         = array('id' => 'desc', 'tools' => 'simple');

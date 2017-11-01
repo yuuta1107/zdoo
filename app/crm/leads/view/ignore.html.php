@@ -16,7 +16,7 @@
   <table class='table table-form'>
     <tr>
       <th class='w-40px'><?php echo $lang->leads->ignoreReason;?></th>
-      <td><?php echo html::textarea('comment');?></td>
+      <td><?php echo html::textarea('comment', '', "rows='3' class='form-control'");?></td>
     </tr>
     <tr>
       <th></th>

@@ -72,24 +72,24 @@ var trader   = 'customer';
 
 $(document).ready(function()
 {
-    switch (config.currentModule)
+    switch(config.currentModule)
     {
-    case 'contact' :
-        relation = 'client';
-        trader   = 't2.customer';
-        break;
-    case 'feedback' :
-        relation = 'client';
-        trader   = 'customer';
-        break;
-    case 'order' :
-        relation = 'client';
-        trader   = 'o.customer';
-        break;
-    case 'trade' :
-        relation = v.modeType == 'in' ? 'client' : '';
-        trader   = 'trader';
-        break;
+        case 'contact':
+            relation = 'client';
+            trader   = 't2.customer';
+            break;
+        case 'feedback':
+            relation = 'client';
+            trader   = 'customer';
+            break;
+        case 'order':
+            relation = 'client';
+            trader   = 'o.customer';
+            break;
+        case 'trade':
+            relation = v.modeType == 'in' ? 'client' : '';
+            trader   = 'trader';
+            break;
     }
 
     var showSearchModal = function(e)

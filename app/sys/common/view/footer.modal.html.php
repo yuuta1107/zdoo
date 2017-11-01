@@ -16,5 +16,5 @@
 </div>
 <?php if(isset($pageJS)) js::execute($pageJS);?>
 <?php else:?>
-<?php include  $this->app->getAppRoot() . '/common/view/footer.html.php'; ?>
+<?php include  $this->app->getAppRoot() . '/common/view/footer.html.php';?>
 <?php endif;?>

@@ -31,10 +31,12 @@
           <th class='w-100px'><?php echo $lang->trade->depositor;?></th>
           <td><?php echo html::select('depositor', $depositorList, $trade->depositor, "class='form-control'");?></td>
         </tr>
+          <?php if($trade->type == 'in' or $trade->type == 'out'):?>
         <tr>
           <th><?php echo $lang->trade->product;?></th>
           <td><?php echo html::select('product', array('') + $productList, $trade->product, "class='form-control chosen'");?></td>
         </tr>
+        <?php endif;?>
         <?php if($trade->type == 'in'):?>
         <tr class='income'>
           <th><?php echo $lang->trade->category;?></th>

@@ -50,7 +50,7 @@
           </tr>
           <tr>
             <th><?php echo $lang->trade->depositor;?></th>
-            <td><?php echo !empty($depositor->name) ? $depositor->name : '';?></td>
+            <td><?php echo !empty($depositor->abbr) ? $depositor->abbr : '';?></td>
           </tr>
           <tr>
             <th><?php echo $lang->trade->type;?></th>
@@ -78,10 +78,12 @@
             <th><?php echo $lang->trade->handlers;?></th>
             <td title='<?php foreach(explode(',', $trade->handlers) as $handler) echo zget($users, $handler) . ' ';?>'><?php foreach(explode(',', $trade->handlers) as $handler) echo zget($users, $handler) . ' ';?></td>
           </tr>
+          <?php if($trade->type == 'in' or $trade->type == 'out'):?>
           <tr>
             <th><?php echo $lang->trade->product;?></th>
             <td><?php echo !empty($product->name) ? $product->name : '';?></td>
           </tr>
+          <?php endif;?>
           <?php if($trade->type == 'in' or $trade->type == 'out'):?>
           <tr>
             <th><?php echo $lang->trade->category;?></th>

@@ -13,6 +13,9 @@
 <?php include '../../../sys/common/view/header.modal.html.php';?>
 <?php include '../../../sys/common/view/datepicker.html.php';?>
 <?php include '../../../sys/common/view/chosen.html.php';?>
+<?php js::set('module', $this->moduleName);?>
+<?php js::set('method', $this->methodName);?>
+<?php js::set('params', "tripID=$trip->id&");?>
 <div class='panel-body'>
   <form id='ajaxForm' method='post' action="<?php echo $this->createLink('oa.trip', 'edit', "id=$trip->id")?>">
     <table class='table table-form table-condensed'>

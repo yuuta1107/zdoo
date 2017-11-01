@@ -120,6 +120,7 @@ class refundModel extends model
             ->join('related', ',')
             ->remove('firstReviewer,firstReviewDate,sencondReviewer,secondReviewDate,refundBy,refundDate')
             ->remove('dateList,moneyList,currencyList,categoryList,descList,relatedList')
+            ->setForce('money', (float)$this->post->money)
             ->get();
 
         if(!empty($this->config->refund->firstReviewer) && $this->config->refund->firstReviewer == $this->app->user->account) 
@@ -152,13 +153,13 @@ class refundModel extends model
         {
             foreach($this->post->moneyList as $key => $money)
             {
-                if(empty($money)) continue;
+                if(!(float)$money) continue;
                 $detail = new stdclass();
                 $detail->parent      = $refundID;
                 $detail->status      = $refund->status;
                 $detail->createdBy   = $this->app->user->account;
                 $detail->createdDate = $now;
-                $detail->money       = $money;
+                $detail->money       = (float)$money;
                 $detail->date        = empty($_POST['dateList'][$key]) ? helper::today() : $_POST['dateList'][$key];
                 $detail->currency    = $refund->currency;
                 $detail->category    = $_POST['categoryList'][$key];
@@ -192,6 +193,7 @@ class refundModel extends model
             ->join('related', ',')
             ->remove('status,firstReviewer,firstReviewDate,sencondReviewer,secondReviewDate,refundBy,refundDate,files,labels')
             ->remove('idList,dateList,moneyList,currencyList,categoryList,descList,relatedList')
+            ->setForce('money', (float)$this->post->money)
             ->get();
 
         if(!empty($this->config->refund->firstReviewer) && $this->config->refund->firstReviewer == $this->app->user->account) 
@@ -224,14 +226,15 @@ class refundModel extends model
             $newDetails = array();
             foreach($this->post->moneyList as $key => $money)
             {
-                if(empty($money)) continue;
+                if(!(float)$money) continue;
                 $detail = new stdclass();
                 $detail->id          = empty($_POST['idList'][$key]) ? '0' : $_POST['idList'][$key];
                 $detail->parent      = $refundID;
                 $detail->status      = 'wait';
                 $detail->createdBy   = $this->app->user->account;
                 $detail->createdDate = $now;
-                $detail->money       = $money;
+                $detail->money       = (float)$money;
+                $detail->related     = implode(',', $_POST['relatedList'][$key]);
                 $detail->date        = empty($_POST['dateList'][$key]) ? $refund->date : $_POST['dateList'][$key];
                 $detail->currency    = $refund->currency;
                 $detail->category    = !empty($_POST['categoryList'][$key]) ? $_POST['categoryList'][$key] : '';
@@ -295,7 +298,7 @@ class refundModel extends model
     /**
      * Set refund category. 
      * 
-     * @parsm  array   $expenseIdList 
+     * @param  array   $expenseIdList 
      * @access public
      * @return void
      */

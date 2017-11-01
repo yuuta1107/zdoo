@@ -724,7 +724,7 @@ class task extends control
 
             if(isset($skipTasks)) $this->send(array('result' => 'fail', 'message' => sprintf($this->lang->task->skipClose, join(',', $skipTasks))));
         }
-        $this->send(array('result' => 'success', 'locate' => $this->server->http_referer));
+        $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => $this->server->http_referer));
     }
 
     /**
@@ -817,7 +817,7 @@ class task extends control
             if($mode == 'all')
             {
                 $taskQueryCondition = $this->session->taskQueryCondition;
-                if(strpos($taskQueryCondition, 'limit') !== false) $taskQueryCondition = substr($taskQueryCondition, 0, strpos($taskQueryCondition, 'limit'));
+                if(strpos($taskQueryCondition, 'LIMIT') !== false) $taskQueryCondition = substr($taskQueryCondition, 0, strpos($taskQueryCondition, 'LIMIT'));
                 $stmt = $this->dbh->query($taskQueryCondition);
                 while($row = $stmt->fetch()) $tasks[$row->id] = $row;
             }

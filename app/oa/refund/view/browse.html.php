@@ -86,7 +86,8 @@
           <td class='refund-<?php echo $refund->status?>'><?php echo zget($lang->refund->statusList, $refund->status)?></td>
           <td><?php echo zget($userPairs, $refund->createdBy);?></td>
           <td><?php echo formatTime($refund->createdDate, DT_DATE1);?></td>
-          <td><?php echo zget($userPairs, $refund->firstReviewer) . ' ' . zget($userPairs, $refund->secondReviewer);?></td>
+          <?php $reviewer = zget($userPairs, $refund->firstReviewer) . ' ' . zget($userPairs, $refund->secondReviewer);?> 
+          <td class='text-left' title='<?php echo $reviewer;?>'><?php echo $reviewer;?></td>
           <td><?php echo zget($userPairs, $refund->refundBy);?></td>
           <td><?php echo formatTime($refund->refundDate, DT_DATE1)?></td>
           <td class='text-left'>

@@ -17,7 +17,7 @@
   <div id='titlebar'>
     <div class='input-group w-200px' id='datepicker'>
       <span class='input-group-addon'><?php echo $lang->todo->date;?></span>
-      <?php echo html::input('date', $date, "class='form-control form-date' onchange='updateAction(this.value)'");?>
+      <?php echo html::input('date', $date, "class='form-control form-date'");?>
       <span class='input-group-addon'><label class='checkbox-inline'><input type='checkbox' id='switchDate' onclick='switchDateTodo(this);'> <?php echo $lang->todo->periods['future'];?></label></span>
     </div>
   </div>

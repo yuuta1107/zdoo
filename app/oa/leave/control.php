@@ -172,7 +172,7 @@ class leave extends control
     {
         /* Check privilage. */
         $canReview = false;
-        if($this->app->user->admin = 'super') 
+        if($this->app->user->admin == 'super') 
         {
             $canReview = true;
         }
@@ -602,7 +602,7 @@ class leave extends control
             if($mode == 'all')
             {
                 $leaveQueryCondition = $this->session->leaveQueryCondition;
-                if(strpos($leaveQueryCondition, 'limit') !== false) $leaveQueryCondition = substr($leaveQueryCondition, 0, strpos($leaveQueryCondition, 'limit'));
+                if(strpos($leaveQueryCondition, 'LIMIT') !== false) $leaveQueryCondition = substr($leaveQueryCondition, 0, strpos($leaveQueryCondition, 'LIMIT'));
                 $stmt = $this->dbh->query($leaveQueryCondition);
                 while($row = $stmt->fetch()) $leaves[$row->id] = $row;
             }

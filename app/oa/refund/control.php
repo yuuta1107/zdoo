@@ -506,7 +506,9 @@ class refund extends control
      */
     public function setCategory($module = '')
     {
-        $expenseList   = $this->loadModel('tree')->getOptionMenu('out', 0, true);
+        $expenseList = $this->loadModel('tree')->getOptionMenu('out', 0, true);
+        /* Expenses whose grade < 2 wiill be hide. */
+        foreach($expenseList as $key => $expense) if(substr_count($expense, '/') < 2) unset($expenseList[$key]);
         $expenseIdList =  array_keys($expenseList);
 
         if($_POST)
@@ -764,7 +766,7 @@ class refund extends control
             if($mode == 'all')
             {
                 $refundQueryCondition = $this->session->refundQueryCondition;
-                if(strpos($refundQueryCondition, 'limit') !== false) $refundQueryCondition = substr($refundQueryCondition, 0, strpos($refundQueryCondition, 'limit'));
+                if(strpos($refundQueryCondition, 'LIMIT') !== false) $refundQueryCondition = substr($refundQueryCondition, 0, strpos($refundQueryCondition, 'LIMIT'));
                 $stmt = $this->dbh->query($refundQueryCondition);
                 while($row = $stmt->fetch()) $refunds[$row->id] = $row;
             }

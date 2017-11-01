@@ -388,7 +388,7 @@ class customer extends control
             if($mode == 'all')
             {
                 $customerQueryCondition = $this->session->customerQueryCondition;
-                if(strpos($customerQueryCondition, 'limit') !== false) $customerQueryCondition = substr($customerQueryCondition, 0, strpos($customerQueryCondition, 'limit'));
+                if(strpos($customerQueryCondition, 'LIMIT') !== false) $customerQueryCondition = substr($customerQueryCondition, 0, strpos($customerQueryCondition, 'LIMIT'));
                 $stmt = $this->dbh->query($customerQueryCondition);
                 while($row = $stmt->fetch()) $customers[$row->id] = $row;
             }

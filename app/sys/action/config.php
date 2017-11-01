@@ -10,7 +10,7 @@
  * @link        http://www.ranzhico.com
  */
 $config->action->require = new stdclass();
-$config->action->require->createRecord = 'contact,comment';
+$config->action->require->createrecord = 'contact,comment';
 
 $config->action->objectNameFields['announce']  = 'title';
 $config->action->objectNameFields['article']   = 'title';

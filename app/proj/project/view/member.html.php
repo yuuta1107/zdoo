@@ -13,7 +13,7 @@
 <?php include '../../../sys/common/view/header.modal.html.php';?>
 <?php include '../../../sys/common/view/chosen.html.php';?>
 <?php $key = 0;?>
-<form id='ajaxForm' method='post' action='<?php echo $this->createLink('proj.project', 'member', "projectID={$project->id}")?>'>
+<form id='teamForm' method='post' action='<?php echo $this->createLink('proj.project', 'member', "projectID={$project->id}")?>'>
   <table class='table table-form table-hover no-td-padding'>
     <?php foreach($project->members as $member):?>
     <?php if($member->role == 'manager') continue;?>

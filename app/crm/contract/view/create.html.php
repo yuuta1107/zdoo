@@ -84,7 +84,7 @@
           <th><?php echo $lang->contract->address;?></th>
           <td>
             <div class='input-group'>
-              <?php echo html::select('address', '', '', "class='form-control chosen'");?>
+              <?php echo html::select('address', array(), '', "class='form-control chosen'");?>
               <?php echo html::input('newAddress', '', "class='form-control'");?>
               <span class='input-group-addon'>
                 <label class='checkbox-inline'>

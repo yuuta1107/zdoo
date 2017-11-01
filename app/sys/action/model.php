@@ -55,7 +55,7 @@ class actionModel extends model
 
         $this->dao->insert(TABLE_ACTION)
             ->data($action, $skip = 'nextDate,files,labels')
-            ->batchCheckIF($actionType == 'record', $this->config->action->require->createRecord, 'notempty')
+            ->batchCheckIF($actionType == 'record', $this->config->action->require->createrecord, 'notempty')
             ->checkIF($this->post->nextDate, 'nextDate', 'ge', helper::today())
             ->exec();
 

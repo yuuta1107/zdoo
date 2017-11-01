@@ -65,8 +65,6 @@ $lang->todo->statusList['wait']     = '未開始';
 $lang->todo->statusList['doing']    = '進行中';
 $lang->todo->statusList['done']     = '已完成';
 $lang->todo->statusList['closed']   = '已關閉';
-//$lang->todo->statusList['cancel']   = '已取消';
-//$lang->todo->statusList['postpone'] = '已延期';
 
 $lang->todo->priList[3] = '一般';
 $lang->todo->priList[1] = '最高';
@@ -95,6 +93,8 @@ $lang->todo->periods['thisYear']   = '本年';
 $lang->todo->periods['future']     = '待定';
 $lang->todo->periods['before']     = '未完';
 $lang->todo->periods['all']        = '所有';
+
+$lang->todo->batchedittips = '未選擇編輯項目';
 
 $lang->todo->action = new stdclass();
 $lang->todo->action->finished  = array('main' => '$date, 由 <strong>$actor</strong>完成');

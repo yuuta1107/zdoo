@@ -4,6 +4,7 @@ $app->loadLang('trip', 'oa');
 $menu = isset($lang->egress->menu) ? $lang->egress->menu : '';
 $lang->egress = clone $lang->trip;
 $lang->egress->menu = $menu;
+$lang->egress->create   = '新建外出';
 
 $lang->egress->common   = '外出';
 $lang->egress->browse   = '外出列表';

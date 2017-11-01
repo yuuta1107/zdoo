@@ -53,11 +53,11 @@
         <?php 
         if(helper::isAjaxRequest())
         {
-            $append  = $from != 'record' ? "class='loadInModal'" : '';
+            $append = $from == 'record' ? "class='loadInModal'" : '';
         }
         else
         {
-            $append = $from == 'view' ?  "data-toggle='modal' data-type='ajax'" : '';
+            $append = $from == 'view' ?  "data-toggle='modal'" : '';
         }
         $editUrl =$this->createLink('action', 'editRecord', "id={$action->id}&from={$from}");
 

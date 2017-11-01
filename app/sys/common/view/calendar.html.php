@@ -67,6 +67,8 @@ $(function()
             }
         }
 
+        settings.dragThenDrop = {flex: false};
+
         /* init calendar. */
         calendarObj.calendar(settings);
     });

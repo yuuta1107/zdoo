@@ -34,17 +34,17 @@
     <thead>
       <tr class='text-center'>
         <?php $vars = "mode={$mode}&status={$status}&origin={$origin}&orderBy=%s&recTotal={$pager->recTotal}&recPerPage={$pager->recPerPage}&pageID={$pager->pageID}";?>
-        <th class='w-80px'> <?php commonModel::printOrderLink('id', $orderBy, $vars, $lang->contact->id);?></th>
+        <th class='w-60px'> <?php commonModel::printOrderLink('id', $orderBy, $vars, $lang->contact->id);?></th>
         <th class='w-80px text-left'><?php commonModel::printOrderLink('realname', $orderBy, $vars, $lang->contact->realname);?></th>
         <?php if($mode == 'next'):?>
-        <th class="w-80px text-left"><?php commonModel::printOrderLink('nextDate', $orderBy, $vars, $lang->contact->nextDate);?></th>
+        <th class="w-90px"><?php commonModel::printOrderLink('nextDate', $orderBy, $vars, $lang->contact->nextDate);?></th>
         <?php endif;?>
-        <th class="text-left"><?php commonModel::printOrderLink('company', $orderBy, $vars, $lang->contact->company);?></th>
+        <th class='text-left'><?php commonModel::printOrderLink('company', $orderBy, $vars, $lang->contact->company);?></th>
         <th class='w-60px'> <?php commonModel::printOrderLink('gender', $orderBy, $vars, $lang->contact->gender);?></th>
-        <th class='w-200px text-left'><?php commonModel::printOrderLink('phone', $orderBy, $vars, $lang->contact->phone . $lang->slash . $lang->contact->mobile);?></th>
+        <th class='w-160px'><?php commonModel::printOrderLink('phone', $orderBy, $vars, $lang->contact->phone . $lang->slash . $lang->contact->mobile);?></th>
         <th class='w-160px'><?php commonModel::printOrderLink('email', $orderBy, $vars, $lang->contact->email);?></th>
-        <th class='w-80px visible-lg'><?php commonModel::printOrderLink('qq', $orderBy, $vars, $lang->contact->qq);?></th>
-        <th class='w-80px visible-lg'><?php commonModel::printOrderLink('weixin', $orderBy, $vars, $lang->contact->weixin);?></th>
+        <th class='w-100px visible-lg'><?php commonModel::printOrderLink('qq', $orderBy, $vars, $lang->contact->qq);?></th>
+        <th class='w-100px visible-lg'><?php commonModel::printOrderLink('weixin', $orderBy, $vars, $lang->contact->weixin);?></th>
         <th class='w-100px'><?php commonModel::printOrderLink('origin', $orderBy, $vars, $lang->contact->origin);?></th>
         <th class='w-200px'><?php echo $lang->actions;?></th>
       </tr>
@@ -53,17 +53,18 @@
     <?php foreach($contacts as $contact):?>
     <tr class='text-center'>
       <td><?php echo $contact->id;?></td>
-      <td class='text-left'><?php echo html::a(inlink('view', "contactID={$contact->id}&mode={$mode}&status={$status}"), $contact->realname);?></td>
+      <td class='text-left' title='<?php echo $contact->realname;?>'><?php echo html::a(inlink('view', "contactID={$contact->id}&mode={$mode}&status={$status}"), $contact->realname);?></td>
       <?php if($mode == 'next'):?>
-      <td class="text-left"><?php echo $contact->nextDate;?></td>
+      <td title='<?php echo $contact->nextDate;?>'><?php echo $contact->nextDate;?></td>
       <?php endif;?>
-      <td class='text-left'><?php echo $contact->company;?></td>
+      <td class='text-left' title='<?php echo $contact->company;?>'><?php echo $contact->company;?></td>
       <td><?php echo isset($lang->genderList->{$contact->gender}) ? $lang->genderList->{$contact->gender} : '';?></td>
-      <td class='text-left'><?php echo $contact->phone . ' ' . $contact->mobile;?></td>
-      <td><?php echo html::mailto($contact->email, $contact->email)?></td>
-      <td class='visible-lg'><?php echo empty($contact->qq) ? '' : html::a("tencent://Message/?Uin={$contact->qq}&websiteName=RanZhi&Menu=yes", $contact->qq, "target='_blank'")?></td>
-      <td class='visible-lg'><?php echo empty($contact->weixin) ? '' : $contact->weixin;?></td>
-      <td><?php echo $contact->origin;?></td>
+      <?php $PhoneAndMobile =  $contact->phone . ' ' . $contact->mobile;?>
+      <td class='text-left' title='<?php echo $PhoneAndMobile;?>' ><?php echo $PhoneAndMobile;?></td>
+      <td title='<?php echo $contact->email;?>'><?php echo html::mailto($contact->email, $contact->email)?></td>
+      <td class='visible-lg' title='<?php echo $contact->qq;?>'><?php echo empty($contact->qq) ? '' : html::a("tencent://Message/?Uin={$contact->qq}&websiteName=RanZhi&Menu=yes", $contact->qq, "target='_blank'")?></td>
+      <td class='visible-lg' title='<?php echo $contact->weixin;?>'><?php echo empty($contact->weixin) ? '' : $contact->weixin;?></td>
+      <td class='text-left' title='<?php echo $contact->origin;?>'><?php echo $contact->origin;?></td>
       <td class='operate'>
         <?php
         commonModel::printLink('leads', 'assign', "contactID=$contact->id", $lang->contact->assign, "data-toggle='modal'");

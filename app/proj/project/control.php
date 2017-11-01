@@ -110,10 +110,12 @@ class project extends control
      */
     public function view($projectID = 0)
     {
-        $this->view->title      = $this->lang->project->view;
-        $this->view->project    = $this->project->getById($projectID);
-        $this->view->users      = $this->loadModel('user')->getPairs();
-        $this->view->modalWidth = 500;
+        $project = $this->project->getByID($projectID);
+
+        $this->view->title   = $this->lang->project->view . $this->lang->colon . $project->name;
+        $this->view->groups  = $this->loadModel('group')->getPairs();
+        $this->view->users   = $this->loadModel('user')->getPairs();
+        $this->view->project = $project;
         $this->display();
     }
 

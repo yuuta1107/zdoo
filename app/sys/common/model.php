@@ -148,7 +148,7 @@ class commonModel extends model
         $appName = '';
         if(strpos($module, '.') !== false) list($appName, $module) = explode('.', $module);
 
-        if(!commonModel::isAvailable($module)) return false;
+        if(!commonModel::isAvailable($module, $method)) return false;
 
         if($app->user->admin == 'super') return true;
 
@@ -244,10 +244,11 @@ class commonModel extends model
      * @access public
      * @return bool
      */
-    public static function isAvailable($module)
+    public static function isAvailable($module, $method = '')
     {
         global $config, $lang;
         if(isset($lang->setting->moduleList[$module]) and strpos($config->setting->modules, $module) === false) return false;
+        if($module == 'my' and $method == 'review' and empty($config->setting->modules)) return false;
         return true;
     }
 
@@ -380,7 +381,7 @@ class commonModel extends model
                 $method = 'department';
             }
 
-            if(!commonModel::isAvailable($module)) continue;
+            if(!commonModel::isAvailable($module, $method)) continue;
 
             if(strpos(',tree,setting,schema,sales,', ',' . $module . ',') != false and isset($lang->setting->menu)) 
             {

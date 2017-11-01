@@ -74,7 +74,7 @@
               </tr>
               <?php $key++;?>
               <?php endforeach;?>
-              <tr class='text-center'>
+              <tr>
                 <td class='w-100px'><?php echo html::input("dateList[$key]", '', "class='form-control form-date' placeholder='{$lang->refund->date}'")?></td>
                 <?php if($categories):?>
                 <td class='w-100px'><?php echo html::select("categoryList[$key]", $categories, '', "class='form-control chosen' placeholder='{$lang->refund->category}'")?></td>
@@ -104,7 +104,7 @@
   </div>
 </form>
 <script type='text/template' id='detailTpl'>
-<tr class='text-center'>
+<tr>
   <td class='w-100px'><?php echo html::input('dateList[key]', '', "class='form-control form-date' placeholder='{$lang->refund->date}'")?></td>
   <?php if($categories):?>
   <td class='w-100px'><?php echo html::select('categoryList[key]', $categories, '', "class='form-control chosen' placeholder='{$lang->refund->category}'")?></td>

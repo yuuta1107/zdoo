@@ -389,7 +389,7 @@ class order extends control
             if($mode == 'all')
             {
                 $orderQueryCondition = $this->session->orderQueryCondition;
-                if(strpos($orderQueryCondition, 'limit') !== false) $orderQueryCondition = substr($orderQueryCondition, 0, strpos($orderQueryCondition, 'limit'));
+                if(strpos($orderQueryCondition, 'LIMIT') !== false) $orderQueryCondition = substr($orderQueryCondition, 0, strpos($orderQueryCondition, 'LIMIT'));
                 $stmt = $this->dbh->query($orderQueryCondition);
                 while($row = $stmt->fetch()) $orders[$row->id] = $row;
             }

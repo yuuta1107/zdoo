@@ -570,7 +570,7 @@ class projectModel extends model
             }
             else
             {
-                $menu .= "<li>" . html::a(helper::createLink('project', 'view', "projectID=$projectID"), $this->lang->project->project, "data-toggle='modal'") . "</li>";
+                $menu .= "<li>" . html::a(helper::createLink('project', 'view', "projectID=$projectID"), $this->lang->project->project, "data-toggle='modal' data-width='500'") . "</li>";
             }
         }
         else if($methodName == 'kanban' || $methodName == 'outline')
