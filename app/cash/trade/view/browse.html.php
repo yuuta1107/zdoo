@@ -120,7 +120,7 @@
             <?php commonModel::printLink('trade', 'view', "tradeID={$trade->id}&mode={$mode}", $lang->view);?>
             <?php commonModel::printLink('trade', 'edit', "tradeID={$trade->id}&mode={$mode}", $lang->edit);?>
             <?php commonModel::printLink('trade', 'detail', "tradeID={$trade->id}&mode={$mode}", $lang->trade->detail, "data-toggle='modal'");?>
-            <?php commonModel::printLink('trade', 'delete', "tradeID={$trade->id}", $lang->delete, "class='deleter'");?>
+            <?php commonModel::printLink('trade', 'delete', "tradeID={$trade->id}&mode={$mode}", $lang->delete, "class='deleter'");?>
           </td>
         </tr>
         <?php endforeach;?>
