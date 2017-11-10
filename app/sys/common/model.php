@@ -1425,15 +1425,15 @@ class commonModel extends model
         curl_setopt($ci, CURLOPT_USERAGENT, 'Sae T OAuth2 v0.1');
         curl_setopt($ci, CURLOPT_CONNECTTIMEOUT, 30);
         curl_setopt($ci, CURLOPT_TIMEOUT, 30);
-        curl_setopt($ci, CURLOPT_RETURNTRANSFER, TRUE);
-        curl_setopt($ci, CURLOPT_ENCODING, "");
-        curl_setopt($ci, CURLOPT_SSL_VERIFYPEER, FALSE);
-        curl_setopt($ci, CURLOPT_HEADER, FALSE);
+        curl_setopt($ci, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ci, CURLOPT_ENCODING, '');
+        curl_setopt($ci, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ci, CURLOPT_HEADER, false);
 
         $headers[] = "API-RemoteIP: " . $_SERVER['REMOTE_ADDR'];
         curl_setopt($ci, CURLOPT_URL, $url);
-        curl_setopt($ci, CURLOPT_HTTPHEADER, $headers );
-        curl_setopt($ci, CURLINFO_HEADER_OUT, TRUE);
+        curl_setopt($ci, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ci, CURLINFO_HEADER_OUT, true);
         if(!empty($data)) 
         {
             curl_setopt($ci, CURLOPT_POST, true);

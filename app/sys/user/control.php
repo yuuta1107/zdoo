@@ -327,7 +327,7 @@ class user extends control
     public function delete($account = '')
     {
         $result = $this->user->inTheReviewProcess($account);
-        if($result!== false) 
+        if($result !== false) 
         {
             $this->send(array('result' => 'fail', 'message' => sprintf($this->lang->user->actionError, $result)));
         }
