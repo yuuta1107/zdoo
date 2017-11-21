@@ -7,7 +7,7 @@
  * @author      Tingting Dai <daitingting@xirangit.com>
  * @package     product
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.zdoo.org
  */
 if(!isset($lang->product)) $lang->product = new stdclass();
 $lang->product->common      = 'Product';

@@ -7,7 +7,7 @@
  * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
  * @package     common 
  * @version     $Id: en.php 4194 2016-10-21 09:23:53Z daitingting $
- * @link        http://www.ranzhico.com
+ * @link        http://www.zdoo.org
  */
 $lang->colon      = ' : ';
 $lang->ellipsis   = '…';
@@ -42,9 +42,9 @@ $lang->apps->team       = 'TEAM';
 $lang->apps->superadmin = 'ADMIN';
 
 /* Lang items for ranzhi. */
-$lang->ranzhi    = 'Ranger';
-$lang->agreement = "I have read and agreed to  <a href='http://zpl.pub/page/zplv11.html' target='_blank'>Z PUBLIC LICENSE 1.2</a>, <span class='text-danger'>and will keep the logos and links of Ranger.</span>";
-$lang->poweredBy = "<a href='http://www.ranzhico.com/?v=%s' target='_blank'>{$lang->ranzhi} %s</a>";
+$lang->ranzhi    = 'Zdoo';
+$lang->agreement = "I have read and agreed to  <a href='http://zpl.pub/page/zplv11.html' target='_blank'>Z PUBLIC LICENSE 1.2</a>, <span class='text-danger'>and will keep the logos and links of Zdoo.</span>";
+$lang->poweredBy = "<a href='http://www.zdoo.org/?v=%s' target='_blank'>{$lang->ranzhi} %s</a>";
 $lang->ipLimited = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8' /></head><body>Sorry, your current IP is blocked. Please contact the Administrator to get privilege.</body></html>";
 
 /* IE6 alert.  */
@@ -68,7 +68,7 @@ $lang->themes['clear']   = 'Clear';
 
 /* Global lang items. */
 $lang->home           = 'Home';
-$lang->welcome        = '%s Ranger';
+$lang->welcome        = '%s Zdoo';
 $lang->messages       = "<strong><i class='icon-comment-alt'></i> %s</strong>";
 $lang->todayIs        = 'Today is %s, ';
 $lang->today          = 'Today';

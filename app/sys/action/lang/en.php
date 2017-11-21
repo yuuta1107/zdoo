@@ -7,7 +7,7 @@
  * @author      Yidong Wang <yidong@cnezsoft.com>
  * @package     action
  * @version     $Id: zh-cn.php 4955 2013-07-02 01:47:21Z chencongzhi520@gmail.com $
- * @link        http://www.ranzhico.com
+ * @link        http://www.zdoo.org
  */
 if(!isset($lang->action)) $lang->action = new stdclass();
 
@@ -33,7 +33,7 @@ $lang->action->hideOne       = 'Hide';
 $lang->action->hideAll       = 'Hide all';
 $lang->action->hidden        = 'Hidden';
 $lang->action->undelete      = 'Undelete';
-$lang->action->trashTips     = 'Tips:The deletions in Ranger are tag deletions.';
+$lang->action->trashTips     = 'Tips:The deletions in Zdoo are tag deletions.';
 
 $lang->action->textDiff = 'Text Mode';
 $lang->action->original = 'Original content';

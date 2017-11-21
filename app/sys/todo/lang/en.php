@@ -7,7 +7,7 @@
  * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
  * @package     todo
  * @version     $Id: en.php 4676 2013-04-26 06:08:23Z chencongzhi520@gmail.com $
- * @link        http://www.ranzhico.com
+ * @link        http://www.zdoo.org
  */
 if(!isset($lang->todo)) $lang->todo = new stdclass();
 $lang->todo->common       = 'To-Do';
@@ -52,7 +52,7 @@ $lang->todo->finishedBy   = 'Finished By';
 $lang->todo->finishedDate = 'Finished On';
 $lang->todo->closedBy     = 'Closed By';
 $lang->todo->closedDate   = 'Closed On';
-$lang->todo->ranzhi       = 'Ranger';
+$lang->todo->ranzhi       = 'Zdoo';
 $lang->todo->task         = 'Tasks';
 $lang->todo->bug          = 'Bugs';
 

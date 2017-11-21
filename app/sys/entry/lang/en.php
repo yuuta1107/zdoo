@@ -7,7 +7,7 @@
  * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
  * @package     entry 
  * @version     $Id: en.php 4091 2016-09-30 07:16:50Z daitingting $
- * @link        http://www.ranzhico.com
+ * @link        http://www.zdoo.org
  */
 $lang->entry->common      = 'App';
 $lang->entry->admin       = 'Apps';
@@ -40,9 +40,9 @@ $lang->entry->height      = 'Height';
 $lang->entry->priv        = 'Privilege';
 $lang->entry->category    = 'Category';
 
-$lang->entry->chanzhi          = 'Changer';
+$lang->entry->chanzhi          = 'Zsite';
 $lang->entry->zentao           = 'ZenTao';
-$lang->entry->integrateChanzhi = 'Integrate Changer';
+$lang->entry->integrateChanzhi = 'Integrate Zsite';
 $lang->entry->integrateZentao  = 'Integrate ZenTao';
 
 $lang->entry->chanzhiPlaceholder = 'Please enter Admin URL';

@@ -7,7 +7,7 @@
  * @author      Tingting Dai <daitingting@xirangit.com>
  * @package     project
  * @version     $Id: zh-cn.php 824 2010-05-02 15:32:06Z wwccss $
- * @link        http://www.ranzhico.com
+ * @link        http://www.zdoo.org
  */
 if(!isset($lang->project)) $lang->project = new stdclass();
 $lang->project->common     = 'Project';

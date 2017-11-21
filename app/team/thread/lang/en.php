@@ -7,7 +7,7 @@
  * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
  * @package     thread
  * @version     $Id: en.php 4029 2016-08-26 06:50:41Z liugang $
- * @link        http://www.ranzhico.com
+ * @link        http://www.zdoo.org
  */
 $lang->thread->common    = 'Thread';
 

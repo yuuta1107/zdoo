@@ -7,7 +7,7 @@
  * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
  * @package     mail 
  * @version     $Id: en.php 4029 2016-08-26 06:50:41Z liugang $
- * @link        http://www.ranzhico.com
+ * @link        http://www.zdoo.org
  */
 $lang->mail->common = 'Email Settings';
 $lang->mail->index  = 'Home';
@@ -46,7 +46,7 @@ $lang->mail->secureList['tls'] = 'tls';
 $lang->mail->inputFromEmail = 'Please enter Email address';
 $lang->mail->nextStep       = 'Next';
 $lang->mail->successSaved   = 'The configuration has been successfully saved.';
-$lang->mail->subject        = "This is a testing Email from Ranger.";
+$lang->mail->subject        = "This is a testing Email from Zdoo.";
 $lang->mail->content        = 'If you see this notice, it means that the Email notification feature has been enabled!';
 $lang->mail->successSended  = 'Successfully sent!';
 $lang->mail->needConfigure  = "Configuration is not found. Configure it first.";

@@ -7,7 +7,7 @@
  * @author      Yidong Wang <yidong@cnezsoft.com>
  * @package     webapp
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.zdoo.org
  */
 if(!isset($lang->webapp)) $lang->webapp = new stdclass();
 $lang->webapp->common = 'App';

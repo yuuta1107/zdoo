@@ -7,7 +7,7 @@
  * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
  * @package     package
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.zdoo.org
  */
 $lang->package->common        = 'Packages';
 $lang->package->browse        = 'View';
@@ -93,7 +93,7 @@ $lang->package->waring = 'Waring';
 
 $lang->package->errorOccurs                  = 'Error:';
 $lang->package->errorGetModules              = "Get packages' categories data from the www.ranzhico.com failed. ";
-$lang->package->errorGetPackages             = 'Get packages from www.ranzhico.com failed. You can visit <a href="http://www.ranzhico.com/extension/" target="_blank">www.ranzhico.com</a> to find your packages, download it manually and then upload to ranzhi to install it.';
+$lang->package->errorGetPackages             = 'Get packages from www.ranzhico.com failed. You can visit <a href="http://www.zdoo.org/extension/" target="_blank">www.ranzhico.com</a> to find your packages, download it manually and then upload to ranzhi to install it.';
 $lang->package->errorDownloadPathNotFound    = 'The save path of package file <strong>%s</strong>does not exists.<br />For linux users, can execute <strong>mkdir -p %s</strong> to fix it.';
 $lang->package->errorDownloadPathNotWritable = 'The save path of package file <strong>%s</strong>is not writable.<br />For linux users, can execute <strong>sudo chmod 777 %s</strong> to fix it.';
 $lang->package->errorPackageFileExists       = 'There is a file with the same name <strong>%s</strong>.<h3> If you want to %s again, <a href="%s" class="alert-link loadInModal">please click this link</a>.</h3>';
