@@ -52,7 +52,7 @@ $lang->mail->successSended  = 'Successfully sent!';
 $lang->mail->needConfigure  = "Configuration is not found. Configure it first.";
 
 $lang->mail->mailContentTip = <<<EOT
-<strong>%s</strong>(%s) Powered by <a href='https://www.ranzhico.com' target='blank'>RanZhi OA</a>.<br />
+<strong>%s</strong>(%s) Powered by <a href='https://www.zdoo.org' target='blank'>RanZhi OA</a>.<br />
 <a href='http://www.cnezsoft.com' target='blank'>Nature Easy Soft</a>
 EOT;
 $lang->mail->openTip = 'Send E-mail notifications when any update to orders, customers and tasks, reviews and reimbursements.';

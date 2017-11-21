@@ -74,8 +74,8 @@ $lang->webapp->addTypeList['system'] = 'System App';
 $lang->webapp->addTypeList['custom'] = 'Custom App';
 
 $lang->webapp->errorOccurs        = 'Error:';
-$lang->webapp->errorGetModules    = "Get extensions' categories data from the www.ranzhico.com failed. ";
-$lang->webapp->errorGetExtensions = 'Get extensions from www.ranzhico.com failed. ';
+$lang->webapp->errorGetModules    = "Get extensions' categories data from the www.zdoo.org failed. ";
+$lang->webapp->errorGetExtensions = 'Get extensions from www.zdoo.org failed. ';
 $lang->webapp->successInstall     = 'Success Install App.';
 $lang->webapp->confirmDelete      = 'Are you sure delete this app?';
 $lang->webapp->noticeAbstract     = 'Sentence describes the application, not more than 30 words';
