@@ -546,43 +546,47 @@ class userModel extends model
     public function inTheReviewProcess($account)
     {
         $processes = array();
-        /* attend */
-        $attendCount = $this->dao->select('count(*) as count')->from(TABLE_ATTEND)
-            ->where('reviewStatus')->eq('wait')
-            ->andWhere('account')->eq($account)->fetch('count');
+        /* Attend */
+        $attendCount = $this->dao->select('COUNT(*) AS count')->from(TABLE_ATTEND)
+            ->where('account')->eq($account)
+            ->andWhere('reviewStatus')->eq('wait')
+            ->fetch('count');
         if($attendCount) $processes[] = $this->lang->user->reviewProcess['attend'];
 
-        /* leave */
-        $leaveCount = $this->dao->select('count(*) as count')->from(TABLE_LEAVE)
-            ->where('status')->eq('wait')
-            ->andWhere('createdBy')->eq($account)->fetch('count');
+        /* Leave */
+        $leaveCount = $this->dao->select('COUNT(*) AS count')->from(TABLE_LEAVE)
+            ->where('createdBy')->eq($account)
+            ->andWhere('status')->eq('wait')
+            ->fetch('count');
         if($leaveCount) $processes[] = $this->lang->user->reviewProcess['leave'];
 
-        /* overtime */
-        $overtimeCount = $this->dao->select('count(*) as count')->from(TABLE_OVERTIME)
-            ->where('status')->eq('wait')
+        /* Overtime */
+        $overtimeCount = $this->dao->select('COUNT(*) AS count')->from(TABLE_OVERTIME)
+            ->where('createdBy')->eq($account)
+            ->andWhere('status')->eq('wait')
             ->andWhere('type')->ne('compensate')
-            ->andWhere('createdBy')->eq($account)->fetchAll();
+            ->fetch('count');
         if($overtimeCount) $processes[] = $this->lang->user->reviewProcess['overtime'];
 
-        /* makeup */
-        $makeupCount = $this->dao->select('count(*) as count')->from(TABLE_OVERTIME)
-            ->where('status')->eq('wait')
+        /* Makeup */
+        $makeupCount = $this->dao->select('COUNT(*) AS count')->from(TABLE_OVERTIME)
+            ->where('createdBy')->eq($account)
+            ->andWhere('status')->eq('wait')
             ->andWhere('type')->eq('compensate')
-            ->andWhere('createdBy')->eq($account)->fetchAll();
+            ->fetch('count');
         if($makeupCount) $processes[] = $this->lang->user->reviewProcess['makeup'];
 
-        /* lieu */
-        $lieuCount = $this->dao->select('count(*) as count')->from(TABLE_LIEU)
-            ->where('status')->eq('wait')
-            ->andWhere('createdBy')->eq($account)->fetch('count');
+        /* Lieu */
+        $lieuCount = $this->dao->select('COUNT(*) AS count')->from(TABLE_LIEU)
+            ->where('createdBy')->eq($account)
+            ->andWhere('status')->eq('wait')
+            ->fetch('count');
         if($lieuCount) $processes[] = $this->lang->user->reviewProcess['lieu'];
 
-        /* refund */
-        $refundCount = $this->dao->select('count(*) as count')->from(TABLE_REFUND)
+        /* Refund */
+        $refundCount = $this->dao->select('COUNT(*) AS count')->from(TABLE_REFUND)
             ->where('createdBy')->eq($account)
             ->andWhere('status')->in('wait, doing')
-            ->orWhere('status')->eq('pass')
             ->fetch('count');
         if($refundCount) $processes[] = $this->lang->user->reviewProcess['refund'];
 
