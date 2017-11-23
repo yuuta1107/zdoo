@@ -7,7 +7,7 @@
  * @author      Yidong Wang <yidong@cnezsoft.com>
  * @package     doc
  * @version     $Id: en.php 824 2010-05-02 15:32:06Z wwccss $
- * @link        http://www.ranzhico.com
+ * @link        http://www.zdoo.org
  */
 if(!isset($lang->doc)) $lang->doc = new stdclass();
 $lang->doc->common         = 'Document';

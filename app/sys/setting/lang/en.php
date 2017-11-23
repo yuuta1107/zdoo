@@ -7,7 +7,7 @@
  * @author      Yidong Wang <yidong@cnezsoft.com>
  * @package     setting 
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.zdoo.org
  */
 $lang->setting->common = 'Setting';
 $lang->setting->reset  = 'Reset';

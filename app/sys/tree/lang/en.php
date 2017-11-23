@@ -7,7 +7,7 @@
  * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
  * @package     tree
  * @version     $Id: en.php 4103 2016-09-30 09:22:14Z daitingting $
- * @link        http://www.ranzhico.com
+ * @link        http://www.zdoo.org
  */
 $lang->tree->common      = "Tree";
 $lang->tree->add         = "Add";

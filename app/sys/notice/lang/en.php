@@ -7,7 +7,7 @@
  * @author      Xiying Guan <guanxiying@xirangit.com>
  * @package     notice
  * @version     $Id:$
- * @link        http://www.ranzhico.com
+ * @link        http://www.zdoo.org
  */
 $lang->notice = new stdclass();
 $lang->notice->common  = 'Error';

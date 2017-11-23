@@ -7,7 +7,7 @@
  * @author      Xiying Guan <guanxiying@xirangit.com>
  * @package     group
  * @version     $Id: en.php 4719 2013-05-03 02:20:28Z chencongzhi520@gmail.com $
- * @link        http://www.ranzhico.com
+ * @link        http://www.zdoo.org
  */
 $lang->group->common             = 'Group';
 $lang->group->browse             = 'Groups';

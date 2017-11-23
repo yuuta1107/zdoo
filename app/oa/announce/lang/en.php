@@ -7,7 +7,7 @@
  * @author      Yidong Wang <yidong@cnezsoft.com>
  * @package     announce 
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.zdoo.org
  */
 $lang->announce->common = 'Announce';
 $lang->announce->browse = 'Browse';

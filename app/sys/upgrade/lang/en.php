@@ -7,7 +7,7 @@
  * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
  * @package     upgrade
  * @version     $Id: en.php 4185 2016-10-21 07:44:16Z liugang $
- * @link        http://www.ranzhico.com
+ * @link        http://www.zdoo.org
  */
 $lang->upgrade = new stdclass();
 $lang->upgrade->common  = 'Upgrade';

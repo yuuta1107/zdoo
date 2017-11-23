@@ -60,7 +60,7 @@
           <td>
             <?php $hasCustomer = (is_numeric($trade['trader']) or empty($trade['trader']));?>
             <div class='input-group out' <?php if($trade['type'] == 'in') echo "style='display:none'"?>>
-              <?php echo html::select("trader[$i]", $traderList, ($hasCustomer ? $trade['trader'] : 0), "class='form-control chosen' id='trader{$i}'");?>
+              <?php echo html::select("trader[$i]", $traderList, ($hasCustomer ? $trade['trader'] : 0), "class='form-control chosen' id='trader{$i}' data-no_results_text='" . $lang->searchMore . "'");?>
               <?php echo html::input("traderName[$i]", $hasCustomer ? '' : $trade['trader'], "class='form-control' id='traderName{$i}' style='display:none'");?>
               <div class='input-group-addon'>
                 <label class="checkbox-inline">
@@ -71,7 +71,7 @@
               </div>
             </div>
             <div class='input-group in' <?php if($trade['type'] == 'out') echo "style='display:none'"?>>
-              <?php echo html::select("trader[$i]", $customerList, ($hasCustomer ? $trade['trader'] : 0), "class='form-control chosen' id='trader{$i}'");?>
+              <?php echo html::select("trader[$i]", $customerList, ($hasCustomer ? $trade['trader'] : 0), "class='form-control chosen' id='trader{$i}' data-no_results_text='" . $lang->searchMore . "'");?>
               <?php echo html::input("customerName[$i]", ($hasCustomer ? '' : $trade['trader']), "class='form-control' id='customerName{$i}' style='display:none'");?>
               <div class='input-group-addon'>
                 <label class="checkbox-inline">
