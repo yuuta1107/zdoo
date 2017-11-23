@@ -568,7 +568,7 @@ class commonModel extends model
             if($module == 'my' and $method == 'order')    $hasPriv = commonModel::hasPriv('order', 'browse');
             if($module == 'my' and $method == 'contract') $hasPriv = commonModel::hasPriv('contract', 'browse');
 
-            if($module == 'my' and $method == 'review')
+            if($module == 'my' and $method == 'review' and $hasPriv)
             {
                 $hasPriv = false;
                 foreach($lang->my->review->menu as $methodName => $methodMenu)
