@@ -140,4 +140,25 @@ class sso extends control
         }
         die($boardList);
     }
+
+    /**
+     * Get leave users.
+     * 
+     * @access public
+     * @return void
+     */
+    public function leaveUsers()
+    {
+        $code = $this->get->code;
+
+        if(!$this->sso->checkIP($code)) die('IP DENY');
+
+        $key = $this->sso->getAppKey($code);
+        if($key != $this->get->key) die('KEY ERROR');
+
+        $yesterday = date('Y-m-d', strtotime('yesterday'));
+        $leaveUsers = $this->dao->select('*')->from(TABLE_LEAVE)->where('begin')->le($yesterday)->andWhere('end')->ge($yesterday)->fetchPairs('createdBy', 'createdBy');
+
+        die(json_encode($leaveUsers));
+    }
 }
