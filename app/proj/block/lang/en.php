@@ -28,7 +28,7 @@ $lang->block->asc     = 'ASC';
 $lang->block->desc    = 'DESC';
 $lang->block->actions = 'Options';
 
-$lang->block->orderByList = new stdclass();;
+$lang->block->orderByList = new stdclass();
 $lang->block->orderByList->task = array();
 $lang->block->orderByList->task['id_asc']        = 'ID ASC';
 $lang->block->orderByList->task['id_desc']       = 'ID DESC';

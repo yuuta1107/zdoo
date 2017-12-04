@@ -54,7 +54,7 @@
           <?php endif;?>
           <div class='form-group'>
             <label class='col-md-1 col-sm-2'></label>
-            <div class='col-md-11 col-sm-10'><?php echo html::submitButton() . ' ' . html::backButton();;?></div>
+            <div class='col-md-11 col-sm-10'><?php echo html::submitButton() . ' ' . html::backButton();?></div>
           </div>
         </form>
       </div>

@@ -77,7 +77,7 @@ $lang->todo->typeList['order']    = 'Order';
 $lang->todo->typeList['customer'] = 'Customer';
 
 $lang->todo->confirmDelete  = "Do you want to delete this To-Do?";
-$lang->todo->successMarked  = "Successfully changed.";;
+$lang->todo->successMarked  = "Successfully changed.";
 $lang->todo->thisIsPrivate  = 'This is a private todo:)';
 $lang->todo->lblDisableDate = 'Set time later.';
 $lang->todo->emptyTodo      = 'You have no To-Do scheduled today.';

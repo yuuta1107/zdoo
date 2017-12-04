@@ -265,7 +265,7 @@ class treeModel extends model
                 }
                 else
                 {
-                    $treeMenu[$category->parent] = $categoryName;;
+                    $treeMenu[$category->parent] = $categoryName;
                 }
                 $treeMenu[$category->parent] .= $treeMenu[$category->id];
             }
