@@ -7,7 +7,7 @@
  * @author      Hao Sun <sunhao@cnezsoft.com>
  * @package     message
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.zdoo.org
  */
 
 if(!isset($lang->misc)) $lang->misc = new stdclass();

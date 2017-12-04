@@ -7,7 +7,7 @@
  * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
  * @package     install 
  * @version     $Id: en.php 4029 2016-08-26 06:50:41Z liugang $
- * @link        http://www.ranzhico.com
+ * @link        http://www.zdoo.org
  */
 $lang->install = new stdclass();
 $lang->install->common  = 'Install';
@@ -27,8 +27,8 @@ $lang->install->desc             = <<<EOT
   With projects, customers, cash flow, office and communication of the five core functions.
   Tailored specifically for small and medium sized groups, small and medium sized team of information technology tool of choice!
 
-  Website:<a href='http://www.ranzhico.com' target='_blank'>http://www.ranzhico.com</a>
-  Suport: <a href='http://www.ranzhico.com/forum/' target='_blank'>http://www.ranzhico.com/forum/</a>
+  Website:<a href='http://www.zdoo.org' target='_blank'>http://www.zdoo.org</a>
+  Suport: <a href='http://www.zdoo.org/forum/' target='_blank'>http://www.zdoo.org/forum/</a>
   Current Version: <strong class='red'>%s</strong>。
 </blockquote>
 EOT;

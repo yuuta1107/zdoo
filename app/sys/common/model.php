@@ -317,7 +317,7 @@ class commonModel extends model
         if($module == 'action' and $method == 'read') return true;
         if($module == 'block') return true;
         if($module == 'notice') return true;
-        if($module == 'sso' and strpos(',auth|check|gettodolist', $method)) return true;
+        if($module == 'sso' and strpos(',auth|check|gettodolist|leaveusers', $method)) return true;
         if($module == 'attend' and strpos(',signin|signout', $method)) return true;
         if($module == 'refund' and $method == 'createtrade') return true;
         if($module == 'file'   and $method == 'read') return true;
@@ -568,7 +568,7 @@ class commonModel extends model
             if($module == 'my' and $method == 'order')    $hasPriv = commonModel::hasPriv('order', 'browse');
             if($module == 'my' and $method == 'contract') $hasPriv = commonModel::hasPriv('contract', 'browse');
 
-            if($module == 'my' and $method == 'review')
+            if($module == 'my' and $method == 'review' and $hasPriv)
             {
                 $hasPriv = false;
                 foreach($lang->my->review->menu as $methodName => $methodMenu)
