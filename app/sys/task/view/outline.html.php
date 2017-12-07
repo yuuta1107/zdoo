@@ -125,7 +125,7 @@ $(function()
         var $this = $(this);
         $this.toggleClass('collapsed');
         var collapsed = $this.hasClass('collapsed');
-        $this.find('.toggle-icon').toggleClass('icon-caret-down', !collapsed).toggleClass('icon-caret-right', collapsed);;
+        $this.find('.toggle-icon').toggleClass('icon-caret-down', !collapsed).toggleClass('icon-caret-right', collapsed);
         $($this.data('target')).toggleClass('collapse', collapsed).toggleClass('in', !collapsed);
     });
 

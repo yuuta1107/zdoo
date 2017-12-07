@@ -47,7 +47,7 @@
                     {
                         echo '(' . $lang->forum->threadCount . $lang->colon . $childBoard->threads . ' ' . $lang->forum->postCount . $lang->colon . $childBoard->posts . ') ';
                         $postedDate = substr($childBoard->postedDate, 5, -3); 
-                        $postedBy   =  html::a($this->createLink('thread', 'locate', "threadID={$childBoard->postID}&replyID={$childBoard->replyID}"), zget($users, $childBoard->postedBy));;
+                        $postedBy   =  html::a($this->createLink('thread', 'locate', "threadID={$childBoard->postID}&replyID={$childBoard->replyID}"), zget($users, $childBoard->postedBy));
                         echo sprintf($lang->forum->lastPost, $postedDate, $postedBy);
                     }
                     else

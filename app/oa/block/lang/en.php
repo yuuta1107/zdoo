@@ -29,4 +29,4 @@ $lang->block->asc     = 'ASC';
 $lang->block->desc    = 'DESC';
 $lang->block->actions = 'Options';
 
-$lang->block->orderByList = new stdclass();;
+$lang->block->orderByList = new stdclass();
