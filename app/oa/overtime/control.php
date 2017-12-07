@@ -521,8 +521,8 @@ class overtime extends control
 
             foreach($overtimes as $overtime)
             {
-                $overtime->createdBy  = zget($userPairs, $overtime->createdBy);
                 $overtime->dept       = zget($userDepts, $overtime->createdBy);
+                $overtime->createdBy  = zget($userPairs, $overtime->createdBy);
                 $overtime->type       = zget($this->lang->overtime->typeList, $overtime->type);
                 $overtime->begin      = $overtime->begin . ' ' . $overtime->start;
                 $overtime->end        = $overtime->end   . ' ' . $overtime->finish;
