@@ -778,9 +778,9 @@ class refund extends control
 
             foreach($refunds as $refund)
             {
+                $refund->dept        = zget($userDepts, $refund->createdBy);
                 $refund->createdBy   = zget($userPairs, $refund->createdBy);
                 $refund->createdDate = substr($refund->createdDate, 0, 10);
-                $refund->dept        = zget($userDepts, $refund->createdBy);
                 $refund->category    = zget($categories, $refund->category);
                 $refund->money       = zget($currencySign, $refund->currency) . $refund->money;
                 $refund->status      = zget($this->lang->refund->statusList, $refund->status);

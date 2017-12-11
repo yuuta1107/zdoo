@@ -545,8 +545,8 @@ class makeup extends control
 
             foreach($makeups as $makeup)
             {
-                $makeup->createdBy  = zget($userPairs, $makeup->createdBy);
                 $makeup->dept       = zget($userDepts, $makeup->createdBy);
+                $makeup->createdBy  = zget($userPairs, $makeup->createdBy);
                 $makeup->type       = zget($this->lang->makeup->typeList, $makeup->type);
                 $makeup->begin      = $makeup->begin . ' ' . $makeup->start;
                 $makeup->end        = $makeup->end   . ' ' . $makeup->finish;

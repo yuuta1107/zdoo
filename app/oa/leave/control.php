@@ -614,8 +614,8 @@ class leave extends control
 
             foreach($leaves as $leave)
             {
-                $leave->createdBy  = zget($userPairs, $leave->createdBy);
                 $leave->dept       = zget($userDepts, $leave->createdBy);
+                $leave->createdBy  = zget($userPairs, $leave->createdBy);
                 $leave->type       = zget($this->lang->leave->typeList, $leave->type);
                 $leave->begin      = $leave->begin . ' ' . $leave->start;
                 $leave->end        = $leave->end   . ' ' . $leave->finish;
