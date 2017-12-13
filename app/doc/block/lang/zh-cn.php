@@ -26,4 +26,4 @@ $lang->block->asc     = '正序';
 $lang->block->desc    = '倒序';
 $lang->block->actions = '操作';
 
-$lang->block->orderByList = new stdclass();;
+$lang->block->orderByList = new stdclass();

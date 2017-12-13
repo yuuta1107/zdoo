@@ -230,7 +230,7 @@ class ssoModel extends model
         if(strpos($zentaoConfig->version, 'pro') === false and version_compare($zentaoConfig->version, '8.2.1', '<')) return false;
 
         $url  = $this->sso->createZentaoLink($zentaoConfig, $zentaoUrl, 'sso', 'getTodoList', "account=$account", 'json', false);
-        $url .= "?hash={$entry->key}";
+        $url .= $zentaoConfig->requestType == 'GET' ? "&hash={$entry->key}" : "?hash={$entry->key}";
         $results = commonModel::http($url);
         return json_decode($results, true);
     }

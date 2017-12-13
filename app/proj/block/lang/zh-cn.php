@@ -28,7 +28,7 @@ $lang->block->asc     = '正序';
 $lang->block->desc    = '倒序';
 $lang->block->actions = '操作';
 
-$lang->block->orderByList = new stdclass();;
+$lang->block->orderByList = new stdclass();
 $lang->block->orderByList->task = array();
 $lang->block->orderByList->task['id_asc']        = 'ID 递增';
 $lang->block->orderByList->task['id_desc']       = 'ID 递减';

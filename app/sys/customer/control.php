@@ -521,7 +521,7 @@ class customer extends control
         $this->app->loadClass('date', $static = true);
         $customerIdList = $this->loadModel('customer')->getCustomersSawByMe();
         $thisWeek       = date::getThisWeek();
-        $customers      = array();
+        $customers      = array('');
         if($account == '') $account = $this->app->user->account;
 
         $sql = $this->dao->select('c.id, c.name, c.nextDate, t.id as todo')->from(TABLE_CUSTOMER)->alias('c')
