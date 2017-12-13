@@ -1278,7 +1278,7 @@ class commonModel extends model
         $checkByID['address']  = ',edit,delete,';
         if($app->appName == 'crm') $checkByID['contact'] = ',edit,delete,';
 
-        $funcName = "check{$module}Priv";
+        $funcName = 'check' . ucfirst($module) . 'Priv';
         if(method_exists('extcommonModel', $funcName)) $checkByID = extcommonModel::$funcName($checkByID);
 
         foreach($checkByID as $moduleName => $methodName)
