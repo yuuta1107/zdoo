@@ -79,7 +79,7 @@
           <th><?php echo $lang->refund->desc?></th>
           <td colspan='2'><?php echo html::textarea('desc', '', "class='form-control'")?></td>
         </tr>
-        <?php if(commonModel::hasPriv('file', 'uplaod')):?>
+        <?php if(commonModel::hasPriv('file', 'upload')):?>
         <tr>
           <th><?php echo $lang->refund->files;?></th>
           <td colspan='2'><?php echo $this->fetch('file', 'buildForm')?></td>
