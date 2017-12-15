@@ -23,7 +23,7 @@ if(isset($pageCSS)) css::internal($pageCSS);
     $index = $key;
     ?>  
     <div class='col-sm-6 col-md-<?php echo $block->grid;?>'>
-      <div class='panel <?php if(isset($block->params->color)) echo 'panel-' . $block->params->color;?>' id='block<?php echo $index?>' data-id='<?php echo $index?>' data-blockid='<?php echo $block->id?>' data-name='<?php echo $block->title?>' data-url='<?php echo $block->blockLink?>' <?php if($block->height) echo "data-height='$block->height'";?>>
+      <div class='panel <?php if(isset($block->params->color)) echo 'panel-' . $block->params->color;?>' id='block<?php echo $index?>' data-id='<?php echo $index?>' data-blockid='<?php echo $block->id?>' data-name='<?php echo $block->title?>' data-url='<?php echo $block->blockLink?>' <?php if(!empty($block->height)) echo "data-height='$block->height'";?>>
         <div class='panel-heading'>
           <div class='panel-actions'>
             <?php if(isset($block->moreLink)) echo html::a($block->moreLink, $lang->more . "<i class='icon-double-angle-right'></i>", "class='app-btn' data-id='{$block->appid}'");?>
