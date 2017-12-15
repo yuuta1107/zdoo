@@ -465,7 +465,7 @@ class order extends control
         $customerIdList = $this->loadModel('customer')->getCustomersSawByMe();
         $products       = $this->loadModel('product')->getPairs();
         $thisWeek       = date::getThisWeek();
-        $orders         = array();
+        $orders         = array('');
         if($account == '') $account = $this->app->user->account;
 
         $sql = $this->dao->select('o.id, o.product, o.createdDate, c.name as customerName, t.id as todo')->from(TABLE_ORDER)->alias('o')

@@ -1,6 +1,6 @@
 $(document).ready(function()
 {
-    $(document).ready(removeDitto());//Remove 'ditto' in first row.
+    removeDitto(); //Remove 'ditto' in first row.
 
     $(document).on('change', '.type', function()
     {

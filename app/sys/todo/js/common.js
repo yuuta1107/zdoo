@@ -21,31 +21,31 @@ function loadList(type, id)
     }
     else
     {
-        divClass   = '.nameBox';
-        divID      = '#nameBox';
-    }
-
-    var param = 'account=' + v.account;
-    if(id) param += '&id=' + id;
-
-    if(type == 'task')
-    {
-        link = createLink('task', 'ajaxGetTodoList', param);
-    }
-    else if(type == 'order')
-    {
-        link = createLink('crm.order', 'ajaxGetTodoList', param);
-    }
-    else if(type == 'customer')
-    {
-        link = createLink('crm.customer', 'ajaxGetTodoList', param);
+        divClass = '.nameBox';
+        divID    = '#nameBox';
     }
 
     if(type != 'custom')
     {
+        var param = 'account=' + v.account;
+        if(id) param += '&id=' + id;
+
+        if(type == 'task')
+        {
+            link = createLink('task', 'ajaxGetTodoList', param);
+        }
+        else if(type == 'order')
+        {
+            link = createLink('crm.order', 'ajaxGetTodoList', param);
+        }
+        else if(type == 'customer')
+        {
+            link = createLink('crm.customer', 'ajaxGetTodoList', param);
+        }
+
         $(divClass).load(link, function(){$(divClass).find('select').chosen(window.defaultChosenOptions)});
     }
-    else if(type == 'custom')
+    else
     {
         $(divClass).html($(divID).html());
     }
