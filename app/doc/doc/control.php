@@ -105,6 +105,13 @@ class doc extends control
         $lib = $this->doc->getLibByID($libID);
         if(!$lib) die(js::error($this->lang->doc->libNotFound) . js::locate(inlink('browse')));
 
+        $this->loadModel('project', 'proj');
+        if($lib->project != 0 and !$this->project->checkPriv($lib->project))
+        {
+            echo(js::alert($this->lang->error->accessDenied));
+            die(js::locate('back'));
+        }
+
         /* Set browseType.*/ 
         $browseType = strtolower($browseType);
         if(($this->cookie->browseType == 'bymenu' or $this->cookie->browseType == 'bytree') and $browseType != 'bysearch') $browseType = $this->cookie->browseType;
@@ -240,7 +247,16 @@ class doc extends control
         $lib = $this->doc->getLibByID($libID);
         if(!$lib) die(js::error($this->lang->doc->libNotFound) . js::locate('back'));
 
-        if(!empty($lib->project)) $this->view->project = $this->project->getByID($lib->project);
+        if(!empty($lib->project))
+        {
+            if(!$this->project->checkPriv($lib->project))
+            {
+                echo(js::alert($this->lang->error->accessDenied));
+                die(js::locate('back'));
+            }
+
+            $this->view->project = $this->project->getByID($lib->project);
+        }
 
         $this->view->title  = $this->lang->doc->editLib;
         $this->view->lib    = $lib;
@@ -344,6 +360,12 @@ class doc extends control
         /* Get doc and set menu. */
         $doc = $this->doc->getById($docID);
         if(!$doc) die(js::error($this->lang->doc->notFound) . js::locate('back'));
+        if($doc->project != 0 and !$this->project->checkPriv($doc->project))
+        {
+            echo(js::alert($this->lang->error->accessDenied));
+            die(js::locate('back'));
+        }
+
         $libID = $doc->lib;
 
         /* Get modules. */
@@ -374,7 +396,7 @@ class doc extends control
         /* Get doc. */
         $doc = $this->doc->getById($docID, $version, true);
         if(!$doc) die(js::error($this->lang->doc->notFound) . js::locate('back'));
-        if($doc->project != 0 and !$this->project->checkPriv($this->project->getById($doc->project)))
+        if($doc->project != 0 and !$this->project->checkPriv($doc->project))
         {
             echo(js::alert($this->lang->error->accessDenied));
             die(js::locate('back'));
@@ -410,6 +432,12 @@ class doc extends control
         $doc = $this->doc->getById($docID);
         if(!$doc) die(js::error($this->lang->doc->notFound));
 
+        if($doc->project != 0 and !$this->project->checkPriv($doc->project))
+        {
+            echo(js::alert($this->lang->error->accessDenied));
+            die(js::locate('back'));
+        }
+
         $this->doc->delete(TABLE_DOC, $docID);
         if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
         $this->send(array('result' => 'success', 'locate' => inlink('browse')));
@@ -424,6 +452,12 @@ class doc extends control
      */
     public function projectLibs($projectID)
     {
+        if(!$this->project->checkPriv($projectID))
+        {
+            echo(js::alert($this->lang->error->accessDenied));
+            die(js::locate('back'));
+        }
+
         $this->doc->setMainMenu();
 
         $project = $this->project->getByID($projectID);
@@ -443,6 +477,12 @@ class doc extends control
      */
     public function showFiles($projectID, $recTotal = 0, $recPerPage = 20, $pageID = 1)
     {
+        if(!$this->project->checkPriv($projectID))
+        {
+            echo(js::alert($this->lang->error->accessDenied));
+            die(js::locate('back'));
+        }
+
         $this->doc->setMainMenu();
 
         $uri = $this->app->getURI(true);
