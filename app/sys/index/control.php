@@ -91,7 +91,7 @@ class index extends control
             else
             {
                 $moduleName = $block->block;
-                if((isset($block->params->type) or isset($block->params->status)) and is_array($this->lang->block->moreLinkList->{$moduleName}))
+                if((isset($block->params->type) or isset($block->params->status)) and isset($this->lang->block->moreLinkList->$moduleName) and is_array($this->lang->block->moreLinkList->{$moduleName}))
                 {
                     $type = isset($block->params->type) ? $block->params->type : $block->params->status;
                     if(isset($this->lang->block->moreLinkList->{$moduleName}[$type]))

@@ -77,7 +77,7 @@ js::set('attend', commonModel::isAvailable('attend') ? 1 : 0);
           $index = $key;
           ?>
           <div class='col-xs-<?php echo $block->grid;?> pull-left'>
-          <div class='panel <?php if(isset($block->params->color)) echo 'panel-' . $block->params->color;?>' id='block<?php echo $index?>' data-id='<?php echo $index?>' data-blockid='<?php echo $block->id?>' data-name='<?php echo $block->title?>' data-url='<?php echo $this->createLink('entry', 'printBlock', 'index=' . $index) ?>' <?php if($block->height) echo "data-height='$block->height'";?>>
+          <div class='panel <?php if(isset($block->params->color)) echo 'panel-' . $block->params->color;?>' id='block<?php echo $index?>' data-id='<?php echo $index?>' data-blockid='<?php echo $block->id?>' data-name='<?php echo $block->title?>' data-url='<?php echo $this->createLink('entry', 'printBlock', 'index=' . $index) ?>' <?php if(!empty($block->height)) echo "data-height='$block->height'";?>>
               <div class='panel-heading'>
                 <div class='panel-actions'>
                   <?php if(isset($block->moreLink) and isset($block->appid)) echo html::a($block->moreLink, $lang->more . "<i class='icon-double-angle-right'></i>", "class='more app-btn' data-id='{$block->appid}'");?>
