@@ -282,7 +282,11 @@ class user extends control
     {
         if($this->app->user->account == 'guest') $this->locate(inlink('login'));
         if(!$account) $account = $this->app->user->account;
-        if(!commonModel::hasPriv('user', 'edit')) die(js::locate($this->createLink('user', 'deny', "module=user&method=edit")));
+        if(!commonModel::hasPriv('user', 'edit'))
+        {
+            $account = $this->app->user->account;
+            if(!commonModel::hasPriv('user', 'editself')) die(js::locate($this->createLink('user', 'deny', "module=user&method=edit")));
+        }
 
         if(!empty($_POST))
         {
