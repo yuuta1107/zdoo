@@ -130,6 +130,8 @@ class docModel extends model
         {
             if($i > $limit) break;
             $key = ($type == 'project') ? 'project' : 'id';
+
+            $projectPriv = $type == 'project' ? $this->loadModel('project', 'proj')->checkPriv($docLib->project) : true;
             if($this->hasRight($docLib) and !isset($libs[$docLib->$key]))
             {
                 $libs[$docLib->$key] = $docLib->name;

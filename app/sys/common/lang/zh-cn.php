@@ -397,6 +397,7 @@ $lang->error->noConvertFun = '不存在iconv和mb_convert_encoding转码方法�
 $lang->error->noCurlExt    = '没有加载curl扩展！';
 $lang->error->notInt       = '<strong>%s</strong>不能为纯数字组合。';
 $lang->error->pasteImg     = '您的浏览器不支持粘贴图片！';
+$lang->error->accessDenied = '访问受限';
 
 /* The pager items. */
 $lang->pager = new stdclass();

@@ -263,7 +263,6 @@ class todo extends control
         {
             die(js::alert($this->lang->todo->batchedittips) . js::locate('back'));
         }
-        
 
         if($this->post->names)
         {

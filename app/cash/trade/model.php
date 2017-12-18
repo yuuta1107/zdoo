@@ -207,8 +207,8 @@ class tradeModel extends model
 
         if($groupBy == 'category')
         {
-            if($type == 'in')  $list = $this->loadModel('tree')->getListByType('in');
-            if($type == 'out') $list = $this->loadModel('tree')->getListByType('out');
+            if($type == 'in')  $list = array(0 => '') + $this->loadModel('tree')->getListByType('in');
+            if($type == 'out') $list = array(0 => '') + $this->loadModel('tree')->getListByType('out');
         }
 
         if($groupBy == 'dept')     $list = $this->loadModel('tree')->getOptionMenu('dept', 0, true);
@@ -232,7 +232,7 @@ class tradeModel extends model
                 ->beginIf($currency != '')->andWhere('currency')->eq($currency)->fi()
                 ->beginIf($startDate != '' and $endDate != '')->andWhere('date')->ge($startDate)->andWhere('date')->lt($endDate)->fi()
                 ->beginIf($groupBy == 'category')->andWhere('category')->in(array_keys($list))->fi()
-                ->groupBy($groupBy)
+                ->groupBy('name')
                 ->orderBy('value_desc')
                 ->fetchAll('name');
         }
@@ -294,6 +294,7 @@ class tradeModel extends model
         }
         elseif($groupBy == 'category')
         {
+            $parents = array();
             foreach($datas as $name => $data)
             {
                 if(empty($list[$name]))
@@ -306,15 +307,18 @@ class tradeModel extends model
                 else
                 {
                     $category = $list[$name];
-                    if($category->grade == 2)
+                    if($category->grade == 2 or $category->grade == 1)
                     {
                         $data->name = $category->name;
+
+                        /* Compute grade 1 which has chidren. */
+                        if($category->grade == 2) $parents[] = $category->parent;
                     }
                     else
                     {
                         unset($datas[$name]);
 
-                        if($category->grade == 1)continue;
+                        if($category->grade == 1) continue;
                         
                         /* If grade > 2, get parent and compute the value. */
                         $pathList = explode(',', trim($category->path, ','));
@@ -328,6 +332,8 @@ class tradeModel extends model
                         else
                         {
                             $category = $list[$parent];
+                            $parents[] = $category->parent;
+
                             $data->name = $category->name;
                             if(isset($datas[$category->id]))
                             {
@@ -336,6 +342,19 @@ class tradeModel extends model
                             $datas[$category->id] = $data;
                         }
                     }
+                }
+            }
+
+            /* Plus value of grade1 on unset if it has children. */
+            foreach($datas as $name => $data)
+            {
+                if(in_array($name, $parents))
+                {
+                    $data->name  = $this->lang->trade->report->undefined;
+                    $data->value = isset($datas['unset']) ? $datas['unset']->value + $data->value : $data->value;
+                    $datas['unset'] = $data;
+
+                    unset($datas[$name]);
                 }
             }
         }
@@ -358,7 +377,11 @@ class tradeModel extends model
         }
 
         $chartDatas = array();
-        foreach($datas as $data) $chartDatas[$data->value] = $data;
+        foreach($datas as $data)
+        {
+            if(isset($chartDatas[$data->value]))  $chartDatas[$data->value + 1] = $data;
+            if(!isset($chartDatas[$data->value])) $chartDatas[$data->value] = $data;
+        }
         krsort($chartDatas);
 
         return $chartDatas;
