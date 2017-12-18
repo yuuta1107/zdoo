@@ -44,7 +44,7 @@ $lang->attend->menu->company    = '公司考勤|attend|company|';
 $lang->attend->menu->detail     = '考勤明細|attend|detail|';
 $lang->attend->menu->review     = '補錄審核|attend|browsereview|';
 $lang->attend->menu->stat       = '統計|attend|stat|';
-$lang->attend->menu->settings   = array('link' => '設置|attend|settings|', 'alias' => 'setmanager');
+$lang->attend->menu->settings   = array('link' => '設置|attend|settings|', 'alias' => 'personalsettings,setmanager');
 
 if(!isset($lang->leave)) $lang->leave = new stdclass();
 $lang->leave->menu = new stdclass();
