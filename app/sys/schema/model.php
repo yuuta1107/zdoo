@@ -127,24 +127,51 @@ class schemaModel extends model
     /**
      * Parse CSV.
      * 
-     * @param  string    $fileName 
+     * @param  string $fileName 
+     * @param  string $delmiter
      * @access public
      * @return array
      */
-    public function parseCSV($fileName = '')
+    public function parseCSV($fileName, $delmiter = ',')
     {
-        $handle = fopen($fileName, 'r');
-        $col    = -1;
-        $row    = 0;
-        $data   = array();
-        while(($line = fgets($handle)) !== false)
+        $content = file_get_contents($fileName);
+        /* Fix bug, see http://pms.zentao.net/bug-view-890.html. */
+        $content = str_replace("\x82\x32", "\x10", $content);
+        $lines   = explode("\n", $content);
+
+        $func = function_exists('str_getcsv');
+        if($delmiter == '\t') $delmiter = "\t";
+
+        $col  = -1;
+        $row  = 0;
+        $data = array();
+        foreach($lines as $line)
         {
             $line = trim($line);
-            $line = preg_replace_callback('/(\"{2,})(\,+)/', array($this, 'removeInterference'), $line);
+            if(empty($line)) continue;
+
+            if($func)
+            {
+                $cols = str_getcsv($line, $delmiter);
+                $data[$row] = $cols;
+                $row++;
+                continue;
+            }
+
+            $markNum = substr_count($line, '"') - substr_count($line, '\"');
+            if(substr($line, -1) != $delmiter and (($markNum % 2 == 1 and $col != -1) or ($markNum % 2 == 0 and substr($line, -2) != "{$delmiter}\"" and $col == -1))) $line .= $delmiter;
+            /* If the data like this {,"","","","",}, must replace twice. */
+            $line = str_replace("{$delmiter}\"\"{$delmiter}", "{$delmiter}{$delmiter}", $line);
+            $line = str_replace("{$delmiter}\"\"{$delmiter}", "{$delmiter}{$delmiter}", $line);
+
+            $pattern = $delmiter;
+            if($delmiter == ',' or $delmiter == '^' or $delmiter == '|') $pattern = "\{$delmiter}";
+            $line = preg_replace_callback("/(\"{2,})({$pattern}+)/U", array($this, 'removeInterference'), $line);
+            
             $line = str_replace('""', '"', $line);
 
             /* if only one column then line is the data. */
-            if(strpos($line, ',') === false and $col == -1)
+            if(strpos($line, $delmiter) === false and $col == -1)
             {
                 $data[$row][0] = trim($line, '"');
             }
@@ -153,16 +180,17 @@ class schemaModel extends model
                 /* if col is not -1, then the data of column is not end. */
                 if($col != -1)
                 {
-                    $pos = strpos($line, '",');
+                    $pos = strpos($line, "\"{$delmiter}");
                     if($pos === false)
                     {
                         $data[$row][$col] .= "\n" . $line;
+                        $data[$row][$col] = str_replace('&comma;', $delmiter, trim($data[$row][$col], '"'));
                         continue;
                     }
                     else
                     {
                         $data[$row][$col] .= "\n" . substr($line, 0, $pos + 1);
-                        $data[$row][$col] = str_replace('&comma;', ',', trim($data[$row][$col], '"'));
+                        $data[$row][$col] = trim(str_replace('&comma;', $delmiter, trim($data[$row][$col], '"')));
                         $line = substr($line, $pos + 2);
                         $col++;
                     }
@@ -175,12 +203,12 @@ class schemaModel extends model
                     /* the cell has '"', the delimiter is '",'. */
                     if($line{0} == '"')
                     {
-                        $pos = strpos($line, '",');
+                        $pos = strpos($line, "\"{$delmiter}");
                         if($pos === false)
                         {
                             $data[$row][$col] = $line;
-                            /* if end of cell is not '"', then the data of cell is not end. */
-                            if($line{strlen($line) - 1} != '"') continue 2;
+                            /* if line is not empty, then the data of cell is not end. */
+                            if(strlen($line) >= 1) continue 2;
                             $line = '';
                         }
                         else
@@ -188,12 +216,12 @@ class schemaModel extends model
                             $data[$row][$col] = substr($line, 0, $pos + 1);
                             $line = substr($line, $pos + 2);
                         }
-                        $data[$row][$col] = trim($data[$row][$col], '"');
+                        $data[$row][$col] = str_replace('&comma;', $delmiter, trim($data[$row][$col], '"'));
                     }
                     else
                     {
                         /* the delimiter default is ','. */
-                        $pos = strpos($line, ',');
+                        $pos = strpos($line, $delmiter);
                         /* if line is not delimiter, then line is the data of cell. */
                         if($pos === false)
                         {
@@ -207,14 +235,13 @@ class schemaModel extends model
                         }
                     }
 
-                    $data[$row][$col] = str_replace('&comma;', ',', trim($data[$row][$col], '"'));
+                    $data[$row][$col] = trim(str_replace('&comma;', $delmiter, trim($data[$row][$col], '"')));
                     $col++;
                 }
             }
             $row ++;
             $col = -1;
         }
-        fclose ($handle);
 
         return $data;
     }

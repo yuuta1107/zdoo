@@ -872,7 +872,7 @@ class attend extends control
             $datas = array();
             foreach($statList as $account => $stat)
             {
-                $data  = new stdclass();
+                $data = new stdclass();
                 $data->realname        = $users[$account];
                 $data->normal          = $stat->normal;
                 $data->late            = $stat->late;
@@ -1034,7 +1034,8 @@ class attend extends control
                 $fields[$field] = isset($this->lang->attend->$field) ? $this->lang->attend->$field : '';
                 unset($fields[$key]);
             }
-            $fields['dept'] = $this->lang->user->dept;
+            $fields['dept']     = $this->lang->user->dept;
+            $fields['realname'] = $this->lang->user->realname;
 
             $attends = $this->attend->getDetailAttends($date, $account, $deptID);
 

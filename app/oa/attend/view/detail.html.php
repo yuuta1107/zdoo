@@ -16,7 +16,7 @@
 <?php include '../../../sys/common/view/datepicker.html.php';?>
 <?php $lang->attend->abbrStatusList['rest'] = '';?>
 <div id='menuActions'>
-  <?php commonModel::printLink('attend', 'exportDetail', "date=$currentYear$currentMonth", "{$lang->attend->export}", "class='iframe btn btn-primary'")?>
+  <?php commonModel::printLink('attend', 'exportDetail', "date=$currentYear$currentMonth", $lang->attend->export, "class='iframe btn btn-primary'")?>
 </div>
 <div class='with-side'>
   <div class='side'>

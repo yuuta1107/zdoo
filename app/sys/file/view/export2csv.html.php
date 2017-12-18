@@ -11,14 +11,16 @@
  */
 ?>
 <?php
+$count = count($fields);
 echo '"'. implode('","', $fields) . '"' . "\n";
 foreach($rows as $row)
 {
     echo '"';
+    $i = 0;
     foreach($fields as $fieldName => $fieldLabel)
     {
-        isset($row->$fieldName) ? print(strip_tags($row->$fieldName)) : print('');
-        echo '","';
+        isset($row->$fieldName) ? print(str_replace('",', '"，', strip_tags($row->$fieldName))) : print('');
+        if(++$i < $count) echo '","';
     }
     echo '"' . "\n";
 }

@@ -118,7 +118,7 @@ class schema extends control
                 }
                 else
                 {              
-                    die(js::error($this->lang->noConvertFun) . js::locate('back'));
+                    die(js::error($this->lang->error->noConvertFun) . js::locate('back'));
                 }              
             }
 

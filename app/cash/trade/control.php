@@ -249,7 +249,7 @@ class trade extends control
         $this->view->customerList  = $this->loadModel('customer')->getPairs('client', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit);
         $this->view->traderList    = $this->customer->getPairs('provider', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit);
         $this->view->contractList  = $this->loadModel('contract', 'crm')->getList($customerID = 0);
-        $this->view->deptList      = $this->loadModel('tree')->getOptionMenu('dept', 0, $removeRoot = true);
+        $this->view->deptList      = array('') + $this->loadModel('tree')->getOptionMenu('dept', 0);
         $this->view->users         = $this->loadModel('user')->getPairs('nodeleted,noforbidden,noclosed');
 
         $this->display();
@@ -288,7 +288,7 @@ class trade extends control
         $this->view->traderList    = $this->customer->getPairs('provider', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit);
         $this->view->expenseTypes  = array('' => '') + $this->loadModel('tree')->getOptionMenu('out', 0, $removeRoot = true);
         $this->view->incomeTypes   = array('' => '') + $this->loadModel('tree')->getOptionMenu('in', 0, $removeRoot = true);
-        $this->view->deptList      = $this->loadModel('tree')->getOptionMenu('dept', 0, $removeRoot = true);
+        $this->view->deptList      = array('') + $this->loadModel('tree')->getOptionMenu('dept', 0);
         $this->view->requireTrader = $this->config->trade->settings->trader;
         $this->view->productList   = array(0 => '') + $this->loadModel('product')->getPairs();
 
@@ -356,7 +356,7 @@ class trade extends control
         $this->view->contractList  = $this->loadModel('contract', 'crm')->getList($customerID = 0);
         $this->view->tradeContract = array('' => '') + $this->loadModel('contract', 'crm')->getPairs($customerID = $trade->trader);
         $this->view->users         = $this->loadModel('user')->getPairs('nodeleted,noforbidden,noclosed');
-        $this->view->deptList      = $this->loadModel('tree')->getOptionMenu('dept', 0, $removeRoot = true);
+        $this->view->deptList      = array('') + $this->loadModel('tree')->getOptionMenu('dept', 0);
         $this->view->depositorList = $depositorList;
         $this->view->orderList     = $orderList;
         $this->view->trade         = $trade;
@@ -476,7 +476,7 @@ class trade extends control
         unset($this->lang->trade->menu);
         $this->view->title         = $this->lang->trade->transfer;
         $this->view->users         = $this->loadModel('user')->getPairs('nodeleted,noforbidden');
-        $this->view->deptList      = $this->loadModel('tree')->getOptionMenu('dept', 0, $removeRoot = true);
+        $this->view->deptList      = array('') + $this->loadModel('tree')->getOptionMenu('dept', 0);
         $this->view->depositorList = $this->loadModel('depositor', 'cash')->getList();
 
         $this->display();
@@ -515,7 +515,7 @@ class trade extends control
         $this->view->title              = $this->lang->trade->invest;
         $this->view->type               = $type;
         $this->view->users              = $this->loadModel('user')->getPairs('nodeleted,noforbidden');
-        $this->view->deptList           = $this->loadModel('tree')->getOptionMenu('dept', 0, $removeRoot = true);
+        $this->view->deptList           = array('') + $this->loadModel('tree')->getOptionMenu('dept', 0);
         $this->view->depositorList      = $depositorList;
         $this->view->traderList         = $this->loadModel('customer')->getPairs('', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit);
         $this->view->investCategoryList = $investCategories;
@@ -556,7 +556,7 @@ class trade extends control
         $this->view->title         = $this->lang->trade->loan;
         $this->view->type          = $type;
         $this->view->users         = $this->loadModel('user')->getPairs('nodeleted,noforbidden');
-        $this->view->deptList      = $this->loadModel('tree')->getOptionMenu('dept', 0, $removeRoot = true);
+        $this->view->deptList      = array('') + $this->loadModel('tree')->getOptionMenu('dept', 0);
         $this->view->depositorList = $depositorList;
         $this->view->traderList    = $this->loadModel('customer')->getPairs('', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit);
         $this->view->loanList      = $loanList;
@@ -676,7 +676,7 @@ class trade extends control
         $this->view->traderList         = $this->customer->getPairs('provider', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit, $customerIDList);
         $this->view->expenseTypes       = array('' => '') + $this->loadModel('tree')->getOptionMenu('out', 0, $removeRoot = true);
         $this->view->incomeTypes        = array('' => '') + $this->loadModel('tree')->getOptionMenu('in', 0, $removeRoot = true);
-        $this->view->deptList           = $this->loadModel('tree')->getOptionMenu('dept', 0, $removeRoot = true);
+        $this->view->deptList           = array('') + $this->loadModel('tree')->getOptionMenu('dept', 0);
         $this->view->productList        = array(0 => '') + $this->loadModel('product')->getPairs();
         $this->view->requireTrader      = $this->config->trade->settings->trader;
         $this->view->disabledCategories = $this->dao->select('*')->from(TABLE_CATEGORY)->where('major')->in('5,6,7,8')->fetchAll('id');
@@ -854,7 +854,7 @@ class trade extends control
                 $data['type']  = 'out';
                 $data['money'] = $fee;
                 $data['desc']  = '';
-                $dataList[$i]    = $data;
+                $dataList[$i]  = $data;
             }
             $i++;
         }
@@ -894,7 +894,7 @@ class trade extends control
         $this->view->traderList   = array('' => '') + $customers;
         $this->view->expenseTypes = $expenseTypes;
         $this->view->incomeTypes  = $incomeTypes;
-        $this->view->deptList     = $this->tree->getOptionMenu('dept', 0, $removeRoot = true);
+        $this->view->deptList     = array('') + $this->loadModel('tree')->getOptionMenu('dept', 0);
         $this->view->productList  = array(0 => '') + $productList;
         $this->view->existTrades  = $existTrades;
 
