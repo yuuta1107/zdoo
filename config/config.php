@@ -126,3 +126,5 @@ if($extConfigFiles) foreach($extConfigFiles as $extConfigFile) include $extConfi
 /* 引用自定义的配置。 Include the custom config file. */
 $myConfig = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'my.php';
 if(file_exists($myConfig)) include $myConfig;
+
+if(!isset($config->debug)) $config->debug = true;

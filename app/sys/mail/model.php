@@ -246,7 +246,7 @@ class mailModel extends model
      * @param  string  $ccList 
      * @param  bool    $includeMe 
      * @param  string  $attachmentName
-     * @param  string  $attachmentFile
+     * @param  mixed   $attachmentFile
      * @access public
      * @return void
      */
@@ -298,7 +298,20 @@ class mailModel extends model
             $this->setTO($toList, $emails);
             $this->setCC($ccList, $emails);
             $this->setBody($this->convertCharset($body));
-            if($attachmentFile) $this->mta->AddAttachment($attachmentFile, $attachmentName);
+            if($attachmentFile) 
+            {
+                if(is_array($attachmentFile))
+                {
+                    foreach($attachmentFile as $file) 
+                    {
+                        if(isset($file->realpath)) $this->mta->AddAttachment($file->realpath, $file->title);
+                    }
+                }
+                else
+                {
+                    $this->mta->AddAttachment($attachmentFile, $attachmentName);
+                }
+            }
             $this->setErrorLang();
             $this->mta->send();
         }
