@@ -55,4 +55,4 @@ $lang->upgrade->deleteDir    = '<code>rm -fr %s</code>';
 $lang->upgrade->deleteFile   = '<code>rm %s</code>';
 $lang->upgrade->afterDeleted = '<br />刪除以上檔案後刷新！';
 
-include './version.php';
+include 'version.php';
