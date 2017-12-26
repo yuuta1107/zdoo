@@ -10,8 +10,8 @@
  * @link        http://www.ranzhico.com
  */
 $config->task->require = new stdclass();
-$config->task->require->create = 'name';
-$config->task->require->edit   = 'name';
+$config->task->require->create   = 'name';
+$config->task->require->edit     = 'name';
 $config->task->require->activate = 'left';
 
 $config->task->editor = new stdclass();
@@ -26,7 +26,7 @@ $config->task->editor->close          = array('id' => 'comment', 'tools' => 'sim
 $config->task->editor->start          = array('id' => 'comment', 'tools' => 'simple');
 $config->task->editor->recordestimate = array('id' => 'comment', 'tools' => 'simple');
 
-$config->task->batchCreate =  10;
+$config->task->batchCreate = 10;
 
 global $lang;
 $config->task->search['module'] = 'task';

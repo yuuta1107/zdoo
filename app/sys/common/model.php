@@ -248,7 +248,11 @@ class commonModel extends model
     {
         global $config, $lang;
         if(isset($lang->setting->moduleList[$module]) and strpos($config->setting->modules, $module) === false) return false;
-        if($module == 'my' and $method == 'review' and empty($config->setting->modules)) return false;
+        if($module == 'my' and $method == 'review')
+        { 
+            if(empty($config->setting->modules)) return false;
+            if($config->setting->modules == trim('trip,egress')) return false;
+        }
         return true;
     }
 
