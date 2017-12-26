@@ -188,7 +188,7 @@ $lang->action->label->product   = '产品|product|view|productID=%s';
 $lang->action->label->project   = '项目|task|browse|projectID=%s';
 $lang->action->label->provider  = '供应商|provider|view|providerID=%s';
 $lang->action->label->schema    = '记账模板|schema|browse|';
-$lang->action->label->space     = '　';
+$lang->action->label->space     = ' ';
 $lang->action->label->task      = '任务|task|view|taskID=%s';
 $lang->action->label->todo      = '待办|todo|calendar|';
 $lang->action->label->trade     = '账目|trade|browse|';

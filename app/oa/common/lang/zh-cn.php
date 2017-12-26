@@ -93,7 +93,7 @@ $lang->refund->menu->review     = '待审批|refund|browsereview|status=unreview
 $lang->refund->menu->reviewedBy = '由我审批|refund|browsereview|status=reviewed';
 $lang->refund->menu->todo       = '待报销|refund|todo|';
 $lang->refund->menu->company    = '所有报销|refund|company|';
-$lang->refund->menu->settings   = array('link' => '设置|refund|setreviewer|', 'alias' => 'setcategory,setmoney,setdepositor,setrefundby');
+$lang->refund->menu->settings   = array('link' => '设置|refund|setreviewer|', 'alias' => 'setcategory,setdepositor,setrefundby');
 
 if(!isset($lang->holiday)) $lang->holiday = new stdclass();
 $lang->holiday->menu = new stdclass();
