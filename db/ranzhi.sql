@@ -236,13 +236,6 @@ CREATE TABLE IF NOT EXISTS `crm_resume` (
   KEY `left` (`left`),
   KEY `maker` (`maker`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
--- DROP TABLE IF EXISTS `crm_service`;
-CREATE TABLE IF NOT EXISTS `crm_service` (
-  `customer` mediumint(8) unsigned NOT NULL,
-  `product` mediumint(8) unsigned NOT NULL,
-  `expire` date NOT NULL,
-  UNIQUE KEY `customer` (`customer`,`product`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `crm_salesgroup`;
 CREATE TABLE IF NOT EXISTS `crm_salesgroup` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
