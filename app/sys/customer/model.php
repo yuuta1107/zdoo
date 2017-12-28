@@ -98,6 +98,8 @@ class customerModel extends model
             ->beginIF($relation == 'client')->andWhere('relation')->ne('provider')->fi()
             ->beginIF($relation == 'provider')->andWhere('relation')->ne('client')->fi()
             ->beginIF($mode == 'field')->andWhere('mode')->eq($param)->fi()
+            ->beginIF($mode == 'area')->andWhere('area')->eq($param)->fi()
+            ->beginIF($mode == 'industry')->andWhere('industry')->eq($param)->fi()
             ->beginIF($mode == 'past')->andWhere('nextDate')->lt(helper::today())->fi()
             ->beginIF($mode == 'today')->andWhere('nextDate')->eq(helper::today())->fi()
             ->beginIF($mode == 'tomorrow')->andWhere('nextDate')->eq(formattime(date::tomorrow(), DT_DATE1))->fi()
@@ -107,7 +109,7 @@ class customerModel extends model
             ->beginIF($mode == 'assignedTo')->andWhere('assignedTo')->eq($this->app->user->account)->fi()
             ->beginIF($mode == 'query')->andWhere($param)->fi()
             ->beginIF($mode == 'bysearch')->andWhere($customerQuery)->fi()
-            ->beginIF(strpos('all, bysearch, public, assignedTo, query', $mode) === false)->andWhere('nextDate')->ne('0000-00-00')->fi()
+            ->beginIF(strpos('all, bysearch, public, assignedTo, query, area, industry', $mode) === false)->andWhere('nextDate')->ne('0000-00-00')->fi()
             ->andWhere('id')->in($customerIdList)
             ->orderBy($orderBy)
             ->page($pager)
@@ -559,5 +561,130 @@ class customerModel extends model
             $this->dao->update(TABLE_CUSTOMER)->set('deleted')->eq(1)->where('id')->eq($customerID)->exec();
         }
         return !dao::isError();
+    }
+
+    /**
+     * Process categories.
+     * Remove the category which is not in $categoryIDList. 
+     * 
+     * @param  array  $categories 
+     * @param  array  $categoryIDList 
+     * @access public
+     * @return array
+     */
+    public function processCategories($categories, $categoryIDList)
+    {
+        foreach($categories as $key => $category)
+        {
+            if(in_array($category->id, $categoryIDList))
+            {
+                if($category->parent) 
+                {
+                    $parent = $categories[$category->parent];
+                    $parent->children[] = $category;
+
+                    $categories[$category->parent] = $parent;
+
+                    unset($categories[$key]);
+                }
+            }
+            else
+            {
+                if(!isset($category->children)) unset($categories[$key]);
+            }
+        }
+        return $categories;
+    }
+
+    /**
+     * Get menu by categories. 
+     * 
+     * @param  array  $categories 
+     * @param  string $mode 
+     * @param  string $orderBy 
+     * @param  int    $recTotal 
+     * @param  int    $recPerPage 
+     * @param  int    $pageID 
+     * @access public
+     * @return string
+     */
+    public function getMenuByCategories($categories, $mode, $orderBy, $recTotal, $recPerPage, $pageID)
+    {
+        $menu = '';
+        foreach($categories as $category)
+        {
+            if(empty($category->children))
+            {
+                $menu .= '<li>' . html::a(helper::createLink('crm.customer', 'browse', "mode=$mode&param=$category->id&orderBy=$orderBy&recTotal=$recTotal&recPerPage=$recPerPage&pageID=$pageID"), $category->name) . '</li>';
+            }
+            else
+            {
+                $menu .= "<li class='dropdown-submenu'>";
+                $menu .= html::a(helper::createLink('crm.customer', 'browse', "mode=$mode&param=$category->id&orderBy=$orderBy&recTotal=$recTotal&recPerPage=$recPerPage&pageID=$pageID"), $category->name);
+                $menu .= "<ul class='dropdown-menu'>";
+                $menu .= $this->getMenuByCategories($category->children, $mode, $orderBy, $recTotal, $recPerPage, $pageID);
+                $menu .= '</ul></li>';
+            }
+        }
+        return $menu;
+    }
+
+    /**
+     * Create module menu. 
+     * 
+     * @param  string $mode 
+     * @param  string $param 
+     * @param  string $orderBy 
+     * @param  int    $recTotal 
+     * @param  int    $recPerPage 
+     * @param  int    $pageID 
+     * @access public
+     * @return string 
+     */
+    public function createModuleMenu($mode, $param, $orderBy, $recTotal, $recPerPage, $pageID)
+    {
+        $customerIdList = $this->getCustomersSawByMe();
+        if(empty($customerIdList)) return array();
+
+        $customers = $this->dao->select('area, industry')->from(TABLE_CUSTOMER)
+            ->where('deleted')->eq(0)
+            ->andWhere('id')->in($customerIdList)
+            ->fetchAll();
+
+        $menu = commonModel::createModuleMenu('customer');
+        $menu = str_replace('</ul></nav>', '', $menu);
+        foreach(array('area', 'industry') as $field)
+        {
+            $categoryIDList = array();
+            foreach($customers as $customer)
+            {
+                if($customer->$field) $categoryIDList[$customer->$field] = $customer->$field;
+            }
+
+            $categoryList = $this->loadModel('tree')->getListByType($field, 'grade_desc, id');
+            $categories   = $this->processCategories($categoryList, $categoryIDList);
+
+            $label = $this->lang->customer->$field;
+            if($mode == $field)
+            {
+                if(isset($categoryList[$param]))
+                {
+                    $category = $categoryList[$param];
+                    $label    = $category->name;
+                }
+            }
+
+            if($categories)
+            {
+                $menu .= "<li class='dropdown'>";
+                $menu .= html::a(inlink('browse', "mode=$field"), $label . "<span class='caret'></span>", "data-toggle='dropdown'");
+                $menu .= "<ul class='dropdown-menu'>";
+                $menu .= $this->getMenuByCategories($categories, $field, $orderBy, $recTotal, $recPerPage, $pageID);
+                $menu .= '</ul></li>';
+            }
+        }
+        $menu .= '</ul></nav>';
+
+        return $menu;
     }
 }
