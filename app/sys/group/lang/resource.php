@@ -59,6 +59,7 @@ $lang->appModule->team[] = 'company';
 
 $lang->appModule->superadmin = array();
 $lang->appModule->superadmin[] = 'adminUser';
+$lang->appModule->superadmin[] = 'cron';
 
 $lang->appModule->sys = array();
 $lang->appModule->sys[] = 'tree';
@@ -105,6 +106,8 @@ $lang->moduleOrder[110] = 'user';
 $lang->moduleOrder[115] = 'company';
 
 $lang->moduleOrder[120] = 'adminUser';
+
+$lang->moduleOrder[123] = 'cron';
 
 $lang->moduleOrder[125] = 'tree';
 $lang->moduleOrder[130] = 'setting';
@@ -726,6 +729,22 @@ $lang->adminUser->methodOrder[20] = 'edit';
 $lang->adminUser->methodOrder[25] = 'delete';
 $lang->adminUser->methodOrder[30] = 'forbid';
 $lang->adminUser->methodOrder[35] = 'active';
+
+/* Cron. */
+$lang->resource->cron = new stdclass();
+$lang->resource->cron->index  = 'index';
+$lang->resource->cron->create = 'create';
+$lang->resource->cron->edit   = 'edit';
+$lang->resource->cron->delete = 'delete';
+$lang->resource->cron->turnon = 'turnon';
+$lang->resource->cron->toggle = 'toggle';
+
+$lang->cron->methodOrder[10] = 'index';
+$lang->cron->methodOrder[15] = 'create';
+$lang->cron->methodOrder[20] = 'edit';
+$lang->cron->methodOrder[25] = 'delete';
+$lang->cron->methodOrder[30] = 'turnon';
+$lang->cron->methodOrder[35] = 'toggle';
 
 /* Every version of new privilege. */
 $lang->changelog = array();
