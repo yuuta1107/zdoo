@@ -13,8 +13,8 @@
 <?php include '../../common/view/header.html.php';?>
 <?php if(!empty($config->global->cron)):?>
 <div id='menuActions'>
-  <?php echo html::a(inlink('turnon'), $lang->cron->turnonList[0], "class='btn btn-primary' data-type='iframe' data-toggle='modal'")?>
-  <?php echo html::a(inlink('create'), $lang->cron->create, "class='btn btn-primary'")?>
+  <?php commonModel::printLink('cron', 'turnon', '', $lang->cron->turnonList[0], "class='btn btn-primary' data-type='iframe' data-toggle='modal'");?>
+  <?php commonModel::printLink('cron', 'create', '', $lang->cron->create, "class='btn btn-primary'")?>
 </div>
 <div class='panel'>
   <table class='table table-hover table-border'>
@@ -46,9 +46,9 @@
         <td><?php echo zget($lang->cron->statusList, $cron->status);?></td>
         <td class='text-left'>
           <?php
-          if(!empty($cron->command)) echo html::a(inlink('toggle', "id=$cron->id&status=" . ($cron->status == 'stop' ? 'normal' :  'stop')), $cron->status == 'stop' ? $lang->cron->toggleList['start'] : $lang->cron->toggleList['stop']);
-          if($cron->buildin == 0) echo html::a(inlink('edit', "id=$cron->id"), $lang->edit);
-          if($cron->buildin == 0) echo html::a(inlink('delete', "id=$cron->id"), $lang->delete, "class='deleter'");
+          if(!empty($cron->command)) commonModel::printLink('cron', 'toggle', "id=$cron->id&status=" . ($cron->status == 'stop' ? 'normal' :  'stop'), $cron->status == 'stop' ? $lang->cron->toggleList['start'] : $lang->cron->toggleList['stop']);
+          commonModel::printLink('cron', 'edit', "id=$cron->id", $lang->edit);
+          commonModel::printLink('cron', 'delete', "id=$cron->id", $lang->delete, "class='deleter'");
           ?>
         </td>
       </tr>

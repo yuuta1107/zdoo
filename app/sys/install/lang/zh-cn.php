@@ -27,8 +27,8 @@ $lang->install->desc             = <<<EOT
   <!--内置项目、客户、现金流、办公和沟通共五大核心功能模块，-->
   专为中小型团队量身打造，是中小型团队信息化的首选工具！
 
-  官方网站：<a href='http://www.ranzhico.com' target='_blank'>http://www.ranzhico.com</a>
-  技术支持: <a href='http://www.ranzhico.com/forum/' target='_blank'>http://www.ranzhico.com/forum/</a>
+  官方网站：<a href='http://www.ranzhi.org' target='_blank'>http://www.ranzhi.org</a>
+  技术支持: <a href='http://www.ranzhi.org/forum/' target='_blank'>http://www.ranzhi.org/forum/</a>
   您现在正在安装的版本是 <strong class='red'>%s</strong>。
 </blockquote>
 EOT;

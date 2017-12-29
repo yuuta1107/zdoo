@@ -52,7 +52,7 @@ $lang->mail->successSended  = '成功發送！';
 $lang->mail->needConfigure  = '無法找到郵件配置信息，請先配置郵件發送參數。';
 
 $lang->mail->mailContentTip = <<<EOT
-<strong>%s</strong>(%s)由<a href='https://www.ranzhico.com' target='blank'>然之協同管理系統</a>搭建。<br />
+<strong>%s</strong>(%s)由<a href='https://www.ranzhi.org' target='blank'>然之協同管理系統</a>搭建。<br />
 <a href='http://www.cnezsoft.com' target='blank'>易軟天創</a>為天下企業提供專業的管理工具。
 EOT;
 $lang->mail->openTip = '訂單、客戶、任務指派，請假、報銷審批時會進行郵件提醒';

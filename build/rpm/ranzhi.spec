@@ -5,7 +5,7 @@ Summary:This is RanZhi software.
 
 Group:utils
 License:ZPL
-URL:http://www.ranzhico.com
+URL:http://www.ranzhi.org
 Source0:%{name}-%{version}.tar.gz
 BuildRoot:%{_tmppath}/%{name}-%{version}-root
 BuildArch:noarch

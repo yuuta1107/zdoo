@@ -407,9 +407,13 @@ class commonModel extends model
             {
                 if(commonModel::hasPriv($module, $method))
                 {
-                    $link  = helper::createLink($module, $method, $vars);
-                    $string .= !$isMobile ? "<li$class><a href='$link'>$label</a></li>\n" : "<a$class href='$link'>$label</a>";
+                    $link = helper::createLink($module, $method, $vars);
                 }
+                else
+                {
+                    $link = self::getLinkFromSubmenu($moduleName);
+                }
+                if($link) $string .= !$isMobile ? "<li$class><a href='$link'>$label</a></li>\n" : "<a$class href='$link'>$label</a>";
             }
         }
 
@@ -620,6 +624,30 @@ class commonModel extends model
         $string .= '</li></ul>';
 
         return $string;
+    }
+
+    /**
+     * Get Link From Submenu.
+     * 
+     * @param  string    $menuGroup 
+     * @access public
+     * @return string
+     */
+    public static function getLinkFromSubmenu($menuGroup)
+    {
+        global $lang, $config;
+
+        if(!isset($lang->$menuGroup->menu)) return '';
+
+        foreach($lang->$menuGroup->menu as $code => $menu)
+        {
+            if(is_array($menu)) $menu = $menu['link'];
+            list($label, $moduleName, $methodName, $vars) = explode('|', $menu);
+
+            if(commonModel::hasPriv($moduleName, $methodName)) return helper::createLink($moduleName, $methodName, $vars);
+        }
+
+        return '';
     }
 
     /**

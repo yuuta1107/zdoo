@@ -101,7 +101,7 @@ class product extends control
                 if($changes) $this->action->logHistory($actionID, $changes);
             }
 
-            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => inlink('browse')));
+            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => $this->session->productList));
         }
 
         $this->view->title   = $this->lang->product->edit;
@@ -136,7 +136,7 @@ class product extends control
     {
         $this->product->delete(TABLE_PRODUCT, $productID);
         if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
-        $this->send(array('result' => 'success', 'locate' => inlink('browse')));
+        $this->send(array('result' => 'success', 'locate' => $this->session->productList));
     }
 
     /**

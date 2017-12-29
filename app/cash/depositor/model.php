@@ -44,10 +44,12 @@ class depositorModel extends model
      * @access public
      * @return array
      */
-    public function getList($tag = '', $orderBy = 'id_desc', $pager = null)
+    public function getList($tag = '', $status = 'normal', $orderBy = 'id_desc', $pager = null)
     {
         return $this->dao->select('*')->from(TABLE_DEPOSITOR)
-            ->beginIF($tag)->where('tags')->like("%{$tag}%")->fi()
+            ->where(1)
+            ->beginIF($status != 'all')->andWhere('status')->eq($status)->fi()
+            ->beginIF($tag)->andWhere('tags')->like("%{$tag}%")->fi()
             ->orderBy($orderBy)
             ->page($pager)
             ->fetchAll('id');
