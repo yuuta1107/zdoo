@@ -32,7 +32,7 @@ class depositor extends control
      * @access public
      * @return void
      */
-    public function browse($tag = '', $orderBy = 'id_desc', $recTotal = 0, $recPerPage = 20, $pageID = 1)
+    public function browse($tag = '', $status = 'normal', $orderBy = 'id_desc', $recTotal = 0, $recPerPage = 20, $pageID = 1)
     {   
         $this->app->loadClass('pager', $static = true);
         $pager = new pager($recTotal, $recPerPage, $pageID);
@@ -40,12 +40,13 @@ class depositor extends control
         $this->view->trades       = $this->depositor->getTradesAmount();
         $this->view->balances     = $this->loadModel('balance', 'cash')->getLatest();
         $this->view->title        = $this->lang->depositor->browse;
-        $this->view->depositors   = $this->depositor->getList($tag, $orderBy, $pager);
+        $this->view->depositors   = $this->depositor->getList($tag, $status, $orderBy, $pager);
         $this->view->pager        = $pager;
         $this->view->orderBy      = $orderBy;
         $this->view->currencyList = $this->loadModel('common', 'sys')->getCurrencyList();
         $this->view->tags         = $this->depositor->getTags();
         $this->view->currentTag   = $tag;
+        $this->view->status       = $status;
         $this->display();
     }   
 
