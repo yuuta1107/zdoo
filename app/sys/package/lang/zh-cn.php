@@ -92,8 +92,8 @@ $lang->package->upgradeVersion = '（从%s升级到%s）';
 $lang->package->waring = '警告';
 
 $lang->package->errorOccurs                  = '错误：';
-$lang->package->errorGetModules              = '从www.ranzhico.com获得插件分类失败。可能是因为网络方面的原因，请检查后重新刷新页面。';
-$lang->package->errorGetPackages             = '从www.ranzhico.com获得插件失败。可能是因为网络方面的原因，您可以到 <a href="https://www.ranzhico.com/extension" target="_blank" class="alert-link">www.ranzhico.com</a> 手工下载插件，然后上传安装。';
+$lang->package->errorGetModules              = '从www.ranzhi.org获得插件分类失败。可能是因为网络方面的原因，请检查后重新刷新页面。';
+$lang->package->errorGetPackages             = '从www.ranzhi.org获得插件失败。可能是因为网络方面的原因，您可以到 <a href="https://www.ranzhi.org/extension" target="_blank" class="alert-link">www.ranzhi.org</a> 手工下载插件，然后上传安装。';
 $lang->package->errorDownloadPathNotFound    = '插件下载存储路径<strong>%s</strong>不存在。<br />linux下面请执行命令：<strong>mkdir -p %s</strong>来修正。';
 $lang->package->errorDownloadPathNotWritable = '插件下载存储路径<strong>%s</strong>不可写。<br />linux下面请执行命令：<strong>sudo chmod 777 %s</strong>来修正。';
 $lang->package->errorPackageFileExists       = '下载路径已经有一个名为的<strong>%s</strong>附件。<h3>重新%s，<a href="%s" class="alert-link loadInModal">请点击此链接</a></h3>';
