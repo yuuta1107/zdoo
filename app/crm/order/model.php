@@ -66,7 +66,7 @@ class orderModel extends model
      * @access public
      * @return array
      */
-    public function getList($mode = 'all', $param = '', $owner = '', $orderBy = 'id_desc', $pager = null)
+    public function getList($mode = 'all', $param = '', $owner = '', $needQueryCondition = true, $orderBy = 'id_desc', $pager = null)
     {
         $customerIdList = $this->loadModel('customer')->getCustomersSawByMe();
         if(empty($customerIdList)) return array();
@@ -106,7 +106,7 @@ class orderModel extends model
             ->andWhere('o.customer')->in($customerIdList)
             ->orderBy("o.$orderBy")->page($pager)->fetchAll('id');
 
-        $this->session->set('orderQueryCondition', $this->dao->get());
+        if($needQueryCondition) $this->session->set('orderQueryCondition', $this->dao->get());
 
         $products = $this->loadModel('product')->getPairs();
 
