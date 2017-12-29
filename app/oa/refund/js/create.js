@@ -5,6 +5,10 @@ $(document).ready(function()
     {
         if($(this).find('i').hasClass('icon-double-angle-down'))
         {
+            $('input[name^=dateList]').val($('#date').val());
+            $('select[name^=categoryList]').val($('#category').val()).trigger('chosen:updated');
+            $('select[name^=relatedList]').val($('#related').val()).trigger('chosen:updated');
+
             $('#refund-detail').removeClass('hidden');
             $('#money').prop('readonly', 'readonly');
             $('#refund-date').addClass('hidden');

@@ -48,5 +48,10 @@
     </tr>
     <?php endforeach;?>
   </table>
+  <?php if(!$attends):?>
+  <div class='table-footer'>
+    <div class='pager' style='float: right; clear: none'><?php echo $lang->pager->noRecord;?></div>
+  </div>
+  <?php endif;?>
 </div>
 <?php include '../../common/view/footer.html.php';?>

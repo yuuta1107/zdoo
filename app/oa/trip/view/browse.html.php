@@ -82,6 +82,11 @@
         </tr>
         <?php endforeach;?>
       </table>
+      <?php if(!$tripList):?>
+      <div class='table-footer'>
+        <div class='pager' style='float: right; clear: none'><?php echo $lang->pager->noRecord;?></div>
+      </div>
+      <?php endif;?>
     </div>
   </div>
 </div>

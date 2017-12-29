@@ -55,6 +55,11 @@
     </tr>
     <?php endforeach;?>
   </table>
+  <?php if(!$attends):?>
+  <div class='table-footer'>
+    <div class='pager' style='float: right; clear: none'><?php echo $lang->pager->noRecord;?></div>
+  </div>
+  <?php endif;?>
 </div>
 <?php endif;?>
 
@@ -95,6 +100,11 @@
     </tr>
     <?php endforeach;?>
   </table>
+  <?php if(!$leaveList):?>
+  <div class='table-footer'>
+    <div class='pager' style='float: right; clear: none'><?php echo $lang->pager->noRecord;?></div>
+  </div>
+  <?php endif;?>
 </div>
 <?php endif;?>
 
@@ -130,6 +140,11 @@
     </tr>
     <?php endforeach;?>
   </table>
+  <?php if(!$makeupList):?>
+  <div class='table-footer'>
+    <div class='pager' style='float: right; clear: none'><?php echo $lang->pager->noRecord;?></div>
+  </div>
+  <?php endif;?>
 </div>
 <?php endif;?>
 
@@ -167,6 +182,11 @@
     </tr>
     <?php endforeach;?>
   </table>
+  <?php if(!$overtimeList):?>
+  <div class='table-footer'>
+    <div class='pager' style='float: right; clear: none'><?php echo $lang->pager->noRecord;?></div>
+  </div>
+  <?php endif;?>
 </div>
 <?php endif;?>
 
@@ -202,6 +222,11 @@
     </tr>
     <?php endforeach;?>
   </table>
+  <?php if(!$lieuList):?>
+  <div class='table-footer'>
+    <div class='pager' style='float: right; clear: none'><?php echo $lang->pager->noRecord;?></div>
+  </div>
+  <?php endif;?>
 </div>
 <?php endif;?>
 
@@ -243,6 +268,11 @@
     </tr>
     <?php endforeach;?>
   </table>
+  <?php if(!$refunds):?>
+  <div class='table-footer'>
+    <div class='pager' style='float: right; clear: none'><?php echo $lang->pager->noRecord;?></div>
+  </div>
+  <?php endif;?>
 </div>
 <?php endif;?>
 
@@ -339,6 +369,11 @@
     <?php endforeach;?>
 
   </table>
+  <?php if(!$leaveList && !$makeupList && !$overtimeList && !$lieuList):?>
+  <div class='table-footer'>
+    <div class='pager' style='float: right; clear: none'><?php echo $lang->pager->noRecord;?></div>
+  </div>
+  <?php endif;?>
 </div>
 <?php endif;?>
 
