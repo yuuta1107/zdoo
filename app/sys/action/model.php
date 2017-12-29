@@ -791,7 +791,7 @@ class actionModel extends model
         }
 
         /* Create past order notice. */
-        $orders = $this->loadModel('order', 'crm')->getList('past');
+        $orders = $this->loadModel('order', 'crm')->getList('past', '', '', $needQueryCondition = false);
         foreach($orders as $order)
         {
             /* Skip not assigned to me, read and showed notice. */
