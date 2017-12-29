@@ -13,7 +13,7 @@ $lang->lieu->commit = '提交';
 $lang->lieu->personal     = '我的调休';
 $lang->lieu->browseReview = '审核列表';
 $lang->lieu->company      = '所有调休';
-$lang->lieu->setReviewer  = '设置审核者';
+$lang->lieu->setReviewer  = '调休设置';
 $lang->lieu->batchReview  = '批量审核';
 $lang->lieu->batchPass    = '批量通过';
 
@@ -43,14 +43,20 @@ $lang->lieu->statusList['reject'] = '拒绝';
 $lang->lieu->confirmReview['pass']   = '您确定要执行通过操作吗？';
 $lang->lieu->confirmReview['reject'] = '您确定要执行拒绝操作吗？';
 
+$lang->lieu->checkHours    = '调休时长检测';
 $lang->lieu->denied        = '信息访问受限';
 $lang->lieu->unique        = '%s 已经存在调休记录';
 $lang->lieu->sameMonth     = '不支持跨月份调休';
 $lang->lieu->wrongEnd      = '结束时间应该大于开始时间';
 $lang->lieu->nodata        = '没有选择数据';
 $lang->lieu->reviewSuccess = '审核成功';
+$lang->lieu->wrongHours    = '调休时长 (%s) 不能超过加班时长 (%s)';
+$lang->lieu->nobccomp      = '请安装bcmath扩展';
 
 $lang->lieu->hoursTip = '小时';
+
+$lang->lieu->checkHoursList['0'] = '不检测调休时长';
+$lang->lieu->checkHoursList['1'] = '调休时长不能超过加班时长';
 
 $lang->lieu->reviewStatusList['pass']   = '通过';
 $lang->lieu->reviewStatusList['reject'] = '拒绝';

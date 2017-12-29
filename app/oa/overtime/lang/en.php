@@ -14,7 +14,7 @@ $lang->overtime->export = 'Export';
 $lang->overtime->personal     = 'My Overtime';
 $lang->overtime->browseReview = 'Review List';
 $lang->overtime->company      = 'All';
-$lang->overtime->setReviewer  = 'Set Reviewer';
+$lang->overtime->setReviewer  = 'Settings';
 $lang->overtime->batchReview  = 'Batch Review';
 $lang->overtime->batchPass    = 'Batch Pass';
 

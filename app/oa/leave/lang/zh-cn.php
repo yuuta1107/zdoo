@@ -16,7 +16,7 @@ $lang->leave->reviewBack = '审核销假';
 $lang->leave->personal     = '我的请假';
 $lang->leave->browseReview = '审核列表';
 $lang->leave->company      = '所有请假';
-$lang->leave->setReviewer  = '设置审核者';
+$lang->leave->setReviewer  = '请假设置';
 $lang->leave->batchReview  = '批量审核';
 $lang->leave->batchPass    = '批量通过';
 

@@ -14,7 +14,7 @@ $lang->makeup->export = '導出補班記錄';
 $lang->makeup->personal     = '我的補班';
 $lang->makeup->browseReview = '審核列表';
 $lang->makeup->company      = '所有補班';
-$lang->makeup->setReviewer  = '設置審核者';
+$lang->makeup->setReviewer  = '補班設置';
 $lang->makeup->batchReview  = '批量審核';
 $lang->makeup->batchPass    = '批量通過';
 
