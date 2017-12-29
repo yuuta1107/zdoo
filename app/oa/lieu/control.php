@@ -179,6 +179,12 @@ class lieu extends control
     {
         if($_POST)
         {
+            if($this->config->lieu->checkHours)
+            {
+                $result = $this->lieu->checkHours();
+                if(is_array($result)) $this->send($result);
+            }
+
             $result = $this->lieu->create();
             if(is_array($result)) $this->send($result);
 
@@ -231,6 +237,12 @@ class lieu extends control
 
         if($_POST)
         {
+            if($this->config->lieu->checkHours)
+            {
+                $result = $this->lieu->checkHours();
+                if(is_array($result)) $this->send($result);
+            }
+
             $result = $this->lieu->update($id);
             if(is_array($result) && $result['result'] == 'fail') $this->send($result);
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
@@ -499,7 +511,8 @@ class lieu extends control
     {
         if($_POST)
         {
-            $this->loadModel('setting')->setItem('system.oa.lieu..reviewedBy', $this->post->reviewedBy);
+            $this->loadModel('setting')->setItem('system.oa.lieu.reviewedBy', $this->post->reviewedBy);
+            $this->setting->setItem('system.oa.lieu.checkHours', $this->post->checkHours);
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess));
         }

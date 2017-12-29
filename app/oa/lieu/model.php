@@ -134,12 +134,8 @@ class lieuModel extends model
             ->batchCheck($this->config->lieu->require->create, 'notempty')
             ->check('end', 'ge', $lieu->begin)
             ->exec();
-        if(!dao::isError())
-        {
-            $lieuID = $this->dao->lastInsertID();
-            return $lieuID;
-        }
-        return !dao::isError();
+
+        return $this->dao->lastInsertID();
     }
 
     /**
@@ -174,6 +170,29 @@ class lieuModel extends model
             ->exec();
 
         return commonModel::createChanges($oldLieu, $lieu);
+    }
+
+    /**
+     * Compare liue hours and overtime hours. 
+     * 
+     * @access public
+     * @return bool | array 
+     */
+    public function checkHours()
+    {
+        if(!$this->post->overtime) return true;
+
+        if(!function_exists('bccomp') or !function_exists('bcadd')) return array('result' => 'fail', 'message' => $this->lang->lieu->nobcmath);;
+
+        $lieuHours     = $this->post->hours;
+        $overtimeHours = 0;
+
+        $overtimes = $this->loadModel('overtime', 'oa')->getByIdList($this->post->overtime);
+        foreach($overtimes as $overtime) $overtimeHours = bcadd($overtimeHours, $overtime->hours);
+        
+        if(bccomp($lieuHours, $overtimeHours, 2) === 1) return array('result' => 'fail', 'message' => sprintf($this->lang->lieu->wrongHours, $lieuHours, $overtimeHours));
+
+        return true;
     }
 
     /**

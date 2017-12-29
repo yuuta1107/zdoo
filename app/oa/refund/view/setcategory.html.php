@@ -43,18 +43,17 @@
                 ?>
               </td>
             </tr>
-            <tr>
-              <td>
-                <?php echo html::hidden('uid');?>
-                <?php if(!empty($expenseList))
-                { 
-                    echo html::submitButton() . "&nbsp;&nbsp;";
-                } 
-                commonModel::printLink('cash.tree', 'browse', 'type=out', $lang->refund->setExpense, "class='btn btn-primary setExpense'");
-                ?>
-              </td>
-            </tr>
           </table>
+          <div class='page-actions'>
+            <?php echo html::hidden('uid');?>
+            <?php if(!empty($expenseList))
+            { 
+                echo html::selectButton();
+                echo html::submitButton() . "&nbsp;&nbsp;";
+            } 
+            commonModel::printLink('cash.tree', 'browse', 'type=out', $lang->refund->setExpense, "class='btn btn-primary setExpense'");
+            ?>
+          </div>
         </form>
       </div>
     </div>

@@ -16,12 +16,20 @@
   <div class='panel-heading'><strong><?php echo $lang->lieu->setReviewer;?></strong></div>
   <div class='panel-body'>
     <form id='ajaxForm' method='post'>
-      <table class='table table-form table-condensed w-p40'>
-      <tr>
-        <th class='w-100px'><?php echo $lang->lieu->reviewedBy;?></th>
-        <td><?php echo html::select('reviewedBy', array('' => $this->lang->dept->moderators) + $users, $reviewedBy, "class='form-control chosen'")?></td><td></td>
-      </tr>
-      <tr><th></th><td colspan='2'><?php echo html::submitButton();?></td></tr>
+      <table class='table table-form table-condensed'>
+        <tr>
+          <th class='w-100px'><?php echo $lang->lieu->reviewedBy;?></th>
+          <td class='w-200px'><?php echo html::select('reviewedBy', array('' => $lang->dept->moderators) + $users, $reviewedBy, "class='form-control chosen'")?></td><td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th><?php echo $lang->lieu->checkHours;?></th>
+          <td colspan='2'><?php echo html::radio('checkHours', $lang->lieu->checkHoursList, $config->lieu->checkHours);?></td>
+        </tr>
+        <tr>
+          <th></th>
+          <td colspan='2'><?php echo html::submitButton();?></td>
+        </tr>
       </table>
     </form>
   </div>

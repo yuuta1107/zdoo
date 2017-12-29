@@ -16,7 +16,7 @@ $lang->leave->reviewBack = 'Review back date';
 $lang->leave->personal     = 'My Leave';
 $lang->leave->browseReview = 'Review List';
 $lang->leave->company      = 'All';
-$lang->leave->setReviewer  = 'Set Reviewer';
+$lang->leave->setReviewer  = 'Settings';
 $lang->leave->batchReview  = 'Batch Review';
 $lang->leave->batchPass    = 'Batch Pass';
 

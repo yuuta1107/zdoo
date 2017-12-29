@@ -14,7 +14,7 @@ $lang->makeup->export = 'Export';
 $lang->makeup->personal     = 'My Makeup';
 $lang->makeup->browseReview = 'Review List';
 $lang->makeup->company      = 'All';
-$lang->makeup->setReviewer  = 'Set Reviewer';
+$lang->makeup->setReviewer  = 'Settings';
 $lang->makeup->batchReview  = 'Batch Review';
 $lang->makeup->batchPass    = 'Batch Pass';
 
