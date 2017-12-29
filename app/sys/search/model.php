@@ -91,6 +91,7 @@ class searchModel extends model
             $value    = $this->post->$valueName;
             $operator = $this->post->$operatorName;
             if(!isset($this->lang->search->operators[$operator])) $operator = '=';
+            if($operator == '=' and $this->post->$fieldName == 'createdDate') $operator = 'include';
 
             if($this->post->$fieldName == 'contract.productLine')
             {
