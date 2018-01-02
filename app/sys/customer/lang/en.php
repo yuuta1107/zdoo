@@ -17,6 +17,8 @@ $lang->customer->name          = 'Name';
 $lang->customer->contact       = 'Contact';
 $lang->customer->depositor     = 'Account';
 $lang->customer->type          = 'Type';
+$lang->customer->source        = 'Source';
+$lang->customer->sourceNote    = 'Note';
 $lang->customer->size          = 'Size';
 $lang->customer->industry      = 'Industry';
 $lang->customer->area          = 'Area';
@@ -62,6 +64,14 @@ $lang->customer->export      = 'Export';
 $lang->customer->merge       = 'Merge';
 $lang->customer->basicInfo   = 'Basic Info';
 $lang->customer->moreInfo    = 'More Info';
+
+$lang->customer->sourceList['']              = '';
+$lang->customer->sourceList['visit']         = 'Visit Directly';
+$lang->customer->sourceList['advertisement'] = 'Advertisement';
+$lang->customer->sourceList['introduce']     = 'Introduce';
+$lang->customer->sourceList['activity']      = 'Activity';
+$lang->customer->sourceList['socialPlat']    = 'Social Platform';
+$lang->customer->sourceList['others']        = 'Others';
 
 $lang->customer->typeList['']            = '';
 $lang->customer->typeList['national']    = 'National';
