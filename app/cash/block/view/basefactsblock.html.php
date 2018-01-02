@@ -13,8 +13,7 @@
 <table class='table table-data table-hover block-contract table-fixed'>
 <?php $appid = ($this->get->app == 'sys' and isset($_GET['entry'])) ? "class='app-btn' data-id='{$this->get->entry}'" : ''?>
 <div style="overflow:auto;" class='table-wrapper'>
-  <table id='barChart' class='table table-condensed table-hover table-striped table-bordered table-chart' data-chart='bar' data-target='#myBarChar
-t' data-animation='false'>
+  <table id='barChart' class='table table-condensed table-hover table-striped table-bordered table-chart' data-chart='bar' data-target='#myBarChart' data-animation='false'>
   <thead>
     <tr class='text-center'>
       <th><?php echo $lang->trade->month;?></th>
