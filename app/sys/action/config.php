@@ -39,6 +39,8 @@ $config->action->objectNameFields['todo']      = 'name';
 $config->action->objectNameFields['trade']     = 'id';
 $config->action->objectNameFields['user']      = 'account';
 
+$config->action->objectModalLinks = ',announce,todo,leave,lieu,makeup,overtime,project,';
+
 $config->action->objectAppNames['announce']  = 'oa';
 $config->action->objectAppNames['article']   = 'oa';
 $config->action->objectAppNames['attend']    = 'oa';
