@@ -190,7 +190,7 @@ $lang->action->label->provider  = 'Supplier|provider|view|providerID=%s';
 $lang->action->label->schema    = 'Trade Template|schema|browse|';
 $lang->action->label->space     = ' ';
 $lang->action->label->task      = 'Task|task|view|taskID=%s';
-$lang->action->label->todo      = 'To-Do|todo|calendar|';
+$lang->action->label->todo      = '待办|todo|view|todoID=%s';
 $lang->action->label->trade     = 'Trade|trade|browse|';
 
 $lang->action->label->attend = array();

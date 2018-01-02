@@ -32,7 +32,7 @@ $lang->block->confirmRemoveBlock = '确定移除区块【{0}】吗？';
 
 $lang->block->allEntries  = '所有应用';
 $lang->block->dynamic     = '最新动态';
-$lang->block->dynamicInfo = "%s, %s <em>%s</em> %s <a href='%s'>%s</a>。";
+$lang->block->dynamicInfo = "%s, %s <em>%s</em> %s <a href='%s' %s>%s</a>。";
 
 $lang->block->default['oa']['1']['title'] = '日历';
 $lang->block->default['oa']['1']['block'] = 'attend';

@@ -32,7 +32,7 @@ $lang->block->confirmRemoveBlock = 'Are you sure to remove Widget [{0}] ?';
 
 $lang->block->allEntries  = 'All';
 $lang->block->dynamic     = 'Dynamic';
-$lang->block->dynamicInfo = "%s, %s <em>%s</em> %s <a href='%s'>%s</a>。";
+$lang->block->dynamicInfo = "%s, %s <em>%s</em> %s <a href='%s' %s>%s</a>。";
 
 $lang->block->default['oa']['1']['title'] = 'Calendar';
 $lang->block->default['oa']['1']['block'] = 'attend';

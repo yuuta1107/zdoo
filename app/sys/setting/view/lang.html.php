@@ -54,17 +54,17 @@
       <?php foreach($fieldList as $key => $value):?>
       <tr class='text-center'>
         <?php $system = isset($systemField[$key]) ? $systemField[$key] : 1;?>
-        <?php $readonly = ($module == 'customer' and $field == 'statusList' and $key == 'payed') ? "readonly='readonly'" : '';?>
+        <?php $readonly = (($module == 'customer' and $field == 'statusList' and $key == 'payed') or (empty($key))) ? "readonly='readonly'" : '';?>
         <td class='text-middle'><?php echo $key === '' ? 'NULL' : $key; echo html::hidden('keys[]', $key, "$readonly") . html::hidden('systems[]', $system, "$readonly");?></td>
         <td>
           <div class='input-group'>
             <?php echo html::input("values[]", $value, "class='form-control' $readonly");?>
             <?php if($module == 'customer' and $field == 'sizeNameList'):?>
             <span class="input-group-addon fix-border fix-padding"></span>
-            <?php echo html::input("sizeNoteList[]", $lang->customer->sizeNoteList[$key], "class='form-control' size='75'");?>
+            <?php echo html::input("sizeNoteList[]", $lang->customer->sizeNoteList[$key], "class='form-control' size='75' $readonly");?>
             <?php elseif($module == 'customer' and $field == 'levelNameList'):?>
             <span class="input-group-addon fix-border fix-padding"></span>
-            <?php echo html::input("levelNoteList[]", $lang->customer->levelNoteList[$key], "class='form-control' size='75'");?>
+            <?php echo html::input("levelNoteList[]", $lang->customer->levelNoteList[$key], "class='form-control' size='75' $readonly");?>
             <?php endif;?>
           </div>
         </td>
