@@ -2,6 +2,5 @@
 .with-side .side .menu.affix{top:100px; margin-left:0;}
 .with-side .main{padding-left: 160px; margin-right: 0;}
 
-.valign-middle {vertical-align: middle !important;}
 .tree > li {margin-right: 0;}
 .tree li.active > a{font-weight: bold;}

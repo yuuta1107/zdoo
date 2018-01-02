@@ -162,3 +162,4 @@ $lang->attend->m = 'minutes';
 $lang->attend->s = 'seconds';
 
 $lang->attend->signInClientError = 'Signin failed. It has been set can only sign in by %s.';
+$lang->attend->waitReviews       = 'There are <strong>%s</strong> records waitting to be reviewed.';

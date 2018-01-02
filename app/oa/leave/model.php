@@ -56,12 +56,26 @@ class leaveModel extends model
      */
     public function getList($type = 'personal', $year = '', $month = '', $account = '', $dept = '', $status = '', $orderBy = 'id_desc')
     {
+        $date = '';
+        if($year)  
+        {
+            if(!$month) $date = "$year-%";
+            if($month)  $date = "$year-$month-%";
+        }
+        else
+        {
+            if($month) $date = "%-$month-%";
+        }
+
         $leaveList = $this->dao->select('t1.*, t2.realname, t2.dept')
             ->from(TABLE_LEAVE)->alias('t1')
             ->leftJoin(TABLE_USER)->alias('t2')->on("t1.createdBy=t2.account")
-            ->where('1=1')
-            ->beginIf($year != '')->andWhere('t1.year')->eq($year)->fi()
-            ->beginIf($month != '')->andWhere('t1.begin')->like("%-$month-%")->fi()
+            ->where(1)
+            ->beginIf($date)
+            ->andWhere('t1.begin', true)->like($date)
+            ->orWhere('t1.end')->like($date)
+            ->markRight(1)
+            ->fi()
             ->beginIf($account != '')->andWhere('t1.createdBy')->eq($account)->fi()
             ->beginIf($dept != '')->andWhere('t2.dept')->in($dept)->fi()
             ->beginIf($status != '')->andWhere('t1.status')->in($status)->fi()
@@ -107,13 +121,17 @@ class leaveModel extends model
     public function getAllMonth($type)
     {
         $monthList = array();
-        $dateList  = $this->dao->select('begin')->from(TABLE_LEAVE)
+        $dateList  = $this->dao->select('begin, end')->from(TABLE_LEAVE)
             ->beginIF($type == 'personal')->where('createdBy')->eq($this->app->user->account)->fi()
             ->groupBy('begin')
             ->orderBy('begin_desc')
             ->fetchAll('begin');
         foreach($dateList as $date)
         {
+            $year  = substr($date->end, 0, 4);
+            $month = substr($date->end, 5, 2);
+            if(!isset($monthList[$year][$month])) $monthList[$year][$month] = $month;
+
             $year  = substr($date->begin, 0, 4);
             $month = substr($date->begin, 5, 2);
             if(!isset($monthList[$year][$month])) $monthList[$year][$month] = $month;
@@ -225,7 +243,7 @@ class leaveModel extends model
      */
     public function checkDate($date, $id = 0)
     {
-        if(substr($date->begin, 0, 7) != substr($date->end, 0, 7)) return array('result' => 'fail', 'message' => $this->lang->leave->sameMonth);
+        //if(substr($date->begin, 0, 7) != substr($date->end, 0, 7)) return array('result' => 'fail', 'message' => $this->lang->leave->sameMonth);
         if("$date->end $date->finish" <= "$date->begin $date->start") return array('result' => 'fail', 'message' => $this->lang->leave->wrongEnd);
 
         $existLeave = $this->checkLeave($date, $this->app->user->account, $id);

@@ -50,13 +50,27 @@ class tripModel extends model
      */
     public function getList($type = 'trip', $year = '', $month = '', $account = '', $dept = '', $orderBy = 'id_desc')
     {
+        $date = '';
+        if($year)  
+        {
+            if(!$month) $date = "$year-%";
+            if($month)  $date = "$year-$month-%";
+        }
+        else
+        {
+            if($month) $date = "%-$month-%";
+        }
+
         return $this->dao->select('t1.*, t2.realname, t2.dept')
             ->from(TABLE_TRIP)->alias('t1')
             ->leftJoin(TABLE_USER)->alias('t2')->on("t1.createdBy=t2.account")
-            ->where('1=1')
+            ->where(1)
             ->beginIF($type != '')->andWhere('t1.type')->eq($type)->fi()
-            ->beginIF($year != '')->andWhere('t1.year')->eq($year)->fi()
-            ->beginIF($month != '')->andWhere('t1.begin')->like("%-$month-%")->fi()
+            ->beginIf($date)
+            ->andWhere('t1.begin', true)->like($date)
+            ->orWhere('t1.end')->like($date)
+            ->markRight(1)
+            ->fi()
             ->beginIF($account != '')->andWhere('t1.createdBy')->eq($account)->fi()
             ->beginIF($dept != '')->andWhere('t2.dept')->in($dept)->fi()
             ->orderBy("t2.dept,t1.{$orderBy}")
@@ -211,7 +225,7 @@ class tripModel extends model
     {
         if($date->type == 'egress') $this->app->loadLang('egress', 'oa');
 
-        if(substr($date->begin, 0, 7) != substr($date->end, 0, 7)) return array('result' => 'fail', 'message' => $this->lang->{$date->type}->sameMonth);
+        //if(substr($date->begin, 0, 7) != substr($date->end, 0, 7)) return array('result' => 'fail', 'message' => $this->lang->{$date->type}->sameMonth);
         if("$date->end $date->finish" <= "$date->begin $date->start") return array('result' => 'fail', 'message' => $this->lang->{$date->type}->wrongEnd);
 
         $existTrip = $this->checkTrip('trip', $date, $this->app->user->account, $id); 
