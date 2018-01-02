@@ -32,6 +32,16 @@
           </td><td></td>
         </tr>
         <tr>
+          <th><?php echo $lang->customer->source;?></th>
+          <td>
+            <div class='input-group'>
+              <?php echo html::select('source', $lang->customer->sourceList, '', "class='form-control'");?>
+              <span class='input-group-addon fix-border'><?php echo $lang->customer->sourceNote;?></span>
+              <?php echo html::input('sourceNote', '', "class='form-control'");?>
+            </div>
+          </td><td></td>
+        </tr>
+        <tr>
           <th><?php echo $lang->customer->contact;?></th>
           <td>
             <div class='input-group'>

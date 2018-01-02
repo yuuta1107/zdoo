@@ -139,6 +139,8 @@ CREATE TABLE IF NOT EXISTS `crm_customer` (
   `name` char(100) NOT NULL,
   `type` char(30) NOT NULL,
   `relation` enum('client', 'provider', 'partner') NOT NULL default 'client',
+  `source` varchar(20) NOT NULL,
+  `sourceNote` varchar(255) NOT NULL,
   `size` tinyint(3) unsigned NOT NULL,
   `industry` mediumint(8) unsigned NOT NULL,
   `area` mediumint(8) unsigned NOT NULL,

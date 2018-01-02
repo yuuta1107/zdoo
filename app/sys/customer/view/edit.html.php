@@ -60,6 +60,14 @@
               <th class='w-70px'><?php echo $lang->customer->relation;?></th>
               <td><?php echo html::select('relation', $lang->customer->relationList, $customer->relation, "class='form-control'");?></td>
             </tr>
+            <tr>
+              <th><?php echo $lang->customer->source;?></th>
+              <td><?php echo html::select('source', $lang->customer->sourceList, $customer->source, "class='form-control'");?></td>
+            </tr>
+            <tr>
+              <th><?php echo $lang->customer->sourceNote;?></th>
+              <td><?php echo html::input('sourceNote', $customer->sourceNote, "class='form-control'");?></td>
+            </tr>
            <tr>
              <th><?php echo $lang->customer->depositor;?></th>
              <td><?php echo html::input('depositor', $customer->depositor, "class='form-control'");?></td>

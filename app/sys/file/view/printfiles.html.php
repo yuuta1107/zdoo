@@ -14,8 +14,9 @@ $sessionString .= session_name() . '=' . session_id();
 ?>
 <style>
   ul.files-list {margin-bottom: 0; margin-top: 10px;}
-  .files-list > li {margin-top: -1px; border: 1px solid #ddd; background: #fafafa; padding: 5px 10px; width: 350px;}
-  .files-list > li > i {display: inline-block; margin-right: 5px;}
+  .files-list > li {margin-top: -1px; border: 1px solid #ddd; background: #fafafa; padding: 5px 10px; width: 350px; height: 30px;}
+  .files-list > li > i {display: inline-block; margin-right: 5px; float: left;}
+  .files-list > li > .file-name {display: inline-block; max-width: 260px;}
   .files-list > li > .link-btn {float: right; margin-left: 10px;}
   .files-list > li > a:hover {text-decoration: none}
 
@@ -47,9 +48,9 @@ function downloadFile(fileID)
     foreach($files as $file)
     {
         echo "<li><i class='icon-file-text-alt text-muted'></i> ";
-        echo html::a('javascript:;', $file->title .'.' . $file->extension, "onclick='return downloadFile($file->id)'");
-        commonModel::printLink('file', 'edit', "fileID=$file->id", "<i class='icon-pencil'></i>", "data-toggle='modal' class='link-edit link-btn'");
+        echo html::a('javascript:;', $file->title .'.' . $file->extension, "onclick='return downloadFile($file->id)' class='file-name text-nowrap' title='{$file->title}'");
         commonModel::printLink('file', 'delete', "fileID=$file->id", "<i class='icon-remove'></i>", "class='deleter link-btn'");
+        commonModel::printLink('file', 'edit', "fileID=$file->id", "<i class='icon-pencil'></i>", "data-toggle='modal' class='link-edit link-btn'");
         echo '</li>';
     }
     ?>

@@ -17,6 +17,8 @@ $lang->customer->name          = '名称';
 $lang->customer->contact       = '联系人';
 $lang->customer->depositor     = '对公账户';
 $lang->customer->type          = '类型';
+$lang->customer->source        = '客户来源';
+$lang->customer->sourceNote    = '来源备注';
 $lang->customer->size          = '规模';
 $lang->customer->industry      = '行业';
 $lang->customer->area          = '区域';
@@ -62,6 +64,14 @@ $lang->customer->export      = '导出';
 $lang->customer->merge       = '合并';
 $lang->customer->basicInfo   = '基本信息';
 $lang->customer->moreInfo    = '更多信息';
+
+$lang->customer->sourceList['']              = '';
+$lang->customer->sourceList['visit']         = '陌生拜访';
+$lang->customer->sourceList['advertisement'] = '广告';
+$lang->customer->sourceList['introduce']     = '转介绍';
+$lang->customer->sourceList['activity']      = '活动';
+$lang->customer->sourceList['socialPlat']    = '社交平台';
+$lang->customer->sourceList['others']        = '其他';
 
 $lang->customer->typeList['']            = '';
 $lang->customer->typeList['national']    = '国有企业';

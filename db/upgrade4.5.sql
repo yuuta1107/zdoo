@@ -8,3 +8,6 @@ ALTER TABLE `sys_product` CHANGE `line` `line` varchar(30) NOT NULL;
 
 UPDATE `cash_trade` SET `exchangeRate` = 1 WHERE `currency` = (SELECT `value` FROM `sys_config` WHERE `owner` = 'system' AND `app` = 'sys' AND `module` = 'setting' AND `key` = 'mainCurrency');
 UPDATE `sys_product` SET `line` = '' WHERE `line` = 'default';
+
+ALTER TABLE `crm_customer` ADD `source` varchar(20) NOT NULL AFTER `relation`,
+ADD `sourceNote` varchar(255) NOT NULL AFTER `source`;
