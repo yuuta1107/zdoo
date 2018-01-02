@@ -76,12 +76,13 @@
         </tr>
         <?php endforeach;?>
       </table>
-      <?php $totalMoney = $this->refund->total($refunds);?>
-      <?php if($totalMoney):?>
       <div class='table-footer'>
+        <?php $totalMoney = $this->refund->total($refunds);?>
+        <?php if($totalMoney):?>
         <div class='pull-left text-danger'><?php echo $lang->refund->total . $totalMoney;?></div>
+        <?php endif;?>
+        <?php $pager->show();?>
       </div>
-      <?php endif;?>
     </div>
 <?php if($status == 'reviewed'):?>
   </div>
