@@ -162,3 +162,4 @@ $lang->attend->m = '分';
 $lang->attend->s = '秒';
 
 $lang->attend->signInClientError = '簽到失敗！已設置只能通過 %s 簽到。';
+$lang->attend->waitReviews       = '<strong>%s</strong> 存在未審批的記錄，請審批之後再進行統計。';
