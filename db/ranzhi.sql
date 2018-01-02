@@ -318,7 +318,7 @@ CREATE TABLE IF NOT EXISTS `oa_project` (
   `whitelist` varchar(255) NOT NULL,
   `deleted` enum('0','1') NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE='MyISAM' COLLATE 'utf8_general_ci'; 
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `oa_attend`;
 CREATE TABLE IF NOT EXISTS `oa_attend` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
@@ -500,6 +500,10 @@ CREATE TABLE IF NOT EXISTS `oa_todo` (
 -- DROP TABLE IF EXISTS `oa_refund`;
 CREATE TABLE IF NOT EXISTS `oa_refund` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `customer` mediumint(8) unsigned NOT NULL,
+  `order` mediumint(8) unsigned NOT NULL,
+  `contract` mediumint(8) unsigned NOT NULL,
+  `project` mediumint(8) unsigned NOT NULL,
   `name` char(150) NOT NULL,
   `parent`  mediumint(8) unsigned NOT NULL DEFAULT 0,
   `dept`  mediumint(8) unsigned NOT NULL DEFAULT 0,
@@ -578,6 +582,7 @@ CREATE TABLE IF NOT EXISTS `cash_trade` (
   `trader` mediumint(8) unsigned NOT NULL DEFAULT 0,
   `order` mediumint(8) unsigned NOT NULL,
   `contract` mediumint(8) unsigned NOT NULL,
+  `project` mediumint(8) unsigned NOT NULL,
   `investID` mediumint(8) unsigned NOT NULL,
   `loanID` mediumint(8) unsigned NOT NULL,
   `dept` mediumint(8) unsigned NOT NULL,

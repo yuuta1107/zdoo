@@ -57,10 +57,6 @@
             <td><?php echo $lang->trade->typeList[$trade->type];?></td>
           </tr>
           <tr>
-            <th><?php echo $lang->trade->trader;?></th>
-            <td title="<?php echo !empty($trader->name) ? $trader->name : '';?>"><?php echo !empty($trader->name) ? $trader->name : '';?></td>
-          </tr>
-          <tr>
             <th><?php echo $lang->trade->money;?></th>
             <td><?php echo zget($currencySign, $trade->currency) . formatMoney($trade->money);?></td>
           </tr>

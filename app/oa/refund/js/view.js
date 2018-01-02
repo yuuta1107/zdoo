@@ -39,11 +39,13 @@ $(document).ready(function()
         return false;
     })
 
-    $('.panel-history a').click(function()
+    $('.panel-history a, .table-info a').click(function()
     {
         var href = $(this).prop('href');
         var app  = '';
+        if(href.indexOf('/crm/') != -1)  app = 'crm';
         if(href.indexOf('/cash/') != -1) app = 'cash';
+        if(href.indexOf('/proj/') != -1) app = 'proj';
 
         if(app != '' && $(this).data('toggle') == undefined)
         {

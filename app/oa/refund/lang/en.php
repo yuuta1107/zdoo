@@ -23,6 +23,10 @@ $lang->refund->setRefundBy  = 'Set RefundBy';
 $lang->refund->export       = 'Export';
 
 $lang->refund->id               = 'ID';
+$lang->refund->customer         = 'Customer';
+$lang->refund->order            = 'Order';
+$lang->refund->contract         = 'contract';
+$lang->refund->project          = 'Project';
 $lang->refund->name             = 'Name';
 $lang->refund->category         = 'Category';
 $lang->refund->date             = 'Date';
@@ -48,6 +52,11 @@ $lang->refund->reason           = 'Reason';
 $lang->refund->reviewer         = 'Reviewer';
 $lang->refund->related          = 'Involved';
 $lang->refund->depositor        = 'Account';
+
+$lang->refund->objectTypeList['customer'] = 'Customer';
+$lang->refund->objectTypeList['order']    = 'Order';
+$lang->refund->objectTypeList['contract'] = 'Contract';
+$lang->refund->objectTypeList['project']  = 'Project';
 
 $lang->refund->statusList['draft']  = 'Draft';
 $lang->refund->statusList['wait']   = 'Wait';

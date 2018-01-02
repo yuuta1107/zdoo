@@ -124,12 +124,13 @@ class projectModel extends model
     /**
      * Get  project pairs.
      * 
+     * @param  string $orderBy
      * @access public
      * @return array
      */
-    public function getPairs()
+    public function getPairs($orderBy = 'id_desc')
     {
-        return $this->dao->select('id,name')->from(TABLE_PROJECT)->where('deleted')->eq(0)->fetchPairs();
+        return $this->dao->select('id,name')->from(TABLE_PROJECT)->where('deleted')->eq(0)->orderBy($orderBy)->fetchPairs();
     }
 
     /**

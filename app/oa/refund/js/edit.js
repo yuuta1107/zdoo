@@ -1,5 +1,21 @@
 $(document).ready(function()
 {
+    $('[name^=objectType]').change(function()
+    {
+        var objectType = $(this).val();
+        var checked    = $(this).prop('checked');
+        if(objectType != 'project')
+        {
+            if(checked)
+            {
+                $('[name^=objectType]').not(this).not('[value=project]').prop('checked', false).change();
+            }
+            if(objectType == 'order')    $('#customer').parents('tr').toggle(checked);
+            if(objectType == 'contract') $('#customer').parents('tr').toggle(checked);
+        }
+        $('#' + objectType).parents('tr').toggle(checked);
+    });
+
     /* show or hide detail. */
     $(document).on('click', '.detail', function()
     {
@@ -77,4 +93,34 @@ $(document).ready(function()
     {
         $('.detail').click();
     }
+
+    $('[name^=objectType]').each(function()
+    {
+        $('#' + $(this).val()).parents('tr').hide();
+    });
+
+    $('[name^=objectType]').each(function()
+    {
+        if($(this).prop('checked')) $(this).change();
+    });
 });
+
+function getOrders(customer)
+{
+    if(!customer) return false;
+
+    $('#order').load(createLink('crm.order', 'ajaxGetOrders', 'customer=' + customer), function()
+    {
+        $('#order').trigger('chosen:updated');
+    });
+}
+
+function getContracts(customer)
+{
+    if(!customer) return false;
+
+    $('#contract').load(createLink('crm.contract', 'getOptionMenu', 'customer=' + customer), function()
+    {
+        $('#contract').trigger('chosen:updated');
+    });
+}
