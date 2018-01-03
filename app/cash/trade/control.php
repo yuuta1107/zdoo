@@ -219,6 +219,10 @@ class trade extends control
         $orders    = $this->order->getPairs();
         foreach($orderList as $id => $order) $order->name = $orders[$id];
 
+        $contractList  = $this->loadModel('contract', 'crm')->getList($customerID = 0);
+        $contractPairs = array();
+        foreach($contractList as $contract) $contractPairs[$contract->id] = $contract->name;
+
         if($type == 'in' or $type == 'out')
         {
             $categories = $this->loadModel('tree')->getOptionMenu($type, 0, $removeRoot = true);
@@ -241,16 +245,18 @@ class trade extends control
         }
 
         unset($this->lang->trade->menu);
-        $this->view->title         = $this->lang->trade->{$type};
-        $this->view->type          = $type;
-        $this->view->depositorList = array('' => '') + $this->loadModel('depositor', 'cash')->getPairs();
-        $this->view->productList   = $this->loadModel('product')->getPairs();
-        $this->view->orderList     = $orderList;
-        $this->view->customerList  = $this->loadModel('customer')->getPairs('client', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit);
-        $this->view->traderList    = $this->customer->getPairs('provider', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit);
-        $this->view->contractList  = $this->loadModel('contract', 'crm')->getList($customerID = 0);
-        $this->view->deptList      = array('') + $this->loadModel('tree')->getOptionMenu('dept', 0);
-        $this->view->users         = $this->loadModel('user')->getPairs('nodeleted,noforbidden,noclosed');
+        $this->view->title           = $this->lang->trade->{$type};
+        $this->view->type            = $type;
+        $this->view->depositorList   = array('' => '') + $this->loadModel('depositor', 'cash')->getPairs();
+        $this->view->productList     = $this->loadModel('product')->getPairs();
+        $this->view->orderList       = $orderList;
+        $this->view->pinyinOrders    = commonModel::convert2Pinyin($orders);
+        $this->view->customerList    = $this->loadModel('customer')->getPairs('client', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit);
+        $this->view->traderList      = $this->customer->getPairs('provider', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit);
+        $this->view->contractList    = $contractList;
+        $this->view->pinyinContracts = commonModel::convert2Pinyin($contractPairs);
+        $this->view->deptList        = array('') + $this->loadModel('tree')->getOptionMenu('dept', 0);
+        $this->view->users           = $this->loadModel('user')->getPairs('nodeleted,noforbidden,noclosed');
 
         $this->display();
     }
@@ -359,6 +365,7 @@ class trade extends control
         $this->view->deptList      = array('') + $this->loadModel('tree')->getOptionMenu('dept', 0);
         $this->view->depositorList = $depositorList;
         $this->view->orderList     = $orderList;
+        $this->view->pinyinOrders  = commonModel::convert2Pinyin($orders);
         $this->view->trade         = $trade;
         $this->view->mode          = $mode;
 

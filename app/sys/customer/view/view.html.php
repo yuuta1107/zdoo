@@ -29,9 +29,31 @@
       <div class='panel-body'><?php echo $customer->desc;?></div>
     </div>
     <div class='panel'>
-      <div class='panel-heading'><strong><i class="icon-list-info"></i> <?php echo $lang->customer->intension;?></strong></div>
+      <div class='panel-heading'><strong><?php echo $lang->customer->intension;?></strong></div>
       <div class='panel-body'><?php echo $customer->intension;?></div>
     </div>
+    <?php if(!empty($returnList)):?>
+    <div class='panel'>
+      <div class='panel-heading'><strong><?php echo $lang->contract->returnRecords;?></strong></div>
+      <table class='table'>
+        <tr>
+          <th><?php echo $lang->contract->common;?></th>
+          <th class='w-100px'><?php echo $lang->contract->returnedDate;?></th>
+          <th class='w-100px'><?php echo $lang->contract->returnedBy;?></th> 
+          <th class='w-160px'><?php echo $lang->contract->amount;?></th> 
+        </tr>
+        <?php foreach($returnList as $return):?>
+        <?php $contract = $contracts[$return->contract];?>
+        <tr>
+          <td><?php echo $contract->name;?></td>
+          <td><?php echo $return->returnedDate;?></td>
+          <td><?php echo zget($users, $return->returnedBy, $return->returnedBy);?></td>
+          <td><?php echo zget($currencySign, $contract->currency, '') . formatMoney($return->amount);?></td>
+        </tr>
+        <?php endforeach;?>
+      </table>
+    </div>
+    <?php endif;?>
     <?php echo $this->fetch('file', 'printFiles', array('files' => $files, 'fieldset' => 'true'))?>
     <?php echo $this->fetch('action', 'history', "objectType=customer&objectID={$customer->id}")?>
     <div class='page-actions'>

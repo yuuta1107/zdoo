@@ -16,7 +16,7 @@
   <tr data-url='<?php echo $this->createLink('crm.customer', 'view', "id=$id");?>' <?php echo $appid;?>>
     <td class='nobr'><?php echo $customer->name;?></td>
     <td class='w-80px text-center'><?php echo $customer->nextDate?></td>
-    <td class='w-80px text-center'><?php echo $lang->customer->statusList[$customer->status];?></td>
+    <td class='w-80px text-center'><?php echo zget($lang->customer->statusList, $customer->status);?></td>
   </tr>
   <?php endforeach;?>
 </table>

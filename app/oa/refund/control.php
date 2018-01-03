@@ -473,6 +473,7 @@ class refund extends control
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
         }
 
+
         $this->view->title         = $this->lang->refund->common;
         $this->view->refundID      = $refundID;
         $this->view->refund        = $this->refund->getById($refundID);

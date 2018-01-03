@@ -19,8 +19,8 @@ $config->cookiePath    = '/';                // cookies路径分隔符。       
 $config->checkVersion  = true;               // 是否自动检测新版本。                      Auto check for new version or not.
 $config->timeout       = 30 * 1000;          // ajax请求超时时间，单位毫秒。              The timeout of ajax request.
 $config->pingInterval  = 60;                 // 心跳请求发送间隔，单位秒。                The interval of ping request, seconds.
-$config->customerLimit = 50;                 // 页面加载时载入客户的最大数量。            The maximum number of customers that are loaded when the page loads.
-$config->searchLimit   = 50;                 // 使用ajax搜索客户时页面显示的最大条目数量。The maximum number of customers displays in search customer page.
+$config->customerLimit = 3;                 // 页面加载时载入客户的最大数量。            The maximum number of customers that are loaded when the page loads.
+$config->searchLimit   = 5;                 // 使用ajax搜索客户时页面显示的最大条目数量。The maximum number of customers displays in search customer page.
 
 /* Supported charsets. */
 $config->charsets['zh-cn']['utf-8'] = 'UTF-8';
