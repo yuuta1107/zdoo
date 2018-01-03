@@ -208,6 +208,21 @@ class userModel extends model
     }
 
     /**
+     * Get pairs of user and dept manager. 
+     * 
+     * @access public
+     * @return array
+     */
+    public function getUserManagerPairs()
+    {
+        return $this->dao->select('t1.account, t2.moderators')->from(TABLE_USER)->alias('t1')
+            ->leftJoin(TABLE_CATEGORY)->alias('t2')->on('t1.dept=t2.id')
+            ->where('t1.deleted')->eq('0')
+            ->andWhere('t2.type')->eq('dept')
+            ->fetchPairs();
+    }
+
+    /**
      * Create a user.
      * 
      * @access public

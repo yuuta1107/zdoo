@@ -17,6 +17,8 @@ $lang->customer->name          = '名稱';
 $lang->customer->contact       = '聯繫人';
 $lang->customer->depositor     = '對公賬戶';
 $lang->customer->type          = '類型';
+$lang->customer->source        = '客戶來源';
+$lang->customer->sourceNote    = '來源備註';
 $lang->customer->size          = '規模';
 $lang->customer->industry      = '行業';
 $lang->customer->area          = '區域';
@@ -62,6 +64,14 @@ $lang->customer->export      = '導出';
 $lang->customer->merge       = '合併';
 $lang->customer->basicInfo   = '基本信息';
 $lang->customer->moreInfo    = '更多信息';
+
+$lang->customer->sourceList['']              = '';
+$lang->customer->sourceList['visit']         = '陌生拜訪';
+$lang->customer->sourceList['advertisement'] = '廣告';
+$lang->customer->sourceList['introduce']     = '轉介紹';
+$lang->customer->sourceList['activity']      = '活動';
+$lang->customer->sourceList['socialPlat']    = '社交平台';
+$lang->customer->sourceList['others']        = '其他';
 
 $lang->customer->typeList['']            = '';
 $lang->customer->typeList['national']    = '國有企業';

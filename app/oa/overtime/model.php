@@ -85,6 +85,35 @@ class overtimeModel extends model
             ->fetchAll();
         $this->session->set('overtimeQueryCondition', $this->dao->get());
 
+        return $this->processStatus($overtimeList);
+    }
+
+    /**
+     * Process status of overtime list. 
+     * 
+     * @param  array  $overtimeList 
+     * @access public
+     * @return array 
+     */
+    public function processStatus($overtimeList)
+    {
+        $users    = $this->loadModel('user')->getPairs();
+        $managers = $this->user->getUserManagerPairs();
+        foreach($overtimeList as $overtime)
+        {
+            $overtime->statusLabel = zget($this->lang->overtime->statusList, $overtime->status);
+
+            if($overtime->status == 'wait')
+            {
+                $reviewer = $this->getReviewedBy();
+                if(!$reviewer) 
+                {
+                    $reviewer = trim(zget($managers, $overtime->createdBy, ''), ',');
+                }
+                if($reviewer) $overtime->statusLabel = zget($users, $reviewer) . $this->lang->overtime->statusList['doing'];
+            }
+        }
+
         return $overtimeList;
     }
 

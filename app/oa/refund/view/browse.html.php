@@ -61,10 +61,9 @@
             <th><?php commonModel::printOrderLink('name', $orderBy, $vars, $lang->refund->name);?></th>
             <th class='w-120px'><?php commonModel::printOrderLink('category', $orderBy, $vars, $lang->refund->category);?></th>
             <th class='w-100px text-right'><?php commonModel::printOrderLink('money', $orderBy, $vars, $lang->refund->money);?></th>
-            <th class='w-80px'><?php commonModel::printOrderLink('status', $orderBy, $vars, $lang->refund->status);?></th>
+            <th class='w-100px'><?php commonModel::printOrderLink('status', $orderBy, $vars, $lang->refund->status);?></th>
             <th class='w-80px'><?php commonModel::printOrderLink('createdBy', $orderBy, $vars, $lang->refund->createdBy);?></th>
             <th class='w-80px'><?php commonModel::printOrderLink('createdDate', $orderBy, $vars, $lang->refund->createdDate);?></th>
-            <th class='w-80px'><?php commonModel::printOrderLink('firstReviewer', $orderBy, $vars, $lang->refund->reviewer);?></th>
             <th class='w-80px'><?php commonModel::printOrderLink('refundBy', $orderBy, $vars, $lang->refund->refundBy);?></th>
             <th class='w-80px'><?php commonModel::printOrderLink('refundDate', $orderBy, $vars, $lang->refund->refundDate);?></th>
             <?php if($mode == 'personal'):?>
@@ -83,11 +82,9 @@
           <td class='text-left' title='<?php echo $refund->name;?>'><?php echo $refund->name?></td>
           <td class='text-left' title='<?php echo zget($categories, $refund->category);?>'><?php echo zget($categories, $refund->category, ' ');?></td>
           <td class='text-right'><?php echo zget($currencySign, $refund->currency) . $refund->money?></td>
-          <td class='refund-<?php echo $refund->status?>'><?php echo zget($lang->refund->statusList, $refund->status)?></td>
+          <td class='refund-<?php echo $refund->status?>' title='<?php echo $refund->statusLabel;?>'><?php echo $refund->statusLabel;?></td>
           <td><?php echo zget($userPairs, $refund->createdBy);?></td>
           <td><?php echo formatTime($refund->createdDate, DT_DATE1);?></td>
-          <?php $reviewer = zget($userPairs, $refund->firstReviewer) . ' ' . zget($userPairs, $refund->secondReviewer);?> 
-          <td class='text-left' title='<?php echo $reviewer;?>'><?php echo $reviewer;?></td>
           <td><?php echo zget($userPairs, $refund->refundBy);?></td>
           <td><?php echo formatTime($refund->refundDate, DT_DATE1)?></td>
           <td class='text-left'>

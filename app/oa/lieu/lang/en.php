@@ -37,6 +37,7 @@ $lang->lieu->rejectReason = 'Reject Reason';
 
 $lang->lieu->statusList['draft']  = 'Draft';
 $lang->lieu->statusList['wait']   = 'Wait';
+$lang->lieu->statusList['doing']  = 'Doing';
 $lang->lieu->statusList['pass']   = 'Pass';
 $lang->lieu->statusList['reject'] = 'Reject';
 

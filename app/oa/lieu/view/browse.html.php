@@ -56,10 +56,7 @@
             <th class='w-130px'><?php commonModel::printOrderLink('end', $orderBy, $vars, $lang->lieu->end);?></th>
             <th class='w-60px'><?php commonModel::printOrderLink('hours', $orderBy, $vars, $lang->lieu->hours);?></th>
             <th><?php echo $lang->lieu->desc;?></th>
-            <th class='w-70px'><?php commonModel::printOrderLink('status', $orderBy, $vars, $lang->lieu->status);?></th>
-            <?php if($type != 'browseReview'):?>
-            <th class='w-80px'><?php commonModel::printOrderLink('reviewedBy', $orderBy, $vars, $lang->lieu->reviewedBy);?></th>
-            <?php endif;?>
+            <th class='w-100px'><?php commonModel::printOrderLink('status', $orderBy, $vars, $lang->lieu->status);?></th>
             <?php if($type == 'personal'):?>
             <th class='w-130px'><?php echo $lang->actions;?></th>
             <?php else:?>
@@ -82,10 +79,7 @@
           <td><?php echo formatTime($lieu->end . ' ' . $lieu->finish, DT_DATETIME2);?></td>
           <td><?php echo $lieu->hours;?></td>
           <td title='<?php echo $lieu->desc;?>'><?php echo $lieu->desc;?></td>
-          <td class='lieu-<?php echo $lieu->status?>'><?php echo zget($this->lang->lieu->statusList, $lieu->status);?></td>
-          <?php if($type != 'browseReview'):?>
-          <td><?php echo zget($users, $lieu->reviewedBy);?></td>
-          <?php endif;?>
+          <td class='lieu-<?php echo $lieu->status?>'><?php echo $lieu->statusLabel;?></td>
           <td class='actionTD text-left'>
             <?php
             commonModel::printLink('oa.lieu', 'view', "id={$lieu->id}&type=$type", $lang->lieu->view, "data-toggle='modal'");

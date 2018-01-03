@@ -52,6 +52,7 @@ $lang->leave->unpaid = 'Unpaid Leave';
 
 $lang->leave->statusList['draft']  = 'Draft';
 $lang->leave->statusList['wait']   = 'Wait';
+$lang->leave->statusList['doing']  = 'Doing';
 $lang->leave->statusList['pass']   = 'Pass';
 $lang->leave->statusList['reject'] = 'Reject';
 $lang->leave->statusList['back']   = 'Back';

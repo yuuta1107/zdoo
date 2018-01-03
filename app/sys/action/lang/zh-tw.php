@@ -190,7 +190,7 @@ $lang->action->label->provider  = '供應商|provider|view|providerID=%s';
 $lang->action->label->schema    = '記賬模板|schema|browse|';
 $lang->action->label->space     = ' ';
 $lang->action->label->task      = '任務|task|view|taskID=%s';
-$lang->action->label->todo      = '待辦|todo|calendar|';
+$lang->action->label->todo      = '待辦|todo|view|todoID=%s';
 $lang->action->label->trade     = '賬目|trade|browse|';
 
 $lang->action->label->attend = array();

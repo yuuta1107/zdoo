@@ -41,6 +41,7 @@ $lang->makeup->typeList['compensate'] = 'Compensated Leave';
 
 $lang->makeup->statusList['draft']  = 'Draft';
 $lang->makeup->statusList['wait']   = 'Wait';
+$lang->makeup->statusList['doing']  = 'Doing';
 $lang->makeup->statusList['pass']   = 'Pass';
 $lang->makeup->statusList['reject'] = 'Reject';
 

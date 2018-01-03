@@ -93,6 +93,36 @@ class leaveModel extends model
             }
         }
 
+        return $this->processStatus($leaveList);
+    }
+
+    /**
+     * Process status of leave list. 
+     * 
+     * @param  array  $leaveList 
+     * @access public
+     * @return array
+     */
+    public function processStatus($leaveList)
+    {
+        $users    = $this->loadModel('user')->getPairs();
+        $managers = $this->user->getUserManagerPairs();
+        foreach($leaveList as $leave)
+        {
+            $status = ($leave->status == 'pass' && $leave->backDate != '0000-00-00 00:00:00' && $leave->backDate != $leave->end . ' ' . $leave->finish) ? 'back' : $leave->status;
+            $leave->statusLabel = zget($this->lang->leave->statusList, $status);
+
+            if($status == 'wait' or $status == 'back')
+            {
+                $reviewer = $this->getReviewedBy();
+                if(!$reviewer) 
+                {
+                    $reviewer = trim(zget($managers, $leave->createdBy, ''), ',');
+                }
+                if($reviewer) $leave->statusLabel = zget($users, $reviewer) . $this->lang->leave->statusList['doing'];
+            }
+        }
+
         return $leaveList;
     }
 

@@ -23,6 +23,10 @@ $lang->refund->setRefundBy  = '報銷者設置';
 $lang->refund->export       = '導出報銷記錄';
 
 $lang->refund->id               = '編號';
+$lang->refund->customer         = '客戶';
+$lang->refund->order            = '訂單';
+$lang->refund->contract         = '合同';
+$lang->refund->project          = '項目';
 $lang->refund->name             = '名稱';
 $lang->refund->category         = '科目';
 $lang->refund->date             = '日期';
@@ -48,6 +52,11 @@ $lang->refund->reason           = '理由';
 $lang->refund->reviewer         = '審批人';
 $lang->refund->related          = '參與人';
 $lang->refund->depositor        = '報銷賬戶';
+
+$lang->refund->objectTypeList['customer'] = '客戶支出';
+$lang->refund->objectTypeList['order']    = '訂單支出';
+$lang->refund->objectTypeList['contract'] = '合同支出';
+$lang->refund->objectTypeList['project']  = '項目支出';
 
 $lang->refund->statusList['draft']  = '草稿';
 $lang->refund->statusList['wait']   = '等待審批';

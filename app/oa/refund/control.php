@@ -363,7 +363,7 @@ class refund extends control
         {
             $deptList = $allDeptList;
         }
-        else if(empty($this->config->refund->firstReviewer))
+        elseif(empty($this->config->refund->firstReviewer))
         {
             $deptList = $managedDeptList;
         }

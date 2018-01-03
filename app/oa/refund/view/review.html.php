@@ -33,7 +33,7 @@
         </div>
       </th>
       <?php else:;?>
-      <th class='w-160px'></th>
+      <th class='w-160px'><?php echo $lang->actions;?></th>
       <?php endif;?>
     </tr>
     </thead>

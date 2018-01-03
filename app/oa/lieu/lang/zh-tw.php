@@ -37,6 +37,7 @@ $lang->lieu->rejectReason = '拒絶原因';
 
 $lang->lieu->statusList['draft']  = '草稿';
 $lang->lieu->statusList['wait']   = '等待審核';
+$lang->lieu->statusList['doing']  = '審核中';
 $lang->lieu->statusList['pass']   = '通過';
 $lang->lieu->statusList['reject'] = '拒絶';
 

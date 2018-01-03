@@ -73,6 +73,35 @@ class makeupModel extends model
             ->fetchAll();
         $this->session->set('makeupQueryCondition', $this->dao->get());
 
+        return $this->processStatus($makeupList);
+    }
+
+    /**
+     * Process status of makeup list. 
+     * 
+     * @param  array  $makeupList 
+     * @access public
+     * @return array 
+     */
+    public function processStatus($makeupList)
+    {
+        $users    = $this->loadModel('user')->getPairs();
+        $managers = $this->user->getUserManagerPairs();
+        foreach($makeupList as $makeup)
+        {
+            $makeup->statusLabel = zget($this->lang->makeup->statusList, $makeup->status);
+
+            if($makeup->status == 'wait')
+            {
+                $reviewer = $this->getReviewedBy();
+                if(!$reviewer) 
+                {
+                    $reviewer = trim(zget($managers, $makeup->createdBy, ''), ',');
+                }
+                if($reviewer) $makeup->statusLabel = zget($users, $reviewer) . $this->lang->makeup->statusList['doing'];
+            }
+        }
+
         return $makeupList;
     }
 

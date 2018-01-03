@@ -52,6 +52,7 @@ $lang->leave->unpaid = '非带薪假';
 
 $lang->leave->statusList['draft']  = '草稿';
 $lang->leave->statusList['wait']   = '等待审核';
+$lang->leave->statusList['doing']  = '审核中';
 $lang->leave->statusList['pass']   = '通过';
 $lang->leave->statusList['reject'] = '拒绝';
 $lang->leave->statusList['back']   = '销假待审';

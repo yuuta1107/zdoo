@@ -41,6 +41,7 @@ $lang->makeup->typeList['compensate'] = '補班';
 
 $lang->makeup->statusList['draft']  = '草稿';
 $lang->makeup->statusList['wait']   = '等待審核';
+$lang->makeup->statusList['doing']  = '審核中';
 $lang->makeup->statusList['pass']   = '通過';
 $lang->makeup->statusList['reject'] = '拒絶';
 

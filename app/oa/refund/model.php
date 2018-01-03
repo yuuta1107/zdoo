@@ -55,7 +55,7 @@ class refundModel extends model
         if($this->session->refundQuery == false) $this->session->set('refundQuery', ' 1 = 1');
         $refundQuery = $this->loadModel('search', 'sys')->replaceDynamic($this->session->refundQuery);
 
-        $users = $this->loadModel('user')->getPairs('noclosed,noempty', $deptID);
+        $users   = $this->loadModel('user')->getPairs('noclosed,noempty', $deptID);
         $refunds = $this->dao->select('*')->from(TABLE_REFUND)
             ->where('parent')->eq('0')
             ->beginIf($deptID != '')->andWhere('createdBy')->in(array_keys($users))->fi()
@@ -79,6 +79,46 @@ class refundModel extends model
         $details = $this->dao->select('*')->from(TABLE_REFUND)->where('parent')->in(array_keys($refunds))->fetchGroup('parent', 'id');
         foreach($refunds as $key => $refund) $refund->detail = isset($details[$key]) ? $details[$key] : array();
 
+        return $this->processStatus($refunds, $users);
+    }
+
+    /**
+     * Process status of refunds. 
+     * 
+     * @param  array  $refunds 
+     * @param  array  $users 
+     * @access public
+     * @return array
+     */
+    public function processStatus($refunds, $users)
+    {
+        $managers = $this->loadModel('user')->getUserManagerPairs();
+        foreach($refunds as $refund)
+        {
+            if($refund->status != 'wait' && $refund->status != 'doing') 
+            {
+                $refund->statusLabel = zget($this->lang->refund->statusList, $refund->status);
+                continue;
+            }
+
+            $reviewer = '';
+            if($refund->firstReviewer)
+            {
+                if(!empty($this->config->refund->secondReviewer)) $reviewer = $this->config->refund->secondReviewer;
+            }
+            else
+            {
+                if(empty($this->config->refund->firstReviewer))
+                {
+                    $reviewer = trim(zget($managers, $refund->createdBy, ''), ',');
+                }
+                else
+                {
+                    $reviewer = $this->config->refund->firstReviewer;
+                }
+            }
+            if($reviewer) $refund->statusLabel = zget($users, $reviewer) . $this->lang->refund->statusList['doing'];
+        }
         return $refunds;
     }
 
@@ -180,6 +220,10 @@ class refundModel extends model
             ->add('status', 'wait')
             ->add('editedBy', $this->app->user->account)
             ->add('editedDate', helper::now())
+            ->add('firstReviewer', '')
+            ->add('firstReviewDate', '0000-00-00')
+            ->add('secondReviewer', '')
+            ->add('secondReviewDate', '0000-00-00')
             ->join('related', ',')
             ->setDefault('date', helper::today())
             ->setForce('money', (float)$this->post->money)

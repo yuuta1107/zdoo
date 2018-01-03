@@ -43,6 +43,7 @@ $lang->overtime->typeList['holiday'] = '节假日加班';
 
 $lang->overtime->statusList['draft']  = '草稿';
 $lang->overtime->statusList['wait']   = '等待审核';
+$lang->overtime->statusList['doing']  = '审核中';
 $lang->overtime->statusList['pass']   = '通过';
 $lang->overtime->statusList['reject'] = '拒绝';
 

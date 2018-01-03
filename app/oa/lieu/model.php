@@ -55,7 +55,7 @@ class lieuModel extends model
             if($month) $date = "%-$month-%";
         }
 
-        return $this->dao->select('t1.*, t2.realname, t2.dept')
+        $lieuList = $this->dao->select('t1.*, t2.realname, t2.dept')
             ->from(TABLE_LIEU)->alias('t1')
             ->leftJoin(TABLE_USER)->alias('t2')->on("t1.createdBy=t2.account")
             ->where(1)
@@ -71,6 +71,38 @@ class lieuModel extends model
             ->beginIf($type == 'company')->andWhere('t1.status')->ne('draft')->fi()
             ->orderBy("t2.dept,t1.{$orderBy}")
             ->fetchAll();
+        $this->session->set('lieuQueryCondition', $this->dao->get());
+
+        return $this->processStatus($lieuList);
+    }
+
+    /**
+     * Process status of lieu list. 
+     * 
+     * @param  array  $lieuList 
+     * @access public
+     * @return array 
+     */
+    public function processStatus($lieuList)
+    {
+        $users    = $this->loadModel('user')->getPairs();
+        $managers = $this->user->getUserManagerPairs();
+        foreach($lieuList as $lieu)
+        {
+            $lieu->statusLabel = zget($this->lang->lieu->statusList, $lieu->status);
+
+            if($lieu->status == 'wait')
+            {
+                $reviewer = $this->getReviewedBy();
+                if(!$reviewer) 
+                {
+                    $reviewer = trim(zget($managers, $lieu->createdBy, ''), ',');
+                }
+                if($reviewer) $lieu->statusLabel = zget($users, $reviewer) . $this->lang->lieu->statusList['doing'];
+            }
+        }
+
+        return $lieuList;
     }
 
     /**

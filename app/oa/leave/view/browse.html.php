@@ -59,10 +59,7 @@
             <th class='w-140px'><?php commonModel::printOrderLink('backDate', $orderBy, $vars, $lang->leave->backDate);?></th>
             <th class='w-60px visible-lg'><?php commonModel::printOrderLink('hours', $orderBy, $vars, $lang->leave->hours);?></th>
             <th><?php echo $lang->leave->desc;?></th>
-            <th class='w-70px'><?php commonModel::printOrderLink('status', $orderBy, $vars, $lang->leave->status);?></th>
-            <?php if($type != 'browseReview'):?>
-            <th class='w-80px'><?php commonModel::printOrderLink('reviewedBy', $orderBy, $vars, $lang->leave->reviewedBy);?></th>
-            <?php endif;?>
+            <th class='w-100px'><?php commonModel::printOrderLink('status', $orderBy, $vars, $lang->leave->status);?></th>
             <?php if($type == 'personal'):?>
             <th class='w-160px'><?php echo $lang->actions;?></th>
             <?php else:?>
@@ -88,10 +85,7 @@
           <td class='visible-lg'><?php echo $leave->hours == 0 ? '' : $leave->hours;?></td>
           <td title='<?php echo $leave->desc;?>'><?php echo $leave->desc;?></td>
           <?php $status = ($leave->status == 'pass' and $leave->backDate != '0000-00-00 00:00:00' and $leave->backDate != $leave->end . ' ' . $leave->finish) ? 'back' : $leave->status;?>
-          <td class='leave-<?php echo $status?>'><?php echo zget($this->lang->leave->statusList, $status);?></td>
-          <?php if($type != 'browseReview'):?>
-          <td><?php echo zget($users, $leave->reviewedBy);?></td>
-          <?php endif;?>
+          <td class='leave-<?php echo $status?>' title='<?php echo $leave->statusLabel;?>'><?php echo $leave->statusLabel;?></td>
           <td class='actionTD text-left'>
             <?php 
             commonModel::printLink('oa.leave', 'view', "id={$leave->id}&type=$type", $lang->detail, "data-toggle='modal'");

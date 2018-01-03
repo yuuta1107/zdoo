@@ -58,10 +58,7 @@
             <th class='w-150px'><?php commonModel::printOrderLink('end', $orderBy, $vars, $lang->overtime->end);?></th>
             <th class='w-50px visible-lg'><?php commonModel::printOrderLink('hours', $orderBy, $vars, $lang->overtime->hours);?></th>
             <th><?php echo $lang->overtime->desc;?></th>
-            <th class='w-80px'><?php commonModel::printOrderLink('status', $orderBy, $vars, $lang->overtime->status);?></th>
-            <?php if($type != 'browseReview'):?>
-            <th class='w-80px'><?php commonModel::printOrderLink('reviewedBy', $orderBy, $vars, $lang->overtime->reviewedBy);?></th>
-            <?php endif;?>
+            <th class='w-100px'><?php commonModel::printOrderLink('status', $orderBy, $vars, $lang->overtime->status);?></th>
             <?php if($type == 'personal'):?>
             <th class='w-130px'><?php echo $lang->actions;?></th>
             <?php else:?>
@@ -85,10 +82,7 @@
           <td><?php echo formatTime($overtime->end . ' ' . $overtime->finish, DT_DATETIME2);?></td>
           <td class='visible-lg'><?php echo $overtime->hours == 0 ? '' : $overtime->hours;?></td>
           <td title='<?php echo $overtime->desc?>'><?php echo $overtime->desc;?></td>
-          <td class='overtime-<?php echo $overtime->status?>'><?php echo zget($this->lang->overtime->statusList, $overtime->status);?></td>
-          <?php if($type != 'browseReview'):?>
-          <td><?php echo zget($users, $overtime->reviewedBy);?></td>
-          <?php endif;?>
+          <td class='overtime-<?php echo $overtime->status?>'><?php echo $overtime->statusLabel;?></td>
           <td class='actionTD text-left'>
             <?php 
             commonModel::printLink('oa.overtime', 'view', "id=$overtime->id&type=$type", $lang->detail, "data-toggle='modal'");

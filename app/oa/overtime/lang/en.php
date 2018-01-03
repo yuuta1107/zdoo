@@ -43,6 +43,7 @@ $lang->overtime->typeList['holiday'] = 'On holiday';
 
 $lang->overtime->statusList['draft']  = 'Draft';
 $lang->overtime->statusList['wait']   = 'Wait';
+$lang->overtime->statusList['doing']  = 'Doing';
 $lang->overtime->statusList['pass']   = 'Pass';
 $lang->overtime->statusList['reject'] = 'Reject';
 
