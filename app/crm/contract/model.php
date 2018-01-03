@@ -149,14 +149,19 @@ class contractModel extends model
     /**
      * Get returnList of its contract.
      * 
-     * @param  int    $contractID 
-     * @param  string $orderBy
+     * @param  int|array $contractID 
+     * @param  string    $orderBy
      * @access public
      * @return array
      */
     public function getReturnList($contractID = 0, $orderBy = 'id_desc')
     {
-        return $this->dao->select('*')->from(TABLE_PLAN)->where('contract')->eq($contractID)->orderBy($orderBy)->fetchAll();
+        return $this->dao->select('*')->from(TABLE_PLAN)
+            ->where(1)
+            ->beginIF(is_array($contractID))->andWhere('contract')->in($contractID)->fi()
+            ->beginIF(!is_array($contractID))->andWhere('contract')->eq($contractID)->fi()
+            ->orderBy($orderBy)
+            ->fetchAll();
     }
 
     /**

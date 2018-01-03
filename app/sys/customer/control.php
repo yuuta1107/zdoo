@@ -197,6 +197,7 @@ class customer extends control
         $this->view->users        = $this->loadModel('user')->getPairs();
         $this->view->areaList     = $this->loadModel('tree')->getPairs('', 'area');
         $this->view->industryList = $this->tree->getPairs('', 'industry');
+        $this->view->returnList   = $this->contract->getReturnList(array_keys($this->view->contracts), 'returnedDate_desc');
         $this->view->currencySign = $this->loadModel('common', 'sys')->getCurrencySign();
         $this->view->preAndNext   = $this->common->getPreAndNextObject('customer', $customerID);
         $this->view->files        = $fileList;
