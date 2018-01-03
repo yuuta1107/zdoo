@@ -194,7 +194,7 @@ class refundModel extends model
         {
             foreach($this->post->objectType as $objectType) 
             {
-                $refund->$objectType = $this->post->objectType;
+                $refund->$objectType = $this->post->$objectType;
                 if($objectType == 'order' or $objectType == 'contract') $refund->customer = $this->post->customer;
 
                 $this->config->refund->require->edit .= ',' . $objectType;

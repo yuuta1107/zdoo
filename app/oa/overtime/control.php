@@ -555,7 +555,7 @@ class overtime extends control
         {
             $this->loadModel('setting')->setItem('system.oa.overtime..reviewedBy', $this->post->reviewedBy);
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
-            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess));
+            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
         }
 
         if($module)

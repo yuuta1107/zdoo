@@ -77,7 +77,7 @@ class lieu extends control
         }
         else
         {
-            if($date == '' or (strlen($date) != 6 and strlen($date) != 4)) $date = date("Ym");
+            if($date == '' or (strlen($date) != 6 and strlen($date) != 4)) $date = date('Ym');
             $currentYear  = substr($date, 0, 4);
             $currentMonth = strlen($date) == 6 ? substr($date, 4, 2) : '';
             $monthList    = $this->lieu->getAllMonth($type);
@@ -514,7 +514,7 @@ class lieu extends control
             $this->loadModel('setting')->setItem('system.oa.lieu.reviewedBy', $this->post->reviewedBy);
             $this->setting->setItem('system.oa.lieu.checkHours', $this->post->checkHours);
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
-            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess));
+            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
         }
 
         if($module)

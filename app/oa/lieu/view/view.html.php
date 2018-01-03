@@ -71,10 +71,10 @@
   }
   elseif($lieu->status == 'wait')
   {
-      commonModel::printLink('oa.lieu', 'review', "id={$lieu->id}status=pass",   $lang->lieu->status['pass'],   "class='btn reviewPass'");
-      commonModel::printLink('oa.lieu', 'review', "id={$lieu->id}status=reject", $lang->lieu->status['reject'], "class='btn loadInModal'");
+      commonModel::printLink('oa.lieu', 'review', "id={$lieu->id}&status=pass",   $lang->lieu->statusList['pass'],   "class='btn reviewPass'");
+      commonModel::printLink('oa.lieu', 'review', "id={$lieu->id}&status=reject", $lang->lieu->statusList['reject'], "class='btn loadInModal'");
   }
-  echo html::a('###', $lang->goback, "class='btn' data-dismiss='modal'");
+  echo html::a('javascript:;', $lang->goback, "class='btn' data-dismiss='modal'");
   ?>
 </div>
 <?php include '../../../sys/common/view/footer.modal.html.php';?>

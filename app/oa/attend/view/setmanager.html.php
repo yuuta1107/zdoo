@@ -28,7 +28,7 @@
     <div class='panel'>
       <div class='panel-heading'><?php echo $lang->attend->setManager;?></div>
       <div class='panel-body'>
-        <form id='deptForm' method='post'>
+        <form id='ajaxForm' method='post'>
           <table class='table table-form table-condensed w-p40'>
             <?php if(!empty($deptList)):?>
             <?php foreach($deptList as $id => $dept):?>
@@ -37,9 +37,15 @@
               <td class='w-300px'><?php echo html::select("dept[$id]", $users, trim($dept->moderators, ','), "class='form-control chosen'")?></td>
             </tr>
             <?php endforeach;?>
-            <tr><th></th><td><?php echo html::submitButton();?></td></tr>
+            <tr>
+              <th></th>
+              <td><?php echo html::submitButton();?></td>
+            </tr>
             <?php else:?>
-            <tr><th></th><td><?php commonModel::printLink('team.tree', 'browse', 'type=dept', $lang->attend->setDept, "class='btn btn-primary setDept'");?></td></tr>
+            <tr>
+              <th></th>
+              <td><?php commonModel::printLink('team.tree', 'browse', 'type=dept', $lang->attend->setDept, "class='btn btn-primary setDept'");?></td>
+            </tr>
             <?php endif;?>
           </table>
         </form>
