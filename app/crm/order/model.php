@@ -23,10 +23,15 @@ class orderModel extends model
         $customerIdList = $this->loadModel('customer')->getCustomersSawByMe();
         if(empty($customerIdList)) return null;
 
-        $order = $this->dao->select('*')->from(TABLE_ORDER)->where('id')->eq($id)->andWhere('customer')->in($customerIdList)->fetch(); 
+        $order = $this->dao->select('o.*, c.name as customerName')->from(TABLE_ORDER)->alias('o')
+            ->leftJoin(TABLE_CUSTOMER)->alias('c')->on("o.customer=c.id")
+            ->where('o.customer')->in($customerIdList)
+            ->fetch();
         if(!$order) return false;
 
-        $products = $this->dao->select('*')->from(TABLE_PRODUCT)->where('id')->in($order->product)->orderBy('id_desc')->fetchAll();
+        $products     = $this->dao->select('*')->from(TABLE_PRODUCT)->where('id')->in($order->product)->orderBy('id_desc')->fetchAll();
+        $productName  = count($products) > 1 ? current($products)->name . $this->lang->etc : current($products)->name;
+        $order->title = sprintf($this->lang->order->titleLBL, $order->customerName, $productName, date('Y-m-d', strtotime($order->createdDate))); 
 
         $order->products = $products;
 

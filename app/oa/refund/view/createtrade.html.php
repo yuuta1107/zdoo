@@ -26,35 +26,16 @@
     <tr>
       <th class='w-60px'><?php echo $lang->trade->category;?></th>
       <td>
-        <div class='input-group'>
-          <?php echo html::select('category', $categoryList, $refund->category, "class='form-control chosen'");?>
-          <div class='input-group-addon' style='padding-right: 20px;'><?php echo html::checkbox('objectType', $lang->trade->objectTypeList);?></div>
-        </div>
-      </td>
-    </tr>
-    <tr class='hide'>
-      <th><?php echo $lang->trade->customer;?></th>
-      <td><?php echo html::select('customer', $customerList, '', "class='form-control chosen'");?></td>
-    </tr>
-    <tr class='hide'>
-      <th><?php echo $lang->trade->order;?></th>
-      <td><?php echo html::select('order', array('') + (array) $orderList, '', "class='form-control chosen'");?></td>
-    </tr>
-    <tr class='hide'>
-      <th><?php echo $lang->trade->contract;?></th>
-      <td>
-        <select class='form-control chosen' id='contract' name='contract'>
-          <option value=''></option>
-          <?php foreach($contractList as $id => $contract):?>
-          <?php $optionPinyin = zget($pinyinContracts, $contract->name);?>
-          <option value="<?php echo $id?>" data-amount="<?php echo $contract->amount;?>" data-keys="<?php echo $optionPinyin;?>"><?php echo $contract->name;?></option>
-          <?php endforeach;?>
-        </select>
+        <div class='required required-wrapper'></div>
+        <?php echo html::select('category', $categoryList, $refund->category, "class='form-control chosen'");?>
       </td>
     </tr>
     <tr>
       <th><?php echo $lang->trade->dept;?></th>
-      <td><?php echo html::select('dept', $deptList, $refund->dept, "class='form-control chosen'");?></td>
+      <td>
+        <div class='required required-wrapper'></div>
+        <?php echo html::select('dept', $deptList, $refund->dept, "class='form-control chosen'");?>
+      </td>
     </tr>
     <tr>
       <th><?php echo $lang->trade->handlers;?></th>

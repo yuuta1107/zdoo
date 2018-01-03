@@ -47,11 +47,22 @@ class refund extends control
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => inlink('personal')));
         }
 
+        $contracts        = $this->loadModel('contract', 'crm')->getPairs();
+        $contractsSawByMe = $this->contract->getContractsSawByMe();
+        foreach($contracts as $id => $name)
+        {
+            if(!in_array($id, $contractsSawByMe)) unset($contracts[$id]);
+        }
+
         $this->view->currencyList = $this->loadModel('common', 'sys')->getCurrencyList();
         $this->view->currencySign = $this->loadModel('common', 'sys')->getCurrencySign();
         $this->view->categories   = $this->refund->getCategoryPairs();
         $this->view->users        = $this->loadModel('user')->getPairs('noclosed,nodeleted,noforbidden');
         $this->view->deptList     = $this->loadModel('tree')->getOptionMenu('dept');
+        $this->view->customers    = $this->loadModel('customer')->getPairs('client', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit);
+        $this->view->orders       = array('') + $this->loadModel('order', 'crm')->getPairs();
+        $this->view->projects     = array('') + $this->loadModel('project', 'proj')->getPairs();
+        $this->view->contracts    = array('') + $contracts;
         $this->display();
     }
 
@@ -91,12 +102,23 @@ class refund extends control
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => inlink('view', "refundID=$refundID&mode=personal")));
         }
 
+        $contracts        = $this->loadModel('contract', 'crm')->getPairs();
+        $contractsSawByMe = $this->contract->getContractsSawByMe();
+        foreach($contracts as $id => $name)
+        {
+            if(!in_array($id, $contractsSawByMe)) unset($contracts[$id]);
+        }
+
         $this->view->currencyList = $this->loadModel('common', 'sys')->getCurrencyList();
         $this->view->currencySign = $this->loadModel('common', 'sys')->getCurrencySign();
         $this->view->categories   = $this->refund->getCategoryPairs();
-        $this->view->refund       = $refund;
         $this->view->users        = $this->loadModel('user')->getPairs('noclosed,nodeleted,noforbidden');
         $this->view->deptList     = $this->loadModel('tree')->getOptionMenu('dept');
+        $this->view->customers    = $this->loadModel('customer')->getPairs('client', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit, $refund->customer);
+        $this->view->orders       = array('') + $this->loadModel('order', 'crm')->getPairs();
+        $this->view->projects     = array('') + $this->loadModel('project', 'proj')->getPairs();
+        $this->view->contracts    = array('') + $contracts;
+        $this->view->refund       = $refund;
         $this->display();
     }
 
@@ -241,6 +263,10 @@ class refund extends control
         $this->view->categories   = $this->refund->getCategoryPairs();
         $this->view->deptList     = $this->loadModel('tree')->getOptionMenu('dept');
         $this->view->preAndNext   = $this->loadModel('common', 'sys')->getPreAndNextObject('refund', $refundID);
+        $this->view->customer     = $this->loadModel('customer')->getById($refund->customer);
+        $this->view->order        = $this->loadModel('order', 'crm')->getById($refund->order);
+        $this->view->contract     = $this->loadModel('contract', 'crm')->getById($refund->contract);
+        $this->view->project      = $this->loadModel('project', 'proj')->getById($refund->project);
         $this->view->refund       = $refund;
         $this->view->mode         = $mode;
         $this->view->status       = $status;
@@ -447,21 +473,17 @@ class refund extends control
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
         }
 
-        $contractPairs = array();
-        $contractList  = $this->loadModel('contract', 'crm')->getList($customerID = 0);
-        foreach($contractList as $contract) $contractPairs[$contract->id] = $contract->name;
 
-        $this->view->title           = $this->lang->refund->common;
-        $this->view->refundID        = $refundID;
-        $this->view->refund          = $this->refund->getById($refundID);
-        $this->view->depositorList   = array('') + $this->loadModel('depositor', 'cash')->getPairs();
-        $this->view->categoryList    = $this->refund->getCategoryPairs();
-        $this->view->orderList       = $this->loadModel('order', 'crm')->getPairs($customerID = 0);
-        $this->view->contractList    = $contractList;
-        $this->view->pinyinContracts = commonModel::convert2Pinyin($contractPairs);
-        $this->view->customerList    = $this->loadModel('customer')->getPairs('client');
-        $this->view->deptList        = $this->loadModel('tree')->getOptionMenu('dept');
-        $this->view->userList        = $this->loadModel('user')->getPairs('noclosed,nodeleted,noempty,noforbidden');
+        $this->view->title         = $this->lang->refund->common;
+        $this->view->refundID      = $refundID;
+        $this->view->refund        = $this->refund->getById($refundID);
+        $this->view->depositorList = array('') + $this->loadModel('depositor', 'cash')->getPairs();
+        $this->view->categoryList  = $this->refund->getCategoryPairs();
+        $this->view->orderList     = $this->loadModel('order', 'crm')->getPairs($customerID = 0);
+        $this->view->contractList  = $this->loadModel('contract', 'crm')->getList($customerID = 0);
+        $this->view->customerList  = $this->loadModel('customer')->getPairs('client');
+        $this->view->deptList      = $this->loadModel('tree')->getOptionMenu('dept');
+        $this->view->userList      = $this->loadModel('user')->getPairs('noclosed,nodeleted,noempty,noforbidden');
 
         $this->display();
     }
@@ -520,7 +542,7 @@ class refund extends control
         {
             $this->refund->setCategory($expenseIdList);
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
-            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess));
+            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
         }
 
         if($module)
@@ -553,7 +575,7 @@ class refund extends control
         {
             $this->loadModel('setting')->setItem('system.oa.refund.depositor', $this->post->depositor);
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
-            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess));
+            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
         }
 
         if($module)
@@ -581,7 +603,7 @@ class refund extends control
         {
             $this->loadModel('setting')->setItem('system.oa.refund.refundBy', $this->post->refundBy);
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
-            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess));
+            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
         }
 
         if($module)

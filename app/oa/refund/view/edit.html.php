@@ -27,13 +27,50 @@
           <th><?php echo $lang->refund->dept?></th>
           <td><?php echo html::select('dept', $deptList, $refund->dept, "class='form-control chosen'")?></td>
         </tr>
-        <?php if($categories):?>
         <tr>
           <th><?php echo $lang->refund->category?></th>
-          <td><?php echo html::select('category', $categories, $refund->category, "class='form-control chosen'")?></td>
+          <td>
+            <div class='input-group'>
+              <?php echo html::select('category', $categories, $refund->category, "class='form-control chosen'");?>
+              <span class='input-group-addon'>
+                <?php echo html::checkbox('objectType', $lang->refund->objectTypeList, $refund->objectType);?> 
+              </span>
+            </div>
+          </td>
           <td></td>
         </tr>
-        <?php endif;?>
+        <tr>
+          <th><?php echo $lang->refund->customer;?></th>
+          <td>
+            <div class='required required-wrapper'></div>
+            <?php echo html::select('customer', $customers, $refund->customer, "class='form-control chosen' data-no_results_text='" . $lang->searchMore . "'");?>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <th><?php echo $lang->refund->order;?></th>
+          <td>
+            <div class='required required-wrapper'></div>
+            <?php echo html::select('order', $orders, $refund->order, "class='form-control chosen'");?>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <th><?php echo $lang->refund->contract;?></th>
+          <td>
+            <div class='required required-wrapper'></div>
+            <?php echo html::select('contract', $contracts, $refund->contract, "class='form-control chosen'");?>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <th><?php echo $lang->refund->project;?></th>
+          <td>
+            <div class='required required-wrapper'></div>
+            <?php echo html::select('project', $projects, $refund->project, "class='form-control chosen'");?>
+          </td>
+          <td></td>
+        </tr>
         <tr>
           <th><?php echo $lang->refund->money?></th>
           <td>
@@ -62,7 +99,6 @@
               <?php $key = 0;?>
               <?php foreach($refund->detail as $d):?>
               <tr>
-                <?php echo html::hidden('idList[]', $d->id)?>
                 <td class='w-100px'><?php echo html::input("dateList[$key]", $d->date, "class='form-control form-date' placeholder='{$lang->refund->date}'")?></td>
                 <?php if($categories):?>
                 <td class='w-100px'><?php echo html::select("categoryList[$key]", $categories, $d->category, "class='form-control chosen' placeholder='{$lang->refund->category}'")?></td>
@@ -116,4 +152,7 @@
 </tr>
 </script>
 <?php js::set('key', 2)?>
+<script>
+<?php helper::import('../js/searchcustomer.js');?>
+</script>
 <?php include '../../common/view/footer.html.php';?>

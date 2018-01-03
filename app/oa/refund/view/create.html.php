@@ -23,20 +23,57 @@
       <table class='table table-form w-p70'>
         <tr>
           <th class='w-100px'><?php echo $lang->refund->name?></th>
-          <td class='w-400px'><?php echo html::input('name', '', "class='form-control'")?></td>
+          <td class='w-500px'><?php echo html::input('name', '', "class='form-control'")?></td>
           <td></td>
         </tr>
         <tr>
           <th><?php echo $lang->refund->dept?></th>
           <td><?php echo html::select('dept', $deptList, $this->app->user->dept, "class='form-control chosen'")?></td>
         </tr>
-        <?php if($categories):?>
         <tr>
           <th><?php echo $lang->refund->category?></th>
-          <td><?php echo html::select('category', $categories, '', "class='form-control chosen'")?></td>
+          <td>
+            <div class='input-group'>
+              <?php echo html::select('category', $categories, '', "class='form-control chosen'");?>
+              <span class='input-group-addon'>
+                <?php echo html::checkbox('objectType', $lang->refund->objectTypeList);?> 
+              </span>
+            </div>
+          </td>
           <td></td>
         </tr>
-        <?php endif;?>
+        <tr>
+          <th><?php echo $lang->refund->customer;?></th>
+          <td>
+            <div class='required required-wrapper'></div>
+            <?php echo html::select('customer', $customers, '', "class='form-control chosen' data-no_results_text='" . $lang->searchMore . "'");?>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <th><?php echo $lang->refund->order;?></th>
+          <td>
+            <div class='required required-wrapper'></div>
+            <?php echo html::select('order', $orders, '', "class='form-control chosen'");?>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <th><?php echo $lang->refund->contract;?></th>
+          <td>
+            <div class='required required-wrapper'></div>
+            <?php echo html::select('contract', $contracts, '', "class='form-control chosen'");?>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <th><?php echo $lang->refund->project;?></th>
+          <td>
+            <div class='required required-wrapper'></div>
+            <?php echo html::select('project', $projects, '', "class='form-control chosen'");?>
+          </td>
+          <td></td>
+        </tr>
         <tr>
           <th><?php echo $lang->refund->money?></th>
           <td>
@@ -103,4 +140,7 @@
 </tr>
 </script>
 <?php js::set('key', 2)?>
+<script>
+<?php helper::import('../js/searchcustomer.js');?>
+</script>
 <?php include '../../common/view/footer.html.php';?>

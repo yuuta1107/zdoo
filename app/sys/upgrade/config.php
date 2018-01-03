@@ -16,3 +16,4 @@ $config->delete['3_7'][]   = 'app/oa/doc/';
 $config->delete['4_0'][]   = 'app/sys/error/';
 $config->delete['4_2_2'][] = 'app/oa/leave/css/create.css';
 $config->delete['4_2_2'][] = 'app/oa/overtime/css/create.css';
+$config->delete['4_5'][]   = 'app/oa/refund/js/createtrade.js';

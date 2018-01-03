@@ -5,7 +5,7 @@
  * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Tingting Dai <daitingting@xirangit.com>
- * @package     customer 
+ * @package     refund 
  * @version     $Id$
  * @link        http://www.ranzhico.com
  */
@@ -100,6 +100,30 @@
             <th><?php echo $lang->refund->category;?></th>
             <td><?php echo zget($categories, $refund->category, '')?></td>
           </tr>
+          <?php if($customer):?>
+          <tr>
+            <th><?php echo $lang->refund->customer;?></th>
+            <td><?php if(!commonModel::printLink('crm.customer', 'view', "customer=$refund->customer", $customer->name)) echo $customer->name;?></td>
+          </tr>
+          <?php endif;?>
+          <?php if($order):?>
+          <tr>
+            <th><?php echo $lang->refund->order;?></th>
+            <td><?php if(!commonModel::printLink('crm.order', 'view', "order=$refund->order", $order->title)) echo $order->title;?></td>
+          </tr>
+          <?php endif;?>
+          <?php if($contract):?>
+          <tr>
+            <th><?php echo $lang->refund->contract;?></th>
+            <td><?php if(!commonModel::printLink('crm.contract', 'view', "contract=$refund->contract", $contract->name)) echo $contract->name;?></td>
+          </tr>
+          <?php endif;?>
+          <?php if($project):?>
+          <tr>
+            <th><?php echo $lang->refund->project;?></th>
+            <td><?php if(!commonModel::printLink('proj.project', 'view', "project=$refund->project", $project->name, "data-toggle='modal'")) echo $project->name;?></td>
+          </tr>
+          <?php endif;?>
           <tr>
             <th><?php echo $lang->refund->money;?></th>
             <td><?php echo zget($currencySign, $refund->currency) . $refund->money?></td>

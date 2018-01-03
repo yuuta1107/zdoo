@@ -499,4 +499,23 @@ class order extends control
         }
         die(json_encode($orders));
     }
+
+    /**
+     * Get orders by ajax. 
+     * 
+     * @param  int    $customer 
+     * @access public
+     * @return void
+     */
+    public function ajaxGetOrders($customer)
+    {
+        $html   = '<option></option>';
+        $orders = $this->order->getPairs($customer);
+        foreach($orders as $id => $name)
+        {
+            $html .= "<option value='$id'>$name</option>";
+        }
+
+        echo $html;
+    }
 }
