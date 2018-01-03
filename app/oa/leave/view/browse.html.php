@@ -84,8 +84,7 @@
           <td><?php echo formatTime($leave->backDate, DT_DATETIME2);?></td>
           <td class='visible-lg'><?php echo $leave->hours == 0 ? '' : $leave->hours;?></td>
           <td title='<?php echo $leave->desc;?>'><?php echo $leave->desc;?></td>
-          <?php $status = ($leave->status == 'pass' and $leave->backDate != '0000-00-00 00:00:00' and $leave->backDate != $leave->end . ' ' . $leave->finish) ? 'back' : $leave->status;?>
-          <td class='leave-<?php echo $status?>' title='<?php echo $leave->statusLabel;?>'><?php echo $leave->statusLabel;?></td>
+          <td class='leave-<?php echo $leave->status?>' title='<?php echo $leave->statusLabel;?>'><?php echo $leave->statusLabel;?></td>
           <td class='actionTD text-left'>
             <?php 
             commonModel::printLink('oa.leave', 'view', "id={$leave->id}&type=$type", $lang->detail, "data-toggle='modal'");
@@ -127,7 +126,7 @@
                     commonModel::printLink('oa.leave', 'review', "id={$leave->id}&status=pass",   $lang->leave->statusList['pass'],   "class='reviewPass'");
                     commonModel::printLink('oa.leave', 'review', "id={$leave->id}&status=reject", $lang->leave->statusList['reject'], "data-toggle='modal'");
                 }
-                elseif($leave->status == 'pass' and $leave->backDate != '0000-00-00 00:00:00' and $leave->backDate != "$leave->end $leave->finish")
+                elseif($leave->status == 'back')
                 {
                     echo html::a('###', $lang->edit, "disabled='disabled'");
                     commonModel::printLink('oa.leave', 'review', "id={$leave->id}&status=pass&mode=back",   $lang->leave->statusList['pass'],   "class='reviewPass'");

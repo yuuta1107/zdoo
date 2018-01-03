@@ -79,19 +79,11 @@ class leaveModel extends model
             ->beginIf($account != '')->andWhere('t1.createdBy')->eq($account)->fi()
             ->beginIf($dept != '')->andWhere('t2.dept')->in($dept)->fi()
             ->beginIf($status != '')->andWhere('t1.status')->in($status)->fi()
-            ->beginIf($type == 'browseReview')->andWhere('t1.status')->eq('wait')->fi()
+            ->beginIf($type == 'browseReview')->andWhere('t1.status')->in('wait,back')->fi()
             ->beginIf($type == 'company')->andWhere('t1.status')->ne('draft')->fi()
             ->orderBy("t2.dept,t1.{$orderBy}")
             ->fetchAll();
         $this->session->set('leaveQueryCondition', $this->dao->get());
-
-        if($type == 'browseReview')
-        {
-            foreach($leaveList as $key => $leave)
-            {
-                if($leave->status == 'pass' and ($leave->backDate == '0000-00-00 00:00:00' or $leave->backDate == $leave->end . ' ' . $leave->finish)) unset($leaveList[$key]);
-            }
-        }
 
         return $this->processStatus($leaveList);
     }
@@ -109,10 +101,9 @@ class leaveModel extends model
         $managers = $this->user->getUserManagerPairs();
         foreach($leaveList as $leave)
         {
-            $status = ($leave->status == 'pass' && $leave->backDate != '0000-00-00 00:00:00' && $leave->backDate != $leave->end . ' ' . $leave->finish) ? 'back' : $leave->status;
-            $leave->statusLabel = zget($this->lang->leave->statusList, $status);
+            $leave->statusLabel = zget($this->lang->leave->statusList, $leave->status);
 
-            if($status == 'wait' or $status == 'back')
+            if($leave->status == 'wait' or $leave->status == 'back')
             {
                 $reviewer = $this->getReviewedBy();
                 if(!$reviewer) 
@@ -341,6 +332,7 @@ class leaveModel extends model
     {
         $oldLeave = $this->getById($id);
         $leave    = clone $oldLeave;
+        $leave->status   = 'back';
         $leave->backDate = $this->post->backDate;
 
         $this->dao->update(TABLE_LEAVE)->set('backDate')->eq($this->post->backDate)->autoCheck()->where('id')->eq($id)->exec();
@@ -394,6 +386,7 @@ class leaveModel extends model
         {
             $this->dao->update(TABLE_LEAVE)->set('backDate')->eq('0000-00-00 00:00:00')->where('id')->eq($id)->exec();
             $leave = clone $oldLeave;
+            $leave->status   = 'pass';
             $leave->backDate = '0000-00-00 00:00:00';
 
             if(dao::isError()) return false;
@@ -401,10 +394,10 @@ class leaveModel extends model
             return commonModel::createChanges($oldLeave, $leave);
         }
 
-        $begin    = $oldLeave->begin;
-        $start    = $oldLeave->start;
-        $end      = substr($oldLeave->backDate, 0, 10);
-        $finish   = substr($oldLeave->backDate, 11);
+        $begin  = $oldLeave->begin;
+        $start  = $oldLeave->start;
+        $end    = substr($oldLeave->backDate, 0, 10);
+        $finish = substr($oldLeave->backDate, 11);
 
         if($oldLeave->begin == $end) 
         {
@@ -424,6 +417,7 @@ class leaveModel extends model
         }
 
         $data = new stdclass();
+        $data->status       = 'pass';
         $data->end          = $end;
         $data->finish       = $finish;
         $data->hours        = $hours;
