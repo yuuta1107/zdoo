@@ -29,7 +29,8 @@
         <select id='contact' name='contact' class='form-control select-contact chosen'>
           <option></option>
           <?php foreach($contacts as $contact):?>
-          <option value='<?php echo $contact->id;?>' <?php if($contact->id == $record->contact) echo 'selected';?> data-phone='<?php echo $contact->phone . $lang->slash . $contact->mobile;?>'><?php echo $contact->realname;?></option>
+          <?php $optionPinyin = zget($pinyinContacts, $contact->realname, '');?>
+          <option value='<?php echo $contact->id;?>' <?php if($contact->id == $record->contact) echo 'selected';?> data-keys="<?php echo $optionPinyin;?>" data-phone='<?php echo $contact->phone . $lang->slash . $contact->mobile;?>'><?php echo $contact->realname;?></option>
           <?php endforeach;?>
         </select>
       </td>

@@ -447,16 +447,21 @@ class refund extends control
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
         }
 
-        $this->view->title         = $this->lang->refund->common;
-        $this->view->refundID      = $refundID;
-        $this->view->refund        = $this->refund->getById($refundID);
-        $this->view->depositorList = array('') + $this->loadModel('depositor', 'cash')->getPairs();
-        $this->view->categoryList  = $this->refund->getCategoryPairs();
-        $this->view->orderList     = $this->loadModel('order', 'crm')->getPairs($customerID = 0);
-        $this->view->contractList  = $this->loadModel('contract', 'crm')->getList($customerID = 0);
-        $this->view->customerList  = $this->loadModel('customer')->getPairs('client');
-        $this->view->deptList      = $this->loadModel('tree')->getOptionMenu('dept');
-        $this->view->userList      = $this->loadModel('user')->getPairs('noclosed,nodeleted,noempty,noforbidden');
+        $contractPairs = array();
+        $contractList  = $this->loadModel('contract', 'crm')->getList($customerID = 0);
+        foreach($contractList as $contract) $contractPairs[$contract->id] = $contract->name;
+
+        $this->view->title           = $this->lang->refund->common;
+        $this->view->refundID        = $refundID;
+        $this->view->refund          = $this->refund->getById($refundID);
+        $this->view->depositorList   = array('') + $this->loadModel('depositor', 'cash')->getPairs();
+        $this->view->categoryList    = $this->refund->getCategoryPairs();
+        $this->view->orderList       = $this->loadModel('order', 'crm')->getPairs($customerID = 0);
+        $this->view->contractList    = $contractList;
+        $this->view->pinyinContracts = commonModel::convert2Pinyin($contractPairs);
+        $this->view->customerList    = $this->loadModel('customer')->getPairs('client');
+        $this->view->deptList        = $this->loadModel('tree')->getOptionMenu('dept');
+        $this->view->userList        = $this->loadModel('user')->getPairs('noclosed,nodeleted,noempty,noforbidden');
 
         $this->display();
     }

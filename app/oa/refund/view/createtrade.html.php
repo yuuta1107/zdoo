@@ -46,7 +46,8 @@
         <select class='form-control chosen' id='contract' name='contract'>
           <option value=''></option>
           <?php foreach($contractList as $id => $contract):?>
-          <option value="<?php echo $id?>" data-amount="<?php echo $contract->amount;?>"><?php echo $contract->name;?></option>
+          <?php $optionPinyin = zget($pinyinContracts, $contract->name);?>
+          <option value="<?php echo $id?>" data-amount="<?php echo $contract->amount;?>" data-keys="<?php echo $optionPinyin;?>"><?php echo $contract->name;?></option>
           <?php endforeach;?>
         </select>
       </td>

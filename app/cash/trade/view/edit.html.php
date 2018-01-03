@@ -59,7 +59,8 @@
             <select class='form-control chosen' id='order' name='order'>
               <option value=''></option>
               <?php foreach($orderList as $id => $order):?>
-              <option <?php if($id == $trade->order) echo " selected='selected' ";?> value="<?php echo $id?>" data-customer="<?php echo $order->customer?>" data-amount="<?php echo $order->real;?>"><?php echo $order->name;?></option>
+              <?php $optionPinyin = zget($pinyinOrders, $order->name, '');?>
+              <option <?php if($id == $trade->order) echo " selected='selected' ";?> value="<?php echo $id?>" data-customer="<?php echo $order->customer?>" data-amount="<?php echo $order->real;?>" data-keys="<?php echo $optionPinyin;?>"><?php echo $order->name;?></option>
               <?php endforeach;?>
             </select>
           </td>
