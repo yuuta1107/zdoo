@@ -103,7 +103,7 @@ class leaveModel extends model
         {
             $leave->statusLabel = zget($this->lang->leave->statusList, $leave->status);
 
-            if($leave->status == 'wait' or $leave->status == 'back')
+            if(strpos(',wait,back,', ",$leave->status,") !== false)
             {
                 $reviewer = $this->getReviewedBy();
                 if(!$reviewer) 
@@ -144,6 +144,7 @@ class leaveModel extends model
         $monthList = array();
         $dateList  = $this->dao->select('begin, end')->from(TABLE_LEAVE)
             ->beginIF($type == 'personal')->where('createdBy')->eq($this->app->user->account)->fi()
+            ->beginIF($type == 'company')->where('status')->ne('draft')->fi()
             ->groupBy('begin')
             ->orderBy('begin_desc')
             ->fetchAll('begin');

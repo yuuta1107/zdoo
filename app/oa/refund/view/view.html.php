@@ -171,11 +171,11 @@
             <th><?php echo $lang->refund->editedBy;?></th>
             <td><?php if($refund->editedBy) echo zget($users, $refund->editedBy) . $lang->at . $refund->editedDate;?></td>
           </tr>
-          <tr>
+          <tr id='firstReviewer'>
             <th><?php echo $lang->refund->firstReviewer;?></th>
             <td><?php if($refund->firstReviewer) echo zget($users, $refund->firstReviewer) . $lang->at . $refund->firstReviewDate;?></td>
           </tr>
-          <tr>
+          <tr id='secondReviewer'>
             <th><?php echo $lang->refund->secondReviewer;?></th>
             <td><?php if($refund->secondReviewer) echo zget($users, $refund->secondReviewer) . $lang->at . $refund->secondReviewDate;?></td>
           </tr>

@@ -107,7 +107,7 @@
             }
             else
             {
-                if($lieu->status == 'wait')
+                if(strpos(',wait,doing,', ",$lieu->status,") !== false)
                 {
                     commonModel::printLink('oa.lieu', 'review', "id={$lieu->id}&status=pass",   $lang->lieu->statusList['pass'],   "class='reviewPass'");
                     commonModel::printLink('oa.lieu', 'review', "id={$lieu->id}&status=reject", $lang->lieu->statusList['reject'], "data-toggle='modal'");

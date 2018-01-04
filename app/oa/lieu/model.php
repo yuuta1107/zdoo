@@ -132,6 +132,7 @@ class lieuModel extends model
         $monthList = array();
         $dateList  = $this->dao->select('begin')->from(TABLE_LIEU)
             ->beginIF($type == 'personal')->where('createdBy')->eq($this->app->user->account)->fi()
+            ->beginIF($type == 'company')->where('status')->ne('draft')->fi()
             ->groupBy('begin')
             ->orderBy('begin_desc')
             ->fetchAll('begin');

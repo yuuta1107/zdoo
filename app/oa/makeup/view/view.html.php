@@ -49,7 +49,7 @@
     <th><?php echo $lang->makeup->createdBy;?></th>
     <td><?php echo zget($users, $makeup->createdBy);?></td>
     <th><?php echo $lang->makeup->reviewedBy;?></th>
-    <td><?php echo zget($users, $makeup->reviewedBy);?></td>
+    <td id='reviewedBy'><?php echo zget($users, $makeup->reviewedBy);?></td>
   </tr> 
   <tr>
     <th><?php echo $lang->makeup->createdDate;?></th>
@@ -76,7 +76,7 @@
           echo '</div>';
       }
   }
-  elseif($makeup->status == 'wait')
+  elseif(strpos(',wait,doing,', ",$makeup->status,") !== false)
   {
       echo "<div class='btn-group'>";
       commonModel::printLink('oa.makeup', 'review', "id=$makeup->id&status=pass",   $lang->makeup->statusList['pass'],   "class='btn reviewPass'");
