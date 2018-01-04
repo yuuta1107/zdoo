@@ -216,7 +216,6 @@ class refundModel extends model
     {
         $oldRefund = $this->getByID($refundID);
         $refund = fixer::input('post')
-            ->add('status', 'wait')
             ->add('editedBy', $this->app->user->account)
             ->add('editedDate', helper::now())
             ->add('firstReviewer', '')
