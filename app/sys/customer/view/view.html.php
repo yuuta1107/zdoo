@@ -28,10 +28,12 @@
       <div class='panel-heading'><strong><?php echo $lang->customer->desc;?></strong></div>
       <div class='panel-body'><?php echo $customer->desc;?></div>
     </div>
+
     <div class='panel'>
       <div class='panel-heading'><strong><?php echo $lang->customer->intension;?></strong></div>
       <div class='panel-body'><?php echo $customer->intension;?></div>
     </div>
+
     <?php if(!empty($returnList)):?>
     <div class='panel'>
       <div class='panel-heading'><strong><?php echo $lang->contract->returnRecords;?></strong></div>
@@ -54,6 +56,7 @@
       </table>
     </div>
     <?php endif;?>
+
     <?php echo $this->fetch('file', 'printFiles', array('files' => $files, 'fieldset' => 'true'))?>
     <?php echo $this->fetch('action', 'history', "objectType=customer&objectID={$customer->id}")?>
     <div class='page-actions'>
@@ -163,6 +166,7 @@
         <?php endforeach;?>
       </table>
     </div>
+
     <div class='panel'>
       <div class='panel-heading'>
         <div class='row'>      
@@ -183,6 +187,30 @@
         <?php endforeach;?>
       </table>
     </div>
+
+    <?php if(!empty($productList)):?>
+    <div class='panel'>
+      <div class='panel-heading'>
+        <div class='row'>      
+          <div class='col w-p50'><strong><i class='icon-list-info'></i> <?php echo $lang->customer->purchasedProducts;?></strong></div>
+          <div class='col w-p20'><strong><?php echo $lang->product->line;?></strong></div>
+          <div class='col w-p15'><strong><?php echo $lang->product->type;?></strong></div>
+          <div class='col w-p15'><strong><?php echo $lang->product->status;?></strong></div>
+        </div>
+      </div>
+      <table class='table table-data table-condensed'>
+        <?php foreach($productList as $product):?>
+        <tr data-url='<?php echo $this->createLink('crm.product', 'view', "productID=$product->id"); ?>'>
+          <td class='w-p50'><?php echo $product->name;?></td>
+          <td class='w-p20'><?php echo zget($lang->product->lineList, $product->line);?></td>
+          <td class='w-p15'><?php echo zget($lang->product->typeList, $product->type);?></td>
+          <td class='w-p15'><?php echo zget($lang->product->statusList, $product->status);?></td>
+        </tr>
+        <?php endforeach;?>
+      </table>
+    </div>
+    <?php endif;?>
+
     <div class='panel'>
       <div class='panel-heading'><strong><?php echo $lang->customer->address;?></strong></div>
       <table class='table table-data table-condensed'>
