@@ -125,7 +125,7 @@ class reportModel extends model
                 }
                 else
                 {
-                    $list = $this->lang->{$module}->{$listName};
+                    $list = isset($this->lang->{$module}->{$listName}) ? $this->lang->{$module}->{$listName} : '';
                 }
             }
         }
@@ -179,6 +179,26 @@ class reportModel extends model
                 }
             }
         }
+        elseif($groupBy == 'year')
+        {
+            $datas = $this->dao->select("year(createdDate) as name, $func($field) as value")->from($tableName)
+                ->where('deleted')->eq('0')
+                ->beginIF($currency != '')->andWhere('currency')->eq($currency)->fi()
+                ->groupBy("year(createdDate)")
+                ->orderBy('name desc')
+                ->limit(12)
+                ->fetchAll('name');
+        }
+        elseif($groupBy == 'month')
+        {
+            $datas = $this->dao->select("DATE_FORMAT(createdDate, '%Y%m') as name, $func($field) as value")->from($tableName)
+                ->where('deleted')->eq('0')
+                ->beginIF($currency != '')->andWhere('currency')->eq($currency)->fi()
+                ->groupBy("DATE_FORMAT(createdDate, '%Y%m')")
+                ->orderBy('name desc')
+                ->limit(12)
+                ->fetchAll('name');
+        }
         else
         {
             if($module == 'customer' && $tableName == TABLE_CUSTOMER)
@@ -207,15 +227,19 @@ class reportModel extends model
         }
 
         /* Add names. */
-        if(isset($this->config->report->{$module}->listName[$chart]))
+        if(isset($this->config->report->{$module}->listName[$chart]) and strpos('year, month', $groupBy) === false)
         {
             foreach($datas as $name => $data) $data->name = isset($list[$name]) ? $list[$name] : $this->lang->report->undefined;
         }
 
-        $temp = array();
-        foreach($datas as $key => $data) $temp[$key] = $data->value;
-        arsort($temp);
-        foreach($datas as $key => $data) $temp[$key] = $data;
+        $temp = $datas;
+        if(strpos('year, month', $groupBy) === false)
+        {
+            $temp = array();
+            foreach($datas as $key => $data) $temp[$key] = $data->value;
+            arsort($temp);
+            foreach($datas as $key => $data) $temp[$key] = $data;
+        }
 
         return $temp;
     }

@@ -42,8 +42,12 @@ class report extends control
                 /* merge options. */
                 $chartOption = clone $this->lang->report->options;
                 $chartOption->item = $this->lang->report->{$module}->item[$chart];
-                if(isset($this->lang->report->{$module}->xAxisName[$chart])) $chartOption->graph->xAxisName = $this->lang->report->{$module}->xAxisName[$chart];
-                if(isset($this->lang->report->{$module}->chartList[$chart])) $chartOption->graph->caption   = $this->lang->report->{$module}->chartList[$chart];
+                if(isset($this->lang->report->{$module}->options->typeList[$chart]))   $chartOption->type             = $this->lang->report->{$module}->options->typeList[$chart];
+                if(isset($this->lang->report->{$module}->options->widthList[$chart]))  $chartOption->width            = $this->lang->report->{$module}->options->widthList[$chart];
+                if(isset($this->lang->report->{$module}->options->heightList[$chart])) $chartOption->height           = $this->lang->report->{$module}->options->heightList[$chart];
+                if(isset($this->lang->report->{$module}->xAxisName[$chart]))           $chartOption->graph->xAxisName = $this->lang->report->{$module}->xAxisName[$chart];
+                if(isset($this->lang->report->{$module}->chartList[$chart]))           $chartOption->graph->caption   = $this->lang->report->{$module}->chartList[$chart];
+                $chartOption->scaleStepWidth = '80px';
 
                 /* add charts for multi currency. */
                 $currencyList = $this->loadModel('common', 'sys')->getCurrencyList();

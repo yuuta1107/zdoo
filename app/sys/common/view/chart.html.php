@@ -69,16 +69,28 @@ if($config->debug)
             }
             else if(chartType === 'bar')
             {
-                var labels = [], dataset = {label: $table.find('thead .chart-label').text(), color: nextAccentColor().toCssStr(), data: []};
+                var color  = nextAccentColor().toCssStr();
+                var labels = [], dataset = {label: $table.find('thead .chart-label').text(), color: color, data: []};
 
                 var $rows = $table.find('tbody > tr').each(function(idx)
                 {
                     var $row = $(this);
                     labels.push($row.find('.chart-label').text());
                     dataset.data.push(parseFloat($row.find('.chart-value').text()));
+
+                    $row.attr('data-id', idx).find('.chart-color-dot').css('color', color);
                 });
                 var data = {labels: labels, datasets: [dataset]};
-                if(labels.length) options.barValueSpacing = 5;
+
+                /* Compute bar width. */
+                if(labels.length)
+                {
+                    var extraWidth   = 50;
+                    var halfBarWidth = 15;
+                    var minSpacing   = 5;
+                    barValueSpacing = ($canvas.parent().width() - extraWidth) / labels.length / 2 - halfBarWidth;
+                    options.barValueSpacing = barValueSpacing > minSpacing ? barValueSpacing : minSpacing;
+                }
 
                 chart = $canvas.barChart(data, options);
             }
