@@ -68,7 +68,7 @@
           <td class='text-left'>
             <?php 
             echo html::a($this->createLink('refund', 'view', "refundID={$refund->id}&mode=review&status=$status"), $lang->detail);
-            if($refund->status == 'wait' or $refund->status == 'doing') 
+            if(strpos(',wait,doing,', ",$refund->status,") !== false)
             {
                 echo html::a($this->createLink('refund', 'review', "refundID={$refund->id}"), $lang->refund->review, "data-toggle='modal' data-width='800'");
             }

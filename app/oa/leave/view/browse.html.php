@@ -78,7 +78,7 @@
           </td>
           <td><?php echo zget($users, $leave->createdBy);?></td>
           <td class='visible-lg'><?php echo zget($deptList, $leave->dept);?></td>
-          <td><?php echo zget($this->lang->leave->typeList, $leave->type);?></td>
+          <td><?php echo zget($lang->leave->typeList, $leave->type);?></td>
           <td><?php echo formatTime($leave->begin . ' ' . $leave->start, DT_DATETIME2);?></td>
           <td><?php echo formatTime($leave->end . ' ' . $leave->finish, DT_DATETIME2);?></td>
           <td><?php echo formatTime($leave->backDate, DT_DATETIME2);?></td>
@@ -86,7 +86,7 @@
           <td title='<?php echo $leave->desc;?>'><?php echo $leave->desc;?></td>
           <td class='leave-<?php echo $leave->status?>' title='<?php echo $leave->statusLabel;?>'><?php echo $leave->statusLabel;?></td>
           <td class='actionTD text-left'>
-            <?php 
+            <?php
             commonModel::printLink('oa.leave', 'view', "id={$leave->id}&type=$type", $lang->detail, "data-toggle='modal'");
             if($type == 'personal')
             { 
@@ -120,7 +120,7 @@
             }
             else
             {
-                if($leave->status == 'wait')
+                if(strpos(',wait,doing,', ",$leave->status,") !== false)
                 {
                     commonModel::printLink('oa.leave', 'edit',   "id={$leave->id}",               $lang->edit,                        "data-toggle='modal'");
                     commonModel::printLink('oa.leave', 'review', "id={$leave->id}&status=pass",   $lang->leave->statusList['pass'],   "class='reviewPass'");

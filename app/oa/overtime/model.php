@@ -145,6 +145,7 @@ class overtimeModel extends model
         $dateList  = $this->dao->select('begin')->from(TABLE_OVERTIME)
             ->where('type')->ne('compensate')
             ->beginIF($type == 'personal')->andWhere('createdBy')->eq($this->app->user->account)->fi()
+            ->beginIF($type == 'company')->andWhere('status')->ne('draft')->fi()
             ->groupBy('begin')
             ->orderBy('begin_desc')
             ->fetchAll('begin');

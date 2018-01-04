@@ -44,7 +44,7 @@
     <th><?php echo $lang->overtime->createdBy;?></th>
     <td><?php echo zget($users, $overtime->createdBy);?></td>
     <th><?php echo $lang->overtime->reviewedBy;?></th>
-    <td><?php echo zget($users, $overtime->reviewedBy);?></td>
+    <td id='reviewedBy'><?php echo zget($users, $overtime->reviewedBy);?></td>
   </tr> 
   <tr>
     <th><?php echo $lang->overtime->createdDate;?></th>
@@ -71,7 +71,7 @@
           echo '</div>';
       }
   }
-  elseif($overtime->status == 'wait')
+  elseif(strpos(',wait,doing,', ",$overtime->status,") !== false)
   {
       commonModel::printLink('oa.overtime', 'review', "id=$overtime->id&status=pass",   $lang->overtime->statusList['pass'],   "class='btn reviewPass'");
       commonModel::printLink('oa.overtime', 'review', "id=$overtime->id&status=reject", $lang->overtime->statusList['reject'], "class='btn loadInModal'");

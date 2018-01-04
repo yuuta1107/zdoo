@@ -110,7 +110,7 @@
             }
             else
             {
-                if($overtime->status == 'wait')
+                if(strpos(',wait,doing,', ",$overtime->status,") !== false)
                 {
                     commonModel::printLink('oa.overtime', 'review', "id=$overtime->id&status=pass",   $lang->overtime->statusList['pass'],   "class='reviewPass'");
                     commonModel::printLink('oa.overtime', 'review', "id=$overtime->id&status=reject", $lang->overtime->statusList['reject'], "data-toggle='modal'");

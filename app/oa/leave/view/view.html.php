@@ -11,12 +11,10 @@
  */
 ?>
 <?php include '../../../sys/common/view/header.modal.html.php';?>
-<?php include '../../../sys/common/view/kindeditor.html.php';?>
-<table class='table table-bordered'>
+<table class='table table-bordered leaveTable'>
   <tr>
     <th><?php echo $lang->leave->status;?></th>
-    <?php $status = ($leave->status == 'pass' and $leave->backDate != '0000-00-00 00:00:00' and $leave->backDate != "$leave->end $leave->finish") ? 'back' : $leave->status;?>
-    <td class='leave-<?php echo $status;?>'><?php echo $lang->leave->statusList[$status];?></td>
+    <td class='leave-<?php echo $leave->status;?>'><?php echo $lang->leave->statusList[$leave->status];?></td>
     <th><?php echo $lang->leave->type;?></th>
     <td><?php echo zget($lang->leave->typeList, $leave->type);?></td>
   </tr>
@@ -40,7 +38,7 @@
     <th><?php echo $lang->leave->createdBy;?></th>
     <td><?php echo zget($users, $leave->createdBy);?></th>
     <th><?php echo $lang->leave->reviewedBy;?></th>
-    <td><?php echo zget($users, $leave->reviewedBy);?></th>
+    <td id='reviewedBy'><?php echo zget($users, $leave->reviewedBy);?></th>
   </tr>
   <tr>
     <th><?php echo $lang->leave->createdDate;?></th>
@@ -58,12 +56,12 @@
       {
           commonModel::printLink('oa.leave', 'back', "id={$leave->id}", $lang->leave->back, "class='btn loadInModal'");
       }
-      $switchLabel = $status == 'wait' ? $lang->leave->cancel : $lang->leave->commit;
-      if(strpos(',wait,draft,', ",$status,") !== false)
+      $switchLabel = $leave->status == 'wait' ? $lang->leave->cancel : $lang->leave->commit;
+      if(strpos(',wait,draft,', ",$leave->status,") !== false)
       {
           commonModel::printLink('oa.leave', 'switchstatus', "id={$leave->id}", $switchLabel, "class='btn'");
       }
-      if(strpos(',wait,draft,reject,', ",$status,") !== false)
+      if(strpos(',wait,draft,reject,', ",$leave->status,") !== false)
       {
           echo "<div class='btn-group'>";
           commonModel::printLink('oa.leave', 'edit',   "id={$leave->id}", $lang->edit,   "class='btn loadInModal'");
@@ -73,7 +71,7 @@
   }
   else
   {
-      if($status == 'wait')
+      if(strpos(',wait,doing,', ",$leave->status,") !== false)
       {
           commonModel::printLink('oa.leave', 'edit',   "id={$leave->id}", $lang->edit, "class='btn loadInModal'");
           echo "<div class='btn-group'>";
@@ -81,7 +79,7 @@
           commonModel::printLink('oa.leave', 'review', "id={$leave->id}&status=reject", $lang->leave->statusList['reject'], "class='btn loadInModal'");
           echo '</div>';
       }
-      elseif($status == 'back')
+      elseif($leave->status == 'back')
       {
           echo "<div class='btn-group'>";
           commonModel::printLink('oa.leave', 'review', "id={$leave->id}&status=pass&mode=back",   $lang->leave->statusList['pass'],   "class='btn reviewPass'");

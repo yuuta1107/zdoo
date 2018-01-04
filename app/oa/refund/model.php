@@ -95,29 +95,28 @@ class refundModel extends model
         $managers = $this->loadModel('user')->getUserManagerPairs();
         foreach($refunds as $refund)
         {
-            if($refund->status != 'wait' && $refund->status != 'doing') 
-            {
-                $refund->statusLabel = zget($this->lang->refund->statusList, $refund->status);
-                continue;
-            }
+            $refund->statusLabel = zget($this->lang->refund->statusList, $refund->status);
 
-            $reviewer = '';
-            if($refund->firstReviewer)
+            if(strpos(',wait,doing,', ",$refund->status,") !== false)
             {
-                if(!empty($this->config->refund->secondReviewer)) $reviewer = $this->config->refund->secondReviewer;
-            }
-            else
-            {
-                if(empty($this->config->refund->firstReviewer))
+                $reviewer = '';
+                if($refund->firstReviewer)
                 {
-                    $reviewer = trim(zget($managers, $refund->createdBy, ''), ',');
+                    if(!empty($this->config->refund->secondReviewer)) $reviewer = $this->config->refund->secondReviewer;
                 }
                 else
                 {
-                    $reviewer = $this->config->refund->firstReviewer;
+                    if(empty($this->config->refund->firstReviewer))
+                    {
+                        $reviewer = trim(zget($managers, $refund->createdBy, ''), ',');
+                    }
+                    else
+                    {
+                        $reviewer = $this->config->refund->firstReviewer;
+                    }
                 }
+                if($reviewer) $refund->statusLabel = zget($users, $reviewer) . $this->lang->refund->statusList['doing'];
             }
-            if($reviewer) $refund->statusLabel = zget($users, $reviewer) . $this->lang->refund->statusList['doing'];
         }
         return $refunds;
     }
@@ -217,7 +216,6 @@ class refundModel extends model
     {
         $oldRefund = $this->getByID($refundID);
         $refund = fixer::input('post')
-            ->add('status', 'wait')
             ->add('editedBy', $this->app->user->account)
             ->add('editedDate', helper::now())
             ->add('firstReviewer', '')

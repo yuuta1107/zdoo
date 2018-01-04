@@ -11,7 +11,6 @@
  */
 ?>
 <?php include '../../../sys/common/view/header.modal.html.php';?>
-<?php include '../../../sys/common/view/kindeditor.html.php';?>
 <table class='table table-bordered'>
   <tr>
     <th><?php echo $lang->lieu->status;?></th>
@@ -42,7 +41,7 @@
     <th><?php echo $lang->lieu->createdBy;?></th>
     <td><?php echo zget($users, $lieu->createdBy);?></td>
     <th><?php echo $lang->lieu->reviewedBy;?></th>
-    <td><?php echo zget($users, $lieu->reviewedBy);?></td>
+    <td id='reviewedBy'><?php echo zget($users, $lieu->reviewedBy);?></td>
   </tr>
   <tr>
     <th><?php echo $lang->lieu->createdDate;?></th>
@@ -69,7 +68,7 @@
           echo '</div>';
       }
   }
-  elseif($lieu->status == 'wait')
+  elseif(strpos(',wait,doing,', ",$lieu->status,") !== false)
   {
       commonModel::printLink('oa.lieu', 'review', "id={$lieu->id}&status=pass",   $lang->lieu->statusList['pass'],   "class='btn reviewPass'");
       commonModel::printLink('oa.lieu', 'review', "id={$lieu->id}&status=reject", $lang->lieu->statusList['reject'], "class='btn loadInModal'");
