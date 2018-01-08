@@ -82,8 +82,11 @@ $lang->trade->compare       = 'Annual Compare';
 $lang->trade->setReportUnit = 'Report Unit';
 $lang->trade->settings      = 'Trade Setting';
 
-$lang->trade->settingList['trader']   = 'select merchants';
-$lang->trade->settingList['category'] = 'select final subjects';
+$lang->trade->settingList['trader']       = 'select merchants';
+$lang->trade->settingList['category']     = 'select subject';
+$lang->trade->settingList['product']      = 'select product';
+$lang->trade->settingList['dept']         = 'select department';
+$lang->trade->settingList['lastCategory'] = 'select final subjects';
 
 $lang->trade->report = new stdclass();
 $lang->trade->report->common      = 'Report'; 

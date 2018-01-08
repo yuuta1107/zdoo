@@ -203,7 +203,10 @@ class trade extends control
      */
     public function create($type = '')
     {
-        if($this->config->trade->settings->trader) $this->config->trade->require->create .= ',trader,customer,allCustomer,traderName';
+        if($this->config->trade->settings->trader)   $this->config->trade->require->create .= ',trader,customer,allCustomer,traderName';
+        if($this->config->trade->settings->category) $this->config->trade->require->create .= ',category';
+        if($this->config->trade->settings->product)  $this->config->trade->require->create .= ',product';
+        if($this->config->trade->settings->dept)     $this->config->trade->require->create .= ',dept';
 
         if($_POST)
         {
@@ -227,7 +230,7 @@ class trade extends control
         {
             $categories = $this->loadModel('tree')->getOptionMenu($type, 0, $removeRoot = true);
 
-            if($this->config->trade->settings->category)
+            if($this->config->trade->settings->lastCategory)
             {
                 $allCategories = $this->loadModel('tree')->getListByType($type, 'grade_desc');
                 foreach($allCategories as $category)
@@ -269,8 +272,6 @@ class trade extends control
      */
     public function batchCreate()
     {
-        if($this->config->trade->settings->trader) $this->config->trade->require->create .= ',trader,customer,allCustomer,traderName';
-
         if($_POST)
         {
             $result = $this->trade->batchCreate();
@@ -314,7 +315,11 @@ class trade extends control
         $trade = $this->trade->getByID($tradeID);
         if(empty($trade)) die();
         if($trade->type == 'out' and $trade->category != 'loss' and $trade->category != 'fee') $this->loadModel('tree')->checkRight($trade->category);
-        if($this->config->trade->settings->trader) $this->config->trade->require->edit .= ',trader,customer,allCustomer';
+
+        if($this->config->trade->settings->trader)   $this->config->trade->require->edit .= ',trader,customer,allCustomer';
+        if($this->config->trade->settings->category) $this->config->trade->require->edit .= ',category';
+        if($this->config->trade->settings->product)  $this->config->trade->require->edit .= ',product';
+        if($this->config->trade->settings->dept)     $this->config->trade->require->edit .= ',dept';
 
         if($_POST)
         {
@@ -1284,8 +1289,11 @@ class trade extends control
         if($_POST)
         {
             $settings = new stdclass();
-            $settings->trader   = $this->post->trader ? 1 : 0;
-            $settings->category = $this->post->category ? 1 : 0;
+            $settings->trader       = $this->post->trader ? 1 : 0;
+            $settings->category     = $this->post->category ? 1 : 0;
+            $settings->product      = $this->post->product ? 1 : 0;
+            $settings->dept         = $this->post->dept ? 1 : 0;
+            $settings->lastCategory = $this->post->lastCategory ? 1 : 0;
 
             $this->loadModel('setting')->setItems('system.cash.trade.settings', $settings);
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));

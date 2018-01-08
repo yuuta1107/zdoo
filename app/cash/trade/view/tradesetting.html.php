@@ -17,11 +17,11 @@
       <strong><?php echo $this->lang->trade->settings?></strong>
     </div>
     <div class='panel-body'>
-    <?php foreach($lang->trade->settingList as $key => $value):?>
+      <?php foreach($lang->trade->settingList as $key => $value):?>
       <label class='checkbox-inline'>
-        <input type='checkbox' name='<?php echo $key;?>' value='1' <?php if(!empty($config->trade->settings->$key)) echo "checked='checked'";?>><?php echo $value;?>
+        <input type='checkbox' name='<?php echo $key;?>' value='1' <?php if(!empty($config->trade->settings->$key)) echo "checked='checked'";?>> <?php echo $value;?>
       </label>
-    <?php endforeach;?>
+      <?php endforeach;?>
     </div>
     <div class='panel-footer'><?php echo html::submitButton() . html::hidden('foo'); // Just a var, to make sure $_POST is not empty.?></div>
   </div>

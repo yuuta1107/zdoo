@@ -10,8 +10,11 @@
  * @link        http://www.ranzhico.com
  */
 $config->trade->settings = new stdclass();
-$config->trade->settings->trader   = false;
-$config->trade->settings->category = false;
+$config->trade->settings->trader       = false;
+$config->trade->settings->category     = false;
+$config->trade->settings->product      = false;
+$config->trade->settings->dept         = false;
+$config->trade->settings->lastCategory = false;
 
 $config->trade->require = new stdclass();
 $config->trade->require->create = 'depositor,money,type,handlers,date';

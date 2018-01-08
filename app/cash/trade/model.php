@@ -599,6 +599,9 @@ class tradeModel extends model
             if(!$this->post->money[$key]) continue;
             if(empty($this->post->handlers[$key][1])) continue;
             if(empty($trader) && empty($this->post->traderName[$key]) && $this->config->trade->settings->trader) continue;
+            if($this->config->trade->settings->category && empty($category)) continue;
+            if($this->config->trade->settings->product && empty($product)) continue;
+            if($this->config->trade->settings->dept && empty($dept)) continue;
 
             $trade = new stdclass();
             $trade->type           = $type;
@@ -666,6 +669,9 @@ class tradeModel extends model
             if(!$this->post->money[$key]) continue;
             if(empty($this->post->handlers[$key][0]) and empty($this->post->handlers[$key][1])) continue;
             if(empty($this->post->trader[$key]) && $this->config->trade->settings->trader) continue;
+            if(empty($this->post->category[$key]) && $this->config->trade->settings->category) continue;
+            if(empty($this->post->product[$key]) && $this->config->trade->settings->product) continue;
+            if(empty($this->post->dept[$key]) && $this->config->trade->settings->dept) continue;
 
             $trade = new stdclass();
             $trade->depositor      = $this->post->depositor[$key];
