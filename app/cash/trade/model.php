@@ -657,7 +657,7 @@ class tradeModel extends model
     {
         $trades = array();
 
-        $depositorList = $this->loadModel('depositor', 'cash')->getList('', 'all');
+        $depositorList = $this->loadModel('depositor', 'cash')->getList();
 
         /* Get data. */
         if($this->post->type === false) return array('result' => 'fail');
