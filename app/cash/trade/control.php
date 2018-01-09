@@ -680,14 +680,33 @@ class trade extends control
         foreach($trades as $trade) $customerIDList[$trade->trader] = $trade->trader;
         $customerIDList = implode(',', $customerIDList);
 
+        $expenseTypes = $this->loadModel('tree')->getOptionMenu('out', 0, $removeRoot = true);
+        $incomeTypes  = $this->loadModel('tree')->getOptionMenu('in', 0, $removeRoot = true);
+
+        foreach($expenseTypes as $key => $expenseType)
+        {
+            $path = explode('/', trim($expenseType, '/'));
+            if(count($path) > 1) array_shift($path);
+
+            $expenseTypes[$key] = implode('/', $path);
+        }
+
+        foreach($incomeTypes as $key => $incomeType)
+        {
+            $path = explode('/', trim($incomeType, '/'));
+            if(count($path) > 1) array_shift($path);
+
+            $incomeTypes[$key] = implode('/', $path);
+        }
+
         $this->view->title              = $this->lang->trade->batchCreate;
         $this->view->trades             = $trades;
         $this->view->depositors         = $this->loadModel('depositor', 'cash')->getPairs();
         $this->view->users              = $this->loadModel('user')->getPairs('nodeleted,noforbidden,noclosed');
         $this->view->customerList       = $this->loadModel('customer')->getPairs('client', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit, $customerIDList);
         $this->view->traderList         = $this->customer->getPairs('provider', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit, $customerIDList);
-        $this->view->expenseTypes       = array('' => '') + $this->loadModel('tree')->getOptionMenu('out', 0, $removeRoot = true);
-        $this->view->incomeTypes        = array('' => '') + $this->loadModel('tree')->getOptionMenu('in', 0, $removeRoot = true);
+        $this->view->expenseTypes       = array('' => '') + $expenseTypes;
+        $this->view->incomeTypes        = array('' => '') + $incomeTypes;
         $this->view->deptList           = array('') + $this->loadModel('tree')->getOptionMenu('dept', 0);
         $this->view->productList        = array(0 => '') + $this->loadModel('product')->getPairs();
         $this->view->requireTrader      = $this->config->trade->settings->trader;

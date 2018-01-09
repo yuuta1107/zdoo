@@ -20,19 +20,20 @@
     <table class='table table-hover'>
       <thead>
         <tr class='text-center'>
-          <th class='w-100px'><?php echo $lang->trade->type;?></th> 
-          <th class='w-100px required'><?php echo $lang->trade->depositor;?></th>
+          <th class='w-120px required'><?php echo $lang->trade->depositor;?></th>
           <?php $categoryRequired = $config->trade->settings->category ? 'required' : '';?>
           <th class='w-120px <?php echo $categoryRequired;?>'><?php echo $lang->trade->category;?></th> 
+          <th class='w-50px'><?php echo $lang->ditto;?></th> 
           <?php if($requireTrader):?>
-          <th class='w-180px required'><?php echo $lang->trade->trader;?></th> 
+          <th class='w-160px required'><?php echo $lang->trade->trader;?></th> 
           <?php else:?>
-          <th class='w-180px'><?php echo $lang->trade->trader;?></th> 
+          <th class='w-160px'><?php echo $lang->trade->trader;?></th> 
           <?php endif;?>
           <th class='w-120px required'><?php echo $lang->trade->money;?></th>
           <?php $deptRequired = $config->trade->settings->dept ? 'required' : '';?>
-          <th class='w-80px <?php echo $deptRequired;?>'><?php echo $lang->trade->dept;?></th>
-          <th class='w-200px required'><?php echo $lang->trade->handlers;?></th>
+          <th class='w-120px <?php echo $deptRequired;?>'><?php echo $lang->trade->dept;?></th>
+          <th class='w-50px'><?php echo $lang->ditto;?></th> 
+          <th class='w-160px required'><?php echo $lang->trade->handlers;?></th>
           <?php $productRequired = $config->trade->settings->product ? 'required' : '';?>
           <th class='w-120px <?php echo $productRequired;?>'><?php echo $lang->trade->product;?></th>
           <th class='w-120px'><?php echo $lang->trade->date;?></th>
@@ -40,31 +41,74 @@
         </tr>
       </thead>
       <tbody>
+        <?php $i = 1;?>
         <?php foreach($trades as $id => $trade):?>
         <tr>
           <td>
-            <?php echo html::input('', zget($lang->trade->typeList, $trade->type), "class='form-control' readonly");?>
+            <?php $title = zget($depositors, $trade->depositor);?>
+            <?php echo html::select("depositor[{$id}]", $depositors, $trade->depositor, "class='form-control' id='depositor{$id}' title='{$title}'");?>
             <?php echo html::hidden("type[{$id}]", $trade->type);?>
           </td>
-          <td><?php echo html::select("depositor[{$id}]", $depositors, $trade->depositor, "class='form-control' id='depositor{$id}'");?></td>
-          <td>
-            <?php $disabled = isset($disabledCategories[$trade->category]) ? 'disabled' : '';?>
-            <?php if($trade->type == 'in') echo html::select("category[$id]", $incomeTypes, $trade->category, "class='form-control in chosen' id='category{$id}' $disabled");?>
-            <?php if($trade->type == 'out') echo html::select("category[$id]", $expenseTypes, $trade->category, "class='form-control in chosen' id='category{$id}' $disabled");?>
-            <?php if(in_array($trade->type, array_keys($lang->trade->categoryList))) echo html::select("category[$id]", $lang->trade->categoryList, $trade->category, "class='form-control' disabled");?>
+          <td colspan='2'>
+            <?php $disabledVar  = 'disabled' . $i;?>
+            <?php $$disabledVar = isset($disabledCategories[$trade->category]) ? 'disabled' : '';?>
+            <div class='input-group'>
+              <?php if($trade->type == 'in'):?>
+              <?php $title = zget($incomeTypes, $trade->category, '');?>
+              <?php echo html::select("category[$id]", $incomeTypes, $trade->category, "class='form-control in chosen' id='category{$id}' title='{$title}' {$$disabledVar}");?>
+              <?php endif;?>
+              <?php if($trade->type == 'out'):?>
+              <?php $title = zget($expenseTypes, $trade->category, '');?>
+              <?php echo html::select("category[$id]", $expenseTypes, $trade->category, "class='form-control in chosen' id='category{$id}' title='{$title}' {$$disabledVar}");?>
+              <?php endif;?>
+              <?php if(in_array($trade->type, array_keys($lang->trade->categoryList))):?>
+              <?php $title = zget($lang->trade->categoryList, $trade->category, '');?>
+              <?php echo html::select("category[$id]", $lang->trade->categoryList, $trade->category, "class='form-control' title='{$title}' disabled");?>
+              <?php endif;?>
+              <?php echo html::hidden("categoryDisabled[$id]", $$disabledVar);?>
+              <span class='input-group-addon'>
+                <?php $curDisabledVar = 'disabled' . $i;?>
+                <?php $preDisabledVar = 'disabled' . ($i-1);?>
+                <?php $disabled = ($i == 1 || $$curDisabledVar == 'disabled' || (isset($$preDisabledVar) && $$preDisabledVar == 'disabled')) ? "disabled='disabled'" : '';?>
+                <label class='checkbox-inline'>
+                    <input type='checkbox' name="categoryDitto[<?php echo $id;?>]" id="categoryDitto[<?php echo $id;?>]" value='1' <?php echo $disabled;?> />
+                </label>
+              </span>
+            </div>
           </td>
           <td>
-            <?php if($trade->type == 'in' and !isset($disabledCategories[$trade->category])) echo html::select("trader[{$id}]", $customerList, $trade->trader, "class='form-control chosen' data-no_results_text='" . $lang->searchMore . "'");?>
-            <?php if($trade->type == 'out' and !isset($disabledCategories[$trade->category])) echo html::select("trader[{$id}]", $traderList, $trade->trader, "class='form-control chosen' data-no_results_text='" . $lang->searchMore . "'");?>
+            <?php if($trade->type == 'in' and !isset($disabledCategories[$trade->category])):?>
+            <?php $title = zget($customerList, $trade->trader, '');?>
+            <?php echo html::select("trader[{$id}]", $customerList, $trade->trader, "class='form-control chosen' title='{$title}' data-no_results_text='" . $lang->searchMore . "'");?>
+            <?php endif;?>
+            <?php if($trade->type == 'out' and !isset($disabledCategories[$trade->category])):?>
+            <?php $title = zget($traderList, $trade->trader, '');?>
+            <?php echo html::select("trader[{$id}]", $traderList, $trade->trader, "class='form-control chosen' title='{$title}' data-no_results_text='" . $lang->searchMore . "'");?>
+            <?php endif;?>
             <?php if(in_array($trade->type, array_keys($lang->trade->categoryList)) or isset($disabledCategories[$trade->category])) echo html::hidden("trader[$id]", 0);?>
           </td>
-          <td><?php echo html::input("money[$id]", $trade->money, "class='form-control' id='money{$id}'");?></td>
-          <td><?php echo html::select("dept[$id]", $deptList, $trade->dept, "class='form-control chosen' id='dept{$id}'");?></td>
-          <td><?php echo html::select("handlers[$id][]", $users, $trade->handlers, "class='form-control chosen' id='handlers{$id}' multiple");?></td>
-          <td><?php echo html::select("product[$id]", $productList, $trade->product, "class='form-control chosen' id='product{$id}'");?></td>
-          <td><?php echo html::input("date[$id]", $trade->date, "class='form-control form-date' id='date{$id}'");?></td>
-          <td><?php echo html::textarea("desc[$id]", $trade->desc, "rows='1' class='form-control'");?></td>
+          <td><?php echo html::input("money[$id]", $trade->money, "class='form-control' id='money{$id}' title='{$trade->money}'");?></td>
+          <td colspan='2'>
+            <div class='input-group'>
+              <?php $title = zget($deptList, $trade->dept, '');?>
+              <?php echo html::select("dept[$id]", $deptList, $trade->dept, "class='form-control chosen' id='dept{$id}' title='{$title}'");?>
+              <span class='input-group-addon'>
+                <?php $disabled = $i == 1 ? "disabled='disabled'" : '';?>
+                <label class='checkbox-inline'>
+                    <input type='checkbox' name="deptDitto[<?php echo $id;?>]" id="deptDitto[<?php echo $id;?>]" value='1' <?php echo $disabled;?> />
+                </label>
+              </span>
+            </div>
+          </td>
+          <td><?php echo html::select("handlers[$id][]", $users, $trade->handlers, "class='form-control chosen' id='handlers{$id}' title='{$lang->trade->handlers}' multiple");?></td>
+          <td>
+            <?php $title = zget($productList, $trade->product, '');?>
+            <?php echo html::select("product[$id]", $productList, $trade->product, "class='form-control chosen' id='product{$id}' title='{$title}'");?>
+          </td>
+          <td><?php echo html::input("date[$id]", $trade->date, "class='form-control form-date' id='date{$id}' title='{$trade->date}'");?></td>
+          <td><?php echo html::textarea("desc[$id]", $trade->desc, "rows='1' class='form-control' title='{$trade->desc}'");?></td>
         </tr>
+        <?php $i++;?>
         <?php endforeach;?>
       </tbody>
       <tfoot><tr><td colspan='10' class='text-center'><?php echo html::submitButton() . ' ' . html::backButton();?></td></tr></tfoot>
