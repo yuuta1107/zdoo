@@ -76,6 +76,7 @@ $lang->contract->deleteReturn     = '删除回款';
 $lang->contract->deleteDelivery   = '删除交付';
 $lang->contract->export           = '导出';
 $lang->contract->totalReturn      = '回款合计';
+$lang->contract->tradeList        = '收支记录';
 
 $lang->contract->deliveryList[]        = '';
 $lang->contract->deliveryList['wait']  = '等待交付';

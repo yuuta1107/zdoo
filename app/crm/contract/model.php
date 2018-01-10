@@ -32,6 +32,7 @@ class contractModel extends model
             $contract->files        = $this->file->getByObject('contract', $contractID);
             $contract->returnList   = $this->getReturnList($contractID);
             $contract->deliveryList = $this->getDeliveryList($contractID);
+            $contract->tradeList    = $this->getTradeList($contractID);
         }
 
         $contract = $this->file->replaceImgURL($contract, 'items');
@@ -174,6 +175,18 @@ class contractModel extends model
     public function getDeliveryByID($deliveryID = 0)
     {
         return $this->dao->select('*')->from(TABLE_DELIVERY)->where('id')->eq($deliveryID)->fetch();
+    }
+
+    /**
+     * Get trade by contract.
+     * 
+     * @param  int    $contractID 
+     * @access public
+     * @return object
+     */
+    public function getTradeList($contractID = 0, $orderBy = '`type`_desc')
+    {
+        return $this->dao->select('*')->from(TABLE_TRADE)->where('contract')->eq($contractID)->orderBy($orderBy)->fetchAll();
     }
 
     /**

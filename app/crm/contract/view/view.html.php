@@ -26,6 +26,34 @@
         <div><?php echo $this->fetch('file', 'printFiles', array('files' => $contract->files, 'fieldset' => 'false'))?></div>
       </div>
     </div>
+    <?php if(!empty($contract->tradeList)):?>
+    <div class='panel'>
+      <table class='table table-hover table-striped'>
+        <thead>
+          <tr class='text-center'>
+            <th class='w-100px'><?php echo $lang->trade->date;?></th>
+            <th class='w-100px'><?php echo $lang->trade->depositor;?></th>
+            <th class='w-60px'><?php echo $lang->trade->type;?></th>
+            <th class='w-80px'><?php echo $lang->trade->money;?></th>
+            <th class='w-80px'><?php echo $lang->trade->dept;?></th>
+            <th class='w-80px'><?php echo $lang->trade->handlers;?></th>
+            <th><?php echo $lang->trade->desc;?></th>
+          </tr>
+        </thead>
+        <?php foreach($contract->tradeList as $trade):?>
+        <tr class='text-center'>
+          <td><?php echo formatTime($trade->date, DT_DATE1);?></td>
+          <td class='text-left'><?php echo zget($depositorList, $trade->depositor, ' ');?></td>
+          <td><?php echo $lang->trade->typeList[$trade->type];?></td>
+          <td class='text-right'><?php echo zget($currencySign, $trade->currency) . formatMoney($trade->money);?></td>
+          <td><?php echo zget($deptList, $trade->dept);?></td>
+          <td title='<?php foreach(explode(',', $trade->handlers) as $handler) echo zget($users, $handler) . ' ';?>'><?php foreach(explode(',', $trade->handlers) as $handler) echo zget($users, $handler) . ' ';?></td>
+          <td class='text-left'><div title="<?php echo $trade->desc;?>" class='text-ellipsis'><?php echo $trade->desc;?><div></td>
+        </tr>
+        <?php endforeach;?>
+      </table>
+    </div>
+    <?php endif;?>
     <?php echo $this->fetch('action', 'history', "objectType=contract&objectID={$contract->id}")?>
     <div class='page-actions'>
       <?php

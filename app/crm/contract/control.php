@@ -450,6 +450,7 @@ class contract extends control
      */
     public function view($contractID)
     {
+        $this->loadModel('trade', 'cash');
         $contract = $this->contract->getByID($contractID);
         $this->loadModel('common', 'sys')->checkPrivByCustomer(empty($contract) ? '0' : $contract->customer);
 
@@ -462,17 +463,19 @@ class contract extends control
         $this->session->set('contactList',  $uri);
         if(!$this->session->orderList) $this->session->set('orderList', $uri);
 
-        $this->view->title        = $this->lang->contract->view;
-        $this->view->orders       = $this->loadModel('order', 'crm')->getByIdList($contract->order);
-        $this->view->customers    = $this->loadModel('customer')->getPairs('client');
-        $this->view->contacts     = $this->loadModel('contact', 'crm')->getPairs($contract->customer);
-        $this->view->products     = $this->loadModel('product')->getPairs();
-        $this->view->users        = $this->loadModel('user')->getPairs();
-        $this->view->addresses    = $this->loadModel('address', 'crm')->getPairsByObject('customer', $contract->customer); 
-        $this->view->contract     = $contract;
-        $this->view->actions      = $this->loadModel('action')->getList('contract', $contractID);
-        $this->view->currencySign = $this->loadModel('common', 'sys')->getCurrencySign();
-        $this->view->preAndNext   = $this->common->getPreAndNextObject('contract', $contractID);
+        $this->view->title         = $this->lang->contract->view;
+        $this->view->orders        = $this->loadModel('order', 'crm')->getByIdList($contract->order);
+        $this->view->customers     = $this->loadModel('customer')->getPairs('client');
+        $this->view->contacts      = $this->loadModel('contact', 'crm')->getPairs($contract->customer);
+        $this->view->products      = $this->loadModel('product')->getPairs();
+        $this->view->users         = $this->loadModel('user')->getPairs();
+        $this->view->addresses     = $this->loadModel('address', 'crm')->getPairsByObject('customer', $contract->customer); 
+        $this->view->contract      = $contract;
+        $this->view->actions       = $this->loadModel('action')->getList('contract', $contractID);
+        $this->view->currencySign  = $this->loadModel('common', 'sys')->getCurrencySign();
+        $this->view->depositorList = $this->loadModel('depositor', 'cash')->getPairs();
+        $this->view->deptList      = $this->loadModel('tree')->getPairs(0, 'dept');
+        $this->view->preAndNext    = $this->common->getPreAndNextObject('contract', $contractID);
 
         $this->display();
     }
