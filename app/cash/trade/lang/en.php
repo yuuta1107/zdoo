@@ -193,6 +193,7 @@ $lang->trade->totalIn       = '%s: income %s;';
 $lang->trade->totalOut      = '%s: expense %s;';
 $lang->trade->totalAmount   = '%s: income %s, expense %s, %s;';
 $lang->trade->totalInvest   = '%s: invest %s, redeem %s,unredeem %s, %s;';
+$lang->trade->selectItem    = 'Seleted';
 $lang->trade->profit        = 'profit';
 $lang->trade->loss          = 'loss';
 $lang->trade->balance       = 'Income is equal to Expense';

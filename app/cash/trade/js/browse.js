@@ -13,6 +13,40 @@ $(document).ready(function()
         v.key ++;
     });
 
+    $('[name*=tradeIDList]').click(function()
+    {
+        $('.table-footer .text-danger .selectedMoney').empty();
+        $('.table-footer .text-danger .selectedItem').hide();
+
+        selectedMoney = new Array();
+        $.each(v.currencyList, function(index, currency)
+        {
+            selectedMoney[index] = 0;
+            $('[name*=tradeIDList]').each(function()
+            {
+                if($(this).prop('checked'))
+                {
+                    if($(this).parents('tr').data('currency') == index)
+                    {
+                        currentMoney = parseFloat($(this).parents('tr').data('money'));
+                        selectedMoney[index] = selectedMoney[index] + currentMoney;
+                    }
+                }
+            });
+        });
+
+        for(currency in selectedMoney)
+        {
+            money = selectedMoney[currency];
+            money = money > 10000 ? Math.round(money / 10000 * 100) / 100 + v.unit : Math.round(money * 100) / 100;
+            if(money)
+            {
+                $('.table-footer .text-danger .selectedMoney').append(v.currencyList[currency] + money + v.semicolon);
+                $('.table-footer .text-danger .selectedItem').show();
+            }
+        }
+    });
+
     /* Remove a trade detail item. */
     $(document).on('click', '.icon-remove', function()
     {
