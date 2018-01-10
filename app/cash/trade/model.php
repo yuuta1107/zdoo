@@ -407,11 +407,11 @@ class tradeModel extends model
      * @access public
      * @return void
      */
-    public function getByYear($year, $currency)
+    public function getByYear($year, $currency = '')
     {
         return $this->dao->select('*, substr(date, 6, 2) as month')->from(TABLE_TRADE)
             ->where('date')->like("$year%")
-            ->andWhere('currency')->eq($currency)
+            ->beginIf($currency)->andWhere('currency')->eq($currency)->fi()
             ->orderBy('date_desc')
             ->fetchGroup('month');
     }

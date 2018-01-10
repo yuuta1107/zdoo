@@ -179,32 +179,32 @@ class block extends control
     public function printBasefactsBlock()
     {
         $this->processParams();
-        $this->loadModel('trade');
 
-        $currentYear  = date('Y');
-
-        $currencySign  = $this->loadModel('common', 'sys')->getCurrencySign();
+        $trades = $this->loadModel('trade')->getByYear(date('Y')); 
         $annualChartDatas = array();
-        foreach($currencySign as $currency => $sign)
+        foreach($trades as $month => $monthTrades)
         {
-            $trades = $this->trade->getByYear($currentYear, $currency); 
-            foreach($trades as $month => $monthTrades)
+            $annualChartDatas[$month]['in']  = 0;
+            $annualChartDatas[$month]['out'] = 0;
+            foreach($monthTrades as $trade)
             {
-                $annualChartDatas[$currency][$month]['in']  = 0;
-                $annualChartDatas[$currency][$month]['out'] = 0;
-                foreach($monthTrades as $trade)
-                {
-                    if($trade->type == 'in')  $annualChartDatas[$currency][$month]['in']  += $trade->money;
-                    if($trade->type == 'out') $annualChartDatas[$currency][$month]['out'] += $trade->money;
-                }
-                $annualChartDatas[$currency][$month]['profit'] = $annualChartDatas[$currency][$month]['in'] - $annualChartDatas[$currency][$month]['out'];
+                if($trade->type == 'in')  $annualChartDatas[$month]['in']  += $trade->money * $trade->exchangeRate;
+                if($trade->type == 'out') $annualChartDatas[$month]['out'] += $trade->money * $trade->exchangeRate;
             }
+            $annualChartDatas[$month]['profit'] = $annualChartDatas[$month]['in'] - $annualChartDatas[$month]['out'];
         }
 
         krsort($annualChartDatas, SORT_STRING);
+        foreach($annualChartDatas as $month => $annualChartData)
+        {
+            foreach($annualChartData as $type => $data)
+            {
+                $annualChartDatas[$month][$type] = $data > 10000 ? round($data / 10000, 2) . 'w' : round($data, 2);
+            }
+        }
 
-        $this->view->currencySign      = $currencySign;
-        $this->view->annualChartDatas  = $annualChartDatas;
+        $this->view->annualChartDatas = $annualChartDatas;
+        $this->view->currencySign     = $this->loadModel('common', 'sys')->getCurrencySign();
         $this->display();
     }
 
