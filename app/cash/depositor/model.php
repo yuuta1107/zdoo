@@ -44,7 +44,7 @@ class depositorModel extends model
      * @access public
      * @return array
      */
-    public function getList($tag = '', $status = 'normal', $orderBy = 'id_desc', $pager = null)
+    public function getList($tag = '', $status = 'all', $orderBy = 'id_desc', $pager = null)
     {
         return $this->dao->select('*')->from(TABLE_DEPOSITOR)
             ->where(1)

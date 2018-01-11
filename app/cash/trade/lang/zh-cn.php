@@ -82,8 +82,11 @@ $lang->trade->compare       = '年度对比表';
 $lang->trade->setReportUnit = '设置报表单位';
 $lang->trade->settings      = '记账设置';
 
-$lang->trade->settingList['trader']   = '必须选择商户';
-$lang->trade->settingList['category'] = '必须选择末级科目';
+$lang->trade->settingList['trader']       = '必须选择商户';
+$lang->trade->settingList['category']     = '必须选择科目';
+$lang->trade->settingList['product']      = '必须选择产品';
+$lang->trade->settingList['dept']         = '必须选择部门';
+$lang->trade->settingList['lastCategory'] = '必须选择末级科目';
 
 $lang->trade->report = new stdclass();
 $lang->trade->report->common      = '报表'; 
@@ -190,6 +193,7 @@ $lang->trade->totalIn       = '%s收入%s；';
 $lang->trade->totalOut      = '%s支出%s；';
 $lang->trade->totalAmount   = '%s收入%s，支出%s，%s；';
 $lang->trade->totalInvest   = '%s投资%s，赎回%s，未赎回%s，%s；';
+$lang->trade->selectItem    = '选中';
 $lang->trade->profit        = '盈';
 $lang->trade->loss          = '亏';
 $lang->trade->balance       = '收支平衡';

@@ -76,6 +76,7 @@ $lang->contract->deleteReturn     = 'Delete';
 $lang->contract->deleteDelivery   = 'Delete';
 $lang->contract->export           = 'Export';
 $lang->contract->totalReturn      = 'Total';
+$lang->contract->tradeList        = 'Trade List';
 
 $lang->contract->deliveryList[]        = '';
 $lang->contract->deliveryList['wait']  = 'Wait';

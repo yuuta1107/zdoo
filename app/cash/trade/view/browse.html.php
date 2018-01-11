@@ -18,6 +18,9 @@
 <?php js::set('null', $lang->search->null);?>
 <?php js::set('currentYear', $currentYear);?>
 <?php js::set('treeview', !empty($_COOKIE['treeview']) ? $_COOKIE['treeview'] : '');?>
+<?php js::set('currencyList', $currencyList);?>
+<?php js::set('unit', $lang->currencyTip['w']);?>
+<?php js::set('semicolon', $lang->semicolon);?>
 <li id='bysearchTab'><?php echo html::a('#', "<i class='icon-search icon'></i>" . $lang->search->common)?></li>
 <div id='menuActions'>
   <?php commonModel::printLink('trade', 'import', '', "<i class='icon-download-alt'> </i>" . $lang->trade->import, "class='btn btn-primary' data-toggle='modal'")?>
@@ -87,7 +90,7 @@
       </thead>
       <tbody>
         <?php foreach($trades as $trade):?>
-        <tr class='text-center'>
+        <tr class='text-center' data-money='<?php echo $trade->money;?>' data-currency='<?php echo $trade->currency;?>'>
           <td>
             <?php if($batchEdit):?>
             <label class='checkbox-inline'><input type='checkbox' name='tradeIDList[]' value='<?php echo $trade->id;?>'/> <?php echo formatTime($trade->date, DT_DATE1);?></label>
@@ -130,7 +133,12 @@
       <?php if($trades):?>
       <div class='pull-left'>
         <?php if($batchEdit) echo html::selectButton() . html::submitButton($lang->edit);?>
-        <span class='text-danger'><?php $this->trade->countMoney($trades, $mode);?></span>
+        <span class='text-danger'>
+          <?php $this->trade->countMoney($trades, $mode);?>
+          <span class='selectedItem hide'>
+            <?php echo $lang->trade->selectItem;?><span class='selectedMoney'></span>
+          </span>
+        </span>
       </div>
       <?php endif;?>
       <?php echo $pager->get();?>

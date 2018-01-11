@@ -407,11 +407,11 @@ class tradeModel extends model
      * @access public
      * @return void
      */
-    public function getByYear($year, $currency)
+    public function getByYear($year, $currency = '')
     {
         return $this->dao->select('*, substr(date, 6, 2) as month')->from(TABLE_TRADE)
             ->where('date')->like("$year%")
-            ->andWhere('currency')->eq($currency)
+            ->beginIf($currency)->andWhere('currency')->eq($currency)->fi()
             ->orderBy('date_desc')
             ->fetchGroup('month');
     }
@@ -599,6 +599,9 @@ class tradeModel extends model
             if(!$this->post->money[$key]) continue;
             if(empty($this->post->handlers[$key][1])) continue;
             if(empty($trader) && empty($this->post->traderName[$key]) && $this->config->trade->settings->trader) continue;
+            if($this->config->trade->settings->category && empty($category)) continue;
+            if($this->config->trade->settings->product && empty($product)) continue;
+            if($this->config->trade->settings->dept && empty($dept)) continue;
 
             $trade = new stdclass();
             $trade->type           = $type;
@@ -661,17 +664,26 @@ class tradeModel extends model
 
         foreach($this->post->type as $key => $type)
         {
+            $dept = !empty($this->post->deptDitto[$key]) ? $dept : $this->post->dept[$key];
+            if($this->post->categoryDisabled[$key] != 'disabled')
+            {
+                $category = !empty($this->post->categoryDitto[$key]) ? $category : $this->post->category[$key];
+            }
+
             if(empty($type)) break;
             if(empty($this->post->depositor[$key])) continue;
             if(!$this->post->money[$key]) continue;
             if(empty($this->post->handlers[$key][0]) and empty($this->post->handlers[$key][1])) continue;
             if(empty($this->post->trader[$key]) && $this->config->trade->settings->trader) continue;
+            if($this->post->categoryDisabled[$key] != 'disabled' && empty($category) && $this->config->trade->settings->category) continue;
+            if(empty($this->post->product[$key]) && $this->config->trade->settings->product) continue;
+            if(empty($dept) && $this->config->trade->settings->dept) continue;
 
             $trade = new stdclass();
             $trade->depositor      = $this->post->depositor[$key];
             $trade->money          = $this->post->money[$key];
             $trade->type           = $type;
-            $trade->dept           = $this->post->dept[$key];
+            $trade->dept           = $dept;
             $trade->trader         = $this->post->trader[$key] ? $this->post->trader[$key] : 0;
             $trade->createTrader   = false;
             $trade->createCustomer = false;
@@ -680,7 +692,7 @@ class tradeModel extends model
             $trade->date           = $this->post->date[$key];
             $trade->desc           = strip_tags(nl2br($this->post->desc[$key]));
             $trade->currency       = $depositorList[$trade->depositor]->currency;
-            if(isset($this->post->category[$key])) $trade->category = $this->post->category[$key];
+            if($this->post->categoryDisabled[$key] != 'disabled') $trade->category = $category;
 
             $trades[$key] = $trade;
         }

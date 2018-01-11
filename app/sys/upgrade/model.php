@@ -139,6 +139,7 @@ class upgradeModel extends model
             case '4_4': $this->processContractAddress();
                 $this->execSQL($this->getUpgradeFile('4.4'));
             case '4_5': $this->execSQL($this->getUpgradeFile('4.5'));
+                $this->renameLastCategory();
             default: if(!$this->isError()) $this->loadModel('setting')->updateVersion($this->config->version);
         }
 
@@ -1373,5 +1374,26 @@ class upgradeModel extends model
             $this->dao->update(TABLE_CONTRACT)->set('address')->eq($addressID)->where('id')->eq($contract->id)->exec();
         }
         return !dao::isError();
+    }
+
+    /**
+     * Rename category to lastCategory for trade settings when upgrade from 4.5.
+     * 
+     * @access public
+     * @return bool
+     */
+    public function renameLastCategory()
+    {
+        if(isset($this->config->cash->trade->settings->category))
+        {
+            $this->dao->update(TABLE_CONFIG)->set('`key`')->eq('lastCategory')
+                ->where('app')->eq('cash')
+                ->andWhere('module')->eq('trade')
+                ->andWhere('section')->eq('settings')
+                ->andWhere('`key`')->eq('category')
+                ->exec();
+
+            return !dao::isError();
+        }
     }
 }

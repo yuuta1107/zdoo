@@ -82,8 +82,11 @@ $lang->trade->compare       = 'Annual Compare';
 $lang->trade->setReportUnit = 'Report Unit';
 $lang->trade->settings      = 'Trade Setting';
 
-$lang->trade->settingList['trader']   = 'select merchants';
-$lang->trade->settingList['category'] = 'select final subjects';
+$lang->trade->settingList['trader']       = 'select merchants';
+$lang->trade->settingList['category']     = 'select subject';
+$lang->trade->settingList['product']      = 'select product';
+$lang->trade->settingList['dept']         = 'select department';
+$lang->trade->settingList['lastCategory'] = 'select final subjects';
 
 $lang->trade->report = new stdclass();
 $lang->trade->report->common      = 'Report'; 
@@ -190,6 +193,7 @@ $lang->trade->totalIn       = '%s: income %s;';
 $lang->trade->totalOut      = '%s: expense %s;';
 $lang->trade->totalAmount   = '%s: income %s, expense %s, %s;';
 $lang->trade->totalInvest   = '%s: invest %s, redeem %s,unredeem %s, %s;';
+$lang->trade->selectItem    = 'Seleted';
 $lang->trade->profit        = 'profit';
 $lang->trade->loss          = 'loss';
 $lang->trade->balance       = 'Income is equal to Expense';

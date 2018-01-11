@@ -10,8 +10,11 @@
  * @link        http://www.ranzhico.com
  */
 $config->trade->settings = new stdclass();
-$config->trade->settings->trader   = false;
-$config->trade->settings->category = false;
+$config->trade->settings->trader       = false;
+$config->trade->settings->category     = false;
+$config->trade->settings->product      = false;
+$config->trade->settings->dept         = false;
+$config->trade->settings->lastCategory = false;
 
 $config->trade->require = new stdclass();
 $config->trade->require->create = 'depositor,money,type,handlers,date';
@@ -30,6 +33,7 @@ $config->trade->search['fields']['depositor']   = $lang->trade->depositor;
 $config->trade->search['fields']['product']     = $lang->trade->product;
 $config->trade->search['fields']['type']        = $lang->trade->type;
 $config->trade->search['fields']['trader']      = $lang->trade->trader;
+$config->trade->search['fields']['contract']    = $lang->trade->contract;
 $config->trade->search['fields']['money']       = $lang->trade->money;
 $config->trade->search['fields']['category']    = $lang->trade->category;
 $config->trade->search['fields']['dept']        = $lang->trade->dept;
@@ -43,6 +47,7 @@ $config->trade->search['params']['depositor']   = array('operator' => '=',  'con
 $config->trade->search['params']['product']     = array('operator' => '=',  'control' => 'select', 'values' => 'set in control');
 $config->trade->search['params']['type']        = array('operator' => '=',  'control' => 'select', 'values' => array('' => '') + $lang->trade->typeList);
 $config->trade->search['params']['trader']      = array('operator' => '=',  'control' => 'select', 'values' => 'set in control');
+$config->trade->search['params']['contract']    = array('operator' => '=',  'control' => 'select', 'values' => 'set in control');
 $config->trade->search['params']['money']       = array('operator' => '>=', 'control' => 'input',  'values' => '');
 $config->trade->search['params']['category']    = array('operator' => '=',  'control' => 'select', 'values' => 'set in control');
 $config->trade->search['params']['dept']        = array('operator' => '=',  'control' => 'select', 'values' => 'depts');
