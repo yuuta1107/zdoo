@@ -189,6 +189,9 @@ $lang->trade->statusList['repaied']    = '已还贷';
 $lang->trade->statusList['repaying']   = '还贷中';
 $lang->trade->statusList['unRepaied']  = '未还贷';
 
+$lang->trade->processList['invest'] = '赎回进度';
+$lang->trade->processList['loan']   = '还贷进度';
+
 $lang->trade->totalIn       = '%s收入%s；';
 $lang->trade->totalOut      = '%s支出%s；';
 $lang->trade->totalAmount   = '%s收入%s，支出%s，%s；';

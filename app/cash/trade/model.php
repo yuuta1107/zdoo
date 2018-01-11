@@ -91,8 +91,8 @@ class tradeModel extends model
             ->beginIF($mode == 'in')->andWhere('type')->eq('in')->fi()
             ->beginIF($mode == 'out')->andWhere('type')->eq('out')->fi()
             ->beginIF($mode == 'transfer')->andWhere('type', true)->like('transfer%')->orWhere('category')->in(array_keys($feeCategories))->markRight(1)->fi()
-            ->beginIF($mode == 'invest')->andWhere('type', true)->in('invest,redeem')->orWhere('category')->in(array_keys($investCategories))->markRight(1)->fi()
-            ->beginIF($mode == 'loan')->andWhere('type', true)->in('loan,repay')->orWhere('category')->in(array_keys($interestCategories))->markRight(1)->fi()
+            ->beginIF($mode == 'invest')->andWhere('type')->eq('invest')->fi()
+            ->beginIF($mode == 'loan')->andWhere('type')->eq('loan')->fi()
             ->beginIF($bysearch)->andWhere($tradeQuery)->fi()
             ->beginIF(!empty($denyCategories))->andWhere('category')->notin($denyCategories)
             ->beginIF(!$expensePriv)->andWhere('type')->ne('out')->fi()
@@ -105,7 +105,7 @@ class tradeModel extends model
             $matches = $this->dao->select('*')->from(TABLE_TRADE)->where('type')->eq('redeem')->andWhere('investID')->ne(0)->fetchGroup('investID');
             $returns = $this->dao->select('*')->from(TABLE_TRADE)->where('type')->in('in,out')->andWhere('investID')->ne(0)->fetchGroup('investID');
 
-            foreach($trades as $trade)
+            foreach($trades as $tradeID => $trade)
             {
                 $redeem = 0;
                 $trade->status = '';
@@ -113,15 +113,19 @@ class tradeModel extends model
 
                 if($trade->type == 'invest')
                 {
-                    $trade->status = 'unReturned';
+                    $trade->status   = 'unReturned';
+                    $trade->progress = 0;
                     if(isset($matches[$trade->id]))
                     {
+                        $trade->children = $matches[$trade->id];
                         foreach($matches[$trade->id] as $match) $redeem += $match->money;
-                        $trade->status = $redeem < $trade->money ? 'returning' : 'returned';
+                        $trade->status   = $redeem < $trade->money ? 'returning' : 'returned';
+                        $trade->progress = round($redeem / $trade->money * 100, 4) . '%';
                     }
 
                     if(isset($returns[$trade->id]))
                     {
+                        $trade->children = array_merge($trade->children, $returns[$trade->id]);
                         foreach($returns[$trade->id] as $return)
                         {
                             if($return->type == 'in')  $trade->return += $return->money;
@@ -139,22 +143,26 @@ class tradeModel extends model
             $matches   = $this->dao->select('*')->from(TABLE_TRADE)->where('type')->eq('repay')->andWhere('loanID')->ne(0)->fetchGroup('loanID');
             $interests = $this->dao->select('*')->from(TABLE_TRADE)->where('type')->in('out')->andWhere('loanID')->ne(0)->fetchGroup('loanID');
 
-            foreach($trades as $trade)
+            foreach($trades as $tradeID => $trade)
             {
                 $repay = 0;
                 $trade->status   = '';
                 $trade->interest = 0;
                 if($trade->type == 'loan')
                 {
-                    $trade->status = 'unRepaied';
+                    $trade->status   = 'unRepaied';
+                    $trade->progress = 0;
                     if(isset($matches[$trade->id]))
                     {
+                        $trade->children = $matches[$trade->id];
                         foreach($matches[$trade->id] as $match) $repay += $match->money;
-                        $trade->status = $repay < $trade->money ? 'repaying' : 'repaied';
+                        $trade->status   = $repay < $trade->money ? 'repaying' : 'repaied';
+                        $trade->progress = round($repay / $trade->money * 100, 4) . '%';
                     }
 
                     if(isset($interests[$trade->id]))
                     {
+                        $trade->children = array_merge($trade->children, $interests[$trade->id]);
                         foreach($interests[$trade->id] as $interest)
                         {
                             $trade->interest += $interest->money;
