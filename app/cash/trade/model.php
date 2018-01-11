@@ -1351,7 +1351,14 @@ class tradeModel extends model
             {
                 if($trade->currency != $key) continue;
                 if($trade->type == 'in' or $trade->type == 'out') $totalMoney[$key][$trade->type] += $trade->money;
-                if($mode == 'invest' and ($trade->type == 'invest' or $trade->type == 'redeem')) $totalMoney[$key][$trade->type] += $trade->money;
+                if($mode == 'invest')
+                {
+                    $totalMoney[$key][$trade->type] += $trade->money;
+                    if(!empty($trade->children))
+                    {
+                        foreach($trade->children as $child) $totalMoney[$key][$child->type] += $child->money;
+                    }
+                }
             }
         }
 
