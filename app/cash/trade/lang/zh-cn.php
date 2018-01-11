@@ -27,6 +27,7 @@ $lang->trade->order       = '订单';
 $lang->trade->contract    = '合同';
 $lang->trade->category    = '科目';
 $lang->trade->date        = '交易时间';
+$lang->trade->deadline    = '截止日期';
 $lang->trade->handlers    = '经手人';
 $lang->trade->dept        = '部门';
 $lang->trade->receipt     = '收款账户';
@@ -189,8 +190,8 @@ $lang->trade->statusList['repaied']    = '已还贷';
 $lang->trade->statusList['repaying']   = '还贷中';
 $lang->trade->statusList['unRepaied']  = '未还贷';
 
-$lang->trade->processList['invest'] = '赎回进度';
-$lang->trade->processList['loan']   = '还贷进度';
+$lang->trade->progressList['invest'] = '赎回进度';
+$lang->trade->progressList['loan']   = '还贷进度';
 
 $lang->trade->totalIn       = '%s收入%s；';
 $lang->trade->totalOut      = '%s支出%s；';

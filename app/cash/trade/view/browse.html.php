@@ -79,7 +79,8 @@
           <th class='w-200px visible-lg'><?php echo $lang->trade->desc;?></th>
           <?php if($mode == 'invest' or $mode == 'loan'):?>
           <th class='w-80px'><?php echo $lang->trade->status;?></th>
-          <th class='w-80px'><?php echo $lang->trade->processList[$mode];?></th>
+          <th class='w-80px'><?php echo $lang->trade->progressList[$mode];?></th>
+          <th class='w-80px'><?php echo $lang->trade->deadline;?></th>
           <?php endif;?>
           <?php if($mode == 'invest'):?>
           <th class='w-80px'><?php echo $lang->trade->rate;?></th>
@@ -120,6 +121,7 @@
               <div class='progress-bar' role='progressbar' aria-valuenow='<?php echo $trade->progress;?>' aria-valuemin='0' aria-valuemax='100' style='width: <?php echo $trade->progress;?>'></div>
             </div>
           </td>
+          <td><?php echo formatTime($trade->deadline, DT_DATE1);?></td>
           <?php endif;?>
           <?php if($mode == 'invest'):?>
           <td><?php if($trade->return) echo $trade->return;?></td>
@@ -136,7 +138,7 @@
         </tr>
         <?php if(!empty($trade->children)):?>
         <tr class='tr-children'>
-          <td colspan='13'>
+          <td colspan='14'>
             <table class='table table-hover table-striped table-data table-fixed'>
               <?php foreach($trade->children as $trade):?>
               <tr class='text-center'>
@@ -149,7 +151,7 @@
                 <td class='w-80px' title='<?php foreach(explode(',', $trade->handlers) as $handler) echo zget($users, $handler) . ' ';?>'><?php foreach(explode(',', $trade->handlers) as $handler) echo zget($users, $handler) . ' ';?></td>
                 <td class='w-200px text-nowrap text-ellipsis text-left' title='<?php echo zget($categories, $trade->category, ' ');?>'><?php echo zget($categories, $trade->category, ' ');?></td>
                 <td class='w-200px text-left visible-lg'><div title="<?php echo $trade->desc;?>" class='w-200px text-ellipsis'><?php echo $trade->desc;?><div></td>
-                <td colspan='3' class='w-240px'></td>
+                <td colspan='4' class='w-320px'></td>
                 <td class='w-130px'>
                   <?php commonModel::printLink('trade', 'view', "tradeID={$trade->id}&mode={$mode}", $lang->view);?>
                   <?php commonModel::printLink('trade', 'edit', "tradeID={$trade->id}&mode={$mode}", $lang->edit);?>

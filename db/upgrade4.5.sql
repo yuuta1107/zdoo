@@ -1,4 +1,7 @@
-ALTER TABLE `cash_trade` ADD `project` mediumint(8) unsigned NOT NULL AFTER `contract`;
+ALTER TABLE `cash_trade`
+ADD `project` mediumint(8) unsigned NOT NULL AFTER `contract`,
+ADD `deadline` date NOT NULL AFTER `date`;
+
 ALTER TABLE `cash_trade` CHANGE `exchangeRate` `exchangeRate` decimal(12,4) NOT NULL DEFAULT 1;
 ALTER TABLE `oa_refund` ADD `customer` mediumint(8) unsigned NOT NULL AFTER `id`;
 ALTER TABLE `oa_refund` ADD `order` mediumint(8) unsigned NOT NULL AFTER `customer`;
