@@ -173,7 +173,7 @@ class block extends control
 
         $this->view->tasks = $this->dao->select('*')->from(TABLE_TASK)
             ->where('deleted')->eq(0)
-            ->andWhere("(createdBy='$params->account' OR assignedTo = '$params->account')")
+            ->andWhere('createdBy', true)->eq($params->account)->orWhere('assignedTo')->eq($params->account)->markRight(1)
             ->beginIF(isset($params->status) and join($params->status) != false)->andWhere('status')->in($params->status)->fi()
             ->orderBy($params->orderBy)
             ->limit($params->num)
