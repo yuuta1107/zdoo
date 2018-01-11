@@ -39,11 +39,11 @@ class attendModel extends model
         if(empty($attend))
         {
             $attend = new stdclass();
-            $attend->account = $account;
-            $attend->date    = $date;
-            $attend->signIn  = '00:00:00';
-            $attend->signOut = '00:00:00';
-            $attend->status  = $this->computeStatus($attend);
+            $attend->account      = $account;
+            $attend->date         = $date;
+            $attend->signIn       = '00:00:00';
+            $attend->signOut      = '00:00:00';
+            $attend->status       = $this->computeStatus($attend);
             $attend->manualIn     = '';
             $attend->manualOut    = '';
             $attend->reason       = '';
@@ -1263,7 +1263,7 @@ EOT;
                 }
                 else
                 {
-                    if($status == 'leave')    $hours = $this->config->attend->workingHours;
+                    if($status == 'leave') $hours = $this->config->attend->workingHours;
                     if($status == 'overtime' || $status == 'makeup') $hours = $this->config->attend->signOutLimit - $this->config->attend->signInLimit;
                 }
                 if($hours > $this->config->attend->workingHours && ($status == 'leave' || $status == 'lieu' || $status == 'makeup')) 
