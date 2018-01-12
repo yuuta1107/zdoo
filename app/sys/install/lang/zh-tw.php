@@ -88,6 +88,7 @@ $lang->install->save2File  = '<span class="red">嘗試寫入配置檔案，失�
 $lang->install->saved2File = '配置信息已經成功保存到" <strong>%s</strong> "中。您後面還可繼續修改此檔案。';
 $lang->install->errorNotSaveConfig = '還沒有保存配置檔案';
 
+$lang->install->success  = "安裝成功！";
 $lang->install->domainIP = '域名映射的IP是：%s';
 $lang->install->serverIP = '伺服器的內網IP是：%s';
 $lang->install->publicIP = '伺服器的公網IP是：%s';
@@ -96,7 +97,8 @@ $lang->install->account  = '帳號';
 $lang->install->password = '密碼';
 $lang->install->errorEmptyPassword = '密碼不能為空';
 
-$lang->install->success    = "安裝成功！";
+$lang->install->import['area']     = '導入區域數據';
+$lang->install->import['industry'] = '導入行業數據';
 
 $lang->install->buildinEntry = new stdclass();
 $lang->install->buildinEntry->crm['name']  = '客戶管理';

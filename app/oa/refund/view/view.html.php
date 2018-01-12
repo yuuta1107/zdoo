@@ -49,7 +49,7 @@
             <?php $related = ''; foreach(explode(',', trim($d->related, ',')) as $account) $related .= ' ' . zget($users, $account);?>
             <td title='<?php echo $related;?>'><?php echo $related;?></td>
             <td><span data-toggle='tooltip' data-original-title="<?php echo $d->reason;?>"><?php echo zget($lang->refund->statusList, $d->status);?></span></td>
-            <td><?php echo $d->desc;?></td>
+            <td title='<?php echo $d->desc;?>'><?php echo $d->desc;?></td>
           </tr>
           <?php endforeach;?>
         </table>

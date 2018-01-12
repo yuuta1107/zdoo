@@ -502,4 +502,23 @@ EOT;
         $this->lang->user->password1 = $this->lang->user->password;
         $this->dao->insert(TABLE_USER)->data($admin, $skip = 'password1')->autoCheck()->batchCheck('account,password1', 'notempty')->check('account', 'account')->exec();
     }
+
+    /**
+     * Import data. 
+     * 
+     * @access public
+     * @return bool
+     */
+    public function importData()
+    {
+        if(!$this->post->import) return false;
+        if(!is_array($this->post->import)) return false;
+
+        foreach($this->post->import as $type)
+        {
+            $sqlFile = $this->app->getBasepath() . 'db' . DS . "$type.sql";
+            $this->loadModel('upgrade')->execSQL($sqlFile);
+        }
+        return true;
+    }
 }

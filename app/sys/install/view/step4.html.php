@@ -32,6 +32,10 @@ include '../../common/view/header.lite.html.php';
             <label for='password' class='col-xs-2 control-label'><?php echo $lang->install->password;?></label>
             <div class='col-xs-8'><?php echo html::input('password', '', "class='form-control' id='password1'");?></div>
           </div>
+          <div class='form-group'>
+            <label class='col-xs-2'></label>
+            <div class='col-xd-8'><?php echo html::checkbox('import', $lang->install->import);?></div>
+          </div>
           <?php if(!empty($domainIP)):?>
           <div class='ipDiv'><?php printf($lang->install->domainIP, $domainIP);?></div>
           <?php endif;?>

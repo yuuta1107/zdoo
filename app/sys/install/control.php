@@ -140,6 +140,7 @@ class install extends control
         {
             $this->install->installEntry();
             $this->install->createAdmin();
+            $this->install->importData();
 
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError() ));
             $this->loadModel('setting')->updateVersion($this->config->version);
