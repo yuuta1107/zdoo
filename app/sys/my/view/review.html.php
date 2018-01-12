@@ -241,11 +241,11 @@
         <th class='w-80px'><?php echo $lang->refund->id;?></th>
         <?php endif;?>
         <th class='w-80px'><?php echo $lang->refund->createdBy;?></th>
-        <th class='w-80px'><?php echo $lang->refund->name;?></th>
-        <th class='w-100px'><?php echo $lang->refund->category;?></th>
-        <th class='w-120px'><?php echo $lang->refund->money;?></th>
+        <th><?php echo $lang->refund->name;?></th>
+        <th class='w-140px'><?php echo $lang->refund->category;?></th>
+        <th class='w-120px text-right'><?php echo $lang->refund->money;?></th>
         <th class='w-120px'><?php echo $lang->refund->date;?></th>
-        <th><?php echo $lang->refund->desc;?></th>
+        <th class='w-240px'><?php echo $lang->refund->desc;?></th>
         <th class='w-100px'><?php echo $lang->refund->status;?></th>
         <th class='w-100px'><?php echo $lang->actions;?></th>
       </tr>
@@ -258,11 +258,11 @@
         <td><?php echo $refund->id;?></td>
       <?php endif;?>
       <td><?php echo zget($users, $refund->createdBy);?></td>
-      <td title='<?php echo $refund->name;?>'><?php echo $refund->name;?></td>
-      <td title='<?php echo zget($categories, $refund->category, '');?>'><?php echo zget($categories, $refund->category, '');?></td>
-      <td><?php echo zget($currencySign, $refund->currency) . $refund->money;?></td>
+      <td class='text-left' title='<?php echo $refund->name;?>'><?php echo $refund->name;?></td>
+      <td class='text-left' title='<?php echo zget($categories, $refund->category, '');?>'><?php echo zget($categories, $refund->category, '');?></td>
+      <td class='text-right'><?php echo zget($currencySign, $refund->currency) . $refund->money;?></td>
       <td><?php echo $refund->date;?></td>
-      <td><?php echo $refund->desc?></td>
+      <td class='text-left' title='<?php echo $refund->desc;?>'><?php echo $refund->desc;?></td>
       <td><?php echo zget($lang->refund->statusList, $refund->status);?></td>
       <td><?php commonModel::printLink('oa.refund', 'review', "refundID={$refund->id}", $lang->refund->review, "data-toggle='modal' data-width=800")?></td>
     </tr>
