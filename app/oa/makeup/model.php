@@ -14,7 +14,7 @@ class makeupModel extends model
     public function __construct($appName = '')
     {
         parent::__construct($appName);
-        $this->app->loadModuleConfig('attend', 'oa');
+        $this->loadModel('attend', 'oa');
     }
 
     /**
