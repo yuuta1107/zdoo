@@ -70,7 +70,7 @@
         <?php if($type == 'loan'):?>
         <tr>
           <th><?php echo $lang->trade->deadline;?></th>
-          <td><?php echo html::input('deadline', date('Y-m-d'), "class='form-control form-date'");?></td>
+          <td><?php echo html::input('deadline', '', "class='form-control form-date'");?></td>
         </tr>
         <?php endif;?>
         <tr>
