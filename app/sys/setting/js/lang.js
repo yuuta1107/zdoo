@@ -14,8 +14,8 @@ $(function()
         value = $(this).parent().prev().find('.input-group').html();
         $(this).parent().parent().next().find('.input-group').html(value);
         $(this).parent().parent().next().find('.input-group input').val('');
-        $(this).parent().parent().next().find('.input-group input').eq(0).attr('placeholder', v.valueplaceholder);
-        $(this).parent().parent().next().find('.input-group input').eq(1).attr('placeholder', v.infoplaceholder);
+        $(this).parent().parent().next().find('.input-group input').eq(0).attr('placeholder', v.valueplaceholder).removeAttr('readonly');
+        $(this).parent().parent().next().find('.input-group input').eq(1).attr('placeholder', v.infoplaceholder).removeAttr('readonly');
     })
 
     /* Remove an item. */

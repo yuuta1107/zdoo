@@ -59,7 +59,8 @@
   <?php if($batchEdit):?>
   <form method='post' action='<?php echo inlink('batchEdit', 'step=form')?>'>
   <?php endif;?>
-    <table class='table table-hover table-striped table-bordered tablesorter table-data table-fixed' id='tradeList'>
+    <?php $class = ($mode != 'invest' && $mode != 'loan') ? 'table-bordered' : '';?>
+    <table class='table table-hover table-striped tablesorter table-data table-fixed <?php echo $class;?>' id='tradeList'>
       <thead>
         <tr class='text-center'>
           <?php $vars = "mode={$mode}" . ($bysearch ? '_bysearch' : '') . "&date={$date}&orderBy=%s&recTotal={$pager->recTotal}&recPerPage={$pager->recPerPage}&pageID={$pager->pageID}";?>
@@ -78,6 +79,8 @@
           <th class='w-200px visible-lg'><?php echo $lang->trade->desc;?></th>
           <?php if($mode == 'invest' or $mode == 'loan'):?>
           <th class='w-80px'><?php echo $lang->trade->status;?></th>
+          <th class='w-80px'><?php echo $lang->trade->progressList[$mode];?></th>
+          <th class='w-80px'><?php echo $lang->trade->deadline;?></th>
           <?php endif;?>
           <?php if($mode == 'invest'):?>
           <th class='w-80px'><?php echo $lang->trade->rate;?></th>
@@ -95,6 +98,7 @@
             <?php if($batchEdit):?>
             <label class='checkbox-inline'><input type='checkbox' name='tradeIDList[]' value='<?php echo $trade->id;?>'/> <?php echo formatTime($trade->date, DT_DATE1);?></label>
             <?php else:?>
+            <?php if(!empty($trade->children)) echo "<span class='trade-toggle'><i class='icon icon-minus'> </i></span>"?>
             <?php echo formatTime($trade->date, DT_DATE1);?>
             <?php endif;?>
           </td>
@@ -112,6 +116,12 @@
           <td class='text-left visible-lg'><div title="<?php echo $trade->desc;?>" class='w-200px text-ellipsis'><?php echo $trade->desc;?><div></td>
           <?php if($mode == 'invest' or $mode == 'loan'):?>
           <td><?php echo zget($lang->trade->statusList, $trade->status);?></td>
+          <td>
+            <div class='progress' title='<?php echo $trade->progress;?>'>
+              <div class='progress-bar' role='progressbar' aria-valuenow='<?php echo $trade->progress;?>' aria-valuemin='0' aria-valuemax='100' style='width: <?php echo $trade->progress;?>'></div>
+            </div>
+          </td>
+          <td><?php echo formatTime($trade->deadline, DT_DATE1);?></td>
           <?php endif;?>
           <?php if($mode == 'invest'):?>
           <td><?php if($trade->return) echo $trade->return;?></td>
@@ -126,6 +136,34 @@
             <?php commonModel::printLink('trade', 'delete', "tradeID={$trade->id}&mode={$mode}", $lang->delete, "class='deleter'");?>
           </td>
         </tr>
+        <?php if(!empty($trade->children)):?>
+        <tr class='tr-children'>
+          <td colspan='14'>
+            <table class='table table-hover table-striped table-data table-fixed'>
+              <?php foreach($trade->children as $trade):?>
+              <tr class='text-center'>
+                <td class='w-100px'><?php echo formatTime($trade->date, DT_DATE1);?></td>
+                <td class='w-100px text-left'><?php echo zget($depositorList, $trade->depositor, ' ');?></td>
+                <td class='w-60px'><?php echo $lang->trade->typeList[$trade->type];?></td>
+                <td class='text-left' title="<?php echo zget($customerList, $trade->trader, '');?>"><?php if($trade->trader) echo zget($customerList, $trade->trader, ' ');?></td>
+                <td class='w-80px text-right'><?php echo zget($currencySign, $trade->currency) . formatMoney($trade->money);?></td>
+                <td class='w-80px'><?php echo zget($deptList, $trade->dept);?></td>
+                <td class='w-80px' title='<?php foreach(explode(',', $trade->handlers) as $handler) echo zget($users, $handler) . ' ';?>'><?php foreach(explode(',', $trade->handlers) as $handler) echo zget($users, $handler) . ' ';?></td>
+                <td class='w-200px text-nowrap text-ellipsis text-left' title='<?php echo zget($categories, $trade->category, ' ');?>'><?php echo zget($categories, $trade->category, ' ');?></td>
+                <td class='w-200px text-left visible-lg'><div title="<?php echo $trade->desc;?>" class='w-200px text-ellipsis'><?php echo $trade->desc;?><div></td>
+                <td colspan='4' class='w-320px'></td>
+                <td class='w-130px'>
+                  <?php commonModel::printLink('trade', 'view', "tradeID={$trade->id}&mode={$mode}", $lang->view);?>
+                  <?php commonModel::printLink('trade', 'edit', "tradeID={$trade->id}&mode={$mode}", $lang->edit);?>
+                  <?php commonModel::printLink('trade', 'detail', "tradeID={$trade->id}&mode={$mode}", $lang->trade->detail, "data-toggle='modal'");?>
+                  <?php commonModel::printLink('trade', 'delete', "tradeID={$trade->id}&mode={$mode}", $lang->delete, "class='deleter'");?>
+                </td>
+              </tr>
+              <?php endforeach;?>
+            </table>
+          </td>
+        </tr>
+        <?php endif;?>
         <?php endforeach;?>
       </tbody>
     </table>

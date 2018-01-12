@@ -639,6 +639,7 @@ class treeModel extends model
             ->setDefault('readonly', 0)
             ->get();
 
+        $category->name   = strip_tags(trim($category->name));
         $category->rights = !empty($category->rights) ? ',' . trim($category->rights, ',') . ',' : '';
         $category->users  = !empty($category->users) ? ',' . trim($category->users, ',') . ',' : '';
 
@@ -745,7 +746,7 @@ class treeModel extends model
             $order = $i * 10;
 
             /* First, save the child without path field. */
-            $category->name  = $categoryName;
+            $category->name  = strip_tags(trim($categoryName));
             $category->order = $order;
             $mode = $this->post->mode[$key];
 
@@ -766,7 +767,7 @@ class treeModel extends model
             {
                 $categoryID = $key;
                 $this->dao->update(TABLE_CATEGORY)
-                    ->set('name')->eq($categoryName)
+                    ->set('name')->eq(strip_tags(trim($categoryName)))
                     ->set('order')->eq($order)
                     ->where('id')->eq($categoryID)
                     ->exec();

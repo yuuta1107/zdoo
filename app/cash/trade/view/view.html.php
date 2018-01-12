@@ -48,6 +48,12 @@
             <th class='w-70px'><?php echo $lang->trade->date;?></th>
             <td><?php echo formatTime($trade->date, DT_DATE1);?></td>
           </tr>
+          <?php if($trade->type == 'invest' or $trade->type == 'loan'):?>
+          <tr>
+            <th><?php echo $lang->trade->deadline;?></th>
+            <td><?php echo formatTime($trade->deadline, DT_DATE1);?></td>
+          </tr>
+          <?php endif;?>
           <tr>
             <th><?php echo $lang->trade->depositor;?></th>
             <td><?php echo !empty($depositor->abbr) ? $depositor->abbr : '';?></td>

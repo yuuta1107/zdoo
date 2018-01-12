@@ -219,6 +219,12 @@
           <th><?php echo $lang->trade->date;?></th>
           <td><?php echo html::input('date', $trade->date, "class='form-control form-date'");?></td>
         </tr>
+        <?php if($trade->type == 'invest' or $trade->type == 'loan'):?>
+        <tr>
+          <th><?php echo $lang->trade->deadline;?></th>
+          <td><?php echo html::input('deadline', $trade->deadline, "class='form-control form-date'");?></td>
+        </tr>
+        <?php endif;?>
         <tr>
           <th><?php echo $lang->trade->desc;?></th>
           <td><?php echo html::textarea('desc', $trade->desc, "class='form-control' rows='3'");?></td>
