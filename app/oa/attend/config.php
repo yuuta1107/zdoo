@@ -20,3 +20,5 @@ $config->attend->editor->review = array('id' => 'comment', 'tools' => 'simple');
 
 $config->attend->list = new stdclass();
 $config->attend->list->exportFields = 'dept, realname, date, dayName, status, signIn, signOut, ip, desc';
+
+$config->attend->typeList = array('leave', 'lieu', 'makeup', 'overtime', 'trip', 'egress');

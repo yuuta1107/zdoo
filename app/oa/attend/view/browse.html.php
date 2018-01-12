@@ -72,8 +72,27 @@
             <?php for($day = 1; $day <= $dayNum; $day++):?>
               <?php $currentDate = date("Y-m-d", strtotime("{$currentYear}-{$currentMonth}-{$day}"));?>
               <?php if(isset($userAttends[$currentDate])):?>
-              <td class='attend-status attend-<?php echo $userAttends[$currentDate]->status?>' title='<?php echo $lang->attend->statusList[$userAttends[$currentDate]->status]?>'>
-                <span><?php echo $lang->attend->markStatusList[$userAttends[$currentDate]->status]?></span>
+              <?php 
+              $attend = $userAttends[$currentDate];
+              $status = $attend->status;
+              if($attend->hoursList)
+              {
+                  $title  = '';
+                  $icon   = '';
+                  foreach($attend->hoursList as $status => $hours) 
+                  {
+                      $title .= $lang->attend->statusList[$status] . $hours . 'h ';
+                      $icon  .= $lang->attend->markStatusList[$status];
+                  }
+              }
+              else
+              {
+                  $title = $lang->attend->statusList[$attend->status];
+                  $icon  = $lang->attend->markStatusList[$attend->status];
+              }
+              ?>
+              <td class='attend-status attend-<?php echo $status;?>' title='<?php echo $title;?>'>
+                <span><?php echo $icon;?></span>
               </td>
               <?php else:?>
               <td></td>
