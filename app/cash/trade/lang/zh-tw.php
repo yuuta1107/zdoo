@@ -84,9 +84,9 @@ $lang->trade->setReportUnit = '設置報表單位';
 $lang->trade->settings      = '記賬設置';
 
 $lang->trade->settingList['trader']       = '必須選擇商戶';
-$lang->trade->settingList['category']     = '必須選擇科目';
 $lang->trade->settingList['product']      = '必須選擇產品';
 $lang->trade->settingList['dept']         = '必須選擇部門';
+$lang->trade->settingList['category']     = '必須選擇科目';
 $lang->trade->settingList['lastCategory'] = '必須選擇末級科目';
 
 $lang->trade->report = new stdclass();

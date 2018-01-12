@@ -84,9 +84,9 @@ $lang->trade->setReportUnit = '设置报表单位';
 $lang->trade->settings      = '记账设置';
 
 $lang->trade->settingList['trader']       = '必须选择商户';
-$lang->trade->settingList['category']     = '必须选择科目';
 $lang->trade->settingList['product']      = '必须选择产品';
 $lang->trade->settingList['dept']         = '必须选择部门';
+$lang->trade->settingList['category']     = '必须选择科目';
 $lang->trade->settingList['lastCategory'] = '必须选择末级科目';
 
 $lang->trade->report = new stdclass();
