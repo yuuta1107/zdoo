@@ -449,7 +449,7 @@ class actionModel extends model
             $action->appName = '';
             if(isset($this->config->action->objectAppNames[$objectType])) $action->appName = $this->config->action->objectAppNames[$objectType];
 
-            /* Open object by toggle or not. */
+            /* Open object by modal or not. */
             $action->toggle = '';
             if(strpos($this->config->action->objectModalLinks, ",{$objectType},") !== false) $action->toggle = "data-toggle = 'modal'"; 
 
