@@ -21,6 +21,7 @@ $lang->raquo      = '&raquo;';
 $lang->minus      = ' - ';
 $lang->hyphen     = '-';
 $lang->slash      = ' / ';
+$lang->semicolon  = '；';
 $lang->RMB        = '￥';
 $lang->divider    = "<span class='divider'>{$lang->raquo}</span> ";
 $lang->at         = ' 于 ';

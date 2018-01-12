@@ -27,6 +27,7 @@ $lang->trade->order       = 'Order';
 $lang->trade->contract    = 'Contract';
 $lang->trade->category    = 'Category';
 $lang->trade->date        = 'Transaction time';
+$lang->trade->deadline    = 'Deadline';
 $lang->trade->handlers    = 'Handler';
 $lang->trade->dept        = 'Dept';
 $lang->trade->receipt     = 'From';
@@ -188,6 +189,9 @@ $lang->trade->statusList['unReturned'] = 'Unreturned';
 $lang->trade->statusList['repaied']    = 'Repaied';
 $lang->trade->statusList['repaying']   = 'Repaying';
 $lang->trade->statusList['unRepaied']  = 'Unrepaied';
+
+$lang->trade->progressList['invest'] = 'Redemption progress';
+$lang->trade->progressList['loan']   = 'Repayment progress';
 
 $lang->trade->totalIn       = '%s: income %s;';
 $lang->trade->totalOut      = '%s: expense %s;';

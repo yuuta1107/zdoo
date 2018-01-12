@@ -5,6 +5,7 @@ $menu = isset($lang->egress->menu) ? $lang->egress->menu : '';
 $lang->egress = clone $lang->trip;
 $lang->egress->menu = $menu;
 
+$lang->egress->create   = 'Create';
 $lang->egress->common   = 'Egress';
 $lang->egress->browse   = 'Browse';
 $lang->egress->personal = 'My Egress';

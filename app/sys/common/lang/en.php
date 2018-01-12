@@ -398,6 +398,7 @@ $lang->error->noConvertFun = 'Iconv and mb_convert_encoding do not exist. You ca
 $lang->error->noCurlExt    = 'No curl extension.';
 $lang->error->notInt       = '<strong>%s</strong> should be not a interger.';
 $lang->error->pasteImg     = 'Your browser does not support paste pictures.';
+$lang->error->accessDenied = 'Access Denied';
 
 /* The pager items. */
 $lang->pager = new stdclass();

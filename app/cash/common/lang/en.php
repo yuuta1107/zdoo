@@ -50,10 +50,10 @@ $lang->report->menu->setting = 'Report Unit|trade|setReportUnit|';
 /* Menu of setting module. */
 $lang->setting = new stdclass();
 $lang->setting->menu = new stdclass();
-$lang->setting->menu->income    = 'Income|tree|browse|type=in|';
-$lang->setting->menu->expend    = 'Expense|tree|browse|type=out|';
-$lang->setting->menu->currency  = 'Currency|setting|lang|module=common&field=currencyList';
-$lang->setting->menu->schema    = 'Template|schema|browse|';
-$lang->setting->menu->tradePriv = 'View Expense|group|managetradepriv|';
-$lang->setting->menu->tradeSet  = 'Trade Set|trade|tradeSetting|';
+$lang->setting->menu->income       = 'Income|tree|browse|type=in|';
+$lang->setting->menu->expend       = 'Expense|tree|browse|type=out|';
+$lang->setting->menu->currency     = 'Currency|setting|lang|module=common&field=currencyList';
+$lang->setting->menu->schema       = 'Template|schema|browse|';
+$lang->setting->menu->tradePriv    = 'View Expense|group|managetradepriv|';
+$lang->setting->menu->tradeSetting = 'Trade Setting|trade|tradeSetting|';
 include(dirname(__FILE__) . '/menuOrder.php');
