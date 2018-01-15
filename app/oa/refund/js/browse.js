@@ -35,4 +35,7 @@ $(document).ready(function()
 
          return false;
     })
+
+    /* expand active tree. */
+    $('.tree li.active .hitarea').click();
 })

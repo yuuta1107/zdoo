@@ -199,7 +199,7 @@ class block extends control
         {
             foreach($annualChartData as $type => $data)
             {
-                $annualChartDatas[$month][$type] = $data > 10000 ? round($data / 10000, 2) . 'w' : round($data, 2);
+                $annualChartDatas[$month][$type] = $data > 10000 ? round($data / 10000, 2) . $this->lang->trade->report->unitList[10000] : round($data, 2);
             }
         }
 

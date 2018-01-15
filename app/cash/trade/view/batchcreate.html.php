@@ -17,25 +17,25 @@
 <form id='ajaxForm' method='post'>
   <div class='panel'>
     <div class='panel-heading'><strong><?php echo $lang->trade->batchCreate;?></strong></div>
-    <table class='table table-hover'>
+    <table class='table table-condensed table-hover'>
       <thead>
         <tr class='text-center'>
           <th class='w-150px required'><?php echo $lang->trade->depositor;?></th>
-          <th class='w-100px'><?php echo $lang->trade->type;?></th> 
+          <th class='w-80px'><?php echo $lang->trade->type;?></th> 
           <?php $categoryRequired = $config->trade->settings->category ? 'required' : '';?>
-          <th class='w-160px <?php echo $categoryRequired;?>'><?php echo $lang->trade->category;?></th> 
+          <th class='w-140px <?php echo $categoryRequired;?>'><?php echo $lang->trade->category;?></th> 
           <?php if($requireTrader):?>
-          <th class='w-260px required'><?php echo $lang->trade->trader;?></th> 
+          <th class='w-240px required'><?php echo $lang->trade->trader;?></th> 
           <?php else:?>
-          <th class='w-260px'><?php echo $lang->trade->trader;?></th> 
+          <th class='w-240px'><?php echo $lang->trade->trader;?></th> 
           <?php endif;?>
           <th class='w-100px required'><?php echo $lang->trade->money;?></th>
           <?php $deptRequired = $config->trade->settings->dept ? 'required' : '';?>
-          <th class='w-80px <?php echo $deptRequired;?>'> <?php echo $lang->trade->dept;?></th>
+          <th class='w-140px <?php echo $deptRequired;?>'> <?php echo $lang->trade->dept;?></th>
           <th class='w-120px required'><?php echo $lang->trade->handlers;?></th>
           <?php $productRequired = $config->trade->settings->product ? 'required' : '';?>
           <th class='w-110px <?php echo $productRequired;?>'><?php echo $lang->trade->product;?></th>
-          <th class='w-110px'><?php echo $lang->trade->date;?></th>
+          <th class='w-100px'><?php echo $lang->trade->date;?></th>
           <th><?php echo $lang->trade->desc;?></th>
         </tr>
       </thead>

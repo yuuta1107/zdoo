@@ -13,7 +13,6 @@
 <?php include '../../common/view/header.html.php';?>
 <?php include '../../../sys/common/view/datepicker.html.php';?>
 <?php include '../../../sys/common/view/chosen.html.php';?>
-<?php js::set('noResultsMatch', $lang->noResultsMatch);?>
 <form id='ajaxForm' method='post' action="<?php echo $this->createLink('oa.refund', 'create')?>">
   <div class='panel'>
     <div class='panel-heading'>
@@ -92,7 +91,7 @@
         </tr>
         <tr id='refund-related'>
           <th><?php echo $lang->refund->related?></th>
-          <td><?php echo html::select('related[]', $users, '', "class='form-control chosen' multiple")?></td>
+          <td><?php echo html::select('related[]', $users, $this->app->user->account, "class='form-control chosen' multiple")?></td>
           <td></td>
         </tr>
         <tr id='refund-detail' class='hidden'>

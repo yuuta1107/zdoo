@@ -46,13 +46,13 @@
           </table>
           <div class='page-actions'>
             <?php echo html::hidden('uid');?>
-            <?php if(!empty($expenseList))
-            { 
-                echo html::selectButton();
-                echo html::submitButton() . "&nbsp;&nbsp;";
-            } 
-            commonModel::printLink('cash.tree', 'browse', 'type=out', $lang->refund->setExpense, "class='btn btn-primary setExpense'");
-            ?>
+            <?php if(!empty($expenseList)):?>
+            <div class='checkbox checkAll'>
+              <label><input type='checkbox' name='checkAll' id='checkAll'><?php echo $lang->selectAll;?></label>
+            </div>
+            <?php echo html::submitButton();?>
+            <?php endif;?>
+            <?php commonModel::printLink('cash.tree', 'browse', 'type=out', $lang->refund->setExpense, "class='btn btn-primary setExpense'");?>
           </div>
         </form>
       </div>
