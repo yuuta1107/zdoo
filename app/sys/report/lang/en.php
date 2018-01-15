@@ -20,6 +20,7 @@ $lang->report->undefined  = 'Undefined';
 $lang->report->time       = 'Time';
 $lang->report->select     = 'Pleace select the type of reports';
 $lang->report->create     = 'Generate';
+$lang->report->tip        = 'Note: Report is generated from search results. Please search in the list page before you generate a report.';
 
 $lang->report->options = new stdclass();
 $lang->report->options->type   = 'pie';
