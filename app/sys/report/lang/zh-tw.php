@@ -2,12 +2,12 @@
 /**
  * The report module zh-tw file of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青島易軟天創網絡科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青島易軟天創網絡科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
  * @package     report
  * @version     $Id: zh-tw.php 5080 2013-07-10 00:46:59Z wyd621@gmail.com $
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 if(!isset($lang->report)) $lang->report = new stdclass();
 $lang->report->common     = '報表';
@@ -20,6 +20,7 @@ $lang->report->undefined  = '未設定';
 $lang->report->time       = '時間';
 $lang->report->select     = '請選擇報表類型';
 $lang->report->create     = '生成報表';
+$lang->report->tip        = '註：統計報表的數據，來源於列表頁面的檢索結果，生成統計報表前請先在列表頁面進行檢索。';
 
 $lang->report->options = new stdclass();
 $lang->report->options->type   = 'pie';

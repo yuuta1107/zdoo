@@ -2,12 +2,12 @@
 /**
  * The model file of lieu module of Ranzhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Tingting Dai <chujilu@cnezsoft.com>
  * @package     lieu
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 class lieuModel extends model
 {
@@ -237,7 +237,7 @@ class lieuModel extends model
         $overtimes = $this->loadModel('overtime', 'oa')->getByIdList($this->post->overtime);
         foreach($overtimes as $overtime) $overtimeHours = bcadd($overtimeHours, $overtime->hours);
         
-        if(bccomp($lieuHours, $overtimeHours, 2) === 1) return array('result' => 'fail', 'message' => sprintf($this->lang->lieu->wrongHours, $lieuHours, $overtimeHours));
+        if(bccomp($lieuHours, $overtimeHours, 2) === 1) return array('result' => 'fail', 'message' => array('hours' => sprintf($this->lang->lieu->wrongHours, $overtimeHours)));
 
         return true;
     }

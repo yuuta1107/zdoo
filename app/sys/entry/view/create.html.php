@@ -2,12 +2,12 @@
 /**
  * The create view of entry module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
  * @package     entry 
  * @version     $Id: create.html.php 4091 2016-09-30 07:16:50Z daitingting $
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 include '../../common/view/header.html.php';
 include '../../common/view/chosen.html.php';

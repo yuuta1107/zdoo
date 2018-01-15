@@ -2,12 +2,12 @@
 /**
  * The calendar view of common module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      chujilu <chujilu@cnezsoft.com>
  * @package     common 
  * @version     $Id: calendar.html.php 2508 2015-01-26 08:32:52Z chujilu $
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 if($extView = $this->getExtViewFile(__FILE__)){include $extView; return helper::cd();}
 $clientLang = $this->app->getClientLang();
