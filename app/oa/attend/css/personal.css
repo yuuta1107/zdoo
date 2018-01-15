@@ -1,6 +1,4 @@
 .panel .no-padding{padding: 0px;}
-.tree .active{font-weight: bold;}
-.tree > li {margin-right: 0;}
 
 td .attend-normal   {color: #38B03F;}
 td .attend-rest     {color: #3280fc;}
@@ -21,4 +19,4 @@ table .otherMonth {background: #f0f0f0; color: #9e9e9e}
 table tr:last-child th ,table tr:last-child td{border-bottom: none;}
 
 td > .dropdown{height: 100%; line-height: 100%;}
-a:hover {text-decoration: none;}
+a, a:hover {text-decoration: none !important;}

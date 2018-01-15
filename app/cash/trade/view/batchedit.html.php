@@ -17,26 +17,25 @@
 <form id='ajaxForm' method='post' action="<?php echo inlink('batchedit', 'step=save')?>">
   <div class='panel'>
     <div class='panel-heading'><strong><?php echo $lang->trade->batchEdit;?></strong></div>
-    <table class='table table-hover'>
+    <table class='table table-condensed table-hover'>
       <thead>
         <tr class='text-center'>
-          <th class='w-120px required'><?php echo $lang->trade->depositor;?></th>
           <?php $categoryRequired = $config->trade->settings->category ? 'required' : '';?>
-          <th class='w-120px <?php echo $categoryRequired;?>'><?php echo $lang->trade->category;?></th> 
+          <th class='w-150px <?php echo $categoryRequired;?>'><?php echo $lang->trade->category;?></th> 
           <th class='w-50px'><?php echo $lang->ditto;?></th> 
           <?php if($requireTrader):?>
-          <th class='w-160px required'><?php echo $lang->trade->trader;?></th> 
+          <th class='w-200px required'><?php echo $lang->trade->trader;?></th> 
           <?php else:?>
-          <th class='w-160px'><?php echo $lang->trade->trader;?></th> 
+          <th class='w-200px'><?php echo $lang->trade->trader;?></th> 
           <?php endif;?>
           <th class='w-120px required'><?php echo $lang->trade->money;?></th>
           <?php $deptRequired = $config->trade->settings->dept ? 'required' : '';?>
-          <th class='w-120px <?php echo $deptRequired;?>'><?php echo $lang->trade->dept;?></th>
+          <th class='w-150px <?php echo $deptRequired;?>'><?php echo $lang->trade->dept;?></th>
           <th class='w-50px'><?php echo $lang->ditto;?></th> 
-          <th class='w-160px required'><?php echo $lang->trade->handlers;?></th>
+          <th class='w-130px required'><?php echo $lang->trade->handlers;?></th>
           <?php $productRequired = $config->trade->settings->product ? 'required' : '';?>
-          <th class='w-120px <?php echo $productRequired;?>'><?php echo $lang->trade->product;?></th>
-          <th class='w-120px'><?php echo $lang->trade->date;?></th>
+          <th class='w-140px <?php echo $productRequired;?>'><?php echo $lang->trade->product;?></th>
+          <th class='w-100px'><?php echo $lang->trade->date;?></th>
           <th><?php echo $lang->trade->desc;?></th>
         </tr>
       </thead>
@@ -44,11 +43,6 @@
         <?php $i = 1;?>
         <?php foreach($trades as $id => $trade):?>
         <tr>
-          <td>
-            <?php $title = zget($depositors, $trade->depositor);?>
-            <?php echo html::select("depositor[{$id}]", $depositors, $trade->depositor, "class='form-control' id='depositor{$id}' title='{$title}'");?>
-            <?php echo html::hidden("type[{$id}]", $trade->type);?>
-          </td>
           <td colspan='2'>
             <?php $disabledVar  = 'disabled' . $i;?>
             <?php $$disabledVar = isset($disabledCategories[$trade->category]) ? 'disabled' : '';?>
