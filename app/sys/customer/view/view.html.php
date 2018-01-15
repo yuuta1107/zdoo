@@ -95,7 +95,15 @@
       <div class='panel-body'>
         <table class='table table-info'>
           <tr>
-            <th class='w-70px'><?php echo $lang->customer->depositor;?></th>
+            <th class='w-70px'><?php echo $lang->customer->source;?></th>
+            <td><?php echo zget($lang->customer->sourceList, $customer->source);?></td>
+          </tr>
+          <tr>
+            <th><?php echo $lang->customer->sourceNote;?></th>
+            <td><?php echo $customer->sourceNote;?></td>
+          </tr>
+          <tr>
+            <th><?php echo $lang->customer->depositor;?></th>
             <td><?php echo $customer->depositor;?></td>
           </tr>
           <tr>
