@@ -237,7 +237,7 @@ class lieuModel extends model
         $overtimes = $this->loadModel('overtime', 'oa')->getByIdList($this->post->overtime);
         foreach($overtimes as $overtime) $overtimeHours = bcadd($overtimeHours, $overtime->hours);
         
-        if(bccomp($lieuHours, $overtimeHours, 2) === 1) return array('result' => 'fail', 'message' => sprintf($this->lang->lieu->wrongHours, $lieuHours, $overtimeHours));
+        if(bccomp($lieuHours, $overtimeHours, 2) === 1) return array('result' => 'fail', 'message' => array('hours' => sprintf($this->lang->lieu->wrongHours, $overtimeHours)));
 
         return true;
     }

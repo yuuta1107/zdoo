@@ -51,7 +51,7 @@ $lang->lieu->sameMonth     = 'Lieu must be in the same month.';
 $lang->lieu->wrongEnd      = 'End time should be greater than begin time.';
 $lang->lieu->nodata        = 'Select no data.';
 $lang->lieu->reviewSuccess = 'Review success';
-$lang->lieu->wrongHours    = 'Lieu hours (%s) can not be greater than overtime hours (%s).';
+$lang->lieu->wrongHours    = 'Overtime <strong>%s</strong> hours. Lieu hours can not be greater than overtime hours.';
 $lang->lieu->nobccomp      = 'Please install the extension php-bcmath.';
 
 $lang->lieu->hoursTip = 'Hours';

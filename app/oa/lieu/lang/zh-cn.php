@@ -51,7 +51,7 @@ $lang->lieu->sameMonth     = '不支持跨月份调休';
 $lang->lieu->wrongEnd      = '结束时间应该大于开始时间';
 $lang->lieu->nodata        = '没有选择数据';
 $lang->lieu->reviewSuccess = '审核成功';
-$lang->lieu->wrongHours    = '调休时长 (%s) 不能超过加班时长 (%s)';
+$lang->lieu->wrongHours    = '加班时长 <strong>%s</strong> 小时，调休时长不能超过加班时长。';
 $lang->lieu->nobccomp      = '请安装bcmath扩展';
 
 $lang->lieu->hoursTip = '小时';
