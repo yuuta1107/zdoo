@@ -129,6 +129,17 @@ class reportModel extends model
                 }
             }
         }
+        
+        $conditionName = $module . 'QueryCondition';
+        $conditionSql  = $this->session->$conditionName;
+
+        $queryCondition = explode('WHERE', $conditionSql);
+        $queryCondition = isset($queryCondition[1]) ? $queryCondition[1] : '';
+        if($queryCondition)
+        {    
+            $queryCondition = explode('ORDER', $queryCondition);
+            $queryCondition = str_replace(array('t1.', 'o.'), '', $queryCondition[0]);
+        }
 
         if(strpos($groupBy, '_multi') !== false and isset($list))
         {
@@ -152,6 +163,7 @@ class reportModel extends model
                     {
                         $count = $this->dao->select("$func($field) as value")->from($tableName)
                             ->where('deleted')->eq('0')
+                            ->beginIF($queryCondition)->andWhere($queryCondition)->fi()
                             ->andWhere('product')->like("%,$id,%")
                             ->beginIf($currency != '')->andWhere('currency')->eq($currency)->fi()
                             ->fetch('value');
@@ -168,6 +180,7 @@ class reportModel extends model
                 {
                     $count = $this->dao->select("$func($field) as value")->from($tableName)
                         ->where('deleted')->eq('0')
+                        ->beginIF($queryCondition)->andWhere($queryCondition)->fi()
                         ->andWhere($groupBy)->like("%,$key,%")
                         ->beginIf($currency != '')->andWhere('currency')->eq($currency)->fi()
                         ->fetch('value');
@@ -183,6 +196,7 @@ class reportModel extends model
         {
             $datas = $this->dao->select("year(createdDate) as name, $func($field) as value")->from($tableName)
                 ->where('deleted')->eq('0')
+                ->beginIF($queryCondition)->andWhere($queryCondition)->fi()
                 ->beginIF($currency != '')->andWhere('currency')->eq($currency)->fi()
                 ->groupBy("year(createdDate)")
                 ->orderBy('name desc')
@@ -193,6 +207,7 @@ class reportModel extends model
         {
             $datas = $this->dao->select("DATE_FORMAT(createdDate, '%Y%m') as name, $func($field) as value")->from($tableName)
                 ->where('deleted')->eq('0')
+                ->beginIF($queryCondition)->andWhere($queryCondition)->fi()
                 ->beginIF($currency != '')->andWhere('currency')->eq($currency)->fi()
                 ->groupBy("DATE_FORMAT(createdDate, '%Y%m')")
                 ->orderBy('name desc')
@@ -217,6 +232,7 @@ class reportModel extends model
             }
             $datas = $this->dao->select("$groupBy as name, $func($field) as value")->from($tableName)
                 ->where('deleted')->eq('0')
+                ->beginIF($queryCondition)->andWhere($queryCondition)->fi()
                 ->beginIF($currency != '')->andWhere('currency')->eq($currency)->fi()
                 ->beginIF($relation)->andWhere('relation')->eq($relation)->fi()
                 ->beginIF($customerIdList)->andWhere('id')->in($customerIdList)->fi()

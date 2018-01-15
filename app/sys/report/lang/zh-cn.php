@@ -20,6 +20,7 @@ $lang->report->undefined  = '未设定';
 $lang->report->time       = '时间';
 $lang->report->select     = '请选择报表类型';
 $lang->report->create     = '生成报表';
+$lang->report->tip        = '注：统计报表的数据，来源于列表页面的检索结果，生成统计报表前请先在列表页面进行检索。';
 
 $lang->report->options = new stdclass();
 $lang->report->options->type   = 'pie';

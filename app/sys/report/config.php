@@ -100,4 +100,3 @@ $config->report->dailyreminder->todo     = true;
 $config->report->dailyreminder->order    = true;
 $config->report->dailyreminder->customer = true;
 $config->report->dailyreminder->task     = true;
-

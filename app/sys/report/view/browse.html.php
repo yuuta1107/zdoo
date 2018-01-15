@@ -26,7 +26,10 @@
   </div>
   <div class='col-md-9 col-lg-10'>
     <div class='panel panel-sm'>
-      <div class='panel-heading'><strong><?php echo $lang->report->common;?></strong></div>
+      <div class='panel-heading'>
+        <strong><?php echo $lang->report->common;?></strong>
+        <span class='pull-right text-info'><strong><?php echo $lang->report->tip;?></strong></span>
+      </div>
       <table class='table active-disabled'>
         <?php foreach($charts as $chartType => $chartOption):?>
         <tr class='text-top'>
