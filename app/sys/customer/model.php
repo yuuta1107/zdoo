@@ -643,15 +643,16 @@ class customerModel extends model
      */
     public function createModuleMenu($mode, $param, $orderBy, $recTotal, $recPerPage, $pageID)
     {
+        $menu = commonModel::createModuleMenu('customer');
+
         $customerIdList = $this->getCustomersSawByMe();
-        if(empty($customerIdList)) return array();
+        if(empty($customerIdList)) return $menu;
 
         $customers = $this->dao->select('area, industry')->from(TABLE_CUSTOMER)
             ->where('deleted')->eq(0)
             ->andWhere('id')->in($customerIdList)
             ->fetchAll();
 
-        $menu = commonModel::createModuleMenu('customer');
         $menu = str_replace('</ul></nav>', '', $menu);
         foreach(array('area', 'industry') as $field)
         {

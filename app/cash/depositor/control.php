@@ -25,6 +25,8 @@ class depositor extends control
     /**
      * Browse depositor.
      * 
+     * @param string $tag 
+     * @param string $status 
      * @param string $orderBy     the order by
      * @param int    $recTotal 
      * @param int    $recPerPage 
