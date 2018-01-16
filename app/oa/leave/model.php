@@ -336,7 +336,7 @@ class leaveModel extends model
         $leave->status   = 'back';
         $leave->backDate = $this->post->backDate;
 
-        $this->dao->update(TABLE_LEAVE)->set('backDate')->eq($this->post->backDate)->autoCheck()->where('id')->eq($id)->exec();
+        $this->dao->update(TABLE_LEAVE)->data($leave)->autoCheck()->where('id')->eq($id)->exec();
 
         if(dao::isError()) return false;
 
