@@ -68,8 +68,25 @@ class trade extends control
         $this->config->trade->search['params']['trader']['values']   = $this->loadModel('customer')->getPairs('', $emptyOption = true, 'id_desc', $limit = $this->config->customerLimit, $traders);
         $this->config->trade->search['params']['contract']['values'] = array('') + $this->loadModel('contract', 'crm')->getPairs();
 
+        $expenseCategories = $this->loadModel('tree')->getOptionMenu('out', 0, $removeRoot = true);
         $incomeCategories  = $this->loadModel('tree')->getOptionMenu('in', 0, $removeRoot = true);
-        $expenseCategories = $this->tree->getOptionMenu('out', 0, $removeRoot = true);
+
+        foreach($expenseCategories as $key => $expenseType)
+        {
+            $path = explode('/', trim($expenseType, '/'));
+            if(count($path) > 1) array_shift($path);
+
+            $expenseCategories[$key] = implode('/', $path);
+        }
+
+        foreach($incomeCategories as $key => $incomeType)
+        {
+            $path = explode('/', trim($incomeType, '/'));
+            if(count($path) > 1) array_shift($path);
+
+            $incomeCategories[$key] = implode('/', $path);
+        }
+
         $investCategories  = $this->trade->getSystemCategoryPairs('invest');
         $loanCategories    = $this->trade->getSystemCategoryPairs('interest');
         $searchCategories  = array('' => '') + $this->lang->trade->categoryList + $incomeCategories + $expenseCategories;
@@ -172,7 +189,7 @@ class trade extends control
         }
         else
         {
-            $this->view->categories = $this->tree->getOptionMenu('in', 0, $removeRoot = true) + $this->tree->getOptionMenu('out', 0, $removeRoot = true);
+            $this->view->categories = $expenseCategories + $incomeCategories;
         }
 
         $this->view->title         = $this->lang->trade->browse;
@@ -289,13 +306,32 @@ class trade extends control
         unset($this->lang->trade->typeList['loan']);
         unset($this->lang->trade->typeList['repay']);
 
+        $expenseTypes = $this->loadModel('tree')->getOptionMenu('out', 0, $removeRoot = true);
+        $incomeTypes  = $this->loadModel('tree')->getOptionMenu('in', 0, $removeRoot = true);
+
+        foreach($expenseTypes as $key => $expenseType)
+        {
+            $path = explode('/', trim($expenseType, '/'));
+            if(count($path) > 1) array_shift($path);
+
+            $expenseTypes[$key] = implode('/', $path);
+        }
+
+        foreach($incomeTypes as $key => $incomeType)
+        {
+            $path = explode('/', trim($incomeType, '/'));
+            if(count($path) > 1) array_shift($path);
+
+            $incomeTypes[$key] = implode('/', $path);
+        }
+
         $this->view->title         = $this->lang->trade->batchCreate;
         $this->view->depositors    = array('' => '') + $this->loadModel('depositor', 'cash')->getPairs();
         $this->view->users         = $this->loadModel('user')->getPairs('nodeleted,noforbidden,noclosed');
         $this->view->customerList  = $this->loadModel('customer')->getPairs('client', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit);
         $this->view->traderList    = $this->customer->getPairs('provider', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit);
-        $this->view->expenseTypes  = array('' => '') + $this->loadModel('tree')->getOptionMenu('out', 0, $removeRoot = true);
-        $this->view->incomeTypes   = array('' => '') + $this->loadModel('tree')->getOptionMenu('in', 0, $removeRoot = true);
+        $this->view->expenseTypes  = array('' => '') + $expenseTypes; 
+        $this->view->incomeTypes   = array('' => '') + $incomeTypes; 
         $this->view->deptList      = array('') + $this->loadModel('tree')->getOptionMenu('dept', 0);
         $this->view->requireTrader = $this->config->trade->settings->trader;
         $this->view->productList   = array(0 => '') + $this->loadModel('product')->getPairs();
@@ -664,14 +700,15 @@ class trade extends control
      * Batch edit trades.
      * 
      * @param  string $step  form|save
+     * @param  string $mode
      * @access public
      * @return void
      */
-    public function batchEdit($step = 'form')
+    public function batchEdit($step = 'form', $mode)
     {
         if($step == 'save')
         {
-            $result =  $this->trade->batchUpdate();
+            $result =  $this->trade->batchUpdate($mode);
             $this->send($result);
         }
 
@@ -712,6 +749,7 @@ class trade extends control
         $this->view->productList        = array(0 => '') + $this->loadModel('product')->getPairs();
         $this->view->requireTrader      = $this->config->trade->settings->trader;
         $this->view->disabledCategories = $this->dao->select('*')->from(TABLE_CATEGORY)->where('major')->in('5,6,7,8')->fetchAll('id');
+        $this->view->mode               = $mode;
 
         $this->display();
     }

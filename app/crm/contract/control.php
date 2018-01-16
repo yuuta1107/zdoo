@@ -463,6 +463,25 @@ class contract extends control
         $this->session->set('contactList',  $uri);
         if(!$this->session->orderList) $this->session->set('orderList', $uri);
 
+        $expenseTypes = $this->loadModel('tree')->getOptionMenu('out', 0, $removeRoot = true);
+        $incomeTypes  = $this->loadModel('tree')->getOptionMenu('in', 0, $removeRoot = true);
+
+        foreach($expenseTypes as $key => $expenseType)
+        {
+            $path = explode('/', trim($expenseType, '/'));
+            if(count($path) > 1) array_shift($path);
+
+            $expenseTypes[$key] = implode('/', $path);
+        }
+
+        foreach($incomeTypes as $key => $incomeType)
+        {
+            $path = explode('/', trim($incomeType, '/'));
+            if(count($path) > 1) array_shift($path);
+
+            $incomeTypes[$key] = implode('/', $path);
+        }
+
         $this->view->title         = $this->lang->contract->view;
         $this->view->orders        = $this->loadModel('order', 'crm')->getByIdList($contract->order);
         $this->view->customers     = $this->loadModel('customer')->getPairs('client');
@@ -476,7 +495,7 @@ class contract extends control
         $this->view->currencySign  = $this->loadModel('common', 'sys')->getCurrencySign();
         $this->view->depositorList = $this->loadModel('depositor', 'cash')->getPairs();
         $this->view->deptList      = $this->loadModel('tree')->getPairs(0, 'dept');
-        $this->view->categories    = $this->loadModel('tree')->getOptionMenu('in', 0, $removeRoot = true) + $this->tree->getOptionMenu('out', 0, $removeRoot = true);
+        $this->view->categories    = $expenseTypes + $incomeTypes; 
         $this->view->preAndNext    = $this->common->getPreAndNextObject('contract', $contractID);
 
         $this->display();

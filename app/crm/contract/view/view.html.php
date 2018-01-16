@@ -28,7 +28,7 @@
     </div>
     <?php if(!empty($contract->tradeList)):?>
     <div class='panel'>
-      <table class='table table-hover table-striped'>
+      <table class='table table-condensed table-hover table-striped table-fixed'>
         <thead>
           <tr class='text-center'>
             <th class='w-80px'><?php echo $lang->trade->date;?></th>
@@ -40,7 +40,7 @@
             <th class='w-80px'><?php echo $lang->trade->handlers;?></th>
             <th class='w-100px'><?php echo $lang->trade->product;?></th>
             <th class='w-100px'><?php echo $lang->trade->category;?></th>
-            <th><?php echo $lang->trade->desc;?></th>
+            <th class='desc'><?php echo $lang->trade->desc;?></th>
           </tr>
         </thead>
         <?php foreach($contract->tradeList as $trade):?>
@@ -55,14 +55,14 @@
           $category  = zget($categories, $trade->category, '');
           ?>
           <td><?php echo formatTime($trade->date, DT_DATE1);?></td>
-          <td class='text-left' title='<?php echo $depositor;?>'><?php echo $depositor;?></td>
+          <td class='text-left text-ellipsis' title='<?php echo $depositor;?>'><?php echo $depositor;?></td>
           <td><?php echo $lang->trade->typeList[$trade->type];?></td>
-          <td title='<?php echo $customer;?>'><?php echo $customer;?></td>
+          <td class='text-left text-ellipsis' title='<?php echo $customer;?>'><?php echo $customer;?></td>
           <td class='text-right'><?php echo zget($currencySign, $trade->currency) . formatMoney($trade->money);?></td>
-          <td title='<?php echo $dept;?>'><?php echo $dept;?></td>
-          <td title='<?php echo $handlers;?>'><?php echo $handlers;?></td>
-          <td title='<?php echo $product;?>'><?php echo $product;?></td>
-          <td title='<?php echo $category;?>'><?php echo $category;?></td>
+          <td class='text-ellipsis' title='<?php echo $dept;?>'><?php echo $dept;?></td>
+          <td class='text-left text-ellipsis' title='<?php echo $handlers;?>'><?php echo $handlers;?></td>
+          <td class='text-left text-ellipsis' title='<?php echo $product;?>'><?php echo $product;?></td>
+          <td class='text-left text-ellipsis' title='<?php echo $category;?>'><?php echo $category;?></td>
           <td class='text-left'><div title="<?php echo $trade->desc;?>" class='text-ellipsis'><?php echo $trade->desc;?><div></td>
         </tr>
         <?php endforeach;?>

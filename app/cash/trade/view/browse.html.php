@@ -57,7 +57,7 @@
 <div class='panel'>
   <?php $batchEdit = ($mode == 'in' or $mode == 'out') && commonModel::hasPriv('trade', 'batchEdit');?>
   <?php if($batchEdit):?>
-  <form method='post' action='<?php echo inlink('batchEdit', 'step=form')?>'>
+  <form method='post' action='<?php echo inlink('batchEdit', "step=form&mode=$mode")?>'>
   <?php endif;?>
     <?php $class = ($mode != 'invest' && $mode != 'loan') ? 'table-bordered' : '';?>
     <table class='table table-hover table-striped tablesorter table-data table-fixed <?php echo $class;?>' id='tradeList'>
@@ -106,7 +106,9 @@
             $depositor = zget($depositorList, $trade->depositor, '');
             $trader    = zget($customerList, $trade->trader, '');
             $dept      = zget($deptList, $trade->dept, '');
+            $product   = zget($productList, $trade->product, '');
             $category  = zget($categories, $trade->category, '');
+            $product   = $product ? $product . $lang->slash . $category : $category;
             $handlers  = '';
             foreach(explode(',', $trade->handlers) as $handler) $handlers .= zget($users, $handler) . ' ';
           ?>
@@ -117,7 +119,7 @@
           <td title='<?php echo $dept;?>'><?php echo $dept;?></td>
           <td class='text-left' title='<?php echo $handlers;?>'><?php echo $handlers;?></td>
           <?php if(strpos(',in,all,', ",$mode,") !== false):?>
-          <td class='text-left'><?php echo isset($productList[$trade->product]) ? $productList[$trade->product] . $lang->slash . zget($categories, $trade->category, ' ') : zget($categories, $trade->category, ' ');?></td>
+          <td class='text-left' title='<?php echo $product;?>'><?php echo $product;?></td>
           <?php else:?>
           <td class='text-nowrap text-ellipsis text-left' title='<?php echo $category;?>'><?php echo $category;?></td>
           <?php endif;?>

@@ -658,10 +658,11 @@ class tradeModel extends model
     /**
      * Batch update trades.
      * 
+     * @param  string $mode
      * @access public
      * @return void
      */
-    public function batchUpdate()
+    public function batchUpdate($mode)
     {
         $trades = array();
 
@@ -708,8 +709,8 @@ class tradeModel extends model
         {
             $this->dao->update(TABLE_TRADE)->data($trade, $skip = 'createTrader,createCustomer')->where('id')->eq($tradeID)->autoCheck()->exec();
         }
-        if(!dao::isError()) return array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => inlink('browse'));
-        return array('result' => 'fail', 'message' => dao::getError());
+        if(dao::isError()) return array('result' => 'fail', 'message' => dao::getError());
+        return array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => inlink('browse', "mode=$mode"));
     }
 
     /**

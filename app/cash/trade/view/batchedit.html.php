@@ -13,8 +13,8 @@
 <?php include $app->getModuleRoot() . 'common/view/header.html.php';?>
 <?php include '../../../sys/common/view/datepicker.html.php';?>
 <?php include '../../../sys/common/view/chosen.html.php';?>
-<?php js::set('modeType', 'all');?>
-<form id='ajaxForm' method='post' action="<?php echo inlink('batchedit', 'step=save')?>">
+<?php js::set('modeType', $mode);?>
+<form id='ajaxForm' method='post' action="<?php echo inlink('batchedit', "step=save&mode=$mode");?>">
   <div class='panel'>
     <div class='panel-heading'><strong><?php echo $lang->trade->batchEdit;?></strong></div>
     <table class='table table-condensed table-hover'>
