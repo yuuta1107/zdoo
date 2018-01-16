@@ -719,11 +719,11 @@ class treeModel extends model
     /**
      * Manage children of one category.
      * 
-     * @param string $type 
-     * @param string $children 
-     * @param int    $root 
+     * @param  string $type 
+     * @param  string $children 
+     * @param  int    $root 
      * @access public
-     * @return void
+     * @return bool 
      */
     public function manageChildren($type, $parent, $children, $root = 0)
     {
