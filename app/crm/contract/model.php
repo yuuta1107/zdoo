@@ -253,6 +253,9 @@ class contractModel extends model
         if(dao::isError()) return false;
 
         $contractID = $this->dao->lastInsertID();
+
+        $this->file->updateObjectID($this->post->uid, $contractID, 'contract');
+
         foreach($contract->order as $key => $orderID)
         {
             if($orderID)
@@ -330,6 +333,8 @@ class contractModel extends model
             ->checkIF($contract->end != '0000-00-00', 'end', 'ge', $contract->begin)
             ->exec();
         
+        $this->file->updateObjectID($this->post->uid, $contractID, 'contract');
+
         if(!dao::isError())
         {
             if($data->order)

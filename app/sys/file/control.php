@@ -78,7 +78,7 @@ class file extends control
             $this->dao->insert(TABLE_FILE)->data($file, false)->exec();
 
             $fileID = $this->dao->lastInsertID();
-            $url    = $this->createLink('file', 'read', "fileID=$fileID", $file['extension']);
+            $url    = $this->createLink('file', 'download', "fileID=$fileID");
             if($uid) $_SESSION['album'][$uid][] = $fileID;
             die(json_encode(array('error' => 0, 'url' => $url)));
         }

@@ -30,7 +30,7 @@
           <h4><span class='label label-primary'><?php echo $categories[$announce->category];?></span> <?php echo html::a(inlink('view', "announceID={$announce->id}"), $announce->title, "class='nounderline' data-toggle='modal'");?></h4>
         </div>
         <div class='item-content'>
-          <div class='text'><?php echo $announce->content;?></div>
+          <div class='text'><?php echo strip_tags($announce->content);?></div>
           <div class='pull-left'>
             <?php echo html::a(inlink('viewReaders', "announceID={$announce->id}"), sprintf($lang->article->lblReaders, count($announce->readers)), "class='nounderline' data-toggle='modal'");?>
           </div>

@@ -17,8 +17,8 @@ $config->doc->require->create    = 'title';
 $config->doc->require->edit      = 'title';
 
 $config->doc->editor = new stdclass();
-$config->doc->editor->create = array('id' => 'content', 'tools' => 'full');
-$config->doc->editor->edit   = array('id' => 'content,comment', 'tools' => 'full');
+$config->doc->editor->create = array('id' => 'content', 'tools' => 'simple');
+$config->doc->editor->edit   = array('id' => 'content,comment', 'tools' => 'simple');
 
 $config->doc->markdown = new stdclass();
 $config->doc->markdown->create = array('id' => 'contentMarkdown', 'tools' => 'withchange');
