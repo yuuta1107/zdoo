@@ -1036,6 +1036,7 @@ EOT;
             $signOut = (!empty($attend->manualOut) and $attend->manualOut != '00:00:00') ? $attend->manualOut : $attend->signOut;
 
             $this->dao->update(TABLE_ATTEND)
+                ->set('status')->eq('normal')
                 ->set('reviewStatus')->eq('pass')
                 ->set('signIn')->eq($signIn)
                 ->set('signOut')->eq($signOut)
