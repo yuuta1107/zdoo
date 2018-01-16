@@ -45,4 +45,4 @@ $lang->product->statusList['offline']    = '下线';
 $lang->product->lineList[''] = '';
 
 $lang->product->placeholder = new stdclass();
-$lang->product->placeholder->code = '产品代号，必须为英文、数字或下划线的组合';
+$lang->product->placeholder->code = '产品代号必须为英文或数字的组合';

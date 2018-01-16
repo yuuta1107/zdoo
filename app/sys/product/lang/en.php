@@ -45,4 +45,4 @@ $lang->product->statusList['offline']    = 'Offline';
 $lang->product->lineList[''] = '';
 
 $lang->product->placeholder = new stdclass();
-$lang->product->placeholder->code = 'Product alias should be letters, digits or underline.';
+$lang->product->placeholder->code = 'Product alias should be letters or digits.';

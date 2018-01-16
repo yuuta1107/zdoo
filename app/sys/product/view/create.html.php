@@ -19,7 +19,7 @@
     </tr>
     <tr>
       <th><?php echo $lang->product->code;?></th>
-      <td><?php echo html::input('code', '', "class='form-control' placeholder='{$lang->product->placeholder->code}'");?></td>
+      <td><?php echo html::input('code', '', "class='form-control'");?></td>
     </tr>
     <tr>
       <th><?php echo $lang->product->line;?></th>
