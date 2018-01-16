@@ -36,7 +36,7 @@ class sales extends control
         $groups = $this->sales->getGroupList();
         $users  = $this->user->getPairs('nodeleted, noempty, noclosed, noforbidden');
 
-        if($_POST)
+        if($this->server->request_method == 'POST')
         {
             $this->sales->updatePriv();
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
