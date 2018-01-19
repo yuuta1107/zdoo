@@ -25,7 +25,8 @@ class orderModel extends model
 
         $order = $this->dao->select('o.*, c.name as customerName')->from(TABLE_ORDER)->alias('o')
             ->leftJoin(TABLE_CUSTOMER)->alias('c')->on("o.customer=c.id")
-            ->where('o.customer')->in($customerIdList)
+            ->where('o.id')->eq($id)
+            ->andWhere('o.customer')->in($customerIdList)
             ->fetch();
         if(!$order) return false;
 
