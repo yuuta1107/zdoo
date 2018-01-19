@@ -36,6 +36,17 @@ $config->dashboard->modules = 'my,todo';
 $config->ipWhiteList = '*';
 $config->allowedTags = '<p><span><h1><h2><h3><h4><h5><em><u><strong><br><ol><ul><li><img><a><b><font><hr><pre><div><table><td><th><tr><tbody><embed><style>';
 
+/* Excel items. */
+$config->excel = new stdclass();
+$config->excel->width = new stdclass();
+$config->excel->width->title   = 30;
+$config->excel->width->content = 100;
+
+$config->excel->titleFields  = array();
+$config->excel->centerFields = array();
+$config->excel->dateFields   = array();
+$config->excel->freeze       = new stdclass();
+
 /* Tables for basic system. */
 if(!defined('TABLE_CONFIG'))    define('TABLE_CONFIG',    '`' . $config->db->prefix . 'sys_config`');
 if(!defined('TABLE_PACKAGE'))   define('TABLE_PACKAGE',   '`' . $config->db->prefix . 'sys_package`');
