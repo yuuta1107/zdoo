@@ -2,12 +2,12 @@
 /**
  * The zh-cn file of crm contract module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Yidong Wang <yidong@cnezsoft.com>
  * @package     contract 
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 if(!isset($lang->contract)) $lang->contract = new stdclass();
 $lang->contract->common = '合同';
@@ -76,6 +76,7 @@ $lang->contract->deleteReturn     = '删除回款';
 $lang->contract->deleteDelivery   = '删除交付';
 $lang->contract->export           = '导出';
 $lang->contract->totalReturn      = '回款合计';
+$lang->contract->tradeList        = '收支记录';
 
 $lang->contract->deliveryList[]        = '';
 $lang->contract->deliveryList['wait']  = '等待交付';

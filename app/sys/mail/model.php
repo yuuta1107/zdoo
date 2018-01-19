@@ -2,12 +2,12 @@
 /**
  * The model file of mail module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
  * @package     mail 
  * @version     $Id: model.php 4145 2016-10-14 05:31:16Z liugang $
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 ?>
 <?php
@@ -246,7 +246,7 @@ class mailModel extends model
      * @param  string  $ccList 
      * @param  bool    $includeMe 
      * @param  string  $attachmentName
-     * @param  string  $attachmentFile
+     * @param  mixed   $attachmentFile
      * @access public
      * @return void
      */
@@ -298,7 +298,20 @@ class mailModel extends model
             $this->setTO($toList, $emails);
             $this->setCC($ccList, $emails);
             $this->setBody($this->convertCharset($body));
-            if($attachmentFile) $this->mta->AddAttachment($attachmentFile, $attachmentName);
+            if($attachmentFile) 
+            {
+                if(is_array($attachmentFile))
+                {
+                    foreach($attachmentFile as $file) 
+                    {
+                        if(isset($file->realpath)) $this->mta->AddAttachment($file->realpath, $file->title);
+                    }
+                }
+                else
+                {
+                    $this->mta->AddAttachment($attachmentFile, $attachmentName);
+                }
+            }
             $this->setErrorLang();
             $this->mta->send();
         }

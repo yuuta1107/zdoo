@@ -2,12 +2,12 @@
 /**
  * The control file of leave of Ranzhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      chujilu <chujilu@cnezsoft.com>
  * @package     leave
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 class leave extends control
 {
@@ -648,7 +648,7 @@ class leave extends control
         {
             $this->loadModel('setting')->setItem('system.oa.leave..reviewedBy', $this->post->reviewedBy);
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
-            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess));
+            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
         }
 
         if($module)

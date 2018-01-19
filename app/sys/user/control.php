@@ -2,12 +2,12 @@
 /**
  * The control file of user module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
  * @package     user
  * @version     $Id: control.php 4219 2016-10-25 05:45:16Z daitingting $
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 class user extends control
 {
@@ -258,7 +258,7 @@ class user extends control
     {                          
         if(!empty($_POST))     
         {   
-            if(in_array(trim($this->post->account), $this->config->user->retainAccount)) $this->send(array('result' => 'fail', 'message' => array('account' => sprintf($this->lang->user->retainAccount, trim($this->post->account)))));
+            if(in_array(strtolower(trim($this->post->account)), $this->config->user->retainAccount)) $this->send(array('result' => 'fail', 'message' => array('account' => sprintf($this->lang->user->retainAccount, trim($this->post->account)))));
 
             $this->user->create();          
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError())); 
@@ -282,7 +282,11 @@ class user extends control
     {
         if($this->app->user->account == 'guest') $this->locate(inlink('login'));
         if(!$account) $account = $this->app->user->account;
-        if(!commonModel::hasPriv('user', 'edit')) die(js::locate($this->createLink('user', 'deny', "module=user&method=edit")));
+        if(!commonModel::hasPriv('user', 'edit'))
+        {
+            $account = $this->app->user->account;
+            if(!commonModel::hasPriv('user', 'editself')) die(js::locate($this->createLink('user', 'deny', "module=user&method=edit")));
+        }
 
         if(!empty($_POST))
         {

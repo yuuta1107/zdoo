@@ -2,12 +2,12 @@
 /**
  * The product module zh-tw file of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青島易軟天創網絡科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青島易軟天創網絡科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Tingting Dai <daitingting@xirangit.com>
  * @package     product
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 if(!isset($lang->product)) $lang->product = new stdclass();
 $lang->product->common      = '產品維護';
@@ -45,4 +45,4 @@ $lang->product->statusList['offline']    = '下線';
 $lang->product->lineList[''] = '';
 
 $lang->product->placeholder = new stdclass();
-$lang->product->placeholder->code = '產品代號，必須為英文、數字或下劃線的組合';
+$lang->product->placeholder->code = '產品代號必須為英文或數字的組合';

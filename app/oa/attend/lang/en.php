@@ -14,7 +14,9 @@ $lang->attend->makeuped     = 'Alread makeup times';
 $lang->attend->lieu         = 'Lieu';
 $lang->attend->lieud        = 'Already lieu';
 $lang->attend->trip         = 'Trip';
+$lang->attend->triped       = 'Already trip';
 $lang->attend->egress       = 'Egress';
+$lang->attend->egressed     = 'Already egress';
 $lang->attend->overtime     = 'Overtime';
 $lang->attend->overtimed    = 'Already overtime';
 $lang->attend->review       = 'Review attendance';
@@ -162,3 +164,4 @@ $lang->attend->m = 'minutes';
 $lang->attend->s = 'seconds';
 
 $lang->attend->signInClientError = 'Signin failed. It has been set can only sign in by %s.';
+$lang->attend->waitReviews       = 'There are <strong>%s</strong> records waitting to be reviewed.';

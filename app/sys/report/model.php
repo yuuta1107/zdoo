@@ -2,12 +2,12 @@
 /**
  * The model file of report module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
  * @package     report
  * @version     $Id: model.php 4726 2013-05-03 05:51:27Z chencongzhi520@gmail.com $
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 ?>
 <?php
@@ -125,9 +125,20 @@ class reportModel extends model
                 }
                 else
                 {
-                    $list = $this->lang->{$module}->{$listName};
+                    $list = isset($this->lang->{$module}->{$listName}) ? $this->lang->{$module}->{$listName} : '';
                 }
             }
+        }
+        
+        $conditionName = $module . 'QueryCondition';
+        $conditionSql  = $this->session->$conditionName;
+
+        $queryCondition = explode('WHERE', $conditionSql);
+        $queryCondition = isset($queryCondition[1]) ? $queryCondition[1] : '';
+        if($queryCondition)
+        {    
+            $queryCondition = explode('ORDER', $queryCondition);
+            $queryCondition = str_replace(array('t1.', 'o.'), '', $queryCondition[0]);
         }
 
         if(strpos($groupBy, '_multi') !== false and isset($list))
@@ -152,6 +163,7 @@ class reportModel extends model
                     {
                         $count = $this->dao->select("$func($field) as value")->from($tableName)
                             ->where('deleted')->eq('0')
+                            ->beginIF($queryCondition)->andWhere($queryCondition)->fi()
                             ->andWhere('product')->like("%,$id,%")
                             ->beginIf($currency != '')->andWhere('currency')->eq($currency)->fi()
                             ->fetch('value');
@@ -168,6 +180,7 @@ class reportModel extends model
                 {
                     $count = $this->dao->select("$func($field) as value")->from($tableName)
                         ->where('deleted')->eq('0')
+                        ->beginIF($queryCondition)->andWhere($queryCondition)->fi()
                         ->andWhere($groupBy)->like("%,$key,%")
                         ->beginIf($currency != '')->andWhere('currency')->eq($currency)->fi()
                         ->fetch('value');
@@ -178,6 +191,28 @@ class reportModel extends model
                     if($count != 0) $datas[$key] = $data;
                 }
             }
+        }
+        elseif($groupBy == 'year')
+        {
+            $datas = $this->dao->select("year(createdDate) as name, $func($field) as value")->from($tableName)
+                ->where('deleted')->eq('0')
+                ->beginIF($queryCondition)->andWhere($queryCondition)->fi()
+                ->beginIF($currency != '')->andWhere('currency')->eq($currency)->fi()
+                ->groupBy("year(createdDate)")
+                ->orderBy('name desc')
+                ->limit(12)
+                ->fetchAll('name');
+        }
+        elseif($groupBy == 'month')
+        {
+            $datas = $this->dao->select("DATE_FORMAT(createdDate, '%Y%m') as name, $func($field) as value")->from($tableName)
+                ->where('deleted')->eq('0')
+                ->beginIF($queryCondition)->andWhere($queryCondition)->fi()
+                ->beginIF($currency != '')->andWhere('currency')->eq($currency)->fi()
+                ->groupBy("DATE_FORMAT(createdDate, '%Y%m')")
+                ->orderBy('name desc')
+                ->limit(12)
+                ->fetchAll('name');
         }
         else
         {
@@ -197,6 +232,7 @@ class reportModel extends model
             }
             $datas = $this->dao->select("$groupBy as name, $func($field) as value")->from($tableName)
                 ->where('deleted')->eq('0')
+                ->beginIF($queryCondition)->andWhere($queryCondition)->fi()
                 ->beginIF($currency != '')->andWhere('currency')->eq($currency)->fi()
                 ->beginIF($relation)->andWhere('relation')->eq($relation)->fi()
                 ->beginIF($customerIdList)->andWhere('id')->in($customerIdList)->fi()
@@ -207,15 +243,19 @@ class reportModel extends model
         }
 
         /* Add names. */
-        if(isset($this->config->report->{$module}->listName[$chart]))
+        if(isset($this->config->report->{$module}->listName[$chart]) and strpos('year, month', $groupBy) === false)
         {
             foreach($datas as $name => $data) $data->name = isset($list[$name]) ? $list[$name] : $this->lang->report->undefined;
         }
 
-        $temp = array();
-        foreach($datas as $key => $data) $temp[$key] = $data->value;
-        arsort($temp);
-        foreach($datas as $key => $data) $temp[$key] = $data;
+        $temp = $datas;
+        if(strpos('year, month', $groupBy) === false)
+        {
+            $temp = array();
+            foreach($datas as $key => $data) $temp[$key] = $data->value;
+            arsort($temp);
+            foreach($datas as $key => $data) $temp[$key] = $data;
+        }
 
         return $temp;
     }

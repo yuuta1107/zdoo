@@ -2,12 +2,12 @@
 /**
  * The browse view file of lieu module of Ranzhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Tingting Dai <daitingting@xirangit.com>
  * @package     lieu
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 ?>
 <?php include '../../common/view/header.html.php';?>
@@ -56,10 +56,7 @@
             <th class='w-130px'><?php commonModel::printOrderLink('end', $orderBy, $vars, $lang->lieu->end);?></th>
             <th class='w-60px'><?php commonModel::printOrderLink('hours', $orderBy, $vars, $lang->lieu->hours);?></th>
             <th><?php echo $lang->lieu->desc;?></th>
-            <th class='w-70px'><?php commonModel::printOrderLink('status', $orderBy, $vars, $lang->lieu->status);?></th>
-            <?php if($type != 'browseReview'):?>
-            <th class='w-80px'><?php commonModel::printOrderLink('reviewedBy', $orderBy, $vars, $lang->lieu->reviewedBy);?></th>
-            <?php endif;?>
+            <th class='w-100px'><?php commonModel::printOrderLink('status', $orderBy, $vars, $lang->lieu->status);?></th>
             <?php if($type == 'personal'):?>
             <th class='w-130px'><?php echo $lang->actions;?></th>
             <?php else:?>
@@ -82,10 +79,7 @@
           <td><?php echo formatTime($lieu->end . ' ' . $lieu->finish, DT_DATETIME2);?></td>
           <td><?php echo $lieu->hours;?></td>
           <td title='<?php echo $lieu->desc;?>'><?php echo $lieu->desc;?></td>
-          <td class='lieu-<?php echo $lieu->status?>'><?php echo zget($this->lang->lieu->statusList, $lieu->status);?></td>
-          <?php if($type != 'browseReview'):?>
-          <td><?php echo zget($users, $lieu->reviewedBy);?></td>
-          <?php endif;?>
+          <td class='lieu-<?php echo $lieu->status?>'><?php echo $lieu->statusLabel;?></td>
           <td class='actionTD text-left'>
             <?php
             commonModel::printLink('oa.lieu', 'view', "id={$lieu->id}&type=$type", $lang->lieu->view, "data-toggle='modal'");
@@ -113,7 +107,7 @@
             }
             else
             {
-                if($lieu->status == 'wait')
+                if(strpos(',wait,doing,', ",$lieu->status,") !== false)
                 {
                     commonModel::printLink('oa.lieu', 'review', "id={$lieu->id}&status=pass",   $lang->lieu->statusList['pass'],   "class='reviewPass'");
                     commonModel::printLink('oa.lieu', 'review', "id={$lieu->id}&status=reject", $lang->lieu->statusList['reject'], "data-toggle='modal'");
@@ -135,6 +129,11 @@
           <?php echo html::selectButton();?>
           <?php echo html::a('javascript:;', $lang->lieu->batchPass, "class='btn btn-primary batchPass'");?> 
         </div>
+      </div>
+      <?php endif;?>
+      <?php if(!$lieuList):?>
+      <div class='table-footer'>
+        <div class='pager' style='float: right; clear: none'><?php echo $lang->pager->noRecord;?></div>
       </div>
       <?php endif;?>
     </div>

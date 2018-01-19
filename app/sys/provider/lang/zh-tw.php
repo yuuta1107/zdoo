@@ -2,12 +2,12 @@
 /**
  * The provider module zh-tw file of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青島易軟天創網絡科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青島易軟天創網絡科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Tingting Dai <daitingting@xirangit.com>
  * @package     provider
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 $lang->provider->browse      = '瀏覽供應商';
 $lang->provider->create      = '添加供應商';

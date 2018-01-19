@@ -2,12 +2,12 @@
 /**
  * The control file of sales of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      chujilu <chujilu@cnezsoft.com>
  * @package     sales
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 class sales extends control
 {
@@ -36,7 +36,7 @@ class sales extends control
         $groups = $this->sales->getGroupList();
         $users  = $this->user->getPairs('nodeleted, noempty, noclosed, noforbidden');
 
-        if($_POST)
+        if($this->server->request_method == 'POST')
         {
             $this->sales->updatePriv();
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));

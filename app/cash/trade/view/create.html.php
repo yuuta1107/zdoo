@@ -2,12 +2,12 @@
 /**
  * The create view file of trade module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Xiying Guan <guanxiying@xirangit.com>
  * @package     trade 
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 ?>
 <?php include '../../common/view/header.html.php';?>
@@ -58,7 +58,8 @@
             <select class='form-control chosen' id='order' name='order'>
               <option value=''></option>
               <?php foreach($orderList as $id => $order):?>
-              <option value="<?php echo $id?>" data-customer="<?php echo $order->customer?>" data-amount="<?php echo $order->real;?>"><?php echo $order->name;?></option>
+              <?php $optionPinyin = zget($pinyinOrders, $order->name, '');?>
+              <option value="<?php echo $id?>" data-customer="<?php echo $order->customer?>" data-amount="<?php echo $order->real;?>" data-keys="<?php echo $optionPinyin;?>"><?php echo $order->name;?></option>
               <?php endforeach;?>
             </select>
           </td>
@@ -69,7 +70,8 @@
             <select class='form-control chosen' id='contract' name='contract'>
               <option value=''></option>
               <?php foreach($contractList as $id => $contract):?>
-              <option value="<?php echo $id?>" data-customer="<?php echo $contract->customer?>" data-amount="<?php echo $contract->amount;?>"><?php echo $contract->name;?></option>
+              <?php $optionPinyin = zget($pinyinContracts, $contract->name, '');?>
+              <option value="<?php echo $id?>" data-customer="<?php echo $contract->customer?>" data-amount="<?php echo $contract->amount;?>" data-keys="<?php echo $optionPinyin;?>"><?php echo $contract->name;?></option>
               <?php endforeach;?>
             </select>
           </td>

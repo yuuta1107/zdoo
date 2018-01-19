@@ -2,12 +2,12 @@
 /**
  * The model file of action module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Yidong Wang <yidong@cnezsoft.com>
  * @package     action
  * @version     $Id: model.php 5028 2013-07-06 02:59:41Z wyd621@gmail.com $
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 ?>
 <?php
@@ -449,6 +449,10 @@ class actionModel extends model
             $action->appName = '';
             if(isset($this->config->action->objectAppNames[$objectType])) $action->appName = $this->config->action->objectAppNames[$objectType];
 
+            /* Open object by modal or not. */
+            $action->toggle = '';
+            if(strpos($this->config->action->objectModalLinks, ",{$objectType},") !== false) $action->toggle = "data-toggle = 'modal'"; 
+
             /* Other actions, create a link. */
             if(strpos($action->objectLabel, '|') !== false)
             {
@@ -791,7 +795,7 @@ class actionModel extends model
         }
 
         /* Create past order notice. */
-        $orders = $this->loadModel('order', 'crm')->getList('past');
+        $orders = $this->loadModel('order', 'crm')->getList('past', '', '', $needQueryCondition = false);
         foreach($orders as $order)
         {
             /* Skip not assigned to me, read and showed notice. */

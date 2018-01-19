@@ -2,12 +2,12 @@
 /**
  * The model file of search module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
  * @package     search
  * @version     $Id: model.php 5082 2013-07-10 01:14:45Z wyd621@gmail.com $
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 ?>
 <?php
@@ -91,6 +91,7 @@ class searchModel extends model
             $value    = $this->post->$valueName;
             $operator = $this->post->$operatorName;
             if(!isset($this->lang->search->operators[$operator])) $operator = '=';
+            if($operator == '=' and $this->post->$fieldName == 'createdDate') $operator = 'include';
 
             if($this->post->$fieldName == 'contract.productLine')
             {

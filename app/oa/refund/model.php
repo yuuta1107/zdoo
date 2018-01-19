@@ -2,12 +2,12 @@
 /**
  * The model file of refund module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Tingting Dai <daitingting@xirangit.com>
  * @package     refund
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 class refundModel extends model
 {
@@ -20,10 +20,20 @@ class refundModel extends model
      */
     public function getByID($ID)
     {
-        $refund  = $this->dao->select('*')->from(TABLE_REFUND)->where('id')->eq($ID)->fetch();
-        $details = $this->dao->select('*')->from(TABLE_REFUND)->where('parent')->eq($ID)->fetchAll('id');
-        $refund->detail = $details;
-        $refund->files  = $this->loadModel('file')->getByObject('refund', $ID);
+        $refund = $this->dao->select('*')->from(TABLE_REFUND)->where('id')->eq($ID)->fetch();
+        if($refund)
+        {
+            $details = $this->dao->select('*')->from(TABLE_REFUND)->where('parent')->eq($ID)->fetchAll('id');
+            $refund->detail = $details;
+            $refund->files  = $this->loadModel('file')->getByObject('refund', $ID);
+
+            $objectType = '';
+            if($refund->customer) $objectType  = 'customer';
+            if($refund->order)    $objectType  = 'order';
+            if($refund->contract) $objectType  = 'contract';
+            if($refund->project)  $objectType .= ',project';
+            $refund->objectType = explode(',', trim($objectType, ','));
+        }
         return $refund;
     }
 
@@ -45,7 +55,7 @@ class refundModel extends model
         if($this->session->refundQuery == false) $this->session->set('refundQuery', ' 1 = 1');
         $refundQuery = $this->loadModel('search', 'sys')->replaceDynamic($this->session->refundQuery);
 
-        $users = $this->loadModel('user')->getPairs('noclosed,noempty', $deptID);
+        $users   = $this->loadModel('user')->getPairs('noclosed,noempty', $deptID);
         $refunds = $this->dao->select('*')->from(TABLE_REFUND)
             ->where('parent')->eq('0')
             ->beginIf($deptID != '')->andWhere('createdBy')->in(array_keys($users))->fi()
@@ -69,6 +79,45 @@ class refundModel extends model
         $details = $this->dao->select('*')->from(TABLE_REFUND)->where('parent')->in(array_keys($refunds))->fetchGroup('parent', 'id');
         foreach($refunds as $key => $refund) $refund->detail = isset($details[$key]) ? $details[$key] : array();
 
+        return $this->processStatus($refunds, $users);
+    }
+
+    /**
+     * Process status of refunds. 
+     * 
+     * @param  array  $refunds 
+     * @param  array  $users 
+     * @access public
+     * @return array
+     */
+    public function processStatus($refunds, $users)
+    {
+        $managers = $this->loadModel('user')->getUserManagerPairs();
+        foreach($refunds as $refund)
+        {
+            $refund->statusLabel = zget($this->lang->refund->statusList, $refund->status);
+
+            if(strpos(',wait,doing,', ",$refund->status,") !== false)
+            {
+                $reviewer = '';
+                if($refund->firstReviewer)
+                {
+                    if(!empty($this->config->refund->secondReviewer)) $reviewer = $this->config->refund->secondReviewer;
+                }
+                else
+                {
+                    if(empty($this->config->refund->firstReviewer))
+                    {
+                        $reviewer = trim(zget($managers, $refund->createdBy, ''), ',');
+                    }
+                    else
+                    {
+                        $reviewer = $this->config->refund->firstReviewer;
+                    }
+                }
+                if($reviewer) $refund->statusLabel = zget($users, $reviewer) . $this->lang->refund->statusList['doing'];
+            }
+        }
         return $refunds;
     }
 
@@ -111,65 +160,46 @@ class refundModel extends model
      */
     public function create()
     {
-        $now    = helper::now();
         $refund = fixer::input('post')
             ->add('status', 'wait')
             ->add('createdBy', $this->app->user->account)
-            ->add('createdDate', $now) 
-            ->setDefault('date', helper::today())
+            ->add('createdDate', helper::now()) 
             ->join('related', ',')
-            ->remove('firstReviewer,firstReviewDate,sencondReviewer,secondReviewDate,refundBy,refundDate')
-            ->remove('dateList,moneyList,currencyList,categoryList,descList,relatedList')
+            ->setDefault('date', helper::today())
             ->setForce('money', (float)$this->post->money)
+            ->remove('customer,order,contract,project,objectType,dateList,moneyList,categoryList,descList,relatedList,files,labels')
             ->get();
 
-        if(!empty($this->config->refund->firstReviewer) && $this->config->refund->firstReviewer == $this->app->user->account) 
-        {
-            $refund->status          = 'doing';
-            $refund->firstReviewer   = $this->app->user->account;
-            $refund->firstReviewDate = $now;
+        $result = $this->processRefund($refund);
+        if(is_array($result)) return $result;
+        $refund = $result;
 
-            if(empty($this->config->refund->secondReviewer) or (isset($this->config->refund->money) and $refund->money < $this->config->refund->money)) $refund->status = 'pass';
-            if(!empty($this->config->refund->secondReviewer) && $this->config->refund->secondReviewer == $this->app->user->account)
+        if($this->post->objectType)
+        {
+            foreach($this->post->objectType as $objectType) 
             {
-                $refund->status = 'pass';
-                $refund->secondReviewer   = $this->app->user->account;
-                $refund->secondReviewDate = $now;
+                $refund->$objectType = $this->post->$objectType;
+                if($objectType == 'order' or $objectType == 'contract') $refund->customer = $this->post->customer;
+
+                $this->config->refund->require->create .= ',' . $objectType;
             }
         }
 
         $this->dao->insert(TABLE_REFUND)
-            ->data($refund, $skip = 'files,labels')
-            ->autoCheck()
+            ->data($refund)
             ->batchCheck($this->config->refund->require->create, 'notempty')
+            ->autoCheck()
             ->exec();
 
         if(dao::isError()) return false;
+
         $refundID = $this->dao->lastInsertID();
         $this->loadModel('file')->saveUpload('refund', $refundID);
 
-        /* Insert detail */
-        if(!empty($_POST['moneyList']))
+        if(!$this->saveDetails($refundID))
         {
-            foreach($this->post->moneyList as $key => $money)
-            {
-                if(!(float)$money) continue;
-                $detail = new stdclass();
-                $detail->parent      = $refundID;
-                $detail->status      = $refund->status;
-                $detail->createdBy   = $this->app->user->account;
-                $detail->createdDate = $now;
-                $detail->money       = (float)$money;
-                $detail->date        = empty($_POST['dateList'][$key]) ? helper::today() : $_POST['dateList'][$key];
-                $detail->currency    = $refund->currency;
-                $detail->category    = $_POST['categoryList'][$key];
-                $detail->desc        = $_POST['descList'][$key];
-                $detail->related     = join(',', $_POST['relatedList'][$key]);
-
-                $this->dao->insert(TABLE_REFUND)->data($detail)->autoCheck()->exec();
-            }
-
-            if(dao::isError()) return false;
+            $this->delete($refundID);
+            return false;
         }
 
         return $refundID;
@@ -184,91 +214,112 @@ class refundModel extends model
      */
     public function update($refundID)
     {
-        $now = helper::now();
         $oldRefund = $this->getByID($refundID);
         $refund = fixer::input('post')
             ->add('editedBy', $this->app->user->account)
-            ->add('editedDate', $now)
-            ->setDefault('date', helper::today())
+            ->add('editedDate', helper::now())
+            ->add('firstReviewer', '')
+            ->add('firstReviewDate', '0000-00-00')
+            ->add('secondReviewer', '')
+            ->add('secondReviewDate', '0000-00-00')
             ->join('related', ',')
-            ->remove('status,firstReviewer,firstReviewDate,sencondReviewer,secondReviewDate,refundBy,refundDate,files,labels')
-            ->remove('idList,dateList,moneyList,currencyList,categoryList,descList,relatedList')
+            ->setDefault('date', helper::today())
             ->setForce('money', (float)$this->post->money)
+            ->remove('customer,order,contract,project,objectType,dateList,moneyList,categoryList,descList,relatedList,files,labels')
             ->get();
 
+        $result = $this->processRefund($refund);
+        if(is_array($result)) return $result;
+        $refund = $result;
+
+        if($this->post->objectType)
+        {
+            foreach($this->post->objectType as $objectType) 
+            {
+                $refund->$objectType = $this->post->$objectType;
+                if($objectType == 'order' or $objectType == 'contract') $refund->customer = $this->post->customer;
+
+                $this->config->refund->require->edit .= ',' . $objectType;
+            }
+        }
+
+        $this->dao->update(TABLE_REFUND)
+            ->data($refund)
+            ->batchCheck($this->config->refund->require->edit, 'notempty')
+            ->autoCheck()
+            ->where('id')->eq($refundID)
+            ->exec();
+
+        if(dao::isError()) return false;
+
+        $this->loadModel('file')->saveUpload('refund', $refundID);
+
+        $this->saveDetails($refundID);
+
+        return commonModel::createChanges($oldRefund, $refund);
+    }
+
+    /**
+     * Process a refund. 
+     * 
+     * @param  object $refund 
+     * @access public
+     * @return object
+     */
+    public function processRefund($refund)
+    {
         if(!empty($this->config->refund->firstReviewer) && $this->config->refund->firstReviewer == $this->app->user->account) 
         {
             $refund->status          = 'doing';
             $refund->firstReviewer   = $this->app->user->account;
-            $refund->firstReviewDate = $now;
+            $refund->firstReviewDate = helper::now();
 
-            if(empty($this->config->refund->secondReviewer)) $refund->status = 'pass';
-            
+            if(empty($this->config->refund->secondReviewer) or (isset($this->config->refund->money) and $refund->money < $this->config->refund->money)) $refund->status = 'pass';
             if(!empty($this->config->refund->secondReviewer) && $this->config->refund->secondReviewer == $this->app->user->account)
             {
                 $refund->status = 'pass';
                 $refund->secondReviewer   = $this->app->user->account;
-                $refund->secondReviewDate = $now;
+                $refund->secondReviewDate = helper::now();
             }
         }
-        if($oldRefund->status == 'reject') $refund->status = 'wait';
 
-        $this->dao->update(TABLE_REFUND)
-            ->data($refund)
-            ->autoCheck()
-            ->batchCheck($this->config->refund->require->edit, 'notempty')
-            ->where('id')->eq($refundID)
-            ->exec();
+        return $refund;
+    }
 
-        /* update details. */
+    /**
+     * Save details of a refund. 
+     * 
+     * @param  int    $refundID 
+     * @access public
+     * @return bool 
+     */
+    public function saveDetails($refundID)
+    {
+        $this->dao->delete()->from(TABLE_REFUND)->where('parent')->eq($refundID)->exec();
+
+        /* Insert detail */
         if(!empty($_POST['moneyList']))
         {
-            $newDetails = array();
             foreach($this->post->moneyList as $key => $money)
             {
                 if(!(float)$money) continue;
                 $detail = new stdclass();
-                $detail->id          = empty($_POST['idList'][$key]) ? '0' : $_POST['idList'][$key];
                 $detail->parent      = $refundID;
+                $detail->category    = $this->post->categoryList[$key];
+                $detail->currency    = $this->post->currency;
+                $detail->date        = $this->post->dateList[$key] ? $this->post->dateList[$key] : helper::today();
+                $detail->money       = (float)$money;
+                $detail->desc        = $this->post->descList[$key];
+                $detail->related     = implode(',', $this->post->relatedList[$key]);
                 $detail->status      = 'wait';
                 $detail->createdBy   = $this->app->user->account;
-                $detail->createdDate = $now;
-                $detail->money       = (float)$money;
-                $detail->related     = implode(',', $_POST['relatedList'][$key]);
-                $detail->date        = empty($_POST['dateList'][$key]) ? $refund->date : $_POST['dateList'][$key];
-                $detail->currency    = $refund->currency;
-                $detail->category    = !empty($_POST['categoryList'][$key]) ? $_POST['categoryList'][$key] : '';
-                $detail->desc        = $_POST['descList'][$key];
+                $detail->createdDate = helper::now();
 
-                if($detail->id == '0') 
-                {
-                    $this->dao->insert(TABLE_REFUND)->data($detail, 'id')->autoCheck()->exec();
-                    $detail->id = $this->dao->lastInsertID();
-                }
-                else
-                {
-                    $this->dao->update(TABLE_REFUND)->data($detail, 'id,createdBy,createdDate')->autoCheck()->where('id')->eq($detail->id)->exec();
-                }
-                $newDetails[$detail->id] = $detail;
-            }
-            $refund->detail = $newDetails;
-
-            /* remove old details. */
-            foreach($oldRefund->detail as $detail)
-            {
-                if(!isset($newDetails[$detail->id])) $this->dao->delete()->from(TABLE_REFUND)->where('id')->eq($detail->id)->exec();
-            }
-        }
-        else
-        {
-            /* remove old details. */
-            foreach($oldRefund->detail as $detail)
-            {
-                $this->dao->delete()->from(TABLE_REFUND)->where('id')->eq($detail->id)->exec();
+                $this->dao->insert(TABLE_REFUND)->data($detail)->autoCheck()->exec();
             }
         }
 
-        return commonModel::createChanges($oldRefund, $refund);
+        return !dao::isError();
     }
 
     /**
@@ -281,17 +332,7 @@ class refundModel extends model
      */
     public function delete($refundID, $null = null)
     {
-        $oldRefund = $this->getByID($refundID);
-        $this->dao->delete()->from(TABLE_REFUND)->where('id')->eq($refundID)->exec();
-
-        /* remove old details. */
-        if(!empty($oldRefund->detail))
-        {
-            foreach($oldRefund->detail as $detail)
-            {
-                $this->dao->delete()->from(TABLE_REFUND)->where('id')->eq($detail->id)->exec();
-            }
-        }
+        $this->dao->delete()->from(TABLE_REFUND)->where('id')->eq($refundID)->orWhere('parent')->eq($refundID)->exec();
         return dao::isError();
     }
 
@@ -333,7 +374,7 @@ class refundModel extends model
     public function getCategoryPairs()
     {
         $categories       = $this->loadModel('tree')->getOptionMenu('out', 0, $removeRoot = true);
-        $refundCategories = $this->dao->select('*')->from(TABLE_CATEGORY)->where('type')->eq('out')->andWhere('refund')->eq(1)->fetchPairs('id', 'name');
+        $refundCategories = $this->dao->select('id, name')->from(TABLE_CATEGORY)->where('type')->eq('out')->andWhere('refund')->eq(1)->fetchPairs();
         $newCategories = array();
         foreach($categories as $key => $category)
         {
@@ -407,7 +448,6 @@ class refundModel extends model
         {
             foreach($refund->detail as $detail)
             {
-                $data->status = $status;
                 if($_POST["status{$detail->id}"] == 'reject') $data->status = 'reject';
                 $this->dao->update(TABLE_REFUND)->data($data, $skip = 'money')->where('id')->eq($detail->id)->exec();
             }
@@ -450,14 +490,14 @@ class refundModel extends model
     public function createTrade($refundID)
     {
         $refund = $this->getByID($refundID);
-        $user   = $this->loadModel('user')->getByAccount($refund->createdBy);
 
         $trade = new stdclass();
         $trade->type        = 'out';
         $trade->depositor   = $this->post->depositor;
-        $trade->trader      = $this->post->customer ? $this->post->customer : 0;
-        $trade->order       = $this->post->order ? $this->post->order : 0;
-        $trade->contract    = $this->post->contract ? $this->post->contract : 0;
+        $trade->trader      = $refund->customer;
+        $trade->order       = $refund->order;
+        $trade->contract    = $refund->contract;
+        $trade->project     = $refund->project;
         $trade->money       = $refund->money;
         $trade->currency    = $refund->currency;
         $trade->date        = date('Y-m-d');
@@ -475,12 +515,11 @@ class refundModel extends model
         $extra   = html::a(helper::createLink('oa.refund', 'view', "refundID=$refundID"), $refund->name);
         $this->loadModel('action')->create('trade', $tradeID, 'reimburse', '', $extra);
 
-
         if(!empty($refund->detail))
         {
             foreach($refund->detail as $detail)
             {
-                if($detail->status != 'pass') continue;
+                if($detail->status != 'finish') continue;
 
                 $tradeDetail = new stdclass();
                 $tradeDetail->type        = 'out';
@@ -491,9 +530,7 @@ class refundModel extends model
                 $tradeDetail->category    = $detail->category;
                 $tradeDetail->desc        = $detail->desc;
                 $tradeDetail->createdBy   = $this->app->user->account;
-                $tradeDetail->editedBy    = $this->app->user->account;
                 $tradeDetail->createdDate = helper::now();
-                $tradeDetail->editedDate  = helper::now();
 
                 $this->dao->insert(TABLE_TRADE)->data($tradeDetail)->exec();
             }
@@ -511,7 +548,6 @@ class refundModel extends model
      */
     public function total($refunds)
     {
-
         $totalMoney  = array();
         $currencyList = $this->loadModel('common', 'sys')->getCurrencySign();
 

@@ -2,12 +2,12 @@
 /**
  * The webapp module zh-cn file of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Yidong Wang <yidong@cnezsoft.com>
  * @package     webapp
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 if(!isset($lang->webapp)) $lang->webapp = new stdclass();
 $lang->webapp->common = 'WEB应用';
@@ -74,8 +74,8 @@ $lang->webapp->addTypeList['system'] = '系统应用';
 $lang->webapp->addTypeList['custom'] = '自定义应用';
 
 $lang->webapp->errorOccurs        = '错误：';
-$lang->webapp->errorGetModules    = '从www.ranzhico.com获得插件分类失败。可能是因为网络方面的原因，请检查后重新刷新页面。';
-$lang->webapp->errorGetExtensions = '从www.ranzhico.com获得插件失败。可能是因为网络方面的原因，请检查后重新刷新页面。';
+$lang->webapp->errorGetModules    = '从www.ranzhi.org获得插件分类失败。可能是因为网络方面的原因，请检查后重新刷新页面。';
+$lang->webapp->errorGetExtensions = '从www.ranzhi.org获得插件失败。可能是因为网络方面的原因，请检查后重新刷新页面。';
 $lang->webapp->successInstall     = '成功安装应用！';
 $lang->webapp->confirmDelete      = '是否删除该应用？';
 $lang->webapp->noticeAbstract     = '用一句话介绍应用，不多于30个字';

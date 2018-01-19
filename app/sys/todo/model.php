@@ -2,12 +2,12 @@
 /**
  * The model file of todo module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
  * @package     todo
  * @version     $Id: model.php 5035 2013-07-06 05:21:58Z wyd621@gmail.com $
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 ?>
 <?php
@@ -437,8 +437,8 @@ class todoModel extends model
             ->beginIF($mode == 'self')->andWhere('account', true)->eq($account)->orWhere('assignedTo')->eq($account)->orWhere('finishedBy')->eq($account)->markRight(1)->fi()
             ->beginIF($mode == 'assignedtoother')->andWhere('account')->eq($account)->andWhere('assignedTo')->ne($account)->andWhere('assignedTo')->ne('')->fi()
             ->beginIF($mode == 'assignedtome')->andWhere('assignedTo')->eq($account)->fi()
-            ->andWhere("date >= '$begin'")
-            ->andWhere("date <= '$end'")
+            ->andWhere('`date`')->ge($begin)
+            ->andWhere('`date`')->le($end)
             ->beginIF(strpos('all,undone,unclosed,custom', $status) === false)->andWhere('status')->in($status)->fi()
             ->beginIF($status == 'undone')->andWhere('status')->notin('done,closed')->fi()
             ->beginIF($status == 'custom')->andWhere('status')->notin('done,closed')->fi()

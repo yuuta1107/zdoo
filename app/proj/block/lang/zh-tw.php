@@ -2,12 +2,12 @@
 /**
  * The zh-tw file of block module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青島易軟天創網絡科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青島易軟天創網絡科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Yidong Wang <yidong@cnezsoft.com>
  * @package     block 
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 $lang->block->common   = '區塊';
 $lang->block->lblBlock = '區塊';
@@ -28,7 +28,7 @@ $lang->block->asc     = '正序';
 $lang->block->desc    = '倒序';
 $lang->block->actions = '操作';
 
-$lang->block->orderByList = new stdclass();;
+$lang->block->orderByList = new stdclass();
 $lang->block->orderByList->task = array();
 $lang->block->orderByList->task['id_asc']        = 'ID 遞增';
 $lang->block->orderByList->task['id_desc']       = 'ID 遞減';

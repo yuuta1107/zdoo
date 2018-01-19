@@ -2,12 +2,12 @@
 /**
  * The trade module zh-cn file of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Xiying Guan <guanxiying@xirangit.com>
  * @package     trade
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 if(!isset($lang->trade)) $lang->trade = new stdclass();
 $lang->trade->common      = '记账';
@@ -27,6 +27,7 @@ $lang->trade->order       = '订单';
 $lang->trade->contract    = '合同';
 $lang->trade->category    = '科目';
 $lang->trade->date        = '交易时间';
+$lang->trade->deadline    = '截止日期';
 $lang->trade->handlers    = '经手人';
 $lang->trade->dept        = '部门';
 $lang->trade->receipt     = '收款账户';
@@ -82,8 +83,11 @@ $lang->trade->compare       = '年度对比表';
 $lang->trade->setReportUnit = '设置报表单位';
 $lang->trade->settings      = '记账设置';
 
-$lang->trade->settingList['trader']   = '必须选择商户';
-$lang->trade->settingList['category'] = '必须选择末级科目';
+$lang->trade->settingList['trader']       = '必须选择商户';
+$lang->trade->settingList['product']      = '必须选择产品';
+$lang->trade->settingList['dept']         = '必须选择部门';
+$lang->trade->settingList['category']     = '必须选择科目';
+$lang->trade->settingList['lastCategory'] = '必须选择末级科目';
 
 $lang->trade->report = new stdclass();
 $lang->trade->report->common      = '报表'; 
@@ -186,10 +190,14 @@ $lang->trade->statusList['repaied']    = '已还贷';
 $lang->trade->statusList['repaying']   = '还贷中';
 $lang->trade->statusList['unRepaied']  = '未还贷';
 
+$lang->trade->progressList['invest'] = '赎回进度';
+$lang->trade->progressList['loan']   = '还贷进度';
+
 $lang->trade->totalIn       = '%s收入%s；';
 $lang->trade->totalOut      = '%s支出%s；';
 $lang->trade->totalAmount   = '%s收入%s，支出%s，%s；';
 $lang->trade->totalInvest   = '%s投资%s，赎回%s，未赎回%s，%s；';
+$lang->trade->selectItem    = '选中';
 $lang->trade->profit        = '盈';
 $lang->trade->loss          = '亏';
 $lang->trade->balance       = '收支平衡';

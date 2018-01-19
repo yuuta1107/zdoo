@@ -2,16 +2,19 @@
 /**
  * The config file of trade module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Tingting Dai <daitingting@xirangit.com>
  * @package     trade 
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 $config->trade->settings = new stdclass();
-$config->trade->settings->trader   = false;
-$config->trade->settings->category = false;
+$config->trade->settings->trader       = false;
+$config->trade->settings->category     = false;
+$config->trade->settings->product      = false;
+$config->trade->settings->dept         = false;
+$config->trade->settings->lastCategory = false;
 
 $config->trade->require = new stdclass();
 $config->trade->require->create = 'depositor,money,type,handlers,date';
@@ -30,6 +33,7 @@ $config->trade->search['fields']['depositor']   = $lang->trade->depositor;
 $config->trade->search['fields']['product']     = $lang->trade->product;
 $config->trade->search['fields']['type']        = $lang->trade->type;
 $config->trade->search['fields']['trader']      = $lang->trade->trader;
+$config->trade->search['fields']['contract']    = $lang->trade->contract;
 $config->trade->search['fields']['money']       = $lang->trade->money;
 $config->trade->search['fields']['category']    = $lang->trade->category;
 $config->trade->search['fields']['dept']        = $lang->trade->dept;
@@ -43,6 +47,7 @@ $config->trade->search['params']['depositor']   = array('operator' => '=',  'con
 $config->trade->search['params']['product']     = array('operator' => '=',  'control' => 'select', 'values' => 'set in control');
 $config->trade->search['params']['type']        = array('operator' => '=',  'control' => 'select', 'values' => array('' => '') + $lang->trade->typeList);
 $config->trade->search['params']['trader']      = array('operator' => '=',  'control' => 'select', 'values' => 'set in control');
+$config->trade->search['params']['contract']    = array('operator' => '=',  'control' => 'select', 'values' => 'set in control');
 $config->trade->search['params']['money']       = array('operator' => '>=', 'control' => 'input',  'values' => '');
 $config->trade->search['params']['category']    = array('operator' => '=',  'control' => 'select', 'values' => 'set in control');
 $config->trade->search['params']['dept']        = array('operator' => '=',  'control' => 'select', 'values' => 'depts');
@@ -72,14 +77,4 @@ $config->trade->excel->numberFields = array('undefined', 'total');
 $config->trade->excel->customWidth  = array('undefined' => 15, 'total' => 15);
 
 /* Excel items. */
-$config->excel = new stdclass();
-$config->excel->titleFields  = array();
-$config->excel->centerFields = array();
-$config->excel->dateFields   = array();
-
-$config->excel->width = new stdclass();
-$config->excel->width->title   = 30;
-$config->excel->width->content = 100;
-
-$config->excel->freeze = new stdclass();
 $config->excel->freeze->depositor = 'month';

@@ -14,7 +14,7 @@ $lang->overtime->export = '导出加班记录';
 $lang->overtime->personal     = '我的加班';
 $lang->overtime->browseReview = '审核列表';
 $lang->overtime->company      = '所有加班';
-$lang->overtime->setReviewer  = '设置审核者';
+$lang->overtime->setReviewer  = '加班设置';
 $lang->overtime->batchReview  = '批量审核';
 $lang->overtime->batchPass    = '批量通过';
 
@@ -43,6 +43,7 @@ $lang->overtime->typeList['holiday'] = '节假日加班';
 
 $lang->overtime->statusList['draft']  = '草稿';
 $lang->overtime->statusList['wait']   = '等待审核';
+$lang->overtime->statusList['doing']  = '审核中';
 $lang->overtime->statusList['pass']   = '通过';
 $lang->overtime->statusList['reject'] = '拒绝';
 

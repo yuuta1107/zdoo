@@ -2,7 +2,7 @@
 /**
  * The en file of common module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Tingting Dai <daitingting@xirangit.com>
  * @package     common 
@@ -50,10 +50,10 @@ $lang->report->menu->setting = 'Report Unit|trade|setReportUnit|';
 /* Menu of setting module. */
 $lang->setting = new stdclass();
 $lang->setting->menu = new stdclass();
-$lang->setting->menu->income    = 'Income|tree|browse|type=in|';
-$lang->setting->menu->expend    = 'Expense|tree|browse|type=out|';
-$lang->setting->menu->currency  = 'Currency|setting|lang|module=common&field=currencyList';
-$lang->setting->menu->schema    = 'Template|schema|browse|';
-$lang->setting->menu->tradePriv = 'View Expense|group|managetradepriv|';
-$lang->setting->menu->tradeSet  = 'Trade Set|trade|tradeSetting|';
+$lang->setting->menu->income       = 'Income|tree|browse|type=in|';
+$lang->setting->menu->expend       = 'Expense|tree|browse|type=out|';
+$lang->setting->menu->currency     = 'Currency|setting|lang|module=common&field=currencyList';
+$lang->setting->menu->schema       = 'Template|schema|browse|';
+$lang->setting->menu->tradePriv    = 'View Expense|group|managetradepriv|';
+$lang->setting->menu->tradeSetting = 'Trade Setting|trade|tradeSetting|';
 include(dirname(__FILE__) . '/menuOrder.php');

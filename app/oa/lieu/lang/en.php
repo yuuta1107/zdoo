@@ -13,7 +13,7 @@ $lang->lieu->commit = 'Commit';
 $lang->lieu->personal     = 'My Lieus';
 $lang->lieu->browseReview = 'Reviews';
 $lang->lieu->company      = 'All';
-$lang->lieu->setReviewer  = 'Set Reviewer';
+$lang->lieu->setReviewer  = 'Settings';
 $lang->lieu->batchReview  = 'Batch Review';
 $lang->lieu->batchPass    = 'Batch Pass';
 
@@ -37,20 +37,27 @@ $lang->lieu->rejectReason = 'Reject Reason';
 
 $lang->lieu->statusList['draft']  = 'Draft';
 $lang->lieu->statusList['wait']   = 'Wait';
+$lang->lieu->statusList['doing']  = 'Doing';
 $lang->lieu->statusList['pass']   = 'Pass';
 $lang->lieu->statusList['reject'] = 'Reject';
 
 $lang->lieu->confirmReview['pass']   = 'Are you sure to pass it?';
 $lang->lieu->confirmReview['reject'] = 'Are you sure to reject it?';
 
+$lang->lieu->checkHours    = 'Check Hours';
 $lang->lieu->denied        = 'Access denied.';
 $lang->lieu->unique        = 'There was a record of lieu in %s.';
 $lang->lieu->sameMonth     = 'Lieu must be in the same month.';
 $lang->lieu->wrongEnd      = 'End time should be greater than begin time.';
 $lang->lieu->nodata        = 'Select no data.';
 $lang->lieu->reviewSuccess = 'Review success';
+$lang->lieu->wrongHours    = 'Overtime <strong>%s</strong> hours. Lieu hours can not be greater than overtime hours.';
+$lang->lieu->nobccomp      = 'Please install the extension php-bcmath.';
 
 $lang->lieu->hoursTip = 'Hours';
+
+$lang->lieu->checkHoursList['0'] = 'Not check';
+$lang->lieu->checkHoursList['1'] = 'Lieu hours can not be greater than overtime hours (%s)';
 
 $lang->lieu->reviewStatusList['pass']   = 'Pass';
 $lang->lieu->reviewStatusList['reject'] = 'Reject';

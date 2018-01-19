@@ -2,15 +2,25 @@
 /**
  * The model file of attend module of Ranzhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      chujilu <chujilu@cnezsoft.com>
  * @package     attend
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 class attendModel extends model
 {
+    public function __construct($appName = '')
+    {
+        parent::__construct($appName);
+
+        if(empty($this->config->attend->workingHours))
+        {
+            $this->config->attend->workingHours = round((strtotime(date('Y-m-d') . ' ' . $this->config->attend->signOutLimit) - strtotime(date('Y-m-d') . ' ' . $this->config->attend->signInLimit)) / 3600, 2);
+        }
+    }
+
     /**
      * Get by attend id. 
      * 
@@ -39,11 +49,11 @@ class attendModel extends model
         if(empty($attend))
         {
             $attend = new stdclass();
-            $attend->account = $account;
-            $attend->date    = $date;
-            $attend->signIn  = '00:00:00';
-            $attend->signOut = '00:00:00';
-            $attend->status  = $this->computeStatus($attend);
+            $attend->account      = $account;
+            $attend->date         = $date;
+            $attend->signIn       = '00:00:00';
+            $attend->signOut      = '00:00:00';
+            $attend->status       = $this->computeStatus($attend);
             $attend->manualIn     = '';
             $attend->manualOut    = '';
             $attend->reason       = '';
@@ -85,26 +95,31 @@ class attendModel extends model
         }
 
         $attends = $this->fixUserAttendList($attends, $startDate, $endDate);
-        return $this->processAttendList($attends);
+        $attends = $this->processAttendList($attends);
+        $attends = $this->processHours(array($account => $attends), $startDate);
+        return $attends[$account];
     }
 
     /**
      * Get stat.
      * 
-     * @param  string    $date 
+     * @param  string $month   
      * @access public
      * @return array
      */
-    public function getStat($date)
+    public function getStat($month)
     {
-        $attends = $this->dao->select('*')->from(TABLE_ATTENDSTAT)->where('month')->eq($date)->fetchAll('account');
+        $attends = $this->dao->select('account, SUM(normal) normal, SUM(late) late, SUM(early) early, SUM(absent) absent, SUM(trip) trip, SUM(egress) egress, SUM(lieu) lieu, SUM(paidLeave) paidLeave, SUM(unpaidLeave) unpaidLeave, SUM(timeOvertime) timeOvertime, SUM(restOvertime) restOvertime, SUM(holidayOvertime) holidayOvertime, SUM(deserve) deserve, SUM(actual) actual')->from(TABLE_ATTENDSTAT)
+            ->where('month')->like("$month%")
+            ->groupBy('account')
+            ->fetchAll('account');
         foreach($attends as $account => $attend)
         {
             if(strpos(",{$this->config->attend->noAttendUsers},", ",$account,") !== false) unset($attends[$account]);
             $beginDate = isset($this->config->attend->beginDate->$account) ? $this->config->attend->beginDate->$account : $this->config->attend->beginDate->company;
             if($beginDate)
             {
-                if(date('Ym', strtotime($beginDate)) > $date) unset($attends[$account][$key]);
+                if(date('Ym', strtotime($beginDate)) > $month) unset($attends[$account][$key]);
             }
         }
 
@@ -216,6 +231,8 @@ class attendModel extends model
             }
         }
 
+        foreach($newAttends as $dept => $attends) $attends = $this->processHours($attends, $startDate);
+
         return $newAttends;
     }
 
@@ -298,44 +315,20 @@ class attendModel extends model
                     $attend->realname = isset($users[$account]) ? $users[$account]->realname : '';
                     $attend->dayName  = $this->lang->datepicker->dayNames[(int)date('w', strtotime($currentDate))];
 
-                    $desc = zget($this->lang->attend->statusList, $attend->status);
-                    if(strpos(',leave,makeup,overtime,trip,egress,', ",$attend->status,") !== false and $attend->desc)
+                    $desc = '';
+                    if($attend->hoursList)
                     {
-                        $desc .= $attend->desc . $this->lang->attend->h;
+                        foreach($attend->hoursList as $status => $hours) $desc .= zget($this->lang->attend->statusList, $status) . $hours . 'h ';
                     }
                     elseif($attend->status == 'late' && !empty($attend->signIn))
                     {
                         $seconds = strtotime($attend->signIn) - strtotime($this->config->attend->signInLimit);
-                        if($seconds >= 3600)
-                        {
-                            $hours   = floor($seconds / 3600);
-                            $desc   .= $hours . $this->lang->attend->h;
-                            $seconds = $seconds % 3600;
-                        }
-                        if($seconds >= 60)
-                        {
-                            $minutes = floor($seconds / 60);
-                            $seconds = $seconds % 60;
-                            $desc   .= $minutes . $this->lang->attend->m;
-                        }
-                        if($seconds > 0) $desc .= $seconds . $this->lang->attend->s;
+                        $desc   .= $this->computeDesc($seconds);
                     }
                     elseif($attend->status == 'early' && !empty($attend->signOut))
                     {
                         $seconds = strtotime($this->config->attend->signOutLimit) - strtotime($attend->signOut);
-                        if($seconds >= 3600)
-                        {
-                            $hours   = floor($seconds / 3600);
-                            $desc   .= $hours . $this->lang->attend->h;
-                            $seconds = $seconds % 3600;
-                        }
-                        if($seconds >= 60)
-                        {
-                            $minutes = floor($seconds / 60);
-                            $seconds = $seconds % 60;
-                            $desc   .= $minutes . $this->lang->attend->m;
-                        }
-                        if($seconds > 0) $desc .= $seconds . $this->lang->attend->s;
+                        $desc   .= $this->computeDesc($seconds);
                     }
                     elseif($attend->status == 'both')
                     {
@@ -343,42 +336,21 @@ class attendModel extends model
                         if(!empty($attend->signIn))
                         {
                             $seconds = strtotime($attend->signIn) - strtotime($this->config->attend->signInLimit);
-                            if($seconds >= 3600)
-                            {
-                                $hours   = floor($seconds / 3600);
-                                $desc   .= $hours . $this->lang->attend->h;
-                                $seconds = $seconds % 3600;
-                            }
-                            if($seconds >= 60)
-                            {
-                                $minutes = floor($seconds / 60);
-                                $seconds = $seconds % 60;
-                                $desc   .= $minutes . $this->lang->attend->m;
-                            }
-                            if($seconds > 0) $desc .= $seconds . $this->lang->attend->s;
+                            $desc   .= $this->computeDesc($seconds);
                         }
 
                         $desc .= ', ' . $this->lang->attend->statusList['early'];
                         if(!empty($attend->signOut))
                         {
                             $seconds = strtotime($this->config->attend->signOutLimit) - strtotime($attend->signOut);
-                            if($seconds >= 3600)
-                            {
-                                $hours   = floor($seconds / 3600);
-                                $desc   .= $hours . $this->lang->attend->h;
-                                $seconds = $seconds % 3600;
-                            }
-                            if($seconds >= 60)
-                            {
-                                $minutes = floor($seconds / 60);
-                                $seconds = $seconds % 60;
-                                $desc   .= $minutes . $this->lang->attend->m;
-                            }
-                            if($seconds > 0) $desc .= $seconds . $this->lang->attend->s;
+                            $desc   .= $this->computeDesc($seconds);
                         }
                     }
-                    $attend->status = zget($this->lang->attend->statusList, $attend->status);
-                    $attend->desc   = $desc == $attend->status ? '' : $desc;
+                    else
+                    {
+                        $desc .= zget($this->lang->attend->statusList, $attend->status);
+                    }
+                    $attend->desc = $desc;
 
                     $attends[] = $attend;
                 }
@@ -386,6 +358,33 @@ class attendModel extends model
         }
 
         return $attends;
+    }
+
+    /**
+     * Compute desc. 
+     * 
+     * @param  int    $seconds 
+     * @access public
+     * @return string
+     */
+    public function computeDesc($seconds)
+    {
+        $desc = '';
+        if($seconds >= 3600)
+        {
+            $hours   = floor($seconds / 3600);
+            $desc   .= $hours . $this->lang->attend->h;
+            $seconds = $seconds % 3600;
+        }
+        if($seconds >= 60)
+        {
+            $minutes = floor($seconds / 60);
+            $seconds = $seconds % 60;
+            $desc   .= $minutes . $this->lang->attend->m;
+        }
+        if($seconds > 0) $desc .= $seconds . $this->lang->attend->s;
+
+        return $desc;
     }
 
     /**
@@ -484,6 +483,433 @@ EOT;
     {
         if($this->app->getViewType() == 'html') return 'desktop';
         return 'other';
+    }
+
+    /**
+     * Compute attend stat. 
+     * 
+     * @param  int    $year 
+     * @param  int    $month 
+     * @param  array  $users 
+     * @access public
+     * @return array 
+     */
+    public function computeStat($year, $month, $users)
+    {
+        $startDate    = $month ? "{$year}-{$month}-01" : "$year-01-01";
+        $endDate      = $month ? date('Y-m-d', strtotime("$startDate +1 month -1 day")) : "$year-12-31";
+        $workingDates = $this->computeWorkingDates($startDate, $endDate);
+
+        /* Init stat. */
+        $stat = array();
+        foreach($users as $account => $realname)
+        {
+            if(strpos(",{$this->config->attend->noAttendUsers},", ",$account,") !== false) continue;
+
+            $beginDate = isset($this->config->attend->beginDate->$account) ? $this->config->attend->beginDate->$account : $this->config->attend->beginDate->company;
+            $tmpDates  = $workingDates;
+            if($beginDate)
+            {
+                foreach($tmpDates as $key => $date)
+                {
+                    if($beginDate > $date)    unset($tmpDates[$key]);
+                    if($date > date('Y-m-d')) unset($tmpDates[$key]);
+                }
+            }
+
+            $stat[$account] = new stdclass(); 
+            $stat[$account]->deserve         = count($tmpDates);
+            $stat[$account]->actual          = 0;
+            $stat[$account]->normal          = 0;
+            $stat[$account]->late            = 0;
+            $stat[$account]->early           = 0;
+            $stat[$account]->absent          = 0;
+            $stat[$account]->trip            = 0;
+            $stat[$account]->egress          = 0;
+            $stat[$account]->lieu            = 0;
+            $stat[$account]->paidLeave       = 0;
+            $stat[$account]->unpaidLeave     = 0;
+            $stat[$account]->timeOvertime    = 0;
+            $stat[$account]->restOvertime    = 0;
+            $stat[$account]->holidayOvertime = 0;
+
+            /* Init absentDates. */
+            $stat[$account]->absentDates = $tmpDates;
+        }
+
+        $stat = $this->computeAttendStat($stat, $startDate, $endDate);
+        $stat = $this->computeTripStat($stat, $year, $month);
+        $stat = $this->computeLeaveStat($stat, $year, $month);
+        $stat = $this->computeLieuStat($stat, $year, $month);
+        $stat = $this->computeMakeupStat($stat, $year, $month);
+        $stat = $this->computeOvertimeStat($stat, $year, $month);
+
+        /* Compute absent days. */
+        foreach($stat as $userStat)
+        {
+            $userStat->absent = count($userStat->absentDates);
+        }
+
+        return $stat;
+    }
+
+    /**
+     * Compute attend stat. 
+     * 
+     * @param  array  $stat 
+     * @param  string $startDate 
+     * @param  string $endDate 
+     * @access public
+     * @return array
+     */
+    public function computeAttendStat($stat, $startDate, $endDate)
+    {
+        $attends = $this->getGroupByAccount($startDate, $endDate < helper::today() ? $endDate : helper::today());
+
+        /* Update stat with attends. */
+        foreach($attends as $account => $accountAttends)
+        {
+            if(!isset($stat[$account])) continue;
+
+            foreach($accountAttends as $attend)
+            {
+                $stat[$account]->actual++;
+                if($attend->status == 'normal') $stat[$account]->normal ++;
+                if($attend->status == 'late' or $attend->status == 'both')
+                {
+                    $stat[$account]->late ++;
+                }
+                if($attend->status == 'early' or $attend->status == 'both')
+                {
+                    $stat[$account]->early ++;
+                }
+                unset($stat[$account]->absentDates[$attend->date]);
+            }
+        }
+
+        return $stat;
+    }
+
+    /**
+     * Compute leave stat. 
+     * 
+     * @param  array  $stat 
+     * @param  string $year 
+     * @param  string $month 
+     * @access public
+     * @return array
+     */
+    public function computeLeaveStat($stat, $year, $month)
+    {
+        $startDate = $month ? "{$year}-{$month}-01" : "$year-01-01";
+        $endDate   = $month ? date('Y-m-d', strtotime("$startDate +1 month -1 day")) : "$year-12-31";
+        $leaves    = $this->loadModel('leave', 'oa')->getList($type = 'company', $year, $month, $account = '', $dept = '', $status = 'pass', $orderBy = 'begin, start');
+
+        /* Update stat with leaves. */
+        /* Leave's start and finish time has been checked when create or edit. */
+        foreach($leaves as $leave)
+        {
+            if(!isset($stat[$leave->createdBy])) continue;
+
+            $leaveDays = $this->processDays($startDate, $endDate, $leave, 'leave');
+            if(strpos(',affairs,sick,', ",$leave->type,") !== false)
+            {
+                $stat[$leave->createdBy]->unpaidLeave += $leaveDays; 
+            }
+            if(strpos(',annual,home,marry,maternity,', ",$leave->type,") !== false)
+            {
+                $stat[$leave->createdBy]->paidLeave += $leaveDays; 
+            }
+
+            $dates = range(strtotime($leave->begin), strtotime($leave->end), 86400);
+            foreach($dates as $datetime)
+            {
+                $date = date('Y-m-d', $datetime);
+
+                if($date < $startDate) continue;
+                if($date > $endDate) continue;
+
+                /* Update absentDates. */
+                unset($stat[$leave->createdBy]->absentDates[$date]);
+            }
+        }
+
+        return $stat;
+    }
+
+    /**
+     * Compute lieu stat. 
+     * 
+     * @param  array  $stat 
+     * @param  string $year 
+     * @param  string $month 
+     * @access public
+     * @return array
+     */
+    public function computeLieuStat($stat, $year, $month)
+    {
+        $startDate = $month ? "{$year}-{$month}-01" : "$year-01-01";
+        $endDate   = $month ? date('Y-m-d', strtotime("$startDate +1 month -1 day")) : "$year-12-31";
+        $lieus     = $this->loadModel('lieu', 'oa')->getList($type = 'company', $year, $month, $account = '', $dept = '', $status = 'pass', $orderBy = 'begin');
+
+        /* Update stat with lieus. */
+        /* lieu's start and finish time has been checked when create or edit. */
+        foreach($lieus as $lieu)
+        {
+            if(!isset($stat[$lieu->createdBy])) continue;
+
+            $lieuDays = $this->processDays($startDate, $endDate, $lieu, 'lieu');
+            $stat[$lieu->createdBy]->lieu += $lieuDays;
+
+            /* Update actual and absentDates. */
+            $dates = range(strtotime($lieu->begin), strtotime($lieu->end), 86400);
+            foreach($dates as $datetime)
+            {
+                $date = date('Y-m-d', $datetime);
+
+                if($date < $startDate) continue;
+                if($date > $endDate) continue;
+
+                if(isset($stat[$lieu->createdBy]->absentDates[$date])) $stat[$lieu->createdBy]->actual++;
+                unset($stat[$lieu->createdBy]->absentDates[$date]);
+            }
+        }
+
+        return $stat;
+    }
+
+    /**
+     * Compute makeup stat. 
+     * 
+     * @param  array  $stat 
+     * @param  string $year 
+     * @param  string $month 
+     * @access public
+     * @return array
+     */
+    public function computeMakeupStat($stat, $year, $month)
+    {
+        $startDate = $month ? "{$year}-{$month}-01" : "$year-01-01";
+        $endDate   = $month ? date('Y-m-d', strtotime("$startDate +1 month -1 day")) : "$year-12-31";
+        $makeups   = $this->loadModel('makeup', 'oa')->getList($type = 'company', $year, $month, $account = '', $dept = '', $status = 'pass', $orderBy = 'begin, start');
+
+        /* Update stat with makeups. */
+        /* Makeup's start and finish time has been checked when create or edit. */
+        /* Makeup should be seemed as a normal working day. */
+        foreach($makeups as $makeup)
+        {
+            if(!isset($stat[$makeup->createdBy])) continue;
+            if($makeup->type == 'compensate') 
+            {
+                $makeupDays = $this->processDays($startDate, $endDate, $makeup, 'makeup');
+                $stat[$makeup->createdBy]->normal += $makeupDays;
+            }
+        }
+
+        return $stat;
+    }
+
+    /**
+     * Compute overtime stat. 
+     * 
+     * @param  array  $stat 
+     * @param  string $year 
+     * @param  string $month 
+     * @access public
+     * @return array
+     */
+    public function computeOvertimeStat($stat, $year, $month)
+    {
+        $startDate = $month ? "{$year}-{$month}-01" : "$year-01-01";
+        $endDate   = $month ? date('Y-m-d', strtotime("$startDate +1 month -1 day")) : "$year-12-31";
+        $allLieus  = $this->loadModel('lieu',     'oa')->getList($type = 'company', '', '', '', '', 'pass');
+        $overtimes = $this->loadModel('overtime', 'oa')->getList($type = 'company', $year, $month, $account = '', $dept = '', $status = 'pass', $orderBy = 'begin, start');
+
+        /* Update stat with overtimes. */
+        /* Overtime's start and finish time has been checked when create or edit. */
+        /* Overtime don't need to update absentDates. */
+        foreach($overtimes as $overtime)
+        {
+            if(!isset($stat[$overtime->createdBy])) continue;
+            $hasLieu = false;
+            foreach($allLieus as $lieu)
+            {
+                if(strpos($lieu->overtime, ',' . $overtime->id . ',') !== false)
+                {
+                    $hasLieu = true;
+                    break;
+                }
+            }
+            if($hasLieu) continue;
+
+            $overtimeDays = $this->processDays($startDate, $endDate, $overtime, 'overtime');
+            if($overtime->type == 'time')    
+            {
+                $stat[$overtime->createdBy]->timeOvertime += $overtimeDays;
+            }
+            if($overtime->type == 'rest')    
+            {
+                $stat[$overtime->createdBy]->restOvertime += $overtimeDays;
+            }
+            if($overtime->type == 'holiday') 
+            {
+                $stat[$overtime->createdBy]->holidayOvertime += $overtimeDays;
+            }
+            if($overtime->type == 'compensate') 
+            {
+                $stat[$overtime->createdBy]->normal += $overtimeDays;
+            }
+        }
+
+        return $stat;
+    }
+
+    /**
+     * Compute trip and egress stat. 
+     * 
+     * @param  array  $stat 
+     * @param  string $year 
+     * @param  string $month 
+     * @access public
+     * @return array
+     */
+    public function computeTripStat($stat, $year, $month)
+    {
+        $startDate = $month ? "{$year}-{$month}-01" : "$year-01-01";
+        $endDate   = $month ? date('Y-m-d', strtotime("$startDate +1 month -1 day")) : "$year-12-31";
+        $trips     = $this->loadModel('trip', 'oa')->getList($type = '', $year, $month, $account = '', $dept = '', $orderBy = 'begin, start');
+
+        /* Update stat with trips. */
+        /* Trips don't record hours, need to compute it. */
+        foreach($trips as $trip)
+        {
+            if(!isset($stat[$trip->createdBy])) continue;
+
+            $tripDays = $this->processDays($startDate, $endDate, $trip, $trip->type);
+            $stat[$trip->createdBy]->{$trip->type} += $tripDays; 
+
+            /* Update actual and absentDates. */
+            $dates = range(strtotime($trip->begin), strtotime($trip->end), 86400);
+            foreach($dates as $datetime)
+            {
+                $date = date('Y-m-d', $datetime);
+
+                if($date < $startDate) continue;
+                if($date > $endDate) continue;
+
+                if(isset($stat[$trip->createdBy]->absentDates[$date])) $stat[$trip->createdBy]->actual++;
+                unset($stat[$trip->createdBy]->absentDates[$date]);
+            }
+        }
+
+        return $stat;
+    }
+
+    /**
+     * Process days. 
+     * 
+     * @param  string $startDate 
+     * @param  string $endDate 
+     * @param  object $data 
+     * @param  string $type 
+     * @access public
+     * @return float
+     */
+    public function processDays($startDate, $endDate, $data, $type)
+    {
+        if(strpos(',leave,lieu,makeup,overtime,trip,egress,', ",$type,") === false) return 0;
+
+        $attendWorkingHours = $this->config->attend->workingHours;
+        if($data->begin == $data->end)
+        {
+            if($type != 'trip' && $type != 'egress')
+            {
+                $hours = $data->hours;
+            }
+            else
+            {
+                $hours = round((strtotime($data->end . ' ' . $data->finish) - strtotime($data->begin . ' ' . $data->start)) / 3600, 2);
+            }
+
+            return round($hours / $attendWorkingHours, 2);
+        }
+
+        $totalHours = 0;
+        $dates = range(strtotime($data->begin), strtotime($data->end), 86400);
+        foreach($dates as $datetime)
+        {
+            $date = date('Y-m-d', $datetime);
+
+            if($date < $startDate) continue;
+            if($date > $endDate) continue;
+
+            if($type != 'makeup' && $type != 'overtime')
+            {
+                $signIn       = strtotime($date . ' ' . $this->config->attend->signInLimit);
+                $signOut      = strtotime($date . ' ' . $this->config->attend->signOutLimit);
+                $workingHours = $attendWorkingHours;
+            }
+            else
+            {
+                $signIn       = strtotime($date);
+                $signOut      = strtotime($date . '+1 day');
+                $workingHours = 24;
+            }
+
+            $hours = 0;
+            if($date == $data->begin)
+            {
+                $hours = round(($signOut - strtotime($data->begin . ' ' . $data->start)) / 3600, 2);
+            }
+            elseif($date == $data->end)
+            {
+                $hours = round((strtotime($data->end . ' ' . $data->finish) - $signIn) / 3600, 2);
+            }
+            else
+            {
+                $hours = $workingHours;
+            }
+
+            if($hours < 0) $hours = 0;
+            if($hours > $workingHours) $hours = $workingHours;
+            if($type != 'trip' && $type != 'egress' && $hours > $data->hours) $hours = $data->hours;
+            if($hours) $totalHours += $hours;
+        }
+
+        return round($totalHours / $attendWorkingHours, 2);
+    }
+
+    /**
+     * Check if has wait reviews. 
+     * 
+     * @param  string $month 
+     * @access public
+     * @return array 
+     */
+    public function checkWaitReviews($month)
+    {
+        if(!$month or (strlen($month) != 4 && strlen($month) != 6)) $month = date('Ym');
+        $year  = substr($month, 0, 4);
+        $month = substr($month, 4, 2);
+
+        $leaves    = $this->loadModel('leave', 'oa')->getList('browseReview', $year, $month);
+        $lieus     = $this->loadModel('lieu', 'oa')->getList('browseReview', $year, $month);
+        $makeups   = $this->loadModel('makeup', 'oa')->getList('browseReview', $year, $month);
+        $overtimes = $this->loadModel('overtime', 'oa')->getList('browseReview', $year, $month);
+        $attends   = $this->dao->select('*')->from(TABLE_ATTEND)
+            ->where('reviewStatus')->eq('wait')
+            ->beginIF($month)->andWhere('date')->like("$year-$month-%")->fi()
+            ->beginIF(!$month)->andWhere('date')->like("$year-%")->fi()
+            ->fetchAll();
+
+        $waitReviews = array();
+        if($leaves)    $waitReviews[] = 'leave';
+        if($lieus)     $waitReviews[] = 'lieu';
+        if($makeups)   $waitReviews[] = 'makeup';
+        if($overtimes) $waitReviews[] = 'overtime';
+        if($attends)   $waitReviews[] = 'attend';
+
+        return $waitReviews;
     }
 
     /**
@@ -610,7 +1036,7 @@ EOT;
             $signOut = (!empty($attend->manualOut) and $attend->manualOut != '00:00:00') ? $attend->manualOut : $attend->signOut;
 
             $this->dao->update(TABLE_ATTEND)
-                ->set('status')->eq($attend->reason)
+                ->set('status')->eq('normal')
                 ->set('reviewStatus')->eq('pass')
                 ->set('signIn')->eq($signIn)
                 ->set('signOut')->eq($signOut)
@@ -720,14 +1146,6 @@ EOT;
     {
         $beginDate = isset($this->config->attend->beginDate->{$attend->account}) ? $this->config->attend->beginDate->{$attend->account} : $this->config->attend->beginDate->company;
         if($beginDate && $beginDate > $attend->date) return 'normal';
-
-        /* 'leave': ask for leave. 'trip': biz trip. */
-        if($this->loadModel('leave', 'oa')->isLeave($attend->date, $attend->account)) return 'leave';
-        if($this->loadModel('trip', 'oa')->isTrip('trip', $attend->date, $attend->account)) return 'trip';
-        if($this->loadModel('trip', 'oa')->isTrip('egress', $attend->date, $attend->account)) return 'egress';
-        if($this->loadModel('overtime', 'oa')->isOvertime($attend->date, $attend->account)) return 'overtime';
-        if($this->loadModel('makeup', 'oa')->isMakeup($attend->date, $attend->account)) return 'makeup';
-        if($this->loadModel('lieu', 'oa')->isLieu($attend->date, $attend->account)) return 'lieu';
 
         $status = 'normal';
         if(($attend->signIn == "00:00:00" and $attend->signOut == "00:00:00") or (!$attend->signIn and !$attend->signOut)) 
@@ -855,6 +1273,134 @@ EOT;
     }
 
     /**
+     * Process hours of every status of attend list. 
+     * 
+     * @param  array  $attendList 
+     * @param  string $startDate 
+     * @access public
+     * @return array
+     */
+    public function processHours($attendList, $startDate)
+    {
+        $year  = substr($startDate, 0, 4);
+        $month = substr($startDate, 5, 2);
+
+        $leaveList    = $this->loadModel('leave',    'oa')->getList('',        $year, $month, '', '', 'pass');
+        $lieuList     = $this->loadModel('lieu',     'oa')->getList('',        $year, $month, '', '', 'pass');
+        $makeupList   = $this->loadModel('makeup',   'oa')->getList('',        $year, $month, '', '', 'pass');
+        $overtimeList = $this->loadModel('overtime', 'oa')->getList('',        $year, $month, '', '', 'pass');
+        $tripList     = $this->loadModel('trip',     'oa')->getList('trip',    $year, $month);
+        $egressList   = $this->loadModel('trip',     'oa')->getList('egreess', $year, $month);
+
+        /* Group data list by account. */
+        foreach($this->config->attend->typeList as $type)
+        {
+            $dataList = ${$type . 'List'};
+            foreach(${$type . 'List'} as $key => $data)
+            {
+                ${$type . 'List'}[$data->createdBy][] = $data;
+                unset(${$type . 'List'}[$key]);
+            }
+        }
+
+        foreach($attendList as $account => $attends)
+        {
+            /* Get datas of current account. */
+            foreach($this->config->attend->typeList as $type)
+            {
+                ${$type . 's'} = zget(${$type . 'List'}, $account, array());
+            }
+
+            foreach($attends as $attend)
+            {
+                $hoursList = array();
+
+                /* Compute status hours. */
+                foreach($this->config->attend->typeList as $type)
+                {
+                    if(${$type . 's'}) 
+                    {
+                        $hours = $this->computeHours($attend, ${$type . 's'}, $type);
+                        if($hours) $hoursList[$type] = $hours;
+                    }
+                }
+
+                $attend->hoursList = $hoursList;
+            }
+        }
+
+        return $attendList;
+    }
+
+    /**
+     * Compute hours of every status of an attend. 
+     * 
+     * @param  obejct $attend 
+     * @param  array  $datas 
+     * @param  string $type 
+     * @access public
+     * @return float
+     */
+    public function computeHours($attend, $datas, $type)
+    {
+        if(strpos(',leave,lieu,makeup,overtime,trip,egress,', ",$type,") === false) return 0;
+
+        if($type != 'makeup' && $type != 'overtime')
+        {
+            $signIn       = strtotime($attend->date . ' ' . $this->config->attend->signInLimit);
+            $signOut      = strtotime($attend->date . ' ' . $this->config->attend->signOutLimit);
+            $workingHours = $this->config->attend->workingHours;
+        }
+        else
+        {
+            $signIn       = strtotime($attend->date);
+            $signOut      = strtotime($attend->date . '+1 day');
+            $workingHours = 24;
+        }
+
+        $totalHours = 0;
+        foreach($datas as $data)
+        {
+            if($data->begin > $attend->date or $data->end < $attend->date) continue;
+
+            $hours = 0;
+            if($data->begin == $data->end)
+            {
+                if($type != 'trip' && $type != 'egress')
+                {
+                    $hours = $data->hours;
+                }
+                else
+                {
+                    $hours = round((strtotime($data->end . ' ' . $data->finish) - strtotime($data->begin . ' ' . $data->start)) / 3600, 2);
+                }
+            }
+            else
+            {
+                if($data->begin == $attend->date)
+                {
+                    $hours = round(($signOut - strtotime($data->begin . ' ' . $data->start)) / 3600, 2);
+                }
+                elseif($data->end == $attend->date)
+                {
+                    $hours = round((strtotime($data->end . ' ' . $data->finish) - $signIn) / 3600, 2);
+                }
+                else
+                {
+                    $hours = $workingHours;
+                }
+            }
+
+            if($hours < 0) $hours = 0;
+            if($hours > $workingHours) $hours = $workingHours;
+            if($type != 'trip' && $type != 'egress' && $hours > $data->hours) $hours = $data->hours;
+            if($hours) $totalHours += $hours;
+        }
+
+        return $totalHours;
+    }
+
+    /**
      * Set reviewer for attend.
      * 
      * @access public
@@ -940,13 +1486,12 @@ EOT;
      * @param  string    $account 
      * @param  string    $status 
      * @param  string    $reason 
-     * @param  object    $time 
      * @access public
      * @return bool
      */
-    public function batchUpdate($dates, $account, $status = '', $reason = '', $time = '')
+    public function batchUpdate($dates, $account, $status = '', $reason = '')
     {
-        if($status != '' and strpos(',normal,leave,makeup,overtime,lieu,trip,egress,', ",$status,") === false) return false;
+        if($status != '' and strpos(',normal,leave,lieu,makeup,overtime,trip,egress,', ",$status,") === false) return false;
         if($reason == '') $reason = $status;
 
         foreach($dates as $datetime)
@@ -959,48 +1504,6 @@ EOT;
             $attend->reviewStatus = '';
             $attend->desc         = '';
 
-            if(is_object($time))
-            {
-                $hours = '';
-                if($time->begin == $date and $time->end == $date) 
-                {
-                    $hours = round((strtotime("{$date} {$time->finish}") - strtotime("{$date} {$time->start}")) / 3600, 2);
-                }
-                elseif($time->begin == $date and $time->end != $date) 
-                {
-                    if($status == 'leave' || (($status == 'overtime' || $status == 'makeup') && $time->start < $this->config->attend->signOutLimit))    
-                    {
-                        $hours = round((strtotime("{$date} {$this->config->attend->signOutLimit}") - strtotime("{$date} {$time->start}")) / 3600, 2);
-                    }
-                    elseif($status == 'overtime' || $status == 'makeup') 
-                    {
-                        $hours = round((strtotime("{$date} +1 days") - strtotime("{$date} {$time->start}")) / 3600, 2);
-                    }
-                }
-                elseif($time->begin != $date and $time->end == $date) 
-                {
-                    if($status == 'leave' || (($status == 'overtime' || $status == 'makeup') && $time->finish > $this->config->attend->signInLimit))    
-                    {
-                        $hours = round((strtotime("{$date} {$time->finish}") - strtotime("{$date} {$this->config->attend->signInLimit}")) / 3600, 2);
-                    }
-                    elseif($status == 'overtime' || $status == 'makeup') 
-                    {
-                        $hours = round((strtotime("{$date} {$time->finish}") - strtotime("{$date}")) / 3600, 2);
-                    }
-                }
-                else
-                {
-                    if($status == 'leave')    $hours = $this->config->attend->workingHours;
-                    if($status == 'overtime' || $status == 'makeup') $hours = $this->config->attend->signOutLimit - $this->config->attend->signInLimit;
-                }
-                if($hours > $this->config->attend->workingHours && ($status == 'leave' || $status == 'lieu' || $status == 'makeup')) 
-                {
-                    $hours = $this->config->attend->workingHours;
-                }
-
-                $attend->desc = $hours;
-            }
-
             $oldAttend = $this->getByDate($date, $account);
             if(isset($oldAttend->new))
             {
@@ -1010,7 +1513,6 @@ EOT;
             }
             else
             {
-                if($status && strpos(',leave,makeup,overtime,lieu,', ",$status,") !== false && $status == $oldAttend->status && !empty($oldAttend->desc)) $attend->desc += (float)$oldAttend->desc;
                 $attend->status = $this->computeStatus($oldAttend);
                 $this->dao->update(TABLE_ATTEND)->data($attend)->autoCheck()->where('date')->eq($date)->andWhere('account')->eq($account)->exec();
             }

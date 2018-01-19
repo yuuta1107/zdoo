@@ -2,7 +2,7 @@
 /**
  * The English file of install module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
  * @package     install 
@@ -88,6 +88,7 @@ $lang->install->save2File  = '<div class="text-center"><span class="fail">Try to
 $lang->install->saved2File = 'The config file has saved to "<strong>%s</strong> ".';
 $lang->install->errorNotSaveConfig = 'Do not save the config file.';
 
+$lang->install->success  = "Installed!";
 $lang->install->domainIP = 'IP of domain is %s';
 $lang->install->serverIP = 'IP of LAN is %s';
 $lang->install->publicIP = 'IP of WAN is %s';
@@ -96,7 +97,8 @@ $lang->install->account  = 'Account';
 $lang->install->password = 'Password';
 $lang->install->errorEmptyPassword = "should not be empty";
 
-$lang->install->success    = "Installed!";
+$lang->install->import['area']     = 'Import area data';
+$lang->install->import['industry'] = 'Import industry data';
 
 $lang->install->buildinEntry = new stdclass();
 $lang->install->buildinEntry->crm['name']  = 'CRM';

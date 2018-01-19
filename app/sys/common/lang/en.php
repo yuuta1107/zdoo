@@ -2,7 +2,7 @@
 /**
  * The English file of common module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
  * @package     common 
@@ -21,6 +21,7 @@ $lang->raquo      = '&raquo;';
 $lang->minus      = ' - ';
 $lang->hyphen     = '-';
 $lang->slash      = ' / ';
+$lang->semicolon  = ';';
 $lang->RMB        = '￥';
 $lang->divider    = "<span class='divider'>{$lang->raquo}</span> ";
 $lang->at         = ' At ';
@@ -397,6 +398,7 @@ $lang->error->noConvertFun = 'Iconv and mb_convert_encoding do not exist. You ca
 $lang->error->noCurlExt    = 'No curl extension.';
 $lang->error->notInt       = '<strong>%s</strong> should be not a interger.';
 $lang->error->pasteImg     = 'Your browser does not support paste pictures.';
+$lang->error->accessDenied = 'Access Denied';
 
 /* The pager items. */
 $lang->pager = new stdclass();

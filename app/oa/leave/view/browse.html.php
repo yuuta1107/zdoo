@@ -2,12 +2,12 @@
 /**
  * The browse view file of leave module of Ranzhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      chujilu <chujilu@cnezsoft.com>
  * @package     leave
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 ?>
 <?php include '../../common/view/header.html.php';?>
@@ -59,10 +59,7 @@
             <th class='w-140px'><?php commonModel::printOrderLink('backDate', $orderBy, $vars, $lang->leave->backDate);?></th>
             <th class='w-60px visible-lg'><?php commonModel::printOrderLink('hours', $orderBy, $vars, $lang->leave->hours);?></th>
             <th><?php echo $lang->leave->desc;?></th>
-            <th class='w-70px'><?php commonModel::printOrderLink('status', $orderBy, $vars, $lang->leave->status);?></th>
-            <?php if($type != 'browseReview'):?>
-            <th class='w-80px'><?php commonModel::printOrderLink('reviewedBy', $orderBy, $vars, $lang->leave->reviewedBy);?></th>
-            <?php endif;?>
+            <th class='w-100px'><?php commonModel::printOrderLink('status', $orderBy, $vars, $lang->leave->status);?></th>
             <?php if($type == 'personal'):?>
             <th class='w-160px'><?php echo $lang->actions;?></th>
             <?php else:?>
@@ -81,19 +78,15 @@
           </td>
           <td><?php echo zget($users, $leave->createdBy);?></td>
           <td class='visible-lg'><?php echo zget($deptList, $leave->dept);?></td>
-          <td><?php echo zget($this->lang->leave->typeList, $leave->type);?></td>
+          <td><?php echo zget($lang->leave->typeList, $leave->type);?></td>
           <td><?php echo formatTime($leave->begin . ' ' . $leave->start, DT_DATETIME2);?></td>
           <td><?php echo formatTime($leave->end . ' ' . $leave->finish, DT_DATETIME2);?></td>
           <td><?php echo formatTime($leave->backDate, DT_DATETIME2);?></td>
           <td class='visible-lg'><?php echo $leave->hours == 0 ? '' : $leave->hours;?></td>
           <td title='<?php echo $leave->desc;?>'><?php echo $leave->desc;?></td>
-          <?php $status = ($leave->status == 'pass' and $leave->backDate != '0000-00-00 00:00:00' and $leave->backDate != $leave->end . ' ' . $leave->finish) ? 'back' : $leave->status;?>
-          <td class='leave-<?php echo $status?>'><?php echo zget($this->lang->leave->statusList, $status);?></td>
-          <?php if($type != 'browseReview'):?>
-          <td><?php echo zget($users, $leave->reviewedBy);?></td>
-          <?php endif;?>
+          <td class='leave-<?php echo $leave->status?>' title='<?php echo $leave->statusLabel;?>'><?php echo $leave->statusLabel;?></td>
           <td class='actionTD text-left'>
-            <?php 
+            <?php
             commonModel::printLink('oa.leave', 'view', "id={$leave->id}&type=$type", $lang->detail, "data-toggle='modal'");
             if($type == 'personal')
             { 
@@ -127,13 +120,13 @@
             }
             else
             {
-                if($leave->status == 'wait')
+                if(strpos(',wait,doing,', ",$leave->status,") !== false)
                 {
                     commonModel::printLink('oa.leave', 'edit',   "id={$leave->id}",               $lang->edit,                        "data-toggle='modal'");
                     commonModel::printLink('oa.leave', 'review', "id={$leave->id}&status=pass",   $lang->leave->statusList['pass'],   "class='reviewPass'");
                     commonModel::printLink('oa.leave', 'review', "id={$leave->id}&status=reject", $lang->leave->statusList['reject'], "data-toggle='modal'");
                 }
-                elseif($leave->status == 'pass' and $leave->backDate != '0000-00-00 00:00:00' and $leave->backDate != "$leave->end $leave->finish")
+                elseif($leave->status == 'back')
                 {
                     echo html::a('###', $lang->edit, "disabled='disabled'");
                     commonModel::printLink('oa.leave', 'review', "id={$leave->id}&status=pass&mode=back",   $lang->leave->statusList['pass'],   "class='reviewPass'");
@@ -157,6 +150,11 @@
           <?php echo html::selectButton();?>
           <?php echo html::a('javascript:;', $lang->leave->batchPass, "class='btn btn-primary batchPass'");?> 
         </div>
+      </div>
+      <?php endif;?>
+      <?php if(!$leaveList):?>
+      <div class='table-footer'>
+        <div class='pager' style='float: right; clear: none'><?php echo $lang->pager->noRecord;?></div>
       </div>
       <?php endif;?>
     </div>

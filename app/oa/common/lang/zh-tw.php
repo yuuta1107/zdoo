@@ -2,12 +2,12 @@
 /**
  * The zh-tw file of common module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青島易軟天創網絡科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青島易軟天創網絡科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Chunsheng wang <chunsheng@cnezsoft.com>
  * @package     common 
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 $lang->app = new stdclass();
 $lang->app->name = '日常辦公';
@@ -44,7 +44,7 @@ $lang->attend->menu->company    = '公司考勤|attend|company|';
 $lang->attend->menu->detail     = '考勤明細|attend|detail|';
 $lang->attend->menu->review     = '補錄審核|attend|browsereview|';
 $lang->attend->menu->stat       = '統計|attend|stat|';
-$lang->attend->menu->settings   = array('link' => '設置|attend|settings|', 'alias' => 'setmanager');
+$lang->attend->menu->settings   = array('link' => '設置|attend|settings|', 'alias' => 'personalsettings,setmanager');
 
 if(!isset($lang->leave)) $lang->leave = new stdclass();
 $lang->leave->menu = new stdclass();
@@ -93,7 +93,7 @@ $lang->refund->menu->review     = '待審批|refund|browsereview|status=unreview
 $lang->refund->menu->reviewedBy = '由我審批|refund|browsereview|status=reviewed';
 $lang->refund->menu->todo       = '待報銷|refund|todo|';
 $lang->refund->menu->company    = '所有報銷|refund|company|';
-$lang->refund->menu->settings   = array('link' => '設置|refund|setreviewer|', 'alias' => 'setcategory,setmoney,setdepositor,setrefundby');
+$lang->refund->menu->settings   = array('link' => '設置|refund|setreviewer|', 'alias' => 'setcategory,setdepositor,setrefundby');
 
 if(!isset($lang->holiday)) $lang->holiday = new stdclass();
 $lang->holiday->menu = new stdclass();
@@ -104,10 +104,10 @@ $lang->setting->menu->modules         = '功能模組|setting|modules|app=oa';
 $lang->setting->menu->companyAttend   = '公司考勤設置|attend|settings|module=setting';
 $lang->setting->menu->personalAttend  = '個人考勤設置|attend|personalSettings|module=setting';
 $lang->setting->menu->deptManager     = '部門經理設置|attend|setManager|module=setting';
-$lang->setting->menu->leaveReviewer   = '請假審批人|leave|setReviewer|module=setting';
-$lang->setting->menu->makeupReviewer  = '補班審批人|makeup|setReviewer|module=setting';
-$lang->setting->menu->lieuReviewer    = '調休審批人|lieu|setReviewer|module=setting';
-$lang->setting->menu->overtimeReviewer= '加班審批人|overtime|setReviewer|module=setting';
+$lang->setting->menu->leaveReviewer   = '請假設置|leave|setReviewer|module=setting';
+$lang->setting->menu->makeupReviewer  = '補班設置|makeup|setReviewer|module=setting';
+$lang->setting->menu->lieuReviewer    = '調休設置|lieu|setReviewer|module=setting';
+$lang->setting->menu->overtimeReviewer= '加班設置|overtime|setReviewer|module=setting';
 $lang->setting->menu->refundReviewer  = '報銷審批人|refund|setReviewer|module=setting';
 $lang->setting->menu->refundCategory  = '報銷科目|refund|setCategory|module=setting';
 $lang->setting->menu->refundDepositor = '報銷賬戶|refund|setDepositor|module=setting';

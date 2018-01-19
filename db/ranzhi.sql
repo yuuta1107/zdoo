@@ -139,6 +139,8 @@ CREATE TABLE IF NOT EXISTS `crm_customer` (
   `name` char(100) NOT NULL,
   `type` char(30) NOT NULL,
   `relation` enum('client', 'provider', 'partner') NOT NULL default 'client',
+  `source` varchar(20) NOT NULL,
+  `sourceNote` varchar(255) NOT NULL,
   `size` tinyint(3) unsigned NOT NULL,
   `industry` mediumint(8) unsigned NOT NULL,
   `area` mediumint(8) unsigned NOT NULL,
@@ -236,13 +238,6 @@ CREATE TABLE IF NOT EXISTS `crm_resume` (
   KEY `left` (`left`),
   KEY `maker` (`maker`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
--- DROP TABLE IF EXISTS `crm_service`;
-CREATE TABLE IF NOT EXISTS `crm_service` (
-  `customer` mediumint(8) unsigned NOT NULL,
-  `product` mediumint(8) unsigned NOT NULL,
-  `expire` date NOT NULL,
-  UNIQUE KEY `customer` (`customer`,`product`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `crm_salesgroup`;
 CREATE TABLE IF NOT EXISTS `crm_salesgroup` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
@@ -325,7 +320,7 @@ CREATE TABLE IF NOT EXISTS `oa_project` (
   `whitelist` varchar(255) NOT NULL,
   `deleted` enum('0','1') NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE='MyISAM' COLLATE 'utf8_general_ci'; 
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `oa_attend`;
 CREATE TABLE IF NOT EXISTS `oa_attend` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
@@ -507,6 +502,10 @@ CREATE TABLE IF NOT EXISTS `oa_todo` (
 -- DROP TABLE IF EXISTS `oa_refund`;
 CREATE TABLE IF NOT EXISTS `oa_refund` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `customer` mediumint(8) unsigned NOT NULL,
+  `order` mediumint(8) unsigned NOT NULL,
+  `contract` mediumint(8) unsigned NOT NULL,
+  `project` mediumint(8) unsigned NOT NULL,
   `name` char(150) NOT NULL,
   `parent`  mediumint(8) unsigned NOT NULL DEFAULT 0,
   `dept`  mediumint(8) unsigned NOT NULL DEFAULT 0,
@@ -585,6 +584,7 @@ CREATE TABLE IF NOT EXISTS `cash_trade` (
   `trader` mediumint(8) unsigned NOT NULL DEFAULT 0,
   `order` mediumint(8) unsigned NOT NULL,
   `contract` mediumint(8) unsigned NOT NULL,
+  `project` mediumint(8) unsigned NOT NULL,
   `investID` mediumint(8) unsigned NOT NULL,
   `loanID` mediumint(8) unsigned NOT NULL,
   `dept` mediumint(8) unsigned NOT NULL,
@@ -593,6 +593,7 @@ CREATE TABLE IF NOT EXISTS `cash_trade` (
   `exchangeRate` decimal(12,4) NOT NULL DEFAULT 1,
   `currency` varchar(30) NOT NULL,
   `date` date NOT NULL,
+  `deadline` date NOT NULL,
   `handlers` varchar(255) NOT NULL,
   `category` char(30) NOT NULL,
   `desc` text NOT NULL,
@@ -879,7 +880,7 @@ CREATE TABLE IF NOT EXISTS `sys_product` (
   `code` varchar(20) NOT NULL, 
   `type` varchar(10) NOT NULL,
   `status` varchar(10) NOT NULL,
-  `line` varchar(30) NOT NULL,
+  `line` varchar(60) NOT NULL,
   `desc` text NOT NULL,
   `createdBy` varchar(30) NOT NULL,
   `createdDate` datetime NOT NULL,

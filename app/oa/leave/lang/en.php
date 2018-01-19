@@ -16,7 +16,7 @@ $lang->leave->reviewBack = 'Review back date';
 $lang->leave->personal     = 'My Leave';
 $lang->leave->browseReview = 'Review List';
 $lang->leave->company      = 'All';
-$lang->leave->setReviewer  = 'Set Reviewer';
+$lang->leave->setReviewer  = 'Settings';
 $lang->leave->batchReview  = 'Batch Review';
 $lang->leave->batchPass    = 'Batch Pass';
 
@@ -52,6 +52,7 @@ $lang->leave->unpaid = 'Unpaid Leave';
 
 $lang->leave->statusList['draft']  = 'Draft';
 $lang->leave->statusList['wait']   = 'Wait';
+$lang->leave->statusList['doing']  = 'Doing';
 $lang->leave->statusList['pass']   = 'Pass';
 $lang->leave->statusList['reject'] = 'Reject';
 $lang->leave->statusList['back']   = 'Back';

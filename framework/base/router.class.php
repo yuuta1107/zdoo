@@ -1362,6 +1362,10 @@ class baseRouter
         $mergedModelFile = $mergedModelDir . $moduleName . '.php';
         if(!is_dir($mergedModelDir)) mkdir($mergedModelDir, 0755, true);
 
+        /* 判断缓存文件目录是否存在以及是否可写。 Judge whether the merged model dir exist and writable. */
+        if(!is_dir($mergedModelDir))      $this->triggerError("$mergedModelDir not exist.", __FILE__, __LINE__, true);
+        if(!is_writable($mergedModelDir)) $this->triggerError("$mergedModelDir not writable.", __FILE__, __LINE__, true);
+
         /* 判断生成的缓存文件是否需要更新。 Judge whether the merged model file needed update or not. */
         if(!$this->needModelFileUpdate($mergedModelFile, $extFiles, $hookFiles, $modelExtPaths, $mainModelFile)) return $mergedModelFile;
 
@@ -2208,8 +2212,8 @@ class baseRouter
     public function saveError($level, $message, $file, $line)
     {
         if(empty($this->config->debug))  return true;
-        if(!is_dir($this->logRoot))      return true;
-        if(!is_writable($this->logRoot)) return true;
+        if(!is_dir($this->logRoot))      die("$this->logRoot not exist.");
+        if(!is_writable($this->logRoot)) die("$this->logRoot not writable.");
 
         /*
          * 删除设定时间之前的日志。

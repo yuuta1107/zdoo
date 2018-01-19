@@ -2,12 +2,12 @@
 /**
  * The model file of order module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Tingting Dai <daitingting@xirangit.com>
  * @package     order
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 class orderModel extends model
 {
@@ -23,10 +23,15 @@ class orderModel extends model
         $customerIdList = $this->loadModel('customer')->getCustomersSawByMe();
         if(empty($customerIdList)) return null;
 
-        $order = $this->dao->select('*')->from(TABLE_ORDER)->where('id')->eq($id)->andWhere('customer')->in($customerIdList)->fetch(); 
+        $order = $this->dao->select('o.*, c.name as customerName')->from(TABLE_ORDER)->alias('o')
+            ->leftJoin(TABLE_CUSTOMER)->alias('c')->on("o.customer=c.id")
+            ->where('o.customer')->in($customerIdList)
+            ->fetch();
         if(!$order) return false;
 
-        $products = $this->dao->select('*')->from(TABLE_PRODUCT)->where('id')->in($order->product)->orderBy('id_desc')->fetchAll();
+        $products     = $this->dao->select('*')->from(TABLE_PRODUCT)->where('id')->in($order->product)->orderBy('id_desc')->fetchAll();
+        $productName  = count($products) > 1 ? current($products)->name . $this->lang->etc : current($products)->name;
+        $order->title = sprintf($this->lang->order->titleLBL, $order->customerName, $productName, date('Y-m-d', strtotime($order->createdDate))); 
 
         $order->products = $products;
 
@@ -66,7 +71,7 @@ class orderModel extends model
      * @access public
      * @return array
      */
-    public function getList($mode = 'all', $param = '', $owner = '', $orderBy = 'id_desc', $pager = null)
+    public function getList($mode = 'all', $param = '', $owner = '', $needQueryCondition = true, $orderBy = 'id_desc', $pager = null)
     {
         $customerIdList = $this->loadModel('customer')->getCustomersSawByMe();
         if(empty($customerIdList)) return array();
@@ -106,7 +111,7 @@ class orderModel extends model
             ->andWhere('o.customer')->in($customerIdList)
             ->orderBy("o.$orderBy")->page($pager)->fetchAll('id');
 
-        $this->session->set('orderQueryCondition', $this->dao->get());
+        if($needQueryCondition) $this->session->set('orderQueryCondition', $this->dao->get());
 
         $products = $this->loadModel('product')->getPairs();
 

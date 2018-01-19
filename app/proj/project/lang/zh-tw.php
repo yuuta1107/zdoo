@@ -2,12 +2,12 @@
 /**
  * The project module zh-tw file of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青島易軟天創網絡科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青島易軟天創網絡科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Yidong Wang <yidong@cnezsoft.com>
  * @package     project
  * @version     $Id: zh-tw.php 824 2010-05-02 15:32:06Z wwccss $
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 if(!isset($lang->project)) $lang->project = new stdclass();
 $lang->project->common     = '項目視圖';
@@ -69,7 +69,7 @@ $lang->project->roleList['senior']  = '管理員';
 $lang->project->roleList['limited'] = '受限';
 
 $lang->project->whitelistTip        = '參觀者可以查看項目和任務';
-$lang->project->roleTip             = "管理員擁有所有權限，預設成員可刪除任務，受限成員僅可操作自己相關任務。";
+$lang->project->roleTip             = "管理員擁有所有權限，預設成員不可刪除與自己無關的任務，受限成員僅可操作自己相關任務。";
 $lang->project->roleTips['senior']  = "管理員：可以查看、編輯、刪除所有任務。";
 $lang->project->roleTips['member']  = "預設：可以查看、編輯所有任務，刪除與自己相關的任務。";
 $lang->project->roleTips['limited'] = "受限：只能查看、編輯與自己相關的任務。";

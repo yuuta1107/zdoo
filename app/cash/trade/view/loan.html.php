@@ -2,12 +2,12 @@
 /**
  * The loan view file of trade module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Tingting Dai <daitingting@xirangit.com>
  * @package     trade 
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 ?>
 <?php include '../../common/view/header.html.php';?>
@@ -67,6 +67,12 @@
           <th><?php echo $lang->trade->date;?></th>
           <td><?php echo html::input('date', date('Y-m-d'), "class='form-control form-date'");?></td>
         </tr>
+        <?php if($type == 'loan'):?>
+        <tr>
+          <th><?php echo $lang->trade->deadline;?></th>
+          <td><?php echo html::input('deadline', '', "class='form-control form-date'");?></td>
+        </tr>
+        <?php endif;?>
         <tr>
           <th><?php echo $lang->trade->desc;?></th>
           <td><?php echo html::textarea('desc','', "class='form-control' rows='8'");?></td>

@@ -2,7 +2,7 @@
 /**
  * The project module en file of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Tingting Dai <daitingting@xirangit.com>
  * @package     project
@@ -69,7 +69,7 @@ $lang->project->roleList['senior']  = 'Manager';
 $lang->project->roleList['limited'] = 'Limited';
 
 $lang->project->whitelistTip        = 'Whitelist members have access to projects and tasks.';
-$lang->project->roleTip             = "Managers have all privilages; Default members can delete tasks; Limited members can only edit their own tasks.";
+$lang->project->roleTip             = "Managers have all privilages; Default members can not delete the unreleted tasks; Limited members can only edit their own tasks.";
 $lang->project->roleTips['senior']  = "Managers can view, edit and delete all task.";
 $lang->project->roleTips['member']  = "Default: view and edit all tasks and delete their own tasks.";
 $lang->project->roleTips['limited'] = "Limited: view and edit their own tasks.";

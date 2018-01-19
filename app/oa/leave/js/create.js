@@ -28,10 +28,10 @@ $(document).ready(function()
             var hoursStart   = 0;
             var hoursEnd     = 0;
             var hoursContent = 0;
-            if(beginTime < signOutTime) hoursStart = Math.round((signOutTime - beginTime)/(3600*1000)*100)/100;
-            if(hoursStart > v.workingHours) hoursStart = parseFloat(v.workingHours);
-            if(endTime > signInTime) hoursEnd = Math.round((endTime - signInTime)/(3600*1000)*100)/100;
-            if(hoursEnd > v.workingHours) hoursEnd = parseFloat(v.workingHours);
+            if(beginTime < signOutTime)     hoursStart = Math.round((signOutTime - beginTime)/(3600*1000)*100)/100;
+            if(endTime > signInTime)        hoursEnd   = Math.round((endTime - signInTime)/(3600*1000)*100)/100;
+            if(v.workingHours && hoursStart > v.workingHours) hoursStart = parseFloat(v.workingHours);
+            if(v.workingHours && hoursEnd   > v.workingHours) hoursEnd   = parseFloat(v.workingHours);
             var days = Math.floor((Date.parse(new Date(end)) - Date.parse(new Date(begin)))/(24*3600*1000));
             if(days > 1) hoursContent = (days - 1) * v.workingHours;
 

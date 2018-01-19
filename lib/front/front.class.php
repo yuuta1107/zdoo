@@ -20,6 +20,49 @@ helper::import(dirname(dirname(__FILE__)) . '/base/front/front.class.php');
  */
 class html extends baseHTML
 {
+    /**
+     * 生成select标签。
+     * Create tags like "<select><option></option></select>"
+     *
+     * @param  string $name          the name of the select tag.
+     * @param  array  $options       the array to create select tag from.
+     * @param  string $selectedItems the item(s) to be selected, can like item1,item2.
+     * @param  string $attrib        other params such as multiple, size and style.
+     * @param  string $append        adjust if add options[$selectedItems].
+     * @static
+     * @access public
+     * @return string
+     */
+    static public function select($name = '', $options = array(), $selectedItems = "", $attrib = "", $append = false)
+    {
+        $options = (array)($options);
+        if($append and !isset($options[$selectedItems])) $options[$selectedItems] = $selectedItems;
+        if(!is_array($options) or empty($options)) return false;
+
+        /* The begin. */
+        $id = $name;
+        if(strpos($name, '[') !== false) $id = trim(str_replace(']', '', str_replace('[', '', $name)));
+        $id = "id='{$id}'";
+        if(strpos($attrib, 'id=') !== false) $id = '';
+
+        $string = "<select name='$name' {$id} $attrib>\n";
+
+        /* The options. */
+        if(is_array($selectedItems)) $selectedItems = implode(',', $selectedItems);
+        $selectedItems   = ",$selectedItems,";
+        $convertedPinYin = class_exists('commonModel') ? commonModel::convert2Pinyin($options) : array();
+        foreach($options as $key => $value)
+        {
+            $optionPinyin = zget($convertedPinYin, $value, '');
+
+            $key      = str_replace('item', '', $key);
+            $selected = strpos($selectedItems, ",$key,") !== false ? " selected='selected'" : '';
+            $string  .= "<option value='$key'$selected data-keys='{$optionPinyin}'>$value</option>\n";
+        }
+
+        /* End. */
+        return $string .= "</select>\n";
+    }
 }
 
 /**

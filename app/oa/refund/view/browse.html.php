@@ -2,15 +2,16 @@
 /**
  * The browse view file of order module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Tingting Dai <daitingting@xirangit.com>
  * @package     order 
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 ?>
 <?php include '../../common/view/header.html.php';?>
+<?php include '../../../sys/common/view/treeview.html.php';?>
 <?php js::set('mode', $type);?>
 <?php js::set('createTradeTip', $lang->refund->createTradeTip);?>
 <li id='bysearchTab'><?php echo html::a('#', "<i class='icon-search icon'></i>" . $lang->search->common)?></li>
@@ -61,10 +62,9 @@
             <th><?php commonModel::printOrderLink('name', $orderBy, $vars, $lang->refund->name);?></th>
             <th class='w-120px'><?php commonModel::printOrderLink('category', $orderBy, $vars, $lang->refund->category);?></th>
             <th class='w-100px text-right'><?php commonModel::printOrderLink('money', $orderBy, $vars, $lang->refund->money);?></th>
-            <th class='w-80px'><?php commonModel::printOrderLink('status', $orderBy, $vars, $lang->refund->status);?></th>
+            <th class='w-100px'><?php commonModel::printOrderLink('status', $orderBy, $vars, $lang->refund->status);?></th>
             <th class='w-80px'><?php commonModel::printOrderLink('createdBy', $orderBy, $vars, $lang->refund->createdBy);?></th>
             <th class='w-80px'><?php commonModel::printOrderLink('createdDate', $orderBy, $vars, $lang->refund->createdDate);?></th>
-            <th class='w-80px'><?php commonModel::printOrderLink('firstReviewer', $orderBy, $vars, $lang->refund->reviewer);?></th>
             <th class='w-80px'><?php commonModel::printOrderLink('refundBy', $orderBy, $vars, $lang->refund->refundBy);?></th>
             <th class='w-80px'><?php commonModel::printOrderLink('refundDate', $orderBy, $vars, $lang->refund->refundDate);?></th>
             <?php if($mode == 'personal'):?>
@@ -80,14 +80,12 @@
         <tr data-url='<?php echo $this->createLink('refund', 'view', "refundID={$refund->id}&mode={$mode}");?>'>
           <td><?php echo $refund->id;?></td>
           <td class='text-left visible-lg'><?php echo zget($deptList, $refund->dept);?></td>
-          <td class='text-left' title='<?php echo $refund->name;?>'><?php echo $refund->name?></td>
+          <td class='text-left' title='<?php echo $refund->name;?>'><?php echo $refund->name;?></td>
           <td class='text-left' title='<?php echo zget($categories, $refund->category);?>'><?php echo zget($categories, $refund->category, ' ');?></td>
-          <td class='text-right'><?php echo zget($currencySign, $refund->currency) . $refund->money?></td>
-          <td class='refund-<?php echo $refund->status?>'><?php echo zget($lang->refund->statusList, $refund->status)?></td>
+          <td class='text-right'><?php echo zget($currencySign, $refund->currency) . $refund->money;?></td>
+          <td class='refund-<?php echo $refund->status?>' title='<?php echo $refund->statusLabel;?>'><?php echo $refund->statusLabel;?></td>
           <td><?php echo zget($userPairs, $refund->createdBy);?></td>
           <td><?php echo formatTime($refund->createdDate, DT_DATE1);?></td>
-          <?php $reviewer = zget($userPairs, $refund->firstReviewer) . ' ' . zget($userPairs, $refund->secondReviewer);?> 
-          <td class='text-left' title='<?php echo $reviewer;?>'><?php echo $reviewer;?></td>
           <td><?php echo zget($userPairs, $refund->refundBy);?></td>
           <td><?php echo formatTime($refund->refundDate, DT_DATE1)?></td>
           <td class='text-left'>

@@ -2,12 +2,12 @@
 /**
  * The zh-cn file of block module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Yidong Wang <yidong@cnezsoft.com>
  * @package     block 
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 $lang->block->common = '区块';
 $lang->block->name   = '区块名称';
@@ -32,7 +32,7 @@ $lang->block->confirmRemoveBlock = '确定移除区块【{0}】吗？';
 
 $lang->block->allEntries  = '所有应用';
 $lang->block->dynamic     = '最新动态';
-$lang->block->dynamicInfo = "%s, %s <em>%s</em> %s <a href='%s'>%s</a>。";
+$lang->block->dynamicInfo = "%s, %s <em>%s</em> %s <a href='%s' %s>%s</a>。";
 
 $lang->block->default['oa']['1']['title'] = '日历';
 $lang->block->default['oa']['1']['block'] = 'attend';

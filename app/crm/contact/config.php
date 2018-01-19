@@ -2,12 +2,12 @@
 /**
  * The config file of contact module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Tingting Dai <daitingting@xirangit.com>
  * @package     contact 
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 $config->contact->require = new stdclass();
 $config->contact->require->create = 'customer, realname';
@@ -56,14 +56,6 @@ $config->contact->excelCustomWidth = array('origin' => 15, 'company' => 15, 'rea
 $config->contact->listFields       = array('gender');
 
 /* Excel items. */
-if(!isset($config->excel)) $config->excel = new stdclass();
-if(!isset($config->excel->width)) $config->excel->width = new stdclass();
-$config->excel->width->title   = 30;
-$config->excel->width->content = 100;
+$config->excel->dateFields = array('birthday');
 
-$config->excel->titleFields  = array();
-$config->excel->centerFields = array();
-$config->excel->dateFields   = array('birthday');
-
-if(!isset($config->excel->freeze)) $config->excel->freeze = new stdclass();
 $config->excel->freeze->contact = 'email';

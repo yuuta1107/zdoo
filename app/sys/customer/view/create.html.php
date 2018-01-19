@@ -2,12 +2,12 @@
 /**
  * The create view file of customer module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Tingting Dai <daitingting@xirangit.com>
  * @package     customer 
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 ?>
 <?php include $app->getModuleRoot() . 'common/view/header.html.php';?>
@@ -28,6 +28,16 @@
               <span class='input-group-addon'>
                 <label class='checkbox-inline'><input type='checkbox' id='public' name='public' value='1'> <?php echo $lang->customer->public;?></label>
               </span>
+            </div>
+          </td><td></td>
+        </tr>
+        <tr>
+          <th><?php echo $lang->customer->source;?></th>
+          <td>
+            <div class='input-group'>
+              <?php echo html::select('source', $lang->customer->sourceList, '', "class='form-control'");?>
+              <span class='input-group-addon fix-border'><?php echo $lang->customer->sourceNote;?></span>
+              <?php echo html::input('sourceNote', '', "class='form-control'");?>
             </div>
           </td><td></td>
         </tr>

@@ -2,12 +2,12 @@
 /**
  * The edit order record view file of order module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Xiying Guan <guanxiying@xirangit.com>
  * @package     order
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 ?>
 <?php if(helper::isAjaxRequest()):?>
@@ -29,7 +29,8 @@
         <select id='contact' name='contact' class='form-control select-contact chosen'>
           <option></option>
           <?php foreach($contacts as $contact):?>
-          <option value='<?php echo $contact->id;?>' <?php if($contact->id == $record->contact) echo 'selected';?> data-phone='<?php echo $contact->phone . $lang->slash . $contact->mobile;?>'><?php echo $contact->realname;?></option>
+          <?php $optionPinyin = zget($pinyinContacts, $contact->realname, '');?>
+          <option value='<?php echo $contact->id;?>' <?php if($contact->id == $record->contact) echo 'selected';?> data-keys="<?php echo $optionPinyin;?>" data-phone='<?php echo $contact->phone . $lang->slash . $contact->mobile;?>'><?php echo $contact->realname;?></option>
           <?php endforeach;?>
         </select>
       </td>

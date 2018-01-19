@@ -2,19 +2,19 @@
 /**
  * The model file of overtime module of Ranzhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Tingting Dai <daitingting@xirangit.com>
  * @package     overtime
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 class overtimeModel extends model
 {
     public function __construct($appName = '')
     {
         parent::__construct($appName);
-        $this->app->loadModuleConfig('attend', 'oa');
+        $this->loadModel('attend', 'oa');
     }
 
     /**
@@ -56,12 +56,26 @@ class overtimeModel extends model
      */
     public function getList($type = 'personal', $year = '', $month = '', $account = '', $dept = '', $status = '', $orderBy = 'id_desc')
     {
+        $date = '';
+        if($year)  
+        {
+            if(!$month) $date = "$year-%";
+            if($month)  $date = "$year-$month-%";
+        }
+        else
+        {
+            if($month) $date = "%-$month-%";
+        }
+
         $overtimeList = $this->dao->select('t1.*, t2.realname, t2.dept')
             ->from(TABLE_OVERTIME)->alias('t1')
             ->leftJoin(TABLE_USER)->alias('t2')->on("t1.createdBy=t2.account")
             ->where('t1.type')->ne('compensate')
-            ->beginIf($year != '')->andWhere('t1.year')->eq($year)->fi()
-            ->beginIf($month != '')->andWhere('t1.begin')->like("%-$month-%")->fi()
+            ->beginIf($date)
+            ->andWhere('t1.begin', true)->like($date)
+            ->orWhere('t1.end')->like($date)
+            ->markRight(1)
+            ->fi()
             ->beginIf($account != '')->andWhere('t1.createdBy')->eq($account)->fi()
             ->beginIf($dept != '')->andWhere('t2.dept')->in($dept)->fi()
             ->beginIf($status != '')->andWhere('t1.status')->eq($status)->fi()
@@ -70,6 +84,35 @@ class overtimeModel extends model
             ->orderBy("t2.dept,t1.{$orderBy}")
             ->fetchAll();
         $this->session->set('overtimeQueryCondition', $this->dao->get());
+
+        return $this->processStatus($overtimeList);
+    }
+
+    /**
+     * Process status of overtime list. 
+     * 
+     * @param  array  $overtimeList 
+     * @access public
+     * @return array 
+     */
+    public function processStatus($overtimeList)
+    {
+        $users    = $this->loadModel('user')->getPairs();
+        $managers = $this->user->getUserManagerPairs();
+        foreach($overtimeList as $overtime)
+        {
+            $overtime->statusLabel = zget($this->lang->overtime->statusList, $overtime->status);
+
+            if($overtime->status == 'wait')
+            {
+                $reviewer = $this->getReviewedBy();
+                if(!$reviewer) 
+                {
+                    $reviewer = trim(zget($managers, $overtime->createdBy, ''), ',');
+                }
+                if($reviewer) $overtime->statusLabel = zget($users, $reviewer) . $this->lang->overtime->statusList['doing'];
+            }
+        }
 
         return $overtimeList;
     }
@@ -102,6 +145,7 @@ class overtimeModel extends model
         $dateList  = $this->dao->select('begin')->from(TABLE_OVERTIME)
             ->where('type')->ne('compensate')
             ->beginIF($type == 'personal')->andWhere('createdBy')->eq($this->app->user->account)->fi()
+            ->beginIF($type == 'company')->andWhere('status')->ne('draft')->fi()
             ->groupBy('begin')
             ->orderBy('begin_desc')
             ->fetchAll('begin');
@@ -198,7 +242,7 @@ class overtimeModel extends model
      */
     public function checkDate($date, $id = 0)
     {
-        if(substr($date->begin, 0, 7) != substr($date->end, 0, 7)) return array('result' => 'fail', 'message' => $this->lang->overtime->sameMonth);
+        //if(substr($date->begin, 0, 7) != substr($date->end, 0, 7)) return array('result' => 'fail', 'message' => $this->lang->overtime->sameMonth);
         if("$date->end $date->finish" <= "$date->begin $date->start") return array('result' => 'fail', 'message' => $this->lang->overtime->wrongEnd);
 
         $existOvertime = $this->checkOvertime($date, $this->app->user->account, $id);

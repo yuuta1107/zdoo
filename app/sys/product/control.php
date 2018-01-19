@@ -2,12 +2,12 @@
 /**
  * The control file of product module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Tingting Dai <daitingting@xirangit.com>
  * @package     product
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 class product extends control
 {
@@ -39,8 +39,6 @@ class product extends control
     {   
         $this->app->loadClass('pager', $static = true);
         $pager = new pager($recTotal, $recPerPage, $pageID);
-
-        $this->session->set('productList', $this->app->getURI(true));
 
         /* Build search form. */
         $this->loadModel('search', 'sys');
@@ -101,7 +99,7 @@ class product extends control
                 if($changes) $this->action->logHistory($actionID, $changes);
             }
 
-            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => inlink('browse')));
+            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
         }
 
         $this->view->title   = $this->lang->product->edit;
@@ -136,7 +134,7 @@ class product extends control
     {
         $this->product->delete(TABLE_PRODUCT, $productID);
         if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
-        $this->send(array('result' => 'success', 'locate' => inlink('browse')));
+        $this->send(array('result' => 'success'));
     }
 
     /**

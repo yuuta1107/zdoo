@@ -2,12 +2,12 @@
 /**
  * The zh-cn file of install module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
  * @package     install 
  * @version     $Id: zh-cn.php 4029 2016-08-26 06:50:41Z liugang $
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 $lang->install = new stdclass();
 $lang->install->common  = '安装';
@@ -27,8 +27,8 @@ $lang->install->desc             = <<<EOT
   <!--内置项目、客户、现金流、办公和沟通共五大核心功能模块，-->
   专为中小型团队量身打造，是中小型团队信息化的首选工具！
 
-  官方网站：<a href='http://www.ranzhico.com' target='_blank'>http://www.ranzhico.com</a>
-  技术支持: <a href='http://www.ranzhico.com/forum/' target='_blank'>http://www.ranzhico.com/forum/</a>
+  官方网站：<a href='http://www.ranzhi.org' target='_blank'>http://www.ranzhi.org</a>
+  技术支持: <a href='http://www.ranzhi.org/forum/' target='_blank'>http://www.ranzhi.org/forum/</a>
   您现在正在安装的版本是 <strong class='red'>%s</strong>。
 </blockquote>
 EOT;
@@ -88,6 +88,7 @@ $lang->install->save2File  = '<span class="red">尝试写入配置文件，失�
 $lang->install->saved2File = '配置信息已经成功保存到" <strong>%s</strong> "中。您后面还可继续修改此文件。';
 $lang->install->errorNotSaveConfig = '还没有保存配置文件';
 
+$lang->install->success  = "安装成功！";
 $lang->install->domainIP = '域名映射的IP是：%s';
 $lang->install->serverIP = '服务器的内网IP是：%s';
 $lang->install->publicIP = '服务器的公网IP是：%s';
@@ -96,7 +97,8 @@ $lang->install->account  = '帐号';
 $lang->install->password = '密码';
 $lang->install->errorEmptyPassword = '密码不能为空';
 
-$lang->install->success    = "安装成功！";
+$lang->install->import['area']     = '导入区域数据';
+$lang->install->import['industry'] = '导入行业数据';
 
 $lang->install->buildinEntry = new stdclass();
 $lang->install->buildinEntry->crm['name']  = '客户管理';

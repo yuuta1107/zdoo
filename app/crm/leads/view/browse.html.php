@@ -2,12 +2,12 @@
 /**
  * The browse view file of leads module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Tingting Dai <daitingting@xirangit.com>
  * @package     leads 
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 ?>
 <?php include '../../common/view/header.html.php';?>
@@ -59,8 +59,8 @@
       <?php endif;?>
       <td class='text-left' title='<?php echo $contact->company;?>'><?php echo $contact->company;?></td>
       <td><?php echo isset($lang->genderList->{$contact->gender}) ? $lang->genderList->{$contact->gender} : '';?></td>
-      <?php $PhoneAndMobile =  $contact->phone . ' ' . $contact->mobile;?>
-      <td class='text-left' title='<?php echo $PhoneAndMobile;?>' ><?php echo $PhoneAndMobile;?></td>
+      <?php $phoneAndMobile =  $contact->phone . ' ' . $contact->mobile;?>
+      <td class='text-left' title='<?php echo $phoneAndMobile;?>' ><?php echo $phoneAndMobile;?></td>
       <td title='<?php echo $contact->email;?>'><?php echo html::mailto($contact->email, $contact->email)?></td>
       <td class='visible-lg' title='<?php echo $contact->qq;?>'><?php echo empty($contact->qq) ? '' : html::a("tencent://Message/?Uin={$contact->qq}&websiteName=RanZhi&Menu=yes", $contact->qq, "target='_blank'")?></td>
       <td class='visible-lg' title='<?php echo $contact->weixin;?>'><?php echo empty($contact->weixin) ? '' : $contact->weixin;?></td>

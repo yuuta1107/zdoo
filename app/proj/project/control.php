@@ -2,12 +2,12 @@
 /**
  * The control file of project module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Yidong Wang <yidong@cnezsoft.com>
  * @package     project
  * @version     $Id: control.php 7417 2013-12-23 07:51:50Z wwccss $
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 class project extends control
 {

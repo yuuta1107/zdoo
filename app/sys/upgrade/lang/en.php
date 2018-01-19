@@ -2,7 +2,7 @@
 /**
  * The upgrade module English file of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
  * @package     upgrade
@@ -55,4 +55,4 @@ $lang->upgrade->deleteDir    = '<code>rm -fr %s</code>';
 $lang->upgrade->deleteFile   = '<code>rm %s</code>';
 $lang->upgrade->afterDeleted = '<br />Refresh after delete.';
 
-include './version.php';
+include 'version.php';

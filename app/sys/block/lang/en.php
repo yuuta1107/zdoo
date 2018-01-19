@@ -2,7 +2,7 @@
 /**
  * The en file of block module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Tingting Dai <daitingting@xirangit.com>
  * @package     block 
@@ -32,7 +32,7 @@ $lang->block->confirmRemoveBlock = 'Are you sure to remove Widget [{0}] ?';
 
 $lang->block->allEntries  = 'All';
 $lang->block->dynamic     = 'Dynamic';
-$lang->block->dynamicInfo = "%s, %s <em>%s</em> %s <a href='%s'>%s</a>。";
+$lang->block->dynamicInfo = "%s, %s <em>%s</em> %s <a href='%s' %s>%s</a>。";
 
 $lang->block->default['oa']['1']['title'] = 'Calendar';
 $lang->block->default['oa']['1']['block'] = 'attend';

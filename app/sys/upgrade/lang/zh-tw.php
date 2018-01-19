@@ -2,12 +2,12 @@
 /**
  * The upgrade module zh-tw file of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青島易軟天創網絡科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青島易軟天創網絡科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
  * @package     upgrade
  * @version     $$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 $lang->upgrade = new stdclass();
 $lang->upgrade->common  = '升級';
@@ -55,4 +55,4 @@ $lang->upgrade->deleteDir    = '<code>rm -fr %s</code>';
 $lang->upgrade->deleteFile   = '<code>rm %s</code>';
 $lang->upgrade->afterDeleted = '<br />刪除以上檔案後刷新！';
 
-include './version.php';
+include 'version.php';

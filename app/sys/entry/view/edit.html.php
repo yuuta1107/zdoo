@@ -2,12 +2,12 @@
 /**
  * The edit view of entry module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
  * @package     entry 
  * @version     $Id: edit.html.php 4146 2016-10-14 09:10:58Z liugang $
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 include '../../common/view/header.html.php';
 include '../../common/view/chosen.html.php';

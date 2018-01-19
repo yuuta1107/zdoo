@@ -1,10 +1,43 @@
 $(document).ready(function()
 {
+    $('[name^=objectType]').change(function()
+    {
+        var objectType = $(this).val();
+        var checked    = $(this).prop('checked');
+        if(objectType != 'project')
+        {
+            if(checked)
+            {
+                $('[name^=objectType]').not(this).not('[value=project]').prop('checked', false).change();
+            }
+            if(objectType == 'order')    $('#customer').parents('tr').toggle(checked);
+            if(objectType == 'contract') $('#customer').parents('tr').toggle(checked);
+        }
+        $('#' + objectType).parents('tr').toggle(checked);
+    });
+
     /* show or hide detail. */
     $(document).on('click', '.detail', function()
     {
         if($(this).find('i').hasClass('icon-double-angle-down'))
         {
+            $('input[name^=dateList]').each(function()
+            {
+                if(!($this).val()) $(this).val($('#date').val());
+            }
+            $('select[name^=categoryList]').each(function()
+            {
+                if(!$(this).val()) $(this).val($('#category').val()).trigger('chosen:updated');
+            });
+            $('select[name^=relatedList]').each(function()
+            {
+                if(!$(this).val()) $(this).val($('#related').val()).trigger('chosen:updated');
+            });
+            $('textarea[name^=descList]').each(function()
+            {
+                if(!$(this).val()) $(this).val($('#desc').val());
+            }
+
             $('#refund-detail').removeClass('hidden');
             $('#money').prop('readonly', 'readonly');
             $('#refund-date').addClass('hidden');
@@ -45,10 +78,12 @@ $(document).ready(function()
     /* Add a trade detail item. */
     $(document).on('click', '.table-detail .icon-plus', function()
     {
-        $(this).closest('tr').after($('#detailTpl').html().replace(/key/g, v.key));
-        $(this).closest('tr').next().find("select").chosen();
-        var options = window.datetimepickerDefaultOptions;
-        $(this).closest('tr').next().find(".form-date").fixedDate().datetimepicker($.extend(options, {eleClass:'', startView: 2, minView: 2, maxView: 1, format: 'yyyy-mm-dd'}));
+        var tr = $(this).closest('tr');
+        tr.after($('#detailTpl').html().replace(/key/g, v.key));
+        tr.next().find('input[name^=dateList]').val($('#date').val()).fixedDate().datetimepicker($.extend(window.datetimepickerDefaultOptions, {eleClass:'', minView: 2, maxView: 1, format: 'yyyy-mm-dd'}));
+        tr.next().find('select[name^=categoryList]').val($('#category').val()).chosen(window.chosenDefaultOptions);
+        tr.next().find('select[name^=relatedList]').val($('#related').val()).chosen(window.chosenDefaultOptions);
+        tr.next().find('textarea[name^=descList]').val($('#desc').val());
         $('input[name^=moneyList]').change(updateMoney);
         v.key++;
         return false;
@@ -73,4 +108,34 @@ $(document).ready(function()
     {
         $('.detail').click();
     }
+
+    $('[name^=objectType]').each(function()
+    {
+        $('#' + $(this).val()).parents('tr').hide();
+    });
+
+    $('[name^=objectType]').each(function()
+    {
+        if($(this).prop('checked')) $(this).change();
+    });
 });
+
+function getOrders(customer)
+{
+    if(!customer) return false;
+
+    $('#order').load(createLink('crm.order', 'ajaxGetOrders', 'customer=' + customer), function()
+    {
+        $('#order').trigger('chosen:updated');
+    });
+}
+
+function getContracts(customer)
+{
+    if(!customer) return false;
+
+    $('#contract').load(createLink('crm.contract', 'getOptionMenu', 'customer=' + customer), function()
+    {
+        $('#contract').trigger('chosen:updated');
+    });
+}

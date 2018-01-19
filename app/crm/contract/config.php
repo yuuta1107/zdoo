@@ -2,12 +2,12 @@
 /**
  * The config file of contract module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Yidong Wang <yidong@cnezsoft.com>
  * @package     contract 
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 $config->contract->require = new stdclass();
 $config->contract->require->create  = 'customer, name';
@@ -15,8 +15,8 @@ $config->contract->require->edit    = 'customer, name';
 $config->contract->require->receive = 'amount, depositor';
 
 $config->contract->editor = new stdclass();
-$config->contract->editor->create       = array('id' => 'items', 'tools' => 'full');
-$config->contract->editor->edit         = array('id' => 'items', 'tools' => 'full');
+$config->contract->editor->create       = array('id' => 'items',   'tools' => 'simple');
+$config->contract->editor->edit         = array('id' => 'items',   'tools' => 'simple');
 $config->contract->editor->receive      = array('id' => 'comment', 'tools' => 'simple');
 $config->contract->editor->delivery     = array('id' => 'comment', 'tools' => 'simple');
 $config->contract->editor->finish       = array('id' => 'comment', 'tools' => 'simple');
@@ -37,6 +37,7 @@ $config->contract->search['fields']['status']        = $lang->contract->status;
 $config->contract->search['fields']['begin']         = $lang->contract->begin;
 $config->contract->search['fields']['end']           = $lang->contract->end;
 $config->contract->search['fields']['createdBy']     = $lang->contract->createdBy;
+$config->contract->search['fields']['createdDate']   = $lang->contract->createdDate;
 $config->contract->search['fields']['delivery']      = $lang->contract->delivery;
 $config->contract->search['fields']['deliveredBy']   = $lang->contract->deliveredBy;
 $config->contract->search['fields']['deliveredDate'] = $lang->contract->deliveredDate;
@@ -52,6 +53,7 @@ $config->contract->search['params']['status']        = array('operator' => '=', 
 $config->contract->search['params']['begin']         = array('operator' => '>=', 'control' => 'input',  'values' => '', 'class' => 'date');
 $config->contract->search['params']['end']           = array('operator' => '>=', 'control' => 'input',  'values' => '', 'class' => 'date');
 $config->contract->search['params']['createdBy']     = array('operator' => '=',  'control' => 'select', 'values' => 'users');
+$config->contract->search['params']['createdDate']   = array('operator' => '>=', 'control' => 'input',  'values' => '', 'class' => 'date');
 $config->contract->search['params']['delivery']      = array('operator' => '=',  'control' => 'select', 'values' => $lang->contract->deliveryList);
 $config->contract->search['params']['deliveredBy']   = array('operator' => '=',  'control' => 'select', 'values' => 'users');
 $config->contract->search['params']['deliveredDate'] = array('operator' => '>=', 'control' => 'input',  'values' => '', 'class' => 'date');

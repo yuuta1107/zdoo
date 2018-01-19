@@ -14,7 +14,7 @@ $lang->makeup->export = '导出补班记录';
 $lang->makeup->personal     = '我的补班';
 $lang->makeup->browseReview = '审核列表';
 $lang->makeup->company      = '所有补班';
-$lang->makeup->setReviewer  = '设置审核者';
+$lang->makeup->setReviewer  = '补班设置';
 $lang->makeup->batchReview  = '批量审核';
 $lang->makeup->batchPass    = '批量通过';
 
@@ -41,6 +41,7 @@ $lang->makeup->typeList['compensate'] = '补班';
 
 $lang->makeup->statusList['draft']  = '草稿';
 $lang->makeup->statusList['wait']   = '等待审核';
+$lang->makeup->statusList['doing']  = '审核中';
 $lang->makeup->statusList['pass']   = '通过';
 $lang->makeup->statusList['reject'] = '拒绝';
 

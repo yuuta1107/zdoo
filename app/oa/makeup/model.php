@@ -2,19 +2,19 @@
 /**
  * The model file of makeup module of Ranzhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Tingting Dai <daitingting@xirangit.com>
  * @package     makeup
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 class makeupModel extends model
 {
     public function __construct($appName = '')
     {
         parent::__construct($appName);
-        $this->app->loadModuleConfig('attend', 'oa');
+        $this->loadModel('attend', 'oa');
     }
 
     /**
@@ -44,12 +44,26 @@ class makeupModel extends model
      */
     public function getList($type = 'personal', $year = '', $month = '', $account = '', $dept = '', $status = '', $orderBy = 'id_desc')
     {
+        $date = '';
+        if($year)  
+        {
+            if(!$month) $date = "$year-%";
+            if($month)  $date = "$year-$month-%";
+        }
+        else
+        {
+            if($month) $date = "%-$month-%";
+        }
+
         $makeupList = $this->dao->select('t1.*, t2.realname, t2.dept')
             ->from(TABLE_OVERTIME)->alias('t1')
             ->leftJoin(TABLE_USER)->alias('t2')->on("t1.createdBy=t2.account")
-            ->where("t1.type='compensate'")
-            ->beginIf($year != '')->andWhere('t1.year')->eq($year)->fi()
-            ->beginIf($month != '')->andWhere('t1.begin')->like("%-$month-%")->fi()
+            ->where('t1.type')->eq('compensate')
+            ->beginIf($date)
+            ->andWhere('t1.begin', true)->like($date)
+            ->orWhere('t1.end')->like($date)
+            ->markRight(1)
+            ->fi()
             ->beginIf($account != '')->andWhere('t1.createdBy')->eq($account)->fi()
             ->beginIf($dept != '')->andWhere('t2.dept')->in($dept)->fi()
             ->beginIf($status != '')->andWhere('t1.status')->eq($status)->fi()
@@ -58,6 +72,35 @@ class makeupModel extends model
             ->orderBy("t2.dept,t1.{$orderBy}")
             ->fetchAll();
         $this->session->set('makeupQueryCondition', $this->dao->get());
+
+        return $this->processStatus($makeupList);
+    }
+
+    /**
+     * Process status of makeup list. 
+     * 
+     * @param  array  $makeupList 
+     * @access public
+     * @return array 
+     */
+    public function processStatus($makeupList)
+    {
+        $users    = $this->loadModel('user')->getPairs();
+        $managers = $this->user->getUserManagerPairs();
+        foreach($makeupList as $makeup)
+        {
+            $makeup->statusLabel = zget($this->lang->makeup->statusList, $makeup->status);
+
+            if($makeup->status == 'wait')
+            {
+                $reviewer = $this->getReviewedBy();
+                if(!$reviewer) 
+                {
+                    $reviewer = trim(zget($managers, $makeup->createdBy, ''), ',');
+                }
+                if($reviewer) $makeup->statusLabel = zget($users, $reviewer) . $this->lang->makeup->statusList['doing'];
+            }
+        }
 
         return $makeupList;
     }
@@ -90,6 +133,7 @@ class makeupModel extends model
         $dateList  = $this->dao->select('begin')->from(TABLE_OVERTIME)
             ->where('type')->eq('compensate')
             ->beginIF($type == 'personal')->andWhere('createdBy')->eq($this->app->user->account)->fi()
+            ->beginIF($type == 'company')->andWhere('status')->ne('draft')->fi()
             ->groupBy('begin')
             ->orderBy('begin_desc')
             ->fetchAll('begin');
@@ -192,7 +236,7 @@ class makeupModel extends model
      */
     public function checkDate($date, $id = 0)
     {
-        if(substr($date->begin, 0, 7) != substr($date->end, 0, 7)) return array('result' => 'fail', 'message' => $this->lang->makeup->sameMonth);
+        //if(substr($date->begin, 0, 7) != substr($date->end, 0, 7)) return array('result' => 'fail', 'message' => $this->lang->makeup->sameMonth);
         if("$date->end $date->finish" <= "$date->begin $date->start") return array('result' => 'fail', 'message' => $this->lang->makeup->wrongEnd);
 
         $existMakeup = $this->checkMakeup($date, $this->app->user->account, $id);

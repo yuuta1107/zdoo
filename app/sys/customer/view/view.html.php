@@ -2,12 +2,12 @@
 /**
  * The info file of customer module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Tingting Dai <daitingting@xirangit.com>
  * @package     customer 
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 ?>
 <?php include $app->getModuleRoot() . 'common/view/header.html.php';?>
@@ -28,10 +28,35 @@
       <div class='panel-heading'><strong><?php echo $lang->customer->desc;?></strong></div>
       <div class='panel-body'><?php echo $customer->desc;?></div>
     </div>
+
     <div class='panel'>
-      <div class='panel-heading'><strong><i class="icon-list-info"></i> <?php echo $lang->customer->intension;?></strong></div>
+      <div class='panel-heading'><strong><?php echo $lang->customer->intension;?></strong></div>
       <div class='panel-body'><?php echo $customer->intension;?></div>
     </div>
+
+    <?php if(!empty($returnList)):?>
+    <div class='panel'>
+      <div class='panel-heading'><strong><?php echo $lang->contract->returnRecords;?></strong></div>
+      <table class='table'>
+        <tr>
+          <th><?php echo $lang->contract->common;?></th>
+          <th class='w-100px'><?php echo $lang->contract->returnedDate;?></th>
+          <th class='w-100px'><?php echo $lang->contract->returnedBy;?></th> 
+          <th class='w-160px'><?php echo $lang->contract->amount;?></th> 
+        </tr>
+        <?php foreach($returnList as $return):?>
+        <?php $contract = $contracts[$return->contract];?>
+        <tr>
+          <td><?php echo $contract->name;?></td>
+          <td><?php echo $return->returnedDate;?></td>
+          <td><?php echo zget($users, $return->returnedBy, $return->returnedBy);?></td>
+          <td><?php echo zget($currencySign, $contract->currency, '') . formatMoney($return->amount);?></td>
+        </tr>
+        <?php endforeach;?>
+      </table>
+    </div>
+    <?php endif;?>
+
     <?php echo $this->fetch('file', 'printFiles', array('files' => $files, 'fieldset' => 'true'))?>
     <?php echo $this->fetch('action', 'history', "objectType=customer&objectID={$customer->id}")?>
     <div class='page-actions'>
@@ -70,7 +95,15 @@
       <div class='panel-body'>
         <table class='table table-info'>
           <tr>
-            <th class='w-70px'><?php echo $lang->customer->depositor;?></th>
+            <th class='w-70px'><?php echo $lang->customer->source;?></th>
+            <td><?php echo zget($lang->customer->sourceList, $customer->source);?></td>
+          </tr>
+          <tr>
+            <th><?php echo $lang->customer->sourceNote;?></th>
+            <td><?php echo $customer->sourceNote;?></td>
+          </tr>
+          <tr>
+            <th><?php echo $lang->customer->depositor;?></th>
             <td><?php echo $customer->depositor;?></td>
           </tr>
           <tr>
@@ -141,6 +174,7 @@
         <?php endforeach;?>
       </table>
     </div>
+
     <div class='panel'>
       <div class='panel-heading'>
         <div class='row'>      
@@ -161,6 +195,30 @@
         <?php endforeach;?>
       </table>
     </div>
+
+    <?php if(!empty($productList)):?>
+    <div class='panel'>
+      <div class='panel-heading'>
+        <div class='row'>      
+          <div class='col w-p50'><strong><i class='icon-list-info'></i> <?php echo $lang->customer->purchasedProducts;?></strong></div>
+          <div class='col w-p20'><strong><?php echo $lang->product->line;?></strong></div>
+          <div class='col w-p15'><strong><?php echo $lang->product->type;?></strong></div>
+          <div class='col w-p15'><strong><?php echo $lang->product->status;?></strong></div>
+        </div>
+      </div>
+      <table class='table table-data table-condensed'>
+        <?php foreach($productList as $product):?>
+        <tr data-url='<?php echo $this->createLink('crm.product', 'view', "productID=$product->id"); ?>'>
+          <td class='w-p50'><?php echo $product->name;?></td>
+          <td class='w-p20'><?php echo zget($lang->product->lineList, $product->line);?></td>
+          <td class='w-p15'><?php echo zget($lang->product->typeList, $product->type);?></td>
+          <td class='w-p15'><?php echo zget($lang->product->statusList, $product->status);?></td>
+        </tr>
+        <?php endforeach;?>
+      </table>
+    </div>
+    <?php endif;?>
+
     <div class='panel'>
       <div class='panel-heading'><strong><?php echo $lang->customer->address;?></strong></div>
       <table class='table table-data table-condensed'>

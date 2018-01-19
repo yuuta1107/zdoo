@@ -17,7 +17,7 @@ if(!function_exists('getWebRoot')){function getWebRoot(){}}
 if(!isset($config)) $config = new stdclass();
 
 /* 基本设置。Basic settings. */
-$config->version    = '4.5';           // ZenTaoPHP的版本。 The version of ZenTaoPHP. Don't change it. 
+$config->version    = '4.6';                // ZenTaoPHP的版本。 The version of ZenTaoPHP. Don't change it. 
 $config->charset    = 'UTF-8';              // ZenTaoPHP的编码。 The encoding of ZenTaoPHP.                 
 $config->cookieLife = time() + 2592000;     // Cookie的生存时间。The cookie life time.                      
 $config->timezone   = 'Asia/Shanghai';      // 时区设置。        The time zone setting, for more see http://www.php.net/manual/en/timezones.php.
@@ -112,6 +112,10 @@ $config->file->allowed = 'txt,doc,docx,dot,wps,wri,pdf,ppt,pptx,xls,xlsx,ett,xlt
 $filterConfig = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'filter.php';
 if(file_exists($filterConfig)) include $filterConfig;
 
+/* 引用自定义的配置。 Include the custom config file. */
+$myConfig = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'my.php';
+if(file_exists($myConfig)) include $myConfig;
+
 /* 然之配置文件。 rangerteam settings. */
 $rangerteamConfig = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'rangerteam.php';
 if(file_exists($rangerteamConfig)) include $rangerteamConfig;
@@ -123,6 +127,4 @@ if(file_exists($rightsConfig)) include $rightsConfig;
 $extConfigFiles = glob(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'ext/*.php');
 if($extConfigFiles) foreach($extConfigFiles as $extConfigFile) include $extConfigFile;
 
-/* 引用自定义的配置。 Include the custom config file. */
-$myConfig = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'my.php';
-if(file_exists($myConfig)) include $myConfig;
+if(!isset($config->debug)) $config->debug = true;

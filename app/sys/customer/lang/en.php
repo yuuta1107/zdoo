@@ -2,7 +2,7 @@
 /**
  * The customer module en file of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Tingting Dai <daitingting@xirangit.com>
  * @package     customer
@@ -17,6 +17,8 @@ $lang->customer->name          = 'Name';
 $lang->customer->contact       = 'Contact';
 $lang->customer->depositor     = 'Account';
 $lang->customer->type          = 'Type';
+$lang->customer->source        = 'Source';
+$lang->customer->sourceNote    = 'Note';
 $lang->customer->size          = 'Size';
 $lang->customer->industry      = 'Industry';
 $lang->customer->area          = 'Area';
@@ -44,24 +46,33 @@ $lang->customer->contactedDate = 'Contact On';
 $lang->customer->nextDate      = 'Next Contact';
 $lang->customer->selectContact = 'Select Contact';
 
-$lang->customer->browse      = 'Browse Customer';
-$lang->customer->view        = 'View';
-$lang->customer->create      = 'Add a Customer';
-$lang->customer->delete      = 'Delete Customer';
-$lang->customer->order       = 'Orders';
-$lang->customer->contact     = 'Contact';
-$lang->customer->contract    = 'Contracts';
-$lang->customer->address     = 'Addresses';
-$lang->customer->record      = 'Record';
-$lang->customer->assign      = 'Assign Customer';
-$lang->customer->batchAssign = 'Batch Assign';
-$lang->customer->linkContact = 'Add a Contact';
-$lang->customer->list        = 'Customers';
-$lang->customer->edit        = 'Edit';
-$lang->customer->export      = 'Export';
-$lang->customer->merge       = 'Merge';
-$lang->customer->basicInfo   = 'Basic Info';
-$lang->customer->moreInfo    = 'More Info';
+$lang->customer->browse            = 'Browse Customer';
+$lang->customer->view              = 'View';
+$lang->customer->create            = 'Add a Customer';
+$lang->customer->delete            = 'Delete Customer';
+$lang->customer->order             = 'Orders';
+$lang->customer->contact           = 'Contact';
+$lang->customer->contract          = 'Contracts';
+$lang->customer->address           = 'Addresses';
+$lang->customer->record            = 'Record';
+$lang->customer->assign            = 'Assign Customer';
+$lang->customer->batchAssign       = 'Batch Assign';
+$lang->customer->linkContact       = 'Add a Contact';
+$lang->customer->list              = 'Customers';
+$lang->customer->edit              = 'Edit';
+$lang->customer->export            = 'Export';
+$lang->customer->merge             = 'Merge';
+$lang->customer->basicInfo         = 'Basic Info';
+$lang->customer->moreInfo          = 'More Info';
+$lang->customer->purchasedProducts = 'Purchased Products';
+
+$lang->customer->sourceList['']              = '';
+$lang->customer->sourceList['visit']         = 'Visit Directly';
+$lang->customer->sourceList['advertisement'] = 'Advertisement';
+$lang->customer->sourceList['introduce']     = 'Introduce';
+$lang->customer->sourceList['activity']      = 'Activity';
+$lang->customer->sourceList['socialPlat']    = 'Social Platform';
+$lang->customer->sourceList['others']        = 'Others';
 
 $lang->customer->typeList['']            = '';
 $lang->customer->typeList['national']    = 'National';

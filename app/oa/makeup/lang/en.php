@@ -14,7 +14,7 @@ $lang->makeup->export = 'Export';
 $lang->makeup->personal     = 'My Makeup';
 $lang->makeup->browseReview = 'Review List';
 $lang->makeup->company      = 'All';
-$lang->makeup->setReviewer  = 'Set Reviewer';
+$lang->makeup->setReviewer  = 'Settings';
 $lang->makeup->batchReview  = 'Batch Review';
 $lang->makeup->batchPass    = 'Batch Pass';
 
@@ -41,6 +41,7 @@ $lang->makeup->typeList['compensate'] = 'Compensated Leave';
 
 $lang->makeup->statusList['draft']  = 'Draft';
 $lang->makeup->statusList['wait']   = 'Wait';
+$lang->makeup->statusList['doing']  = 'Doing';
 $lang->makeup->statusList['pass']   = 'Pass';
 $lang->makeup->statusList['reject'] = 'Reject';
 

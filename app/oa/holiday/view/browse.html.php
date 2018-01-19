@@ -2,12 +2,12 @@
 /**
  * The browse view file of holiday module of Ranzhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      chujilu <chujilu@cnezsoft.com>
  * @package     holiday
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 ?>
 <?php include '../../common/view/header.html.php';?>
@@ -53,6 +53,11 @@
         </tr>
         <?php endforeach;?>
       </table>
+      <?php if(!$holidays):?>
+      <div class='table-footer'>
+        <div class='pager' style='float: right; clear: none'><?php echo $lang->pager->noRecord;?></div>
+      </div>
+      <?php endif;?>
     </div>
   </div>
 </div>

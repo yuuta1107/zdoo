@@ -2,12 +2,12 @@
 /**
  * The control file of index module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
  * @package     index 
  * @version     $Id: control.php 4205 2016-10-24 08:19:13Z liugang $
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 class index extends control
 {
@@ -91,7 +91,7 @@ class index extends control
             else
             {
                 $moduleName = $block->block;
-                if((isset($block->params->type) or isset($block->params->status)) and is_array($this->lang->block->moreLinkList->{$moduleName}))
+                if((isset($block->params->type) or isset($block->params->status)) and isset($this->lang->block->moreLinkList->$moduleName) and is_array($this->lang->block->moreLinkList->{$moduleName}))
                 {
                     $type = isset($block->params->type) ? $block->params->type : $block->params->status;
                     if(isset($this->lang->block->moreLinkList->{$moduleName}[$type]))

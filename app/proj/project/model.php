@@ -2,12 +2,12 @@
 /**
  * The model file of project module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Yidong Wang <yidong@cnezsoft.com>
  * @package     project 
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 class projectModel extends model
 {
@@ -124,12 +124,13 @@ class projectModel extends model
     /**
      * Get  project pairs.
      * 
+     * @param  string $orderBy
      * @access public
      * @return array
      */
-    public function getPairs()
+    public function getPairs($orderBy = 'id_desc')
     {
-        return $this->dao->select('id,name')->from(TABLE_PROJECT)->where('deleted')->eq(0)->fetchPairs();
+        return $this->dao->select('id,name')->from(TABLE_PROJECT)->where('deleted')->eq(0)->orderBy($orderBy)->fetchPairs();
     }
 
     /**
@@ -560,6 +561,7 @@ class projectModel extends model
                 $menu .= "<li>";
                 $menu .= "<a data-toggle='dropdown' class='dropdown-toggle' href='#'>" . $this->lang->project->project. " <i class='icon-caret-down'></i></a>";
                 $menu .= "<ul class='dropdown-menu'>";
+                $menu .= commonModel::printLink('project', 'view', "projectID=$projectID", $this->lang->view, "data-toggle='modal'", false, '', 'li');
                 $menu .= commonModel::printLink('project', 'edit', "projectID=$projectID", $this->lang->edit, "data-toggle='modal'", false, '', 'li');
                 $menu .= commonModel::printLink('project', 'member', "projectID=$projectID", $this->lang->project->member, "data-toggle='modal''", false, '', 'li');
                 if($project->status != 'finished') $menu .= commonModel::printLink('project','finish', "projectID=$projectID", $this->lang->finish, "data-toggle='modal'", false, '', 'li');

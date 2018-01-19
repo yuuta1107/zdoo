@@ -2,12 +2,12 @@
 /**
  * The model file of user module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
  * @package     user
  * @version     $Id: model.php 4145 2016-10-14 05:31:16Z liugang $
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 ?>
 <?php
@@ -205,6 +205,21 @@ class userModel extends model
     public function getRoleList()
     {
         return $this->lang->user->roleList;
+    }
+
+    /**
+     * Get pairs of user and dept manager. 
+     * 
+     * @access public
+     * @return array
+     */
+    public function getUserManagerPairs()
+    {
+        return $this->dao->select('t1.account, t2.moderators')->from(TABLE_USER)->alias('t1')
+            ->leftJoin(TABLE_CATEGORY)->alias('t2')->on('t1.dept=t2.id')
+            ->where('t1.deleted')->eq('0')
+            ->andWhere('t2.type')->eq('dept')
+            ->fetchPairs();
     }
 
     /**

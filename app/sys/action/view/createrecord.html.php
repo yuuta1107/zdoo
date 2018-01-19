@@ -2,12 +2,12 @@
 /**
  * The save order record view file of order module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Tingting Dai <daitingting@xirangit.com>
  * @package     order
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 ?>
 <?php include '../../../sys/common/view/header.modal.html.php';?>
@@ -32,11 +32,12 @@
                 <option></option>
                 <?php foreach($contacts as $contact):?>
                 <?php 
-                    $phone  = $contact->phone;
-                    $mobile = $contact->mobile;
-                    $phone  = empty($phone) ? $mobile : (empty($mobile) ? $phone : $phone . $lang->slash . $mobile);
+                $phone  = $contact->phone;
+                $mobile = $contact->mobile;
+                $phone  = empty($phone) ? $mobile : (empty($mobile) ? $phone : $phone . $lang->slash . $mobile);
+                $optionPinyin = zget($pinyinContacts, $contact->realname, '');
                 ?>
-                <option value='<?php echo $contact->id;?>' data-phone='<?php echo $phone;?>' data-qq='<?php echo $contact->qq;?>' data-email='<?php echo $contact->email;?>'><?php echo $contact->realname;?></option>
+                <option value='<?php echo $contact->id;?>' data-phone='<?php echo $phone;?>' data-qq='<?php echo $contact->qq;?>' data-email='<?php echo $contact->email;?>' data-keys='<?php echo $optionPinyin;?>'><?php echo $contact->realname;?></option>
                 <?php endforeach;?>
               </select>
               <?php echo html::input('realname', '', "class='form-control' style='display:none'");?>

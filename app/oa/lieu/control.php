@@ -2,12 +2,12 @@
 /**
  * The control file of lieu of Ranzhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Tingting Dai <daitingting@xirangit.com>
  * @package     lieu
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 class lieu extends control
 {
@@ -77,7 +77,7 @@ class lieu extends control
         }
         else
         {
-            if($date == '' or (strlen($date) != 6 and strlen($date) != 4)) $date = date("Ym");
+            if($date == '' or (strlen($date) != 6 and strlen($date) != 4)) $date = date('Ym');
             $currentYear  = substr($date, 0, 4);
             $currentMonth = strlen($date) == 6 ? substr($date, 4, 2) : '';
             $monthList    = $this->lieu->getAllMonth($type);
@@ -179,6 +179,12 @@ class lieu extends control
     {
         if($_POST)
         {
+            if($this->config->lieu->checkHours)
+            {
+                $result = $this->lieu->checkHours();
+                if(is_array($result)) $this->send($result);
+            }
+
             $result = $this->lieu->create();
             if(is_array($result)) $this->send($result);
 
@@ -231,6 +237,12 @@ class lieu extends control
 
         if($_POST)
         {
+            if($this->config->lieu->checkHours)
+            {
+                $result = $this->lieu->checkHours();
+                if(is_array($result)) $this->send($result);
+            }
+
             $result = $this->lieu->update($id);
             if(is_array($result) && $result['result'] == 'fail') $this->send($result);
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
@@ -499,9 +511,10 @@ class lieu extends control
     {
         if($_POST)
         {
-            $this->loadModel('setting')->setItem('system.oa.lieu..reviewedBy', $this->post->reviewedBy);
+            $this->loadModel('setting')->setItem('system.oa.lieu.reviewedBy', $this->post->reviewedBy);
+            $this->setting->setItem('system.oa.lieu.checkHours', $this->post->checkHours);
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
-            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess));
+            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
         }
 
         if($module)

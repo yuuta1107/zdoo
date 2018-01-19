@@ -5,4 +5,7 @@ $(document).ready(function()
         $('#menu .nav li').find('a[href*=' + v.status + ']').parent().addClass('active');
         $('#menu .nav li').find('[href*=unreviewed]').parent().removeClass('active');
     }
+
+    /* expand active tree. */
+    $('.tree li.active .hitarea').click();
 })

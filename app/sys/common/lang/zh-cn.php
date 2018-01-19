@@ -2,12 +2,12 @@
 /**
  * The zh-cn file of common module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
  * @package     common 
  * @version     $Id: zh-cn.php 4194 2016-10-21 09:23:53Z daitingting $
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 $lang->colon      = ' : ';
 $lang->ellipsis   = '…';
@@ -21,6 +21,7 @@ $lang->raquo      = '&raquo;';
 $lang->minus      = ' - ';
 $lang->hyphen     = '-';
 $lang->slash      = ' / ';
+$lang->semicolon  = '；';
 $lang->RMB        = '￥';
 $lang->divider    = "<span class='divider'>{$lang->raquo}</span> ";
 $lang->at         = ' 于 ';
@@ -44,7 +45,7 @@ $lang->apps->superadmin = '后台';
 /* Lang items for ranzhi. */
 $lang->ranzhi    = '然之协同';
 $lang->agreement = "已阅读并同意<a href='http://zpl.pub/page/zplv11.html' target='_blank'>《Z PUBLIC LICENSE授权协议1.2》</a>。<span class='text-danger'>未经许可，不得去除、隐藏或遮掩然之系统的任何标志及链接。</span>";
-$lang->poweredBy = "<a href='http://www.ranzhico.com/?v=%s' target='_blank'>{$lang->ranzhi}%s</a>";
+$lang->poweredBy = "<a href='http://www.ranzhi.org/?v=%s' target='_blank'>{$lang->ranzhi}%s</a>";
 $lang->ipLimited = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8' /></head><body>抱歉，管理员限制当前IP登录，请联系管理员解除限制。</body></html>";
 
 /* IE6 alert.  */
@@ -397,6 +398,7 @@ $lang->error->noConvertFun = '不存在iconv和mb_convert_encoding转码方法�
 $lang->error->noCurlExt    = '没有加载curl扩展！';
 $lang->error->notInt       = '<strong>%s</strong>不能为纯数字组合。';
 $lang->error->pasteImg     = '您的浏览器不支持粘贴图片！';
+$lang->error->accessDenied = '访问受限';
 
 /* The pager items. */
 $lang->pager = new stdclass();

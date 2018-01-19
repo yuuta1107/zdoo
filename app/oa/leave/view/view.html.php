@@ -2,21 +2,19 @@
 /**
  * The detail view file of leave module of RanZhi.
  *
- * @copyright   Copyright 2009-2017 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Gang Liu <liugang@cnezsoft.com>
  * @package     leave 
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 ?>
 <?php include '../../../sys/common/view/header.modal.html.php';?>
-<?php include '../../../sys/common/view/kindeditor.html.php';?>
-<table class='table table-bordered'>
+<table class='table table-bordered leaveTable'>
   <tr>
     <th><?php echo $lang->leave->status;?></th>
-    <?php $status = ($leave->status == 'pass' and $leave->backDate != '0000-00-00 00:00:00' and $leave->backDate != $leave->end . ' ' . $leave->finish) ? 'back' : $leave->status;?>
-    <td class='leave-<?php echo $status;?>'><?php echo $lang->leave->statusList[$status];?></td>
+    <td class='leave-<?php echo $leave->status;?>'><?php echo $lang->leave->statusList[$leave->status];?></td>
     <th><?php echo $lang->leave->type;?></th>
     <td><?php echo zget($lang->leave->typeList, $leave->type);?></td>
   </tr>
@@ -40,7 +38,7 @@
     <th><?php echo $lang->leave->createdBy;?></th>
     <td><?php echo zget($users, $leave->createdBy);?></th>
     <th><?php echo $lang->leave->reviewedBy;?></th>
-    <td><?php echo zget($users, $leave->reviewedBy);?></th>
+    <td id='reviewedBy'><?php echo zget($users, $leave->reviewedBy);?></th>
   </tr>
   <tr>
     <th><?php echo $lang->leave->createdDate;?></th>
@@ -73,7 +71,7 @@
   }
   else
   {
-      if($leave->status == 'wait')
+      if(strpos(',wait,doing,', ",$leave->status,") !== false)
       {
           commonModel::printLink('oa.leave', 'edit',   "id={$leave->id}", $lang->edit, "class='btn loadInModal'");
           echo "<div class='btn-group'>";
@@ -81,7 +79,7 @@
           commonModel::printLink('oa.leave', 'review', "id={$leave->id}&status=reject", $lang->leave->statusList['reject'], "class='btn loadInModal'");
           echo '</div>';
       }
-      elseif($leave->status == 'pass' and $leave->backDate != '0000-00-00 00:00:00' and $leave->backDate != "$leave->end $leave->finish")
+      elseif($leave->status == 'back')
       {
           echo "<div class='btn-group'>";
           commonModel::printLink('oa.leave', 'review', "id={$leave->id}&status=pass&mode=back",   $lang->leave->statusList['pass'],   "class='btn reviewPass'");

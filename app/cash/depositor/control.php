@@ -2,12 +2,12 @@
 /**
  * The control file of depositor module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Tingting Dai <daitingting@xirangit.com>
  * @package     depositor
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 class depositor extends control
 {
@@ -25,6 +25,8 @@ class depositor extends control
     /**
      * Browse depositor.
      * 
+     * @param string $tag 
+     * @param string $status 
      * @param string $orderBy     the order by
      * @param int    $recTotal 
      * @param int    $recPerPage 
@@ -32,7 +34,7 @@ class depositor extends control
      * @access public
      * @return void
      */
-    public function browse($tag = '', $orderBy = 'id_desc', $recTotal = 0, $recPerPage = 20, $pageID = 1)
+    public function browse($tag = '', $status = 'normal', $orderBy = 'id_desc', $recTotal = 0, $recPerPage = 20, $pageID = 1)
     {   
         $this->app->loadClass('pager', $static = true);
         $pager = new pager($recTotal, $recPerPage, $pageID);
@@ -40,12 +42,13 @@ class depositor extends control
         $this->view->trades       = $this->depositor->getTradesAmount();
         $this->view->balances     = $this->loadModel('balance', 'cash')->getLatest();
         $this->view->title        = $this->lang->depositor->browse;
-        $this->view->depositors   = $this->depositor->getList($tag, $orderBy, $pager);
+        $this->view->depositors   = $this->depositor->getList($tag, $status, $orderBy, $pager);
         $this->view->pager        = $pager;
         $this->view->orderBy      = $orderBy;
         $this->view->currencyList = $this->loadModel('common', 'sys')->getCurrencyList();
         $this->view->tags         = $this->depositor->getTags();
         $this->view->currentTag   = $tag;
+        $this->view->status       = $status;
         $this->display();
     }   
 

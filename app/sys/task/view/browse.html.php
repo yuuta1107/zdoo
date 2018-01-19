@@ -2,12 +2,12 @@
 /**
  * The view file of task module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Yidong Wang <yidong@cnezsoft.com>
  * @package     task
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 ?>
 <?php include $app->getModuleRoot() . 'common/view/header.html.php';?>
@@ -63,7 +63,7 @@
             <td colspan='10'>
               <table class='table table-data table-hover table-fixed'>
                 <?php foreach($task->children as $child):?>
-                <tr class="text-center">
+                <tr class='text-center'>
                   <td class='w-60px'><?php echo $child->id;?></td>
                   <td class='w-40px'><span class='active pri pri-<?php echo $child->pri; ?>'><?php echo $lang->task->priList[$child->pri];?></span></td>
                   <td class='text-left' title="<?php echo $child->name;?>">
@@ -73,9 +73,9 @@
                   <td class='w-100px'>  <?php echo $child->deadline;?></td>
                   <td class='w-80px'>   <?php if(isset($users[$child->assignedTo])) echo $users[$child->assignedTo];?></td>
                   <td class="w-90px <?php echo $child->status;?>">   <?php echo zget($lang->task->statusList, $child->status);?></td>
-                  <td class='w-100px visible-lg'><?php echo substr($child->createdDate, 0, 10);?></td>
-                  <td class='w-90px visible-lg'> <?php echo $child->consumed;?></td>
-                  <td class='w-110px visible-lg'><?php echo $child->left;?></td>
+                  <td class='w-90px'><?php echo substr($child->createdDate, 0, 10);?></td>
+                  <td class='w-80px'> <?php echo $child->consumed;?></td>
+                  <td class='w-100px'><?php echo $child->left;?></td>
                   <td class='w-240px text-left'><?php $this->task->buildOperateMenu($child);?></td>
                 </tr>
                 <?php endforeach;?>

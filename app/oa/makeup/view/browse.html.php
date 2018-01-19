@@ -2,12 +2,12 @@
 /**
  * The browse view file of makeup module of Ranzhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Tingting Dai <daitingting@xirangit.com>
  * @package     makeup
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 ?>
 <?php include '../../common/view/header.html.php';?>
@@ -57,10 +57,7 @@
             <th class='w-120px'><?php commonModel::printOrderLink('end', $orderBy, $vars, $lang->makeup->end);?></th>
             <th class='w-50px visible-lg'><?php commonModel::printOrderLink('hours', $orderBy, $vars, $lang->makeup->hours);?></th>
             <th><?php echo $lang->makeup->desc;?></th>
-            <th class='w-80px'><?php commonModel::printOrderLink('status', $orderBy, $vars, $lang->makeup->status);?></th>
-            <?php if($type != 'browseReview'):?>
-            <th class='w-80px'><?php commonModel::printOrderLink('reviewedBy', $orderBy, $vars, $lang->makeup->reviewedBy);?></th>
-            <?php endif;?>
+            <th class='w-100px'><?php commonModel::printOrderLink('status', $orderBy, $vars, $lang->makeup->status);?></th>
             <?php if($type == 'personal'):?>
             <th class='w-130px'><?php echo $lang->actions;?></th>
             <?php else:?>
@@ -83,10 +80,7 @@
           <td><?php echo formatTime($makeup->end . ' ' . $makeup->finish, DT_DATETIME2);?></td>
           <td class='visible-lg'><?php echo $makeup->hours == 0 ? '' : $makeup->hours;?></td>
           <td title='<?php echo $makeup->desc?>'><?php echo $makeup->desc;?></td>
-          <td class='makeup-<?php echo $makeup->status?>'><?php echo zget($this->lang->makeup->statusList, $makeup->status);?></td>
-          <?php if($type != 'browseReview'):?>
-          <td><?php echo zget($users, $makeup->reviewedBy);?></td>
-          <?php endif;?>
+          <td class='makeup-<?php echo $makeup->status?>'><?php echo $makeup->statusLabel;?></td>
           <td class='actionTD text-left'>
             <?php
             commonModel::printLink('oa.makeup', 'view', "id=$makeup->id&type=$type", $lang->detail, "data-toggle='modal'");
@@ -114,7 +108,7 @@
             }
             else
             {
-                if($makeup->status == 'wait')
+                if(strpos(',wait,doing,', ",$makeup->status,") !== false)
                 {
                     commonModel::printLink('oa.makeup', 'review', "id=$makeup->id&status=pass",   $lang->makeup->statusList['pass'],   "class='reviewPass'");
                     commonModel::printLink('oa.makeup', 'review', "id=$makeup->id&status=reject", $lang->makeup->statusList['reject'], "data-toggle='modal'");
@@ -136,6 +130,11 @@
           <?php echo html::selectButton();?>
           <?php echo html::a('javascript:;', $lang->makeup->batchPass, "class='btn btn-primary batchPass'");?> 
         </div>
+      </div>
+      <?php endif;?>
+      <?php if(!$makeupList):?>
+      <div class='table-footer'>
+        <div class='pager' style='float: right; clear: none'><?php echo $lang->pager->noRecord;?></div>
       </div>
       <?php endif;?>
     </div>

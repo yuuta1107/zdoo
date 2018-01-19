@@ -2,12 +2,12 @@
 /**
  * The control file of my module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Tingting Dai <daitingting@xirangit.com>
  * @package     my
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 class my extends control
 {
@@ -293,7 +293,7 @@ class my extends control
         $this->app->loadClass('pager', $static = true);
         $pager = new pager($recTotal, $recPerPage, $pageID);
 
-        $orders = $this->order->getList($type, '', $owner = 'my', $orderBy, $pager);
+        $orders = $this->order->getList($type, '', $owner = 'my', $needQueryCondition = true, $orderBy, $pager);
 
         /* Set pre and next condition. */
         $this->session->set('orderQueryCondition', $this->dao->get());

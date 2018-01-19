@@ -2,12 +2,12 @@
 /**
  * The model file of common module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
  * @package     common
  * @version     $Id: model.php 4150 2016-10-17 08:06:43Z liugang $
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 class commonModel extends model
 {
@@ -248,7 +248,11 @@ class commonModel extends model
     {
         global $config, $lang;
         if(isset($lang->setting->moduleList[$module]) and strpos($config->setting->modules, $module) === false) return false;
-        if($module == 'my' and $method == 'review' and empty($config->setting->modules)) return false;
+        if($module == 'my' and $method == 'review')
+        { 
+            if(empty($config->setting->modules)) return false;
+            if($config->setting->modules == trim('trip,egress')) return false;
+        }
         return true;
     }
 
@@ -403,9 +407,13 @@ class commonModel extends model
             {
                 if(commonModel::hasPriv($module, $method))
                 {
-                    $link  = helper::createLink($module, $method, $vars);
-                    $string .= !$isMobile ? "<li$class><a href='$link'>$label</a></li>\n" : "<a$class href='$link'>$label</a>";
+                    $link = helper::createLink($module, $method, $vars);
                 }
+                else
+                {
+                    $link = self::getLinkFromSubmenu($moduleName);
+                }
+                if($link) $string .= !$isMobile ? "<li$class><a href='$link'>$label</a></li>\n" : "<a$class href='$link'>$label</a>";
             }
         }
 
@@ -616,6 +624,30 @@ class commonModel extends model
         $string .= '</li></ul>';
 
         return $string;
+    }
+
+    /**
+     * Get Link From Submenu.
+     * 
+     * @param  string    $menuGroup 
+     * @access public
+     * @return string
+     */
+    public static function getLinkFromSubmenu($menuGroup)
+    {
+        global $lang, $config;
+
+        if(!isset($lang->$menuGroup->menu)) return '';
+
+        foreach($lang->$menuGroup->menu as $code => $menu)
+        {
+            if(is_array($menu)) $menu = $menu['link'];
+            list($label, $moduleName, $methodName, $vars) = explode('|', $menu);
+
+            if(commonModel::hasPriv($moduleName, $methodName)) return helper::createLink($moduleName, $methodName, $vars);
+        }
+
+        return '';
     }
 
     /**
@@ -1449,6 +1481,49 @@ class commonModel extends model
 
         commonModel::log($url, $response);
         return $response;
+    }
+
+    /**
+     * Convert items to Pinyin.
+     * 
+     * @param  array    $items 
+     * @static
+     * @access public
+     * @return array
+     */
+    public static function convert2Pinyin($items)
+    {
+        global $app;
+        static $allConverted = array();
+        static $pinyin;
+        if(empty($pinyin)) $pinyin = $app->loadClass('pinyin');
+
+        $sign = ' aNdAnD ';
+        $notConvertedItems = array_diff($items, array_keys($allConverted));
+
+        if($notConvertedItems)
+        {
+            $convertedPinYin = $pinyin->romanize(join($sign, $notConvertedItems));
+            $itemsPinYin     = explode(trim($sign), $convertedPinYin);
+            foreach($notConvertedItems as $item)
+            {
+                $itemPinYin  = array_shift($itemsPinYin);
+                $wordsPinYin = explode("\t", trim($itemPinYin));
+
+                $abbr = '';
+                foreach($wordsPinYin as $i => $wordPinyin)
+                {
+                    if($wordPinyin) $abbr .= $wordPinyin[0];
+                }
+
+                $allConverted[$item] = strtolower(join($wordsPinYin) . ' ' . $abbr);
+            }
+        }
+
+        $convertedItems = array();
+        foreach($items as $item) $convertedItems[$item] = zget($allConverted, $item, null);
+
+        return $convertedItems;
     }
 
     /**

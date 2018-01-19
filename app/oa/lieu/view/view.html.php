@@ -2,16 +2,15 @@
 /**
  * The detail view file of lieu module of RanZhi.
  *
- * @copyright   Copyright 2009-2017 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Gang Liu <liugang@cnezsoft.com>
  * @package     lieu
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 ?>
 <?php include '../../../sys/common/view/header.modal.html.php';?>
-<?php include '../../../sys/common/view/kindeditor.html.php';?>
 <table class='table table-bordered'>
   <tr>
     <th><?php echo $lang->lieu->status;?></th>
@@ -42,7 +41,7 @@
     <th><?php echo $lang->lieu->createdBy;?></th>
     <td><?php echo zget($users, $lieu->createdBy);?></td>
     <th><?php echo $lang->lieu->reviewedBy;?></th>
-    <td><?php echo zget($users, $lieu->reviewedBy);?></td>
+    <td id='reviewedBy'><?php echo zget($users, $lieu->reviewedBy);?></td>
   </tr>
   <tr>
     <th><?php echo $lang->lieu->createdDate;?></th>
@@ -69,12 +68,12 @@
           echo '</div>';
       }
   }
-  elseif($lieu->status == 'wait')
+  elseif(strpos(',wait,doing,', ",$lieu->status,") !== false)
   {
-      commonModel::printLink('oa.lieu', 'review', "id={$lieu->id}status=pass",   $lang->lieu->status['pass'],   "class='btn reviewPass'");
-      commonModel::printLink('oa.lieu', 'review', "id={$lieu->id}status=reject", $lang->lieu->status['reject'], "class='btn loadInModal'");
+      commonModel::printLink('oa.lieu', 'review', "id={$lieu->id}&status=pass",   $lang->lieu->statusList['pass'],   "class='btn reviewPass'");
+      commonModel::printLink('oa.lieu', 'review', "id={$lieu->id}&status=reject", $lang->lieu->statusList['reject'], "class='btn loadInModal'");
   }
-  echo html::a('###', $lang->goback, "class='btn' data-dismiss='modal'");
+  echo html::a('javascript:;', $lang->goback, "class='btn' data-dismiss='modal'");
   ?>
 </div>
 <?php include '../../../sys/common/view/footer.modal.html.php';?>

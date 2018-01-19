@@ -16,7 +16,7 @@ $lang->leave->reviewBack = '审核销假';
 $lang->leave->personal     = '我的请假';
 $lang->leave->browseReview = '审核列表';
 $lang->leave->company      = '所有请假';
-$lang->leave->setReviewer  = '设置审核者';
+$lang->leave->setReviewer  = '请假设置';
 $lang->leave->batchReview  = '批量审核';
 $lang->leave->batchPass    = '批量通过';
 
@@ -52,6 +52,7 @@ $lang->leave->unpaid = '非带薪假';
 
 $lang->leave->statusList['draft']  = '草稿';
 $lang->leave->statusList['wait']   = '等待审核';
+$lang->leave->statusList['doing']  = '审核中';
 $lang->leave->statusList['pass']   = '通过';
 $lang->leave->statusList['reject'] = '拒绝';
 $lang->leave->statusList['back']   = '销假待审';

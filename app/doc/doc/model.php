@@ -2,12 +2,12 @@
 /**
  * The model file of doc module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Yidong Wang <yidong@cnezsoft.com>
  * @package     doc 
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 ?>
 <?php
@@ -130,6 +130,8 @@ class docModel extends model
         {
             if($i > $limit) break;
             $key = ($type == 'project') ? 'project' : 'id';
+
+            $projectPriv = $type == 'project' ? $this->loadModel('project', 'proj')->checkPriv($docLib->project) : true;
             if($this->hasRight($docLib) and !isset($libs[$docLib->$key]))
             {
                 $libs[$docLib->$key] = $docLib->name;

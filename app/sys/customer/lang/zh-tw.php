@@ -2,12 +2,12 @@
 /**
  * The customer module zh-tw file of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青島易軟天創網絡科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青島易軟天創網絡科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Tingting Dai <daitingting@xirangit.com>
  * @package     customer
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 if(!isset($lang->customer)) $lang->customer = new stdclass();
 
@@ -17,6 +17,8 @@ $lang->customer->name          = '名稱';
 $lang->customer->contact       = '聯繫人';
 $lang->customer->depositor     = '對公賬戶';
 $lang->customer->type          = '類型';
+$lang->customer->source        = '客戶來源';
+$lang->customer->sourceNote    = '來源備註';
 $lang->customer->size          = '規模';
 $lang->customer->industry      = '行業';
 $lang->customer->area          = '區域';
@@ -44,24 +46,33 @@ $lang->customer->contactedDate = '最後聯繫';
 $lang->customer->nextDate      = '下次聯繫';
 $lang->customer->selectContact = '選擇已有聯繫人';
 
-$lang->customer->browse      = '瀏覽客戶';
-$lang->customer->view        = '客戶詳情';
-$lang->customer->create      = '添加客戶';
-$lang->customer->delete      = '刪除客戶';
-$lang->customer->order       = '訂單';
-$lang->customer->contact     = '聯繫人';
-$lang->customer->contract    = '合同';
-$lang->customer->address     = '地址';
-$lang->customer->record      = '溝通';
-$lang->customer->assign      = '指派';
-$lang->customer->batchAssign = '批量指派';
-$lang->customer->linkContact = '添加聯繫人';
-$lang->customer->list        = '客戶列表';
-$lang->customer->edit        = '編輯客戶';
-$lang->customer->export      = '導出';
-$lang->customer->merge       = '合併';
-$lang->customer->basicInfo   = '基本信息';
-$lang->customer->moreInfo    = '更多信息';
+$lang->customer->browse            = '瀏覽客戶';
+$lang->customer->view              = '客戶詳情';
+$lang->customer->create            = '添加客戶';
+$lang->customer->delete            = '刪除客戶';
+$lang->customer->order             = '訂單';
+$lang->customer->contact           = '聯繫人';
+$lang->customer->contract          = '合同';
+$lang->customer->address           = '地址';
+$lang->customer->record            = '溝通';
+$lang->customer->assign            = '指派';
+$lang->customer->batchAssign       = '批量指派';
+$lang->customer->linkContact       = '添加聯繫人';
+$lang->customer->list              = '客戶列表';
+$lang->customer->edit              = '編輯客戶';
+$lang->customer->export            = '導出';
+$lang->customer->merge             = '合併';
+$lang->customer->basicInfo         = '基本信息';
+$lang->customer->moreInfo          = '更多信息';
+$lang->customer->purchasedProducts = '已購產品';
+
+$lang->customer->sourceList['']              = '';
+$lang->customer->sourceList['visit']         = '陌生拜訪';
+$lang->customer->sourceList['advertisement'] = '廣告';
+$lang->customer->sourceList['introduce']     = '轉介紹';
+$lang->customer->sourceList['activity']      = '活動';
+$lang->customer->sourceList['socialPlat']    = '社交平台';
+$lang->customer->sourceList['others']        = '其他';
 
 $lang->customer->typeList['']            = '';
 $lang->customer->typeList['national']    = '國有企業';

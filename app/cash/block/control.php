@@ -2,12 +2,12 @@
 /**
  * The control file of block module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Tingting Dai <daitingting@xirangit.com>
  * @package     block
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 class block extends control
 {
@@ -179,32 +179,32 @@ class block extends control
     public function printBasefactsBlock()
     {
         $this->processParams();
-        $this->loadModel('trade');
 
-        $currentYear  = date('Y');
-
-        $currencySign  = $this->loadModel('common', 'sys')->getCurrencySign();
+        $trades = $this->loadModel('trade')->getByYear(date('Y')); 
         $annualChartDatas = array();
-        foreach($currencySign as $currency => $sign)
+        foreach($trades as $month => $monthTrades)
         {
-            $trades = $this->trade->getByYear($currentYear, $currency); 
-            foreach($trades as $month => $monthTrades)
+            $annualChartDatas[$month]['in']  = 0;
+            $annualChartDatas[$month]['out'] = 0;
+            foreach($monthTrades as $trade)
             {
-                $annualChartDatas[$currency][$month]['in']  = 0;
-                $annualChartDatas[$currency][$month]['out'] = 0;
-                foreach($monthTrades as $trade)
-                {
-                    if($trade->type == 'in')  $annualChartDatas[$currency][$month]['in']  += $trade->money;
-                    if($trade->type == 'out') $annualChartDatas[$currency][$month]['out'] += $trade->money;
-                }
-                $annualChartDatas[$currency][$month]['profit'] = $annualChartDatas[$currency][$month]['in'] - $annualChartDatas[$currency][$month]['out'];
+                if($trade->type == 'in')  $annualChartDatas[$month]['in']  += $trade->money * $trade->exchangeRate;
+                if($trade->type == 'out') $annualChartDatas[$month]['out'] += $trade->money * $trade->exchangeRate;
             }
+            $annualChartDatas[$month]['profit'] = $annualChartDatas[$month]['in'] - $annualChartDatas[$month]['out'];
         }
 
         krsort($annualChartDatas, SORT_STRING);
+        foreach($annualChartDatas as $month => $annualChartData)
+        {
+            foreach($annualChartData as $type => $data)
+            {
+                $annualChartDatas[$month][$type] = $data > 10000 ? round($data / 10000, 2) . $this->lang->trade->report->unitList[10000] : round($data, 2);
+            }
+        }
 
-        $this->view->currencySign      = $currencySign;
-        $this->view->annualChartDatas  = $annualChartDatas;
+        $this->view->annualChartDatas = $annualChartDatas;
+        $this->view->currencySign     = $this->loadModel('common', 'sys')->getCurrencySign();
         $this->display();
     }
 

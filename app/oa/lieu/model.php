@@ -2,19 +2,19 @@
 /**
  * The model file of lieu module of Ranzhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Tingting Dai <chujilu@cnezsoft.com>
  * @package     lieu
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 class lieuModel extends model
 {
     public function __construct($appName = '')
     {
         parent::__construct($appName);
-        $this->app->loadModuleConfig('attend', 'oa');
+        $this->loadModel('attend', 'oa');
     }
 
     /**
@@ -44,12 +44,26 @@ class lieuModel extends model
      */
     public function getList($type = 'personal', $year = '', $month = '', $account = '', $dept = '', $status = '', $orderBy = 'id_desc')
     {
-        return $this->dao->select('t1.*, t2.realname, t2.dept')
+        $date = '';
+        if($year)  
+        {
+            if(!$month) $date = "$year-%";
+            if($month)  $date = "$year-$month-%";
+        }
+        else
+        {
+            if($month) $date = "%-$month-%";
+        }
+
+        $lieuList = $this->dao->select('t1.*, t2.realname, t2.dept')
             ->from(TABLE_LIEU)->alias('t1')
             ->leftJoin(TABLE_USER)->alias('t2')->on("t1.createdBy=t2.account")
-            ->where('1=1')
-            ->beginIf($year != '')->andWhere('t1.year')->eq($year)->fi()
-            ->beginIf($month != '')->andWhere('t1.begin')->like("%-$month-%")->fi()
+            ->where(1)
+            ->beginIf($date)
+            ->andWhere('t1.begin', true)->like($date)
+            ->orWhere('t1.end')->like($date)
+            ->markRight(1)
+            ->fi()
             ->beginIf($account != '')->andWhere('t1.createdBy')->eq($account)->fi()
             ->beginIf($dept != '')->andWhere('t2.dept')->in($dept)->fi()
             ->beginIf($status != '')->andWhere('t1.status')->eq($status)->fi()
@@ -57,6 +71,38 @@ class lieuModel extends model
             ->beginIf($type == 'company')->andWhere('t1.status')->ne('draft')->fi()
             ->orderBy("t2.dept,t1.{$orderBy}")
             ->fetchAll();
+        $this->session->set('lieuQueryCondition', $this->dao->get());
+
+        return $this->processStatus($lieuList);
+    }
+
+    /**
+     * Process status of lieu list. 
+     * 
+     * @param  array  $lieuList 
+     * @access public
+     * @return array 
+     */
+    public function processStatus($lieuList)
+    {
+        $users    = $this->loadModel('user')->getPairs();
+        $managers = $this->user->getUserManagerPairs();
+        foreach($lieuList as $lieu)
+        {
+            $lieu->statusLabel = zget($this->lang->lieu->statusList, $lieu->status);
+
+            if($lieu->status == 'wait')
+            {
+                $reviewer = $this->getReviewedBy();
+                if(!$reviewer) 
+                {
+                    $reviewer = trim(zget($managers, $lieu->createdBy, ''), ',');
+                }
+                if($reviewer) $lieu->statusLabel = zget($users, $reviewer) . $this->lang->lieu->statusList['doing'];
+            }
+        }
+
+        return $lieuList;
     }
 
     /**
@@ -86,6 +132,7 @@ class lieuModel extends model
         $monthList = array();
         $dateList  = $this->dao->select('begin')->from(TABLE_LIEU)
             ->beginIF($type == 'personal')->where('createdBy')->eq($this->app->user->account)->fi()
+            ->beginIF($type == 'company')->where('status')->ne('draft')->fi()
             ->groupBy('begin')
             ->orderBy('begin_desc')
             ->fetchAll('begin');
@@ -134,12 +181,8 @@ class lieuModel extends model
             ->batchCheck($this->config->lieu->require->create, 'notempty')
             ->check('end', 'ge', $lieu->begin)
             ->exec();
-        if(!dao::isError())
-        {
-            $lieuID = $this->dao->lastInsertID();
-            return $lieuID;
-        }
-        return !dao::isError();
+
+        return $this->dao->lastInsertID();
     }
 
     /**
@@ -177,6 +220,29 @@ class lieuModel extends model
     }
 
     /**
+     * Compare liue hours and overtime hours. 
+     * 
+     * @access public
+     * @return bool | array 
+     */
+    public function checkHours()
+    {
+        if(!$this->post->overtime) return true;
+
+        if(!function_exists('bccomp') or !function_exists('bcadd')) return array('result' => 'fail', 'message' => $this->lang->lieu->nobcmath);;
+
+        $lieuHours     = $this->post->hours;
+        $overtimeHours = 0;
+
+        $overtimes = $this->loadModel('overtime', 'oa')->getByIdList($this->post->overtime);
+        foreach($overtimes as $overtime) $overtimeHours = bcadd($overtimeHours, $overtime->hours);
+        
+        if(bccomp($lieuHours, $overtimeHours, 2) === 1) return array('result' => 'fail', 'message' => array('hours' => sprintf($this->lang->lieu->wrongHours, $overtimeHours)));
+
+        return true;
+    }
+
+    /**
      * Check date.
      * 
      * @param  object    $data 
@@ -186,7 +252,7 @@ class lieuModel extends model
      */
     public function checkDate($date, $id = 0) 
     {
-        if(substr($date->begin, 0, 7) != substr($date->end, 0, 7)) return array('result' => 'fail', 'message' => $this->lang->lieu->sameMonth);
+        //if(substr($date->begin, 0, 7) != substr($date->end, 0, 7)) return array('result' => 'fail', 'message' => $this->lang->lieu->sameMonth);
         if("$date->end $date->finish" <= "$date->begin $date->start") return array('result' => 'fail', 'message' => $this->lang->lieu->wrongEnd);
 
         $existLieu = $this->checkLieu($date, $this->app->user->account, $id);

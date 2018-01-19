@@ -2,12 +2,12 @@
 /**
  * The control file for block module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Yidong Wang <yidong@cnezsoft.com>
  * @package     block
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 class block extends control
 {
@@ -173,7 +173,7 @@ class block extends control
 
         $this->view->tasks = $this->dao->select('*')->from(TABLE_TASK)
             ->where('deleted')->eq(0)
-            ->andWhere("(createdBy='$params->account' OR assignedTo = '$params->account')")
+            ->andWhere('createdBy', true)->eq($params->account)->orWhere('assignedTo')->eq($params->account)->markRight(1)
             ->beginIF(isset($params->status) and join($params->status) != false)->andWhere('status')->in($params->status)->fi()
             ->orderBy($params->orderBy)
             ->limit($params->num)

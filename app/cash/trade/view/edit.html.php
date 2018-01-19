@@ -2,12 +2,12 @@
 /**
  * The edit view file of trade module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Tingting Dai <daitingting@xirangit.com>
  * @package     trade 
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 ?>
 <?php include '../../common/view/header.html.php';?>
@@ -31,7 +31,7 @@
           <th class='w-100px'><?php echo $lang->trade->depositor;?></th>
           <td><?php echo html::select('depositor', $depositorList, $trade->depositor, "class='form-control'");?></td>
         </tr>
-          <?php if($trade->type == 'in' or $trade->type == 'out'):?>
+        <?php if($trade->type == 'in' or $trade->type == 'out'):?>
         <tr>
           <th><?php echo $lang->trade->product;?></th>
           <td><?php echo html::select('product', array('') + $productList, $trade->product, "class='form-control chosen'");?></td>
@@ -59,7 +59,8 @@
             <select class='form-control chosen' id='order' name='order'>
               <option value=''></option>
               <?php foreach($orderList as $id => $order):?>
-              <option <?php if($id == $trade->order) echo " selected='selected' ";?> value="<?php echo $id?>" data-customer="<?php echo $order->customer?>" data-amount="<?php echo $order->real;?>"><?php echo $order->name;?></option>
+              <?php $optionPinyin = zget($pinyinOrders, $order->name, '');?>
+              <option <?php if($id == $trade->order) echo " selected='selected' ";?> value="<?php echo $id?>" data-customer="<?php echo $order->customer?>" data-amount="<?php echo $order->real;?>" data-keys="<?php echo $optionPinyin;?>"><?php echo $order->name;?></option>
               <?php endforeach;?>
             </select>
           </td>
@@ -218,6 +219,12 @@
           <th><?php echo $lang->trade->date;?></th>
           <td><?php echo html::input('date', $trade->date, "class='form-control form-date'");?></td>
         </tr>
+        <?php if($trade->type == 'invest' or $trade->type == 'loan'):?>
+        <tr>
+          <th><?php echo $lang->trade->deadline;?></th>
+          <td><?php echo html::input('deadline', $trade->deadline, "class='form-control form-date'");?></td>
+        </tr>
+        <?php endif;?>
         <tr>
           <th><?php echo $lang->trade->desc;?></th>
           <td><?php echo html::textarea('desc', $trade->desc, "class='form-control' rows='3'");?></td>

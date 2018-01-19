@@ -2,12 +2,12 @@
 /**
  * The model file of tree module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
  * @package     tree
  * @version     $Id: model.php 4169 2016-10-19 08:57:15Z liugang $
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 ?>
 <?php
@@ -639,6 +639,7 @@ class treeModel extends model
             ->setDefault('readonly', 0)
             ->get();
 
+        $category->name   = strip_tags(trim($category->name));
         $category->rights = !empty($category->rights) ? ',' . trim($category->rights, ',') . ',' : '';
         $category->users  = !empty($category->users) ? ',' . trim($category->users, ',') . ',' : '';
 
@@ -718,11 +719,11 @@ class treeModel extends model
     /**
      * Manage children of one category.
      * 
-     * @param string $type 
-     * @param string $children 
-     * @param int    $root 
+     * @param  string $type 
+     * @param  string $children 
+     * @param  int    $root 
      * @access public
-     * @return void
+     * @return bool 
      */
     public function manageChildren($type, $parent, $children, $root = 0)
     {
@@ -745,7 +746,7 @@ class treeModel extends model
             $order = $i * 10;
 
             /* First, save the child without path field. */
-            $category->name  = $categoryName;
+            $category->name  = strip_tags(trim($categoryName));
             $category->order = $order;
             $mode = $this->post->mode[$key];
 
@@ -766,7 +767,7 @@ class treeModel extends model
             {
                 $categoryID = $key;
                 $this->dao->update(TABLE_CATEGORY)
-                    ->set('name')->eq($categoryName)
+                    ->set('name')->eq(strip_tags(trim($categoryName)))
                     ->set('order')->eq($order)
                     ->where('id')->eq($categoryID)
                     ->exec();

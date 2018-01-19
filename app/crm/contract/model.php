@@ -2,12 +2,12 @@
 /**
  * The model file for contract of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Yidong Wang <yidong@cnezsoft.com>
  * @package     contract
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 class contractModel extends model
 {
@@ -32,6 +32,7 @@ class contractModel extends model
             $contract->files        = $this->file->getByObject('contract', $contractID);
             $contract->returnList   = $this->getReturnList($contractID);
             $contract->deliveryList = $this->getDeliveryList($contractID);
+            $contract->tradeList    = $this->getTradeList($contractID);
         }
 
         $contract = $this->file->replaceImgURL($contract, 'items');
@@ -123,15 +124,15 @@ class contractModel extends model
     public function getContractsSawByMe($type = 'view', $contractIdList = array())
     {
         $customerIdList = $this->loadModel('customer')->getCustomersSawByMe($type);
-        $contractList = $this->dao->select('*')->from(TABLE_CONTRACT)
+        $contractList   = $this->dao->select('id')->from(TABLE_CONTRACT)
             ->where('deleted')->eq(0)
             ->beginIF(!empty($contractIdList))->andWhere('id')->in($contractIdList)->fi()
             ->beginIF(!isset($this->app->user->rights['crm']['manageall']) and ($this->app->user->admin != 'super'))
             ->andWhere('customer')->in($customerIdList)
             ->fi()
-            ->fetchAll('id');
+            ->fetchPairs();
 
-        return array_keys($contractList);
+        return $contractList;
     }
 
     /**
@@ -149,14 +150,19 @@ class contractModel extends model
     /**
      * Get returnList of its contract.
      * 
-     * @param  int    $contractID 
-     * @param  string $orderBy
+     * @param  int|array $contractID 
+     * @param  string    $orderBy
      * @access public
      * @return array
      */
     public function getReturnList($contractID = 0, $orderBy = 'id_desc')
     {
-        return $this->dao->select('*')->from(TABLE_PLAN)->where('contract')->eq($contractID)->orderBy($orderBy)->fetchAll();
+        return $this->dao->select('*')->from(TABLE_PLAN)
+            ->where(1)
+            ->beginIF(is_array($contractID))->andWhere('contract')->in($contractID)->fi()
+            ->beginIF(!is_array($contractID))->andWhere('contract')->eq($contractID)->fi()
+            ->orderBy($orderBy)
+            ->fetchAll();
     }
 
     /**
@@ -169,6 +175,18 @@ class contractModel extends model
     public function getDeliveryByID($deliveryID = 0)
     {
         return $this->dao->select('*')->from(TABLE_DELIVERY)->where('id')->eq($deliveryID)->fetch();
+    }
+
+    /**
+     * Get trade by contract.
+     * 
+     * @param  int    $contractID 
+     * @access public
+     * @return object
+     */
+    public function getTradeList($contractID = 0, $orderBy = '`type`_desc')
+    {
+        return $this->dao->select('*')->from(TABLE_TRADE)->where('contract')->eq($contractID)->orderBy($orderBy)->fetchAll();
     }
 
     /**
@@ -235,6 +253,9 @@ class contractModel extends model
         if(dao::isError()) return false;
 
         $contractID = $this->dao->lastInsertID();
+
+        $this->file->updateObjectID($this->post->uid, $contractID, 'contract');
+
         foreach($contract->order as $key => $orderID)
         {
             if($orderID)
@@ -312,6 +333,8 @@ class contractModel extends model
             ->checkIF($contract->end != '0000-00-00', 'end', 'ge', $contract->begin)
             ->exec();
         
+        $this->file->updateObjectID($this->post->uid, $contractID, 'contract');
+
         if(!dao::isError())
         {
             if($data->order)

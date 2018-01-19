@@ -2,7 +2,7 @@
 /**
  * The en file of common module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Yidong Wang <yidong@cnezsoft.com>
  * @package     common 
@@ -44,7 +44,7 @@ $lang->attend->menu->company    = 'Company|attend|company|';
 $lang->attend->menu->detail     = 'Details|attend|detail|';
 $lang->attend->menu->review     = 'Review|attend|browsereview|';
 $lang->attend->menu->stat       = 'Report|attend|stat|';
-$lang->attend->menu->settings   = array('link' => 'Settings|attend|settings|', 'alias' => 'setmanager');
+$lang->attend->menu->settings   = array('link' => 'Settings|attend|settings|', 'alias' => 'personalsettings,setmanager');
 
 if(!isset($lang->leave)) $lang->leave = new stdclass();
 $lang->leave->menu = new stdclass();
@@ -104,10 +104,10 @@ $lang->setting->menu->modules         = 'Modules|setting|modules|app=oa';
 $lang->setting->menu->companyAttend   = 'Company Attend Settings|attend|settings|module=setting';
 $lang->setting->menu->personalAttend  = 'Personal Attend Settings|attend|personalSettings|module=setting';
 $lang->setting->menu->deptManager     = 'Dept Manager Settings|attend|setManager|module=setting';
-$lang->setting->menu->leaveReviewer   = 'Leave Reviewer|leave|setReviewer|module=setting';
-$lang->setting->menu->makeupReviewer  = 'Makeup Reviewer|makeup|setReviewer|module=setting';
-$lang->setting->menu->lieuReviewer    = 'Lieu Reviewer|lieu|setReviewer|module=setting';
-$lang->setting->menu->overtimeReviewer= 'Overtime Reviewer|overtime|setReviewer|module=setting';
+$lang->setting->menu->leaveReviewer   = 'Leave Settings|leave|setReviewer|module=setting';
+$lang->setting->menu->makeupReviewer  = 'Makeup Settings|makeup|setReviewer|module=setting';
+$lang->setting->menu->lieuReviewer    = 'Lieu Settings|lieu|setReviewer|module=setting';
+$lang->setting->menu->overtimeReviewer= 'Overtime Settings|overtime|setReviewer|module=setting';
 $lang->setting->menu->refundReviewer  = 'Refund Reviewer|refund|setReviewer|module=setting';
 $lang->setting->menu->refundCategory  = 'Refund Category|refund|setCategory|module=setting';
 $lang->setting->menu->refundDepositor = 'Refund Depositor|refund|setDepositor|module=setting';

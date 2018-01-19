@@ -14,7 +14,7 @@ $lang->overtime->export = 'Export';
 $lang->overtime->personal     = 'My Overtime';
 $lang->overtime->browseReview = 'Review List';
 $lang->overtime->company      = 'All';
-$lang->overtime->setReviewer  = 'Set Reviewer';
+$lang->overtime->setReviewer  = 'Settings';
 $lang->overtime->batchReview  = 'Batch Review';
 $lang->overtime->batchPass    = 'Batch Pass';
 
@@ -43,6 +43,7 @@ $lang->overtime->typeList['holiday'] = 'On holiday';
 
 $lang->overtime->statusList['draft']  = 'Draft';
 $lang->overtime->statusList['wait']   = 'Wait';
+$lang->overtime->statusList['doing']  = 'Doing';
 $lang->overtime->statusList['pass']   = 'Pass';
 $lang->overtime->statusList['reject'] = 'Reject';
 

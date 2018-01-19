@@ -2,12 +2,12 @@
 /**
  * The control file of file module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
  * @package     file 
  * @version     $Id: control.php 4029 2016-08-26 06:50:41Z liugang $
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 class file extends control
 {
@@ -78,7 +78,7 @@ class file extends control
             $this->dao->insert(TABLE_FILE)->data($file, false)->exec();
 
             $fileID = $this->dao->lastInsertID();
-            $url    = $this->createLink('file', 'read', "fileID=$fileID", $file['extension']);
+            $url    = $this->createLink('file', 'download', "fileID=$fileID");
             if($uid) $_SESSION['album'][$uid][] = $fileID;
             die(json_encode(array('error' => 0, 'url' => $url)));
         }

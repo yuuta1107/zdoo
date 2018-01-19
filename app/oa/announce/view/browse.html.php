@@ -2,12 +2,12 @@
 /**
  * The view file of browse function of announce module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Xiying Guan <guanxiying@xirangit.com> 
  * @package     announce 
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 ?>
 <?php include '../../common/view/header.html.php'; ?>
@@ -30,7 +30,7 @@
           <h4><span class='label label-primary'><?php echo $categories[$announce->category];?></span> <?php echo html::a(inlink('view', "announceID={$announce->id}"), $announce->title, "class='nounderline' data-toggle='modal'");?></h4>
         </div>
         <div class='item-content'>
-          <div class='text'><?php echo $announce->content;?></div>
+          <div class='text'><?php echo strip_tags($announce->content);?></div>
           <div class='pull-left'>
             <?php echo html::a(inlink('viewReaders', "announceID={$announce->id}"), sprintf($lang->article->lblReaders, count($announce->readers)), "class='nounderline' data-toggle='modal'");?>
           </div>

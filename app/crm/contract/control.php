@@ -2,12 +2,12 @@
 /**
  * The control file for contract of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Yidong Wang <yidong@cnezsoft.com>
  * @package     contract
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 class contract extends control
 {
@@ -450,6 +450,7 @@ class contract extends control
      */
     public function view($contractID)
     {
+        $this->loadModel('trade', 'cash');
         $contract = $this->contract->getByID($contractID);
         $this->loadModel('common', 'sys')->checkPrivByCustomer(empty($contract) ? '0' : $contract->customer);
 
@@ -462,17 +463,40 @@ class contract extends control
         $this->session->set('contactList',  $uri);
         if(!$this->session->orderList) $this->session->set('orderList', $uri);
 
-        $this->view->title        = $this->lang->contract->view;
-        $this->view->orders       = $this->loadModel('order', 'crm')->getByIdList($contract->order);
-        $this->view->customers    = $this->loadModel('customer')->getPairs('client');
-        $this->view->contacts     = $this->loadModel('contact', 'crm')->getPairs($contract->customer);
-        $this->view->products     = $this->loadModel('product')->getPairs();
-        $this->view->users        = $this->loadModel('user')->getPairs();
-        $this->view->addresses    = $this->loadModel('address', 'crm')->getPairsByObject('customer', $contract->customer); 
-        $this->view->contract     = $contract;
-        $this->view->actions      = $this->loadModel('action')->getList('contract', $contractID);
-        $this->view->currencySign = $this->loadModel('common', 'sys')->getCurrencySign();
-        $this->view->preAndNext   = $this->common->getPreAndNextObject('contract', $contractID);
+        $expenseTypes = $this->loadModel('tree')->getOptionMenu('out', 0, $removeRoot = true);
+        $incomeTypes  = $this->loadModel('tree')->getOptionMenu('in', 0, $removeRoot = true);
+
+        foreach($expenseTypes as $key => $expenseType)
+        {
+            $path = explode('/', trim($expenseType, '/'));
+            if(count($path) > 1) array_shift($path);
+
+            $expenseTypes[$key] = implode('/', $path);
+        }
+
+        foreach($incomeTypes as $key => $incomeType)
+        {
+            $path = explode('/', trim($incomeType, '/'));
+            if(count($path) > 1) array_shift($path);
+
+            $incomeTypes[$key] = implode('/', $path);
+        }
+
+        $this->view->title         = $this->lang->contract->view;
+        $this->view->orders        = $this->loadModel('order', 'crm')->getByIdList($contract->order);
+        $this->view->customers     = $this->loadModel('customer')->getPairs('client');
+        $this->view->allCustomers  = $this->customer->getPairs();
+        $this->view->contacts      = $this->loadModel('contact', 'crm')->getPairs($contract->customer);
+        $this->view->products      = $this->loadModel('product')->getPairs();
+        $this->view->users         = $this->loadModel('user')->getPairs();
+        $this->view->addresses     = $this->loadModel('address', 'crm')->getPairsByObject('customer', $contract->customer); 
+        $this->view->contract      = $contract;
+        $this->view->actions       = $this->loadModel('action')->getList('contract', $contractID);
+        $this->view->currencySign  = $this->loadModel('common', 'sys')->getCurrencySign();
+        $this->view->depositorList = $this->loadModel('depositor', 'cash')->getPairs();
+        $this->view->deptList      = $this->loadModel('tree')->getPairs(0, 'dept');
+        $this->view->categories    = $expenseTypes + $incomeTypes; 
+        $this->view->preAndNext    = $this->common->getPreAndNextObject('contract', $contractID);
 
         $this->display();
     }

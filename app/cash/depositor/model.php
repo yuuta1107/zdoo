@@ -2,12 +2,12 @@
 /**
  * The model file of depositor module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Tingting Dai <daitingting@xirangit.com>
  * @package     contact
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 class depositorModel extends model
 {
@@ -44,10 +44,12 @@ class depositorModel extends model
      * @access public
      * @return array
      */
-    public function getList($tag = '', $orderBy = 'id_desc', $pager = null)
+    public function getList($tag = '', $status = 'all', $orderBy = 'id_desc', $pager = null)
     {
         return $this->dao->select('*')->from(TABLE_DEPOSITOR)
-            ->beginIF($tag)->where('tags')->like("%{$tag}%")->fi()
+            ->where(1)
+            ->beginIF($status != 'all')->andWhere('status')->eq($status)->fi()
+            ->beginIF($tag)->andWhere('tags')->like("%{$tag}%")->fi()
             ->orderBy($orderBy)
             ->page($pager)
             ->fetchAll('id');
@@ -208,8 +210,8 @@ class depositorModel extends model
 
         $tradeList = $this->dao->select('*')->from(TABLE_TRADE)
             ->where('parent')->eq(0)
-            ->andWhere("`date` > '{$start}'")
-            ->andWhere("`date` <= '{$end}'")
+            ->andWhere('`date`')->gt($start)
+            ->andWhere('`date`')->le($end)
             ->beginif($depositors)->andWhere('depositor')->in($depositors)->fi()
             ->fetchGroup('depositor', 'id');
 

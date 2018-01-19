@@ -2,12 +2,12 @@
 /**
  * The control file of customer module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Xiying Guan <guanxiying@xirangit.com>
  * @package     customer 
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 class customer extends control
 {
@@ -52,19 +52,20 @@ class customer extends control
         $this->config->customer->search['params']['area']['values']     = array('' => '') + $this->loadModel('tree')->getOptionMenu('area');
         $this->search->setSearchParams($this->config->customer->search);
 
-        $customers = $this->customer->getList($mode = $mode, $param = $param, $relation = 'client', $orderBy, $pager);
+        $customers = $this->customer->getList($mode, $param, $relation = 'client', $orderBy, $pager);
 
         $this->session->set('customerQueryCondition', $this->dao->get());
 
         /* Set allowed edit customer ID list. */
         $this->app->user->canEditCustomerIdList = ',' . implode(',', $this->customer->getCustomersSawByMe('edit', array_keys($customers))) . ',';
         
-        $this->view->title     = $this->lang->customer->list;
-        $this->view->users     = $this->loadModel('user')->getPairs();
-        $this->view->mode      = $mode;
-        $this->view->customers = $customers;
-        $this->view->pager     = $pager;
-        $this->view->orderBy   = $orderBy;
+        $this->view->title      = $this->lang->customer->list;
+        $this->view->users      = $this->loadModel('user')->getPairs();
+        $this->view->moduleMenu = $this->customer->createModuleMenu($mode, $param, $orderBy, $recTotal, $recPerPage, $pageID);
+        $this->view->mode       = $mode;
+        $this->view->customers  = $customers;
+        $this->view->pager      = $pager;
+        $this->view->orderBy    = $orderBy;
 
         $this->display();
     }   
@@ -175,6 +176,7 @@ class customer extends control
         if(!$this->session->contactList or $this->session->customerList == $this->session->contactList) $this->session->set('contactList', $this->app->getURI(true));
 
         $this->app->loadLang('resume', 'crm');
+        $this->app->loadLang('product');
 
         $actionList   = $this->loadModel('action')->getList('customer', $customerID);
         $actionIDList = array_keys($actionList);
@@ -185,17 +187,39 @@ class customer extends control
             foreach($files as $file) $fileList[$file->id] = $file;
         }
 
+        /* Compute purchased products from signed orders. */
+        $orders         = $this->loadModel('order', 'crm')->getList($mode = 'query', "customer=$customerID");
+        $contracts      = $this->loadModel('contract', 'crm')->getList($customerID);
+        $contractOrders = $this->dao->select('*')->from(TABLE_CONTRACTORDER)->fetchGroup('contract');
+        $productIDList  = '';
+        foreach($contracts as $contract)
+        {
+            if($contract->status == 'canceled') continue;
+
+            foreach($contractOrders[$contract->id] as $contractOrder)
+            {
+                if(empty($orders[$contractOrder->order])) continue;
+
+                $productIDList .= ',' . trim($orders[$contractOrder->order]->product, ',');
+                $productIDList = trim($productIDList, ',');
+            }
+        }
+        $productIDList = array_unique(explode(',', $productIDList));
+        $productList   = $this->dao->select('*')->from(TABLE_PRODUCT)->where('id')->in($productIDList)->fetchAll();
+
         $this->view->title        = $this->lang->customer->view;
         $this->view->customer     = $customer;
-        $this->view->orders       = $this->loadModel('order', 'crm')->getList($mode = 'query', "customer=$customerID");
+        $this->view->orders       = $orders;
         $this->view->contacts     = $this->loadModel('contact', 'crm')->getList($customerID);
-        $this->view->contracts    = $this->loadModel('contract', 'crm')->getList($customerID);
+        $this->view->contracts    = $contracts;
         $this->view->addresses    = $this->loadModel('address', 'crm')->getList('customer', $customerID);
         $this->view->actions      = $this->loadModel('action')->getList('customer', $customerID);
         $this->view->products     = $this->loadModel('product', 'sys')->getPairs();
+        $this->view->productList  = $productList;
         $this->view->users        = $this->loadModel('user')->getPairs();
         $this->view->areaList     = $this->loadModel('tree')->getPairs('', 'area');
         $this->view->industryList = $this->tree->getPairs('', 'industry');
+        $this->view->returnList   = $this->contract->getReturnList(array_keys($contracts), 'returnedDate_desc');
         $this->view->currencySign = $this->loadModel('common', 'sys')->getCurrencySign();
         $this->view->preAndNext   = $this->common->getPreAndNextObject('customer', $customerID);
         $this->view->files        = $fileList;

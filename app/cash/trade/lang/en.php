@@ -2,7 +2,7 @@
 /**
  * The trade module English file of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Xiying Guan <guanxiying@xirangit.com>
  * @package     trade
@@ -27,6 +27,7 @@ $lang->trade->order       = 'Order';
 $lang->trade->contract    = 'Contract';
 $lang->trade->category    = 'Category';
 $lang->trade->date        = 'Transaction time';
+$lang->trade->deadline    = 'Deadline';
 $lang->trade->handlers    = 'Handler';
 $lang->trade->dept        = 'Dept';
 $lang->trade->receipt     = 'From';
@@ -82,8 +83,11 @@ $lang->trade->compare       = 'Annual Compare';
 $lang->trade->setReportUnit = 'Report Unit';
 $lang->trade->settings      = 'Trade Setting';
 
-$lang->trade->settingList['trader']   = 'select merchants';
-$lang->trade->settingList['category'] = 'select final subjects';
+$lang->trade->settingList['trader']       = 'select merchants';
+$lang->trade->settingList['product']      = 'select product';
+$lang->trade->settingList['dept']         = 'select department';
+$lang->trade->settingList['category']     = 'select subject';
+$lang->trade->settingList['lastCategory'] = 'select final subjects';
 
 $lang->trade->report = new stdclass();
 $lang->trade->report->common      = 'Report'; 
@@ -186,10 +190,14 @@ $lang->trade->statusList['repaied']    = 'Repaied';
 $lang->trade->statusList['repaying']   = 'Repaying';
 $lang->trade->statusList['unRepaied']  = 'Unrepaied';
 
+$lang->trade->progressList['invest'] = 'Redemption progress';
+$lang->trade->progressList['loan']   = 'Repayment progress';
+
 $lang->trade->totalIn       = '%s: income %s;';
 $lang->trade->totalOut      = '%s: expense %s;';
 $lang->trade->totalAmount   = '%s: income %s, expense %s, %s;';
 $lang->trade->totalInvest   = '%s: invest %s, redeem %s,unredeem %s, %s;';
+$lang->trade->selectItem    = 'Seleted';
 $lang->trade->profit        = 'profit';
 $lang->trade->loss          = 'loss';
 $lang->trade->balance       = 'Income is equal to Expense';

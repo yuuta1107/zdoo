@@ -2,12 +2,12 @@
 /**
  * The zh-cn file of mail module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
  * @package     mail 
  * @version     $Id: zh-cn.php 4029 2016-08-26 06:50:41Z liugang $
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 $lang->mail->common = '发信设置';
 $lang->mail->index  = '首页';
@@ -52,7 +52,7 @@ $lang->mail->successSended  = '成功发送！';
 $lang->mail->needConfigure  = '无法找到邮件配置信息，请先配置邮件发送参数。';
 
 $lang->mail->mailContentTip = <<<EOT
-<strong>%s</strong>(%s)由<a href='https://www.ranzhico.com' target='blank'>然之协同管理系统</a>搭建。<br />
+<strong>%s</strong>(%s)由<a href='https://www.ranzhi.org' target='blank'>然之协同管理系统</a>搭建。<br />
 <a href='http://www.cnezsoft.com' target='blank'>易软天创</a>为天下企业提供专业的管理工具。
 EOT;
 $lang->mail->openTip = '订单、客户、任务指派，请假、报销审批时会进行邮件提醒';

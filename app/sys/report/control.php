@@ -2,12 +2,12 @@
 /**
  * The control file of report module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
  * @package     report
  * @version     $Id: control.php 4622 2013-03-28 01:09:02Z chencongzhi520@gmail.com $
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 class report extends control
 {
@@ -42,8 +42,12 @@ class report extends control
                 /* merge options. */
                 $chartOption = clone $this->lang->report->options;
                 $chartOption->item = $this->lang->report->{$module}->item[$chart];
-                if(isset($this->lang->report->{$module}->xAxisName[$chart])) $chartOption->graph->xAxisName = $this->lang->report->{$module}->xAxisName[$chart];
-                if(isset($this->lang->report->{$module}->chartList[$chart])) $chartOption->graph->caption   = $this->lang->report->{$module}->chartList[$chart];
+                if(isset($this->lang->report->{$module}->options->typeList[$chart]))   $chartOption->type             = $this->lang->report->{$module}->options->typeList[$chart];
+                if(isset($this->lang->report->{$module}->options->widthList[$chart]))  $chartOption->width            = $this->lang->report->{$module}->options->widthList[$chart];
+                if(isset($this->lang->report->{$module}->options->heightList[$chart])) $chartOption->height           = $this->lang->report->{$module}->options->heightList[$chart];
+                if(isset($this->lang->report->{$module}->xAxisName[$chart]))           $chartOption->graph->xAxisName = $this->lang->report->{$module}->xAxisName[$chart];
+                if(isset($this->lang->report->{$module}->chartList[$chart]))           $chartOption->graph->caption   = $this->lang->report->{$module}->chartList[$chart];
+                $chartOption->scaleStepWidth = '80px';
 
                 /* add charts for multi currency. */
                 $currencyList = $this->loadModel('common', 'sys')->getCurrencyList();

@@ -2,12 +2,12 @@
 /**
  * The personal view file of attend module of Ranzhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      chujilu <chujilu@cnezsoft.com>
  * @package     attend
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 ?>
 <?php include './header.html.php';?>
@@ -55,6 +55,11 @@
     </tr>
     <?php endforeach;?>
   </table>
+  <?php if(!$attends):?>
+  <div class='table-footer'>
+    <div class='pager' style='float: right; clear: none'><?php echo $lang->pager->noRecord;?></div>
+  </div>
+  <?php endif;?>
 </div>
 <?php endif;?>
 
@@ -95,6 +100,11 @@
     </tr>
     <?php endforeach;?>
   </table>
+  <?php if(!$leaveList):?>
+  <div class='table-footer'>
+    <div class='pager' style='float: right; clear: none'><?php echo $lang->pager->noRecord;?></div>
+  </div>
+  <?php endif;?>
 </div>
 <?php endif;?>
 
@@ -130,6 +140,11 @@
     </tr>
     <?php endforeach;?>
   </table>
+  <?php if(!$makeupList):?>
+  <div class='table-footer'>
+    <div class='pager' style='float: right; clear: none'><?php echo $lang->pager->noRecord;?></div>
+  </div>
+  <?php endif;?>
 </div>
 <?php endif;?>
 
@@ -167,6 +182,11 @@
     </tr>
     <?php endforeach;?>
   </table>
+  <?php if(!$overtimeList):?>
+  <div class='table-footer'>
+    <div class='pager' style='float: right; clear: none'><?php echo $lang->pager->noRecord;?></div>
+  </div>
+  <?php endif;?>
 </div>
 <?php endif;?>
 
@@ -202,6 +222,11 @@
     </tr>
     <?php endforeach;?>
   </table>
+  <?php if(!$lieuList):?>
+  <div class='table-footer'>
+    <div class='pager' style='float: right; clear: none'><?php echo $lang->pager->noRecord;?></div>
+  </div>
+  <?php endif;?>
 </div>
 <?php endif;?>
 
@@ -216,11 +241,11 @@
         <th class='w-80px'><?php echo $lang->refund->id;?></th>
         <?php endif;?>
         <th class='w-80px'><?php echo $lang->refund->createdBy;?></th>
-        <th class='w-80px'><?php echo $lang->refund->name;?></th>
-        <th class='w-100px'><?php echo $lang->refund->category;?></th>
-        <th class='w-120px'><?php echo $lang->refund->money;?></th>
+        <th><?php echo $lang->refund->name;?></th>
+        <th class='w-140px'><?php echo $lang->refund->category;?></th>
+        <th class='w-120px text-right'><?php echo $lang->refund->money;?></th>
         <th class='w-120px'><?php echo $lang->refund->date;?></th>
-        <th><?php echo $lang->refund->desc;?></th>
+        <th class='w-240px'><?php echo $lang->refund->desc;?></th>
         <th class='w-100px'><?php echo $lang->refund->status;?></th>
         <th class='w-100px'><?php echo $lang->actions;?></th>
       </tr>
@@ -233,16 +258,21 @@
         <td><?php echo $refund->id;?></td>
       <?php endif;?>
       <td><?php echo zget($users, $refund->createdBy);?></td>
-      <td title='<?php echo $refund->name;?>'><?php echo $refund->name;?></td>
-      <td title='<?php echo zget($categories, $refund->category, '');?>'><?php echo zget($categories, $refund->category, '');?></td>
-      <td><?php echo zget($currencySign, $refund->currency) . $refund->money;?></td>
+      <td class='text-left' title='<?php echo $refund->name;?>'><?php echo $refund->name;?></td>
+      <td class='text-left' title='<?php echo zget($categories, $refund->category, '');?>'><?php echo zget($categories, $refund->category, '');?></td>
+      <td class='text-right'><?php echo zget($currencySign, $refund->currency) . $refund->money;?></td>
       <td><?php echo $refund->date;?></td>
-      <td><?php echo $refund->desc?></td>
+      <td class='text-left' title='<?php echo $refund->desc;?>'><?php echo $refund->desc;?></td>
       <td><?php echo zget($lang->refund->statusList, $refund->status);?></td>
       <td><?php commonModel::printLink('oa.refund', 'review', "refundID={$refund->id}", $lang->refund->review, "data-toggle='modal' data-width=800")?></td>
     </tr>
     <?php endforeach;?>
   </table>
+  <?php if(!$refunds):?>
+  <div class='table-footer'>
+    <div class='pager' style='float: right; clear: none'><?php echo $lang->pager->noRecord;?></div>
+  </div>
+  <?php endif;?>
 </div>
 <?php endif;?>
 
@@ -339,6 +369,11 @@
     <?php endforeach;?>
 
   </table>
+  <?php if(!$leaveList && !$makeupList && !$overtimeList && !$lieuList):?>
+  <div class='table-footer'>
+    <div class='pager' style='float: right; clear: none'><?php echo $lang->pager->noRecord;?></div>
+  </div>
+  <?php endif;?>
 </div>
 <?php endif;?>
 

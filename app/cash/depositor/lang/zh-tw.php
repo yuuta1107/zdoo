@@ -2,12 +2,12 @@
 /**
  * The depositor module zh-tw file of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青島易軟天創網絡科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青島易軟天創網絡科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Tingting Dai <daitingting@xirangit.com>
  * @package     depositor
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 if(!isset($lang->depositor)) $lang->depositor = new stdclass();
 $lang->depositor->common          = '賬號';
@@ -28,18 +28,19 @@ $lang->depositor->createdDate     = '添加時間';
 $lang->depositor->editedBy        = '由誰編輯';
 $lang->depositor->editedDate      = '編輯時間';
 
-$lang->depositor->all         = '所有賬號';
-$lang->depositor->create      = '添加賬號';
-$lang->depositor->browse      = '瀏覽賬號';
-$lang->depositor->edit        = '編輯賬號';
-$lang->depositor->delete      = '刪除賬號';
-$lang->depositor->view        = '賬號詳情';
-$lang->depositor->forbid      = '禁用';
-$lang->depositor->activate    = '激活';
-$lang->depositor->export      = '導出';
-$lang->depositor->balance     = '餘額';
-$lang->depositor->saveBalance = '登記餘額';
-$lang->depositor->detail      = '明細';
+$lang->depositor->all            = '所有賬號';
+$lang->depositor->create         = '添加賬號';
+$lang->depositor->browse         = '瀏覽賬號';
+$lang->depositor->edit           = '編輯賬號';
+$lang->depositor->delete         = '刪除賬號';
+$lang->depositor->view           = '賬號詳情';
+$lang->depositor->forbid         = '禁用';
+$lang->depositor->activate       = '激活';
+$lang->depositor->export         = '導出';
+$lang->depositor->balance        = '餘額';
+$lang->depositor->saveBalance    = '登記餘額';
+$lang->depositor->detail         = '明細';
+$lang->depositor->disabledBrowse = '禁用賬號';
 
 $lang->depositor->check         = '對賬';
 $lang->depositor->start         = '開始日期';

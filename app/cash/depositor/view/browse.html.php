@@ -2,20 +2,21 @@
 /**
  * The browse view file of depositor module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Tingting Dai <daitingting@xirangit.com>
  * @package     depositor 
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 ?>
 <?php include '../../common/view/header.html.php';?>
 <div class='panel'>
   <div class='panel-heading'>
     <strong><i class="icon-group"></i> <?php echo $lang->depositor->browse;?></strong>
+    <?php echo html::a(inlink('browse', "tag=&status=disable"), $lang->depositor->disabledBrowse, $status == 'disable' ? "class='active'" : '');?>
     <?php foreach($tags as $tag):?>
-    <?php echo html::a(inlink('browse', "tag=$tag"), $tag, $currentTag == $tag ? "class='active'" : '');?>
+    <?php echo html::a(inlink('browse', "tag=$tag&status=all"), $tag, $currentTag == $tag ? "class='active'" : '');?>
     <?php endforeach;?>
     <div class='panel-actions pull-right'>
       <?php commonModel::printLink('depositor', 'export', '', $lang->exportIcon . $lang->export, "class='iframe btn btn-primary' data-width='700'");?></li>

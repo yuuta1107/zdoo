@@ -2,12 +2,12 @@
 /**
  * The zh-tw file of block module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青島易軟天創網絡科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青島易軟天創網絡科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Yidong Wang <yidong@cnezsoft.com>
  * @package     block 
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 $lang->block->common = '區塊';
 $lang->block->name   = '區塊名稱';
@@ -32,7 +32,7 @@ $lang->block->confirmRemoveBlock = '確定移除區塊【{0}】嗎？';
 
 $lang->block->allEntries  = '所有應用';
 $lang->block->dynamic     = '最新動態';
-$lang->block->dynamicInfo = "%s, %s <em>%s</em> %s <a href='%s'>%s</a>。";
+$lang->block->dynamicInfo = "%s, %s <em>%s</em> %s <a href='%s' %s>%s</a>。";
 
 $lang->block->default['oa']['1']['title'] = '日曆';
 $lang->block->default['oa']['1']['block'] = 'attend';

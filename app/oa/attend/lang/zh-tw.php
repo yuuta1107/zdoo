@@ -14,7 +14,9 @@ $lang->attend->makeuped     = '已補班';
 $lang->attend->lieu         = '調休';
 $lang->attend->lieud        = '已調休';
 $lang->attend->trip         = '出差';
+$lang->attend->triped       = '已出差';
 $lang->attend->egress       = '外出';
+$lang->attend->egressed     = '已外出';
 $lang->attend->overtime     = '加班';
 $lang->attend->overtimed    = '已加班';
 $lang->attend->review       = '補錄審核';
@@ -162,3 +164,4 @@ $lang->attend->m = '分';
 $lang->attend->s = '秒';
 
 $lang->attend->signInClientError = '簽到失敗！已設置只能通過 %s 簽到。';
+$lang->attend->waitReviews       = '<strong>%s</strong> 存在未審批的記錄，請審批之後再進行統計。';

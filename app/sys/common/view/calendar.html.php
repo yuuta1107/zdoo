@@ -2,12 +2,12 @@
 /**
  * The calendar view of common module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      chujilu <chujilu@cnezsoft.com>
  * @package     common 
  * @version     $Id: calendar.html.php 2508 2015-01-26 08:32:52Z chujilu $
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 if($extView = $this->getExtViewFile(__FILE__)){include $extView; return helper::cd();}
 $clientLang = $this->app->getClientLang();
@@ -46,13 +46,13 @@ $(function()
             var rowObj = $(this);
             var event = new Array();
             event['data'] = rowObj.data();
-            if(rowObj.find('.title').length)    event['title']      = rowObj.find('.title').text();
-            if(rowObj.find('.desc').length)     event['desc']       = rowObj.find('.desc').text();
-            if(rowObj.find('.allDay').length)   event['allDay']     = rowObj.find('.allDay').text();
-            if(rowObj.find('.start').length)    event['start']      = rowObj.find('.start').text();
-            if(rowObj.find('.end').length)      event['end']        = rowObj.find('.end').text();
-            if(rowObj.find('.calendar').length) event['calendar']   = rowObj.find('.calendar').text();
-            if(rowObj.find('.click').length)    event['click']      = rowObj.find('.click').data();
+            if(rowObj.find('.title').length)    event['title']    = rowObj.find('.title').text();
+            if(rowObj.find('.desc').length)     event['desc']     = rowObj.find('.desc').text();
+            if(rowObj.find('.allDay').length)   event['allDay']   = rowObj.find('.allDay').text();
+            if(rowObj.find('.start').length)    event['start']    = rowObj.find('.start').text();
+            if(rowObj.find('.end').length)      event['end']      = rowObj.find('.end').text();
+            if(rowObj.find('.calendar').length) event['calendar'] = rowObj.find('.calendar').text();
+            if(rowObj.find('.click').length)    event['click']    = rowObj.find('.click').data();
             events.push(event);
         });
         if(calendarObj.find(".calendar-data").length) settings.data = {'calendars':calendars, 'events':events};

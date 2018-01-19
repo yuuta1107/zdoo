@@ -2,19 +2,19 @@
 /**
  * The model file of leave module of Ranzhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      chujilu <chujilu@cnezsoft.com>
  * @package     leave
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 class leaveModel extends model
 {
     public function __construct($appName = '')
     {
         parent::__construct($appName);
-        $this->app->loadModuleConfig('attend', 'oa');
+        $this->loadModel('attend', 'oa');
     }
 
     /**
@@ -56,26 +56,61 @@ class leaveModel extends model
      */
     public function getList($type = 'personal', $year = '', $month = '', $account = '', $dept = '', $status = '', $orderBy = 'id_desc')
     {
+        $date = '';
+        if($year)  
+        {
+            if(!$month) $date = "$year-%";
+            if($month)  $date = "$year-$month-%";
+        }
+        else
+        {
+            if($month) $date = "%-$month-%";
+        }
+
         $leaveList = $this->dao->select('t1.*, t2.realname, t2.dept')
             ->from(TABLE_LEAVE)->alias('t1')
             ->leftJoin(TABLE_USER)->alias('t2')->on("t1.createdBy=t2.account")
-            ->where('1=1')
-            ->beginIf($year != '')->andWhere('t1.year')->eq($year)->fi()
-            ->beginIf($month != '')->andWhere('t1.begin')->like("%-$month-%")->fi()
+            ->where(1)
+            ->beginIf($date)
+            ->andWhere('t1.begin', true)->like($date)
+            ->orWhere('t1.end')->like($date)
+            ->markRight(1)
+            ->fi()
             ->beginIf($account != '')->andWhere('t1.createdBy')->eq($account)->fi()
             ->beginIf($dept != '')->andWhere('t2.dept')->in($dept)->fi()
             ->beginIf($status != '')->andWhere('t1.status')->in($status)->fi()
-            ->beginIf($type == 'browseReview')->andWhere('t1.status')->eq('wait')->fi()
+            ->beginIf($type == 'browseReview')->andWhere('t1.status')->in('wait,back')->fi()
             ->beginIf($type == 'company')->andWhere('t1.status')->ne('draft')->fi()
             ->orderBy("t2.dept,t1.{$orderBy}")
             ->fetchAll();
         $this->session->set('leaveQueryCondition', $this->dao->get());
 
-        if($type == 'browseReview')
+        return $this->processStatus($leaveList);
+    }
+
+    /**
+     * Process status of leave list. 
+     * 
+     * @param  array  $leaveList 
+     * @access public
+     * @return array
+     */
+    public function processStatus($leaveList)
+    {
+        $users    = $this->loadModel('user')->getPairs();
+        $managers = $this->user->getUserManagerPairs();
+        foreach($leaveList as $leave)
         {
-            foreach($leaveList as $key => $leave)
+            $leave->statusLabel = zget($this->lang->leave->statusList, $leave->status);
+
+            if(strpos(',wait,back,', ",$leave->status,") !== false)
             {
-                if($leave->status == 'pass' and ($leave->backDate == '0000-00-00 00:00:00' or $leave->backDate == $leave->end . ' ' . $leave->finish)) unset($leaveList[$key]);
+                $reviewer = $this->getReviewedBy();
+                if(!$reviewer) 
+                {
+                    $reviewer = trim(zget($managers, $leave->createdBy, ''), ',');
+                }
+                if($reviewer) $leave->statusLabel = zget($users, $reviewer) . $this->lang->leave->statusList['doing'];
             }
         }
 
@@ -107,13 +142,18 @@ class leaveModel extends model
     public function getAllMonth($type)
     {
         $monthList = array();
-        $dateList  = $this->dao->select('begin')->from(TABLE_LEAVE)
+        $dateList  = $this->dao->select('begin, end')->from(TABLE_LEAVE)
             ->beginIF($type == 'personal')->where('createdBy')->eq($this->app->user->account)->fi()
+            ->beginIF($type == 'company')->where('status')->ne('draft')->fi()
             ->groupBy('begin')
             ->orderBy('begin_desc')
             ->fetchAll('begin');
         foreach($dateList as $date)
         {
+            $year  = substr($date->end, 0, 4);
+            $month = substr($date->end, 5, 2);
+            if(!isset($monthList[$year][$month])) $monthList[$year][$month] = $month;
+
             $year  = substr($date->begin, 0, 4);
             $month = substr($date->begin, 5, 2);
             if(!isset($monthList[$year][$month])) $monthList[$year][$month] = $month;
@@ -225,7 +265,7 @@ class leaveModel extends model
      */
     public function checkDate($date, $id = 0)
     {
-        if(substr($date->begin, 0, 7) != substr($date->end, 0, 7)) return array('result' => 'fail', 'message' => $this->lang->leave->sameMonth);
+        //if(substr($date->begin, 0, 7) != substr($date->end, 0, 7)) return array('result' => 'fail', 'message' => $this->lang->leave->sameMonth);
         if("$date->end $date->finish" <= "$date->begin $date->start") return array('result' => 'fail', 'message' => $this->lang->leave->wrongEnd);
 
         $existLeave = $this->checkLeave($date, $this->app->user->account, $id);
@@ -293,9 +333,10 @@ class leaveModel extends model
     {
         $oldLeave = $this->getById($id);
         $leave    = clone $oldLeave;
+        $leave->status   = 'back';
         $leave->backDate = $this->post->backDate;
 
-        $this->dao->update(TABLE_LEAVE)->set('backDate')->eq($this->post->backDate)->autoCheck()->where('id')->eq($id)->exec();
+        $this->dao->update(TABLE_LEAVE)->data($leave)->autoCheck()->where('id')->eq($id)->exec();
 
         if(dao::isError()) return false;
 
@@ -346,6 +387,7 @@ class leaveModel extends model
         {
             $this->dao->update(TABLE_LEAVE)->set('backDate')->eq('0000-00-00 00:00:00')->where('id')->eq($id)->exec();
             $leave = clone $oldLeave;
+            $leave->status   = 'pass';
             $leave->backDate = '0000-00-00 00:00:00';
 
             if(dao::isError()) return false;
@@ -353,10 +395,10 @@ class leaveModel extends model
             return commonModel::createChanges($oldLeave, $leave);
         }
 
-        $begin    = $oldLeave->begin;
-        $start    = $oldLeave->start;
-        $end      = substr($oldLeave->backDate, 0, 10);
-        $finish   = substr($oldLeave->backDate, 11);
+        $begin  = $oldLeave->begin;
+        $start  = $oldLeave->start;
+        $end    = substr($oldLeave->backDate, 0, 10);
+        $finish = substr($oldLeave->backDate, 11);
 
         if($oldLeave->begin == $end) 
         {
@@ -376,6 +418,7 @@ class leaveModel extends model
         }
 
         $data = new stdclass();
+        $data->status       = 'pass';
         $data->end          = $end;
         $data->finish       = $finish;
         $data->hours        = $hours;

@@ -2,12 +2,12 @@
 /**
  * The set category view file of refund module of Ranzhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Tingting Dai <daitingting@xirangit.com>
  * @package     refund
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 ?>
 <?php include '../../common/view/header.html.php';?>
@@ -43,18 +43,17 @@
                 ?>
               </td>
             </tr>
-            <tr>
-              <td>
-                <?php echo html::hidden('uid');?>
-                <?php if(!empty($expenseList))
-                { 
-                    echo html::submitButton() . "&nbsp;&nbsp;";
-                } 
-                commonModel::printLink('cash.tree', 'browse', 'type=out', $lang->refund->setExpense, "class='btn btn-primary setExpense'");
-                ?>
-              </td>
-            </tr>
           </table>
+          <div class='page-actions'>
+            <?php echo html::hidden('uid');?>
+            <?php if(!empty($expenseList)):?>
+            <div class='checkbox checkAll'>
+              <label><input type='checkbox' name='checkAll' id='checkAll'><?php echo $lang->selectAll;?></label>
+            </div>
+            <?php echo html::submitButton();?>
+            <?php endif;?>
+            <?php commonModel::printLink('cash.tree', 'browse', 'type=out', $lang->refund->setExpense, "class='btn btn-primary setExpense'");?>
+          </div>
         </form>
       </div>
     </div>

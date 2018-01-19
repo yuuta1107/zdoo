@@ -2,12 +2,12 @@
 /**
  * The control file of trade module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Tingting Dai <daitingting@xirangit.com>
  * @package     trade
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 class trade extends control
 {
@@ -65,10 +65,28 @@ class trade extends control
                 }
             }
         }
-        $this->config->trade->search['params']['trader']['values'] = $this->loadModel('customer')->getPairs('', $emptyOption = true, 'id_desc', $limit = $this->config->customerLimit, $traders);
+        $this->config->trade->search['params']['trader']['values']   = $this->loadModel('customer')->getPairs('', $emptyOption = true, 'id_desc', $limit = $this->config->customerLimit, $traders);
+        $this->config->trade->search['params']['contract']['values'] = array('') + $this->loadModel('contract', 'crm')->getPairs();
 
+        $expenseCategories = $this->loadModel('tree')->getOptionMenu('out', 0, $removeRoot = true);
         $incomeCategories  = $this->loadModel('tree')->getOptionMenu('in', 0, $removeRoot = true);
-        $expenseCategories = $this->tree->getOptionMenu('out', 0, $removeRoot = true);
+
+        foreach($expenseCategories as $key => $expenseType)
+        {
+            $path = explode('/', trim($expenseType, '/'));
+            if(count($path) > 1) array_shift($path);
+
+            $expenseCategories[$key] = implode('/', $path);
+        }
+
+        foreach($incomeCategories as $key => $incomeType)
+        {
+            $path = explode('/', trim($incomeType, '/'));
+            if(count($path) > 1) array_shift($path);
+
+            $incomeCategories[$key] = implode('/', $path);
+        }
+
         $investCategories  = $this->trade->getSystemCategoryPairs('invest');
         $loanCategories    = $this->trade->getSystemCategoryPairs('interest');
         $searchCategories  = array('' => '') + $this->lang->trade->categoryList + $incomeCategories + $expenseCategories;
@@ -171,7 +189,7 @@ class trade extends control
         }
         else
         {
-            $this->view->categories = $this->tree->getOptionMenu('in', 0, $removeRoot = true) + $this->tree->getOptionMenu('out', 0, $removeRoot = true);
+            $this->view->categories = $expenseCategories + $incomeCategories;
         }
 
         $this->view->title         = $this->lang->trade->browse;
@@ -203,7 +221,10 @@ class trade extends control
      */
     public function create($type = '')
     {
-        if($this->config->trade->settings->trader) $this->config->trade->require->create .= ',trader,customer,allCustomer,traderName';
+        if($this->config->trade->settings->trader)   $this->config->trade->require->create .= ',trader,customer,allCustomer,traderName';
+        if($this->config->trade->settings->category) $this->config->trade->require->create .= ',category';
+        if($this->config->trade->settings->product)  $this->config->trade->require->create .= ',product';
+        if($this->config->trade->settings->dept)     $this->config->trade->require->create .= ',dept';
 
         if($_POST)
         {
@@ -219,11 +240,15 @@ class trade extends control
         $orders    = $this->order->getPairs();
         foreach($orderList as $id => $order) $order->name = $orders[$id];
 
+        $contractList  = $this->loadModel('contract', 'crm')->getList($customerID = 0);
+        $contractPairs = array();
+        foreach($contractList as $contract) $contractPairs[$contract->id] = $contract->name;
+
         if($type == 'in' or $type == 'out')
         {
             $categories = $this->loadModel('tree')->getOptionMenu($type, 0, $removeRoot = true);
 
-            if($this->config->trade->settings->category)
+            if($this->config->trade->settings->lastCategory)
             {
                 $allCategories = $this->loadModel('tree')->getListByType($type, 'grade_desc');
                 foreach($allCategories as $category)
@@ -241,16 +266,18 @@ class trade extends control
         }
 
         unset($this->lang->trade->menu);
-        $this->view->title         = $this->lang->trade->{$type};
-        $this->view->type          = $type;
-        $this->view->depositorList = array('' => '') + $this->loadModel('depositor', 'cash')->getPairs();
-        $this->view->productList   = $this->loadModel('product')->getPairs();
-        $this->view->orderList     = $orderList;
-        $this->view->customerList  = $this->loadModel('customer')->getPairs('client', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit);
-        $this->view->traderList    = $this->customer->getPairs('provider', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit);
-        $this->view->contractList  = $this->loadModel('contract', 'crm')->getList($customerID = 0);
-        $this->view->deptList      = $this->loadModel('tree')->getOptionMenu('dept', 0, $removeRoot = true);
-        $this->view->users         = $this->loadModel('user')->getPairs('nodeleted,noforbidden,noclosed');
+        $this->view->title           = $this->lang->trade->{$type};
+        $this->view->type            = $type;
+        $this->view->depositorList   = array('' => '') + $this->loadModel('depositor', 'cash')->getPairs();
+        $this->view->productList     = $this->loadModel('product')->getPairs();
+        $this->view->orderList       = $orderList;
+        $this->view->pinyinOrders    = commonModel::convert2Pinyin($orders);
+        $this->view->customerList    = $this->loadModel('customer')->getPairs('client', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit);
+        $this->view->traderList      = $this->customer->getPairs('provider', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit);
+        $this->view->contractList    = $contractList;
+        $this->view->pinyinContracts = commonModel::convert2Pinyin($contractPairs);
+        $this->view->deptList        = array('') + $this->loadModel('tree')->getOptionMenu('dept', 0);
+        $this->view->users           = $this->loadModel('user')->getPairs('nodeleted,noforbidden,noclosed');
 
         $this->display();
     }
@@ -263,8 +290,6 @@ class trade extends control
      */
     public function batchCreate()
     {
-        if($this->config->trade->settings->trader) $this->config->trade->require->create .= ',trader,customer,allCustomer,traderName';
-
         if($_POST)
         {
             $result = $this->trade->batchCreate();
@@ -281,14 +306,33 @@ class trade extends control
         unset($this->lang->trade->typeList['loan']);
         unset($this->lang->trade->typeList['repay']);
 
+        $expenseTypes = $this->loadModel('tree')->getOptionMenu('out', 0, $removeRoot = true);
+        $incomeTypes  = $this->loadModel('tree')->getOptionMenu('in', 0, $removeRoot = true);
+
+        foreach($expenseTypes as $key => $expenseType)
+        {
+            $path = explode('/', trim($expenseType, '/'));
+            if(count($path) > 1) array_shift($path);
+
+            $expenseTypes[$key] = implode('/', $path);
+        }
+
+        foreach($incomeTypes as $key => $incomeType)
+        {
+            $path = explode('/', trim($incomeType, '/'));
+            if(count($path) > 1) array_shift($path);
+
+            $incomeTypes[$key] = implode('/', $path);
+        }
+
         $this->view->title         = $this->lang->trade->batchCreate;
         $this->view->depositors    = array('' => '') + $this->loadModel('depositor', 'cash')->getPairs();
         $this->view->users         = $this->loadModel('user')->getPairs('nodeleted,noforbidden,noclosed');
         $this->view->customerList  = $this->loadModel('customer')->getPairs('client', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit);
         $this->view->traderList    = $this->customer->getPairs('provider', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit);
-        $this->view->expenseTypes  = array('' => '') + $this->loadModel('tree')->getOptionMenu('out', 0, $removeRoot = true);
-        $this->view->incomeTypes   = array('' => '') + $this->loadModel('tree')->getOptionMenu('in', 0, $removeRoot = true);
-        $this->view->deptList      = $this->loadModel('tree')->getOptionMenu('dept', 0, $removeRoot = true);
+        $this->view->expenseTypes  = array('' => '') + $expenseTypes; 
+        $this->view->incomeTypes   = array('' => '') + $incomeTypes; 
+        $this->view->deptList      = array('') + $this->loadModel('tree')->getOptionMenu('dept', 0);
         $this->view->requireTrader = $this->config->trade->settings->trader;
         $this->view->productList   = array(0 => '') + $this->loadModel('product')->getPairs();
 
@@ -308,7 +352,11 @@ class trade extends control
         $trade = $this->trade->getByID($tradeID);
         if(empty($trade)) die();
         if($trade->type == 'out' and $trade->category != 'loss' and $trade->category != 'fee') $this->loadModel('tree')->checkRight($trade->category);
-        if($this->config->trade->settings->trader) $this->config->trade->require->edit .= ',trader,customer,allCustomer';
+
+        if($this->config->trade->settings->trader)   $this->config->trade->require->edit .= ',trader,customer,allCustomer';
+        if($this->config->trade->settings->category) $this->config->trade->require->edit .= ',category';
+        if($this->config->trade->settings->product)  $this->config->trade->require->edit .= ',product';
+        if($this->config->trade->settings->dept)     $this->config->trade->require->edit .= ',dept';
 
         if($_POST)
         {
@@ -356,9 +404,10 @@ class trade extends control
         $this->view->contractList  = $this->loadModel('contract', 'crm')->getList($customerID = 0);
         $this->view->tradeContract = array('' => '') + $this->loadModel('contract', 'crm')->getPairs($customerID = $trade->trader);
         $this->view->users         = $this->loadModel('user')->getPairs('nodeleted,noforbidden,noclosed');
-        $this->view->deptList      = $this->loadModel('tree')->getOptionMenu('dept', 0, $removeRoot = true);
+        $this->view->deptList      = array('') + $this->loadModel('tree')->getOptionMenu('dept', 0);
         $this->view->depositorList = $depositorList;
         $this->view->orderList     = $orderList;
+        $this->view->pinyinOrders  = commonModel::convert2Pinyin($orders);
         $this->view->trade         = $trade;
         $this->view->mode          = $mode;
 
@@ -476,7 +525,7 @@ class trade extends control
         unset($this->lang->trade->menu);
         $this->view->title         = $this->lang->trade->transfer;
         $this->view->users         = $this->loadModel('user')->getPairs('nodeleted,noforbidden');
-        $this->view->deptList      = $this->loadModel('tree')->getOptionMenu('dept', 0, $removeRoot = true);
+        $this->view->deptList      = array('') + $this->loadModel('tree')->getOptionMenu('dept', 0);
         $this->view->depositorList = $this->loadModel('depositor', 'cash')->getList();
 
         $this->display();
@@ -515,7 +564,7 @@ class trade extends control
         $this->view->title              = $this->lang->trade->invest;
         $this->view->type               = $type;
         $this->view->users              = $this->loadModel('user')->getPairs('nodeleted,noforbidden');
-        $this->view->deptList           = $this->loadModel('tree')->getOptionMenu('dept', 0, $removeRoot = true);
+        $this->view->deptList           = array('') + $this->loadModel('tree')->getOptionMenu('dept', 0);
         $this->view->depositorList      = $depositorList;
         $this->view->traderList         = $this->loadModel('customer')->getPairs('', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit);
         $this->view->investCategoryList = $investCategories;
@@ -556,7 +605,7 @@ class trade extends control
         $this->view->title         = $this->lang->trade->loan;
         $this->view->type          = $type;
         $this->view->users         = $this->loadModel('user')->getPairs('nodeleted,noforbidden');
-        $this->view->deptList      = $this->loadModel('tree')->getOptionMenu('dept', 0, $removeRoot = true);
+        $this->view->deptList      = array('') + $this->loadModel('tree')->getOptionMenu('dept', 0);
         $this->view->depositorList = $depositorList;
         $this->view->traderList    = $this->loadModel('customer')->getPairs('', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit);
         $this->view->loanList      = $loanList;
@@ -651,14 +700,15 @@ class trade extends control
      * Batch edit trades.
      * 
      * @param  string $step  form|save
+     * @param  string $mode
      * @access public
      * @return void
      */
-    public function batchEdit($step = 'form')
+    public function batchEdit($step = 'form', $mode)
     {
         if($step == 'save')
         {
-            $result =  $this->trade->batchUpdate();
+            $result =  $this->trade->batchUpdate($mode);
             $this->send($result);
         }
 
@@ -668,18 +718,38 @@ class trade extends control
         foreach($trades as $trade) $customerIDList[$trade->trader] = $trade->trader;
         $customerIDList = implode(',', $customerIDList);
 
+        $expenseTypes = $this->loadModel('tree')->getOptionMenu('out', 0, $removeRoot = true);
+        $incomeTypes  = $this->loadModel('tree')->getOptionMenu('in', 0, $removeRoot = true);
+
+        foreach($expenseTypes as $key => $expenseType)
+        {
+            $path = explode('/', trim($expenseType, '/'));
+            if(count($path) > 1) array_shift($path);
+
+            $expenseTypes[$key] = implode('/', $path);
+        }
+
+        foreach($incomeTypes as $key => $incomeType)
+        {
+            $path = explode('/', trim($incomeType, '/'));
+            if(count($path) > 1) array_shift($path);
+
+            $incomeTypes[$key] = implode('/', $path);
+        }
+
         $this->view->title              = $this->lang->trade->batchCreate;
         $this->view->trades             = $trades;
         $this->view->depositors         = $this->loadModel('depositor', 'cash')->getPairs();
         $this->view->users              = $this->loadModel('user')->getPairs('nodeleted,noforbidden,noclosed');
         $this->view->customerList       = $this->loadModel('customer')->getPairs('client', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit, $customerIDList);
         $this->view->traderList         = $this->customer->getPairs('provider', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit, $customerIDList);
-        $this->view->expenseTypes       = array('' => '') + $this->loadModel('tree')->getOptionMenu('out', 0, $removeRoot = true);
-        $this->view->incomeTypes        = array('' => '') + $this->loadModel('tree')->getOptionMenu('in', 0, $removeRoot = true);
-        $this->view->deptList           = $this->loadModel('tree')->getOptionMenu('dept', 0, $removeRoot = true);
+        $this->view->expenseTypes       = array('' => '') + $expenseTypes;
+        $this->view->incomeTypes        = array('' => '') + $incomeTypes;
+        $this->view->deptList           = array('') + $this->loadModel('tree')->getOptionMenu('dept', 0);
         $this->view->productList        = array(0 => '') + $this->loadModel('product')->getPairs();
         $this->view->requireTrader      = $this->config->trade->settings->trader;
         $this->view->disabledCategories = $this->dao->select('*')->from(TABLE_CATEGORY)->where('major')->in('5,6,7,8')->fetchAll('id');
+        $this->view->mode               = $mode;
 
         $this->display();
     }
@@ -854,7 +924,7 @@ class trade extends control
                 $data['type']  = 'out';
                 $data['money'] = $fee;
                 $data['desc']  = '';
-                $dataList[$i]    = $data;
+                $dataList[$i]  = $data;
             }
             $i++;
         }
@@ -894,7 +964,7 @@ class trade extends control
         $this->view->traderList   = array('' => '') + $customers;
         $this->view->expenseTypes = $expenseTypes;
         $this->view->incomeTypes  = $incomeTypes;
-        $this->view->deptList     = $this->tree->getOptionMenu('dept', 0, $removeRoot = true);
+        $this->view->deptList     = array('') + $this->loadModel('tree')->getOptionMenu('dept', 0);
         $this->view->productList  = array(0 => '') + $productList;
         $this->view->existTrades  = $existTrades;
 
@@ -1277,8 +1347,11 @@ class trade extends control
         if($_POST)
         {
             $settings = new stdclass();
-            $settings->trader   = $this->post->trader ? 1 : 0;
-            $settings->category = $this->post->category ? 1 : 0;
+            $settings->trader       = $this->post->trader ? 1 : 0;
+            $settings->category     = $this->post->category ? 1 : 0;
+            $settings->product      = $this->post->product ? 1 : 0;
+            $settings->dept         = $this->post->dept ? 1 : 0;
+            $settings->lastCategory = $this->post->lastCategory ? 1 : 0;
 
             $this->loadModel('setting')->setItems('system.cash.trade.settings', $settings);
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));

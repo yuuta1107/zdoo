@@ -2,7 +2,7 @@
 /**
  * The depositor module en file of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Tingting Dai <daitingting@xirangit.com>
  * @package     depositor
@@ -28,18 +28,19 @@ $lang->depositor->createdDate     = 'Created Date';
 $lang->depositor->editedBy        = 'Edited By';
 $lang->depositor->editedDate      = 'Edited Date';
 
-$lang->depositor->all         = 'All';
-$lang->depositor->create      = 'Create';
-$lang->depositor->browse      = 'Account';
-$lang->depositor->edit        = 'Edit';
-$lang->depositor->delete      = 'Delete';
-$lang->depositor->view        = 'View';
-$lang->depositor->forbid      = 'Disable';
-$lang->depositor->activate    = 'Activate';
-$lang->depositor->export      = 'Export';
-$lang->depositor->balance     = 'Balance';
-$lang->depositor->saveBalance = 'Save';
-$lang->depositor->detail      = 'Detail';
+$lang->depositor->all            = 'All';
+$lang->depositor->create         = 'Create';
+$lang->depositor->browse         = 'Account';
+$lang->depositor->edit           = 'Edit';
+$lang->depositor->delete         = 'Delete';
+$lang->depositor->view           = 'View';
+$lang->depositor->forbid         = 'Disable';
+$lang->depositor->activate       = 'Activate';
+$lang->depositor->export         = 'Export';
+$lang->depositor->balance        = 'Balance';
+$lang->depositor->saveBalance    = 'Save';
+$lang->depositor->detail         = 'Detail';
+$lang->depositor->disabledBrowse = 'Disabled Account';
 
 $lang->depositor->check         = 'Check';
 $lang->depositor->start         = 'Begin';

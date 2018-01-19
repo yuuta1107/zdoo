@@ -2,12 +2,12 @@
 /**
  * The model file of install module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
  * @package     install 
  * @version     $Id: model.php 4029 2016-08-26 06:50:41Z liugang $
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 ?>
 <?php
@@ -501,5 +501,24 @@ EOT;
         $admin->join      = $join;
         $this->lang->user->password1 = $this->lang->user->password;
         $this->dao->insert(TABLE_USER)->data($admin, $skip = 'password1')->autoCheck()->batchCheck('account,password1', 'notempty')->check('account', 'account')->exec();
+    }
+
+    /**
+     * Import data. 
+     * 
+     * @access public
+     * @return bool
+     */
+    public function importData()
+    {
+        if(!$this->post->import) return false;
+        if(!is_array($this->post->import)) return false;
+
+        foreach($this->post->import as $type)
+        {
+            $sqlFile = $this->app->getBasepath() . 'db' . DS . "$type.sql";
+            $this->loadModel('upgrade')->execSQL($sqlFile);
+        }
+        return true;
     }
 }

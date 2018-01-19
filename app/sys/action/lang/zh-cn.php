@@ -2,12 +2,12 @@
 /**
  * The lang file of zh-cn module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Yidong Wang <yidong@cnezsoft.com>
  * @package     action
  * @version     $Id: zh-cn.php 4955 2013-07-02 01:47:21Z chencongzhi520@gmail.com $
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 if(!isset($lang->action)) $lang->action = new stdclass();
 
@@ -188,9 +188,9 @@ $lang->action->label->product   = '产品|product|view|productID=%s';
 $lang->action->label->project   = '项目|task|browse|projectID=%s';
 $lang->action->label->provider  = '供应商|provider|view|providerID=%s';
 $lang->action->label->schema    = '记账模板|schema|browse|';
-$lang->action->label->space     = '　';
+$lang->action->label->space     = ' ';
 $lang->action->label->task      = '任务|task|view|taskID=%s';
-$lang->action->label->todo      = '待办|todo|calendar|';
+$lang->action->label->todo      = '待办|todo|view|todoID=%s';
 $lang->action->label->trade     = '账目|trade|browse|';
 
 $lang->action->label->attend = array();

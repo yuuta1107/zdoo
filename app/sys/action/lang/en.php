@@ -2,7 +2,7 @@
 /**
  * The action module English file of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Yidong Wang <yidong@cnezsoft.com>
  * @package     action
@@ -190,7 +190,7 @@ $lang->action->label->provider  = 'Supplier|provider|view|providerID=%s';
 $lang->action->label->schema    = 'Trade Template|schema|browse|';
 $lang->action->label->space     = ' ';
 $lang->action->label->task      = 'Task|task|view|taskID=%s';
-$lang->action->label->todo      = 'To-Do|todo|calendar|';
+$lang->action->label->todo      = '待办|todo|view|todoID=%s';
 $lang->action->label->trade     = 'Trade|trade|browse|';
 
 $lang->action->label->attend = array();

@@ -2,12 +2,12 @@
 /**
  * The view file of makeup module of RanZhi.
  *
- * @copyright   Copyright 2009-2016 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
+ * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Tingting Dai <daitingting@xirangit.com>
  * @package     makeup
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 ?>
 <?php include '../../../sys/common/view/header.modal.html.php';?>
@@ -49,7 +49,7 @@
     <th><?php echo $lang->makeup->createdBy;?></th>
     <td><?php echo zget($users, $makeup->createdBy);?></td>
     <th><?php echo $lang->makeup->reviewedBy;?></th>
-    <td><?php echo zget($users, $makeup->reviewedBy);?></td>
+    <td id='reviewedBy'><?php echo zget($users, $makeup->reviewedBy);?></td>
   </tr> 
   <tr>
     <th><?php echo $lang->makeup->createdDate;?></th>
@@ -76,7 +76,7 @@
           echo '</div>';
       }
   }
-  elseif($makeup->status == 'wait')
+  elseif(strpos(',wait,doing,', ",$makeup->status,") !== false)
   {
       echo "<div class='btn-group'>";
       commonModel::printLink('oa.makeup', 'review', "id=$makeup->id&status=pass",   $lang->makeup->statusList['pass'],   "class='btn reviewPass'");
