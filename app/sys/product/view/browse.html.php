@@ -29,7 +29,7 @@
           <?php if(!empty($productLine)) echo "<li id='{$key}'>" . html::a(inlink('browse', "mode={$mode}&status={$status}&line={$key}"), $productLine) . "</li>";?>
           <?php endforeach;?>
         </ul>
-        <?php commonModel::printLink('crm.setting', 'lang', 'module=product&field=lineList&appName=sys', $lang->product->setline, "class='btn btn-primary setting'");?>
+        <?php commonModel::printLink('tree', 'browse', 'type=product', $lang->product->setCategory, "class='btn btn-primary btn-sm setting'");?>
       </div>
     </div>
   </div>
