@@ -38,7 +38,7 @@ function closeWindow()
         <div class='input-group'>
           <span class='input-group-addon'><?php echo $lang->setFileName;?></span>
           <?php echo html::input('fileName', isset($fileName) ? $fileName : '', 'class=form-control');?>
-          <span class='input-group-addon'><?php echo $lang->setFileType;?></span>
+          <span class='input-group-addon fix-border'><?php echo $lang->setFileType;?></span>
           <?php echo html::select('fileType', array('xls' => 'xls', 'xlsx' => 'xlsx'), 'xls', "class='form-control'");?>
         </div>
       </td>

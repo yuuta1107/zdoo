@@ -18,13 +18,14 @@ class userModel extends model
      *
      * @param  int|array $dept
      * @param  string    $mode
-     * @param  string    $query 
+     * @param  mixed     $accountList   string | array
+     * @param  string    $search
      * @param  string    $orderBy
      * @param  object    $pager
      * @access public
      * @return array 
      */
-    public function getList($dept = 0, $mode = 'normal', $query = '', $orderBy = 'id', $pager = null)
+    public function getList($dept = 0, $mode = 'normal', $accountList = '', $search = '', $orderBy = 'id', $pager = null)
     {
         $deptList = array();
         if($dept)
@@ -37,11 +38,13 @@ class userModel extends model
                 $deptList = array_merge($deptList, $depts);
             }
         }
+
         return $this->dao->select('*')->from(TABLE_USER)
             ->where(1)
             ->beginIF($deptList)->andWhere('dept')->in($deptList)->fi()
-
+            ->beginIF($accountList)->andWhere('account')->in($accountList)->fi()
             ->beginIF($mode != 'all')->andWhere('deleted')->eq('0')->fi()
+            ->beginIF($mode == 'forbid')->andWhere('locked')->ge(helper::now())->fi()
 
             ->beginIF($mode == 'normal')
             ->andWhere('locked', true)->eq('0000-00-00 00:00:00')
@@ -49,11 +52,9 @@ class userModel extends model
             ->markRight(1)
             ->fi()
 
-            ->beginIF($mode == 'forbid')->andWhere('locked')->ge(helper::now())->fi()
-
-            ->beginIF($query != '')
-            ->andWhere('account', true)->like("%$query%")
-            ->orWhere('realname')->like("%$query%")
+            ->beginIF($search)
+            ->andWhere('account', true)->like("%$search%")
+            ->orWhere('realname')->like("%$search%")
             ->markRight(1)
             ->fi()
 

@@ -28,7 +28,7 @@ js::set('from', 'admin');
                 <?php echo html::a(inlink('admin', 'dept=&mode=forbid'), $lang->user->forbidList, "class='btn btn-primary pull-left'");?>
                 <form method='post' class='form-search w-200px pull-right'>
                   <div class="input-group" style='padding-left:10px'>
-                    <?php echo html::input('query', $query, "class='form-control search-query' placeholder='{$lang->user->inputAccount}'"); ?>
+                    <?php echo html::input('search', $search, "class='form-control search-query' placeholder='{$lang->user->inputAccount}'"); ?>
                     <span class="input-group-btn">
                       <?php echo html::submitButton($lang->user->searchUser,"btn btn-primary"); ?>
                     </span>
@@ -39,7 +39,7 @@ js::set('from', 'admin');
             <table class='table table-hover table-striped table-bordered tablesorter table-fixed'>
               <thead>
                 <tr class='text-center'>
-                  <?php $vars = "deptID=$deptID&mode=$mode&query=$query&orderBy=%s&recTotal={$pager->recTotal}&recPerPage={$pager->recPerPage}&pageID={$pager->pageID}";?>
+                  <?php $vars = "deptID=$deptID&mode=$mode&search=$search&orderBy=%s&recTotal={$pager->recTotal}&recPerPage={$pager->recPerPage}&pageID={$pager->pageID}";?>
                   <th class='w-60px'><?php commonModel::printOrderLink('id', $orderBy, $vars, $lang->user->id);?></th>
                   <th class='w-100px'><?php commonModel::printOrderLink('realname', $orderBy, $vars, $lang->user->realname);?></th>
                   <th><?php commonModel::printOrderLink('account', $orderBy, $vars, $lang->user->account);?></th>

@@ -128,17 +128,24 @@ class upgradeModel extends model
                 $this->updateDocPrivileges();
                 $this->moveDocContent();
                 $this->addProjectDoc();
-            case '4_0': $this->addProjPrivilege(); 
-            case '4_1': $this->execSQL($this->getUpgradeFile('4.1'));
+            case '4_0': 
+                $this->addProjPrivilege(); 
+            case '4_1': 
+                $this->execSQL($this->getUpgradeFile('4.1'));
                 $this->updateMakeupActions();
-            case '4_2': $this->execSQL($this->getUpgradeFile('4.2'));
-            case '4_2_1': $this->execSQL($this->getUpgradeFile('4.2.1'));
+            case '4_2': 
+                $this->execSQL($this->getUpgradeFile('4.2'));
+            case '4_2_1': 
+                $this->execSQL($this->getUpgradeFile('4.2.1'));
             case '4_2_2':
             case '4_2_3':
-            case '4_3_beta': $this->execSQL($this->getUpgradeFile('4.3.beta'));
-            case '4_4': $this->processContractAddress();
+            case '4_3_beta': 
+                $this->execSQL($this->getUpgradeFile('4.3.beta'));
+            case '4_4': 
+                $this->processContractAddress();
                 $this->execSQL($this->getUpgradeFile('4.4'));
-            case '4_5': $this->execSQL($this->getUpgradeFile('4.5'));
+            case '4_5': 
+                $this->execSQL($this->getUpgradeFile('4.5'));
                 $this->renameLastCategory();
             default: if(!$this->isError()) $this->loadModel('setting')->updateVersion($this->config->version);
         }

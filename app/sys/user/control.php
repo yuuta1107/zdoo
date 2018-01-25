@@ -345,7 +345,7 @@ class user extends control
      *
      * @param  int    $deptID
      * @param  string $mode
-     * @param  srting $query
+     * @param  srting $search
      * @param  srting $orderBy
      * @param  int    $recTotal
      * @param  int    $recPerPage
@@ -353,7 +353,7 @@ class user extends control
      * @access public
      * @return void
      */
-    public function admin($deptID = 0, $mode = 'normal', $query = '', $orderBy = 'id_asc', $recTotal = 0, $recPerPage = 10, $pageID = 1)
+    public function admin($deptID = 0, $mode = 'normal', $search = '', $orderBy = 'id_asc', $recTotal = 0, $recPerPage = 10, $pageID = 1)
     {
         if($this->post->query) die($this->locate(inlink('admin', "deptID=$deptID&mode=&query={$this->post->query}&orderBy=$orderBy&recTotal=0&recPerPage=$recPerPage&pageID=1")));
 
@@ -362,10 +362,10 @@ class user extends control
 
         $this->view->treeMenu = $this->loadModel('tree')->getTreeMenu('dept', 0, array('treeModel', 'createDeptAdminLink'));
         $this->view->depts    = $this->tree->getOptionMenu('dept');
-        $this->view->users    = $this->user->getList($deptID, $mode, $query, $orderBy, $pager);
+        $this->view->users    = $this->user->getList($deptID, $mode, $accountList = '', $search, $orderBy, $pager);
         $this->view->deptID   = $deptID;
         $this->view->mode     = $mode;
-        $this->view->query    = $query;
+        $this->view->search   = $search;
         $this->view->orderBy  = $orderBy;
         $this->view->pager    = $pager;
 
@@ -377,7 +377,7 @@ class user extends control
      *  Admin colleague list.
      *
      * @param  int    $deptID
-     * @param  srting $query
+     * @param  srting $search
      * @param  srting $orderBy
      * @param  int    $recTotal
      * @param  int    $recPerPage
@@ -385,7 +385,7 @@ class user extends control
      * @access public
      * @return void
      */
-    public function colleague($deptID = 0, $query = '', $orderBy = 'id_asc', $recTotal = 0, $recPerPage = 10, $pageID = 1)
+    public function colleague($deptID = 0, $search = '', $orderBy = 'id_asc', $recTotal = 0, $recPerPage = 10, $pageID = 1)
     {
         if($this->post->query) die($this->locate(inlink('colleague', "deptID=$deptID&query={$this->post->query}&orderBy=$orderBy&recTotal=0&recPerPage=$recPerPage&pageID=1")));
 
@@ -395,8 +395,8 @@ class user extends control
 
         $this->view->treeMenu = $this->loadModel('tree')->getTreeMenu('dept', 0, array('treeModel', 'createDeptColleagueLink'));
         $this->view->depts    = $this->tree->getPairs(0, 'dept');
-        $this->view->users    = $this->user->getList($deptID, $mode = 'normal', $query, $orderBy, $pager);
-        $this->view->query    = $query;
+        $this->view->users    = $this->user->getList($deptID, $mode = 'normal', $accountList = '', $search, $orderBy, $pager);
+        $this->view->search   = $search;
         $this->view->pager    = $pager;
         $this->view->deptID   = $deptID;
         $this->view->orderBy  = $orderBy;
