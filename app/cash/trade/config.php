@@ -77,14 +77,4 @@ $config->trade->excel->numberFields = array('undefined', 'total');
 $config->trade->excel->customWidth  = array('undefined' => 15, 'total' => 15);
 
 /* Excel items. */
-$config->excel = new stdclass();
-$config->excel->titleFields  = array();
-$config->excel->centerFields = array();
-$config->excel->dateFields   = array();
-
-$config->excel->width = new stdclass();
-$config->excel->width->title   = 30;
-$config->excel->width->content = 100;
-
-$config->excel->freeze = new stdclass();
 $config->excel->freeze->depositor = 'month';

@@ -18,8 +18,8 @@
   <div class='btn-group'>
     <button data-toggle='dropdown' class='btn btn-primary dropdown-toggle' type='button'><?php echo $lang->exportIcon . $lang->export;?> <span class='caret'></span></button>
     <ul id='exportActionMenu' class='dropdown-menu'>
-      <li><?php commonModel::printLink('contract', 'export', "mode=all&orderBy={$orderBy}", $lang->exportAll, "class='iframe' data-width='700'");?></li>
-      <li><?php commonModel::printLink('contract', 'export', "mode=thisPage&orderBy={$orderBy}", $lang->exportThisPage, "class='iframe' data-width='700'");?></li>
+      <li><?php commonModel::printLink('contract', 'export', "mode=all", $lang->exportAll, "class='iframe' data-width='700'");?></li>
+      <li><?php commonModel::printLink('contract', 'export', "mode=thisPage", $lang->exportThisPage, "class='iframe' data-width='700'");?></li>
     </ul>
   </div>
   <?php endif;?>

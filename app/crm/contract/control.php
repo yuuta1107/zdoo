@@ -576,11 +576,10 @@ class contract extends control
      * get data to export.
      * 
      * @param  string $mode 
-     * @param  string $orderBy 
      * @access public
      * @return void
      */
-    public function export($mode = 'all', $orderBy = 'id_desc')
+    public function export($mode = 'all')
     { 
         if($_POST)
         {
