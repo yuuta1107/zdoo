@@ -54,7 +54,7 @@
               <?php endif;?>
             </div>
           </div>
-          <div class='card-caption row'>
+          <div class='card-caption row' data-id="<?php echo $depositor->id;?>">
             <?php if($depositor->type != 'cash'):?>
             <?php if($depositor->type == 'bank') echo "<dl class='dl-horizontal'><dt>{$lang->depositor->bankProvider} {$lang->colon} </dt><dd>$depositor->provider </dd></dl>";?>
             <?php if($depositor->type == 'online') echo "<dl class='dl-horizontal'><dt>{$lang->depositor->serviceProvider} {$lang->colon} </dt><dd>{$lang->depositor->providerList[$depositor->provider]} </dd></dl>";?>
