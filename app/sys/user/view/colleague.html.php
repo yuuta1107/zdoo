@@ -29,7 +29,7 @@ js::set('deptID', $deptID);
         <div class="pull-right panel-actions search">
           <form method='post' class='form-search w-300px'>
             <div class="input-group">
-              <?php echo html::input('query', $query, "class='form-control search-query' placeholder='{$lang->user->inputColleague}'"); ?>
+              <?php echo html::input('search', $search, "class='form-control search-query' placeholder='{$lang->user->inputColleague}'"); ?>
               <span class="input-group-btn">
                 <?php echo html::submitButton($lang->user->searchUser,"btn btn-primary"); ?>
               </span>
