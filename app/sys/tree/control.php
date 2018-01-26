@@ -126,7 +126,7 @@ class tree extends control
     {
         if($_POST)
         {
-            $result = $this->tree->merge();
+            $result = $this->tree->merge($type);
             if(is_array($result)) $this->send($result);
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
