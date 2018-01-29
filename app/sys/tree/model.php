@@ -696,7 +696,7 @@ class treeModel extends model
      * @access public
      * @return void
      */
-    public function merge()
+    public function merge($type)
     {
         if(!$this->post->originCategories) return false;
         $targetCategoryID = $this->post->targetCategory;
