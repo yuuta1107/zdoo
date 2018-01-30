@@ -293,7 +293,13 @@ class trade extends control
         if($_POST)
         {
             $result = $this->trade->batchCreate();
-            if($result['result'] != 'success') $this->send($result);
+            if(isset($result['result']) && $result['result'] == 'fail') $this->send($result);
+            if(!dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
+
+            $this->loadModel('action');
+
+            $tradeIDList = $result;
+            foreach($tradeIDList as $tradeID) $this->action->create('trade', $tradeID, 'created');
 
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => inlink('browse')));
         }
@@ -708,8 +714,16 @@ class trade extends control
     {
         if($step == 'save')
         {
-            $result =  $this->trade->batchUpdate($mode);
-            $this->send($result);
+            $result = $this->trade->batchUpdate($mode);
+            if(isset($result['result']) && $result['result'] == 'fail') $this->send($result);
+            if(!dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
+
+            $this->loadModel('action');
+
+            $tradeIDList = $result;
+            foreach($tradeIDList as $tradeID) $this->action->create('trade', $tradeID, 'edited');
+
+            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => inlink('browse', "mode=$mode")));
         }
 
         unset($this->lang->trade->menu);
@@ -766,10 +780,17 @@ class trade extends control
     {
         if($_POST)
         {
-            $return = $this->trade->saveImport($depositorID);
+            $result = $this->trade->saveImport($depositorID);
+            if(isset($result['result']) && $result['result'] == 'fail') $this->send($result);
+            if(!dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
 
-            if($return['result'] == 'success') $this->session->set('importFile', '');
-            $this->send($return);
+            $this->loadModel('action');
+
+            $tradeIDList = $result;
+            foreach($tradeIDList as $tradeID) $this->action->create('trade', $tradeID, 'imported');
+
+            $this->session->set('importFile', '');
+            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => inlink('browse')));
         }
 
         $schema = $this->loadModel('schema')->getByID($schemaID);

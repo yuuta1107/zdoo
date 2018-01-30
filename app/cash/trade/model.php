@@ -578,7 +578,7 @@ class tradeModel extends model
     }
 
     /**
-     * Batch create.
+     * Batch create trades.
      * 
      * @access public
      * @return array
@@ -644,25 +644,24 @@ class tradeModel extends model
         $errors = $this->batchCheck($trades);
         if(!empty($errors)) return array('result' => 'fail', 'message' => $errors);
 
+        $tradeIDList = array();
         foreach($trades as $trade)
         {
             $this->dao->insert(TABLE_TRADE)->data($trade, $skip = 'createTrader,traderName,createCustomer')->autoCheck()->exec();
-            $tradeID = $this->dao->lastInsertID();
-            if(!dao::isError()) $this->action->create('trade', $tradeID, 'Created');
+
+            if(!dao::isError()) $tradeIDList[] = $this->dao->lastInsertID();
         }
 
-        if(!dao::isError()) return array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => inlink('browse'));
-        return array('result' => 'fail', 'message' => dao::getError());
+        return $tradeIDList;
     }
 
     /**
      * Batch update trades.
      * 
-     * @param  string $mode
      * @access public
-     * @return void
+     * @return array 
      */
-    public function batchUpdate($mode)
+    public function batchUpdate()
     {
         $trades = array();
 
@@ -708,9 +707,10 @@ class tradeModel extends model
         foreach($trades as $tradeID => $trade)
         {
             $this->dao->update(TABLE_TRADE)->data($trade, $skip = 'createTrader,createCustomer')->where('id')->eq($tradeID)->autoCheck()->exec();
+            if(!dao::isError()) $tradeIDList[] = $tradeID;
         }
-        if(dao::isError()) return array('result' => 'fail', 'message' => dao::getError());
-        return array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => inlink('browse', "mode=$mode"));
+
+        return $tradeIDlist;
     }
 
     /**
@@ -746,7 +746,7 @@ class tradeModel extends model
      * 
      * @param  int    $tradeID 
      * @access public
-     * @return string|bool
+     * @return bool | array
      */
     public function update($tradeID)
     {
@@ -1004,12 +1004,11 @@ class tradeModel extends model
         foreach($trades as $trade)
         {
             $this->dao->insert(TABLE_TRADE)->data($trade, $skip = 'createTrader,traderName,createCustomer,customerName')->autoCheck()->exec();
-            $tradeID = $this->dao->lastInsertId();
-            $this->action->create('trade', $tradeID, 'imported');
+
+            if(!dao::isError()) $tradeIDList[] = $this->dao->lastInsertId();
         }
 
-        if(!dao::isError()) return array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => inlink('browse'));
-        return array('result' => 'fail', 'message' => dao::getError());
+        return $tradeIDList;
     }
 
     /**
