@@ -1529,16 +1529,19 @@ class commonModel extends model
     /**
      * Log.
      * 
-     * @param  string    $url 
-     * @param  string    $results 
+     * @param  string $url 
+     * @param  string $results 
+     * @param  string $logFile
      * @static
      * @access public
      * @return void
      */
-    public static function log($url, $results)
+    public static function log($url, $results, $logFile = 'saas')
     {
-        global $app;
-        $logFile = $app->getLogRoot() . 'saas.'. date('Ymd') . '.log';
+        global $app, $config;
+        if(empty($config->debug)) return false;
+
+        $logFile = $app->getLogRoot() . $logFile . '.'. date('Ymd') . '.log';
         $fh = @fopen($logFile, 'a');
         if(!$fh) return false;
 
