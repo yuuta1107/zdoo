@@ -14,16 +14,26 @@
 <form method='post' action='<?php echo inlink('create');?>' id='ajaxForm'>
   <table class='table table-form'>
     <tr>
-      <th class='w-50px'><?php echo $lang->product->name;?></th>
-      <td><?php echo html::input('name', '', "class='form-control'");?></td><td></td>
+      <th class='w-60px'><?php echo $lang->product->name;?></th>
+      <td>
+        <div class="col-sm-8">
+          <?php echo html::input('name', '', "class='form-control col-sm-8'");?>
+        </div>
+        <div class="col-sm-4">
+          <div class="input-group">
+            <span class='input-group-addon'><?php echo $lang->product->order?></span>
+            <?php echo html::input('order', $order, "class='form-control'");?>
+          </div>
+        </div>
+      </td>
     </tr>
     <tr>
       <th><?php echo $lang->product->code;?></th>
       <td><?php echo html::input('code', '', "class='form-control'");?></td>
     </tr>
     <tr>
-      <th><?php echo $lang->product->line;?></th>
-      <td><?php echo html::select("line", $lang->product->lineList, '', "class='form-control'");?></td>
+      <th><?php echo $lang->product->category;?></th>
+      <td><?php echo html::select("category", $categories, '', "class='form-control'");?></td>
     </tr>
     <tr>
       <th><?php echo $lang->product->type;?></th>

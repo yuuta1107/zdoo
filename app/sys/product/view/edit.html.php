@@ -14,7 +14,7 @@
 <form method='post' action='<?php echo inlink('edit', "productID=$product->id");?>' id='ajaxForm'>
   <table class='table table-form'>
     <tr>
-      <th class='w-50px'><?php echo $lang->product->name;?></th>
+      <th class='w-70px'><?php echo $lang->product->name;?></th>
       <td><?php echo html::input('name', $product->name, "class='form-control'");?></td><td></td>
     </tr>
     <tr>
@@ -22,8 +22,8 @@
       <td><?php echo html::input('code', $product->code, "class='form-control'");?></td>
     </tr>
     <tr>
-      <th><?php echo $lang->product->line;?></th>
-      <td><?php echo html::select("line", $lang->product->lineList, $product->line, "class='form-control'");?></td>
+      <th><?php echo $lang->product->category;?></th>
+      <td><?php echo html::select("category", $categories, $product->category, "class='form-control'");?></td>
     </tr>
     <tr>
       <th><?php echo $lang->product->type;?></th>

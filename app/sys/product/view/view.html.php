@@ -41,7 +41,7 @@
       <div class='panel-body'>
         <table class='table table-info'>
           <tr>
-            <th class='w-50px'><?php echo $lang->product->name;?></th>
+            <th class='w-70px'><?php echo $lang->product->name;?></th>
             <td><?php echo $product->name;?></td>
           </tr>
           <tr>
@@ -49,8 +49,8 @@
             <td><?php echo $product->code;?></td>
           </tr>
           <tr>
-            <th><?php echo $lang->product->line;?></th>
-            <td><?php echo $lang->product->lineList[$product->line];?></td>
+            <th><?php echo $lang->product->category;?></th>
+            <td><?php echo $categories[$product->category];?></td>
           </tr>
           <tr>
             <th><?php echo $lang->product->type;?></th>

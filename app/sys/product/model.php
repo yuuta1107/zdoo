@@ -30,13 +30,13 @@ class productModel extends model
      * 
      * @param  string  $mode
      * @param  string  $status
-     * @param  string  $line
+     * @param  string  $category
      * @param  string  $orderBy 
      * @param  object  $pager 
      * @access public
      * @return array
      */
-    public function getList($mode = 'browse', $status = '', $line = '', $orderBy = 'id_desc', $pager = null)
+    public function getList($mode = 'browse', $status = '', $category = '', $orderBy = 'id_desc', $pager = null)
     {
         /* Process search condition. */
         if($this->session->productQuery == false) $this->session->set('productQuery', ' 1 = 1');
@@ -47,7 +47,7 @@ class productModel extends model
         return $this->dao->select('*')->from(TABLE_PRODUCT)
             ->where('deleted')->eq(0)
             ->beginIF($mode == 'browse' && $status && $status != 'all')->andWhere('status')->eq($status)->fi()
-            ->beginIF($mode == 'browse' && $line)->andWhere('line')->eq($line)->fi()
+            ->beginIF($mode == 'browse' && $category)->andWhere('category')->eq($category)->fi()
             ->beginIF($mode == 'bysearch')->andWhere($productQuery)->fi()
             ->orderBy($orderBy)
             ->page($pager)

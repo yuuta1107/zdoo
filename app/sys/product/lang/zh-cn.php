@@ -19,6 +19,7 @@ $lang->product->status      = '状态';
 $lang->product->category    = '产品分类';
 $lang->product->line        = '产品线';
 $lang->product->desc        = '简介';
+$lang->product->order       = '排序';
 $lang->product->roles       = '角色';
 $lang->product->createdBy   = '添加者';
 $lang->product->createdDate = '添加时间';
