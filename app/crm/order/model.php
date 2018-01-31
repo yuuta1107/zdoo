@@ -272,7 +272,7 @@ class orderModel extends model
             ->setDefault('assignedDate', $now)
             ->setDefault('customer', 0)
             ->join('product', ',')
-            ->remove('createCustomer, name, contact, phone, email, qq, continue, createProduct, productName, code, line, type, status')
+            ->remove('createCustomer, name, contact, phone, email, qq, continue, createProduct, productName, code, category, type, status')
             ->get();
 
         /* Check data. */
@@ -334,7 +334,7 @@ class orderModel extends model
             $product = new stdclass();
             $product->name        = $this->post->productName;
             $product->code        = strtolower($this->post->code);
-            $product->line        = $this->post->line;
+            $product->category    = $this->post->category;
             $product->type        = $this->post->type;
             $product->status      = $this->post->status;
             $product->createdBy   = $this->app->user->account;

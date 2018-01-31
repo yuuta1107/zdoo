@@ -58,17 +58,18 @@ class productModel extends model
      * Get product pairs.
      * 
      * @param  string  $status
-     * @param  string  $line
+     * @param  int  $category
      * @param  string  $orderBy 
      * @access public
      * @return array
      */
-    public function getPairs($status = '', $line = '', $orderBy = 'id_desc')
+    public function getPairs($status = '', $category = '', $orderBy = 'id_desc')
     {
+        $categories = $this->loadModel('tree')->getFamily($category);
         return $this->dao->select('id, name')->from(TABLE_PRODUCT)
             ->where('deleted')->eq(0)
             ->beginIF($status)->andWhere('status')->in($status)->fi()
-            ->beginIF($line)->andWhere('line')->eq($line)->fi()
+            ->beginIF(!empty($categories))->andWhere('category')->in($categories)->fi()
             ->orderBy($orderBy)
             ->fetchPairs('id');
     }
@@ -150,5 +151,16 @@ class productModel extends model
         }
 
         return array('result' => 'success');
+    }
+
+    /**
+     * Get product line list.
+     * 
+     * @access public
+     * @return void
+     */
+    public function getLines()
+    {
+        return $this->dao->select('id,name')->from(TABLE_CATEGORY)->where('type')->eq('product')->andWhere('grade')->eq(1)->fetchPairs();
     }
 }

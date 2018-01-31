@@ -230,7 +230,7 @@ class tradeModel extends model
         if($groupBy == 'line')
         {
             $this->app->loadLang('product');
-            $list = $this->lang->product->lineList;
+            $list = $this->loadModel('product')->getLines();
         }
 
         if($module == 'trade')

@@ -43,6 +43,8 @@ class product extends control
         /* Build search form. */
         $this->loadModel('search', 'sys');
         $this->config->product->search['actionURL'] = $this->createLink('product', 'browse', 'mode=bysearch');
+        $categories = $this->loadModel('tree')->getOptionMenu('product', 0);
+        $this->config->product->search['params']['category'] = array('operator' => '=', 'control' => 'select', 'values' => $categories);
         $this->search->setSearchParams($this->config->product->search);
         
         $this->view->title      = $this->lang->product->browse;
@@ -146,16 +148,16 @@ class product extends control
     }
 
     /**
-     * Ajax get product by line.
+     * Ajax get product by category.
      * 
      * @param  string $status 
      * @param  string $line 
      * @access public
      * @return void
      */
-    public function ajaxGetByLine($status = '', $line = '')
+    public function ajaxGetByCategory($status = '', $category = '')
     {
-        $products = $this->product->getPairs($status, $line);
+        $products = $this->product->getPairs($status, $category);
 
         echo html::select('product', array('') + $products, '', "class='form-control chosen'");
     }

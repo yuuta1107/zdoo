@@ -74,8 +74,8 @@
           </td>
         </tr>
         <tr class='productInfo hide'>
-          <th><?php echo $lang->product->line;?></th>
-          <td><?php echo html::select("line", $lang->product->lineList, '', "class='form-control'");?></td>
+          <th><?php echo $lang->product->category;?></th>
+          <td><?php echo html::select("category", $productCategories, '', "class='form-control'");?></td>
         </tr>
         <tr class='productInfo hide'>
           <th><?php echo $lang->product->type;?></th>

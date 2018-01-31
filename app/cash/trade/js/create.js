@@ -19,9 +19,9 @@ $(document).ready(function()
         $('#customer').trigger('chosen:updated');
     })
 
-    $('#productLine').change(function()
+    $('#productCategory').change(function()
     {
-        $('#productBox').load(createLink('product', 'ajaxGetByLine', 'status=&line=' + $(this).val()), function()
+        $('#productBox').load(createLink('product', 'ajaxGetByCategory', 'status=&category=' + $(this).val()), function()
         {
             $('#product').chosen(chosenDefaultOptions);
         })
