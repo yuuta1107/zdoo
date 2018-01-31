@@ -486,6 +486,18 @@ class treeModel extends model
     }
 
     /**
+     * Create the product admin link.
+     * 
+     * @param  object      $category 
+     * @access public
+     * @return string
+     */
+    public static function createProductAdminLink($category)
+    {
+        return html::a(helper::createLink('product', 'browse', "mode=browse&status=all&id={$category->id}"), $category->name, "id='category{$category->id}'");
+    }
+
+    /**
      * Create the forum board link.
      * 
      * @param  object      $board 

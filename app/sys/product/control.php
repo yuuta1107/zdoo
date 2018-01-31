@@ -35,7 +35,7 @@ class product extends control
      * @access public
      * @return void
      */
-    public function browse($mode = 'browse', $status = 'all', $line = '', $orderBy = 'id_desc', $recTotal = 0, $recPerPage = 20, $pageID = 1)
+    public function browse($mode = 'browse', $status = 'all', $category = '', $orderBy = '`order` desc', $recTotal = 0, $recPerPage = 20, $pageID = 1)
     {   
         $this->app->loadClass('pager', $static = true);
         $pager = new pager($recTotal, $recPerPage, $pageID);
@@ -45,13 +45,15 @@ class product extends control
         $this->config->product->search['actionURL'] = $this->createLink('product', 'browse', 'mode=bysearch');
         $this->search->setSearchParams($this->config->product->search);
         
-        $this->view->title    = $this->lang->product->browse;
-        $this->view->products = $this->product->getList($mode, $status, $line, $orderBy, $pager);
-        $this->view->mode     = $mode;
-        $this->view->status   = $status;
-        $this->view->line     = $line;
-        $this->view->orderBy  = $orderBy;
-        $this->view->pager    = $pager;
+        $this->view->title      = $this->lang->product->browse;
+        $this->view->products   = $this->product->getList($mode, $status, $category, $orderBy, $pager);
+        $this->view->categories = $this->loadModel('tree')->getPairs('product', 0);
+        $this->view->treeMenu   = $this->tree->getTreeMenu('product', 0, array('treeModel', 'createProductAdminLink'));
+        $this->view->mode       = $mode;
+        $this->view->status     = $status;
+        $this->view->category   = $category;
+        $this->view->orderBy    = $orderBy;
+        $this->view->pager      = $pager;
         $this->display();
     }   
 
@@ -72,7 +74,11 @@ class product extends control
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => inlink('browse')));
         }
 
-        $this->view->title = $this->lang->product->create;
+        $maxID = $this->dao->select('max(id) as maxID')->from(TABLE_PRODUCT)->fetch('maxID');
+
+        $this->view->title      = $this->lang->product->create;
+        $this->view->order      = $maxID + 1;
+        $this->view->categories = $this->loadModel('tree')->getOptionMenu('product', 0, $removeRoot = true);
         $this->display();
     }
 
@@ -102,8 +108,9 @@ class product extends control
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
         }
 
-        $this->view->title   = $this->lang->product->edit;
-        $this->view->product = $this->product->getByID($productID);
+        $this->view->title      = $this->lang->product->edit;
+        $this->view->product    = $this->product->getByID($productID);
+        $this->view->categories = $this->loadModel('tree')->getOptionMenu('product', 0);
         $this->display();
     }
 
@@ -116,9 +123,10 @@ class product extends control
      */
     public function view($productID)
     {
-        $this->view->title   = $this->lang->product->view;
-        $this->view->product = $this->product->getByID($productID);
-        $this->view->users   = $this->loadModel('user')->getPairs();
+        $this->view->title      = $this->lang->product->view;
+        $this->view->categories = $this->loadModel('tree')->getOptionMenu('product', 0);
+        $this->view->product    = $this->product->getByID($productID);
+        $this->view->users      = $this->loadModel('user')->getPairs();
         
         $this->display();
     }
