@@ -235,7 +235,8 @@ class tradeModel extends model
 
         if($module == 'trade')
         {
-            $datas = $this->dao->select("$groupBy as name, sum(money) as value")->from(TABLE_TRADE)
+            $groupByFiled = str_replace('line', 'category', $groupBy);
+            $datas = $this->dao->select("$groupByFiled as name, sum(money) as value")->from(TABLE_TRADE)
                 ->where('type')->eq($type)
                 ->beginIf($currency != '')->andWhere('currency')->eq($currency)->fi()
                 ->beginIf($startDate != '' and $endDate != '')->andWhere('date')->ge($startDate)->andWhere('date')->lt($endDate)->fi()
@@ -246,15 +247,41 @@ class tradeModel extends model
         }
         else
         {
+            $groupByFiled = str_replace('line', 'category', $groupBy);
             $t2 = $this->config->report->moduleList[$module];
-            $datas = $this->dao->select("ifnull(t2.{$groupBy}, 'null') as name, sum(money) as value")->from(TABLE_TRADE)->alias('t1')
+            $datas = $this->dao->select("ifnull(t2.{$groupByFiled}, 'null') as name, sum(money) as value")->from(TABLE_TRADE)->alias('t1')
                 ->leftJoin($t2)->alias('t2')->on("t1.$field = t2.id")
                 ->where('t1.type')->eq($type)
                 ->beginIf($currency != '')->andWhere('currency')->eq($currency)->fi()
                 ->beginIf($startDate != '' and $endDate != '')->andWhere('date')->ge($startDate)->andWhere('date')->lt($endDate)->fi()
-                ->groupBy("t2.{$groupBy}")
+                ->groupBy("t2.{$groupByFiled}")
                 ->orderBy('value_desc')
                 ->fetchAll("name");
+        }
+
+        if($groupBy == 'line')
+        {
+            $lineCategories = array();
+            $newData = array();
+            foreach($list as $line => $name)
+            {
+                $lineCategories[$line] = $this->loadModel('tree')->getFamily($line);
+            }
+            foreach($lineCategories as $root => $children)
+            {
+                if(!isset($newData[$root]))
+                {
+                    $newData[$root] = new stdclass();
+                    $newData[$root]->name  = $root;
+                    $newData[$root]->value = 0;
+                }
+
+                foreach($children as $child)
+                {
+                    if(isset($datas[$child])) $newData[$root]->value += $datas[$child]->value;
+                }
+            }
+            $datas = $newData;
         }
 
         if(empty($datas)) return array();
@@ -527,7 +554,7 @@ class tradeModel extends model
             ->setIf(!$this->post->objectType or !in_array('order', $this->post->objectType), 'order', 0)
             ->setIf(!$this->post->objectType or !in_array('contract', $this->post->objectType), 'contract', 0)
             ->setIF($this->post->currency && $this->post->currency == $this->config->setting->mainCurrency, 'exchangeRate', 1)
-            ->remove('objectType,customer,productLine,allCustomer,currencyLabel')
+            ->remove('objectType,customer,productCategory,allCustomer,currencyLabel')
             ->striptags('desc')
             ->get();
 

@@ -44,10 +44,12 @@ class productModel extends model
 
         if(strpos($orderBy, 'id') === false) $orderBy .= ', id_desc';
 
+        $categories = array();
+        if($category) $categories = $this->loadModel('tree')->getFamily($category);
         return $this->dao->select('*')->from(TABLE_PRODUCT)
             ->where('deleted')->eq(0)
             ->beginIF($mode == 'browse' && $status && $status != 'all')->andWhere('status')->eq($status)->fi()
-            ->beginIF($mode == 'browse' && $category)->andWhere('category')->eq($category)->fi()
+            ->beginIF($mode == 'browse' && $category)->andWhere('category')->in($categories)->fi()
             ->beginIF($mode == 'bysearch')->andWhere($productQuery)->fi()
             ->orderBy($orderBy)
             ->page($pager)
