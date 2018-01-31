@@ -711,7 +711,7 @@ CREATE TABLE IF NOT EXISTS `sys_category` (
   `refund` enum('0','1') NOT NULL DEFAULT '0',
   `major` enum('0','1','2','3','4','5','6','7','8') NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  KEY `tree` (`type`),
+  KEY `type` (`type`),
   KEY `order` (`order`),
   KEY `parent` (`parent`),
   KEY `path` (`path`)

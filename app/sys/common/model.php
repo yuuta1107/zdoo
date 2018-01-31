@@ -740,6 +740,7 @@ class commonModel extends model
         /* Create a guest account. */
         $user           = new stdclass();
         $user->id       = 0;
+        $user->dept     = 0;
         $user->account  = 'guest';
         $user->realname = 'guest';
         $user->admin    = RUN_MODE == 'cli' ? 'super' : 'no';
