@@ -201,7 +201,7 @@
       <div class='panel-heading'>
         <div class='row'>      
           <div class='col w-p50'><strong><i class='icon-list-info'></i> <?php echo $lang->customer->purchasedProducts;?></strong></div>
-          <div class='col w-p20'><strong><?php echo $lang->product->line;?></strong></div>
+          <div class='col w-p20'><strong><?php echo $lang->product->category;?></strong></div>
           <div class='col w-p15'><strong><?php echo $lang->product->type;?></strong></div>
           <div class='col w-p15'><strong><?php echo $lang->product->status;?></strong></div>
         </div>
@@ -210,7 +210,7 @@
         <?php foreach($productList as $product):?>
         <tr data-url='<?php echo $this->createLink('crm.product', 'view', "productID=$product->id"); ?>'>
           <td class='w-p50'><?php echo $product->name;?></td>
-          <td class='w-p20'><?php echo zget($lang->product->lineList, $product->line);?></td>
+          <td class='w-p20'><?php echo zget($productCategories, $product->category);?></td>
           <td class='w-p15'><?php echo zget($lang->product->typeList, $product->type);?></td>
           <td class='w-p15'><?php echo zget($lang->product->statusList, $product->status);?></td>
         </tr>
