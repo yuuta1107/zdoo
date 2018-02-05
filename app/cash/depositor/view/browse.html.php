@@ -14,10 +14,10 @@
 <div class='panel'>
   <div class='panel-heading'>
     <strong><i class="icon-group"></i> <?php echo $lang->depositor->browse;?></strong>
-    <?php echo html::a(inlink('browse', "tag=&status=disable"), $lang->depositor->disabledBrowse, $status == 'disable' ? "class='active'" : '');?>
     <?php foreach($tags as $tag):?>
     <?php echo html::a(inlink('browse', "tag=$tag&status=all"), $tag, $currentTag == $tag ? "class='active'" : '');?>
     <?php endforeach;?>
+    <?php echo html::a(inlink('browse', "tag=&status=disable"), $lang->depositor->disabledBrowse, $status == 'disable' ? "class='active'" : '');?>
     <div class='panel-actions pull-right'>
       <?php commonModel::printLink('depositor', 'export', '', $lang->exportIcon . $lang->export, "class='iframe btn btn-primary' data-width='700'");?></li>
       <?php commonModel::printLink('depositor', 'create', '', "<i class='icon-plus'></i> {$lang->depositor->create}", "class='btn btn-primary' data-toggle='modal'")?>
