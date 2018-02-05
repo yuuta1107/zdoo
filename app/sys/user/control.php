@@ -143,7 +143,7 @@ class user extends control
         /* Save sign out info. */
         if(commonModel::isAvailable('attend') and isset($this->config->attend->mustSignOut) and $this->config->attend->mustSignOut == 'no') $this->loadModel('attend', 'oa')->signOut();
 
-        if($this->app->user->account == 'guest') $this->loadModel('action')->create('user', $this->app->user->id, 'logout');
+        if($this->app->user->account != 'guest') $this->loadModel('action')->create('user', $this->app->user->id, 'logout');
 
         session_destroy();
         setcookie('keepLogin', 'false', $this->config->cookieLife, $this->config->webRoot);
