@@ -266,18 +266,19 @@ class trade extends control
         }
 
         unset($this->lang->trade->menu);
-        $this->view->title           = $this->lang->trade->{$type};
-        $this->view->type            = $type;
-        $this->view->depositorList   = array('' => '') + $this->loadModel('depositor', 'cash')->getPairs();
-        $this->view->productList     = $this->loadModel('product')->getPairs();
-        $this->view->orderList       = $orderList;
-        $this->view->pinyinOrders    = commonModel::convert2Pinyin($orders);
-        $this->view->customerList    = $this->loadModel('customer')->getPairs('client', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit);
-        $this->view->traderList      = $this->customer->getPairs('provider', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit);
-        $this->view->contractList    = $contractList;
-        $this->view->pinyinContracts = commonModel::convert2Pinyin($contractPairs);
-        $this->view->deptList        = array('') + $this->loadModel('tree')->getOptionMenu('dept', 0);
-        $this->view->users           = $this->loadModel('user')->getPairs('nodeleted,noforbidden,noclosed');
+        $this->view->title             = $this->lang->trade->{$type};
+        $this->view->type              = $type;
+        $this->view->depositorList     = array('' => '') + $this->loadModel('depositor', 'cash')->getPairs();
+        $this->view->productList       = $this->loadModel('product')->getPairs();
+        $this->view->productCategories = $this->loadModel('tree')->getOptionMenu('product', 0, true);
+        $this->view->orderList         = $orderList;
+        $this->view->pinyinOrders      = commonModel::convert2Pinyin($orders);
+        $this->view->customerList      = $this->loadModel('customer')->getPairs('client', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit);
+        $this->view->traderList        = $this->customer->getPairs('provider', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit);
+        $this->view->contractList      = $contractList;
+        $this->view->pinyinContracts   = commonModel::convert2Pinyin($contractPairs);
+        $this->view->deptList          = array('') + $this->loadModel('tree')->getOptionMenu('dept', 0);
+        $this->view->users             = $this->loadModel('user')->getPairs('nodeleted,noforbidden,noclosed');
 
         $this->display();
     }

@@ -21,7 +21,7 @@ $config->product->search['fields']['name']        = $lang->product->name;
 $config->product->search['fields']['code']        = $lang->product->code;
 $config->product->search['fields']['type']        = $lang->product->type;
 $config->product->search['fields']['status']      = $lang->product->status;
-$config->product->search['fields']['line']        = $lang->product->line;
+$config->product->search['fields']['category']    = $lang->product->category;
 $config->product->search['fields']['desc']        = $lang->product->desc;
 $config->product->search['fields']['createdBy']   = $lang->product->createdBy;
 $config->product->search['fields']['createdDate'] = $lang->product->createdDate;
@@ -33,7 +33,6 @@ $config->product->search['params']['name']          = array('operator' => 'inclu
 $config->product->search['params']['code']          = array('operator' => 'include', 'control' => 'input',  'values' => '');
 $config->product->search['params']['type']          = array('operator' => '=',       'control' => 'select', 'values' => array('' => '') + $lang->product->typeList);
 $config->product->search['params']['status']        = array('operator' => '=',       'control' => 'select', 'values' => array('' => '') + $lang->product->statusList);
-$config->product->search['params']['line']          = array('operator' => '=',       'control' => 'select', 'values' => $lang->product->lineList);
 $config->product->search['params']['desc']          = array('operator' => 'include', 'control' => 'input',  'values' => '');
 $config->product->search['params']['createdBy']     = array('operator' => '=',       'control' => 'select', 'values' => 'users');
 $config->product->search['params']['createdDate']   = array('operator' => '>=',      'control' => 'input',  'values' => '', 'class' => 'date');

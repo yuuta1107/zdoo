@@ -207,22 +207,23 @@ class customer extends control
         $productIDList = array_unique(explode(',', $productIDList));
         $productList   = $this->dao->select('*')->from(TABLE_PRODUCT)->where('id')->in($productIDList)->fetchAll();
 
-        $this->view->title        = $this->lang->customer->view;
-        $this->view->customer     = $customer;
-        $this->view->orders       = $orders;
-        $this->view->contacts     = $this->loadModel('contact', 'crm')->getList($customerID);
-        $this->view->contracts    = $contracts;
-        $this->view->addresses    = $this->loadModel('address', 'crm')->getList('customer', $customerID);
-        $this->view->actions      = $this->loadModel('action')->getList('customer', $customerID);
-        $this->view->products     = $this->loadModel('product', 'sys')->getPairs();
-        $this->view->productList  = $productList;
-        $this->view->users        = $this->loadModel('user')->getPairs();
-        $this->view->areaList     = $this->loadModel('tree')->getPairs('', 'area');
-        $this->view->industryList = $this->tree->getPairs('', 'industry');
-        $this->view->returnList   = $this->contract->getReturnList(array_keys($contracts), 'returnedDate_desc');
-        $this->view->currencySign = $this->loadModel('common', 'sys')->getCurrencySign();
-        $this->view->preAndNext   = $this->common->getPreAndNextObject('customer', $customerID);
-        $this->view->files        = $fileList;
+        $this->view->title             = $this->lang->customer->view;
+        $this->view->customer          = $customer;
+        $this->view->orders            = $orders;
+        $this->view->contacts          = $this->loadModel('contact', 'crm')->getList($customerID);
+        $this->view->contracts         = $contracts;
+        $this->view->addresses         = $this->loadModel('address', 'crm')->getList('customer', $customerID);
+        $this->view->actions           = $this->loadModel('action')->getList('customer', $customerID);
+        $this->view->products          = $this->loadModel('product', 'sys')->getPairs();
+        $this->view->productList       = $productList;
+        $this->view->productCategories = $this->loadModel('tree')->getPairs('product', 0);
+        $this->view->users             = $this->loadModel('user')->getPairs();
+        $this->view->areaList          = $this->loadModel('tree')->getPairs('', 'area');
+        $this->view->industryList      = $this->tree->getPairs('', 'industry');
+        $this->view->returnList        = $this->contract->getReturnList(array_keys($contracts), 'returnedDate_desc');
+        $this->view->currencySign      = $this->loadModel('common', 'sys')->getCurrencySign();
+        $this->view->preAndNext        = $this->common->getPreAndNextObject('customer', $customerID);
+        $this->view->files             = $fileList;
         $this->display();
     }
 
