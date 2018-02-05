@@ -294,7 +294,7 @@ class trade extends control
         {
             $result = $this->trade->batchCreate();
             if(isset($result['result']) && $result['result'] == 'fail') $this->send($result);
-            if(!dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
+            if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
 
             $this->loadModel('action');
 
@@ -714,9 +714,9 @@ class trade extends control
     {
         if($step == 'save')
         {
-            $result = $this->trade->batchUpdate($mode);
+            $result = $this->trade->batchUpdate();
             if(isset($result['result']) && $result['result'] == 'fail') $this->send($result);
-            if(!dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
+            if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
 
             $this->loadModel('action');
 
@@ -782,7 +782,7 @@ class trade extends control
         {
             $result = $this->trade->saveImport($depositorID);
             if(isset($result['result']) && $result['result'] == 'fail') $this->send($result);
-            if(!dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
+            if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
 
             $this->loadModel('action');
 

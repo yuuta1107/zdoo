@@ -105,7 +105,14 @@
         <?php $i++;?>
         <?php endforeach;?>
       </tbody>
-      <tfoot><tr><td colspan='10' class='text-center'><?php echo html::submitButton() . ' ' . html::backButton();?></td></tr></tfoot>
+      <tfoot>
+        <tr>
+          <td colspan='10' class='text-center'>
+            <?php echo html::submitButton() . ' ' . html::backButton();?>
+            <strong><span class='text-danger'><?php echo $lang->trade->emptyData;?></span></strong>
+          </td>
+        </tr>
+      </tfoot>
     </table>
   </div>
 </form>
