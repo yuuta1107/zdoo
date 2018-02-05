@@ -67,6 +67,7 @@ $lang->user->allUsers        = 'All';
 $lang->user->submit          = "Submit";
 $lang->user->forbid          = 'Disable';
 $lang->user->forbidList      = 'Disabled Users';
+$lang->user->normalList      = 'Normal Users';
 $lang->user->active          = 'Active';
 $lang->user->setReferer      = 'Set referer';
 $lang->user->vcard           = 'Vcard';
