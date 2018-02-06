@@ -289,6 +289,7 @@ $lang->product->menu->browse     = 'All Products|product|browse|mode=browse&stat
 $lang->product->menu->normal     = 'Normal|product|browse|mode=browse&status=normal';
 $lang->product->menu->developing = 'Developing|product|browse|mode=browse&status=developing';
 $lang->product->menu->offline    = 'Offline|product|browse|mode=browse&status=offline';
+$lang->product->menu->category   = 'Category|tree|browse|type=product';
 
 $lang->todo = new stdclass();
 $lang->todo->menu = new stdclass();

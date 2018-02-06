@@ -159,10 +159,10 @@ class productModel extends model
      * Get product line list.
      * 
      * @access public
-     * @return void
+     * @return array 
      */
     public function getLines()
     {
-        return $this->dao->select('id,name')->from(TABLE_CATEGORY)->where('type')->eq('product')->andWhere('grade')->eq(1)->fetchPairs();
+        return $this->dao->select('id, name')->from(TABLE_CATEGORY)->where('type')->eq('product')->andWhere('grade')->eq(1)->fetchPairs();
     }
 }

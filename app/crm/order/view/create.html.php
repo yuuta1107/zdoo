@@ -24,12 +24,14 @@
           <td>
             <div class='input-group'>
               <?php echo html::select('customer', $customers, $customer, "class='form-control chosen' data-no_results_text='" . $lang->searchMore . "'");?>
+              <?php if(commonModel::hasPriv('customer', 'create')):?>
               <?php echo html::input('name', '', "class='form-control' style='display:none'");?>
               <span class='input-group-addon'>
                 <label class='checkbox-inline'>
                   <input type='checkbox' name='createCustomer' id='createCustomer' value='1' /> <?php echo $lang->order->createCustomer?>
                 </label>
               </span>
+              <?php endif;?>
             </div>
           </td>
         </tr>
@@ -57,12 +59,14 @@
           <td>
             <div class='input-group'>
               <?php echo html::select('product[]', $products, '', "class='form-control chosen' multiple");?>
+              <?php if(commonModel::hasPriv('product', 'create')):?>
               <?php echo html::input('productName', '', "class='form-control' style='display:none'");?>
               <span class='input-group-addon'>
                 <label class='checkbox-inline'>
                   <input type='checkbox' name='createProduct' id='createProduct' value='1' /> <?php echo $lang->order->createProduct?>
                 </label>
               </span>
+              <?php endif;?>
             </div>
           </td>
         </tr>
@@ -70,7 +74,7 @@
           <th><?php echo $lang->product->code;?></th>
           <td>
             <div class='required required-wrapper'></div>
-            <?php echo html::input("code", '', "class='form-control' placeholder={$lang->product->placeholder->code}");?>
+            <?php echo html::input("code", '', "class='form-control' placeHolder='{$lang->product->placeholder->code}'");?>
           </td>
         </tr>
         <tr class='productInfo hide'>
