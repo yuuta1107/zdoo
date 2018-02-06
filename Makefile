@@ -22,7 +22,7 @@ ranzhi:
 	mkdir ranzhi/tmp/log/
 	mkdir ranzhi/tmp/model/
 	mkdir ranzhi/tmp/package/
-	mkdir www ranzhi && rm -fr ranzhi/www/data/ && mkdir -p ranzhi/www/data/upload
+	cp -fr www ranzhi && rm -fr ranzhi/www/data/ && mkdir -p ranzhi/www/data/upload
 	cp VERSION ranzhi/
 	# combine js and css files.
 	cp -fr tools ranzhi/tools && cd ranzhi/tools/ && php ./minifyfront.php && php ./cn2tw.php
