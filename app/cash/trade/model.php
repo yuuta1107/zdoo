@@ -737,7 +737,7 @@ class tradeModel extends model
             if(!dao::isError()) $tradeIDList[] = $tradeID;
         }
 
-        return $tradeIDlist;
+        return $tradeIDList;
     }
 
     /**

@@ -99,13 +99,14 @@ function isonlybody()
  * Format money.
  * 
  * @param  float    $money 
+ * @param  int      $unit 
  * @access public
  * @return string
  */
-function formatMoney($money)
+function formatMoney($money, $unit = 1)
 {
     if($money == 0) return '';
-    return trim(preg_replace('/\.0*$/', '', number_format($money, 2)));
+    return trim(preg_replace('/\.0*$/', '', number_format($money / $unit, 2)));
 }
 
 /**

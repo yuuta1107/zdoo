@@ -21,7 +21,7 @@
       <thead>
         <tr class='text-center'>
           <th class='w-150px required'><?php echo $lang->trade->depositor;?></th>
-          <th class='w-80px'><?php echo $lang->trade->type;?></th> 
+          <th class='w-70px'><?php echo $lang->trade->type;?></th> 
           <?php $categoryRequired = $config->trade->settings->category ? 'required' : '';?>
           <th class='w-140px <?php echo $categoryRequired;?>'><?php echo $lang->trade->category;?></th> 
           <?php if($requireTrader):?>
@@ -35,7 +35,7 @@
           <th class='w-120px required'><?php echo $lang->trade->handlers;?></th>
           <?php $productRequired = $config->trade->settings->product ? 'required' : '';?>
           <th class='w-110px <?php echo $productRequired;?>'><?php echo $lang->trade->product;?></th>
-          <th class='w-100px'><?php echo $lang->trade->date;?></th>
+          <th class='w-90px'><?php echo $lang->trade->date;?></th>
           <th><?php echo $lang->trade->desc;?></th>
         </tr>
       </thead>
@@ -88,7 +88,12 @@
         </tr>
         <?php endfor;?>
       </tbody>
-      <tr><td colspan='10' class='text-center'><?php echo html::submitButton() . ' ' . html::backButton();?></td></tr>
+      <tr>
+        <td colspan='10' class='text-center'>
+          <?php echo html::submitButton() . ' ' . html::backButton();?>
+          <strong><span class='text-danger'><?php echo $lang->trade->emptyData;?></span></strong>
+        </td>
+      </tr>
     </table>
   </div>
 </form>

@@ -67,6 +67,7 @@ $lang->user->allUsers        = '全部成员';
 $lang->user->submit          = "提交";
 $lang->user->forbid          = '禁用';
 $lang->user->forbidList      = '禁用成员列表';
+$lang->user->normalList      = '普通成员列表';
 $lang->user->active          = '激活';
 $lang->user->setReferer      = '设置referer';
 $lang->user->vcard           = '获取二维码名片';
