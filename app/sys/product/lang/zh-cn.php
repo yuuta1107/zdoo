@@ -17,7 +17,6 @@ $lang->product->code        = '代号';
 $lang->product->type        = '类型';
 $lang->product->status      = '状态';
 $lang->product->category    = '产品分类';
-$lang->product->line        = '产品线';
 $lang->product->desc        = '简介';
 $lang->product->order       = '排序';
 $lang->product->roles       = '角色';
@@ -34,8 +33,7 @@ $lang->product->create      = '添加产品';
 $lang->product->edit        = '编辑产品';
 $lang->product->view        = '产品详情';
 $lang->product->basicInfo   = '基本信息';
-$lang->product->setline     = '维护产品线';
-$lang->product->setCategory = '维护类目';
+$lang->product->setCategory = '维护分类';
 
 $lang->product->typeList['real']    = '实体类';
 $lang->product->typeList['service'] = '服务类';
