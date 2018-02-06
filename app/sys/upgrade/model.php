@@ -147,6 +147,10 @@ class upgradeModel extends model
             case '4_5': 
                 $this->execSQL($this->getUpgradeFile('4.5'));
                 $this->renameLastCategory();
+            case '4_6': 
+                $this->execSQL($this->getUpgradeFile('4.6'));
+                $this->upgradeProductLine();
+
             default: if(!$this->isError()) $this->loadModel('setting')->updateVersion($this->config->version);
         }
 
@@ -1402,5 +1406,31 @@ class upgradeModel extends model
 
             return !dao::isError();
         }
+    }
+
+    /**
+     * Upgrade product line function.
+     * 
+     * @access public
+     * @return bool
+     */
+    public function upgradeProductLine()
+    {
+        $fields = $this->dao->query('DESC ' .  TABLE_PRODUCT)->fetchAll();
+        $hasCategory = false;
+        foreach($fields as $field)
+        {
+            if($field->Field == 'category') $hasCategory = true;
+        }
+
+        if(!$hasCategory)
+        {
+            $this->dbh->exec("ALTER TABLE " . TABLE_PRODUCT  . " CHANGE line category mediumint(8) UNSIGNED NOT NULL DEFAULT 0");
+        }
+        else
+        {
+            $this->dbh->exec("ALTER TABLE " . TABLE_PRODUCT  . " drop line");
+        }
+        return true;
     }
 }
