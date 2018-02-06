@@ -5,7 +5,7 @@ $(function()
     var menu =  $('.leftmenu .nav li').size() == 0 ? '.nav li' : '.leftmenu .nav li';
     if(v.module == 'user' && v.field == 'roleList') menu = '';
     $(menu).removeClass('active');
-    if(menu)$(menu + " a[href*='" + v.module + "'][href*='" + v.field + "']").parent().addClass('active');
+    if(menu) $(menu + " a[href*='" + v.module + "'][href*='" + v.field + "']").parent().addClass('active');
 
     /* Add an item. */
     $(document).on('click', '.add', function()

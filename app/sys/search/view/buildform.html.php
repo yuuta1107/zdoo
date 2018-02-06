@@ -82,6 +82,10 @@ $(document).ready(function()
             relation = 'client';
             trader   = 'customer';
             break;
+        case 'invoice':
+            relation = 'client';
+            trade    = 'customer';
+            break;
         case 'order':
             relation = 'client';
             trader   = 'o.customer';
@@ -442,6 +446,9 @@ case 'contact' :
     $trader = 't2.customer';
     break;
 case 'feedback' :
+    $trader = 'customer';
+    break;
+case 'invoice' :
     $trader = 'customer';
     break;
 case 'order' :

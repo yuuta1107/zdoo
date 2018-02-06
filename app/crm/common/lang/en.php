@@ -70,17 +70,17 @@ $lang->contract->menu->report       = 'Report|report|browse|module=contract';
 /* Menu of setting module. */
 $lang->setting = new stdclass();
 $lang->setting->menu = new stdclass();
-$lang->setting->menu->product        = 'Product Status|setting|lang|module=product&field=statusList&appName=sys';
-$lang->setting->menu->productLine    = 'Product Line|setting|lang|module=product&field=lineList&appName=sys';
-$lang->setting->menu->customerType   = 'Customer Status|setting|lang|module=customer&field=typeList&appName=sys';
-$lang->setting->menu->customerSize   = 'Customer Size|setting|lang|module=customer&field=sizeNameList&appName=sys';
-$lang->setting->menu->customerLevel  = 'Customer Level|setting|lang|module=customer&field=levelNameList&appName=sys';
-$lang->setting->menu->customerStatus = 'Customer Status|setting|lang|module=customer&field=statusList&appName=sys';
-$lang->setting->menu->area           = 'Area|tree|browse|type=area|';
-$lang->setting->menu->industry       = 'Industry|tree|browse|type=industry|';
-$lang->setting->menu->currency       = 'Currency|setting|lang|module=common&field=currencyList';
-$lang->setting->menu->salesGroup     = array('link' => 'Sales Team|sales|browse|', 'alias' => 'create,edit');
-$lang->setting->menu->customerPool   = 'Customer Pool|setting|customerpool||';
+$lang->setting->menu->product         = 'Product Status|setting|lang|module=product&field=statusList&appName=sys';
+$lang->setting->menu->productCategory = 'Product Category|tree|browse|type=product';
+$lang->setting->menu->customerType    = 'Customer Status|setting|lang|module=customer&field=typeList&appName=sys';
+$lang->setting->menu->customerSize    = 'Customer Size|setting|lang|module=customer&field=sizeNameList&appName=sys';
+$lang->setting->menu->customerLevel   = 'Customer Level|setting|lang|module=customer&field=levelNameList&appName=sys';
+$lang->setting->menu->customerStatus  = 'Customer Status|setting|lang|module=customer&field=statusList&appName=sys';
+$lang->setting->menu->area            = 'Area|tree|browse|type=area|';
+$lang->setting->menu->industry        = 'Industry|tree|browse|type=industry|';
+$lang->setting->menu->currency        = 'Currency|setting|lang|module=common&field=currencyList';
+$lang->setting->menu->salesGroup      = array('link' => 'Sales Team|sales|browse|', 'alias' => 'create,edit');
+$lang->setting->menu->customerPool    = 'Customer Pool|setting|customerpool||';
 
 /* Menu of sales module. */
 if(!isset($lang->sales)) $lang->sales = new stdclass();

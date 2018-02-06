@@ -36,13 +36,13 @@
       <thead>
         <tr class='text-center'>
           <?php $vars = "mode={$mode}&status={$status}&category={$category}&orderBy=%s&recTotal={$pager->recTotal}&recPerPage={$pager->recPerPage}&pageID={$pager->pageID}";?>
-          <th class='w-60px'> <?php commonModel::printOrderLink('id',          $orderBy, $vars, $lang->product->id);?></th>
-          <th>                <?php commonModel::printOrderLink('name',        $orderBy, $vars, $lang->product->name);?></th>
-          <th class='w-200px'><?php commonModel::printOrderLink('code',        $orderBy, $vars, $lang->product->code);?></th>
-          <th class='w-120px'> <?php commonModel::printOrderLink('category',    $orderBy, $vars, $lang->product->category);?></th>
+          <th class='w-60px'> <?php commonModel::printOrderLink('id', $orderBy, $vars, $lang->product->id);?></th>
+          <th><?php commonModel::printOrderLink('name', $orderBy, $vars, $lang->product->name);?></th>
+          <th class='w-120px'> <?php commonModel::printOrderLink('category', $orderBy, $vars, $lang->product->category);?></th>
+          <th class='w-200px'><?php commonModel::printOrderLink('code', $orderBy, $vars, $lang->product->code);?></th>
           <th class='w-160px visible-lg'><?php commonModel::printOrderLink('createdDate', $orderBy, $vars, $lang->product->createdDate);?></th>
-          <th class='w-60px'> <?php commonModel::printOrderLink('type',        $orderBy, $vars, $lang->product->type);?></th>
-          <th class='w-60px'> <?php commonModel::printOrderLink('status',      $orderBy, $vars, $lang->product->status);?></th>
+          <th class='w-60px'><?php commonModel::printOrderLink('type', $orderBy, $vars, $lang->product->type);?></th>
+          <th class='w-60px'><?php commonModel::printOrderLink('status', $orderBy, $vars, $lang->product->status);?></th>
           <th class='w-100px'><?php echo $lang->actions;?></th>
         </tr>
       </thead>
@@ -51,8 +51,8 @@
         <tr class='text-center' data-url="<?php echo $this->createLink('product', 'view', "productID={$product->id}");?>">
           <td><?php echo $product->id;?></td>
           <td class='text-left'><?php echo $product->name;?></td>
+          <td><?php echo zget($categories, $product->category);?></td>
           <td><?php echo $product->code;?></td>
-          <td><?php echo $categories[$product->category];?></td>
           <td class='visible-lg'><?php echo $product->createdDate;?></td>
           <td><?php echo $lang->product->typeList[$product->type];?></td>
           <td><?php echo $lang->product->statusList[$product->status];?></td>

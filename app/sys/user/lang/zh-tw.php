@@ -67,6 +67,7 @@ $lang->user->allUsers        = '全部成員';
 $lang->user->submit          = "提交";
 $lang->user->forbid          = '禁用';
 $lang->user->forbidList      = '禁用成員列表';
+$lang->user->normalList      = '普通成員列表';
 $lang->user->active          = '激活';
 $lang->user->setReferer      = '設置referer';
 $lang->user->vcard           = '獲取二維碼名片';
