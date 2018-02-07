@@ -1,6 +1,5 @@
 config/my.php
 www/data/
-tools/*
 tmp/backup/*
 tmp/cache/*
 tmp/defaultvalue/*
