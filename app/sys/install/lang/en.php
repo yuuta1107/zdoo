@@ -111,5 +111,5 @@ $lang->install->buildinEntry->team['name'] = 'TEAM';
 $lang->install->buildinEntry->team['abbr'] = '';
 $lang->install->buildinEntry->doc['name']  = 'DOC';
 $lang->install->buildinEntry->doc['abbr']  = '';
-$lang->install->buildinEntry->proj['name'] = 'PORJ';
+$lang->install->buildinEntry->proj['name'] = 'PROJ';
 $lang->install->buildinEntry->proj['abbr'] = '';

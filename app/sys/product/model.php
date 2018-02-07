@@ -60,7 +60,7 @@ class productModel extends model
      * Get product pairs.
      * 
      * @param  string  $status
-     * @param  int  $category
+     * @param  int     $category
      * @param  string  $orderBy 
      * @access public
      * @return array
@@ -73,7 +73,7 @@ class productModel extends model
             ->beginIF($status)->andWhere('status')->in($status)->fi()
             ->beginIF(!empty($categories))->andWhere('category')->in($categories)->fi()
             ->orderBy($orderBy)
-            ->fetchPairs('id');
+            ->fetchPairs();
     }
 
     /**
