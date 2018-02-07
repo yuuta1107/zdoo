@@ -400,6 +400,7 @@ $lang->error->noCurlExt    = '沒有加載curl擴展！';
 $lang->error->notInt       = '<strong>%s</strong>不能為純數字組合。';
 $lang->error->pasteImg     = '您的瀏覽器不支持粘貼圖片！';
 $lang->error->accessDenied = '訪問受限';
+$lang->error->deny         = "抱歉，您無權訪問『<b>%s</b>』模組的『<b>%s</b>』功能。請聯繫管理員獲取權限。";
 
 /* The pager items. */
 $lang->pager = new stdclass();
