@@ -27,7 +27,7 @@
       </div>
       <div class='panel-body'>
         <div id='treeMenuBox'><?php echo $treeMenu;?></div>
-        <?php commonModel::printLink('tree', 'browse', 'type=product', $lang->product->setCategory, "class='pull-right'");?>
+        <?php commonModel::printLink('tree', 'browse', 'type=product', $lang->product->setCategory, "class='btn btn-primary pull-right'");?>
       </div>
     </div>
   </div>
