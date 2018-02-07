@@ -33,6 +33,7 @@ $config->product->search['params']['name']          = array('operator' => 'inclu
 $config->product->search['params']['code']          = array('operator' => 'include', 'control' => 'input',  'values' => '');
 $config->product->search['params']['type']          = array('operator' => '=',       'control' => 'select', 'values' => array('' => '') + $lang->product->typeList);
 $config->product->search['params']['status']        = array('operator' => '=',       'control' => 'select', 'values' => array('' => '') + $lang->product->statusList);
+$config->product->search['params']['category']      = array('operator' => '=',       'control' => 'select', 'values' => 'set in control');
 $config->product->search['params']['desc']          = array('operator' => 'include', 'control' => 'input',  'values' => '');
 $config->product->search['params']['createdBy']     = array('operator' => '=',       'control' => 'select', 'values' => 'users');
 $config->product->search['params']['createdDate']   = array('operator' => '>=',      'control' => 'input',  'values' => '', 'class' => 'date');

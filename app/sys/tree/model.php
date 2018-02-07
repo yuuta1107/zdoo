@@ -494,7 +494,7 @@ class treeModel extends model
      */
     public static function createProductAdminLink($category)
     {
-        return html::a(helper::createLink('product', 'browse', "mode=browse&status=all&id={$category->id}"), $category->name, "id='category{$category->id}'");
+        return html::a(helper::createLink('product', 'browse', "mode=browse&status=all&category={$category->id}"), $category->name, "id='category{$category->id}'");
     }
 
     /**

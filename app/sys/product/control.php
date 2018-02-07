@@ -43,13 +43,12 @@ class product extends control
         /* Build search form. */
         $this->loadModel('search', 'sys');
         $this->config->product->search['actionURL'] = $this->createLink('product', 'browse', 'mode=bysearch');
-        $categories = $this->loadModel('tree')->getOptionMenu('product', 0);
-        $this->config->product->search['params']['category'] = array('operator' => '=', 'control' => 'select', 'values' => $categories);
+        $this->config->product->search['params']['category']['values'] = $this->loadModel('tree')->getOptionMenu('product', 0);
         $this->search->setSearchParams($this->config->product->search);
         
         $this->view->title      = $this->lang->product->browse;
         $this->view->products   = $this->product->getList($mode, $status, $category, $orderBy, $pager);
-        $this->view->categories = $this->loadModel('tree')->getPairs('product', 0);
+        $this->view->categories = $this->loadModel('tree')->getPairs(0, 'product');
         $this->view->treeMenu   = $this->tree->getTreeMenu('product', 0, array('treeModel', 'createProductAdminLink'));
         $this->view->mode       = $mode;
         $this->view->status     = $status;
