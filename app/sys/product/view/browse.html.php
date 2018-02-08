@@ -51,7 +51,7 @@
         <tr class='text-center' data-url="<?php echo $this->createLink('product', 'view', "productID={$product->id}");?>">
           <td><?php echo $product->id;?></td>
           <td class='text-left'><?php echo $product->name;?></td>
-          <td><?php echo zget($categories, $product->category);?></td>
+          <td><?php echo zget($categories, $product->category, '');?></td>
           <td><?php echo $product->code;?></td>
           <td class='visible-lg'><?php echo $product->createdDate;?></td>
           <td><?php echo $lang->product->typeList[$product->type];?></td>
