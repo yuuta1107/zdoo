@@ -1407,6 +1407,8 @@ class upgradeModel extends model
 
             return !dao::isError();
         }
+
+        return true;
     }
 
     /**
