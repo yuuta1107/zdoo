@@ -28,13 +28,17 @@ class misc extends control
 
         /* Save online status. */
         $this->loadModel('user')->online();
-        /* Get notices. */
-        $notices = $this->loadModel('action')->getUnreadNotice('', $skipNotice = $notice);
 
-        $res = new stdclass();
-        $res->time    = helper::now();
-        $res->notices = $notices;
-        die(json_encode($res));
+        /* Get notices. */
+        if($this->app->user->account != 'guest')
+        {
+            $notices = $this->loadModel('action')->getUnreadNotice('', $skipNotice = $notice);
+
+            $res = new stdclass();
+            $res->time    = helper::now();
+            $res->notices = $notices;
+            die(json_encode($res));
+        }
     }
 
     /**

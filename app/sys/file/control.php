@@ -71,11 +71,14 @@ class file extends control
             if(!$this->file->checkSavePath()) $this->send(array('error' => 1, 'message' => $this->lang->file->errorUnwritable));
             move_uploaded_file($file['tmpname'], $this->file->savePath . $this->file->getSaveName($file['pathname']));
 
+            /* Compress image for jpg and bmp. */
+            $file = $this->file->compressImage($file);
+
             $file['createdBy']   = $this->app->user->account;
             $file['createdDate'] = helper::now();
-            $file['editor']    = 1;
+            $file['editor']      = 1;
             unset($file['tmpname']);
-            $this->dao->insert(TABLE_FILE)->data($file, false)->exec();
+            $this->dao->insert(TABLE_FILE)->data($file)->exec();
 
             $fileID = $this->dao->lastInsertID();
             $url    = $this->createLink('file', 'download', "fileID=$fileID");
@@ -102,26 +105,23 @@ class file extends control
         if($file)
         {
             if($file['size'] == 0) die(json_encode(array('state' => $this->lang->file->errorFileUpload)));
-            if(@move_uploaded_file($file['tmpname'], $this->file->savePath . $this->file->getSaveName($file['pathname'])))
-            {
-                /* Compress image for jpg and bmp. */
-                $file = $this->file->compressImage($file);
+            if(!$this->file->checkSavePath()) $this->send(array('state' => $this->lang->file->errorUnwritable));
 
-                $file['createdBy']    = $this->app->user->account;
-                $file['createdDate']  = helper::today();
-                unset($file['tmpname']);
-                $this->dao->insert(TABLE_FILE)->data($file)->exec();
+            move_uploaded_file($file['tmpname'], $this->file->savePath . $this->file->getSaveName($file['pathname']));
+            
+            /* Compress image for jpg and bmp. */
+            $file = $this->file->compressImage($file);
 
-                $fileID = $this->dao->lastInsertID();
-                $url    = $this->createLink('file', 'read', "fileID=$fileID", $file['extension']);
-                if($uid) $_SESSION['album'][$uid][] = $fileID;
-                die(json_encode(array('state' => 'SUCCESS', 'url' => $url)));
-            }
-            else
-            {
-                $error = strip_tags(sprintf($this->lang->file->errorCanNotWrite, $this->file->savePath, $this->file->savePath));
-                die(json_encode(array('state' => $error)));
-            }
+            $file['createdBy']    = $this->app->user->account;
+            $file['createdDate']  = helper::today();
+            $file['editor']       = 1;
+            unset($file['tmpname']);
+            $this->dao->insert(TABLE_FILE)->data($file)->exec();
+
+            $fileID = $this->dao->lastInsertID();
+            $url    = $this->createLink('file', 'read', "fileID=$fileID", $file['extension']);
+            if($uid) $_SESSION['album'][$uid][] = $fileID;
+            die(json_encode(array('state' => 'SUCCESS', 'url' => $url)));
         }
     }
 
