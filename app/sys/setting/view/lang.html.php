@@ -11,7 +11,6 @@
  */
 ?>
 <?php include $app->getModuleRoot() . 'common/view/header.html.php';?>
-<?php $isLineList = ($module == 'product' and $field == 'lineList') ? true : false;?>
 <form method='post' id='ajaxForm'>
   <div class='panel'>
     <div class="panel-heading">
@@ -77,8 +76,7 @@
       </tr>
       <?php endforeach;?>
       <tfoot>
-        <?php $langClass = $isLineList ? "class='hidden'" : ''?>
-        <tr <?php echo $langClass;?>>
+        <tr>
           <td></td>
           <td colspan='2'>
           <?php 
@@ -92,7 +90,7 @@
           <td>
           <?php
           echo html::submitButton();
-          if(!$isLineList) echo html::a(inlink('reset', "module=$module&field=$field&appName=$appName"), $lang->setting->reset, "class='btn deleter'");
+          echo html::a(inlink('reset', "module=$module&field=$field&appName=$appName"), $lang->setting->reset, "class='btn deleter'");
           ?>
           </td>
           <td></td>

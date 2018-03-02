@@ -112,9 +112,9 @@ class file extends control
             /* Compress image for jpg and bmp. */
             $file = $this->file->compressImage($file);
 
-            $file['createdBy']    = $this->app->user->account;
-            $file['createdDate']  = helper::today();
-            $file['editor']       = 1;
+            $file['createdBy']   = $this->app->user->account;
+            $file['createdDate'] = helper::today();
+            $file['editor']      = 1;
             unset($file['tmpname']);
             $this->dao->insert(TABLE_FILE)->data($file)->exec();
 
@@ -223,7 +223,7 @@ class file extends control
             if(file_exists($file->realPath)) 
             {
                 /* If the web server is nginx, it will download the file because the extension of file is empty. Use php to output file to avoid this situation. */
-                $mime = mime_content_type($file->realPath);
+                $mime = in_array($file->extension, $this->config->file->imageExtensions) ? "image/{$file->extension}" : $this->config->file->mimes['default'];
                 header("content-type: $mime");
                 echo file_get_contents($file->realPath);
                 exit;

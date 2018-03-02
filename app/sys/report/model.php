@@ -121,7 +121,7 @@ class reportModel extends model
             {
                 if($chart == 'productLine' or $chart == 'productLineA')
                 {
-                    $list = $this->lang->product->lineList;
+                    $list = $this->loadModel('product')->getLines();
                 }
                 else
                 {
@@ -154,7 +154,7 @@ class reportModel extends model
                 foreach($list as $key => $value)
                 {
                     if($key == 'default') continue;
-                    $productList = $this->dao->select('id')->from(TABLE_PRODUCT)->where('line')->eq($key)->fetchAll('id');
+                    $productList = $this->dao->select('id')->from(TABLE_PRODUCT)->where('category')->eq($key)->fetchAll('id');
 
                     $data = new stdclass();
                     $data->name  = $key;
