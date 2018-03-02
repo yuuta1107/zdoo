@@ -1,10 +1,10 @@
 
 Zdoo focuses on Enterprise Collaboration System!
 
-    CRM-Order-Tracking :                   Easy to do sales management
-    Project-Tasks-Announcement-Documents : Easy to manage daily work
-    Cashflow-Income& Expenditure :         All in one system
-    Chat-Forum-Blog-Dynamic :              Free communication and share
+    Easy Sales :         CRM-Order-Tracking                   
+    Easy Daily Work :    Project-Tasks-Announcement-Documents 
+    Easy Cash Flow :     Cashflow-Income & Expenditure   
+    Free Communication : Chat-Forum-Blog-Dynamic  
     
 That is an All-In-One solution for Enterprise Collaboration.
 
