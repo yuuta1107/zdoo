@@ -300,7 +300,7 @@ class contract extends control
 
         $user   = $this->loadModel('user', 'sys')->getByAccount($contract->createdBy);
         $dept   = $this->loadModel('tree')->getByID($user->dept);
-        $orders = $this->dao->select('`order`')->from(TABLE_CONTRACTORDER)->where('contract')->eq($contractID)->fetchPairs();
+        $orders = $this->dao->select('`order`')->from(TABLE_CONTRACTORDER)->where('contract')->eq($contractID)->andWhere('order')->ne('0')->fetchPairs();
 
         $productList = $this->loadModel('product')->getPairs();
         if($orders)
