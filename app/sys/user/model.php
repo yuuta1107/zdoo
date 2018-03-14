@@ -234,6 +234,7 @@ class userModel extends model
         $this->checkPassword();
 
         $user = fixer::input('post')
+            ->setDefault('gender', 'u')
             ->setForce('join', date('Y-m-d H:i:s'))
             ->setIF($this->post->password1 == false, 'password', '')
             ->remove('admin, ip')
@@ -271,6 +272,7 @@ class userModel extends model
         }
 
         $user = fixer::input('post')
+            ->setDefault('gender', 'u')
             ->cleanInt('imobile, qq, zipcode')
             ->remove('ip, account, join, visits')
             ->setIF($from == 'admin' and !$this->post->admin, 'admin', 'no');
