@@ -23,8 +23,8 @@ $(document).ready(function()
         {
             $('input[name^=dateList]').each(function()
             {
-                if(!($this).val()) $(this).val($('#date').val());
-            }
+                if(!$(this).val()) $(this).val($('#date').val());
+            });
             $('select[name^=categoryList]').each(function()
             {
                 if(!$(this).val()) $(this).val($('#category').val()).trigger('chosen:updated');
@@ -36,7 +36,7 @@ $(document).ready(function()
             $('textarea[name^=descList]').each(function()
             {
                 if(!$(this).val()) $(this).val($('#desc').val());
-            }
+            });
 
             $('#refund-detail').removeClass('hidden');
             $('#money').prop('readonly', 'readonly');

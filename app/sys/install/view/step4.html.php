@@ -35,7 +35,7 @@ include '../../common/view/header.lite.html.php';
           <?php if($this->app->clientLang == 'zh-cn'):?>
           <div class='form-group'>
             <label class='col-xs-2'></label>
-            <div class='col-xd-8'><?php echo html::checkbox('import', $lang->install->import);?></div>
+            <div class='col-xs-8'><?php echo html::checkbox('import', $lang->install->import);?></div>
           </div>
           <?php endif;?>
           <?php if(!empty($domainIP)):?>
