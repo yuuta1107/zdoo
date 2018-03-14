@@ -289,7 +289,7 @@ $lang->product->menu->browse     = '所有产品|product|browse|mode=browse&stat
 $lang->product->menu->normal     = '正常|product|browse|mode=browse&status=normal';
 $lang->product->menu->developing = '研发中|product|browse|mode=browse&status=developing';
 $lang->product->menu->offline    = '下线|product|browse|mode=browse&status=offline';
-$lang->product->menu->category   = '类目|tree|browse|type=product';
+$lang->product->menu->category   = '产品分类|tree|browse|type=product';
 
 $lang->todo = new stdclass();
 $lang->todo->menu = new stdclass();
@@ -400,6 +400,7 @@ $lang->error->noCurlExt    = '没有加载curl扩展！';
 $lang->error->notInt       = '<strong>%s</strong>不能为纯数字组合。';
 $lang->error->pasteImg     = '您的浏览器不支持粘贴图片！';
 $lang->error->accessDenied = '访问受限';
+$lang->error->deny         = "抱歉，您无权访问『<b>%s</b>』模块的『<b>%s</b>』功能。请联系管理员获取权限。";
 
 /* The pager items. */
 $lang->pager = new stdclass();

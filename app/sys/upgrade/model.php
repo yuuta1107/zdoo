@@ -200,6 +200,7 @@ class upgradeModel extends model
             case '4_3_beta': $confirmContent .= file_get_contents($this->getUpgradeFile('4.3.beta'));
             case '4_4'     : $confirmContent .= file_get_contents($this->getUpgradeFile('4.4'));
             case '4_5'     : $confirmContent .= file_get_contents($this->getUpgradeFile('4.5'));
+            case '4_6'     : $confirmContent .= file_get_contents($this->getUpgradeFile('4.6'));
         }
         return $confirmContent;
     }
@@ -1406,6 +1407,8 @@ class upgradeModel extends model
 
             return !dao::isError();
         }
+
+        return true;
     }
 
     /**
@@ -1420,17 +1423,15 @@ class upgradeModel extends model
         $hasCategory = false;
         foreach($fields as $field)
         {
-            if($field->Field == 'category') $hasCategory = true;
+            if($field->Field == 'category') 
+            {
+                $hasCategory = true;
+                break;
+            }
         }
 
-        if(!$hasCategory)
-        {
-            $this->dbh->exec("ALTER TABLE " . TABLE_PRODUCT  . " CHANGE line category mediumint(8) UNSIGNED NOT NULL DEFAULT 0");
-        }
-        else
-        {
-            $this->dbh->exec("ALTER TABLE " . TABLE_PRODUCT  . " drop line");
-        }
+        if(!$hasCategory) $this->dbh->exec("ALTER TABLE " . TABLE_PRODUCT  . " CHANGE `line` `category` mediumint(8) UNSIGNED NOT NULL DEFAULT 0 AFTER `id`");
+
         return true;
     }
 }

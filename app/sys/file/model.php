@@ -167,6 +167,8 @@ class fileModel extends model
         {   
             if(!move_uploaded_file($file['tmpname'], $this->savePath . $this->getSaveName($file['pathname']))) return false;
 
+            $file = $this->compressImage($file);
+
             $file['objectType']  = $objectType;
             $file['objectID']    = $objectID;
             $file['createdBy']   = $this->app->user->account;

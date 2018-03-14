@@ -196,6 +196,7 @@ class customer extends control
         foreach($contracts as $contract)
         {
             if($contract->status == 'canceled') continue;
+            if(!isset($contractOrders[$contract->id])) continue;
 
             foreach($contractOrders[$contract->id] as $contractOrder)
             {

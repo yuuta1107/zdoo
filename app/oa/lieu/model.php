@@ -229,7 +229,7 @@ class lieuModel extends model
     {
         if(!$this->post->overtime) return true;
 
-        if(!function_exists('bccomp') or !function_exists('bcadd')) return array('result' => 'fail', 'message' => $this->lang->lieu->nobcmath);;
+        if(!function_exists('bccomp') or !function_exists('bcadd')) return array('result' => 'fail', 'message' => $this->lang->lieu->nobcmath);
 
         $lieuHours     = $this->post->hours;
         $overtimeHours = 0;

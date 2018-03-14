@@ -36,7 +36,7 @@ class productModel extends model
      * @access public
      * @return array
      */
-    public function getList($mode = 'browse', $status = '', $category = '', $orderBy = 'id_desc', $pager = null)
+    public function getList($mode = 'browse', $status = '', $category = '', $orderBy = 'order_desc', $pager = null)
     {
         /* Process search condition. */
         if($this->session->productQuery == false) $this->session->set('productQuery', ' 1 = 1');
@@ -60,12 +60,12 @@ class productModel extends model
      * Get product pairs.
      * 
      * @param  string  $status
-     * @param  int  $category
+     * @param  int     $category
      * @param  string  $orderBy 
      * @access public
      * @return array
      */
-    public function getPairs($status = '', $category = '', $orderBy = 'id_desc')
+    public function getPairs($status = '', $category = '', $orderBy = 'order_desc')
     {
         $categories = $this->loadModel('tree')->getFamily($category);
         return $this->dao->select('id, name')->from(TABLE_PRODUCT)
@@ -73,7 +73,7 @@ class productModel extends model
             ->beginIF($status)->andWhere('status')->in($status)->fi()
             ->beginIF(!empty($categories))->andWhere('category')->in($categories)->fi()
             ->orderBy($orderBy)
-            ->fetchPairs('id');
+            ->fetchPairs();
     }
 
     /**

@@ -54,7 +54,7 @@ function checkSize(obj)
 {
     if(typeof($(obj)[0].files) != 'undefined')
     {
-        var maxUploadInfo = "<?php echo $this->config->file->maxSize / 1024 /1024 . 'M';?>";
+        var maxUploadInfo = '<?php echo strtoupper(ini_get('upload_max_filesize'));?>';
         var sizeType = {'K': 1024, 'M': 1024 * 1024, 'G': 1024 * 1024 * 1024};
         var unit = maxUploadInfo.replace(/\d+/, '');
         var maxUploadSize = maxUploadInfo.replace(unit,'') * sizeType[unit];

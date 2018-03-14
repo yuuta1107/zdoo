@@ -40,6 +40,7 @@ $lang->product->menuOrder[5]  = 'browse';
 $lang->product->menuOrder[10] = 'normal';
 $lang->product->menuOrder[15] = 'developing';
 $lang->product->menuOrder[20] = 'offline';
+$lang->product->menuOrder[25] = 'category';
 
 $lang->todo->menuOrder[5]  = 'calendar';
 $lang->todo->menuOrder[10] = 'all';

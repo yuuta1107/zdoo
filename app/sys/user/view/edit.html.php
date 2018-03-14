@@ -11,7 +11,7 @@
  */
 ?>
 <?php include $app->getModuleRoot() . '../sys/common/view/header.modal.html.php'; ?>
-<form method='post' id='editForm' action="<?php echo inlink('edit', "account={$user->account}");?>" class='form-condensed'>
+<form method='post' id='editForm' action="<?php echo inlink('editself', "account={$user->account}");?>" class='form-condensed'>
   <fieldset>
     <legend><?php echo $lang->user->basicInfo; ?></legend>
     <table class='table table-form'>

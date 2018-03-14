@@ -14,13 +14,14 @@ ranzhi:
 	cp -fr doc ranzhi/ && rm -fr ranzhi/doc/phpdoc && rm -fr ranzhi/doc/doxygen
 	cp -fr framework ranzhi/
 	cp -fr lib ranzhi/
-	cp -fr tmp ranzhi/
+	mkdir ranzhi/tmp/
 	rm -fr ranzhi/db/temp.sql
-	rm -fr ranzhi/tmp/cache/* 
-	rm -fr ranzhi/tmp/extension/*
-	rm -fr ranzhi/tmp/log/*
-	rm -fr ranzhi/tmp/model/*
-	rm -fr ranzhi/tmp/backup/*
+	mkdir ranzhi/tmp/backup/
+	mkdir ranzhi/tmp/cache/ 
+	mkdir ranzhi/tmp/extension/
+	mkdir ranzhi/tmp/log/
+	mkdir ranzhi/tmp/model/
+	mkdir ranzhi/tmp/package/
 	cp -fr www ranzhi && rm -fr ranzhi/www/data/ && mkdir -p ranzhi/www/data/upload
 	cp VERSION ranzhi/
 	# combine js and css files.

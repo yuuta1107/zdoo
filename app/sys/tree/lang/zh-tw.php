@@ -25,8 +25,9 @@ $lang->tree->timeCountDown = "<strong id='countDown'>3</strong> 秒後轉向%s�
 $lang->tree->redirect      = '立即轉向';
 $lang->tree->aliasRepeat   = '別名: %s 已經存在,不能重複添加。';
 $lang->tree->aliasConflict = '別名: %s 與系統模組衝突，不能添加。';
-$lang->tree->hasChildren   = '該版塊存在子版塊，不能刪除。';
+$lang->tree->hasChildren   = '該分類存在子分類，不能刪除。';
 $lang->tree->hasThreads    = '該版塊存在帖子，不能刪除。';
+$lang->tree->hasProducts   = '該分類存在產品，不能刪除。';
 $lang->tree->confirmDelete = "您確定刪除該類目嗎？";
 $lang->tree->successFixed  = "成功修復";
 $lang->tree->asParent      = '[%s]存在子科目，不能被合併';

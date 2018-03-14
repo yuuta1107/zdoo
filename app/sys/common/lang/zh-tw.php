@@ -289,6 +289,7 @@ $lang->product->menu->browse     = '所有產品|product|browse|mode=browse&stat
 $lang->product->menu->normal     = '正常|product|browse|mode=browse&status=normal';
 $lang->product->menu->developing = '研發中|product|browse|mode=browse&status=developing';
 $lang->product->menu->offline    = '下線|product|browse|mode=browse&status=offline';
+$lang->product->menu->category   = '產品分類|tree|browse|type=product';
 
 $lang->todo = new stdclass();
 $lang->todo->menu = new stdclass();
@@ -399,6 +400,7 @@ $lang->error->noCurlExt    = '沒有加載curl擴展！';
 $lang->error->notInt       = '<strong>%s</strong>不能為純數字組合。';
 $lang->error->pasteImg     = '您的瀏覽器不支持粘貼圖片！';
 $lang->error->accessDenied = '訪問受限';
+$lang->error->deny         = "抱歉，您無權訪問『<b>%s</b>』模組的『<b>%s</b>』功能。請聯繫管理員獲取權限。";
 
 /* The pager items. */
 $lang->pager = new stdclass();

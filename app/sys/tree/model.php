@@ -494,7 +494,7 @@ class treeModel extends model
      */
     public static function createProductAdminLink($category)
     {
-        return html::a(helper::createLink('product', 'browse', "mode=browse&status=all&id={$category->id}"), $category->name, "id='category{$category->id}'");
+        return html::a(helper::createLink('product', 'browse', "mode=browse&status=all&category={$category->id}"), $category->name, "id='category{$category->id}'");
     }
 
     /**
@@ -628,7 +628,7 @@ class treeModel extends model
         $linkHtml  = $category->name;
         $linkHtml .= ' ' . html::a(helper::createLink('tree', 'edit', "category={$category->id}"), $lang->tree->edit, "class='ajax'");
         $linkHtml .= ' ' . html::a(helper::createLink('tree', 'children', "type={$category->type}&category={$category->id}&root=$category->root"), $lang->category->children, "class='$childrenLinkClass ajax'");
-        $linkHtml .= ' ' . ($category->major ? html::a('#', $lang->delete, "disabled='disabled'") : html::a(helper::createLink('tree', 'delete',   "category={$category->id}"), $lang->delete, "class='deleter'"));
+        $linkHtml .= ' ' . (!empty($category->major) ? html::a('#', $lang->delete, "disabled='disabled'") : html::a(helper::createLink('tree', 'delete',   "category={$category->id}"), $lang->delete, "class='deleter'"));
 
         return $linkHtml;
     }

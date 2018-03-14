@@ -285,7 +285,6 @@ class my extends control
      */
     public function order($type = 'past', $orderBy = 'id_desc', $recTotal = 0, $recPerPage = 20, $pageID = 1)
     {
-
         $this->loadModel('common', 'sys');
         if(!commonModel::hasPriv('order', 'browse')) $this->common->deny('my', 'order');
 

@@ -106,7 +106,18 @@ function isonlybody()
 function formatMoney($money, $unit = 1)
 {
     if($money == 0) return '';
-    return trim(preg_replace('/\.0*$/', '', number_format($money / $unit, 2)));
+    
+    $decimals    = 2;
+    $formatMoney = number_format($money / $unit, $decimals);
+
+    /* If the formated money is too small, change decimals. */
+    if($money > 0 && (float)$formatMoney == 0) 
+    {
+        $decimals    = ceil(log10($unit));
+        $formatMoney = number_format($money / $unit, $decimals);
+    }
+    
+    return trim(preg_replace('/\.0*$/', '', $formatMoney));
 }
 
 /**

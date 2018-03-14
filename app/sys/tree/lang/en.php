@@ -25,8 +25,9 @@ $lang->tree->timeCountDown = "Locate to %s manage page in <strong id='countDown'
 $lang->tree->redirect      = 'Create now';
 $lang->tree->aliasRepeat   = 'Alias: %s already exists。';
 $lang->tree->aliasConflict = 'Alias: %s  conflicts with system modules';
-$lang->tree->hasChildren   = "The board has children, can't be deleted.";
+$lang->tree->hasChildren   = "The category has children, can't be deleted.";
 $lang->tree->hasThreads    = "The board has threads, can't be deleted.";
+$lang->tree->hasProducts   = "The category has products, can't be deleted.";
 $lang->tree->confirmDelete = "Are you sure to delete it?";
 $lang->tree->successFixed  = "Successfully fixed.";
 $lang->tree->asParent      = "[%s] has children, so it can't be merged.";

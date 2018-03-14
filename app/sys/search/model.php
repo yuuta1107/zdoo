@@ -95,17 +95,13 @@ class searchModel extends model
 
             if($this->post->$fieldName == 'contract.productLine')
             {
-                $clientLang   = $this->app->getClientLang();
-                $productLines = $this->dao->select('`key`')->from(TABLE_LANG)
-                    ->where('lang')->in("$clientLang,all")
-                    ->andWhere('app')->eq('crm')
-                    ->andWhere('module')->eq('product')
-                    ->andWhere('section')->eq('lineList')
-                    ->beginIF($operator == "include" || $operator == "notinclude")->andWhere('value')->like("%$value%")->fi()
-                    ->beginIF($operator == "=" || $operator == "!=")->andWhere('value')->eq($value)->fi()
+                $productLines = $this->dao->select('id')->from(TABLE_CATEGORY)
+                    ->where('type')->eq('product')
+                    ->beginIF($operator == "include" || $operator == "notinclude")->andWhere('name')->like("%$value%")->fi()
+                    ->beginIF($operator == "=" || $operator == "!=")->andWhere('name')->eq($value)->fi()
                     ->fetchPairs();
                 $products = $this->dao->select('id')->from(TABLE_PRODUCT)
-                    ->where('line')->in($productLines)
+                    ->where('category')->in($productLines)
                     ->beginIF($operator == "include" || $operator == "notinclude")->orWhere('name')->like("%$value%")->fi()
                     ->beginIF($operator == "=" || $operator == "!=")->orWhere('name')->eq($value)->fi()
                     ->fetchPairs();

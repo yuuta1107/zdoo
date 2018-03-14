@@ -27,7 +27,7 @@
     <?php foreach($contracts as $contract):?>
     <tr class='text-center'>
       <td><?php echo $contract->id;?></td>
-      <td><?php echo $contract->name;?></td>
+      <td><?php if(!commonModel::printLink('crm.contract', 'view', "id={$contract->id}", $contract->name)) echo $contract->name;?></td>
       <td><?php echo $contract->amount;?></td>
       <td><?php echo substr($contract->createdDate, 0, 10);?></td>
       <td><?php echo $lang->contract->returnList[$contract->return];?></td>

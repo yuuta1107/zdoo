@@ -400,6 +400,7 @@ $lang->error->noCurlExt    = 'No curl extension.';
 $lang->error->notInt       = '<strong>%s</strong> should be not a interger.';
 $lang->error->pasteImg     = 'Your browser does not support paste pictures.';
 $lang->error->accessDenied = 'Access Denied';
+$lang->error->deny         = "Sorry, you don't have the permission to access <b>%s</b>'s <b>%s</b>. Please contact the administrator.";
 
 /* The pager items. */
 $lang->pager = new stdclass();

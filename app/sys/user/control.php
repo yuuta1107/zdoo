@@ -280,13 +280,21 @@ class user extends control
      */
     public function edit($account = '', $from = '')
     {
+        if(!commonModel::hasPriv('user', 'edit')) die(js::locate($this->createLink('user', 'deny', "module=user&method=edit")));
+
+        die($this->fetch('user', 'editself', "account={$account}&from={$from}"));
+    }
+
+    /**
+     * Edit login user. 
+     * 
+     * @access public
+     * @return void
+     */
+    public function editself($account = '', $from = '')
+    {
         if($this->app->user->account == 'guest') $this->locate(inlink('login'));
         if(!$account) $account = $this->app->user->account;
-        if(!commonModel::hasPriv('user', 'edit'))
-        {
-            $account = $this->app->user->account;
-            if(!commonModel::hasPriv('user', 'editself')) die(js::locate($this->createLink('user', 'deny', "module=user&method=edit")));
-        }
 
         if(!empty($_POST))
         {
@@ -306,19 +314,8 @@ class user extends control
         }
         else
         {
-            $this->display();
+            $this->display('user', 'edit');
         }
-    }
-
-    /**
-     * Edit login user. 
-     * 
-     * @access public
-     * @return void
-     */
-    public function editself()
-    {
-        die($this->fetch('user', 'edit', "account={$this->app->user->account}"));
     }
 
     /**

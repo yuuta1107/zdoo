@@ -205,6 +205,12 @@ class tree extends control
             $threads = $this->loadModel('thread')->getList($category->id);
             if($threads) $this->send(array('result' => 'fail', 'message' => $this->lang->tree->hasThreads));
         }
+
+        if($category->type == 'product')
+        {
+            $products = $this->loadModel('product')->getPairs($status = '', $category->id);
+            if($products) $this->send(array('result' => 'fail', 'message' => $this->lang->tree->hasProducts));
+        }
  
         if($this->tree->delete($categoryID)) $this->send(array('result' => 'success'));
         $this->send(array('result' => 'fail', 'message' => dao::getError()));
