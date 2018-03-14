@@ -86,7 +86,7 @@
       <div class='pull-left batch-actions'>
         <div class='pull-left'><?php echo html::selectButton();?></div>
           <div class='input-group assign-action'>
-            <?php echo html::select('assignedTo', $users, '', "class='form-control chosen'");?>
+            <?php echo html::select('assignedTo', $validUsers, '', "class='form-control chosen'");?>
             <span class='input-group-btn'><?php echo html::a('#', $lang->customer->assign, "class='btn btn-primary batchAssign'");?></span>
         </div>
       </div>
