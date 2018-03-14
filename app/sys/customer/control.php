@@ -61,6 +61,7 @@ class customer extends control
         
         $this->view->title      = $this->lang->customer->list;
         $this->view->users      = $this->loadModel('user')->getPairs();
+        $this->view->validUsers = $this->loadModel('user')->getPairs('nodeleted');
         $this->view->moduleMenu = $this->customer->createModuleMenu($mode, $param, $orderBy, $recTotal, $recPerPage, $pageID);
         $this->view->mode       = $mode;
         $this->view->customers  = $customers;
