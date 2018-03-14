@@ -310,6 +310,8 @@ class overtimeModel extends model
     {
         $oldOvertime = $this->getById($id);
         $this->dao->delete()->from(TABLE_OVERTIME)->where('id')->eq($id)->exec();
+        
+        $this->dao->delete()->from(TABLE_ACTION)->where('objectType')->eq('overtime')->andWhere('objectID')->eq($id)->exec();
 
         if(!dao::isError())
         {
