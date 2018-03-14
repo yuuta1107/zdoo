@@ -119,7 +119,7 @@ class attendModel extends model
             $beginDate = isset($this->config->attend->beginDate->$account) ? $this->config->attend->beginDate->$account : $this->config->attend->beginDate->company;
             if($beginDate)
             {
-                if(date('Ym', strtotime($beginDate)) > $month) unset($attends[$account][$key]);
+                if(date('Ym', strtotime($beginDate)) > $month) unset($attends[$account]);
             }
         }
 
