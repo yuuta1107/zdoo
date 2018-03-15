@@ -10,6 +10,9 @@
  * @link        http://www.ranzhi.org
  */
 $config->leads = new stdclass();
+$config->leads->require = new stdclass();
+$config->leads->require->create = 'realname, origin';
+$config->leads->require->edit   = 'realname, origin';
 
 $config->leads->applyLimitList['5']   = 5;
 $config->leads->applyLimitList['10']  = 10;
@@ -41,6 +44,7 @@ $config->leads->search['module'] = 'leads';
 
 $config->leads->search['fields']['realname']      = $lang->contact->realname;
 $config->leads->search['fields']['origin']        = $lang->contact->origin;
+$config->leads->search['fields']['company']       = $lang->contact->company;
 $config->leads->search['fields']['phone']         = $lang->contact->phone;
 $config->leads->search['fields']['mobile']        = $lang->contact->mobile;
 $config->leads->search['fields']['email']         = $lang->contact->email;
@@ -49,12 +53,13 @@ $config->leads->search['fields']['contactedDate'] = $lang->contact->contactedDat
 $config->leads->search['fields']['nextDate']      = $lang->contact->nextDate;
 $config->leads->search['fields']['id']            = $lang->contact->id;
 
-$config->leads->search['params']['realname']      = array('operator' => 'include', 'control' => 'input',  'values' => '');
-$config->leads->search['params']['origin']        = array('operator' => 'include', 'control' => 'input',  'values' => '');
-$config->leads->search['params']['phone']         = array('operator' => 'include', 'control' => 'input',  'values' => '');
-$config->leads->search['params']['mobile']        = array('operator' => 'include', 'control' => 'input',  'values' => '');
-$config->leads->search['params']['email']         = array('operator' => 'include', 'control' => 'input',  'values' => '');
-$config->leads->search['params']['qq']            = array('operator' => 'include', 'control' => 'input',  'values' => '');
-$config->leads->search['params']['contactedDate'] = array('operator' => '>=', 'control' => 'input',  'values' => '', 'class' => 'date');
-$config->leads->search['params']['nextDate']      = array('operator' => '>=', 'control' => 'input',  'values' => '', 'class' => 'date');
-$config->leads->search['params']['id']            = array('operator' => '=', 'control' => 'input',  'values' => '');
+$config->leads->search['params']['realname']      = array('operator' => 'include', 'control' => 'input', 'values' => '');
+$config->leads->search['params']['origin']        = array('operator' => 'include', 'control' => 'input', 'values' => '');
+$config->leads->search['params']['company']       = array('operator' => 'include', 'control' => 'input', 'values' => '');
+$config->leads->search['params']['phone']         = array('operator' => 'include', 'control' => 'input', 'values' => '');
+$config->leads->search['params']['mobile']        = array('operator' => 'include', 'control' => 'input', 'values' => '');
+$config->leads->search['params']['email']         = array('operator' => 'include', 'control' => 'input', 'values' => '');
+$config->leads->search['params']['qq']            = array('operator' => 'include', 'control' => 'input', 'values' => '');
+$config->leads->search['params']['contactedDate'] = array('operator' => '>=', 'control' => 'input', 'values' => '', 'class' => 'date');
+$config->leads->search['params']['nextDate']      = array('operator' => '>=', 'control' => 'input', 'values' => '', 'class' => 'date');
+$config->leads->search['params']['id']            = array('operator' => '=', 'control' => 'input', 'values' => '');

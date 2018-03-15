@@ -19,11 +19,11 @@
 <?php include '../../common/view/datepicker.html.php';?>
 <?php include '../../../sys/common/view/chosen.html.php';?>
 <ul id='menuTitle'>
-  <li><?php commonModel::printLink('leads', 'browse', "mode={$mode}&status={$status}", $lang->contact->list);?></li>
+  <li><?php commonModel::printLink('leads', 'browse', "mode={$mode}&status={$status}", $lang->leads->list);?></li>
   <li class='divider angle'></li>
-  <li><?php commonModel::printLink('leads', 'view', "contactID={$contact->id}&mode={$mode}&status={$status}", $lang->contact->view);?></li>
+  <li><?php commonModel::printLink('leads', 'view', "contactID={$contact->id}&mode={$mode}&status={$status}", $lang->leads->view);?></li>
   <li class='divider angle'></li>
-  <li class='title'><?php echo $lang->contact->edit?></li>
+  <li class='title'><?php echo $lang->leads->edit?></li>
 </ul>
 <?php endif;?>
 <form method='post' id='contactForm' class='form-condensed' action="<?php echo helper::createLink('leads', 'edit', "contactID=$contact->id")?>">
@@ -49,9 +49,13 @@
         <div class='panel-heading'><strong><?php echo $lang->contact->basicInfo;?></strong></div>
         <div class='panel-body'>
           <table class='table table-info table-form'>
-            <tr class='required'>
+            <tr>
               <th class='w-70px'><?php echo $lang->contact->realname;?></th>
               <td><?php echo html::input('realname', $contact->realname, "class='form-control'");?></td>
+            </tr>
+            <tr>
+              <th><?php echo $lang->contact->origin;?></th>
+              <td><?php echo html::input('origin', $contact->origin, "class='form-control'");?></td>
             </tr>
             <tr>
               <th><?php echo $lang->contact->company;?></th>
