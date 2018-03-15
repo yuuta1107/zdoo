@@ -34,9 +34,9 @@
         <td>
           <div class='input-group'>
             <span class='input-group-addon'><?php echo $lang->$type->date?></span>
-            <?php echo html::input('begin', $trip->begin, "class='form-control form-date'")?>
+            <?php echo html::input('begin', $trip->begin, "class='form-control form-date date-picker-down'")?>
             <span class='input-group-addon fix-border'><?php echo $lang->$type->time?></span>
-            <?php echo html::input('start', $trip->start, "class='form-control form-time'")?>
+            <?php echo html::input('start', $trip->start, "class='form-control form-time date-picker-down'")?>
           </div>
         </td>
         <td></td>
@@ -46,9 +46,9 @@
         <td>
           <div class='input-group'>
             <span class='input-group-addon'><?php echo $lang->$type->date?></span>
-            <?php echo html::input('end', $trip->end, "class='form-control form-date'")?>
+            <?php echo html::input('end', $trip->end, "class='form-control form-date date-picker-down'")?>
             <span class='input-group-addon fix-border'><?php echo $lang->$type->time?></span>
-            <?php echo html::input('finish', $trip->finish, "class='form-control form-time'")?>
+            <?php echo html::input('finish', $trip->finish, "class='form-control form-time date-picker-down'")?>
           </div>
         </td>
         <td></td>

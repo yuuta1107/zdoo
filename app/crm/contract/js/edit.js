@@ -19,12 +19,12 @@ $(document).ready(function()
         });
 
         $(this).html($('#tmpData select').html());
+        $(this).val(indexValue);
     })
-
 
     $(document).on('click', '.plus', function()
     {
-        $(this).parents('tr').after( $('#orderGroup tbody').html());
+        $(this).parents('tr').after($('#orderGroup tbody').html());
     });
   
     $(document).on('click', '.minus', function()
@@ -33,10 +33,14 @@ $(document).ready(function()
         {
             $(this).parents('tr').html($('#orderGroup tr').html());
             $(this).parents('td').find('select').val('').change();
+
+            if($('.orderTH:first').html() == '') $('.orderTH:first').html(v.order);
             return false;
         }
         $(this).parents('tr').remove();
         $('.order-real').change();
+
+        if($('.orderTH:first').html() == '') $('.orderTH:first').html(v.order);
     });
 
     $('#customer').change(function()

@@ -29,9 +29,9 @@
         <td>
           <div class='input-group'>
             <span class='input-group-addon'><?php echo $lang->makeup->date?></span>
-            <?php echo html::input('begin', $makeup->begin, "class='form-control form-date'")?>
+            <?php echo html::input('begin', $makeup->begin, "class='form-control form-date date-picker-down'")?>
             <span class='input-group-addon fix-border'><?php echo $lang->makeup->time?></span>
-            <?php echo html::input('start', $makeup->start, "class='form-control form-time'")?>
+            <?php echo html::input('start', $makeup->start, "class='form-control form-time date-picker-down'")?>
           </div>
         </td>
         <td></td>
@@ -41,9 +41,9 @@
         <td>
           <div class='input-group'>
             <span class='input-group-addon'><?php echo $lang->makeup->date?></span>
-            <?php echo html::input('end', $makeup->end, "class='form-control form-date'")?>
+            <?php echo html::input('end', $makeup->end, "class='form-control form-date date-picker-down'")?>
             <span class='input-group-addon fix-border'><?php echo $lang->makeup->time?></span>
-            <?php echo html::input('finish', $makeup->finish, "class='form-control form-time'")?>
+            <?php echo html::input('finish', $makeup->finish, "class='form-control form-time date-picker-down'")?>
           </div>
         </td>
         <td></td>

@@ -22,11 +22,11 @@
       <div class='row'>
         <div class='col-md-9'>
           <table class='table table-form w-p60'>
-            <tr class='required'>
+            <tr>
               <th class='w-100px'><?php echo $lang->contact->realname;?></th>
               <td><?php echo html::input('realname', '', "class='form-control'");?></td>
             </tr>
-            <tr class='required'>
+            <tr>
               <th><?php echo $lang->contact->origin;?></th>
               <td><?php echo html::input('origin', '', "class='form-control'");?></td>
             </tr>

@@ -18,7 +18,7 @@ include $app->getAppRoot() . '../sys/common/view/header.modal.html.php';
 <?php include '../../common/view/chosen.html.php';?>
 <?php if(!$isChildren) $this->loadModel('project', 'proj')->setMenu($projects, $projectID);?>
 <div class='page-content'>
-  <form id='ajaxForm' method='post' action='<?php echo $this->createLink('task', 'batchCreate', "projectID=$projectID&parent=$parent");?>'>
+  <form id='batchCreateForm' method='post' action='<?php echo $this->createLink('task', 'batchCreate', "projectID=$projectID&parent=$parent");?>'>
     <div class='panel'>
       <table class='table table-form'>
         <thead>

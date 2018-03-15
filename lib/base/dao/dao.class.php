@@ -1987,6 +1987,7 @@ class baseSQL
     public function groupBy($groupBy)
     {
         if($this->inCondition and !$this->conditionIsTrue) return $this;
+        if(!preg_match('/^(\w+\.)?(`\w+`|\w+)( +(desc|asc))?( *(, *(\w+\.)?(`\w+`|\w+)( +(desc|asc))?)?)*$/i', $groupBy)) die("Order is bad request, The order is $orders");
         $this->sql .= ' ' . DAO::GROUPBY . " $groupBy";
         return $this;
     }
@@ -2002,6 +2003,7 @@ class baseSQL
     public function having($having)
     {
         if($this->inCondition and !$this->conditionIsTrue) return $this;
+        $having = $this->quote($having);
         $this->sql .= ' ' . DAO::HAVING . " $having";
         return $this;
     }

@@ -24,6 +24,7 @@ $config->customer->search['module'] = 'customer';
 
 $config->customer->search['fields']['name']          = $lang->customer->name;
 $config->customer->search['fields']['intension']     = $lang->customer->intension;
+$config->customer->search['fields']['source']        = $lang->customer->source;
 $config->customer->search['fields']['level']         = $lang->customer->level;
 $config->customer->search['fields']['contactedDate'] = $lang->customer->contactedDate;
 $config->customer->search['fields']['nextDate']      = $lang->customer->nextDate;
@@ -40,6 +41,7 @@ $config->customer->search['fields']['relation']      = $lang->customer->relation
 
 $config->customer->search['params']['name']          = array('operator' => 'include', 'control' => 'input', 'values' => '');
 $config->customer->search['params']['intension']     = array('operator' => 'include', 'control' => 'input', 'values' => '');
+$config->customer->search['params']['source']        = array('operator' => '=',  'control' => 'select', 'values' => $lang->customer->sourceList);
 $config->customer->search['params']['level']         = array('operator' => '=',  'control' => 'select', 'values' => $lang->customer->levelNameList);
 $config->customer->search['params']['contactedDate'] = array('operator' => '>=', 'control' => 'input',  'values' => '', 'class' => 'date');
 $config->customer->search['params']['nextDate']      = array('operator' => '>=', 'control' => 'input',  'values' => '', 'class' => 'date');

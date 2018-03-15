@@ -132,11 +132,11 @@ class contactModel extends model
 
             $contacts = $this->dao->select('*')->from(TABLE_CONTACT)
                 ->where('deleted')->eq(0)
-                ->beginIF($mode != 'bysearch' && $status)->andWhere('status')->eq($status)->fi()
+                ->beginIF($mode != 'bysearch' && $status)->andWhere('status')->eq($status)->fi()    // Makr sure can search the leads which had been transformed to contacts.
                 ->beginIF($origin)->andWhere('origin')->like("%,$origin,%")->fi()
                 ->beginIF($mode == 'assignedTo')->andWhere('assignedTo')->eq($this->app->user->account)->fi()
                 ->beginIF($mode == 'ignoredBy')->andWhere('ignoredBy')->eq($this->app->user->account)->fi()
-                ->beginIF($mode == 'bysearch')->andWhere($leadsQuery)->fi()
+                ->beginIF($mode == 'bysearch')->andWhere($leadsQuery)->andWhere('origin')->ne('')->fi() // Make sure won't search the contacts which aren't transformed from leads.
                 ->beginIF($mode == 'next')->andWhere('assignedTo')->eq($this->app->user->account)->andWhere('nextDate')->fi()
 
                 ->beginIF($this->app->user->admin != 'super')

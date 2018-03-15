@@ -23,8 +23,8 @@ $(document).ready(function()
         {
             $('input[name^=dateList]').each(function()
             {
-                if(!($this).val()) $(this).val($('#date').val());
-            }
+                if(!$(this).val()) $(this).val($('#date').val());
+            });
             $('select[name^=categoryList]').each(function()
             {
                 if(!$(this).val()) $(this).val($('#category').val()).trigger('chosen:updated');
@@ -36,7 +36,7 @@ $(document).ready(function()
             $('textarea[name^=descList]').each(function()
             {
                 if(!$(this).val()) $(this).val($('#desc').val());
-            }
+            });
 
             $('#refund-detail').removeClass('hidden');
             $('#money').prop('readonly', 'readonly');
@@ -80,7 +80,18 @@ $(document).ready(function()
     {
         var tr = $(this).closest('tr');
         tr.after($('#detailTpl').html().replace(/key/g, v.key));
-        tr.next().find('input[name^=dateList]').val($('#date').val()).fixedDate().datetimepicker($.extend(window.datetimepickerDefaultOptions, {eleClass:'', minView: 2, maxView: 1, format: 'yyyy-mm-dd'}));
+        tr.next().find('input[name^=dateList]').val($('#date').val()).fixedDate().datetimepicker(
+        {
+            language:  config.clientLang,
+            weekStart: 1,
+            todayBtn:  1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 2,
+            minView: 2,
+            forceParse: 0,
+            format: 'yyyy-mm-dd'
+        });
         tr.next().find('select[name^=categoryList]').val($('#category').val()).chosen(window.chosenDefaultOptions);
         tr.next().find('select[name^=relatedList]').val($('#related').val()).chosen(window.chosenDefaultOptions);
         tr.next().find('textarea[name^=descList]').val($('#desc').val());

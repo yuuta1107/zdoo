@@ -524,16 +524,16 @@ class task extends control
                 $task     = $this->task->getByID($taskID);
                 $actionID = $this->loadModel('action')->create('task', $taskID, 'Closed', $this->post->comment, $this->lang->task->reasonList[$task->closedReason]);
                 $this->action->logHistory($actionID, $changes);
+            }
 
-                /* Close children */
-                foreach($task->children as $key => $child) 
+            /* Close children */
+            foreach($task->children as $key => $child) 
+            {
+                $childChanges = $this->task->close($child->id);
+                if($childChanges)
                 {
-                    $childChanges = $this->task->close($child->id);
-                    if($childChanges)
-                    {
-                        $actionID = $this->loadModel('action')->create('task', $child->id, 'Closed', $this->post->comment, $this->lang->task->reasonList[$task->closedReason]);
-                        $this->action->logHistory($actionID, $childChanges);
-                    }
+                    $actionID = $this->loadModel('action')->create('task', $child->id, 'Closed', $this->post->comment, $this->lang->task->reasonList[$task->closedReason]);
+                    $this->action->logHistory($actionID, $childChanges);
                 }
             }
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => $this->server->http_referer));
@@ -706,18 +706,18 @@ class task extends control
                 {
                     $actionID = $this->action->create('task', $taskID, 'Closed', '');
                     $this->action->logHistory($actionID, $changes);
+                }
 
-                    /* Close children */
-                    foreach($task->children as $key => $child) 
+                /* Close children */
+                foreach($task->children as $key => $child) 
+                {
+                    $childChanges = $this->task->close($child->id);
+                    if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
+
+                    if($childChanges)
                     {
-                        $childChanges = $this->task->close($child->id);
-                        if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
-
-                        if($childChanges)
-                        {
-                            $actionID = $this->loadModel('action')->create('task', $child->id, 'Closed', $this->post->comment, $this->lang->task->reasonList[$task->closedReason]);
-                            $this->action->logHistory($actionID, $childChanges);
-                        }
+                        $actionID = $this->loadModel('action')->create('task', $child->id, 'Closed', $this->post->comment, $this->lang->task->reasonList[$task->closedReason]);
+                        $this->action->logHistory($actionID, $childChanges);
                     }
                 }
             }

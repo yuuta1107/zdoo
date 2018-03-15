@@ -89,6 +89,7 @@ $(document).ready(function()
         });
 
         $(this).html($('#tmpData select').html());
+        $(this).val(indexValue);
     })
 
     $(document).on('click', '.plus', function()

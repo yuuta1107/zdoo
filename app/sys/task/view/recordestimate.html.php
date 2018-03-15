@@ -12,7 +12,7 @@
 ?>
 <?php include '../../../sys/common/view/header.modal.html.php';?>
 <?php include '../../common/view/kindeditor.html.php';?>
-<form method='post' id='ajaxForm' action='<?php echo $this->createLink('task', 'recordEstimate', "taskID=$task->id")?>'>
+<form method='post' id='estimateForm' action='<?php echo $this->createLink('task', 'recordEstimate', "taskID=$task->id")?>'>
   <table class='table table-form'>
     <tr>
       <th><?php echo $lang->task->myConsumption;?></th>

@@ -79,7 +79,7 @@
         <div class='panel-body'>
           <table class='table table-info'>
             <tr>
-              <th><?php echo $lang->order->createdBy;?></th>
+              <th class='w-70px'><?php echo $lang->order->createdBy;?></th>
               <td><?php echo $order->createdBy;?></td>
             </tr>
             <tr>

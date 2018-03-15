@@ -267,6 +267,7 @@ class refund extends control
         $this->view->order        = $this->loadModel('order', 'crm')->getById($refund->order);
         $this->view->contract     = $this->loadModel('contract', 'crm')->getById($refund->contract);
         $this->view->project      = $this->loadModel('project', 'proj')->getById($refund->project);
+        $this->view->referer      = helper::safe64Encode($this->server->http_referer);
         $this->view->refund       = $refund;
         $this->view->mode         = $mode;
         $this->view->status       = $status;
@@ -280,13 +281,20 @@ class refund extends control
      * @access public
      * @return void
      */
-    public function delete($refundID)
+    public function delete($refundID, $referer = '')
     {
         $refund = $this->refund->getByID($refundID);
         $this->checkPriv($refund, 'delete', 'json');
 
         $this->refund->delete($refundID);
         if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
+
+        if($referer)
+        {
+            $referer = helper::safe64Decode($referer);
+            if($referer) $this->send(array('result' => 'success', 'locate' => $referer));
+        }
+
         $this->send(array('result' => 'success'));
     }
 
@@ -752,7 +760,7 @@ class refund extends control
         }
 
         if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
-        $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess));
+        $this->send(array('result' => 'success'));
     }
 
     /**

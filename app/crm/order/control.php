@@ -100,7 +100,7 @@ class order extends control
         $this->view->title             = $this->lang->order->create;
         $this->view->currencyList      = $this->loadModel('common', 'sys')->getCurrencyList();
         $this->view->customer          = $customer;
-        $this->view->productCategories = $this->loadModel('tree')->getOptionMenu('product', 0, true);
+        $this->view->productCategories = array('') + $this->loadModel('tree')->getOptionMenu('product', 0, true);
 
         $this->display();
     }

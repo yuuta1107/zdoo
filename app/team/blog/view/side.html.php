@@ -14,7 +14,7 @@
 <?php $treeMenu = $this->tree->getTreeMenu('blog', 0, array('treeModel', 'createBlogBrowseLink'));?>
 <div class='col-xs-2'>
   <div class='panel'> 
-    <?php commonModel::printLink('blog', 'create', '', $lang->blog->create, "class='btn btn-primary btn-lg btn-block'");?>
+    <?php commonModel::printLink('blog', 'create', !empty($category->id) ? "categoryID={$category->id}" : '', $lang->blog->create, "class='btn btn-primary btn-lg btn-block'");?>
   </div>
   <div class='input-group'>
     <?php echo html::input('searchInput', isset($searchText) ? $searchText : '', "class='form-control search-query' placeholder=''"); ?>

@@ -16,7 +16,7 @@ function setType(type)
 $(document).ready(function()
 {
     $('#mainNavbar .nav li').removeClass('active');
-    $("#mainNavbar .nav li a[href*='project']").parent().addClass('active');
+    $("#mainNavbar .nav li a[href*='project']").not('[href*=task]').parent().addClass('active');
     $("#menu .nav li a[href*='projectLibs']").parent().addClass('active');
 
     $('#private').click(function()
