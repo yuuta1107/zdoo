@@ -258,18 +258,18 @@ class todo extends control
      */
     public function batchEdit($mode = 'all')
     {
-        $todoIDList = $this->post->todoIDList ? $this->post->todoIDList : array();
-        if(empty($todoIDList))
-        {
-            die(js::alert($this->lang->todo->batchedittips) . js::locate('back'));
-        }
-
         if($this->post->names)
         {
             $this->todo->batchUpdate();
 
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => inlink('browse', "mode=$mode")));
+        }
+
+        $todoIDList = $this->post->todoIDList ? $this->post->todoIDList : array();
+        if(empty($todoIDList))
+        {
+            die(js::alert($this->lang->todo->batchedittips) . js::locate('back'));
         }
 
         $zentaoEntryList = $this->dao->select('code, name')->from(TABLE_ENTRY)->where('zentao')->eq(1)->fetchPairs();
@@ -481,6 +481,9 @@ class todo extends control
 
             if($todo->type == 'task') 
             {
+                unset($_POST['todoIDList']);
+                unset($_POST['date']);
+
                 $task = $this->loadModel('task')->getById($todo->idvalue);
                 $_POST['consumed'] = $task->left == 0 ? 1 : $task->left;
                 $changes = $this->loadModel('task')->finish($todo->idvalue);
