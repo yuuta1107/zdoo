@@ -158,9 +158,9 @@ class blog extends control
         if($currentCategory > 0 && isset($article->categories[$currentCategory])) $category = $currentCategory;  
         $category = $this->loadModel('tree')->getByID($category);
 
-        $title    = $article->title . ' - ' . $category->name;
-        
-        $this->view->title       = $title;
+        $article->views++;
+
+        $this->view->title       = $article->title . ' - ' . $category->name;
         $this->view->article     = $article;
         $this->view->prevAndNext = $this->loadModel('article')->getPrevAndNext($article->id, $category->id);
         $this->view->category    = $category;
