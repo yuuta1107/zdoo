@@ -80,7 +80,18 @@ $(document).ready(function()
     {
         var tr = $(this).closest('tr');
         tr.after($('#detailTpl').html().replace(/key/g, v.key));
-        tr.next().find('input[name^=dateList]').val($('#date').val()).fixedDate().datetimepicker($.extend(window.datetimepickerDefaultOptions, {eleClass:'', minView: 2, maxView: 1, format: 'yyyy-mm-dd'}));
+        tr.next().find('input[name^=dateList]').val($('#date').val()).fixedDate().datetimepicker(
+        {
+            language:  config.clientLang,
+            weekStart: 1,
+            todayBtn:  1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 2,
+            minView: 2,
+            forceParse: 0,
+            format: 'yyyy-mm-dd'
+        });
         tr.next().find('select[name^=categoryList]').val($('#category').val()).chosen(window.chosenDefaultOptions);
         tr.next().find('select[name^=relatedList]').val($('#related').val()).chosen(window.chosenDefaultOptions);
         tr.next().find('textarea[name^=descList]').val($('#desc').val());
