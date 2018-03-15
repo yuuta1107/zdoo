@@ -24,9 +24,9 @@
         <td>
           <div class='input-group'>
             <span class='input-group-addon'><?php echo $lang->lieu->date;?></span>
-            <?php echo html::input('begin', $date, "class='form-control form-date'")?>
+            <?php echo html::input('begin', $date, "class='form-control form-date date-picker-down'")?>
             <span class='input-group-addon fix-border'><?php echo $lang->lieu->time;?></span>
-            <?php echo html::input('start', $this->config->attend->signInLimit, "class='form-control form-time'")?>
+            <?php echo html::input('start', $this->config->attend->signInLimit, "class='form-control form-time date-picker-down'")?>
           </div>
         </td>
       </tr>
@@ -35,9 +35,9 @@
         <td>
           <div class='input-group'>
             <span class='input-group-addon'><?php echo $lang->lieu->date;?></span>
-            <?php echo html::input('end', $date, "class='form-control form-date'")?>
+            <?php echo html::input('end', $date, "class='form-control form-date date-picker-down'")?>
             <span class='input-group-addon fix-border'><?php echo $lang->lieu->time;?></span>
-            <?php echo html::input('finish', $this->config->attend->signOutLimit, "class='form-control form-time'")?>
+            <?php echo html::input('finish', $this->config->attend->signOutLimit, "class='form-control form-time date-picker-down'")?>
           </div>
         </td>
       </tr>

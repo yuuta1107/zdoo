@@ -33,9 +33,9 @@
         <td>
           <div class='input-group'>
             <span class='input-group-addon'><?php echo $lang->overtime->date?></span>
-            <?php echo html::input('begin', $overtime->begin, "class='form-control form-date'")?>
+            <?php echo html::input('begin', $overtime->begin, "class='form-control form-date date-picker-down'")?>
             <span class='input-group-addon fix-border'><?php echo $lang->overtime->time?></span>
-            <?php echo html::input('start', $overtime->start, "class='form-control form-time'")?>
+            <?php echo html::input('start', $overtime->start, "class='form-control form-time date-picker-down'")?>
           </div>
         </td>
         <td></td>
@@ -45,9 +45,9 @@
         <td>
           <div class='input-group'>
             <span class='input-group-addon'><?php echo $lang->overtime->date?></span>
-            <?php echo html::input('end', $overtime->end, "class='form-control form-date'")?>
+            <?php echo html::input('end', $overtime->end, "class='form-control form-date date-picker-down'")?>
             <span class='input-group-addon fix-border'><?php echo $lang->overtime->time?></span>
-            <?php echo html::input('finish', $overtime->finish, "class='form-control form-time'")?>
+            <?php echo html::input('finish', $overtime->finish, "class='form-control form-time date-picker-down'")?>
           </div>
         </td>
         <td></td>
