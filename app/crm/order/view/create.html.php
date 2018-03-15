@@ -79,7 +79,7 @@
         </tr>
         <tr class='productInfo hide'>
           <th><?php echo $lang->product->category;?></th>
-          <td><?php echo html::select("category", $productCategories, '', "class='form-control'");?></td>
+          <td><?php echo html::select("category", $productCategories, '', "class='form-control chosen'");?></td>
         </tr>
         <tr class='productInfo hide'>
           <th><?php echo $lang->product->type;?></th>

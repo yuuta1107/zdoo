@@ -14,6 +14,7 @@
 <?php include '../../common/view/datepicker.html.php';?>
 <?php include '../../../sys/common/view/kindeditor.html.php';?>
 <?php include '../../../sys/common/view/chosen.html.php';?>
+<?php js::set('order', $lang->contract->order);?>
 <ul id='menuTitle'>
   <li><?php commonModel::printLink('contract', 'browse', '', $lang->contract->list);?></li>
   <li class='divider angle'></li>
@@ -29,18 +30,26 @@
         <table class='table table-form'>
           <tr>
             <th class='w-80px'><?php echo $lang->contract->name;?></th>
-            <td colspan='2'><?php echo html::input('name', $contract->name, "class='form-control'");?></td>
-          </tr>
-          <tr>
-            <th><?php echo $lang->contract->code;?></th>
-            <td colspan='2'><?php echo html::input('code', $contract->code, "class='form-control'");?></td>
+            <td>
+              <div class='form-group'>
+                <span class='col-sm-8'>
+                  <?php echo html::input('name', $contract->name, "class='form-control'");?>
+                </span>
+                <span class='col-sm-4'>
+                  <div class='input-group'>
+                    <div class='input-group-addon'><?php echo $lang->contract->code;?></div>
+                    <?php echo html::input('code', $contract->code, "class='form-control'");?>
+                  </div>
+                </span>
+              </div>
+            </td>
           </tr>
           <?php foreach($contractOrders as $currentOrder):?>
           <tr>
             <th class='orderTH'><?php echo $lang->contract->order;?></th>
-            <td colspan='2'>
+            <td>
               <div class='form-group'>
-                <span class='col-sm-7'>
+                <span class='col-sm-8'>
                   <select name='order[]' class='select-order form-control'>
                     <?php foreach($orders as $order):?>
                     <?php if(!$order):?>
@@ -56,17 +65,48 @@
                 </span>
                 <span class='col-sm-4'>
                   <div class='input-group'>
-                    <div class='input-group-addon order-currency'>
-                      <?php echo zget($currencySign, $currentOrder->currency, '');?> 
-                    </div>
+                    <div class='input-group-addon order-currency'><?php echo zget($currencySign, $currentOrder->currency, '');?></div>
                     <?php echo html::input('real[]', ($currentOrder->real and $currentOrder->real != '0.00') ? $currentOrder->real : $currentOrder->plan, "class='order-real form-control' placeholder='{$this->lang->contract->placeholder->real}'");?>
+                    <div class='input-group-btn'>
+                      <a href='javascript:;' class='btn plus'><i class='icon-plus'></i></a>
+                      <a href='javascript:;' class='btn minus'><i class='icon-remove'></i></a>
+                    </div>
                   </div>
                 </span>
-                <span class='col-sm-1' style='margin-top: 8px;'><?php echo html::a('javascript:;', "<i class='icon-plus'></i>", "class='plus'") . html::a('javascript:;', "<i class='icon-remove'></i>", "class='minus'");?></span>
               </div>
             </td>
           </tr>
           <?php endforeach;?>
+          <?php if(!$contractOrders):?>
+          <tr>
+            <th class='orderTH'><?php echo $lang->contract->order;?></th>
+            <td>
+              <div class='form-group'>
+                <span class='col-sm-8'>
+                  <select name='order[]' class='select-order form-control'>
+                    <?php foreach($orders as $order):?>
+                    <?php if(!$order):?>
+                    <option value='' data-real='' data-currency=''></option>
+                    <?php else:?>
+                    <option value="<?php echo $order->id;?>" data-real="<?php echo $order->plan;?>" data-currency="<?php echo $order->currency?>"><?php echo $order->title;?></option>
+                    <?php endif;?>
+                    <?php endforeach;?>
+                  </select>
+                </span>
+                <span class='col-sm-4'>
+                  <div class='input-group'>
+                    <div class='input-group-addon order-currency'><?php echo zget($currencySign, $contract->currency, $contract->currency)?></div>
+                    <?php echo html::input('real[]', '', "class='order-real form-control' placeholder='{$this->lang->contract->placeholder->real}'");?>
+                    <div class='input-group-btn'>
+                      <a href='javascript:;' class='btn plus'><i class='icon-plus'></i></a>
+                      <a href='javascript:;' class='btn minus'><i class='icon-remove'></i></a>
+                    </div>
+                  </div>
+                </span>
+              </div>
+            </td>
+          </tr>
+          <?php endif;?>
           <tbody id='tmpData' class='hide'></tbody>
           <tr>
             <th><?php echo $lang->contract->amount;?></th>
@@ -79,12 +119,12 @@
           </tr>
           <tr>
             <th><?php echo $lang->contract->items;?></th>
-            <td colspan='2'><?php echo html::textarea('items', $contract->items, "class='form-control'");?></td>
+            <td><?php echo html::textarea('items', $contract->items, "class='form-control'");?></td>
           </tr>
           <?php if(commonModel::hasPriv('file', 'upload')):?>
           <tr>
             <th><?php echo $lang->files;?></th>
-            <td colspan='2'><?php echo $this->fetch('file', 'buildForm');?></td>
+            <td><?php echo $this->fetch('file', 'buildForm');?></td>
           </tr>
           <?php endif;?>
         </table>
@@ -201,10 +241,10 @@
 </form>
 <table id='orderGroup' class='hide'>
   <tr>
-    <th></th>
-    <td colspan='2'>
+    <th class='orderTH'></th>
+    <td>
       <div class='form-group'>
-        <span class='col-sm-7'>
+        <span class='col-sm-8'>
           <select name='order[]' class='select-order form-control'>
             <?php foreach($orders as $order):?>
             <?php if(!$order):?>
@@ -219,9 +259,12 @@
           <div class='input-group'>
             <div class='input-group-addon order-currency'><?php echo zget($currencySign, $contract->currency, $contract->currency)?></div>
             <?php echo html::input('real[]', '', "class='order-real form-control' placeholder='{$this->lang->contract->placeholder->real}'");?>
+            <div class='input-group-btn'>
+              <a href='javascript:;' class='btn plus'><i class='icon-plus'></i></a>
+              <a href='javascript:;' class='btn minus'><i class='icon-remove'></i></a>
+            </div>
           </div>
         </span>
-        <span class='col-sm-1' style='margin-top: 8px;'><?php echo html::a('javascript:;', "<i class='icon-plus'></i>", "class='plus'") . html::a('javascript:;', "<i class='icon-remove'></i>", "class='minus'");?></span>
       </div>
     </td>
   </tr>
