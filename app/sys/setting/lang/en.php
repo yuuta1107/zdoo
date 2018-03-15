@@ -36,7 +36,8 @@ $lang->setting->product->lineList->key   = 'Code';
 $lang->setting->product->lineList->value = 'Name';
 
 $lang->setting->customer = new stdClass();
-$lang->setting->customer->fields['typeList']      = 'Customer type';
+$lang->setting->customer->fields['sourceList']    = 'Customer Source';
+$lang->setting->customer->fields['typeList']      = 'Customer Type';
 $lang->setting->customer->fields['sizeNameList']  = 'Customer Size';
 $lang->setting->customer->fields['levelNameList'] = 'Customer Level';
 $lang->setting->customer->fields['statusList']    = 'Customer Status';

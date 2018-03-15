@@ -36,6 +36,7 @@ $lang->setting->product->lineList->key   = '代號';
 $lang->setting->product->lineList->value = '名稱';
 
 $lang->setting->customer = new stdClass();
+$lang->setting->customer->fields['sourceList']    = '客戶來源';
 $lang->setting->customer->fields['typeList']      = '客戶類型';
 $lang->setting->customer->fields['sizeNameList']  = '客戶規模';
 $lang->setting->customer->fields['levelNameList'] = '客戶等級';

@@ -72,6 +72,7 @@ $lang->setting = new stdclass();
 $lang->setting->menu = new stdclass();
 $lang->setting->menu->product         = 'Product Status|setting|lang|module=product&field=statusList&appName=sys';
 $lang->setting->menu->productCategory = 'Product Category|tree|browse|type=product';
+$lang->setting->menu->customerSource  = 'Customer Source|setting|lang|module=customer&field=sourceList&appName=sys';
 $lang->setting->menu->customerType    = 'Customer Status|setting|lang|module=customer&field=typeList&appName=sys';
 $lang->setting->menu->customerSize    = 'Customer Size|setting|lang|module=customer&field=sizeNameList&appName=sys';
 $lang->setting->menu->customerLevel   = 'Customer Level|setting|lang|module=customer&field=levelNameList&appName=sys';

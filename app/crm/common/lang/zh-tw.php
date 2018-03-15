@@ -72,6 +72,7 @@ $lang->setting = new stdclass();
 $lang->setting->menu = new stdclass();
 $lang->setting->menu->product        = '產品狀態|setting|lang|module=product&field=statusList&appName=sys';
 $lang->setting->menu->productLine    = '產品分類|tree|browse|type=product';
+$lang->setting->menu->customerSource = '客戶來源|setting|lang|module=customer&field=sourceList&appName=sys';
 $lang->setting->menu->customerType   = '客戶類型|setting|lang|module=customer&field=typeList&appName=sys';
 $lang->setting->menu->customerSize   = '客戶規模|setting|lang|module=customer&field=sizeNameList&appName=sys';
 $lang->setting->menu->customerLevel  = '客戶等級|setting|lang|module=customer&field=levelNameList&appName=sys';

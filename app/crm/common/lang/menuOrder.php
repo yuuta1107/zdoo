@@ -44,14 +44,15 @@ $lang->contract->menuOrder[45] = 'report';
 
 $lang->setting->menuOrder[5]  = 'product';
 $lang->setting->menuOrder[10] = 'productLine';
-$lang->setting->menuOrder[15] = 'customerType';
-$lang->setting->menuOrder[20] = 'customerSize';
-$lang->setting->menuOrder[25] = 'customerLevel';
-$lang->setting->menuOrder[30] = 'customerStatus';
-$lang->setting->menuOrder[35] = 'area';
-$lang->setting->menuOrder[40] = 'industry';
-$lang->setting->menuOrder[45] = 'currency';
-$lang->setting->menuOrder[50] = 'salesGroup';
-$lang->setting->menuOrder[55] = 'customerPool';
+$lang->setting->menuOrder[15] = 'customerSource';
+$lang->setting->menuOrder[20] = 'customerType';
+$lang->setting->menuOrder[25] = 'customerSize';
+$lang->setting->menuOrder[30] = 'customerLevel';
+$lang->setting->menuOrder[35] = 'customerStatus';
+$lang->setting->menuOrder[40] = 'area';
+$lang->setting->menuOrder[45] = 'industry';
+$lang->setting->menuOrder[50] = 'currency';
+$lang->setting->menuOrder[55] = 'salesGroup';
+$lang->setting->menuOrder[60] = 'customerPool';
 
 $lang->sales->menuOrder = $lang->setting->menuOrder;
