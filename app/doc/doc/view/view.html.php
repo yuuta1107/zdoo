@@ -11,6 +11,7 @@
  */
 ?>
 <?php include '../../common/view/header.html.php';?>
+<?php include '../../../sys/common/view/ueditor.html.php';?>
 <?php echo css::internal($keTableCSS);?>
 <?php js::set('libType', $doc->project ? 'project' : 'custom');?>
 <?php js::set('libID ', $doc->lib);?>

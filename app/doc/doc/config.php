@@ -19,6 +19,7 @@ $config->doc->require->edit      = 'title';
 $config->doc->editor = new stdclass();
 $config->doc->editor->create = array('id' => 'content', 'tools' => 'simple');
 $config->doc->editor->edit   = array('id' => 'content,comment', 'tools' => 'simple');
+$config->doc->editor->view   = array('id' => 'lastComment', 'tools' => 'simple');
 
 $config->doc->markdown = new stdclass();
 $config->doc->markdown->create = array('id' => 'contentMarkdown', 'tools' => 'withchange');
