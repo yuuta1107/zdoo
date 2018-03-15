@@ -12,7 +12,7 @@
 ?>
 <?php include '../../common/view/header.modal.html.php';?>
 <?php include '../../common/view/kindeditor.html.php';?>
-<form id='ajaxForm' method='post' action='<?php echo inlink('close', "taskID=$taskID")?>'>
+<form id='closeForm' method='post' action='<?php echo inlink('close', "taskID=$taskID")?>'>
   <table class='table table-form'>
     <tr>
       <th><?php echo $lang->comment;?></th>

@@ -1,5 +1,7 @@
 $(document).ready(function()
 {
+    $.setAjaxForm('#batchCreateForm');
+
     /* show team menu. */
     $('[name^=multiple]').change(function()
     {

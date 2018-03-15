@@ -146,7 +146,11 @@ class taskModel extends model
     {
         $taskList = $this->dao->select('*')->from(TABLE_TASK)
             ->where('deleted')->eq(0)
-            ->beginIF($taskIDList)->andWhere('id')->in($taskIDList)->fi()
+            ->beginIF($taskIDList)
+            ->andWhere('id', true)->in($taskIDList)
+            ->orWhere('parent')->in($taskIDList)
+            ->markRight(1)
+            ->fi()
             ->fetchAll('id');
 
         foreach($taskList as $key => $task)
@@ -556,20 +560,22 @@ class taskModel extends model
         $parent   = $this->getById($task->parent);
         $wait     = true;
         $done     = true;
+        $close    = true;
         $estimate = 0;
         $consumed = 0;
         $left     = 0;
 
         foreach($parent->children as $child)
         {
-            if($child->status != 'wait') $wait = false;
-            if($child->status != 'done') $done = false;
+            if($child->status != 'wait')   $wait  = false;
+            if($child->status != 'done')   $done  = false;
+            if($child->status != 'closed') $close = false;
             $estimate += $child->estimate;
             $consumed += $child->consumed;
             $left     += $child->left;
         }
         $newParent = new stdclass();
-        $newParent->status   = $wait ? 'wait' : ($done ? 'done' : 'doing');
+        $newParent->status   = $wait ? 'wait' : ($done ? 'done' : ($close ? 'closed' : 'doing'));
         $newParent->estimate = $estimate;
         $newParent->consumed = $consumed;
         $newParent->left     = $left;
