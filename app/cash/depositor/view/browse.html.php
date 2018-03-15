@@ -87,6 +87,7 @@
       </div>
       <?php endforeach;?>
     </div>
+      <?php $pager->show();?>
   </div>
 </div>
 <?php include '../../common/view/footer.html.php';?>
