@@ -62,15 +62,15 @@
       $switchLabel = $refund->status == 'wait' ? $lang->refund->cancel : $lang->refund->commit;
       if($this->app->user->admin == 'super' or $refund->createdBy == $this->app->user->account)
       {
-          if(strpos(',wait,draft,', ",$refund->status,") !== false)
+          if(strpos(',wait,draft,', ",{$refund->status},") !== false)
           {
-              commonModel::printLink('refund', 'switchstatus', "id=$refund->id", $switchLabel, "class='btn reload'");
+              commonModel::printLink('refund', 'switchstatus', "id={$refund->id}", $switchLabel, "class='btn reload'");
           }
-          if(strpos(',wait,draft,reject,', ",$refund->status,") !== false)
+          if(strpos(',wait,draft,reject,', ",{$refund->status},") !== false)
           {
               echo "<div class='btn-group'>";
-              commonModel::printLink('refund', 'edit', "refundID=$refund->id", $lang->edit, "class='btn btn-default'");
-              commonModel::printLink('refund', 'delete', "refundID=$refund->id", $lang->delete, "class='btn btn-default deleter'");
+              commonModel::printLink('refund', 'edit', "refundID={$refund->id}", $lang->edit, "class='btn btn-default'");
+              commonModel::printLink('refund', 'delete', "refundID={$refund->id}&referer={$referer}", $lang->delete, "class='btn btn-default deleter'");
               echo '</div>';
           }
       }
