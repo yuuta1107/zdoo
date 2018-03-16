@@ -47,6 +47,7 @@ $lang->overtime->statusList['doing']  = 'Doing';
 $lang->overtime->statusList['pass']   = 'Pass';
 $lang->overtime->statusList['reject'] = 'Reject';
 
+$lang->overtime->notExist      = 'The record not exist';
 $lang->overtime->denied        = 'Access denied';
 $lang->overtime->unique        = 'There was a record of overtime in %s.';
 $lang->overtime->sameMonth     = 'Overtime must be in the same month.';

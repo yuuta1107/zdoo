@@ -47,6 +47,7 @@ $lang->overtime->statusList['doing']  = '審核中';
 $lang->overtime->statusList['pass']   = '通過';
 $lang->overtime->statusList['reject'] = '拒絶';
 
+$lang->overtime->notExist      = '記錄不存在';
 $lang->overtime->denied        = '信息訪問受限';
 $lang->overtime->unique        = '%s 已經存在加班記錄';
 $lang->overtime->sameMonth     = '不支持跨月份加班';

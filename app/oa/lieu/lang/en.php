@@ -44,6 +44,7 @@ $lang->lieu->statusList['reject'] = 'Reject';
 $lang->lieu->confirmReview['pass']   = 'Are you sure to pass it?';
 $lang->lieu->confirmReview['reject'] = 'Are you sure to reject it?';
 
+$lang->lieu->notExist      = 'The record nto exist';
 $lang->lieu->checkHours    = 'Check Hours';
 $lang->lieu->denied        = 'Access denied.';
 $lang->lieu->unique        = 'There was a record of lieu in %s.';

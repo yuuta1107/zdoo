@@ -45,6 +45,7 @@ $lang->makeup->statusList['doing']  = '審核中';
 $lang->makeup->statusList['pass']   = '通過';
 $lang->makeup->statusList['reject'] = '拒絶';
 
+$lang->makeup->notExist      = '記錄不存在';
 $lang->makeup->denied        = '信息訪問受限';
 $lang->makeup->unique        = '%s 已經存在補班記錄';
 $lang->makeup->sameMonth     = '不支持跨月份補班';

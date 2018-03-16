@@ -45,6 +45,7 @@ $lang->makeup->statusList['doing']  = '审核中';
 $lang->makeup->statusList['pass']   = '通过';
 $lang->makeup->statusList['reject'] = '拒绝';
 
+$lang->makeup->notExist      = '记录不存在';
 $lang->makeup->denied        = '信息访问受限';
 $lang->makeup->unique        = '%s 已经存在补班记录';
 $lang->makeup->sameMonth     = '不支持跨月份补班';

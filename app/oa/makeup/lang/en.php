@@ -45,6 +45,7 @@ $lang->makeup->statusList['doing']  = 'Doing';
 $lang->makeup->statusList['pass']   = 'Pass';
 $lang->makeup->statusList['reject'] = 'Reject';
 
+$lang->makeup->notExist      = 'The record not exist';
 $lang->makeup->denied        = 'Access denied';
 $lang->makeup->unique        = 'There was a record of makeup in %s.';
 $lang->makeup->sameMonth     = 'Makeup must be in the same month.';
