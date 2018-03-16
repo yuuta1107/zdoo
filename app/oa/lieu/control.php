@@ -294,7 +294,7 @@ class lieu extends control
     public function switchStatus($lieuID)
     {
         $lieu = $this->lieu->getById($lieuID);
-        if(!$lieu) return $this->send(array('result' => 'success', 'message' => $this->lang->lieu->notExist));
+        if(!$lieu) $this->send(array('result' => 'success', 'message' => $this->lang->lieu->notExist));
 
         if($lieu->createdBy != $this->app->user->account) $this->send(array('result' => 'fail', 'message' => $this->lang->liue->denied));
 
@@ -315,6 +315,7 @@ class lieu extends control
         }
 
         if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
+
         $this->send(array('result' => 'success'));
     }
 

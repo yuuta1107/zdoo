@@ -410,7 +410,7 @@ class makeup extends control
     public function switchStatus($makeupID)
     {
         $makeup = $this->makeup->getById($makeupID);
-        if(!$makeup) return $this->send(array('result' => 'success', 'message' => $this->lang->makeup->notExist));
+        if(!$makeup) $this->send(array('result' => 'fail', 'message' => $this->lang->makeup->notExist));
 
         if($makeup->createdBy != $this->app->user->account) $this->send(array('result' => 'fail', 'message' => $this->lang->makeup->denied));
 
@@ -437,6 +437,7 @@ class makeup extends control
         }
 
         if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
+
         $this->send(array('result' => 'success'));
     }
 
