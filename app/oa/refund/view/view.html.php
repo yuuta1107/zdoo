@@ -64,7 +64,7 @@
       {
           if(strpos(',wait,draft,', ",{$refund->status},") !== false)
           {
-              commonModel::printLink('refund', 'switchstatus', "id=$refund->id", $switchLabel, "class='btn btn-switch'");
+              commonModel::printLink('refund', 'switchstatus', "id=$refund->id", $switchLabel, "class='btn switchStatus'");
           }
           if(strpos(',wait,draft,reject,', ",{$refund->status},") !== false)
           {

@@ -73,6 +73,9 @@ $lang->refund->reviewAllStatusList['allreject'] = 'Reject All';
 
 $lang->refund->descTip = "%s requested %s.";
 
+$lang->refund->notExist          = 'The record not exist.';
+$lang->refund->cancelSuccess     = 'Cancel success.';
+$lang->refund->commitSuccess     = 'Commit success.';
 $lang->refund->uniqueReviewer    = 'The 1st reviewer and the 2nd reviewer cannot be the same.';
 $lang->refund->createTradeTip    = 'Do you want to keep this reimbursement in accounting?';
 $lang->refund->secondReviewerTip = 'If reimbursement requires a 2nd review, please set 2nd reviewer.';
