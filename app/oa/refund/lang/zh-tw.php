@@ -73,6 +73,9 @@ $lang->refund->reviewAllStatusList['allreject'] = '全部拒絶';
 
 $lang->refund->descTip = "%s 申請報銷 %s。";
 
+$lang->refund->notExist          = '記錄不存在';
+$lang->refund->cancelSuccess     = '撤銷成功';
+$lang->refund->commitSuccess     = '提交成功';
 $lang->refund->uniqueReviewer    = '第一審批人和第二審批人不能是同一個人';
 $lang->refund->createTradeTip    = '是否關聯記賬？';
 $lang->refund->secondReviewerTip = '二級審批需要設置二級審批人。';

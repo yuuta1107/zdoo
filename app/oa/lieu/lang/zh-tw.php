@@ -44,6 +44,7 @@ $lang->lieu->statusList['reject'] = '拒絶';
 $lang->lieu->confirmReview['pass']   = '您確定要執行通過操作嗎？';
 $lang->lieu->confirmReview['reject'] = '您確定要執行拒絶操作嗎？';
 
+$lang->lieu->notExist      = '記錄不存在';
 $lang->lieu->checkHours    = '調休時長檢測';
 $lang->lieu->denied        = '信息訪問受限';
 $lang->lieu->unique        = '%s 已經存在調休記錄';

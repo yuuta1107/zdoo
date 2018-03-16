@@ -57,6 +57,7 @@ $lang->leave->statusList['pass']   = '通過';
 $lang->leave->statusList['reject'] = '拒絶';
 $lang->leave->statusList['back']   = '銷假待審';
 
+$lang->leave->notExist      = '記錄不存在';
 $lang->leave->denied        = '信息訪問受限';
 $lang->leave->unique        = '%s 已經存在請假記錄';
 $lang->leave->sameMonth     = '不支持跨月份請假';

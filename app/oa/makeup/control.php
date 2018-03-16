@@ -410,7 +410,8 @@ class makeup extends control
     public function switchStatus($makeupID)
     {
         $makeup = $this->makeup->getById($makeupID);
-        if(!$makeup) return false;
+        if(!$makeup) return $this->send(array('result' => 'success', 'message' => $this->lang->makeup->notExist));
+
         if($makeup->createdBy != $this->app->user->account) $this->send(array('result' => 'fail', 'message' => $this->lang->makeup->denied));
 
         $dates = range(strtotime($makeup->begin), strtotime($makeup->end), 60 * 60 * 24);

@@ -537,7 +537,8 @@ class leave extends control
     public function switchStatus($leaveID)
     {
         $leave = $this->leave->getByID($leaveID);
-        if(!$leave) return false;
+        if(!$leave) $this->send(array('result' => 'success', 'message' => $this->lang->leave->notExist));
+
         if($leave->createdBy != $this->app->user->account) $this->send(array('result' => 'fail', 'message' => $this->lang->leave->denied));
 
         $dates = range(strtotime($leave->begin), strtotime($leave->end), 60*60*24);

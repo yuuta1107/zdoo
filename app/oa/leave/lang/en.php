@@ -57,6 +57,7 @@ $lang->leave->statusList['pass']   = 'Pass';
 $lang->leave->statusList['reject'] = 'Reject';
 $lang->leave->statusList['back']   = 'Back';
 
+$lang->leave->notExist      = 'The record not exist';
 $lang->leave->denied        = 'Access denied.';
 $lang->leave->unique        = 'There was a record of Leave in %s.';
 $lang->leave->sameMonth     = 'Leave must be in the same month.';

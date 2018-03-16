@@ -744,23 +744,26 @@ class refund extends control
     public function switchStatus($refundID)
     {
         $refund = $this->refund->getByID($refundID);
-        if(!$refund) return false;
+        if(!$refund) return $this->send(array('result' => 'fail', 'message' => $this->lang->refund->notExist, 'locate' => inlink('personal')));
 
+        $message = '';
         if($refund->status == 'wait')
         {
+            $message = $this->lang->refund->cancelSuccess;
             $this->dao->update(TABLE_REFUND)->set('status')->eq('draft')->where('id')->eq($refundID)->exec();
             $actionID = $this->loadModel('action')->create('refund', $refundID, 'revoked');
             $this->sendmail($refundID, $actionID);
         }
         if($refund->status == 'draft')
         {
+            $message = $this->lang->refund->commitSuccess;
             $this->dao->update(TABLE_REFUND)->set('status')->eq('wait')->where('id')->eq($refundID)->exec();
             $actionID = $this->loadModel('action')->create('refund', $refundID, 'commited');
             $this->sendmail($refundID, $actionID);
         }
-
         if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
-        $this->send(array('result' => 'success'));
+
+        $this->send(array('result' => 'success', 'message' => $message));
     }
 
     /**

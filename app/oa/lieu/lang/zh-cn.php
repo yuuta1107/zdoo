@@ -44,6 +44,7 @@ $lang->lieu->statusList['reject'] = '拒绝';
 $lang->lieu->confirmReview['pass']   = '您确定要执行通过操作吗？';
 $lang->lieu->confirmReview['reject'] = '您确定要执行拒绝操作吗？';
 
+$lang->lieu->notExist      = '记录不存在';
 $lang->lieu->checkHours    = '调休时长检测';
 $lang->lieu->denied        = '信息访问受限';
 $lang->lieu->unique        = '%s 已经存在调休记录';

@@ -98,7 +98,7 @@
                 {
                     if(strpos(',wait,draft,', ",$refund->status,") !== false)
                     {
-                        echo html::a($this->createLink('refund', 'switchstatus', "id=$refund->id"), $switchLabel, "class='reload'");
+                        echo html::a($this->createLink('refund', 'switchstatus', "id=$refund->id"), $switchLabel, "class='switchStatus'");
                     }
                     else
                     {

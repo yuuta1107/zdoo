@@ -386,7 +386,8 @@ class overtime extends control
     public function switchStatus($overtimeID)
     {
         $overtime = $this->overtime->getById($overtimeID);
-        if(!$overtime) return false;
+        if(!$overtime) return $this->send(array('result' => 'success', 'message' => $this->lang->overtime->notExist));
+
         if($overtime->createdBy != $this->app->user->account) $this->send(array('result' => 'fail', 'message' => $this->lang->overtime->denied));
 
         $dates = range(strtotime($overtime->begin), strtotime($overtime->end), 60 * 60 * 24);
