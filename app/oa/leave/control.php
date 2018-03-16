@@ -537,7 +537,7 @@ class leave extends control
     public function switchStatus($leaveID)
     {
         $leave = $this->leave->getByID($leaveID);
-        if(!$leave) $this->send(array('result' => 'success', 'message' => $this->lang->leave->notExist));
+        if(!$leave) $this->send(array('result' => 'fail', 'message' => $this->lang->leave->notExist));
 
         if($leave->createdBy != $this->app->user->account) $this->send(array('result' => 'fail', 'message' => $this->lang->leave->denied));
 
@@ -564,6 +564,7 @@ class leave extends control
         }
 
         if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
+
         $this->send(array('result' => 'success'));
     }
 

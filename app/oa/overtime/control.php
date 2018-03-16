@@ -386,7 +386,7 @@ class overtime extends control
     public function switchStatus($overtimeID)
     {
         $overtime = $this->overtime->getById($overtimeID);
-        if(!$overtime) return $this->send(array('result' => 'success', 'message' => $this->lang->overtime->notExist));
+        if(!$overtime) $this->send(array('result' => 'success', 'message' => $this->lang->overtime->notExist));
 
         if($overtime->createdBy != $this->app->user->account) $this->send(array('result' => 'fail', 'message' => $this->lang->overtime->denied));
 
@@ -413,6 +413,7 @@ class overtime extends control
         }
 
         if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
+
         $this->send(array('result' => 'success'));
     }
 

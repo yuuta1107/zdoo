@@ -744,7 +744,7 @@ class refund extends control
     public function switchStatus($refundID)
     {
         $refund = $this->refund->getByID($refundID);
-        if(!$refund) return $this->send(array('result' => 'fail', 'message' => $this->lang->refund->notExist, 'locate' => inlink('personal')));
+        if(!$refund) $this->send(array('result' => 'fail', 'message' => $this->lang->refund->notExist, 'locate' => inlink('personal')));
 
         $message = '';
         if($refund->status == 'wait')
