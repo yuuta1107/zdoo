@@ -178,13 +178,13 @@ class threadModel extends model
      * 
      * @param  int      $board 
      * @access public
-     * @return void
+     * @return int | bool
      */
     public function post($boardID)
     {
-        $now   = helper::now();
-        $isAdmin     = $this->app->user->admin == 'super';
-        $canManage   = $this->canManage($boardID);
+        $now       = helper::now();
+        $isAdmin   = $this->app->user->admin == 'super';
+        $canManage = $this->canManage($boardID);
 
         $thread = fixer::input('post')
             ->stripTags('content', $this->config->allowedTags)
@@ -201,7 +201,7 @@ class threadModel extends model
         $this->dao->insert(TABLE_THREAD)
             ->data($thread, $skip = 'uid')
             ->autoCheck()
-            ->batchCheck('title, content', 'notempty')
+            ->batchCheck($this->config->thread->require->post, 'notempty')
             ->exec();
 
         $threadID = $this->dao->lastInsertID();
@@ -243,13 +243,13 @@ class threadModel extends model
      * 
      * @param  int    $threadID 
      * @access public
-     * @return void
+     * @return bool 
      */
     public function update($threadID)
     {
-        $thread      = $this->getByID($threadID);
-        $isAdmin     = $this->app->user->admin == 'super';
-        $canManage   = $this->canManage($thread->board);
+        $thread    = $this->getByID($threadID);
+        $isAdmin   = $this->app->user->admin == 'super';
+        $canManage = $this->canManage($thread->board);
 
         $thread = fixer::input('post')
             ->setIF(!$canManage, 'readonly', 0)
@@ -264,7 +264,7 @@ class threadModel extends model
         $this->dao->update(TABLE_THREAD)
             ->data($thread, $skip = 'uid')
             ->autoCheck()
-            ->batchCheck('title, content', 'notempty')
+            ->batchCheck($this->config->thread->require->edit, 'notempty')
             ->where('id')->eq($threadID)
             ->exec();
 

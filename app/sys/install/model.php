@@ -491,14 +491,13 @@ EOT;
      */
     public function createAdmin()
     {
-        $join  = helper::now();
         $admin = new stdclass();
         $admin->account   = $this->post->account;
         $admin->realname  = $this->post->account;
         $admin->password  = $this->loadModel('user')->createPassword($this->post->password, $admin->account);
         $admin->password1 = $this->post->password; 
         $admin->admin     = 'super';
-        $admin->join      = $join;
+        $admin->join      = helper::now();
         $this->lang->user->password1 = $this->lang->user->password;
         $this->dao->insert(TABLE_USER)->data($admin, $skip = 'password1')->autoCheck()->batchCheck('account,password1', 'notempty')->check('account', 'account')->exec();
     }

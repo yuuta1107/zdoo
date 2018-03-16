@@ -626,31 +626,23 @@ $lang->blog->methodOrder[20]  = 'delete';
 $lang->resource->forum = new stdclass();
 $lang->resource->forum->index  = 'index';
 $lang->resource->forum->board  = 'board';
-$lang->resource->forum->admin  = 'admin';
-$lang->resource->forum->update = 'update';
 
 $lang->forum->methodOrder[0]  = 'index';
 $lang->forum->methodOrder[5]  = 'board';
-$lang->forum->methodOrder[10] = 'admin';
-$lang->forum->methodOrder[15] = 'update';
 
 /* Thread. */
 $lang->resource->thread = new stdclass();
 $lang->resource->thread->post         = 'post';
 $lang->resource->thread->edit         = 'edit';
 $lang->resource->thread->view         = 'view';
-$lang->resource->thread->transfer     = 'transfer';
 $lang->resource->thread->delete       = 'delete';
-$lang->resource->thread->switchStatus = 'switchStatus';
 $lang->resource->thread->stick        = 'stick';
 $lang->resource->thread->deleteFile   = 'deleteFile';
 
 $lang->thread->methodOrder[0]  = 'post';
 $lang->thread->methodOrder[5]  = 'edit';
 $lang->thread->methodOrder[10] = 'view';
-$lang->thread->methodOrder[15] = 'transfer';
 $lang->thread->methodOrder[20] = 'delete';
-$lang->thread->methodOrder[25] = 'switchStatus';
 $lang->thread->methodOrder[30] = 'stick';
 $lang->thread->methodOrder[35] = 'deleteFile';
 
