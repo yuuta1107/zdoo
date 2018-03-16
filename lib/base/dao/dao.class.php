@@ -1971,7 +1971,11 @@ class baseSQL
 
         /* filter limit. */
         $limit = trim(str_ireplace('limit', '', $limit));
-        if(!preg_match('/^[0-9]+ *(, *[0-9]+)?$/', $limit)) die("Limit is bad query, The limit is $limit");
+        if(!preg_match('/^[0-9]+ *(, *[0-9]+)?$/', $limit))
+        {
+            $limit = htmlspecialchars($limit);
+            die("Limit is bad query, The limit is $limit");
+        }
         $this->sql .= ' ' . DAO::LIMIT . " $limit ";
         return $this;
     }
@@ -1987,7 +1991,11 @@ class baseSQL
     public function groupBy($groupBy)
     {
         if($this->inCondition and !$this->conditionIsTrue) return $this;
-        $groupBy = $this->quote($groupBy);
+        if(!preg_match('/^\w+[a-zA-Z0-9_`.]+$/', $groupBy))
+        {
+            $groupBy = htmlspecialchars($groupBy);
+            die("Group is bad query, The group is $groupBy");
+        }
         $this->sql .= ' ' . DAO::GROUPBY . " $groupBy";
         return $this;
     }
