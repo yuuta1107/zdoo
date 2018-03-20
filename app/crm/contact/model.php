@@ -109,7 +109,7 @@ class contactModel extends model
      * @access public
      * @return array
      */
-    public function getList($customer = 0, $relation = 'client', $mode = '', $status = 'normal', $origin = '', $orderBy = 't2.maker_desc', $pager = null)
+    public function getList($customer = 0, $relation = 'client', $mode = 'all', $status = 'normal', $origin = '', $orderBy = 't2.maker_desc', $pager = null)
     {
         $contacts = array();
         if($status != 'normal')
