@@ -179,7 +179,7 @@ class contactModel extends model
 
             if(strpos(',past,today,tomorrow,thisweek,thismonth,', ",{$mode},") !== false)
             {
-                $contacts = $this->dao->select('t1.*, t2.customer, t2.maker, t2.title, t2.dept, t2.join, t2.left, t3.date AS nextDate')->from(TABLE_CONTACT)->alias('t1')
+                $contacts = $this->dao->select('t1.*, t2.customer, t2.maker, t2.title, t2.dept, t2.join, t2.left')->from(TABLE_CONTACT)->alias('t1')
                     ->leftJoin(TABLE_RESUME)->alias('t2')->on('t1.resume = t2.id')
                     ->leftJoin(TABLE_NEXTCONTACT)->alias('t3')->on('t1.id=t3.objectID')
                     ->where('t1.deleted')->eq(0)
@@ -195,8 +195,22 @@ class contactModel extends model
                     ->beginIF($mode == 'thisweek')->andWhere('t3.date')->between($thisWeek['begin'], $thisWeek['end'])->fi()
                     ->beginIF($mode == 'thismonth')->andWhere('t3.date')->between($thisMonth['begin'], $thisMonth['end'])->fi()
                     ->orderBy($orderBy)
-                    ->page($pager)
+                    ->page($pager, 't1.id')
                     ->fetchAll('id');
+
+                $nextContacts = $this->dao->select('objectID, MIN(date) AS date')->from(TABLE_NEXTCONTACT)
+                    ->where('status')->eq('wait')
+                    ->andWhere('objectType')->eq('contact')
+                    ->andWhere('objectID')->in(array_keys($orders))
+                    ->beginIF($mode == 'past')->andWhere('date')->lt(helper::today())->fi()
+                    ->beginIF($mode == 'today')->andWhere('date')->eq(helper::today())->fi()
+                    ->beginIF($mode == 'tomorrow')->andWhere('date')->eq(formattime(date::tomorrow(), DT_DATE1))->fi()
+                    ->beginIF($mode == 'thisweek')->andWhere('date')->between($thisWeek['begin'], $thisWeek['end'])->fi()
+                    ->beginIF($mode == 'thismonth')->andWhere('date')->between($thisMonth['begin'], $thisMonth['end'])->fi()
+                    ->andWhere('date')->ne('0000-00-00')
+                    ->fetchPairs();
+
+                foreach($contacts as $id => $contact) $contact->nextDate = zget($nextContacts, $id, $contact->nextDate);
             }
             else
             {

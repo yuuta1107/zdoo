@@ -277,6 +277,8 @@ class action extends control
         $nextContact->editedDate = helper::now();
         $this->dao->update(TABLE_NEXTCONTACT)->data($nextContact)->where('id')->eq($id)->exec();
 
+        $this->action->updateOriginTable($nextContact->objectType, $nextContact->objectID);
+
         $this->send(array('result' => 'success'));
     }
 
@@ -294,6 +296,8 @@ class action extends control
         if($this->app->user->admin != 'super' && $nextContact->createdBy != $user) $this->send(array('result' => 'fail', 'message' => $this->lang->admin->record->deleteDenied));
 
         $this->dao->delete()->from(TABLE_NEXTCONTACT)->where('id')->eq($id)->exec();
+
+        $this->action->updateOriginTable($nextContact->objectType, $nextContact->objectID);
 
         $this->send(array('result' => 'success'));
     }

@@ -265,6 +265,7 @@ $lang->action->record->editedDate   = 'Edited Date';
 $lang->action->record->uploadFile   = 'Upload';
 $lang->action->record->finishDenied = 'Only administrator, contacted by and created by can finish.';
 $lang->action->record->deleteDenied = 'Only administrator and creator can delete.';
+$lang->action->record->deleteFail   = "The record had been finished, can't delete it.";
 
 $lang->action->record->statusList['wait'] = 'Wait';
 $lang->action->record->statusList['done'] = 'Done';

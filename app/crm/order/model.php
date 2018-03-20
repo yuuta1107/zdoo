@@ -90,7 +90,7 @@ class orderModel extends model
 
         if(strpos(',past,today,tomorrow,thisweek,thismonth,', ",{$mode},") !== false)
         {
-            $orders = $this->dao->select('o.*, c.name AS customerName, c.level AS level, n.date AS nextDate')->from(TABLE_ORDER)->alias('o')
+            $orders = $this->dao->select('o.*, c.name AS customerName, c.level AS level')->from(TABLE_ORDER)->alias('o')
                 ->leftJoin(TABLE_CUSTOMER)->alias('c')->on('o.customer=c.id')
                 ->leftJoin(TABLE_NEXTCONTACT)->alias('n')->on('o.id=n.objectID')
                 ->where('o.deleted')->eq(0)
@@ -111,8 +111,22 @@ class orderModel extends model
                 ->andWhere('o.customer')->in($customerIdList)
                 ->beginIF(strpos($orderBy, 'date') !== false)->orderBy("n.$orderBy")->fi()
                 ->beginIF(strpos($orderBy, 'date') === false)->orderBy("o.$orderBy")->fi()
-                ->page($pager)
+                ->page($pager, 'o.id')
                 ->fetchAll('id');
+
+            $nextContacts = $this->dao->select('objectID, MIN(date) AS date')->from(TABLE_NEXTCONTACT)
+                ->where('status')->eq('wait')
+                ->andWhere('objectType')->eq('order')
+                ->andWhere('objectID')->in(array_keys($orders))
+                ->beginIF($mode == 'past')->andWhere('date')->lt(helper::today())->fi()
+                ->beginIF($mode == 'today')->andWhere('date')->eq(helper::today())->fi()
+                ->beginIF($mode == 'tomorrow')->andWhere('date')->eq(formattime(date::tomorrow(), DT_DATE1))->fi()
+                ->beginIF($mode == 'thisweek')->andWhere('date')->between($thisWeek['begin'], $thisWeek['end'])->fi()
+                ->beginIF($mode == 'thismonth')->andWhere('date')->between($thisMonth['begin'], $thisMonth['end'])->fi()
+                ->andWhere('date')->ne('0000-00-00')
+                ->fetchPairs();
+
+            foreach($orders as $id => $order) $order->nextDate = zget($nextContacts, $id, $oder->nextDate);
         }
         else
         {

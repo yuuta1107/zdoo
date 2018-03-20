@@ -126,6 +126,23 @@ class actionModel extends model
 
         return !dao::isError();
     }
+
+    /**
+     * Set next date of origin table.
+     *
+     * @param  string $objectType
+     * @param  int    $objectID
+     * @access public
+     * @return bool
+     */
+    public function updateOriginTable($objectType, $objectID)
+    {
+        $table    = $this->config->action->nextContactTables[$objectType];
+        $nextDate = $this->getMinNextDate($objectType, $objectID);
+        $this->dao->update($table)->set('nextDate')->eq($nextDate)->where('id')->eq($objectID)->exec();
+
+        return !dao::isError();
+    }
     
     /**
      * Sync contact info.
@@ -301,7 +318,6 @@ class actionModel extends model
             ->where('status')->eq('wait')
             ->andWhere('objectType')->eq($objectType)
             ->andWhere('objectID')->eq($objectID)
-            ->andWhere('date')->ge(date('Y-m-d'))
             ->orderBy('date, id')
             ->fetchAll();
     }

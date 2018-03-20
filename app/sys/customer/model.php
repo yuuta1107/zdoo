@@ -95,11 +95,11 @@ class customerModel extends model
 
         if(strpos(',past,today,tomorrow,thisweek,thismonth,', ",{$mode},") !== false)
         {
-            return $this->dao->select('t1.*, t2.date AS nextDate')->from(TABLE_CUSTOMER)->alias('t1')
+            $customers = $this->dao->select('t1.*')->from(TABLE_CUSTOMER)->alias('t1')
                 ->leftJoin(TABLE_NEXTCONTACT)->alias('t2')->on('t1.id=t2.objectID')
                 ->where('t1.deleted')->eq(0)
                 ->andWhere('t2.status')->eq('wait')
-                ->andWhere('t2.objectType')->in('customer, provider')
+                ->andWhere('t2.objectType')->in('customer')
                 ->beginIF($relation == 'client')->andWhere('t1.relation')->ne('provider')->fi()
                 ->beginIF($relation == 'provider')->andWhere('t1.relation')->ne('client')->fi()
                 ->beginIF($mode == 'past')->andWhere('t2.date')->lt(helper::today())->fi()
@@ -110,8 +110,24 @@ class customerModel extends model
                 ->andWhere('t2.date')->ne('0000-00-00')
                 ->andWhere('t1.id')->in($customerIdList)
                 ->orderBy($orderBy)
-                ->page($pager)
+                ->page($pager, 't1.id')
                 ->fetchAll('id');
+
+            $nextContacts = $this->dao->select('objectID, MIN(date) AS date')->from(TABLE_NEXTCONTACT)
+                ->where('status')->eq('wait')
+                ->andWhere('objectType')->eq('customer')
+                ->andWhere('objectID')->in(array_keys($customers))
+                ->beginIF($mode == 'past')->andWhere('date')->lt(helper::today())->fi()
+                ->beginIF($mode == 'today')->andWhere('date')->eq(helper::today())->fi()
+                ->beginIF($mode == 'tomorrow')->andWhere('date')->eq(formattime(date::tomorrow(), DT_DATE1))->fi()
+                ->beginIF($mode == 'thisweek')->andWhere('date')->between($thisWeek['begin'], $thisWeek['end'])->fi()
+                ->beginIF($mode == 'thismonth')->andWhere('date')->between($thisMonth['begin'], $thisMonth['end'])->fi()
+                ->andWhere('date')->ne('0000-00-00')
+                ->fetchPairs();
+
+            foreach($customers as $id => $customer) $customer->nextDate = zget($nextContacts, $id, $customer->nextDate);
+
+            return $customers;
         }
 
         return $this->dao->select('*')->from(TABLE_CUSTOMER)

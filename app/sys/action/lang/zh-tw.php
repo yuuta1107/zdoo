@@ -265,6 +265,7 @@ $lang->action->record->editedDate   = '編輯日期';
 $lang->action->record->uploadFile   = '上傳附件:';
 $lang->action->record->finishDenied = '只有管理員、下次聯繫人和創建者可以完成。';
 $lang->action->record->deleteDenied = '只有管理員和創建者可以刪除。';
+$lang->action->record->deleteFail   = '溝通已經完成，不能刪除。';
 
 $lang->action->record->statusList['wait'] = '待聯繫';
 $lang->action->record->statusList['done'] = '聯繫完成';
