@@ -177,7 +177,7 @@ class contactModel extends model
             if($this->session->contactQuery == false) $this->session->set('contactQuery', ' 1 = 1');
             $contactQuery = $this->loadModel('search', 'sys')->replaceDynamic($this->session->contactQuery);
 
-            if(strpos(',past,today,tomorrow,thisweek,thismonth,', ",{$mode},") !== false)
+            if(strpos(',past,today,tomorrow,thisweek,thismonth,', ",{$mode},") !== false or ($mode == 'bysearch' && strpos($contactQuery, '`nextDate`') !== false))
             {
                 $contacts = $this->dao->select('t1.*, t2.customer, t2.maker, t2.title, t2.dept, t2.join, t2.left')->from(TABLE_CONTACT)->alias('t1')
                     ->leftJoin(TABLE_RESUME)->alias('t2')->on('t1.resume = t2.id')
@@ -194,25 +194,30 @@ class contactModel extends model
                     ->beginIF($mode == 'tomorrow')->andWhere('t3.date')->eq(formattime(date::tomorrow(), DT_DATE1))->fi()
                     ->beginIF($mode == 'thisweek')->andWhere('t3.date')->between($thisWeek['begin'], $thisWeek['end'])->fi()
                     ->beginIF($mode == 'thismonth')->andWhere('t3.date')->between($thisMonth['begin'], $thisMonth['end'])->fi()
+                    ->beginIF($mode == 'bysearch')->andWhere(str_replace('`nextDate`', 't3.date', $contactQuery))->fi()
                     ->orderBy($orderBy)
                     ->page($pager, 't1.id')
                     ->fetchAll('id');
 
+                $this->session->set('contactQueryCondition', $this->dao->get());
+
                 $nextContacts = $this->dao->select('objectID, MIN(date) AS date')->from(TABLE_NEXTCONTACT)
                     ->where('status')->eq('wait')
                     ->andWhere('objectType')->eq('contact')
-                    ->andWhere('objectID')->in(array_keys($orders))
+                    ->andWhere('objectID')->in(array_keys($contacts))
                     ->beginIF($mode == 'past')->andWhere('date')->lt(helper::today())->fi()
                     ->beginIF($mode == 'today')->andWhere('date')->eq(helper::today())->fi()
                     ->beginIF($mode == 'tomorrow')->andWhere('date')->eq(formattime(date::tomorrow(), DT_DATE1))->fi()
                     ->beginIF($mode == 'thisweek')->andWhere('date')->between($thisWeek['begin'], $thisWeek['end'])->fi()
                     ->beginIF($mode == 'thismonth')->andWhere('date')->between($thisMonth['begin'], $thisMonth['end'])->fi()
                     ->andWhere('date')->ne('0000-00-00')
+                    ->groupBy('objectID')
                     ->fetchPairs();
 
                 foreach($contacts as $id => $contact) $contact->nextDate = zget($nextContacts, $id, $contact->nextDate);
             }
-            else
+
+            if(strpos(',all,assignedTo,public,', ",{$mode},") !== false or ($mode == 'bysearch' && empty($contacts)))
             {
                 $contacts = $this->dao->select('t1.*, t2.customer, t2.maker, t2.title, t2.dept, t2.join, t2.left')->from(TABLE_CONTACT)->alias('t1')
                     ->leftJoin(TABLE_RESUME)->alias('t2')->on('t1.resume = t2.id')
@@ -227,6 +232,8 @@ class contactModel extends model
                     ->orderBy($orderBy)
                     ->page($pager)
                     ->fetchAll('id');
+
+                $this->session->set('contactQueryCondition', $this->dao->get());
             }
 
             foreach($resumes as $contactID => $resume)

@@ -88,7 +88,7 @@ class orderModel extends model
         if(strpos($orderBy, 'status') !== false) $orderBy .= ', closedReason';
         if(strpos($orderBy, 'id') === false) $orderBy .= ', id_desc';
 
-        if(strpos(',past,today,tomorrow,thisweek,thismonth,', ",{$mode},") !== false)
+        if(strpos(',past,today,tomorrow,thisweek,thismonth,', ",{$mode},") !== false or ($mode == 'bysearch' && strpos($orderQuery, '`nextDate`') !== false))
         {
             $orders = $this->dao->select('o.*, c.name AS customerName, c.level AS level')->from(TABLE_ORDER)->alias('o')
                 ->leftJoin(TABLE_CUSTOMER)->alias('c')->on('o.customer=c.id')
@@ -108,11 +108,14 @@ class orderModel extends model
                 ->beginIF($mode == 'tomorrow')->andWhere('n.date')->eq(formattime(date::tomorrow(), DT_DATE1))->fi()
                 ->beginIF($mode == 'thisweek')->andWhere('n.date')->between($thisWeek['begin'], $thisWeek['end'])->fi()
                 ->beginIF($mode == 'thismonth')->andWhere('n.date')->between($thisMonth['begin'], $thisMonth['end'])->fi()
+                ->beginIF($mode == 'bysearch')->andWhere(str_replace('`nextDate`', 'n.date', $orderQuery))->fi()
                 ->andWhere('o.customer')->in($customerIdList)
                 ->beginIF(strpos($orderBy, 'date') !== false)->orderBy("n.$orderBy")->fi()
                 ->beginIF(strpos($orderBy, 'date') === false)->orderBy("o.$orderBy")->fi()
                 ->page($pager, 'o.id')
                 ->fetchAll('id');
+
+            if($needQueryCondition) $this->session->set('orderQueryCondition', $this->dao->get());
 
             $nextContacts = $this->dao->select('objectID, MIN(date) AS date')->from(TABLE_NEXTCONTACT)
                 ->where('status')->eq('wait')
@@ -124,11 +127,13 @@ class orderModel extends model
                 ->beginIF($mode == 'thisweek')->andWhere('date')->between($thisWeek['begin'], $thisWeek['end'])->fi()
                 ->beginIF($mode == 'thismonth')->andWhere('date')->between($thisMonth['begin'], $thisMonth['end'])->fi()
                 ->andWhere('date')->ne('0000-00-00')
+                ->groupBy('objectID')
                 ->fetchPairs();
 
             foreach($orders as $id => $order) $order->nextDate = zget($nextContacts, $id, $oder->nextDate);
         }
-        else
+
+        if(strpos(',all,public,assignedTo,createdBy,signedBy,query,', ",{$mode},") !== false or ($mode == 'bysearch' && empty($orders)))
         {
             $orders = $this->dao->select('o.*, c.name as customerName, c.level as level')->from(TABLE_ORDER)->alias('o')
                 ->leftJoin(TABLE_CUSTOMER)->alias('c')->on("o.customer=c.id")
@@ -150,9 +155,9 @@ class orderModel extends model
                 ->orderBy("o.$orderBy")
                 ->page($pager)
                 ->fetchAll('id');
-        }
 
-        if($needQueryCondition) $this->session->set('orderQueryCondition', $this->dao->get());
+            if($needQueryCondition) $this->session->set('orderQueryCondition', $this->dao->get());
+        }
 
         $products = $this->loadModel('product')->getPairs();
 
