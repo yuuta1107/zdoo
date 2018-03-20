@@ -9,9 +9,6 @@
  * @version     $Id$
  * @link        http://www.ranzhi.org
  */
-$config->action->require = new stdclass();
-$config->action->require->createrecord = 'contact,comment';
-
 $config->action->objectNameFields['announce']  = 'title';
 $config->action->objectNameFields['article']   = 'title';
 $config->action->objectNameFields['attend']    = 'date';

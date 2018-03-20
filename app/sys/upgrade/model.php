@@ -150,6 +150,9 @@ class upgradeModel extends model
             case '4_6': 
                 $this->execSQL($this->getUpgradeFile('4.6'));
                 $this->upgradeProductLine();
+            case '4_6_1':
+                $this->execSQL($this->getUpgradeFile('4.6'));
+                $this->processNextContact();
 
             default: if(!$this->isError()) $this->loadModel('setting')->updateVersion($this->config->version);
         }
@@ -201,6 +204,7 @@ class upgradeModel extends model
             case '4_4'     : $confirmContent .= file_get_contents($this->getUpgradeFile('4.4'));
             case '4_5'     : $confirmContent .= file_get_contents($this->getUpgradeFile('4.5'));
             case '4_6'     : $confirmContent .= file_get_contents($this->getUpgradeFile('4.6'));
+            case '4_6_1'   : $confirmContent .= file_get_contents($this->getUpgradeFile('4.6.1'));
         }
         return $confirmContent;
     }
@@ -1433,5 +1437,115 @@ class upgradeModel extends model
         if(!$hasCategory) $this->dbh->exec("ALTER TABLE " . TABLE_PRODUCT  . " CHANGE `line` `category` mediumint(8) UNSIGNED NOT NULL DEFAULT 0 AFTER `id`");
 
         return true;
+    }
+
+    /**
+     * Process next contact;
+     *
+     * @access public
+     * @return bool
+     */
+    public function processNextContact()
+    {
+        /* Process order's next contact. */
+        $orders = $this->dao->select('id, nextDate')->from(TABLE_ORDER)
+            ->where('deleted')->eq('0')
+            ->andWhere('nextDate')->ge(date('Y-m-d'))
+            ->fetchPairs();
+
+        $actions = $this->dao->select('id, objectID, contact, actor, date')->from(TABLE_ACTION)
+            ->where('objectType')->eq('order')
+            ->andWhere('objectID')->in(array_keys($orders))
+            ->andWhere('action')->eq('record')
+            ->andWhere('contact')->ne(0)
+            ->orderBy('id_desc')
+            ->fetchGroup('objectID');
+
+        $nextContact = new stdclass();
+        $nextContact->objectType = 'order';
+        foreach($orders as $order => $nextDate)
+        {
+            if(!isset($actions[$order])) continue;
+
+            $action = reset($actions[$order]);
+
+            $nextContact->objectID    = $order;
+            $nextContact->action      = $action->id;
+            $nextContact->contact     = $action->contact;
+            $nextContact->account     = $action->actor;
+            $nextContact->date        = $nextDate;
+            $nextContact->createdBy   = $action->actor;
+            $nextContact->createdDate = $action->date;
+
+            $this->dao->insert(TABLE_NEXTCONTACT)->data($nextContact)->autoCheck()->exec();
+        }
+
+        /* Process customer's next contact. */
+        $customers = $this->dao->select('id, nextDate')->from(TABLE_CUSTOMER)
+            ->where('deleted')->eq('0')
+            ->andWhere('nextDate')->ge(date('Y-m-d'))
+            ->fetchPairs();
+
+        $actions = $this->dao->select('id, objectID, contact, actor, date')->from(TABLE_ACTION)
+            ->where('objectType')->eq('customer')
+            ->andWhere('objectID')->in(array_keys($customers))
+            ->andWhere('action')->eq('record')
+            ->andWhere('contact')->ne(0)
+            ->orderBy('id_desc')
+            ->fetchGroup('objectID');
+
+        $nextContact = new stdclass();
+        $nextContact->objectType = 'customer';
+        foreach($customers as $customer => $nextDate)
+        {
+            if(!isset($actions[$customer])) continue;
+
+            $action = reset($actions[$customer]);
+
+            $nextContact->objectID    = $customer;
+            $nextContact->action      = $action->id;
+            $nextContact->contact     = $action->contact;
+            $nextContact->account     = $action->actor;
+            $nextContact->date        = $nextDate;
+            $nextContact->createdBy   = $action->actor;
+            $nextContact->createdDate = $action->date;
+
+            $this->dao->insert(TABLE_NEXTCONTACT)->data($nextContact)->autoCheck()->exec();
+        }
+
+        /* Process contact's next contact. */
+        $contacts = $this->dao->select('id, nextDate')->from(TABLE_CONTACT)
+            ->where('deleted')->eq('0')
+            ->andWhere('nextDate')->ge(date('Y-m-d'))
+            ->fetchPairs();
+
+        $actions = $this->dao->select('id, objectID, contact, actor, date')->from(TABLE_ACTION)
+            ->where('objectType')->eq('contact')
+            ->andWhere('objectID')->in(array_keys($contacts))
+            ->andWhere('action')->eq('record')
+            ->andWhere('contact')->ne(0)
+            ->orderBy('id_desc')
+            ->fetchGroup('objectID');
+
+        $nextContact = new stdclass();
+        $nextContact->objectType = 'contact';
+        foreach($contacts as $contact => $nextDate)
+        {
+            if(!isset($actions[$contact])) continue;
+
+            $action = reset($actions[$contact]);
+
+            $nextContact->objectID    = $contact;
+            $nextContact->action      = $action->id;
+            $nextContact->contact     = $action->contact;
+            $nextContact->account     = $action->actor;
+            $nextContact->date        = $nextDate;
+            $nextContact->createdBy   = $action->actor;
+            $nextContact->createdDate = $action->date;
+
+            $this->dao->insert(TABLE_NEXTCONTACT)->data($nextContact)->autoCheck()->exec();
+        }
+
+        return !dao::isError();
     }
 }

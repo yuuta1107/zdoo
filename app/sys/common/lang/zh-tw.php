@@ -178,6 +178,7 @@ EOT;
 /* Items for javascript. */
 $lang->js = new stdclass();
 $lang->js->confirmDelete         = '您確定要執行刪除操作嗎？';
+$lang->js->confirmFinish         = '您確定要執行完成操作嗎？';
 $lang->js->deleteing             = '刪除中';
 $lang->js->doing                 = '處理中';
 $lang->js->timeout               = '網絡超時,請重試';

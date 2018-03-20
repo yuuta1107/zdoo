@@ -23,12 +23,14 @@ class action extends control
      */
     public function history($objectType, $objectID, $action = '', $from = 'view')
     {
-        $this->view->actions    = $this->action->getList($objectType, $objectID, $action);
-        $this->view->objectType = $objectType;
-        $this->view->objectID   = $objectID;
-        $this->view->users      = $this->loadModel('user')->getPairs();
-        $this->view->from       = $from;
-        $this->view->behavior   = $action;
+        $this->view->actions      = $this->action->getList($objectType, $objectID, $action);
+        $this->view->nextContacts = $this->action->getNextContacts($objectType, $objectID);
+        $this->view->objectType   = $objectType;
+        $this->view->objectID     = $objectID;
+        $this->view->users        = $this->loadModel('user')->getPairs();
+        $this->view->contacts     = $this->loadModel('contact')->getPairs();
+        $this->view->from         = $from;
+        $this->view->behavior     = $action;
         $this->display();
     }
 
@@ -122,7 +124,9 @@ class action extends control
         $this->view->customer       = $customer;
         $this->view->history        = $history;
         $this->view->contacts       = $contacts;
+        $this->view->contactPairs   = $contactPairs;
         $this->view->pinyinContacts = commonModel::convert2Pinyin($contactPairs);
+        $this->view->users          = $this->loadModel('user')->getPairs('noclosed, nodeleted, noempty, noforbidden');
 
         $this->display();
     }
@@ -251,5 +255,46 @@ class action extends control
     {
         $this->action->read($actionID, $type);
         die('success');
+    }
+
+    /**
+     * Finish a next contact. 
+     * 
+     * @param  int    $id 
+     * @access public
+     * @return void
+     */
+    public function finishNextContact($id)
+    {
+        $user = $this->app->user->account;
+
+        $nextContact = $this->action->getNextContactById($id);
+        if($nextContact->status != 'wait') $this->send(array('result' => 'success'));
+        if($this->app->user->admin != 'super' && $nextContact->account != $user && $nextContact->createdBy != $user) $this->send(array('result' => 'fail', 'message' => $this->lang->admin->record->finishDenied));
+
+        $nextContact->status     = 'done';
+        $nextContact->editedBy   = $user;
+        $nextContact->editedDate = helper::now();
+        $this->dao->update(TABLE_NEXTCONTACT)->data($nextContact)->where('id')->eq($id)->exec();
+
+        $this->send(array('result' => 'success'));
+    }
+
+    /**
+     * Delete a next contact. 
+     * 
+     * @param  int    $id 
+     * @access public
+     * @return void
+     */
+    public function deleteNextContact($id)
+    {
+        $nextContact = $this->action->getNextContactById($id);
+        if($nextContact->status != 'wait') $this->send(array('result' => 'fail', 'message' => $this->lang->action->record->deleteNextContactFail));
+        if($this->app->user->admin != 'super' && $nextContact->createdBy != $user) $this->send(array('result' => 'fail', 'message' => $this->lang->admin->record->deleteDenied));
+
+        $this->dao->delete()->from(TABLE_NEXTCONTACT)->where('id')->eq($id)->exec();
+
+        $this->send(array('result' => 'success'));
     }
 }

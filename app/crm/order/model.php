@@ -88,29 +88,55 @@ class orderModel extends model
         if(strpos($orderBy, 'status') !== false) $orderBy .= ', closedReason';
         if(strpos($orderBy, 'id') === false) $orderBy .= ', id_desc';
 
-        $orders = $this->dao->select('o.*, c.name as customerName, c.level as level')->from(TABLE_ORDER)->alias('o')
-            ->leftJoin(TABLE_CUSTOMER)->alias('c')->on("o.customer=c.id")
-            ->where('o.deleted')->eq(0)
-            ->beginIF($owner == 'my' and strpos('assignedTo,createdBy,signedBy', $mode) === false)
-            ->andWhere('o.assignedTo', true)->eq($this->app->user->account)
-            ->orWhere('o.createdBy')->eq($this->app->user->account)
-            ->orWhere('o.editedBy')->eq($this->app->user->account)
-            ->orWhere('o.signedBy')->eq($this->app->user->account)
-            ->markRight(1)
-            ->fi()
-            ->beginIF($mode == 'past')->andWhere('o.nextDate')->ne('0000-00-00')->andWhere('o.nextDate')->lt(helper::today())->andWhere('o.status')->ne('closed')->fi()
-            ->beginIF($mode == 'today')->andWhere('o.nextDate')->eq(helper::today())->fi()
-            ->beginIF($mode == 'tomorrow')->andWhere('o.nextDate')->eq(formattime(date::tomorrow(), DT_DATE1))->fi()
-            ->beginIF($mode == 'thisweek')->andWhere('o.nextDate')->between($thisWeek['begin'], $thisWeek['end'])->fi()
-            ->beginIF($mode == 'thismonth')->andWhere('o.nextDate')->between($thisMonth['begin'], $thisMonth['end'])->fi()
-            ->beginIF($mode == 'public')->andWhere('public')->eq('1')->fi()
-            ->beginIF($mode == 'assignedTo')->andWhere('o.assignedTo')->eq($this->app->user->account)->fi()
-            ->beginIF($mode == 'createdBy')->andWhere('o.createdBy')->eq($this->app->user->account)->fi()
-            ->beginIF($mode == 'signedBy')->andWhere('o.signedBy')->eq($this->app->user->account)->fi()
-            ->beginIF($mode == 'query')->andWhere($param)->fi()
-            ->beginIF($mode == 'bysearch')->andWhere($orderQuery)->fi()
-            ->andWhere('o.customer')->in($customerIdList)
-            ->orderBy("o.$orderBy")->page($pager)->fetchAll('id');
+        if(strpos(',past,today,tomorrow,thisweek,thismonth,', ",{$mode},") !== false)
+        {
+            $orders = $this->dao->select('o.*, c.name AS customerName, c.level AS level, n.date AS nextDate')->from(TABLE_ORDER)->alias('o')
+                ->leftJoin(TABLE_CUSTOMER)->alias('c')->on('o.customer=c.id')
+                ->leftJoin(TABLE_NEXTCONTACT)->alias('n')->on('o.id=n.objectID')
+                ->where('o.deleted')->eq(0)
+                ->andWhere('n.status')->eq('wait')
+                ->andWhere('n.objectType')->eq('order')
+                ->beginIF($owner == 'my' and strpos('assignedTo,createdBy,signedBy', $mode) === false)
+                ->andWhere('o.assignedTo', true)->eq($this->app->user->account)
+                ->orWhere('o.createdBy')->eq($this->app->user->account)
+                ->orWhere('o.editedBy')->eq($this->app->user->account)
+                ->orWhere('o.signedBy')->eq($this->app->user->account)
+                ->markRight(1)
+                ->fi()
+                ->beginIF($mode == 'past')->andWhere('n.date')->ne('0000-00-00')->andWhere('n.date')->lt(helper::today())->andWhere('o.status')->ne('closed')->fi()
+                ->beginIF($mode == 'today')->andWhere('n.date')->eq(helper::today())->fi()
+                ->beginIF($mode == 'tomorrow')->andWhere('n.date')->eq(formattime(date::tomorrow(), DT_DATE1))->fi()
+                ->beginIF($mode == 'thisweek')->andWhere('n.date')->between($thisWeek['begin'], $thisWeek['end'])->fi()
+                ->beginIF($mode == 'thismonth')->andWhere('n.date')->between($thisMonth['begin'], $thisMonth['end'])->fi()
+                ->andWhere('o.customer')->in($customerIdList)
+                ->beginIF(strpos($orderBy, 'date') !== false)->orderBy("n.$orderBy")->fi()
+                ->beginIF(strpos($orderBy, 'date') === false)->orderBy("o.$orderBy")->fi()
+                ->page($pager)
+                ->fetchAll('id');
+        }
+        else
+        {
+            $orders = $this->dao->select('o.*, c.name as customerName, c.level as level')->from(TABLE_ORDER)->alias('o')
+                ->leftJoin(TABLE_CUSTOMER)->alias('c')->on("o.customer=c.id")
+                ->where('o.deleted')->eq(0)
+                ->beginIF($owner == 'my' and strpos('assignedTo,createdBy,signedBy', $mode) === false)
+                ->andWhere('o.assignedTo', true)->eq($this->app->user->account)
+                ->orWhere('o.createdBy')->eq($this->app->user->account)
+                ->orWhere('o.editedBy')->eq($this->app->user->account)
+                ->orWhere('o.signedBy')->eq($this->app->user->account)
+                ->markRight(1)
+                ->fi()
+                ->beginIF($mode == 'public')->andWhere('public')->eq('1')->fi()
+                ->beginIF($mode == 'assignedTo')->andWhere('o.assignedTo')->eq($this->app->user->account)->fi()
+                ->beginIF($mode == 'createdBy')->andWhere('o.createdBy')->eq($this->app->user->account)->fi()
+                ->beginIF($mode == 'signedBy')->andWhere('o.signedBy')->eq($this->app->user->account)->fi()
+                ->beginIF($mode == 'query')->andWhere($param)->fi()
+                ->beginIF($mode == 'bysearch')->andWhere($orderQuery)->fi()
+                ->andWhere('o.customer')->in($customerIdList)
+                ->orderBy("o.$orderBy")
+                ->page($pager)
+                ->fetchAll('id');
+        }
 
         if($needQueryCondition) $this->session->set('orderQueryCondition', $this->dao->get());
 

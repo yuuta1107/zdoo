@@ -86,6 +86,7 @@ if(!defined('TABLE_PLAN'))          define('TABLE_PLAN',          '`' . $config-
 if(!defined('TABLE_DELIVERY'))      define('TABLE_DELIVERY',      '`' . $config->db->prefix . 'crm_delivery`');
 if(!defined('TABLE_SALESGROUP'))    define('TABLE_SALESGROUP',    '`' . $config->db->prefix . 'crm_salesgroup`');
 if(!defined('TABLE_SALESPRIV'))     define('TABLE_SALESPRIV',     '`' . $config->db->prefix . 'crm_salespriv`');
+if(!defined('TABLE_NEXTCONTACT'))   define('TABLE_NEXTCONTACT',   '`' . $config->db->prefix . 'crm_nextcontact`');
 
 /* Tables for oa. */
 if(!defined('TABLE_TODO'))       define('TABLE_TODO',       '`' . $config->db->prefix . 'oa_todo`');

@@ -93,6 +93,27 @@ class customerModel extends model
 
         if(strpos($orderBy, 'id') === false) $orderBy .= ', id_desc';
 
+        if(strpos(',past,today,tomorrow,thisweek,thismonth,', ",{$mode},") !== false)
+        {
+            return $this->dao->select('t1.*, t2.date AS nextDate')->from(TABLE_CUSTOMER)->alias('t1')
+                ->leftJoin(TABLE_NEXTCONTACT)->alias('t2')->on('t1.id=t2.objectID')
+                ->where('t1.deleted')->eq(0)
+                ->andWhere('t2.status')->eq('wait')
+                ->andWhere('t2.objectType')->in('customer, provider')
+                ->beginIF($relation == 'client')->andWhere('t1.relation')->ne('provider')->fi()
+                ->beginIF($relation == 'provider')->andWhere('t1.relation')->ne('client')->fi()
+                ->beginIF($mode == 'past')->andWhere('t2.date')->lt(helper::today())->fi()
+                ->beginIF($mode == 'today')->andWhere('t2.date')->eq(helper::today())->fi()
+                ->beginIF($mode == 'tomorrow')->andWhere('t2.date')->eq(formattime(date::tomorrow(), DT_DATE1))->fi()
+                ->beginIF($mode == 'thisweek')->andWhere('t2.date')->between($thisWeek['begin'], $thisWeek['end'])->fi()
+                ->beginIF($mode == 'thismonth')->andWhere('t2.date')->between($thisMonth['begin'], $thisMonth['end'])->fi()
+                ->andWhere('t2.date')->ne('0000-00-00')
+                ->andWhere('t1.id')->in($customerIdList)
+                ->orderBy($orderBy)
+                ->page($pager)
+                ->fetchAll('id');
+        }
+
         return $this->dao->select('*')->from(TABLE_CUSTOMER)
             ->where('deleted')->eq(0)
             ->beginIF($relation == 'client')->andWhere('relation')->ne('provider')->fi()
@@ -100,16 +121,10 @@ class customerModel extends model
             ->beginIF($mode == 'field')->andWhere('mode')->eq($param)->fi()
             ->beginIF($mode == 'area')->andWhere('area')->eq($param)->fi()
             ->beginIF($mode == 'industry')->andWhere('industry')->eq($param)->fi()
-            ->beginIF($mode == 'past')->andWhere('nextDate')->lt(helper::today())->fi()
-            ->beginIF($mode == 'today')->andWhere('nextDate')->eq(helper::today())->fi()
-            ->beginIF($mode == 'tomorrow')->andWhere('nextDate')->eq(formattime(date::tomorrow(), DT_DATE1))->fi()
-            ->beginIF($mode == 'thisweek')->andWhere('nextDate')->between($thisWeek['begin'], $thisWeek['end'])->fi()
-            ->beginIF($mode == 'thismonth')->andWhere('nextDate')->between($thisMonth['begin'], $thisMonth['end'])->fi()
             ->beginIF($mode == 'public')->andWhere('public')->eq('1')->fi()
             ->beginIF($mode == 'assignedTo')->andWhere('assignedTo')->eq($this->app->user->account)->fi()
             ->beginIF($mode == 'query')->andWhere($param)->fi()
             ->beginIF($mode == 'bysearch')->andWhere($customerQuery)->fi()
-            ->beginIF(strpos('all, bysearch, public, assignedTo, query, area, industry', $mode) === false)->andWhere('nextDate')->ne('0000-00-00')->fi()
             ->andWhere('id')->in($customerIdList)
             ->orderBy($orderBy)
             ->page($pager)

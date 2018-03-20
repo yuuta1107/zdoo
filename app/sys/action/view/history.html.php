@@ -17,6 +17,60 @@
 .wordwrap {word-wrap:break-word;word-break:break-all;}
 </style>
 
+<?php if(strpos(',order,contract,customer,provider,contact,leads,', ",{$objectType},") !== false && $nextContacts):?>
+<div class='panel panel-nextContact'>
+  <table class='table table-bordered'>
+    <thead>
+      <tr class='text-center'>
+        <th class='w-100px'><?php echo $lang->action->record->nextDate;?></th>
+        <th class='w-90px'><?php echo $lang->action->record->nextContact;?></th>
+        <th class='w-80px'><?php echo $lang->action->record->contactedBy;?></th>
+        <th><?php echo $lang->action->record->desc;?></th>
+        <th class='w-80px'><?php echo $lang->action->record->status;?></th>
+        <th class='w-80px'><?php echo $lang->action->record->createdBy;?></th>
+        <th class='w-90px'><?php echo $lang->action->record->createdDate;?></th>
+        <th class='w-80px'><?php echo $lang->actions;?></th>
+      </tr>
+    </thead>
+    <?php $user = $this->app->user->account;?>
+    <?php foreach($nextContacts as $contact):?>
+    <tr class='text-center'>
+      <td><?php echo $contact->date;?></td>
+      <td><?php echo zget($contacts, $contact->contact, '');?></td>
+      <td><?php echo zget($users, $contact->account);?></td>
+      <td class='text-left' title='<?php echo $contact->desc;?>'><?php echo $contact->desc;?></td>
+      <td><?php echo zget($lang->action->record->statusList, $contact->status);?></td>
+      <td><?php echo zget($users, $contact->createdBy);?></td>
+      <td><?php echo formatTime($contact->createdDate, DT_DATE1);?></td>
+      <td>
+        <?php 
+        if($contact->status == 'wait') 
+        {
+            if($this->app->user->admin == 'super' or $contact->account == $user or $contact->createdBy == $user)
+            {
+                echo html::a(helper::createLink('action', 'finishNextContact', "id={$contact->id}"), $lang->finish, "class='finishNextContact'");
+            }
+            else
+            {
+                echo html::a('javascript:;', $lang->finish, "class='disabled' disabled='disabled'");
+            }
+            if($this->app->user->admin == 'super' or $contact->createdBy == $user)
+            {
+                echo html::a(helper::createLink('action', 'deleteNextContact', "id={$contact->id}"), $lang->delete, "class='deleter'");
+            }
+            else
+            {
+                echo html::a('javascript:;', $lang->delete, "class='disabled' disabled='disabled'");
+            }
+        }
+        ?>
+      </td>
+    </tr>
+    <?php endforeach;?>
+  </table>
+</div>
+<?php endif;?>
+
 <div class='panel panel-history'>
   <div class='panel-heading'>
     <strong><?php echo $lang->history?></strong>

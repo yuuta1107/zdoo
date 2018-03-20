@@ -23,8 +23,9 @@
   <table class='table table-form table-condensed'>
     <?php if($objectType != 'contact'):?>
     <tr>
-      <th class='w-80px'><?php echo $lang->action->record->contact;?></th>
+      <th class='w-90px'><?php echo $lang->action->record->contact;?></th>
       <td>
+        <div class='required required-wrapper'></div>
         <div class='row'>
           <div class='col-sm-7'>
             <div class='input-group'>
@@ -89,7 +90,14 @@
     </tr>
     <?php endif;?>
     <tr>
-      <th class='w-70px'><?php echo $lang->action->record->nextDate;?></th>
+      <th class='w-90px'><?php echo $lang->action->record->comment;?></th>
+      <td>
+        <div class='required required-wrapper'></div>
+        <?php echo html::textarea('comment', '', "class='form-control' rows='3'");?>
+      </td>
+    </tr>
+    <tr>
+      <th><?php echo $lang->action->record->nextDate;?></th>
       <td>
         <div class='row'>
           <div class='col-sm-5'><?php echo html::input('nextDate', '', "class='form-control form-date'");?></div>
@@ -98,8 +106,26 @@
       </td>
     </tr>
     <tr>
-      <th><?php echo $lang->action->record->comment;?></th>
-      <td><?php echo html::textarea('comment', '', "class='form-control' rows='3'");?></td>
+      <th><?php echo $lang->action->record->desc;?></th>
+      <td><?php echo html::textarea('desc', '', "rows='3' class='form-control'");?></td>
+    </tr>
+    <tr>
+      <th><?php echo $lang->action->record->contactedBy;?></th>
+      <td>
+        <?php if($objectType == 'contact' or $objectType == 'leads'):?>
+        <?php echo html::select('contactedBy', $users, $this->app->user->account, "class='form-control chosen'");?>
+        <?php else:?>
+        <div class='row'>
+          <div class='col-sm-7'><?php echo html::select('contactedBy', $users, $this->app->user->account, "class='form-control chosen'");?></div>
+          <div class='col-sm-5'>
+            <div class='input-group'>
+              <span class='input-group-addon'><?php echo $lang->action->record->nextContact;?></span>
+              <?php echo html::select('nextContact', array('ditto' => $lang->action->record->sameContact) + $contactPairs, '', "class='form-control chosen'");?>
+            </div>
+          </div>
+        </div>
+        <?php endif;?>
+      </td>
     </tr>
     <?php if(commonModel::hasPriv('file', 'upload')):?>
     <tr>
