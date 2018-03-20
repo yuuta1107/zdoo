@@ -94,7 +94,7 @@ class customerModel extends model
         if(strpos($orderBy, 'id') === false) $orderBy .= ', id_desc';
 
         $customers = array();
-        /* If the query continas the field `nextDate` search from the table crm_nextcontact. */
+        /* If the query contains the field `nextDate` search from the table crm_nextcontact. */
         if(strpos(',past,today,tomorrow,thisweek,thismonth,', ",{$mode},") !== false or ($mode == 'bysearch' && strpos($customerQuery, '`nextDate`') !== false))
         {
             $customers = $this->dao->select('t1.*')->from(TABLE_CUSTOMER)->alias('t1')
@@ -135,7 +135,7 @@ class customerModel extends model
             foreach($customers as $id => $customer) $customer->nextDate = zget($nextContacts, $id, $customer->nextDate);
         }
 
-        /* If search nothing search from the table crm_customer. */
+        /* If search nothing from the table crm_nextcontact then search from the table crm_customer. */
         if(strpos(',all,field,area,industry,public,assignedTo,query,', ",{$mode},") !== false or ($mode == 'bysearch' && empty($customers)))
         {
             $customers = $this->dao->select('*')->from(TABLE_CUSTOMER)

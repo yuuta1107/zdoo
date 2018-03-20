@@ -111,26 +111,65 @@ class contactModel extends model
      */
     public function getList($customer = 0, $relation = 'client', $mode = '', $status = 'normal', $origin = '', $orderBy = 't2.maker_desc', $pager = null)
     {
-        $customerIdList = array();
-        if($relation != 'provider' and $status == 'normal')
-        {
-            $customerIdList = $this->loadModel('customer')->getCustomersSawByMe();
-            if(empty($customerIdList)) return array();
-        }
-
-        $this->app->loadClass('date', $static = true);
-        $thisMonth = date::getThisMonth();
-        $thisWeek  = date::getThisWeek();
-
+        $contacts = array();
         if($status != 'normal')
         {
-            if($orderBy == 'maker_desc') $orderBy = 'id_desc';
-            if(strpos($orderBy, 'id') === false) $orderBy .= ', id_desc';
+            $contacts = $this->getLeadsList($mode, $status, $origin, $orderBy, $pager);
+        }
+        else
+        {
+            $contacts = $this->getContactList($customer, $relation, $mode, $status, $origin, $orderBy, $pager);
+        }
 
-            if($this->session->leadsQuery == false) $this->session->set('leadsQuery', ' 1 = 1');
-            $leadsQuery = $this->loadModel('search', 'sys')->replaceDynamic($this->session->leadsQuery);
+        foreach($contacts as $contact) $this->formatContact($contact);
 
-            $contacts = $this->dao->select('*')->from(TABLE_CONTACT)
+        return $contacts;
+    }
+
+    /**
+     * Get leads list. 
+     * 
+     * @param  string $mode 
+     * @param  string $status 
+     * @param  string $origin 
+     * @param  string $orderBy 
+     * @param  object $pager 
+     * @access public
+     * @return array
+     */
+    public function getLeadsList($mode, $status, $origin, $orderBy, $pager)
+    {
+        $leads = array();
+        if($orderBy == 'maker_desc') $orderBy = 'id_desc';
+        if(strpos($orderBy, 'id') === false) $orderBy .= ', id_desc';
+
+        if($this->session->leadsQuery == false) $this->session->set('leadsQuery', ' 1 = 1');
+        $leadsQuery = $this->loadModel('search', 'sys')->replaceDynamic($this->session->leadsQuery);
+
+        if($mode == 'bysearch' && strpos($leadsQuery, '`nextDate`') !== false)
+        {
+            $leads = $this->dao->select('t1.*')->from(TABLE_CONTACT)->alias('t1')
+                ->leftJoin(TABLE_NEXTCONTACT)->alias('t2')->on('t1.id=t2.objectID')
+                ->where('t1.deleted')->eq(0)
+                ->andWhere('t2.status')->eq('wait')
+                ->andWhere('t2.objectType')->eq('contact')
+                ->beginIF($origin)->andWhere('origin')->like("%,$origin,%")->fi()
+                ->beginIF($mode == 'bysearch')->andWhere(str_replace('`nextDate`', 't2.date', $leadsQuery))->andWhere('origin')->ne('')->fi() // Make sure won't search the contacts which aren't transformed from leads.
+
+                ->beginIF($this->app->user->admin != 'super')
+                ->andWhere('assignedTo', true)->eq($this->app->user->account)
+                ->orWhere('status')->eq('ignore')
+                ->markRight(1)
+                ->fi()
+
+                ->orderBy($orderBy)
+                ->page($pager)
+                ->fetchAll('id');
+        }
+
+        if(empty($leads))
+        {
+            $leads = $this->dao->select('*')->from(TABLE_CONTACT)
                 ->where('deleted')->eq(0)
                 ->beginIF($mode != 'bysearch' && $status)->andWhere('status')->eq($status)->fi()    // Makr sure can search the leads which had been transformed to contacts.
                 ->beginIF($origin)->andWhere('origin')->like("%,$origin,%")->fi()
@@ -144,113 +183,139 @@ class contactModel extends model
                 ->orWhere('status')->eq('ignore')
                 ->markRight(1)
                 ->fi()
-                
+
                 ->orderBy($orderBy)
                 ->page($pager)
                 ->fetchAll('id');
         }
-        else
+        return $leads;
+    }
+
+    /**
+     * Get contact list. 
+     * 
+     * @param  int    $customer 
+     * @param  string $relation 
+     * @param  string $mode 
+     * @param  string $status 
+     * @param  string $origin 
+     * @param  string $orderBy 
+     * @param  object $pager 
+     * @access public
+     * @return array
+     */
+    public function getContactList($customer, $relation, $mode, $status, $origin, $orderBy, $pager)
+    {
+        $contacts       = array();
+        $customerIdList = array();
+        if($relation != 'provider' and $status == 'normal')
         {
-            $resumes = $this->dao->select('*')->from(TABLE_RESUME)
-                ->where('deleted')->eq(0)
-                ->andWhere('customer')->eq($customer)
-                ->andWhere('`left`', true)->eq('')
-                ->orWhere('`left`')->gt(helper::today())
-                ->markRight(1)
-                ->fetchAll('contact');
-
-            if($relation == 'client') 
-            {
-                $customers = $this->dao->select('id')->from(TABLE_CUSTOMER)->where('relation')->ne('provider')->fetchPairs();
-                foreach($customerIdList as $id)
-                {
-                    if(!isset($customers[$id])) unset($customerIdList[$id]);
-                }
-            }
-            if($relation == 'provider') 
-            {
-                $customerIdList = $this->dao->select('id')->from(TABLE_CUSTOMER)->where('relation')->ne('client')->fetchPairs();
-            }
-
-            if(strpos($orderBy, 'id') === false) $orderBy .= ', id_desc';
-
-            if($this->session->contactQuery == false) $this->session->set('contactQuery', ' 1 = 1');
-            $contactQuery = $this->loadModel('search', 'sys')->replaceDynamic($this->session->contactQuery);
-
-            if(strpos(',past,today,tomorrow,thisweek,thismonth,', ",{$mode},") !== false or ($mode == 'bysearch' && strpos($contactQuery, '`nextDate`') !== false))
-            {
-                $contacts = $this->dao->select('t1.*, t2.customer, t2.maker, t2.title, t2.dept, t2.join, t2.left')->from(TABLE_CONTACT)->alias('t1')
-                    ->leftJoin(TABLE_RESUME)->alias('t2')->on('t1.resume = t2.id')
-                    ->leftJoin(TABLE_NEXTCONTACT)->alias('t3')->on('t1.id=t3.objectID')
-                    ->where('t1.deleted')->eq(0)
-                    ->andWhere('t3.status')->eq('wait')
-                    ->andWhere('t3.objectType')->eq('contact')
-                    ->andWhere('t2.customer')->in($customerIdList)
-                    ->beginIF($status)->andWhere('t1.status')->eq($status)->fi()
-                    ->beginIF($origin)->andWhere('t1.origin')->like("%,$origin,%")->fi()
-                    ->beginIF($customer)->andWhere('t1.id')->in(array_keys($resumes))->fi()
-                    ->beginIF($mode == 'past')->andWhere('t3.date')->lt(helper::today())->andWhere('t3.date')->ne('0000-00-00')->fi()
-                    ->beginIF($mode == 'today')->andWhere('t3.date')->eq(helper::today())->fi()
-                    ->beginIF($mode == 'tomorrow')->andWhere('t3.date')->eq(formattime(date::tomorrow(), DT_DATE1))->fi()
-                    ->beginIF($mode == 'thisweek')->andWhere('t3.date')->between($thisWeek['begin'], $thisWeek['end'])->fi()
-                    ->beginIF($mode == 'thismonth')->andWhere('t3.date')->between($thisMonth['begin'], $thisMonth['end'])->fi()
-                    ->beginIF($mode == 'bysearch')->andWhere(str_replace('`nextDate`', 't3.date', $contactQuery))->fi()
-                    ->orderBy($orderBy)
-                    ->page($pager, 't1.id')
-                    ->fetchAll('id');
-
-                $this->session->set('contactQueryCondition', $this->dao->get());
-
-                $nextContacts = $this->dao->select('objectID, MIN(date) AS date')->from(TABLE_NEXTCONTACT)
-                    ->where('status')->eq('wait')
-                    ->andWhere('objectType')->eq('contact')
-                    ->andWhere('objectID')->in(array_keys($contacts))
-                    ->beginIF($mode == 'past')->andWhere('date')->lt(helper::today())->fi()
-                    ->beginIF($mode == 'today')->andWhere('date')->eq(helper::today())->fi()
-                    ->beginIF($mode == 'tomorrow')->andWhere('date')->eq(formattime(date::tomorrow(), DT_DATE1))->fi()
-                    ->beginIF($mode == 'thisweek')->andWhere('date')->between($thisWeek['begin'], $thisWeek['end'])->fi()
-                    ->beginIF($mode == 'thismonth')->andWhere('date')->between($thisMonth['begin'], $thisMonth['end'])->fi()
-                    ->andWhere('date')->ne('0000-00-00')
-                    ->groupBy('objectID')
-                    ->fetchPairs();
-
-                foreach($contacts as $id => $contact) $contact->nextDate = zget($nextContacts, $id, $contact->nextDate);
-            }
-
-            if(strpos(',all,assignedTo,public,', ",{$mode},") !== false or ($mode == 'bysearch' && empty($contacts)))
-            {
-                $contacts = $this->dao->select('t1.*, t2.customer, t2.maker, t2.title, t2.dept, t2.join, t2.left')->from(TABLE_CONTACT)->alias('t1')
-                    ->leftJoin(TABLE_RESUME)->alias('t2')->on('t1.resume = t2.id')
-                    ->where('t1.deleted')->eq(0)
-                    ->andWhere('t2.customer')->in($customerIdList)
-                    ->beginIF($status)->andWhere('t1.status')->eq($status)->fi()
-                    ->beginIF($origin)->andWhere('t1.origin')->like("%,$origin,%")->fi()
-                    ->beginIF($customer)->andWhere('t1.id')->in(array_keys($resumes))->fi()
-                    ->beginIF($mode == 'assignedTo')->andWhere('t1.assignedTo')->eq($this->app->user->account)->fi()
-                    ->beginIF($mode == 'public')->andWhere('public')->eq('1')->fi()
-                    ->beginIF($mode == 'bysearch')->andWhere($contactQuery)->fi()
-                    ->orderBy($orderBy)
-                    ->page($pager)
-                    ->fetchAll('id');
-
-                $this->session->set('contactQueryCondition', $this->dao->get());
-            }
-
-            foreach($resumes as $contactID => $resume)
-            {
-                if(isset($contacts[$contactID]))
-                {
-                    $contacts[$contactID]->customer = $resume->customer;
-                    $contacts[$contactID]->maker    = $resume->maker;
-                    $contacts[$contactID]->title    = $resume->title;
-                    $contacts[$contactID]->dept     = $resume->dept;
-                    $contacts[$contactID]->join     = $resume->join;
-                    $contacts[$contactID]->left     = $resume->left;
-                }
-            }
+            $customerIdList = $this->loadModel('customer')->getCustomersSawByMe();
+            if(empty($customerIdList)) return array();
         }
 
-        foreach($contacts as $contact) $this->formatContact($contact);
+        $this->app->loadClass('date', $static = true);
+        $thisMonth = date::getThisMonth();
+        $thisWeek  = date::getThisWeek();
+
+
+        $resumes = $this->dao->select('*')->from(TABLE_RESUME)
+            ->where('deleted')->eq(0)
+            ->andWhere('customer')->eq($customer)
+            ->andWhere('`left`', true)->eq('')
+            ->orWhere('`left`')->gt(helper::today())
+            ->markRight(1)
+            ->fetchAll('contact');
+
+        if($relation == 'client') 
+        {
+            $customers = $this->dao->select('id')->from(TABLE_CUSTOMER)->where('relation')->ne('provider')->fetchPairs();
+            foreach($customerIdList as $id)
+            {
+                if(!isset($customers[$id])) unset($customerIdList[$id]);
+            }
+        }
+        if($relation == 'provider') 
+        {
+            $customerIdList = $this->dao->select('id')->from(TABLE_CUSTOMER)->where('relation')->ne('client')->fetchPairs();
+        }
+
+        if(strpos($orderBy, 'id') === false) $orderBy .= ', id_desc';
+
+        if($this->session->contactQuery == false) $this->session->set('contactQuery', ' 1 = 1');
+        $contactQuery = $this->loadModel('search', 'sys')->replaceDynamic($this->session->contactQuery);
+
+        if(strpos(',past,today,tomorrow,thisweek,thismonth,', ",{$mode},") !== false or ($mode == 'bysearch' && strpos($contactQuery, '`nextDate`') !== false))
+        {
+            $contacts = $this->dao->select('t1.*, t2.customer, t2.maker, t2.title, t2.dept, t2.join, t2.left')->from(TABLE_CONTACT)->alias('t1')
+                ->leftJoin(TABLE_RESUME)->alias('t2')->on('t1.resume = t2.id')
+                ->leftJoin(TABLE_NEXTCONTACT)->alias('t3')->on('t1.id=t3.objectID')
+                ->where('t1.deleted')->eq(0)
+                ->andWhere('t3.status')->eq('wait')
+                ->andWhere('t3.objectType')->eq('contact')
+                ->andWhere('t2.customer')->in($customerIdList)
+                ->beginIF($status)->andWhere('t1.status')->eq($status)->fi()
+                ->beginIF($origin)->andWhere('t1.origin')->like("%,$origin,%")->fi()
+                ->beginIF($customer)->andWhere('t1.id')->in(array_keys($resumes))->fi()
+                ->beginIF($mode == 'past')->andWhere('t3.date')->lt(helper::today())->andWhere('t3.date')->ne('0000-00-00')->fi()
+                ->beginIF($mode == 'today')->andWhere('t3.date')->eq(helper::today())->fi()
+                ->beginIF($mode == 'tomorrow')->andWhere('t3.date')->eq(formattime(date::tomorrow(), DT_DATE1))->fi()
+                ->beginIF($mode == 'thisweek')->andWhere('t3.date')->between($thisWeek['begin'], $thisWeek['end'])->fi()
+                ->beginIF($mode == 'thismonth')->andWhere('t3.date')->between($thisMonth['begin'], $thisMonth['end'])->fi()
+                ->beginIF($mode == 'bysearch')->andWhere(str_replace('`nextDate`', 't3.date', $contactQuery))->fi()
+                ->orderBy($orderBy)
+                ->page($pager, 't1.id')
+                ->fetchAll('id');
+
+            $this->session->set('contactQueryCondition', $this->dao->get());
+
+            $nextContacts = $this->dao->select('objectID, MIN(date) AS date')->from(TABLE_NEXTCONTACT)
+                ->where('status')->eq('wait')
+                ->andWhere('objectType')->eq('contact')
+                ->andWhere('objectID')->in(array_keys($contacts))
+                ->beginIF($mode == 'past')->andWhere('date')->lt(helper::today())->fi()
+                ->beginIF($mode == 'today')->andWhere('date')->eq(helper::today())->fi()
+                ->beginIF($mode == 'tomorrow')->andWhere('date')->eq(formattime(date::tomorrow(), DT_DATE1))->fi()
+                ->beginIF($mode == 'thisweek')->andWhere('date')->between($thisWeek['begin'], $thisWeek['end'])->fi()
+                ->beginIF($mode == 'thismonth')->andWhere('date')->between($thisMonth['begin'], $thisMonth['end'])->fi()
+                ->andWhere('date')->ne('0000-00-00')
+                ->groupBy('objectID')
+                ->fetchPairs();
+
+            foreach($contacts as $id => $contact) $contact->nextDate = zget($nextContacts, $id, $contact->nextDate);
+        }
+
+        if(strpos(',all,assignedTo,public,', ",{$mode},") !== false or ($mode == 'bysearch' && empty($contacts)))
+        {
+            $contacts = $this->dao->select('t1.*, t2.customer, t2.maker, t2.title, t2.dept, t2.join, t2.left')->from(TABLE_CONTACT)->alias('t1')
+                ->leftJoin(TABLE_RESUME)->alias('t2')->on('t1.resume = t2.id')
+                ->where('t1.deleted')->eq(0)
+                ->andWhere('t2.customer')->in($customerIdList)
+                ->beginIF($status)->andWhere('t1.status')->eq($status)->fi()
+                ->beginIF($origin)->andWhere('t1.origin')->like("%,$origin,%")->fi()
+                ->beginIF($customer)->andWhere('t1.id')->in(array_keys($resumes))->fi()
+                ->beginIF($mode == 'assignedTo')->andWhere('t1.assignedTo')->eq($this->app->user->account)->fi()
+                ->beginIF($mode == 'public')->andWhere('public')->eq('1')->fi()
+                ->beginIF($mode == 'bysearch')->andWhere($contactQuery)->fi()
+                ->orderBy($orderBy)
+                ->page($pager)
+                ->fetchAll('id');
+
+            $this->session->set('contactQueryCondition', $this->dao->get());
+        }
+
+        foreach($resumes as $contactID => $resume)
+        {
+            if(isset($contacts[$contactID]))
+            {
+                $contacts[$contactID]->customer = $resume->customer;
+                $contacts[$contactID]->maker    = $resume->maker;
+                $contacts[$contactID]->title    = $resume->title;
+                $contacts[$contactID]->dept     = $resume->dept;
+                $contacts[$contactID]->join     = $resume->join;
+                $contacts[$contactID]->left     = $resume->left;
+            }
+        }
 
         return $contacts;
     }
@@ -434,7 +499,7 @@ class contactModel extends model
             ->exec();
 
         if(dao::isError()) return false;
-         
+
         if($oldContact->status == 'normal')
         {
             $resume = new stdclass();
@@ -473,7 +538,7 @@ class contactModel extends model
         $fileModel = $this->loadModel('file', 'sys');
 
         if(!$this->file->checkSavePath()) return array('result' => false, 'message' => $this->lang->file->errorUnwritable);
-        
+
         /* Delete old files. */
         $oldFiles = $this->dao->select('id')->from(TABLE_FILE)->where('objectType')->eq('avatar')->andWhere('objectID')->eq($contactID)->fetchAll('id');
         if($oldFiles)
@@ -481,14 +546,14 @@ class contactModel extends model
             foreach($oldFiles as $file) $fileModel->delete($file->id);
             if(dao::isError()) return array('result' => false, 'message' => $this->lang->contact->failedAvatar);
         }
-        
+
         /* Upload new avatar. */
         $uploadResult = $fileModel->saveUpload('avatar', $contactID);
         if(!$uploadResult) return array('result' => false, 'message' => $this->lang->contact->failedAvatar);
-        
+
         $fileIdList = array_keys($uploadResult);
         $file       = $fileModel->getById($fileIdList[0]);
-        
+
         $avatarPath = $this->config->webRoot . 'data/upload/' . $file->pathname;
         $this->dao->update(TABLE_CONTACT)->set('avatar')->eq($avatarPath)->where('id')->eq($contactID)->exec();
         if(!dao::isError()) return array('result' => true, 'contactID' => $contactID);
@@ -591,7 +656,7 @@ class contactModel extends model
                 $return = $this->loadModel('customer')->checkUnique($customer);
                 if($return['result'] == 'fail') return $return;
             }
-            
+
             $this->dao->insert(TABLE_CUSTOMER)->data($customer, $skip = 'uid,contact,email,qq,phone,continue')->autoCheck()->batchCheck('name', 'notempty')->exec();
             if(dao::isError()) return false;
             $customerID = $this->dao->lastInsertID();
@@ -647,7 +712,7 @@ class contactModel extends model
             $fields[$field] = $this->lang->contact->$field;
         }
         $contactList = $this->loadModel('file', 'sys')->parseExcel($fields);
-        
+
         $errorList   = array();
         $successList = array();
         $gender      = $this->lang->contact->genderList;
