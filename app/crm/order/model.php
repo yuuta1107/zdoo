@@ -92,7 +92,7 @@ class orderModel extends model
         {
             $orders = $this->dao->select('o.*, c.name AS customerName, c.level AS level')->from(TABLE_ORDER)->alias('o')
                 ->leftJoin(TABLE_CUSTOMER)->alias('c')->on('o.customer=c.id')
-                ->leftJoin(TABLE_NEXTCONTACT)->alias('n')->on('o.id=n.objectID')
+                ->leftJoin(TABLE_DATING)->alias('n')->on('o.id=n.objectID')
                 ->where('o.deleted')->eq(0)
                 ->andWhere('n.status')->eq('wait')
                 ->andWhere('n.objectType')->eq('order')
@@ -117,7 +117,7 @@ class orderModel extends model
 
             if($needQueryCondition) $this->session->set('orderQueryCondition', $this->dao->get());
 
-            $nextContacts = $this->dao->select('objectID, MIN(date) AS date')->from(TABLE_NEXTCONTACT)
+            $datingList = $this->dao->select('objectID, MIN(date) AS date')->from(TABLE_DATING)
                 ->where('status')->eq('wait')
                 ->andWhere('objectType')->eq('order')
                 ->andWhere('objectID')->in(array_keys($orders))
@@ -130,7 +130,7 @@ class orderModel extends model
                 ->groupBy('objectID')
                 ->fetchPairs();
 
-            foreach($orders as $id => $order) $order->nextDate = zget($nextContacts, $id, $order->nextDate);
+            foreach($orders as $id => $order) $order->nextDate = zget($datingList, $id, $order->nextDate);
         }
 
         if(strpos(',all,public,assignedTo,createdBy,signedBy,query,', ",{$mode},") !== false or ($mode == 'bysearch' && empty($orders)))

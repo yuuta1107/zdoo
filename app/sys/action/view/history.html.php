@@ -17,7 +17,7 @@
 .wordwrap {word-wrap:break-word;word-break:break-all;}
 </style>
 
-<?php if(strpos(',order,contract,customer,provider,contact,leads,', ",{$objectType},") !== false && $nextContacts):?>
+<?php if(strpos(',order,contract,customer,provider,contact,leads,', ",{$objectType},") !== false && $datingList):?>
 <div class='panel panel-nextContact'>
   <table class='table table-bordered'>
     <thead>
@@ -35,32 +35,32 @@
       </tr>
     </thead>
     <?php $user = $this->app->user->account;?>
-    <?php foreach($nextContacts as $contact):?>
+    <?php foreach($datingList as $dating):?>
     <tr class='text-center'>
-      <td><?php echo $contact->date;?></td>
+      <td><?php echo $dating->date;?></td>
       <?php if($objectType != 'contact' && $objectType != 'leads'):?>
-      <td><?php echo zget($contacts, $contact->contact, '');?></td>
+      <td><?php echo zget($contacts, $dating->contact, '');?></td>
       <?php endif;?>
-      <td><?php echo zget($users, $contact->account);?></td>
-      <td class='text-left' title='<?php echo $contact->desc;?>'><?php echo $contact->desc;?></td>
-      <td><?php echo zget($lang->action->record->statusList, $contact->status);?></td>
-      <td><?php echo zget($users, $contact->createdBy);?></td>
-      <td><?php echo formatTime($contact->createdDate, DT_DATE1);?></td>
+      <td><?php echo zget($users, $dating->account);?></td>
+      <td class='text-left' title='<?php echo $dating->desc;?>'><?php echo $dating->desc;?></td>
+      <td><?php echo zget($lang->action->record->statusList, $dating->status);?></td>
+      <td><?php echo zget($users, $dating->createdBy);?></td>
+      <td><?php echo formatTime($dating->createdDate, DT_DATE1);?></td>
       <td>
         <?php 
-        if($contact->status == 'wait') 
+        if($dating->status == 'wait') 
         {
-            if($this->app->user->admin == 'super' or $contact->account == $user or $contact->createdBy == $user)
+            if($this->app->user->admin == 'super' or $dating->account == $user or $dating->createdBy == $user)
             {
-                echo html::a(helper::createLink('action', 'finishNextContact', "id={$contact->id}"), $lang->finish, "class='finishNextContact'");
+                echo html::a(helper::createLink('action', 'finishDating', "id={$dating->id}"), $lang->finish, "class='finishDating'");
             }
             else
             {
                 echo html::a('javascript:;', $lang->finish, "class='disabled' disabled='disabled'");
             }
-            if($this->app->user->admin == 'super' or $contact->createdBy == $user)
+            if($this->app->user->admin == 'super' or $dating->createdBy == $user)
             {
-                echo html::a(helper::createLink('action', 'deleteNextContact', "id={$contact->id}"), $lang->delete, "class='deleter'");
+                echo html::a(helper::createLink('action', 'deleteDating', "id={$dating->id}"), $lang->delete, "class='deleter'");
             }
             else
             {

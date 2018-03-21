@@ -1,5 +1,5 @@
--- DROP TABLE IF EXISTS `crm_nextcontact`;
-CREATE TABLE IF NOT EXISTS `crm_nextcontact` (
+-- DROP TABLE IF EXISTS `crm_dating`;
+CREATE TABLE IF NOT EXISTS `crm_dating` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `objectType` varchar(30) NOT NULL,
   `objectID` mediumint(8) unsigned NOT NULL,

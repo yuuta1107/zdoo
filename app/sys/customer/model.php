@@ -94,11 +94,11 @@ class customerModel extends model
         if(strpos($orderBy, 'id') === false) $orderBy .= ', id_desc';
 
         $customers = array();
-        /* If the query contains the field `nextDate` search from the table crm_nextcontact. */
+        /* If the query contains the field `nextDate` search from the table crm_dating. */
         if(strpos(',past,today,tomorrow,thisweek,thismonth,', ",{$mode},") !== false or ($mode == 'bysearch' && strpos($customerQuery, '`nextDate`') !== false))
         {
             $customers = $this->dao->select('t1.*')->from(TABLE_CUSTOMER)->alias('t1')
-                ->leftJoin(TABLE_NEXTCONTACT)->alias('t2')->on('t1.id=t2.objectID')
+                ->leftJoin(TABLE_DATING)->alias('t2')->on('t1.id=t2.objectID')
                 ->where('t1.deleted')->eq(0)
                 ->andWhere('t2.status')->eq('wait')
                 ->andWhere('t2.objectType')->in('customer')
@@ -119,7 +119,7 @@ class customerModel extends model
 
             $this->session->set('customerQueryCondition', $this->dao->get());
 
-            $nextContacts = $this->dao->select('objectID, MIN(date) AS date')->from(TABLE_NEXTCONTACT)
+            $datingList = $this->dao->select('objectID, MIN(date) AS date')->from(TABLE_DATING)
                 ->where('status')->eq('wait')
                 ->andWhere('objectType')->eq('customer')
                 ->andWhere('objectID')->in(array_keys($customers))
@@ -132,10 +132,10 @@ class customerModel extends model
                 ->groupBy('objectID')
                 ->fetchPairs();
 
-            foreach($customers as $id => $customer) $customer->nextDate = zget($nextContacts, $id, $customer->nextDate);
+            foreach($customers as $id => $customer) $customer->nextDate = zget($datingList, $id, $customer->nextDate);
         }
 
-        /* If search nothing from the table crm_nextcontact then search from the table crm_customer. */
+        /* If search nothing from the table crm_dating then search from the table crm_customer. */
         if(strpos(',all,field,area,industry,public,assignedTo,query,', ",{$mode},") !== false or ($mode == 'bysearch' && empty($customers)))
         {
             $customers = $this->dao->select('*')->from(TABLE_CUSTOMER)

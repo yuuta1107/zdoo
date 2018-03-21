@@ -149,7 +149,7 @@ class contactModel extends model
         if($mode == 'bysearch' && strpos($leadsQuery, '`nextDate`') !== false)
         {
             $leads = $this->dao->select('t1.*')->from(TABLE_CONTACT)->alias('t1')
-                ->leftJoin(TABLE_NEXTCONTACT)->alias('t2')->on('t1.id=t2.objectID')
+                ->leftJoin(TABLE_DATING)->alias('t2')->on('t1.id=t2.objectID')
                 ->where('t1.deleted')->eq(0)
                 ->andWhere('t2.status')->eq('wait')
                 ->andWhere('t2.objectType')->eq('contact')
@@ -249,7 +249,7 @@ class contactModel extends model
         {
             $contacts = $this->dao->select('t1.*, t2.customer, t2.maker, t2.title, t2.dept, t2.join, t2.left')->from(TABLE_CONTACT)->alias('t1')
                 ->leftJoin(TABLE_RESUME)->alias('t2')->on('t1.resume = t2.id')
-                ->leftJoin(TABLE_NEXTCONTACT)->alias('t3')->on('t1.id=t3.objectID')
+                ->leftJoin(TABLE_DATING)->alias('t3')->on('t1.id=t3.objectID')
                 ->where('t1.deleted')->eq(0)
                 ->andWhere('t3.status')->eq('wait')
                 ->andWhere('t3.objectType')->eq('contact')
@@ -269,7 +269,7 @@ class contactModel extends model
 
             $this->session->set('contactQueryCondition', $this->dao->get());
 
-            $nextContacts = $this->dao->select('objectID, MIN(date) AS date')->from(TABLE_NEXTCONTACT)
+            $datingList = $this->dao->select('objectID, MIN(date) AS date')->from(TABLE_DATING)
                 ->where('status')->eq('wait')
                 ->andWhere('objectType')->eq('contact')
                 ->andWhere('objectID')->in(array_keys($contacts))
@@ -282,7 +282,7 @@ class contactModel extends model
                 ->groupBy('objectID')
                 ->fetchPairs();
 
-            foreach($contacts as $id => $contact) $contact->nextDate = zget($nextContacts, $id, $contact->nextDate);
+            foreach($contacts as $id => $contact) $contact->nextDate = zget($datingList, $id, $contact->nextDate);
         }
 
         if(strpos(',all,assignedTo,public,', ",{$mode},") !== false or ($mode == 'bysearch' && empty($contacts)))

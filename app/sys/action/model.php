@@ -76,7 +76,7 @@ class actionModel extends model
         if(!$actionID) return false;
         $this->loadModel('file')->saveUpload('action', $actionID);
 
-        $this->updateNextContact($objectType, $objectID, $actionID);
+        $this->updateDating($objectType, $objectID, $actionID);
 
         /* Set the min next date as the post value. */
         if(!$this->post->delta or $this->post->delta != 365000) $this->post->nextDate = $this->getMinNextDate($objectType, $objectID);
@@ -85,7 +85,7 @@ class actionModel extends model
     }
 
     /**
-     * Update next contact.
+     * Update dating.
      *
      * @param  string $objectType
      * @param  int    $objectID
@@ -93,14 +93,14 @@ class actionModel extends model
      * @access public
      * @return bool
      */
-    public function updateNextContact($objectType, $objectID, $action)
+    public function updateDating($objectType, $objectID, $action)
     {
         $contact = new stdclass();
         $contact->status     = 'done';
         $contact->editedBy   = $this->app->user->account;
         $contact->editedDate = helper::now();
 
-        $this->dao->update(TABLE_NEXTCONTACT)->data($contact)
+        $this->dao->update(TABLE_DATING)->data($contact)
             ->where('status')->eq('wait')
             ->andWhere('objectType')->eq($objectType)
             ->andWhere('objectID')->eq($objectID)
@@ -111,18 +111,18 @@ class actionModel extends model
 
         if(!$this->post->nextDate) return !dao::isError();
 
-        $nextContact = new stdclass();
-        $nextContact->objectType  = $objectType;
-        $nextContact->objectID    = $objectID;
-        $nextContact->action      = $action;
-        $nextContact->contact     = $this->post->nextContact == 'ditto' ? $this->post->contact : ($this->post->nextContact ? $this->post->nextContact : 0);
-        $nextContact->account     = $this->post->contactedBy;
-        $nextContact->date        = $this->post->nextDate;
-        $nextContact->desc        = $this->post->desc;
-        $nextContact->createdBy   = $this->app->user->account;
-        $nextContact->createdDate = helper::now();
+        $dating = new stdclass();
+        $dating->objectType  = $objectType;
+        $dating->objectID    = $objectID;
+        $dating->action      = $action;
+        $dating->contact     = $this->post->nextContact == 'ditto' ? $this->post->contact : ($this->post->nextContact ? $this->post->nextContact : 0);
+        $dating->account     = $this->post->contactedBy;
+        $dating->date        = $this->post->nextDate;
+        $dating->desc        = $this->post->desc;
+        $dating->createdBy   = $this->app->user->account;
+        $dating->createdDate = helper::now();
 
-        $this->dao->insert(TABLE_NEXTCONTACT)->data($nextContact)->autoCheck()->exec();
+        $this->dao->insert(TABLE_DATING)->data($dating)->autoCheck()->exec();
 
         return !dao::isError();
     }
@@ -137,7 +137,7 @@ class actionModel extends model
      */
     public function updateOriginTable($objectType, $objectID)
     {
-        $table    = $this->config->action->nextContactTables[$objectType];
+        $table    = $this->config->action->datingTables[$objectType];
         $nextDate = $this->getMinNextDate($objectType, $objectID);
         $this->dao->update($table)->set('nextDate')->eq($nextDate)->where('id')->eq($objectID)->exec();
 
@@ -293,28 +293,28 @@ class actionModel extends model
     }
 
     /**
-     * Get next contact by id. 
+     * Get dating by id. 
      * 
      * @param  int    $id 
      * @access public
      * @return object
      */
-    public function getNextContactById($id)
+    public function getDatingById($id)
     {
-        return $this->dao->select('*')->from(TABLE_NEXTCONTACT)->where('id')->eq($id)->fetch();
+        return $this->dao->select('*')->from(TABLE_DATING)->where('id')->eq($id)->fetch();
     }
 
     /**
-     * Get next contacts by objectType and objectID.
+     * Get dating list by objectType and objectID.
      *
      * @param  string $objectType
      * @param  int    $objectID
      * @access public
      * @return void
      */
-    public function getNextContacts($objectType, $objectID)
+    public function getDatingList($objectType, $objectID)
     {
-        return $this->dao->select('*')->from(TABLE_NEXTCONTACT)
+        return $this->dao->select('*')->from(TABLE_DATING)
             ->where('status')->eq('wait')
             ->andWhere('objectType')->eq($objectType)
             ->andWhere('objectID')->eq($objectID)
@@ -332,7 +332,7 @@ class actionModel extends model
      */
     public function getMinNextDate($objectType, $objectID)
     {
-        return $this->dao->select('MIN(date) AS date')->from(TABLE_NEXTCONTACT)
+        return $this->dao->select('MIN(date) AS date')->from(TABLE_DATING)
             ->where('status')->eq('wait')
             ->andWhere('objectType')->eq($objectType)
             ->andWhere('objectID')->eq($objectID)

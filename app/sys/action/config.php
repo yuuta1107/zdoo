@@ -79,7 +79,7 @@ $config->action->actionModules['finishreceivecontract'] = 'contract';
 $config->action->actionModules['finishcontract']        = 'contract';
 $config->action->actionModules['cancelcontract']        = 'contract';
 
-$config->action->nextContactTables['order']    = TABLE_ORDER;
-$config->action->nextContactTables['contract'] = TABLE_CONTRACT;
-$config->action->nextContactTables['customer'] = TABLE_CUSTOMER;
-$config->action->nextContactTables['contact']  = TABLE_CONTACT;
+$config->action->datingTables['order']    = TABLE_ORDER;
+$config->action->datingTables['contract'] = TABLE_CONTRACT;
+$config->action->datingTables['customer'] = TABLE_CUSTOMER;
+$config->action->datingTables['contact']  = TABLE_CONTACT;

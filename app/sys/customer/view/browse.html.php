@@ -42,7 +42,7 @@
           <th class='w-100px visible-lg'><?php commonModel::printOrderLink('createdDate', $orderBy, $vars, $lang->customer->createdDate);?></th>
           <th class='w-100px visible-lg'><?php commonModel::printOrderLink('contactedDate', $orderBy, $vars, $lang->customer->contactedDate);?></th>
           <?php
-          /* The next date is searched from the table crm_nextcontact, so use date instead of nextDate to avoid occur errors when order by this field. */
+          /* The next date is searched from the table crm_dating, so use date instead of nextDate to avoid occur errors when order by this field. */
           $date = strpos(',past,today,tomorrow,thisweek,thismonth,', ",{$mode},") != false ? 'date' : 'nextDate';
           ?>
           <th class='w-100px'><?php commonModel::printOrderLink($date, $orderBy, $vars, $lang->customer->nextDate);?></th>

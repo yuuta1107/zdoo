@@ -1,6 +1,6 @@
 $(document).ready(function()
 {
-    $('.finishNextContact').click(function()
+    $('.finishDating').click(function()
     {
         var url = $(this).attr('href');
         bootbox.confirm(v.lang.confirmFinish, function(result)
