@@ -130,7 +130,7 @@ class orderModel extends model
                 ->groupBy('objectID')
                 ->fetchPairs();
 
-            foreach($orders as $id => $order) $order->nextDate = zget($nextContacts, $id, $oder->nextDate);
+            foreach($orders as $id => $order) $order->nextDate = zget($nextContacts, $id, $order->nextDate);
         }
 
         if(strpos(',all,public,assignedTo,createdBy,signedBy,query,', ",{$mode},") !== false or ($mode == 'bysearch' && empty($orders)))
