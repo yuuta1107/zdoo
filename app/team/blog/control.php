@@ -158,7 +158,15 @@ class blog extends control
         if($currentCategory > 0 && isset($article->categories[$currentCategory])) $category = $currentCategory;  
         $category = $this->loadModel('tree')->getByID($category);
 
-        $article->views++;
+        if($this->cookie->windowReloadUrl)
+        {
+            setcookie('windowReloadUrl', null, $this->config->cookieLife, $this->config->cookiePath);
+        }
+        else
+        {
+            $article->views++;
+            $this->dao->update(TABLE_ARTICLE)->set('views = views + 1')->where('id')->eq($articleID)->exec();
+        }
 
         $this->view->title       = $article->title . ' - ' . $category->name;
         $this->view->article     = $article;
@@ -166,7 +174,6 @@ class blog extends control
         $this->view->category    = $category;
         $this->view->users       = $this->loadModel('user')->getPairs();
 
-        $this->dao->update(TABLE_ARTICLE)->set('views = views + 1')->where('id')->eq($articleID)->exec(false);
         $this->display();
     }
 

@@ -23,7 +23,9 @@
     <thead>
       <tr class='text-center'>
         <th class='w-100px'><?php echo $lang->action->record->nextDate;?></th>
+        <?php if($objectType != 'contact' && $objectType != 'leads'):?>
         <th class='w-90px'><?php echo $lang->action->record->nextContact;?></th>
+        <?php endif;?>
         <th class='w-80px'><?php echo $lang->action->record->contactedBy;?></th>
         <th><?php echo $lang->action->record->desc;?></th>
         <th class='w-80px'><?php echo $lang->action->record->status;?></th>
@@ -36,7 +38,9 @@
     <?php foreach($nextContacts as $contact):?>
     <tr class='text-center'>
       <td><?php echo $contact->date;?></td>
+      <?php if($objectType != 'contact' && $objectType != 'leads'):?>
       <td><?php echo zget($contacts, $contact->contact, '');?></td>
+      <?php endif;?>
       <td><?php echo zget($users, $contact->account);?></td>
       <td class='text-left' title='<?php echo $contact->desc;?>'><?php echo $contact->desc;?></td>
       <td><?php echo zget($lang->action->record->statusList, $contact->status);?></td>
