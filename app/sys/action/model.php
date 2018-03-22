@@ -79,7 +79,7 @@ class actionModel extends model
         $this->updateDating($objectType, $objectID, $actionID);
 
         /* Set the min next date as the post value. */
-        if(!$this->post->delta or $this->post->delta != 365000) $this->post->nextDate = $this->getMinNextDate($objectType, $objectID);
+        if(!$this->post->delta or $this->post->delta != 365000) $this->post->nextDate = $this->getMinDatingDate($objectType, $objectID);
 
         return $this->syncContactInfo($objectType, $objectID, $customer, $contact);
     }
@@ -138,7 +138,7 @@ class actionModel extends model
     public function updateOriginTable($objectType, $objectID)
     {
         $table    = $this->config->action->datingTables[$objectType];
-        $nextDate = $this->getMinNextDate($objectType, $objectID);
+        $nextDate = $this->getMinDatingDate($objectType, $objectID);
         $this->dao->update($table)->set('nextDate')->eq($nextDate)->where('id')->eq($objectID)->exec();
 
         return !dao::isError();
@@ -293,7 +293,7 @@ class actionModel extends model
     }
 
     /**
-     * Get dating by id. 
+     * Get dating by id.
      * 
      * @param  int    $id 
      * @access public
@@ -330,7 +330,7 @@ class actionModel extends model
      * @access public
      * @return string
      */
-    public function getMinNextDate($objectType, $objectID)
+    public function getMinDatingDate($objectType, $objectID)
     {
         return $this->dao->select('MIN(date) AS date')->from(TABLE_DATING)
             ->where('status')->eq('wait')
