@@ -151,10 +151,10 @@ $.extend(
                     {
                         /* Define the id of the error objecjt and it's label. */
                         var errorOBJ   = '#' + key;
-                        var errorLabel =  key + 'Label';
+                        var errorLabel = key + 'Label';
 
                         /* Create the error message. */
-                        var errorMSG = '<span id="'  + errorLabel + '" for="' + key  + '"  class="text-error red">';
+                        var errorMSG = '<span id="' + errorLabel + '" for="' + key  + '"  class="text-error red">';
                         errorMSG += $.type(value) == 'string' ? value : value.join(';');
                         errorMSG += '</span>';
 

@@ -239,6 +239,7 @@ $lang->action->nextContactList[365000] = 'no contact';
 
 $lang->action->record = new stdclass();
 $lang->action->record->common       = 'Communication';
+$lang->action->record->title        = 'This time';
 $lang->action->record->create       = 'Add Record';
 $lang->action->record->edit         = 'Edit Record';
 $lang->action->record->history      = 'Communication History';
@@ -251,6 +252,7 @@ $lang->action->record->actor        = 'Actor';
 $lang->action->record->comment      = 'Content';
 $lang->action->record->date         = 'Contact on';
 $lang->action->record->file         = 'Files';
+$lang->action->record->next         = 'Next';
 $lang->action->record->nextList     = 'Next Contact List';
 $lang->action->record->nextDate     = 'Next Date';
 $lang->action->record->nextContact  = 'Next contact';

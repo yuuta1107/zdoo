@@ -800,7 +800,7 @@ class contractModel extends model
         if($type == 'view') $menu .= "<div class='btn-group'>";
 
         $history = $type == 'view' ? '&history=' : '';
-        if($canCreateRecord) $menu .= commonModel::printLink('action', 'createRecord', "objectType=contract&objectID={$contract->id}&customer={$contract->customer}$history", $this->lang->contract->record, "class='$class' data-toggle='modal' data-width='860'", false);
+        if($canCreateRecord) $menu .= commonModel::printLink('action', 'createRecord', "objectType=contract&objectID={$contract->id}&customer={$contract->customer}$history", $this->lang->contract->record, "class='$class' data-toggle='modal' data-width='800'", false);
         $menu .= commonModel::printLink('customer', 'contact', "customerID={$contract->customer}", $this->lang->contract->contact, "data-toggle='modal' class='$class'", false);
 
         if($contract->return != 'done' and $contract->status == 'normal' and $canReceive)

@@ -239,6 +239,7 @@ $lang->action->nextContactList[365000] = '无需联系';
 
 $lang->action->record = new stdclass();
 $lang->action->record->common       = '沟通';
+$lang->action->record->title        = '本次沟通';
 $lang->action->record->create       = '添加记录';
 $lang->action->record->edit         = '编辑记录';
 $lang->action->record->history      = '沟通记录';
@@ -251,6 +252,7 @@ $lang->action->record->actor        = '操作人';
 $lang->action->record->comment      = '沟通内容';
 $lang->action->record->date         = '时间';
 $lang->action->record->file         = '附件';
+$lang->action->record->next         = '下次联系';
 $lang->action->record->nextList     = '下次联系列表';
 $lang->action->record->nextDate     = '下次联系日期';
 $lang->action->record->nextContact  = '下次联系人';

@@ -120,6 +120,7 @@ class action extends control
         $this->loadModel('file');
         $this->view->title          = "<i class='icon-comment-alt'> </i>" . $this->lang->action->record->create;
         $this->view->objectType     = $objectType == 'provider' ? 'customer' : $objectType;
+        $this->view->isCustomer     = $objectType == 'customer';
         $this->view->objectID       = $objectID;
         $this->view->customer       = $customer;
         $this->view->history        = $history;
@@ -127,6 +128,7 @@ class action extends control
         $this->view->contactPairs   = $contactPairs;
         $this->view->pinyinContacts = commonModel::convert2Pinyin($contactPairs);
         $this->view->users          = $this->loadModel('user')->getPairs('noclosed, nodeleted, noempty, noforbidden');
+        $this->view->modalWidth     = '800'; // Keep the modal dialog display normal if it was reloaded.
 
         $this->display();
     }

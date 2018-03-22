@@ -68,7 +68,7 @@
           <td><?php echo $customer->nextDate;?></td>
           <td class='actions'>
             <?php
-            commonModel::printLink('action',   'createRecord', "objectType=customer&objectID=$customer->id&customer=$customer->id", $lang->customer->record, "data-toggle='modal' data-width='860'");
+            commonModel::printLink('action',   'createRecord', "objectType=customer&objectID=$customer->id&customer=$customer->id", $lang->customer->record, "data-toggle='modal' data-width='800'");
             commonModel::printLink('customer', 'assign', "customerID=$customer->id", $lang->customer->assign, "data-toggle='modal'");
             commonModel::printLink('customer', 'contact', "customerID=$customer->id", $lang->customer->contact,  "data-toggle='modal'");
             commonModel::printLink('customer', 'edit', "customerID=$customer->id", $lang->edit);
