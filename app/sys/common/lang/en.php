@@ -268,15 +268,16 @@ $lang->menu->dashboard->dynamic  = 'Dynamic|my|dynamic|';
 /* Menu of customer module. */
 if(!isset($lang->customer)) $lang->customer = new stdclass();
 $lang->customer->menu = new stdclass();
-$lang->customer->menu->browse     = 'All Customers|customer|browse|mode=all';
-$lang->customer->menu->assignedTo = 'Assigned To Me|customer|browse|mode=assignedtome';
-$lang->customer->menu->past       = 'Urgently need contacted|customer|browse|mode=past';
-$lang->customer->menu->today      = 'Contact Today|customer|browse|mode=today';
-$lang->customer->menu->tomorrow   = 'Contact Tomorrow|customer|browse|mode=tomorrow';
-$lang->customer->menu->thisweek   = 'Contact This Week|customer|browse|mode=thisweek';
-$lang->customer->menu->thismonth  = 'Contact This Month|customer|browse|mode=thismonth';
-$lang->customer->menu->public     = 'Public Customers|customer|browse|mode=public';
-$lang->customer->menu->report     = 'Report|report|browse|module=customer';
+$lang->customer->menu->browse      = 'All Customers|customer|browse|mode=all';
+$lang->customer->menu->assignedTo  = 'Assigned To Me|customer|browse|mode=assignedtome';
+$lang->customer->menu->contactedBy = 'Contacted By Me|customer|browse|mode=contactedby';
+$lang->customer->menu->past        = 'Urgently need contacted|customer|browse|mode=past';
+$lang->customer->menu->today       = 'Contact Today|customer|browse|mode=today';
+$lang->customer->menu->tomorrow    = 'Contact Tomorrow|customer|browse|mode=tomorrow';
+$lang->customer->menu->thisweek    = 'Contact This Week|customer|browse|mode=thisweek';
+$lang->customer->menu->thismonth   = 'Contact This Month|customer|browse|mode=thismonth';
+$lang->customer->menu->public      = 'Public Customers|customer|browse|mode=public';
+$lang->customer->menu->report      = 'Report|report|browse|module=customer';
 
 /* Menu of provider module. */
 if(!isset($lang->provider)) $lang->provider = new stdclass();

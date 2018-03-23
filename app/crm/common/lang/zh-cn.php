@@ -26,25 +26,27 @@ $lang->menu->crm->setting   = '设置|setting|lang|module=product&field=statusLi
 /* Menu of order module. */
 if(!isset($lang->order)) $lang->order = new stdclass();
 $lang->order->menu = new stdclass();
-$lang->order->menu->browse       = '所有订单|order|browse|mode=all';
-$lang->order->menu->assignedTo   = '指派给我|order|browse|mode=assignedTo';
-$lang->order->menu->past         = '亟需联系|order|browse|mode=past';
-$lang->order->menu->today        = '今天联系|order|browse|mode=today';
-$lang->order->menu->tomorrow     = '明天联系|order|browse|mode=tomorrow';
-$lang->order->menu->thisweek     = '本周内联系|order|browse|mode=thisweek';
-$lang->order->menu->thismonth    = '本月内联系|order|browse|mode=thismonth';
-$lang->order->menu->public       = '公共客户|order|browse|mode=public';
-$lang->order->menu->report       = '报表|report|browse|module=order';
+$lang->order->menu->browse      = '所有订单|order|browse|mode=all';
+$lang->order->menu->assignedTo  = '指派给我|order|browse|mode=assignedTo';
+$lang->order->menu->contactedBy = '由我联系|order|browse|mode=contactedby';
+$lang->order->menu->past        = '亟需联系|order|browse|mode=past';
+$lang->order->menu->today       = '今天联系|order|browse|mode=today';
+$lang->order->menu->tomorrow    = '明天联系|order|browse|mode=tomorrow';
+$lang->order->menu->thisweek    = '本周内联系|order|browse|mode=thisweek';
+$lang->order->menu->thismonth   = '本月内联系|order|browse|mode=thismonth';
+$lang->order->menu->public      = '公共客户|order|browse|mode=public';
+$lang->order->menu->report      = '报表|report|browse|module=order';
 
 /* Menu of contact module. */
 if(!isset($lang->contact)) $lang->contact = new stdclass();
 $lang->contact->menu = new stdclass();
-$lang->contact->menu->browse    = '所有联系人|contact|browse|mode=all';
-$lang->contact->menu->past      = '亟需联系|contact|browse|mode=past';
-$lang->contact->menu->today     = '今天联系|contact|browse|mode=today';
-$lang->contact->menu->tomorrow  = '明天联系|contact|browse|mode=tomorrow';
-$lang->contact->menu->thisweek  = '本周内联系|contact|browse|mode=thisweek';
-$lang->contact->menu->thismonth = '本月内联系|contact|browse|mode=thismonth';
+$lang->contact->menu->browse      = '所有联系人|contact|browse|mode=all';
+$lang->contact->menu->contactedBy = '由我联系|contact|browse|mode=contactedby';
+$lang->contact->menu->past        = '亟需联系|contact|browse|mode=past';
+$lang->contact->menu->today       = '今天联系|contact|browse|mode=today';
+$lang->contact->menu->tomorrow    = '明天联系|contact|browse|mode=tomorrow';
+$lang->contact->menu->thisweek    = '本周内联系|contact|browse|mode=thisweek';
+$lang->contact->menu->thismonth   = '本月内联系|contact|browse|mode=thismonth';
 
 if(!isset($lang->leads)) $lang->leads = new stdclass();
 $lang->leads->menu = new stdclass();
@@ -58,6 +60,7 @@ $lang->leads->menu->setting     = '设置|leads|setting|';
 if(!isset($lang->contract)) $lang->contract = new stdclass();
 $lang->contract->menu = new stdclass();
 $lang->contract->menu->browse       = '所有合同|contract|browse|mode=all';
+$lang->contract->menu->contactedBy  = '由我联系|contract|browse|mode=contactedby';
 $lang->contract->menu->unfinished   = '未完成|contract|browse|mode=unfinished';
 $lang->contract->menu->unreceived   = '回款中|contract|browse|mode=unreceived';
 $lang->contract->menu->undeliveried = '交付中|contract|browse|mode=undeliveried';

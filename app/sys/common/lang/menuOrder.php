@@ -28,13 +28,14 @@ $lang->sys->dashboard->menuOrder[40] = 'dynamic';
 
 $lang->customer->menuOrder[5]  = 'browse'; 
 $lang->customer->menuOrder[10] = 'assignedTo';
-$lang->customer->menuOrder[15] = 'past';
-$lang->customer->menuOrder[20] = 'today';
-$lang->customer->menuOrder[25] = 'tomorrow';
-$lang->customer->menuOrder[30] = 'thisweek';
-$lang->customer->menuOrder[35] = 'thismonth';
-$lang->customer->menuOrder[40] = 'public';
-$lang->customer->menuOrder[45] = 'report';
+$lang->customer->menuOrder[15] = 'contactedBy';
+$lang->customer->menuOrder[20] = 'past';
+$lang->customer->menuOrder[25] = 'today';
+$lang->customer->menuOrder[30] = 'tomorrow';
+$lang->customer->menuOrder[35] = 'thisweek';
+$lang->customer->menuOrder[40] = 'thismonth';
+$lang->customer->menuOrder[45] = 'public';
+$lang->customer->menuOrder[50] = 'report';
 
 $lang->product->menuOrder[5]  = 'browse';
 $lang->product->menuOrder[10] = 'normal';

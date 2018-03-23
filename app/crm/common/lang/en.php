@@ -26,25 +26,27 @@ $lang->menu->crm->setting   = 'Settings|setting|lang|module=product&field=status
 /* Menu of order module. */
 if(!isset($lang->order)) $lang->order = new stdclass();
 $lang->order->menu = new stdclass();
-$lang->order->menu->browse       = 'All|order|browse|mode=all';
-$lang->order->menu->assignedTo   = 'Assigned To Me|order|browse|mode=assignedtome';
-$lang->order->menu->past         = 'Urgent|order|browse|mode=past';
-$lang->order->menu->today        = 'Today|order|browse|mode=today';
-$lang->order->menu->tomorrow     = 'Tomorrow|order|browse|mode=tomorrow';
-$lang->order->menu->thisweek     = 'This Week|order|browse|mode=thisweek';
-$lang->order->menu->thismonth    = 'This Month|order|browse|mode=thismonth';
-$lang->order->menu->public       = 'Public|order|browse|mode=public';
-$lang->order->menu->report       = 'Report|report|browse|module=order';
+$lang->order->menu->browse      = 'All|order|browse|mode=all';
+$lang->order->menu->assignedTo  = 'Assigned To Me|order|browse|mode=assignedtome';
+$lang->order->menu->contactedBy = 'Contacted By Me|order|browse|mode=contactedby';
+$lang->order->menu->past        = 'Urgent|order|browse|mode=past';
+$lang->order->menu->today       = 'Today|order|browse|mode=today';
+$lang->order->menu->tomorrow    = 'Tomorrow|order|browse|mode=tomorrow';
+$lang->order->menu->thisweek    = 'This Week|order|browse|mode=thisweek';
+$lang->order->menu->thismonth   = 'This Month|order|browse|mode=thismonth';
+$lang->order->menu->public      = 'Public|order|browse|mode=public';
+$lang->order->menu->report      = 'Report|report|browse|module=order';
 
 /* Menu of contact module. */
 if(!isset($lang->contact)) $lang->contact = new stdclass();
 $lang->contact->menu = new stdclass();
-$lang->contact->menu->browse    = 'All Contacts|contact|browse|mode=all';
-$lang->contact->menu->past      = 'Urgent|contact|browse|mode=past';
-$lang->contact->menu->today     = 'Today|contact|browse|mode=today';
-$lang->contact->menu->tomorrow  = 'Tomorrow|contact|browse|mode=tomorrow';
-$lang->contact->menu->thisweek  = 'This Week|contact|browse|mode=thisweek';
-$lang->contact->menu->thismonth = 'This Month|contact|browse|mode=thismonth';
+$lang->contact->menu->browse      = 'All Contacts|contact|browse|mode=all';
+$lang->contact->menu->contactedBy = 'Contacted By Me|contact|browse|mode=contactedby';
+$lang->contact->menu->past        = 'Urgent|contact|browse|mode=past';
+$lang->contact->menu->today       = 'Today|contact|browse|mode=today';
+$lang->contact->menu->tomorrow    = 'Tomorrow|contact|browse|mode=tomorrow';
+$lang->contact->menu->thisweek    = 'This Week|contact|browse|mode=thisweek';
+$lang->contact->menu->thismonth   = 'This Month|contact|browse|mode=thismonth';
 
 if(!isset($lang->leads)) $lang->leads = new stdclass();
 $lang->leads->menu = new stdclass();
@@ -58,6 +60,7 @@ $lang->leads->menu->setting     = 'Settings|leads|setting|';
 if(!isset($lang->contract)) $lang->contract = new stdclass();
 $lang->contract->menu = new stdclass();
 $lang->contract->menu->browse       = 'All|contract|browse|mode=all';
+$lang->contract->menu->contactedBy  = 'Contacted By Me|contract|browse|mode=contactedby';
 $lang->contract->menu->unfinished   = 'Unfinished|contract|browse|mode=unfinished';
 $lang->contract->menu->unreceived   = 'Receiving|contract|browse|mode=unreceived';
 $lang->contract->menu->undeliveried = 'Delivering|contract|browse|mode=undeliveried';

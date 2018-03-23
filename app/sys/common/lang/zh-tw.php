@@ -268,15 +268,16 @@ $lang->menu->dashboard->dynamic  = '動態|my|dynamic|';
 /* Menu of customer module. */
 if(!isset($lang->customer)) $lang->customer = new stdclass();
 $lang->customer->menu = new stdclass();
-$lang->customer->menu->browse     = '所有客戶|customer|browse|mode=all';
-$lang->customer->menu->assignedTo = '指派給我|customer|browse|mode=assignedTo';
-$lang->customer->menu->past       = '亟需聯繫|customer|browse|mode=past';
-$lang->customer->menu->today      = '今天聯繫|customer|browse|mode=today';
-$lang->customer->menu->tomorrow   = '明天聯繫|customer|browse|mode=tomorrow';
-$lang->customer->menu->thisweek   = '本週內聯繫|customer|browse|mode=thisweek';
-$lang->customer->menu->thismonth  = '本月內聯繫|customer|browse|mode=thismonth';
-$lang->customer->menu->public     = '客戶池|customer|browse|mode=public';
-$lang->customer->menu->report     = '報表|report|browse|module=customer';
+$lang->customer->menu->browse      = '所有客戶|customer|browse|mode=all';
+$lang->customer->menu->assignedTo  = '指派給我|customer|browse|mode=assignedTo';
+$lang->customer->menu->contactedBy = '由我聯繫|customer|browse|mode=contactedby';
+$lang->customer->menu->past        = '亟需聯繫|customer|browse|mode=past';
+$lang->customer->menu->today       = '今天聯繫|customer|browse|mode=today';
+$lang->customer->menu->tomorrow    = '明天聯繫|customer|browse|mode=tomorrow';
+$lang->customer->menu->thisweek    = '本週內聯繫|customer|browse|mode=thisweek';
+$lang->customer->menu->thismonth   = '本月內聯繫|customer|browse|mode=thismonth';
+$lang->customer->menu->public      = '客戶池|customer|browse|mode=public';
+$lang->customer->menu->report      = '報表|report|browse|module=customer';
 
 /* Menu of provider module. */
 if(!isset($lang->provider)) $lang->provider = new stdclass();

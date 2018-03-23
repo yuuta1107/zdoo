@@ -61,6 +61,21 @@ class contractModel extends model
 
         if(strpos($orderBy, 'id') === false) $orderBy .= ', id_desc';
 
+        if($mode == 'contactedby')
+        {
+            return $this->dao->select('*')->from(TABLE_CONTRACT)->alias('t1')
+                ->leftJoin(TABLE_DATING)->alias('t2')->on('t1.id=t2.objectID')
+                ->where('t1.deleted')->eq(0)
+                ->andWhere('t2.status')->eq('wait')
+                ->andWhere('t2.objectType')->eq('contract')
+                ->andWhere('t2.account')->eq($this->app->user->account)
+                ->beginIF($customer)->andWhere('t1.customer')->eq($customer)->fi()
+                ->andWhere('t1.customer')->in($customerIdList)
+                ->orderBy("t1.{$orderBy}")
+                ->page($pager, 't1.id')
+                ->fetchAll('id');
+        }
+
         return $this->dao->select('*')->from(TABLE_CONTRACT)
             ->where('deleted')->eq(0)
             ->beginIF($owner == 'my' and strpos('returnedBy,deliveredBy', $mode) === false)
