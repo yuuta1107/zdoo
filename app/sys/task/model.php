@@ -253,7 +253,7 @@ class taskModel extends model
      */
     public function create($projectID, $task = null)
     {
-        $now  = helper::now();
+        $now = helper::now();
         if(empty($task))
         {
             $task = fixer::input('post')
@@ -369,7 +369,7 @@ class taskModel extends model
             /* Process multiple user task data. */
             if(isset($_POST['multiple'][$key]) and !empty($_POST['multiple'][$key]))
             {
-                $team = array();
+                $team     = array();
                 $estimate = 0;
                 $left     = 0;
                 foreach($this->post->team[$key] as $row => $account)
@@ -556,32 +556,130 @@ class taskModel extends model
      */
     public function updateParent($task)
     {
-        if($task->parent == 0) return true;
-        $parent   = $this->getById($task->parent);
-        $wait     = true;
-        $done     = true;
-        $close    = true;
+        $childTask = $this->dao->select('*')->from(TABLE_TASK)->where('id')->eq($task)->fetch();
+        if(empty($childTask->parent)) return true;
+
+        $parentID = $childTask->parent;
+
+        $childrenStatus = $this->dao->select('status')->from(TABLE_TASK)->where('parent')->eq($parentID)->andWhere('deleted')->eq(0)->fetchPairs();
+        $status         = 'wait';
+        if(isset($childrenStatus['doing']))
+        {
+            $status = 'doing';
+        }
+        elseif(isset($childrenStatus['pause']) and !isset($childrenStatus['wait']))
+        {
+            $status = 'pause';
+        }
+        elseif(isset($childrenStatus['done']) and !isset($childrenStatus['wait']))
+        {
+            $status = 'done';
+        }
+        elseif(isset($childrenStatus['closed']) and !isset($childrenStatus['wait']))
+        {
+            $status = 'closed';
+        }
+        elseif(isset($childrenStatus['cancel']) and !isset($childrenStatus['wait']))
+        {
+            $status = 'cancel';
+        }
+
+        $parentTask = $this->dao->select('*')->from(TABLE_TASK)->where('id')->eq($parentID)->fetch();
+        if($status and $parentTask->status != $status)
+        {
+            $now  = helper::now();
+            $task = new stdclass();
+            $task->status = $status;
+            if($status == 'done')
+            {
+                $task->assignedTo   = $parentTask->createdBy;
+                $task->assignedDate = $now;
+                $task->finishedBy   = $this->app->user->account;
+                $task->finishedDate = $now;
+            }
+
+            if($status == 'cancel')
+            {
+                $task->assignedTo   = $parentTask->createdBy;
+                $task->assignedDate = $now;
+                $task->finishedBy   = '';
+                $task->finishedDate = '';
+                $task->canceledBy   = $this->app->user->account;
+                $task->canceledDate = $now;
+            }
+
+            if($status == 'closed')
+            {
+                $task->assignedTo   = 'closed';
+                $task->assignedDate = $now;
+                $task->closedBy     = $this->app->user->account;
+                $task->closedDate   = $now;
+                $task->closedReason = 'done';
+            }
+
+            if($status == 'doing')
+            {
+                $task->assignedTo   = '';
+                $task->assignedDate = '';
+                $task->finishedBy   = '';
+                $task->finishedDate = '';
+                $task->closedBy     = '';
+                $task->closedDate   = '';
+                $task->closedReason = '';
+            }
+
+            $task->editedBy   = $this->app->user->account;
+            $task->editedDate = $now;
+            $this->dao->update(TABLE_TASK)->data($task)->where('id')->eq($parentID)->exec();
+            if(!dao::isError())
+            {
+                $this->computeWorkingHours($parentID);
+                $changes = commonModel::createChanges($parentTask, $task);
+                $action  = 'Canceled';
+                if($status == 'done') $action = 'Finished';
+                if($status == 'closed') $action = 'Closed';
+                if($status == 'pause') $action = 'Paused';
+                if($status == 'doing' and $parentTask->status == 'wait') $action = 'Started';
+                if($status == 'doing' and $parentTask->status == 'pause') $action = 'Restarted';
+                if($status == 'doing' and $parentTask->status != 'wait' and $parentTask->status != 'pause') $action = 'Activated';
+                $actionID = $this->loadModel('action')->create('task', $parentID, $action);
+                $this->action->logHistory($actionID, $changes);
+            }
+        }
+    }
+
+    /**
+     * Compute parent task working hours.
+     *
+     * @param $taskID
+     *
+     * @access public
+     * @return bool
+     */
+    public function computeWorkingHours($taskID)
+    {
+        if(!$taskID) return true;
+
+        $tasks = $this->dao->select('`id`,`estimate`,`consumed`,`left`')->from(TABLE_TASK)->where('parent')->eq($taskID)->andWhere('status')->ne('cancel')->andWhere('deleted')->eq(0)->fetchAll('id');
+        if(empty($tasks)) return true;
+
         $estimate = 0;
         $consumed = 0;
         $left     = 0;
-
-        foreach($parent->children as $child)
+        foreach($tasks as $task)
         {
-            if($child->status != 'wait')   $wait  = false;
-            if($child->status != 'done')   $done  = false;
-            if($child->status != 'closed') $close = false;
-            $estimate += $child->estimate;
-            $consumed += $child->consumed;
-            $left     += $child->left;
+            $estimate += $task->estimate;
+            $consumed += $task->consumed;
+            if($task->status != 'closed') $left += $task->left;
         }
-        $newParent = new stdclass();
-        $newParent->status   = $wait ? 'wait' : ($done ? 'done' : ($close ? 'closed' : 'doing'));
-        $newParent->estimate = $estimate;
-        $newParent->consumed = $consumed;
-        $newParent->left     = $left;
 
-        $this->dao->update(TABLE_TASK)->data($newParent)->where('id')->eq($parent->id)->exec();
-        return true;
+        $newTask = new stdClass();
+        $newTask->estimate = $estimate;
+        $newTask->consumed = $consumed;
+        $newTask->left     = $left;
+
+        $this->dao->update(TABLE_TASK)->data($newTask)->autoCheck()->where('id')->eq($taskID)->exec();
+        return !dao::isError();
     }
 
     /**
@@ -599,38 +697,49 @@ class taskModel extends model
             $task = new stdclass();
             $task->consumed = $this->post->consumed;
             $task->left     = $this->post->left;
+            $task->status   = (float)$this->post->left ? 'doing' : 'done'; 
             $this->dao->update(TABLE_TASK)->data($task)->autoCheck()->where('id')->eq($taskID)->exec();
         }
 
         if(!empty($oldTask->team) and $oldTask->assignedTo != '')
         {
-            $account    = $oldTask->assignedTo;
-            $task       = new stdclass();
-            $task->team = $oldTask->team;
-            $task->team[$account]->consumed = (float)$this->post->consumed;
-            $task->team[$account]->left     = $this->post->left;
+            $task = new stdclass();
+            $task->consumed = 0;
+            $task->left     = 0;
+            $task->status   = 'doing';
 
-            $consumed = 0;
-            $left     = 0;
-            foreach($task->team as $member) $consumed += (float)$member->consumed;
-            foreach($task->team as $member) $left     += (float)$member->left;
-            $task->consumed = $consumed;
-            $task->left     = $left;
+            $account  = $oldTask->assignedTo;
+            $consumed = (float)$this->post->consumed;
+            $left     = (float)$this->post->left;
+
+            foreach($oldTask->team as $member) 
+            {
+                if($member->account == $account)
+                {
+                    $task->consumed += $consumed;
+                    $task->left     += $left;
+
+                    if($member->account == end($oldTask->team)->account && $left == 0) $task->status = 'done';
+
+                    continue;
+                }
+
+                $task->consumed += (float)$member->consumed;
+                $task->left     += (float)$member->left;
+            }
 
             $this->dao->update(TABLE_TEAM)
-                ->set('consumed')->eq($task->team[$account]->consumed)
-                ->set('left')->eq($task->team[$account]->left)
+                ->set('consumed')->eq($consumed)
+                ->set('left')->eq($left)
                 ->where('type')->eq('task')
                 ->andWhere('id')->eq($taskID)
                 ->andWhere('account')->eq($account)
                 ->exec();
 
-            $this->dao->update(TABLE_TASK)
-                ->set('consumed')->eq($consumed)
-                ->set('left')->eq($left)
-                ->where('id')->eq($taskID)
-                ->exec();
+            $this->dao->update(TABLE_TASK)->data($task, $skip = 'team')->where('id')->eq($taskID)->exec();
         }
+
+        $this->updateParent($oldTask);
 
         return commonModel::createChanges($oldTask, $task);
     }
@@ -812,6 +921,8 @@ class taskModel extends model
             ->where('id')->eq($taskID)
             ->exec();
 
+        $this->updateParent($oldTask);
+
         if(!dao::isError()) return commonModel::createChanges($oldTask, $task);
     }
 
@@ -837,6 +948,8 @@ class taskModel extends model
             ->get();
 
         $this->dao->update(TABLE_TASK)->data($task, 'uid,comment')->autoCheck()->where('id')->eq((int)$taskID)->exec();
+
+        $this->updateParent($oldTask);
 
         if(!dao::isError()) return commonModel::createChanges($oldTask, $task);
     }
@@ -1033,7 +1146,7 @@ class taskModel extends model
         $menu    .= $disabled ? html::a('###', $this->lang->task->recordEstimate, $misc) : commonModel::printLink('proj.task', 'recordEstimate', "taskID=$task->id", $this->lang->task->recordEstimate, $misc, false);
         $menu    .= $type == 'block' ? '</li>' : '';
 
-        $disabled = ($canEdit and self::isClickable($task, 'assignto')) ? '' : 'disabled';
+        $disabled = (!$isParent and $canEdit and self::isClickable($task, 'assignto')) ? '' : 'disabled';
         $misc     = $disabled ? "class='$disabled $class'" : "data-toggle='modal' class='$class'";
         $menu    .= $type == 'block' ? ($disabled ? "<li class='hide'>" : '<li>') : '';
         $menu    .= $disabled ? html::a('###', $isMulti ? $this->lang->task->transmit : $this->lang->assign, "$misc") : commonModel::printLink('proj.task', 'assignto', "taskID=$task->id", $isMulti ? $this->lang->task->transmit : $this->lang->assign, $misc, false);
@@ -1050,7 +1163,7 @@ class taskModel extends model
 
         if($type == 'view')
         {
-            $disabled = ($canEdit and self::isClickable($task, 'activate')) ? '' : 'disabled';
+            $disabled = (!$isParent and $canEdit and self::isClickable($task, 'activate')) ? '' : 'disabled';
             $misc     = $disabled ? "class='$disabled $class'" : "data-toggle='modal' class='$class'";
             $menu    .= $disabled ? html::a('###', $this->lang->activate, $misc) : commonModel::printLink('proj.task', 'activate', "taskID=$task->id", $this->lang->activate, $misc, false);
         }
@@ -1065,7 +1178,7 @@ class taskModel extends model
         {
             $menu .= "</div><div class='btn-group'>";
 
-            $disabled = ($canEdit and self::isClickable($task, 'cancel')) ? '' : 'disabled';
+            $disabled = (!$isParent and $canEdit and self::isClickable($task, 'cancel')) ? '' : 'disabled';
             $misc     = $disabled ? "class='$disabled $class'" : "data-toggle='modal' class='$class'";
             $menu    .= $disabled ? html::a('###', $this->lang->cancel, $misc) : commonModel::printLink('proj.task', 'cancel', "taskID=$task->id", $this->lang->cancel, $misc, false);
 
@@ -1074,7 +1187,7 @@ class taskModel extends model
             $menu    .= $disabled ? html::a('###', $this->lang->delete, "class='disabled $class' disabled='disabled'") : commonModel::printLink('proj.task', 'delete', "taskID=$task->id", $this->lang->delete, "class='$deleter $class'", false);
         }
 
-        $disabled = ($canEdit and self::isClickable($task, 'close')) ? '' : 'disabled';
+        $disabled = (!$isParent and $canEdit and self::isClickable($task, 'close')) ? '' : 'disabled';
         $misc     = $disabled ? "class='$disabled $class'" : "data-toggle='modal' class='$class'";
         $menu    .= $type == 'block' ? ($disabled ? "<li class='hide'>" : '<li>') : '';
         $menu    .= $disabled ? html::a('###', $this->lang->close, $misc) : commonModel::printLink('proj.task', 'close', "taskID=$task->id", $this->lang->close, $misc, false);

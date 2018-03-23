@@ -15,6 +15,7 @@
 <?php include '../../common/view/datepicker.html.php';?>
 <?php include '../../common/view/chosen.html.php';?>
 <?php $this->loadModel('project', 'proj')->setMenu($projects, $projectID);?>
+<?php $disabled = empty($task->children) ? '' : "disabled='disabled'";?>
 <div class='page-content'>
   <form method='post' id='ajaxForm' enctype='multipart/form-data'>
     <div class='row'>
@@ -88,7 +89,7 @@
               </tr>
               <tr>
                 <th><?php echo $lang->task->status;?></th>
-                <td><?php echo html::select('status', $lang->task->statusList, $task->status, "class='form-control'");?></td>
+                <td><?php echo html::select('status', $lang->task->statusList, $task->status, "class='form-control' $disabled");?></td>
               </tr>
               <tr>
                 <th><?php echo $lang->task->pri;?></th>
@@ -104,11 +105,11 @@
               </tr>
               <tr>
                 <th><?php echo $lang->task->consumed;?></th>
-                <td><?php echo html::input('consumed', $task->consumed, "class='form-control'");?></td>
+                <td><?php echo html::input('consumed', $task->consumed, "class='form-control' $disabled");?></td>
               </tr>
               <tr>
                 <th><?php echo $lang->task->left;?></th>
-                <td><?php echo html::input('left', $task->left, "class='form-control'");?></td>
+                <td><?php echo html::input('left', $task->left, "class='form-control' $disabled");?></td>
               </tr>
               <tr>
                 <th><?php echo $lang->task->mailto;?></th>
