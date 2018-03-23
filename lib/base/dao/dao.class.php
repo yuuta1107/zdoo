@@ -1926,9 +1926,16 @@ class baseSQL
         $pos    = stripos($order, 'limit');
         $orders = $pos ? substr($order, 0, $pos) : $order;
         $limit  = $pos ? substr($order, $pos) : '';
+
+        if(!empty($limit))
+        {
+            $trimedLimit = trim(str_replace('limit', '', $limit));
+            if(!preg_match('/^[0-9]+ *(, *[0-9]+)?$/', $trimedLimit)) die("Limit is bad query, The limit is " . htmlspecialchars($limit));
+        }
+
         $orders = trim($orders);
         if(empty($orders)) return $this;
-        if(!preg_match('/^(\w+\.)?(`\w+`|\w+)( +(desc|asc))?( *(, *(\w+\.)?(`\w+`|\w+)( +(desc|asc))?)?)*$/i', $orders)) die("Order is bad request, The order is $orders");
+        if(!preg_match('/^(\w+\.)?(`\w+`|\w+)( +(desc|asc))?( *(, *(\w+\.)?(`\w+`|\w+)( +(desc|asc))?)?)*$/i', $orders)) die("Order is bad request, The order is " . htmlspecialchars($orders));
 
         $orders = explode(',', $orders);
         foreach($orders as $i => $order)
@@ -2011,7 +2018,6 @@ class baseSQL
     public function having($having)
     {
         if($this->inCondition and !$this->conditionIsTrue) return $this;
-        $having = $this->quote($having);
         $this->sql .= ' ' . DAO::HAVING . " $having";
         return $this;
     }
