@@ -118,16 +118,19 @@ class contractModel extends model
      * 
      * @param  string $type        view|edit
      * @param  array  $contractIdList 
+     * @param  object $user
      * @access public
      * @return array
      */
-    public function getContractsSawByMe($type = 'view', $contractIdList = array())
+    public function getContractsSawByMe($type = 'view', $contractIdList = array(), $user = null)
     {
-        $customerIdList = $this->loadModel('customer')->getCustomersSawByMe($type);
+        if(!$user) $user = $this->app->user;
+
+        $customerIdList = $this->loadModel('customer')->getCustomersSawByMe($type, array(), $user);
         $contractList   = $this->dao->select('id')->from(TABLE_CONTRACT)
             ->where('deleted')->eq(0)
             ->beginIF(!empty($contractIdList))->andWhere('id')->in($contractIdList)->fi()
-            ->beginIF(!isset($this->app->user->rights['crm']['manageall']) and ($this->app->user->admin != 'super'))
+            ->beginIF(!isset($user->rights['crm']['manageall']) and ($user->admin != 'super'))
             ->andWhere('customer')->in($customerIdList)
             ->fi()
             ->fetchPairs();

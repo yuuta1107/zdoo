@@ -181,8 +181,10 @@ class salesModel extends model
      * @access public
      * @return string
      */
-    public function getAccountsSawByMe($account, $type = 'view')
+    public function getAccountsSawByMe($account = '', $type = 'view')
     {
+        if(!$account) $account = $this->app->user->account;
+
         $privs  = $this->getPrivsByAccount($account);
         $groups = $this->getGroupList();
         $users  = '';

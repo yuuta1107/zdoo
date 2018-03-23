@@ -1073,4 +1073,43 @@ class actionModel extends model
 
         return $canView;
     }
+
+    /**
+     * Check if the user assigned to next dating has privilege.
+     *
+     * @param  string $objectType
+     * @param  int    $objectID
+     * @access public
+     * @return bool
+     */
+    public function checkDatingPrivilege($objectType, $objectID)
+    {
+        $user = $this->loadModel('user')->getByAccount($this->post->contactedBy);
+        $user->rights = $this->user->authorize($user);
+
+        if($user->admin != 'super' && !isset($user->rights['apppriv']['crm'])) return false;
+
+        if($objectType == 'order')
+        {
+            $orderList = $this->loadModel('order', 'crm')->getOrdersSawByMe($type = 'view', (array)$objectID, $user);
+            if(empty($orderList)) return false;
+        }
+        if($objectType == 'contract')
+        {
+            $contractList = $this->loadModel('contract', 'crm')->getContractsSawByMe($type = 'view', (array)$objectID, $user);
+            if(empty($contractList)) return false;
+        }
+        if($objectType == 'customer' or $objectType == 'provider')
+        {
+            $customerList = $this->loadModel('customer')->getCustomersSawByMe($type = 'view', (array)$objectID, $user);
+            if(empty($customerList)) return false;
+        }
+        if($objectType == 'contact' or $objectType == 'leads')
+        {
+            $contactList = $this->loadModel('contact', 'crm')->getContactsSawByMe($type = 'view', (array)$objectID, $user);
+            if(empty($contactList)) return false;
+        }
+
+        return true;
+    }
 }

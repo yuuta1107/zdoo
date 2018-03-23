@@ -44,16 +44,19 @@ class orderModel extends model
      * 
      * @param  string $type        view|edit
      * @param  array  $orderIdList 
+     * @param  object $user
      * @access public
      * @return array
      */
-    public function getOrdersSawByMe($type = 'view', $orderIdList = array())
+    public function getOrdersSawByMe($type = 'view', $orderIdList = array(), $user = null)
     {
-        $customerIdList = $this->loadModel('customer')->getCustomersSawByMe($type);
+        if(!$user) $user = $this->app->user;
+
+        $customerIdList = $this->loadModel('customer')->getCustomersSawByMe($type, array(), $user);
         $orderList = $this->dao->select('*')->from(TABLE_ORDER)
             ->where('deleted')->eq(0)
             ->beginIF(!empty($orderIdList))->andWhere('id')->in($orderIdList)->fi()
-            ->beginIF(!isset($this->app->user->rights['crm']['manageall']) and ($this->app->user->admin != 'super'))
+            ->beginIF(!isset($user->rights['crm']['manageall']) and ($user->admin != 'super'))
             ->andWhere('customer')->in($customerIdList)
             ->fi()
             ->fetchAll('id');

@@ -64,6 +64,12 @@ class action extends control
 
         if($_POST)
         {
+            if($this->post->nextDate && !$this->action->checkDatingPrivilege($objectType, $objectID))
+            {
+                $user = $this->loadModel('user')->getByAccount($this->post->contactedBy);
+                $this->send(array('result' => 'fail', 'message' => sprintf($this->lang->action->record->noPrivilege, $user->realname)));;
+            }
+
             if($this->post->contract)
             {
                 $objectType = 'contract';

@@ -270,6 +270,7 @@ $lang->action->record->uploadFile   = '上传附件:';
 $lang->action->record->finishDenied = '只有管理员、下次联系人和创建者可以完成。';
 $lang->action->record->deleteDenied = '只有管理员和创建者可以删除。';
 $lang->action->record->deleteFail   = '沟通已经完成，不能删除。';
+$lang->action->record->noPrivilege  = '%s没有权限访问当前操作的对象。';
 
 $lang->action->record->statusList['wait'] = '待联系';
 $lang->action->record->statusList['done'] = '联系完成';

@@ -71,25 +71,28 @@ class contactModel extends model
      * 
      * @param  string $type view|edit
      * @param  array  $contactIdList 
+     * @param  object $user 
      * @access public
-     * @return void
+     * @return array
      */
-    public function getContactsSawByMe($type = 'view', $contactIdList = array())
+    public function getContactsSawByMe($type = 'view', $contactIdList = array(), $user = null)
     {
-        $customerIdList = $this->loadModel('customer')->getCustomersSawByMe($type);
+        if(!$user) $user = $this->app->user;
+
+        $customerIdList = $this->loadModel('customer')->getCustomersSawByMe($type, array(), $user);
         $contactList = $this->dao->select('t1.id')->from(TABLE_CONTACT)->alias('t1')
             ->leftJoin(TABLE_RESUME)->alias('t2')->on('t1.resume = t2.id')
             ->where('t1.deleted')->eq(0)
             ->andWhere('t1.status')->eq('normal')
             ->beginIF(!empty($contactIdList))->andWhere('t1.id')->in($contactIdList)->fi()
-            ->beginIF(!isset($this->app->user->rights['crm']['manageall']) and ($this->app->user->admin != 'super'))
+            ->beginIF(!isset($user->rights['crm']['manageall']) and ($user->admin != 'super'))
             ->andWhere('t2.customer')->in($customerIdList)
             ->fi()
             ->fetchPairs();
         $leadsList = $this->dao->select('id')->from(TABLE_CONTACT)
             ->where('deleted')->eq('0')
             ->andWhere('status', true)->eq('ignore')
-            ->orWhere('assignedTo')->eq($this->app->user->account)
+            ->orWhere('assignedTo')->eq($user->account)
             ->markRight(1)
             ->fetchPairs();
 

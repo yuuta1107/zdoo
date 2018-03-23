@@ -35,16 +35,19 @@ class customerModel extends model
      * 
      * @param  string $type           view|edit
      * @param  array  $customerIdList 
+     * @param  object $user
      * @access public
      * @return array
      */
-    public function getCustomersSawByMe($type = 'view', $customerIdList = array())
+    public function getCustomersSawByMe($type = 'view', $customerIdList = array(), $user = null)
     {
-        $accountsSawByMe = $this->loadModel('sales', 'crm')->getAccountsSawByMe($this->app->user->account, $type);
+        if(!$user) $user = $this->app->user;
+
+        $accountsSawByMe = $this->loadModel('sales', 'crm')->getAccountsSawByMe($user->account, $type);
 
         $customerList = $this->dao->select('id')->from(TABLE_CUSTOMER)
             ->where('deleted')->eq(0)
-            ->beginIF(!isset($this->app->user->rights['crm']['manageall']) and ($this->app->user->admin != 'super'))
+            ->beginIF(!isset($user->rights['crm']['manageall']) and ($user->admin != 'super'))
             ->andWhere('assignedTo', true)->in($accountsSawByMe)
             ->orWhere('public')->eq('1')
             ->markRight(1)
