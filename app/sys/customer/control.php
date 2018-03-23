@@ -54,8 +54,6 @@ class customer extends control
 
         $customers = $this->customer->getList($mode, $param, $relation = 'client', $orderBy, $pager);
 
-        $this->session->set('customerQueryCondition', $this->dao->get());
-
         /* Set allowed edit customer ID list. */
         $this->app->user->canEditCustomerIdList = ',' . implode(',', $this->customer->getCustomersSawByMe('edit', array_keys($customers))) . ',';
         

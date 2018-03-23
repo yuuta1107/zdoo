@@ -9,9 +9,6 @@
  * @version     $Id$
  * @link        http://www.ranzhi.org
  */
-$config->action->require = new stdclass();
-$config->action->require->createrecord = 'contact,comment';
-
 $config->action->objectNameFields['announce']  = 'title';
 $config->action->objectNameFields['article']   = 'title';
 $config->action->objectNameFields['attend']    = 'date';
@@ -81,3 +78,8 @@ $config->action->actionModules['finishdelivercontract'] = 'contract';
 $config->action->actionModules['finishreceivecontract'] = 'contract';
 $config->action->actionModules['finishcontract']        = 'contract';
 $config->action->actionModules['cancelcontract']        = 'contract';
+
+$config->action->datingTables['order']    = TABLE_ORDER;
+$config->action->datingTables['contract'] = TABLE_CONTRACT;
+$config->action->datingTables['customer'] = TABLE_CUSTOMER;
+$config->action->datingTables['contact']  = TABLE_CONTACT;

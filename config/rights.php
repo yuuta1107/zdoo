@@ -110,11 +110,13 @@ $config->rights->member['reply']['deletefile'] = 'deletefile';
 $config->rights->member['message']['comment'] = 'comment';
 $config->rights->member['message']['post']    = 'post';
 
-$config->rights->member['action']['createrecord'] = 'createrecord';
-$config->rights->member['action']['editrecord']   = 'editrecord';
-$config->rights->member['action']['history']      = 'history';
-$config->rights->member['action']['editcomment']  = 'editcomment';
-$config->rights->member['action']['read']         = 'read';
+$config->rights->member['action']['createrecord']      = 'createrecord';
+$config->rights->member['action']['editrecord']        = 'editrecord';
+$config->rights->member['action']['history']           = 'history';
+$config->rights->member['action']['editcomment']       = 'editcomment';
+$config->rights->member['action']['read']              = 'read';
+$config->rights->member['action']['finishnextcontact'] = 'finishNextContact';
+$config->rights->member['action']['deletenextcontact'] = 'deleteNextContact';
 
 $config->rights->member['file']['buildform']      = 'buildform';
 $config->rights->member['file']['buildlist']      = 'buildlist';

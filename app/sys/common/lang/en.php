@@ -178,6 +178,7 @@ EOT;
 /* Items for javascript. */
 $lang->js = new stdclass();
 $lang->js->confirmDelete         = 'Do you want to delete it?';
+$lang->js->confirmFinish         = 'Do you want to finish it?';
 $lang->js->deleteing             = 'Deleting...';
 $lang->js->doing                 = 'Processing...';
 $lang->js->timeout               = 'Timeout';

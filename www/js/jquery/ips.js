@@ -157,7 +157,7 @@
      *
      * Create a entry object, example: 'var et = new entry({});'
      * A entry object stored the entry options and has a method to create a window object
-     * 
+     *
      * @param object options
      */
     var entry = function(options)
@@ -420,7 +420,7 @@
         this.$menu            = $('#apps-menu');
         this.$bottombar       = $('#bottomBar');
         this.isFullscreenMode = this.$.hasClass('fullscreen-mode');
-        
+
         this.menu      = new menu();
         this.position  = desktopPos;
         this.x         = desktopPos.x;
@@ -512,7 +512,7 @@
                     .data('icons', $moreIcons)
                     .attr('data-original-title', settings.moreOptionTip.format($moreIcons.length));
                 setTimeout(function(){$btn.removeClass('active')}, 200);
-                this.menu.tryLayoutMenu();            
+                this.menu.tryLayoutMenu();
             }
         }
         else
@@ -633,6 +633,8 @@
 
         var win = this.opens[et.idstr];
 
+        $.cookie('windowReloadUrl', true, {expires:config.cookieLife, path:config.webRoot});
+
         if(!win)
         {
             if(et.open == 'blank')
@@ -751,10 +753,10 @@
             windows.close(q);
             $('.categoryMenu li .app-btn').each(function()
             {
-                if($(this).attr('data-id') == q) 
+                if($(this).attr('data-id') == q)
                 {
                     var dataid = $(this).parents('.categoryMenu').attr('data-id');
-                    $('#category' + dataid).removeClass('open active'); 
+                    $('#category' + dataid).removeClass('open active');
                 }
             });
         }).on('click', '.min-win', function(event) // min-win
@@ -850,8 +852,8 @@
         {
             windows.reload();
 
-            try{window.event.keyCode = 0;}catch(e){} // for IEs  
-            try{window.frames[theLoadingFrame].event.keyCode = 0;}catch(e){} // for IEs  
+            try{window.event.keyCode = 0;}catch(e){} // for IEs
+            try{window.frames[theLoadingFrame].event.keyCode = 0;}catch(e){} // for IEs
             event.cancelBubble = true;
             event.returnValue  = false;
             event.preventDefault();
@@ -1178,7 +1180,7 @@
         if(forceMax)
         {
             var dSize = desktop.size;
-            win.data('orginLoc', 
+            win.data('orginLoc',
             {
                 left   : win.css('left'),
                 top    : win.css('top'),
@@ -1628,7 +1630,7 @@
                     $shortcut.find('button').attr('id', 'category' + et.id).addClass('categoryButton');
                     $shortcut.find('button').removeAttr('title');
                 }
-                if(et.category !== undefined && et.category != 0) 
+                if(et.category !== undefined && et.category != 0)
                 {
                     if($('#categoryMenu' + et.category).length == 0)
                     {
@@ -1666,8 +1668,8 @@
                 windows.open(
                 {
                     url  : btn.attr('href') || btn.attr('data-url'),
-                    open : btn.attr('data-open') || 'iframe', 
-                    icon : btn.attr('data-icon'), 
+                    open : btn.attr('data-open') || 'iframe',
+                    icon : btn.attr('data-icon'),
                     name : btn.attr('data-name')
                 });
                 stopEvent(event);
@@ -1761,7 +1763,7 @@
                 return false;
             }
 
-            function norightclick(e) 
+            function norightclick(e)
             {
                 if (window.Event)
                 {
@@ -1837,7 +1839,7 @@
                 that.toggleMoreMenu();
                 e.stopPropagation();
             });
-            
+
             $(document).click(function(e)
             {
                 if($(e.target).is(that.$btn)) return;
@@ -1846,7 +1848,7 @@
         };
 
         this.toggleMoreMenu = function()
-        {           
+        {
             if(this.$menu.hasClass('show')) this.hideMoreMenu();
             else this.showMoreMenu();
         };
@@ -1910,12 +1912,12 @@
         windows.openEntry(id, url, null);
     }
 
-    /* 
+    /**
      * Start ips
      *
      * @param  array  entiresOptions
      * @param  object options
-     * @return void 
+     * @return void
      */
     function start(entriesOptions, options)
     {
@@ -1931,7 +1933,7 @@
         }
     }
 
-    /* 
+    /**
      * Refresh desktop shortcuts
      *
      * @param  array  entiresOptions
@@ -1965,7 +1967,7 @@
 
     /**
      * Get query string value
-     * 
+     *
      * @access public
      * @return string
      */

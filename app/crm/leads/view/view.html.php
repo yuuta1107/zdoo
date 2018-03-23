@@ -29,7 +29,7 @@
       <?php
       echo "<div class='btn-group'>";
       commonModel::printLink('leads', 'assign', "contactID=$contact->id", $lang->contact->assign, "class='btn' data-toggle='modal'");
-      commonModel::printLink('action', 'createRecord', "objectType=contact&objectID={$contact->id}&customer=&history=", $lang->contact->record, "data-toggle='modal' data-width='860' class='btn'");
+      commonModel::printLink('action', 'createRecord', "objectType=contact&objectID={$contact->id}&customer=&history=", $lang->contact->record, "data-toggle='modal' data-width='800' class='btn'");
       commonModel::printLink('address', 'browse', "objectType=contact&objectID=$contact->id", $lang->contact->address, "data-toggle='modal' class='btn'");
       commonModel::printLink('leads', 'edit', "contactID=$contact->id", $lang->edit, "class='btn'");
       commonModel::printLink('leads', 'transform', "contactID=$contact->id", $lang->confirm, "class='btn' data-toggle='modal'");

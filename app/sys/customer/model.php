@@ -93,27 +93,71 @@ class customerModel extends model
 
         if(strpos($orderBy, 'id') === false) $orderBy .= ', id_desc';
 
-        return $this->dao->select('*')->from(TABLE_CUSTOMER)
-            ->where('deleted')->eq(0)
-            ->beginIF($relation == 'client')->andWhere('relation')->ne('provider')->fi()
-            ->beginIF($relation == 'provider')->andWhere('relation')->ne('client')->fi()
-            ->beginIF($mode == 'field')->andWhere('mode')->eq($param)->fi()
-            ->beginIF($mode == 'area')->andWhere('area')->eq($param)->fi()
-            ->beginIF($mode == 'industry')->andWhere('industry')->eq($param)->fi()
-            ->beginIF($mode == 'past')->andWhere('nextDate')->lt(helper::today())->fi()
-            ->beginIF($mode == 'today')->andWhere('nextDate')->eq(helper::today())->fi()
-            ->beginIF($mode == 'tomorrow')->andWhere('nextDate')->eq(formattime(date::tomorrow(), DT_DATE1))->fi()
-            ->beginIF($mode == 'thisweek')->andWhere('nextDate')->between($thisWeek['begin'], $thisWeek['end'])->fi()
-            ->beginIF($mode == 'thismonth')->andWhere('nextDate')->between($thisMonth['begin'], $thisMonth['end'])->fi()
-            ->beginIF($mode == 'public')->andWhere('public')->eq('1')->fi()
-            ->beginIF($mode == 'assignedTo')->andWhere('assignedTo')->eq($this->app->user->account)->fi()
-            ->beginIF($mode == 'query')->andWhere($param)->fi()
-            ->beginIF($mode == 'bysearch')->andWhere($customerQuery)->fi()
-            ->beginIF(strpos('all, bysearch, public, assignedTo, query, area, industry', $mode) === false)->andWhere('nextDate')->ne('0000-00-00')->fi()
-            ->andWhere('id')->in($customerIdList)
-            ->orderBy($orderBy)
-            ->page($pager)
-            ->fetchAll('id');
+        $customers = array();
+        /* If the query contains the field `nextDate` search from the table crm_dating. */
+        if(strpos(',past,today,tomorrow,thisweek,thismonth,', ",{$mode},") !== false or ($mode == 'bysearch' && strpos($customerQuery, '`nextDate`') !== false))
+        {
+            $customers = $this->dao->select('t1.*')->from(TABLE_CUSTOMER)->alias('t1')
+                ->leftJoin(TABLE_DATING)->alias('t2')->on('t1.id=t2.objectID')
+                ->where('t1.deleted')->eq(0)
+                ->andWhere('t2.status')->eq('wait')
+                ->andWhere('t2.objectType')->in('customer')
+                ->beginIF($relation == 'client')->andWhere('t1.relation')->ne('provider')->fi()
+                ->beginIF($relation == 'provider')->andWhere('t1.relation')->ne('client')->fi()
+                ->beginIF($mode == 'past')->andWhere('t2.date')->lt(helper::today())->fi()
+                ->beginIF($mode == 'today')->andWhere('t2.date')->eq(helper::today())->fi()
+                ->beginIF($mode == 'tomorrow')->andWhere('t2.date')->eq(formattime(date::tomorrow(), DT_DATE1))->fi()
+                ->beginIF($mode == 'thisweek')->andWhere('t2.date')->between($thisWeek['begin'], $thisWeek['end'])->fi()
+                ->beginIF($mode == 'thismonth')->andWhere('t2.date')->between($thisMonth['begin'], $thisMonth['end'])->fi()
+                ->beginIF($mode == 'bysearch')->andWhere(str_replace('`nextDate`', 't2.date', $customerQuery))->fi()
+                ->andWhere('t2.date')->ne('0000-00-00')
+                ->andWhere('t1.id')->in($customerIdList)
+                ->beginIF(strpos($orderBy, 'date') !== false)->orderBy("t2.$orderBy")->fi()
+                ->beginIF(strpos($orderBy, 'date') === false)->orderBy("t1.$orderBy")->fi()
+                ->page($pager, 't1.id')
+                ->fetchAll('id');
+
+            $this->session->set('customerQueryCondition', $this->dao->get());
+
+            $datingList = $this->dao->select('objectID, MIN(date) AS date')->from(TABLE_DATING)
+                ->where('status')->eq('wait')
+                ->andWhere('objectType')->eq('customer')
+                ->andWhere('objectID')->in(array_keys($customers))
+                ->beginIF($mode == 'past')->andWhere('date')->lt(helper::today())->fi()
+                ->beginIF($mode == 'today')->andWhere('date')->eq(helper::today())->fi()
+                ->beginIF($mode == 'tomorrow')->andWhere('date')->eq(formattime(date::tomorrow(), DT_DATE1))->fi()
+                ->beginIF($mode == 'thisweek')->andWhere('date')->between($thisWeek['begin'], $thisWeek['end'])->fi()
+                ->beginIF($mode == 'thismonth')->andWhere('date')->between($thisMonth['begin'], $thisMonth['end'])->fi()
+                ->andWhere('date')->ne('0000-00-00')
+                ->groupBy('objectID')
+                ->fetchPairs();
+
+            foreach($customers as $id => $customer) $customer->nextDate = zget($datingList, $id, $customer->nextDate);
+        }
+
+        /* If search nothing from the table crm_dating then search from the table crm_customer. */
+        if(strpos(',all,field,area,industry,public,assignedTo,query,', ",{$mode},") !== false or ($mode == 'bysearch' && empty($customers)))
+        {
+            $customers = $this->dao->select('*')->from(TABLE_CUSTOMER)
+                ->where('deleted')->eq(0)
+                ->beginIF($relation == 'client')->andWhere('relation')->ne('provider')->fi()
+                ->beginIF($relation == 'provider')->andWhere('relation')->ne('client')->fi()
+                ->beginIF($mode == 'field')->andWhere('mode')->eq($param)->fi()
+                ->beginIF($mode == 'area')->andWhere('area')->eq($param)->fi()
+                ->beginIF($mode == 'industry')->andWhere('industry')->eq($param)->fi()
+                ->beginIF($mode == 'public')->andWhere('public')->eq('1')->fi()
+                ->beginIF($mode == 'assignedTo')->andWhere('assignedTo')->eq($this->app->user->account)->fi()
+                ->beginIF($mode == 'query')->andWhere($param)->fi()
+                ->beginIF($mode == 'bysearch')->andWhere($customerQuery)->fi()
+                ->andWhere('id')->in($customerIdList)
+                ->orderBy($orderBy)
+                ->page($pager)
+                ->fetchAll('id');
+
+            $this->session->set('customerQueryCondition', $this->dao->get());
+        }
+
+        return $customers;
     }
 
     /** 

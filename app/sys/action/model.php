@@ -55,7 +55,7 @@ class actionModel extends model
 
         $this->dao->insert(TABLE_ACTION)
             ->data($action, $skip = 'nextDate,files,labels')
-            ->batchCheckIF($actionType == 'record', $this->config->action->require->createrecord, 'notempty')
+            ->batchCheckIF($actionType == 'record', 'contact, comment', 'notempty')
             ->checkIF($this->post->nextDate, 'nextDate', 'ge', helper::today())
             ->exec();
 
@@ -75,7 +75,73 @@ class actionModel extends model
 
         if(!$actionID) return false;
         $this->loadModel('file')->saveUpload('action', $actionID);
+
+        $this->updateDating($objectType, $objectID, $actionID);
+
+        /* Set the min next date as the post value. */
+        if(!$this->post->delta or $this->post->delta != 365000) $this->post->nextDate = $this->getMinDatingDate($objectType, $objectID);
+
         return $this->syncContactInfo($objectType, $objectID, $customer, $contact);
+    }
+
+    /**
+     * Update dating.
+     *
+     * @param  string $objectType
+     * @param  int    $objectID
+     * @param  int    $action
+     * @access public
+     * @return bool
+     */
+    public function updateDating($objectType, $objectID, $action)
+    {
+        $contact = new stdclass();
+        $contact->status     = 'done';
+        $contact->editedBy   = $this->app->user->account;
+        $contact->editedDate = helper::now();
+
+        $this->dao->update(TABLE_DATING)->data($contact)
+            ->where('status')->eq('wait')
+            ->andWhere('objectType')->eq($objectType)
+            ->andWhere('objectID')->eq($objectID)
+            ->andWhere('date')->le(date('Y-m-d'))
+            ->andWhere('account')->eq($this->app->user->account)
+            ->andWhere('contact')->eq($this->post->contact)
+            ->exec();
+
+        if(!$this->post->nextDate) return !dao::isError();
+
+        $dating = new stdclass();
+        $dating->objectType  = $objectType;
+        $dating->objectID    = $objectID;
+        $dating->action      = $action;
+        $dating->contact     = $this->post->nextContact == 'ditto' ? $this->post->contact : ($this->post->nextContact ? $this->post->nextContact : 0);
+        $dating->account     = $this->post->contactedBy;
+        $dating->date        = $this->post->nextDate;
+        $dating->desc        = $this->post->desc;
+        $dating->createdBy   = $this->app->user->account;
+        $dating->createdDate = helper::now();
+
+        $this->dao->insert(TABLE_DATING)->data($dating)->autoCheck()->exec();
+
+        return !dao::isError();
+    }
+
+    /**
+     * Set next date of origin table.
+     *
+     * @param  string $objectType
+     * @param  int    $objectID
+     * @access public
+     * @return bool
+     */
+    public function updateOriginTable($objectType, $objectID)
+    {
+        $table    = $this->config->action->datingTables[$objectType];
+        $nextDate = $this->getMinDatingDate($objectType, $objectID);
+        $this->dao->update($table)->set('nextDate')->eq($nextDate)->where('id')->eq($objectID)->exec();
+
+        return !dao::isError();
     }
     
     /**
@@ -223,7 +289,54 @@ class actionModel extends model
      */
     public function getHistory($actionID)
     {
-        return $this->dao->select()->from(TABLE_HISTORY)->where('action')->in($actionID)->orderBy('id')->fetchGroup('action');
+        return $this->dao->select('*')->from(TABLE_HISTORY)->where('action')->in($actionID)->orderBy('id')->fetchGroup('action');
+    }
+
+    /**
+     * Get dating by id.
+     * 
+     * @param  int    $id 
+     * @access public
+     * @return object
+     */
+    public function getDatingById($id)
+    {
+        return $this->dao->select('*')->from(TABLE_DATING)->where('id')->eq($id)->fetch();
+    }
+
+    /**
+     * Get dating list by objectType and objectID.
+     *
+     * @param  string $objectType
+     * @param  int    $objectID
+     * @access public
+     * @return void
+     */
+    public function getDatingList($objectType, $objectID)
+    {
+        return $this->dao->select('*')->from(TABLE_DATING)
+            ->where('status')->eq('wait')
+            ->andWhere('objectType')->eq($objectType)
+            ->andWhere('objectID')->eq($objectID)
+            ->orderBy('date, id')
+            ->fetchAll();
+    }
+
+    /**
+     * Get min next date by objectType and objectID.
+     *
+     * @param  string $objectType
+     * @param  int    $objectID
+     * @access public
+     * @return string
+     */
+    public function getMinDatingDate($objectType, $objectID)
+    {
+        return $this->dao->select('MIN(date) AS date')->from(TABLE_DATING)
+            ->where('status')->eq('wait')
+            ->andWhere('objectType')->eq($objectType)
+            ->andWhere('objectID')->eq($objectID)
+            ->fetch('date');
     }
 
     /**

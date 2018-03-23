@@ -39,7 +39,7 @@
         <?php if($mode == 'next'):?>
         <th class="w-90px"><?php commonModel::printOrderLink('nextDate', $orderBy, $vars, $lang->contact->nextDate);?></th>
         <?php endif;?>
-        <th class='text-left'><?php commonModel::printOrderLink('company', $orderBy, $vars, $lang->contact->company);?></th>
+        <th><?php commonModel::printOrderLink('company', $orderBy, $vars, $lang->contact->company);?></th>
         <th class='w-60px'> <?php commonModel::printOrderLink('gender', $orderBy, $vars, $lang->contact->gender);?></th>
         <th class='w-160px'><?php commonModel::printOrderLink('phone', $orderBy, $vars, $lang->contact->phone . $lang->slash . $lang->contact->mobile);?></th>
         <th class='w-160px'><?php commonModel::printOrderLink('email', $orderBy, $vars, $lang->contact->email);?></th>
@@ -68,7 +68,7 @@
       <td class='operate'>
         <?php
         commonModel::printLink('leads', 'assign', "contactID=$contact->id", $lang->contact->assign, "data-toggle='modal'");
-        commonModel::printLink('action', 'createRecord', "objectType=contact&objectID={$contact->id}", $lang->contact->record, "data-toggle='modal' data-width='860'");
+        commonModel::printLink('action', 'createRecord', "objectType=contact&objectID={$contact->id}", $lang->contact->record, "data-toggle='modal' data-width='800'");
         commonModel::printLink('address', 'browse', "objectType=contact&objectID=$contact->id", $lang->contact->address, "data-toggle='modal'");
         commonModel::printLink('leads', 'edit', "contactID={$contact->id}&mode={$mode}&status={$status}", $lang->edit);
         commonModel::printLink('leads', 'transform', "contactID=$contact->id", $lang->confirm, "data-toggle='modal'");

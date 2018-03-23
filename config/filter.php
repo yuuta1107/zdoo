@@ -16,6 +16,7 @@ $filter->todo    = new stdclass();
 $filter->webapp  = new stdclass();
 $filter->reply   = new stdclass();
 $filter->thread  = new stdclass();
+$filter->blog    = new stdclass();
 
 $filter->rules->md5        = '/^[a-z0-9]{32}$/';
 $filter->rules->base64     = '/^[a-zA-Z0-9\+\/\=]+$/';
@@ -90,3 +91,4 @@ $filter->project->default->cookie['lastProject'] = 'int';
 $filter->project->default->cookie['projectMode'] = 'code';
 $filter->reply->default->cookie['r']             = 'reg::checked';
 $filter->thread->default->cookie['t']            = 'reg::checked';
+$filter->blog->view->cookie['windowReloadUrl']   = 'equal::true';

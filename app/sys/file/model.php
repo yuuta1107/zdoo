@@ -663,7 +663,7 @@ class fileModel extends model
         if(!extension_loaded('gd') or !function_exists('imagecreatefromjpeg')) return $file;
 
         $pathName    = $file['pathname'];
-        $fileName    = $this->savePath . $pathName;
+        $fileName    = $this->savePath . $this->getSaveName($pathName);
         $suffix      = strrchr($fileName, '.');
         $lowerSuffix = strtolower($suffix);
 

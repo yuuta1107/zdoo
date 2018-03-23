@@ -28,7 +28,7 @@
     <div class='page-actions'>
       <?php
       echo "<div class='btn-group'>";
-      commonModel::printLink('action', 'createRecord', "objectType=contact&objectID={$contact->id}&customer={$contact->customer}&history=", $lang->contact->record, "data-toggle='modal' data-width='860' class='btn'");
+      commonModel::printLink('action', 'createRecord', "objectType=contact&objectID={$contact->id}&customer={$contact->customer}&history=", $lang->contact->record, "data-toggle='modal' data-width='800' class='btn'");
       commonModel::printLink('address', 'browse', "objectType=contact&objectID=$contact->id", $lang->contact->address, "data-toggle='modal' class='btn'");
       commonModel::printLink('resume', 'browse', "contactID=$contact->id", $lang->contact->resume, "data-toggle='modal' class='btn'");
       echo "</div>";

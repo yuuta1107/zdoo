@@ -24,9 +24,11 @@ class action extends control
     public function history($objectType, $objectID, $action = '', $from = 'view')
     {
         $this->view->actions    = $this->action->getList($objectType, $objectID, $action);
+        $this->view->datingList = $this->action->getDatingList($objectType, $objectID);
         $this->view->objectType = $objectType;
         $this->view->objectID   = $objectID;
         $this->view->users      = $this->loadModel('user')->getPairs();
+        $this->view->contacts   = $this->loadModel('contact', 'crm')->getPairs();
         $this->view->from       = $from;
         $this->view->behavior   = $action;
         $this->display();
@@ -118,11 +120,15 @@ class action extends control
         $this->loadModel('file');
         $this->view->title          = "<i class='icon-comment-alt'> </i>" . $this->lang->action->record->create;
         $this->view->objectType     = $objectType == 'provider' ? 'customer' : $objectType;
+        $this->view->isCustomer     = $objectType == 'customer';
         $this->view->objectID       = $objectID;
         $this->view->customer       = $customer;
         $this->view->history        = $history;
         $this->view->contacts       = $contacts;
+        $this->view->contactPairs   = $contactPairs;
         $this->view->pinyinContacts = commonModel::convert2Pinyin($contactPairs);
+        $this->view->users          = $this->loadModel('user')->getPairs('noclosed, nodeleted, noempty, noforbidden');
+        $this->view->modalWidth     = '800'; // Keep the modal dialog display normal if it was reloaded.
 
         $this->display();
     }
@@ -251,5 +257,50 @@ class action extends control
     {
         $this->action->read($actionID, $type);
         die('success');
+    }
+
+    /**
+     * Finish a dating.
+     * 
+     * @param  int    $id 
+     * @access public
+     * @return void
+     */
+    public function finishDating($id)
+    {
+        $user = $this->app->user->account;
+
+        $dating = $this->action->getDatingById($id);
+        if($dating->status != 'wait') $this->send(array('result' => 'success'));
+        if($this->app->user->admin != 'super' && $dating->account != $user && $dating->createdBy != $user) $this->send(array('result' => 'fail', 'message' => $this->lang->admin->record->finishDenied));
+
+        $dating->status     = 'done';
+        $dating->editedBy   = $user;
+        $dating->editedDate = helper::now();
+        $this->dao->update(TABLE_DATING)->data($dating)->where('id')->eq($id)->exec();
+
+        $this->action->updateOriginTable($dating->objectType, $dating->objectID);
+
+        $this->send(array('result' => 'success'));
+    }
+
+    /**
+     * Delete a dating.
+     * 
+     * @param  int    $id 
+     * @access public
+     * @return void
+     */
+    public function deleteDating($id)
+    {
+        $dating = $this->action->getDatingById($id);
+        if($dating->status != 'wait') $this->send(array('result' => 'fail', 'message' => $this->lang->action->record->deleteFail));
+        if($this->app->user->admin != 'super' && $dating->createdBy != $user) $this->send(array('result' => 'fail', 'message' => $this->lang->admin->record->deleteDenied));
+
+        $this->dao->delete()->from(TABLE_DATING)->where('id')->eq($id)->exec();
+
+        $this->action->updateOriginTable($dating->objectType, $dating->objectID);
+
+        $this->send(array('result' => 'success'));
     }
 }
