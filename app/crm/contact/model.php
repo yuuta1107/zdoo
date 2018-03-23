@@ -339,7 +339,7 @@ class contactModel extends model
             ->where('t1.deleted')->eq(0)
             ->beginIF($status)->andWhere('t1.status')->eq($status)->fi()
             ->beginIF($customer)->andWhere('t2.customer')->eq($customer)->fi()
-            ->beginIF($status)->andWhere('t2.customer')->in($customerIdList)->fi()
+            ->beginIF($status == 'normal')->andWhere('t2.customer')->in($customerIdList)->fi()
             ->fetchPairs();
 
         if($emptyOption) $contacts = array(0 => '') + $contacts;

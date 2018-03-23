@@ -107,6 +107,7 @@ $lang->action->desc->ignored               = '$date, 由 <strong>$actor</strong>
 $lang->action->desc->createtrip            = '$date, 由 <strong>$actor</strong> 創建出差：<strong>$extra</strong>。' . "\n";
 $lang->action->desc->createegress          = '$date, 由 <strong>$actor</strong> 創建外出：<strong>$extra</strong>。' . "\n";
 $lang->action->desc->imported              = '$date, 由 <strong>$actor</strong> 導入。' . "\n";
+$lang->action->desc->dating                = '$date, 由 <strong>$actor</strong> 創建下次聯繫：<strong>$extra</strong>。' . "\n";
 
 /* 用來顯示動態信息。*/
 $lang->action->label = new stdclass();
@@ -140,7 +141,8 @@ $lang->action->label->transform   = '轉換了';
 $lang->action->label->ignored     = '忽略了';
 $lang->action->label->imported    = '導入了';
 $lang->action->label->login       = '登錄系統';
-$lang->action->label->logout      = "退出登錄";
+$lang->action->label->logout      = '退出登錄';
+$lang->action->label->dating      = '創建了下次聯繫';
 
 $lang->action->label->createdbalance        = '登記餘額';
 $lang->action->label->createorder           = '創建訂單';
@@ -239,6 +241,7 @@ $lang->action->nextContactList[365000] = '無需聯繫';
 
 $lang->action->record = new stdclass();
 $lang->action->record->common       = '溝通';
+$lang->action->record->title        = '本次溝通';
 $lang->action->record->create       = '添加記錄';
 $lang->action->record->edit         = '編輯記錄';
 $lang->action->record->history      = '溝通記錄';
@@ -251,6 +254,7 @@ $lang->action->record->actor        = '操作人';
 $lang->action->record->comment      = '溝通內容';
 $lang->action->record->date         = '時間';
 $lang->action->record->file         = '附件';
+$lang->action->record->next         = '下次聯繫';
 $lang->action->record->nextList     = '下次聯繫列表';
 $lang->action->record->nextDate     = '下次聯繫日期';
 $lang->action->record->nextContact  = '下次聯繫人';

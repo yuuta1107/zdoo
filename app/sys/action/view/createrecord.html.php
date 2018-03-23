@@ -112,7 +112,7 @@
         <td <?php echo $colspan;?>><?php echo html::select('contactedBy', $users, $this->app->user->account, "class='form-control chosen'");?></td>
       </tr>
       <tr>
-        <th class='w-80px'><?php echo $lang->action->record->date;?></th>
+        <th class='w-80px'><?php echo $lang->action->date;?></th>
         <td class='w-240px'><?php echo html::input('nextDate', '', "class='form-control form-date'");?></td>
         <th colspan='2'><?php echo html::radio('delta', $lang->action->nextContactList , '', "onclick='computeNextDate(this.value)'");?></th>
       </tr>

@@ -107,6 +107,7 @@ $lang->action->desc->ignored               = '$date, ignored by <strong>$actor</
 $lang->action->desc->createtrip            = '$date, <strong>$actor</strong> created trip:<strong>$extra</strong>.' . "\n";
 $lang->action->desc->createegress          = '$date, <strong>$actor</strong> created egress:<strong>$extra</strong>.' . "\n";
 $lang->action->desc->imported              = '$date, import by <strong>$actor</strong>.' . "\n";
+$lang->action->desc->dating                = '$date, <strong>$actor</strong> created a dating : <strong>$extra</strong>。' . "\n";
 
 /* The action labels. */
 $lang->action->label = new stdclass();
@@ -140,7 +141,8 @@ $lang->action->label->transform   = 'transformed';
 $lang->action->label->ignored     = 'ignored';
 $lang->action->label->imported    = 'imported';
 $lang->action->label->login       = 'login';
-$lang->action->label->logout      = "logout";
+$lang->action->label->logout      = 'logout';
+$lang->action->label->dating      = 'created dating';
 
 $lang->action->label->createdbalance        = 'create balance';
 $lang->action->label->createorder           = 'create order';

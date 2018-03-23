@@ -71,17 +71,39 @@ class actionModel extends model
      */
     public function createRecord($objectType, $objectID, $customer, $contact)
     {
+        $sendmail = false;
         $actionID = $this->create($objectType, $objectID, $action = 'record', $this->post->comment, $this->post->date, $actor = null, $customer, $contact);
 
         if(!$actionID) return false;
         $this->loadModel('file')->saveUpload('action', $actionID);
 
-        $this->updateDating($objectType, $objectID, $actionID);
+        $result = $this->updateDating($objectType, $objectID, $actionID);
+        if($result && $this->post->nextDate)
+        {
+            if(isset($this->config->action->datingTables[$objectType]))
+            {
+                $table  = $this->config->action->datingTables[$objectType];
+                $object = $this->dao->select('*')->from($table)->where('id')->eq($objectID)->fetch();
+                if($object)
+                {
+                    $objectName = $this->post->nextDate;
+                    if($this->post->nextContact && $objectType != 'contact' && $objectType != 'leads')
+                    {
+                        $nextContact = $this->post->nextContact == 'ditto' ? $this->post->contact : $this->post->nextContact;
+                        $objectName .= ' ' . $this->dao->select('realname')->from(TABLE_CONTACT)->where('id')->eq($nextContact)->fetch('realname');
+                    }
+                    $actionID = $this->create($objectType, $objectID, $action = 'dating', $this->post->desc, $objectName, $actor = null, $customer, $contact);
+                    $sendmail = !dao::isError();
+                }
+            }
+        }
 
         /* Set the min next date as the post value. */
-        if(!$this->post->delta or $this->post->delta != 365000) $this->post->nextDate = $this->getMinDatingDate($objectType, $objectID);
+        if($this->post->nextDate) $this->post->nextDate = $this->getMinDatingDate($objectType, $objectID);
 
-        return $this->syncContactInfo($objectType, $objectID, $customer, $contact);
+        $this->syncContactInfo($objectType, $objectID, $customer, $contact);
+
+        return array('sendmail' => $sendmail, 'action' => $actionID);
     }
 
     /**
@@ -495,11 +517,11 @@ class actionModel extends model
             if($table != TABLE_TODO and $table != TABLE_TRADE)
             {
                 $objectNames[$objectType] = $this->dao->select("id, $field AS name")->from($table)->where('id')->in($objectIds)->fetchPairs();
-                if($objectType == 'order') $objectNames[$objectType] = $this->dao->select('o.id, concat(c.name, o.createdDate) as name')
-                    ->from(TABLE_ORDER)->alias('o')
-                    ->leftJoin(TABLE_CUSTOMER)->alias('c')->on('o.customer=c.id')
-                    ->where('o.id')->in($objectIds)
-                    ->fetchPairs(); 
+                if($objectType == 'order')
+                {
+                    $orders = $this->loadModel('order', 'crm')->getByIdList($objectIds);
+                    foreach($orders as $order) $objectNames[$objectType][$order->id] = $order->title;
+                }
             }
             elseif($table == TABLE_TODO)
             {

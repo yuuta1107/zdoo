@@ -96,9 +96,19 @@ class action extends control
                 }
             }
 
-            $this->action->createRecord($objectType, $objectID, $customer, $this->post->contact);
-
+            $result = $this->action->createRecord($objectType, $objectID, $customer, $this->post->contact);
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
+
+            if(isset($result['sendmail']) && $result['sendmail'] == true && isset($result['action']))
+            {
+                /* If set the date of next dating and assign anyone else to contact, send notice. */
+                if($this->post->contactedBy != $this->app->user->account && $this->post->nextDate)
+                {
+                    $nextContact = $this->post->nextContact == 'ditto' ? $this->post->contact : $this->post->nextContact;
+                    $this->sendmail($result['action'], $nextContact, $this->post->nextDate);
+                }
+            }
+
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => $this->server->http_referer));
         }
         
@@ -131,6 +141,64 @@ class action extends control
         $this->view->modalWidth     = '800'; // Keep the modal dialog display normal if it was reloaded.
 
         $this->display();
+    }
+
+    /**
+     * Send email.
+     *
+     * @param  int    $actionID
+     * @param  int    $nextContact
+     * @param  string $nextDate
+     * @access public
+     * @return void
+     */
+    public function sendmail($actionID, $nextContact, $nextDate)
+    {
+        /* Reset $this->output. */
+        $this->clear();
+
+        /* Get action info. */
+        $action = $this->loadModel('action')->getById($actionID);
+        if($action->action != 'dating') return false;
+
+        $history = $this->action->getHistory($actionID);
+        $action->history = isset($history[$actionID]) ? $history[$actionID] : array();
+
+        /* Set toList and ccList. */
+        $users    = $this->loadModel('user')->getPairs();
+        $customer = $this->loadModel('customer')->getById($action->customer);
+        $contact  = $this->loadModel('contact', 'crm')->getById($nextContact);
+        $toList   = $this->post->contactedBy;
+        $subject  = $this->lang->action->record->next . '# ' . $nextDate;
+        if($customer) $subject .= ' ' . $customer->name;
+        if($contact)  $subject .= ' ' . $contact->realname;
+
+        /* send notice if user is online and return failed accounts. */
+        $toList = $this->loadModel('action')->sendNotice($actionID, $toList);
+
+        if(!$toList) return true;
+
+        $table  = $this->config->action->datingTables[$action->objectType];
+        $object = $this->dao->select('*')->from($table)->where('id')->eq($action->objectID)->fetch();
+        $module = $action->objectType;
+        if($action->objectType == 'customer') $module = $object->relation == 'provider' ? 'provider' : 'customer';
+        if($action->objectType == 'contact')  $module = $object->status == 'normal' ? 'contact' : 'leads';
+        $viewUrl = commonModel::getSysURL() . helper::createLink("crm.{$module}", 'view', "id={$object->id}");
+
+        /* Create the email content. */
+        $this->view->action    = $action;
+        $this->view->users     = $users;
+        $this->view->mailTitle = $subject;
+        $this->view->nextDate  = $nextDate;
+        $this->view->customer  = $customer;
+        $this->view->contact   = $contact;
+        $this->view->viewUrl   = $viewUrl;
+
+        $mailContent = $this->parse($this->moduleName, 'sendmail');
+
+        /* Send emails. */
+        $this->loadModel('mail')->send($toList, $subject, $mailContent);
+        if($this->mail->isError()) trigger_error(join("\n", $this->mail->getError()));
     }
 
    /**
