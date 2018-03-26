@@ -142,7 +142,7 @@ class contact extends control
         $this->app->loadLang('resume', 'crm');
 
         $this->view->title      = $this->lang->contact->edit;
-        $this->view->customers  = $this->loadModel('customer')->getPairs('client', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit, $contact->customer);
+        $this->view->customers  = $this->loadModel('customer')->getPairs('provider', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit, $contact->customer);
         $this->view->contact    = $contact;
         $this->view->modalWidth = 1000;
 
