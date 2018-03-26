@@ -29,7 +29,7 @@ class model extends baseModel
     public function delete($table, $id)
     {
         $this->dao->update($table)->set('deleted')->eq(1)->where('id')->eq($id)->exec();
-        $object = ltrim(strstr(trim($table, '`'), '_'), '_');
+        $object = trim(substr($table, strrpos($table, '_') + 1), '`');
         $this->loadModel('action')->create($object, $id, 'deleted', '', $extra = ACTIONMODEL::CAN_UNDELETED);
     }
 }

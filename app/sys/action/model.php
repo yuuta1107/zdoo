@@ -281,9 +281,9 @@ class actionModel extends model
 
         foreach($typeTrashes as $objectType => $objectIds)
         {
-            $objectIds   = array_unique($objectIds);
-            $table       = $this->config->objectTables[$objectType];
-            $field       = $this->config->action->objectNameFields[$objectType];
+            $objectIds = array_unique($objectIds);
+            $table     = $this->config->objectTables[$objectType];
+            $field     = $this->config->action->objectNameFields[$objectType];
 
             if(!$table) continue;
             $objectNames[$objectType] = $this->dao->select("id, $field AS name")->from($table)->where('id')->in($objectIds)->fetchPairs();
