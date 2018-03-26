@@ -63,6 +63,7 @@
         <?php echo html::hidden('referer', $this->server->http_referer);?>
         <div class='page-actions'>
           <?php
+          if($disabled) echo html::hidden('status', $task->status);
           $browseLink = $this->session->taskList ? $this->session->taskList : inlink('browse', "project=$task->project");
           echo html::submitButton() . html::a($browseLink, $lang->goback, "class='btn btn-default'");
           ?>
@@ -205,7 +206,9 @@
               </td>
             </tr>
             <?php endfor;?>
-            <tr><td colspan='2' class='text-center'><?php echo html::a('javascript:void(0)', $lang->confirm, "class='btn btn-primary' data-dismiss='modal'")?></td></tr>
+            <tr>
+              <td colspan='2' class='text-center'><?php echo html::a('javascript:void(0)', $lang->confirm, "class='btn btn-primary' data-dismiss='modal'")?></td>
+            </tr>
           </table>
         </div>
       </div>
