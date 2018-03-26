@@ -98,7 +98,7 @@ class customerModel extends model
 
         $customers = array();
         /* If the query contains the field `nextDate` search from the table crm_dating. */
-        if(strpos(',past,today,tomorrow,thisweek,thismonth,', ",{$mode},") !== false or ($mode == 'bysearch' && strpos($customerQuery, '`nextDate`') !== false))
+        if(strpos(',contactedby,past,today,tomorrow,thisweek,thismonth,', ",{$mode},") !== false or ($mode == 'bysearch' && strpos($customerQuery, '`nextDate`') !== false))
         {
             $customers = $this->dao->select('t1.*')->from(TABLE_CUSTOMER)->alias('t1')
                 ->leftJoin(TABLE_DATING)->alias('t2')->on('t1.id=t2.objectID')
