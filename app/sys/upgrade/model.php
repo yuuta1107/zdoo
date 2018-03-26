@@ -151,7 +151,7 @@ class upgradeModel extends model
                 $this->execSQL($this->getUpgradeFile('4.6'));
                 $this->upgradeProductLine();
             case '4_6_1':
-                $this->execSQL($this->getUpgradeFile('4.6'));
+                $this->execSQL($this->getUpgradeFile('4.6.1'));
                 $this->processDating();
 
             default: if(!$this->isError()) $this->loadModel('setting')->updateVersion($this->config->version);
