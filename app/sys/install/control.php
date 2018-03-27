@@ -45,8 +45,11 @@ class install extends control
      */
     public function step0()
     {
+        $license = file_get_contents($this->app->getBasePath() . 'doc/LICENSE');
+        if($this->app->clientLang == 'zh-cn' or $this->app->clientLang == 'zh-tw') $license = file_get_contents($this->app->getBasePath() . 'doc/LICENSE.zh_CN');
+
         $this->view->title   = $this->lang->install->welcome;
-        $this->view->license = file_get_contents($this->app->getBasePath() . 'doc/LICENSE');
+        $this->view->license =  $license;
         $this->display();
     }
 

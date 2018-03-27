@@ -113,3 +113,19 @@ $lang->install->buildinEntry->doc['name']  = '文档';
 $lang->install->buildinEntry->doc['abbr']  = '文档';
 $lang->install->buildinEntry->proj['name'] = '项目';
 $lang->install->buildinEntry->proj['abbr'] = '项目';
+
+$lang->install->cronList[1] = '监控定时任务';
+$lang->install->cronList[2] = '定时备份任务';
+$lang->install->cronList[3] = '删除30天前的备份';
+$lang->install->cronList[4] = '每日提醒';
+
+$lang->install->groupList[1]['name'] = '管理员';
+$lang->install->groupList[1]['desc'] = '管理员拥有前台所有权限';
+$lang->install->groupList[2]['name'] = '财务专员';
+$lang->install->groupList[2]['desc'] = '财务专员拥有现金流所有权限';
+$lang->install->groupList[3]['name'] = '销售经理';
+$lang->install->groupList[3]['desc'] = '销售经理拥有客户管理所有权限';
+$lang->install->groupList[4]['name'] = '销售人员';
+$lang->install->groupList[4]['desc'] = '默认的销售人员权限';
+$lang->install->groupList[5]['name'] = '普通用户';
+$lang->install->groupList[5]['desc'] = '默认的普通账号权限';

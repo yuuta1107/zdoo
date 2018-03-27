@@ -19,12 +19,12 @@ $lang->install->error   = 'Error ';
 $lang->install->start            = 'Start install';
 $lang->install->keepInstalling   = 'Keep install this version';
 $lang->install->seeLatestRelease = 'See the latest release.';
-$lang->install->welcome          = 'Welcome to use RanZhi.';
-$lang->install->license          = 'RanZhi use license of Z PUBLIC LICENSE(ZPL) 1.2. ';
+$lang->install->welcome          = 'Welcome to use Zdoo.';
+$lang->install->license          = 'Zdoo use license of Z PUBLIC LICENSE(ZPL) 1.2. ';
 $lang->install->desc             = <<<EOT
 <blockquote>
-  <strong>{$lang->ranzhi}</strong>Developed by<strong><a href='http://www.cnezsoft.com' target='_blank' class='red'>QingDao Nature Easy Soft Network Technology Co,LTD</a></strong>，
-  With projects, customers, cash flow, office and communication of the five core functions.
+  <strong>{$lang->ranzhi}</strong> is developed by <strong><a href='http://www.cnezsoft.com' target='_blank' class='red'>QingDao Nature Easy Soft Network Technology Co.,Ltd.</a></strong>
+  <!--With projects, customers, cash flow, office and communication of the five core functions.-->
   Tailored specifically for small and medium sized groups, small and medium sized team of information technology tool of choice!
 
   Website:<a href='http://www.zdoo.org' target='_blank'>http://www.zdoo.org</a>
@@ -65,7 +65,7 @@ $lang->install->sessionChmod = 'Should change the permission of "%s".<br /> In L
 
 $lang->install->settingDB    = 'Set Database';
 $lang->install->dbHost     = 'Database Host';
-$lang->install->dbHostNote = 'If localhost can connect, try 127.0.0.1';
+$lang->install->dbHostNote = 'If 127.0.0.1 can not connect, try localhost';
 $lang->install->dbPort     = 'Host Port';
 $lang->install->dbUser     = 'Database User';
 $lang->install->dbPassword = 'Database Password';
@@ -84,7 +84,7 @@ $lang->install->setConfig  = 'Create config file';
 $lang->install->key        = 'Item';
 $lang->install->value      = 'Value';
 $lang->install->saveConfig = 'Save config';
-$lang->install->save2File  = '<div class="text-center"><span class="fail">Try to save the config auto, but failed.</span></div>Copy the text of the textareaand save to "<strong> %s </strong>".';
+$lang->install->save2File  = '<div>Failed to save the config automaticlly.</span></div>Copy the text of the textarea and save to "<strong> %s </strong>".';
 $lang->install->saved2File = 'The config file has saved to "<strong>%s</strong> ".';
 $lang->install->errorNotSaveConfig = 'Do not save the config file.';
 
@@ -113,3 +113,19 @@ $lang->install->buildinEntry->doc['name']  = 'DOC';
 $lang->install->buildinEntry->doc['abbr']  = '';
 $lang->install->buildinEntry->proj['name'] = 'PROJ';
 $lang->install->buildinEntry->proj['abbr'] = '';
+
+$lang->install->cronList[1] = 'Monitor cron';
+$lang->install->cronList[2] = 'Backup data & file';
+$lang->install->cronList[3] = 'Auto delete backup before 30 days';
+$lang->install->cronList[4] = 'Daily task reminder';
+
+$lang->install->groupList[1]['name'] = 'Administrator';
+$lang->install->groupList[1]['desc'] = 'Administrator has all privileges.';
+$lang->install->groupList[2]['name'] = 'Finance Specialist';
+$lang->install->groupList[2]['desc'] = 'has all privileges of CASH.';
+$lang->install->groupList[3]['name'] = 'Sales Manager';
+$lang->install->groupList[3]['desc'] = 'Sales Manager has all privileges of CRM.';
+$lang->install->groupList[4]['name'] = 'Sales';
+$lang->install->groupList[4]['desc'] = 'Default privileges for sales.';
+$lang->install->groupList[5]['name'] = 'Common';
+$lang->install->groupList[5]['desc'] = 'Default privileges for common user.';

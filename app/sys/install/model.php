@@ -500,6 +500,24 @@ EOT;
         $admin->join      = helper::now();
         $this->lang->user->password1 = $this->lang->user->password;
         $this->dao->insert(TABLE_USER)->data($admin, $skip = 'password1')->autoCheck()->batchCheck('account,password1', 'notempty')->check('account', 'account')->exec();
+
+        if(dao::isError()) return false;
+
+        /* Update group name and desc on dafault lang. */
+        $groups = $this->dao->select('*')->from(TABLE_GROUP)->orderBy('id')->fetchAll();
+        foreach($groups as $group)
+        {
+            $data = zget($this->lang->install->groupList, $group->id, '');
+            if($data) $this->dao->update(TABLE_GROUP)->data($data)->where('id')->eq($group->id)->exec();
+        }
+
+        /* Update cron remark by lang. */
+        foreach($this->lang->install->cronList as $id => $remark)
+        {
+            $this->dao->update(TABLE_CRON)->set('remark')->eq($remark)->where('id')->eq($id)->exec();
+        }
+
+        return !dao::isError();
     }
 
     /**

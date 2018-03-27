@@ -16,13 +16,8 @@
     <div class='modal-content'>
       <div class="modal-header text-right"><div class='btn dropdown'><?php include '../../common/view/selectlang.html.php';?></div></div>
       <div class='modal-body'>
-        <div class='row'>
-          <div class='col-md-8'>
-            <h3><?php echo $lang->install->welcome;?></h3>
-            <div><?php printf(nl2br(trim($lang->install->desc)), $config->version);?></div>
-          </div>
-          <div class='col-md-4'><!--<div id='ranzhi'><?php echo html::image($themeRoot . '/default/images/ips/app-ranzhi.png');?></div>--></div>
-        </div>
+        <h3><?php echo $lang->install->welcome;?></h3>
+        <div><?php printf(nl2br(trim($lang->install->desc)), $config->version);?></div>
       </div>
       <div class='modal-footer'>
         <?php if(!isset($latestRelease)):?>
