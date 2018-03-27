@@ -161,7 +161,7 @@ class reportModel extends model
                     $data->value = 0; 
                     foreach($productList as $id => $product)
                     {
-                        $count = $this->dao->select("$func($field) as value")->from($tableName)
+                        $count = $this->dao->select("$func($field) AS value")->from($tableName)
                             ->where('deleted')->eq('0')
                             ->beginIF($queryCondition)->andWhere($queryCondition)->fi()
                             ->andWhere('product')->like("%,$id,%")
@@ -178,7 +178,7 @@ class reportModel extends model
             {
                 foreach($list as $key => $value)
                 {
-                    $count = $this->dao->select("$func($field) as value")->from($tableName)
+                    $count = $this->dao->select("$func($field) AS value")->from($tableName)
                         ->where('deleted')->eq('0')
                         ->beginIF($queryCondition)->andWhere($queryCondition)->fi()
                         ->andWhere($groupBy)->like("%,$key,%")
@@ -194,22 +194,22 @@ class reportModel extends model
         }
         elseif($groupBy == 'year')
         {
-            $datas = $this->dao->select("year(createdDate) as name, $func($field) as value")->from($tableName)
+            $datas = $this->dao->select("year(createdDate) AS name, $func($field) AS value")->from($tableName)
                 ->where('deleted')->eq('0')
                 ->beginIF($queryCondition)->andWhere($queryCondition)->fi()
                 ->beginIF($currency != '')->andWhere('currency')->eq($currency)->fi()
-                ->groupBy("year(createdDate)")
+                ->groupBy('name')
                 ->orderBy('name desc')
                 ->limit(12)
                 ->fetchAll('name');
         }
         elseif($groupBy == 'month')
         {
-            $datas = $this->dao->select("DATE_FORMAT(createdDate, '%Y%m') as name, $func($field) as value")->from($tableName)
+            $datas = $this->dao->select("DATE_FORMAT(createdDate, '%Y%m') AS name, $func($field) AS value")->from($tableName)
                 ->where('deleted')->eq('0')
                 ->beginIF($queryCondition)->andWhere($queryCondition)->fi()
                 ->beginIF($currency != '')->andWhere('currency')->eq($currency)->fi()
-                ->groupBy("DATE_FORMAT(createdDate, '%Y%m')")
+                ->groupBy('name')
                 ->orderBy('name desc')
                 ->limit(12)
                 ->fetchAll('name');
@@ -230,14 +230,14 @@ class reportModel extends model
                 $customerIdList = '';
                 $customerQuery  = '';
             }
-            $datas = $this->dao->select("$groupBy as name, $func($field) as value")->from($tableName)
+            $datas = $this->dao->select("$groupBy AS name, $func($field) AS value")->from($tableName)
                 ->where('deleted')->eq('0')
                 ->beginIF($queryCondition)->andWhere($queryCondition)->fi()
                 ->beginIF($currency != '')->andWhere('currency')->eq($currency)->fi()
                 ->beginIF($relation)->andWhere('relation')->eq($relation)->fi()
                 ->beginIF($customerIdList)->andWhere('id')->in($customerIdList)->fi()
                 ->beginIF($customerQuery)->andWhere($customerQuery)->fi()
-                ->groupBy($groupBy)
+                ->groupBy('name')
                 ->orderBy('value_desc')
                 ->fetchAll('name');
         }
@@ -268,7 +268,7 @@ class reportModel extends model
      */
     public function getUserTasks()
     {
-        $tasks = $this->dao->select('t1.id, t1.name, t2.account as user')->from(TABLE_TASK)->alias('t1')
+        $tasks = $this->dao->select('t1.id, t1.name, t2.account AS user')->from(TABLE_TASK)->alias('t1')
             ->leftJoin(TABLE_USER)->alias('t2')->on('t1.assignedTo = t2.account')
             ->leftJoin(TABLE_PROJECT)->alias('t3')->on('t1.project = t3.id')
             ->where('t1.assignedTo')->ne('')
@@ -343,7 +343,7 @@ class reportModel extends model
         $today = helper::today();
 
 		/* Get all orders. */
-        $orders = $this->dao->select('o.*, c.name as customerName, c.level as level')->from(TABLE_ORDER)->alias('o')
+        $orders = $this->dao->select('o.*, c.name AS customerName, c.level AS level')->from(TABLE_ORDER)->alias('o')
             ->leftJoin(TABLE_CUSTOMER)->alias('c')->on("o.customer=c.id")
             ->where('o.deleted')->eq(0)
             ->andWhere('c.deleted')->eq(0)
@@ -403,12 +403,12 @@ class reportModel extends model
      */
     public function getUserContractCount()
     {
-        return $this->dao->select('signedBy, count(*) as count')->from(TABLE_CONTRACT)
+        return $this->dao->select('signedBy, count(*) AS count')->from(TABLE_CONTRACT)
             ->where('deleted')->eq(0)
             ->andWhere('signedBy')->ne('')
             ->andWhere('status')->eq('normal')
             ->groupBy('signedBy')
-            ->fetchPairs('signedBy', 'count');
+            ->fetchPairs();
     }
 }
 
