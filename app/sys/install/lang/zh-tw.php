@@ -113,3 +113,31 @@ $lang->install->buildinEntry->doc['name']  = '文檔';
 $lang->install->buildinEntry->doc['abbr']  = '文檔';
 $lang->install->buildinEntry->proj['name'] = '項目';
 $lang->install->buildinEntry->proj['abbr'] = '項目';
+
+$lang->install->categoryList[1] = '主營業務收入';
+$lang->install->categoryList[2] = '非主營業務收入';
+$lang->install->categoryList[3] = '主營業務成本';
+$lang->install->categoryList[4] = '非主營業務成本';
+$lang->install->categoryList[5] = '理財盈利';
+$lang->install->categoryList[6] = '理財虧損';
+$lang->install->categoryList[7] = '手續費';
+$lang->install->categoryList[8] = '借貸利息';
+
+$lang->install->schemaList[1] = '支付寶';
+$lang->install->schemaList[2] = '中信銀行簡版';
+
+$lang->install->cronList[1] = '監控定時任務';
+$lang->install->cronList[2] = '定時備份任務';
+$lang->install->cronList[3] = '刪除30天前的備份';
+$lang->install->cronList[4] = '每日提醒';
+
+$lang->install->groupList[1]['name'] = '管理員';
+$lang->install->groupList[1]['desc'] = '管理員擁有前台所有權限';
+$lang->install->groupList[2]['name'] = '財務專員';
+$lang->install->groupList[2]['desc'] = '財務專員擁有現金流所有權限';
+$lang->install->groupList[3]['name'] = '銷售經理';
+$lang->install->groupList[3]['desc'] = '銷售經理擁有客戶管理所有權限';
+$lang->install->groupList[4]['name'] = '銷售人員';
+$lang->install->groupList[4]['desc'] = '預設的銷售人員權限';
+$lang->install->groupList[5]['name'] = '普通用戶';
+$lang->install->groupList[5]['desc'] = '預設的普通賬號權限';

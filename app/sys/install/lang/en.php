@@ -114,6 +114,18 @@ $lang->install->buildinEntry->doc['abbr']  = '';
 $lang->install->buildinEntry->proj['name'] = 'PROJ';
 $lang->install->buildinEntry->proj['abbr'] = '';
 
+$lang->install->categoryList[1] = 'Main business income';
+$lang->install->categoryList[2] = 'Non-core business income';
+$lang->install->categoryList[3] = 'Main business cost';
+$lang->install->categoryList[4] = 'Non-core operating cost';
+$lang->install->categoryList[5] = 'Profit';
+$lang->install->categoryList[6] = 'Loss';
+$lang->install->categoryList[7] = 'Fees';
+$lang->install->categoryList[8] = 'Interest';
+
+$lang->install->schemaList[1] = 'Alipay';
+$lang->install->schemaList[2] = 'China CITIC Bank';
+
 $lang->install->cronList[1] = 'Monitor cron';
 $lang->install->cronList[2] = 'Backup data & file';
 $lang->install->cronList[3] = 'Auto delete backup before 30 days';

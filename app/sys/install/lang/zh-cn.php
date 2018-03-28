@@ -114,6 +114,18 @@ $lang->install->buildinEntry->doc['abbr']  = '文档';
 $lang->install->buildinEntry->proj['name'] = '项目';
 $lang->install->buildinEntry->proj['abbr'] = '项目';
 
+$lang->install->categoryList[1] = '主营业务收入';
+$lang->install->categoryList[2] = '非主营业务收入';
+$lang->install->categoryList[3] = '主营业务成本';
+$lang->install->categoryList[4] = '非主营业务成本';
+$lang->install->categoryList[5] = '理财盈利';
+$lang->install->categoryList[6] = '理财亏损';
+$lang->install->categoryList[7] = '手续费';
+$lang->install->categoryList[8] = '借贷利息';
+
+$lang->install->schemaList[1] = '支付宝';
+$lang->install->schemaList[2] = '中信银行简版';
+
 $lang->install->cronList[1] = '监控定时任务';
 $lang->install->cronList[2] = '定时备份任务';
 $lang->install->cronList[3] = '删除30天前的备份';

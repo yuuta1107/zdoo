@@ -503,18 +503,30 @@ EOT;
 
         if(dao::isError()) return false;
 
-        /* Update group name and desc on dafault lang. */
-        $groups = $this->dao->select('*')->from(TABLE_GROUP)->orderBy('id')->fetchAll();
-        foreach($groups as $group)
+        /* Update category name by lang. */
+        foreach($this->lang->install->categoryList as $id => $name)
         {
-            $data = zget($this->lang->install->groupList, $group->id, '');
-            if($data) $this->dao->update(TABLE_GROUP)->data($data)->where('id')->eq($group->id)->exec();
+            $this->dao->update(TABLE_CATEGORY)->set('name')->eq($name)->where('id')->eq($id)->exec();
+        }
+
+        /* Update schema name by lang. */
+        foreach($this->lang->install->schemaList as $id => $name)
+        {
+            $this->dao->update(TABLE_SCHEMA)->set('name')->eq($name)->where('id')->eq($id)->exec();
         }
 
         /* Update cron remark by lang. */
         foreach($this->lang->install->cronList as $id => $remark)
         {
             $this->dao->update(TABLE_CRON)->set('remark')->eq($remark)->where('id')->eq($id)->exec();
+        }
+
+        /* Update group name and desc on dafault lang. */
+        $groups = $this->dao->select('*')->from(TABLE_GROUP)->orderBy('id')->fetchAll();
+        foreach($groups as $group)
+        {
+            $data = zget($this->lang->install->groupList, $group->id, '');
+            if($data) $this->dao->update(TABLE_GROUP)->data($data)->where('id')->eq($group->id)->exec();
         }
 
         return !dao::isError();
