@@ -30,7 +30,8 @@
         <th class='w-150px'><?php echo $lang->backup->time?></th>
         <th><?php echo $lang->backup->files?></th>
         <th class='w-150px'><?php echo $lang->backup->size?></th>
-        <th class='w-80px'><?php echo $lang->actions?></th>
+        <?php $class = $this->app->clientLang == 'en' ? 'w-100px' : 'w-80px';?>
+        <th class='<?php echo $class;?>'><?php echo $lang->actions?></th>
       </tr>
     </thead>
     <tbody class='text-center'>
