@@ -11,8 +11,16 @@
  */
 
 if(!isset($lang->misc)) $lang->misc = new stdclass();
-$lang->misc->version     = '版本%s';
-$lang->misc->offcialSite = '官方网站';
-$lang->misc->support     = '技术支持';
-$lang->misc->userbook    = '用户手册';
-$lang->misc->forum       = '论坛交流';
+$lang->misc->version = '版本%s';
+
+$lang->misc->offcialSite['label'] = '官方网站';
+$lang->misc->offcialSite['url']   = 'http://www.ranzhi.org';
+
+$lang->misc->support['label'] = '技术支持';
+$lang->misc->support['url']   = 'http://www.ranzhi.org/page/support.html';
+
+$lang->misc->userbook['label'] = '用户手册';
+$lang->misc->userbook['url']   = 'http://www.ranzhi.org/book/';
+
+$lang->misc->forum['label'] = '论坛交流';
+$lang->misc->forum['url']   = 'http://www.ranzhi.org/forum/';

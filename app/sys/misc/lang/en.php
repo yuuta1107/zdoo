@@ -11,8 +11,16 @@
  */
 
 if(!isset($lang->misc)) $lang->misc = new stdclass();
-$lang->misc->version     = 'Version %s';
-$lang->misc->offcialSite = 'Official';
-$lang->misc->support     = 'Support';
-$lang->misc->userbook    = 'Manual';
-$lang->misc->forum       = 'Forum';
+$lang->misc->version = 'Version %s';
+
+$lang->misc->offcialSite['label'] = 'Offical';
+$lang->misc->offcialSite['url']   = 'http://www.zdoo.org';
+
+$lang->misc->support['label'] = 'Support';
+$lang->misc->support['url']   = 'http://www.zdoo.org/book/zdoomanual/collaborative-system-technical-support-5.html';
+
+$lang->misc->userbook['label'] = 'Manual';
+$lang->misc->userbook['url']   = 'http://www.zdoo.org/book/';
+
+$lang->misc->forum['label'] = 'Forum';
+$lang->misc->forum['url']   = 'http://www.zdoo.org/forum/';

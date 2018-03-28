@@ -10,10 +10,10 @@
   </div>
   <div class='col-xs-6' style='border-left: 1px solid #ddd'>
     <ul class='list-unstyled' id='aboutNav'>
-      <li><?php echo html::a('http://www.ranzhi.org', "<i class='icon-globe'></i> " . $lang->misc->offcialSite, "target='_blank'")?></li>
-      <li><?php echo html::a('http://www.ranzhi.org/page/support.html', "<i class='icon-question-sign'></i> " . $lang->misc->support, "target='_blank'")?></li>
-      <li><?php echo html::a('http://www.ranzhi.org/book/', "<i class='icon-book'></i> " . $lang->misc->userbook, "target='_blank'")?></li>
-      <li><?php echo html::a('http://www.ranzhi.org/forum/', "<i class='icon-comments-alt'></i> " . $lang->misc->forum, "target='_blank'")?></li>
+      <li><?php echo html::a($lang->misc->offcialSite['url'], "<i class='icon-globe'></i> " . $lang->misc->offcialSite['label'], "target='_blank'")?></li>
+      <li><?php echo html::a($lang->misc->support['url'], "<i class='icon-question-sign'></i> " . $lang->misc->support['label'], "target='_blank'")?></li>
+      <li><?php echo html::a($lang->misc->userbook['url'], "<i class='icon-book'></i> " . $lang->misc->userbook['label'], "target='_blank'")?></li>
+      <li><?php echo html::a($lang->misc->forum['url'], "<i class='icon-comments-alt'></i> " . $lang->misc->forum['label'], "target='_blank'")?></li>
     </ul>
   </div>
 </div>
