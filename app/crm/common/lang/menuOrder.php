@@ -46,7 +46,7 @@ $lang->contract->menuOrder[45] = 'expire';
 $lang->contract->menuOrder[50] = 'report';
 
 $lang->setting->menuOrder[5]  = 'product';
-$lang->setting->menuOrder[10] = 'productLine';
+$lang->setting->menuOrder[10] = 'productCategory';
 $lang->setting->menuOrder[15] = 'customerSource';
 $lang->setting->menuOrder[20] = 'customerType';
 $lang->setting->menuOrder[25] = 'customerSize';

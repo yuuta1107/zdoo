@@ -73,18 +73,18 @@ $lang->contract->menu->report       = '报表|report|browse|module=contract';
 /* Menu of setting module. */
 $lang->setting = new stdclass();
 $lang->setting->menu = new stdclass();
-$lang->setting->menu->product        = '产品状态|setting|lang|module=product&field=statusList&appName=sys';
-$lang->setting->menu->productLine    = '产品分类|tree|browse|type=product';
-$lang->setting->menu->customerSource = '客户来源|setting|lang|module=customer&field=sourceList&appName=sys';
-$lang->setting->menu->customerType   = '客户类型|setting|lang|module=customer&field=typeList&appName=sys';
-$lang->setting->menu->customerSize   = '客户规模|setting|lang|module=customer&field=sizeNameList&appName=sys';
-$lang->setting->menu->customerLevel  = '客户等级|setting|lang|module=customer&field=levelNameList&appName=sys';
-$lang->setting->menu->customerStatus = '客户状态|setting|lang|module=customer&field=statusList&appName=sys';
-$lang->setting->menu->area           = '区域设置|tree|browse|type=area|';
-$lang->setting->menu->industry       = '行业设置|tree|browse|type=industry|';
-$lang->setting->menu->currency       = '货币设置|setting|lang|module=common&field=currencyList';
-$lang->setting->menu->salesGroup     = array('link' => '销售分组|sales|admin|', 'alias' => 'browse,create,edit');
-$lang->setting->menu->customerPool   = '客户池|setting|customerpool|';
+$lang->setting->menu->product         = '产品状态|setting|lang|module=product&field=statusList&appName=sys';
+$lang->setting->menu->productCategory = '产品分类|tree|browse|type=product';
+$lang->setting->menu->customerSource  = '客户来源|setting|lang|module=customer&field=sourceList&appName=sys';
+$lang->setting->menu->customerType    = '客户类型|setting|lang|module=customer&field=typeList&appName=sys';
+$lang->setting->menu->customerSize    = '客户规模|setting|lang|module=customer&field=sizeNameList&appName=sys';
+$lang->setting->menu->customerLevel   = '客户等级|setting|lang|module=customer&field=levelNameList&appName=sys';
+$lang->setting->menu->customerStatus  = '客户状态|setting|lang|module=customer&field=statusList&appName=sys';
+$lang->setting->menu->area            = '区域设置|tree|browse|type=area|';
+$lang->setting->menu->industry        = '行业设置|tree|browse|type=industry|';
+$lang->setting->menu->currency        = '货币设置|setting|lang|module=common&field=currencyList';
+$lang->setting->menu->salesGroup      = array('link' => '销售分组|sales|admin|', 'alias' => 'browse,create,edit');
+$lang->setting->menu->customerPool    = '客户池|setting|customerpool|';
 
 /* Menu of sales module. */
 if(!isset($lang->sales)) $lang->sales = new stdclass();
