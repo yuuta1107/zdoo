@@ -122,4 +122,24 @@ class sql extends baseSQL
             return parent::orderBy($order);
         }
     }
+
+    /**
+     * 创建GROUP BY部分。
+     * Create the groupby part.
+     *
+     * @param  string $groupBy
+     * @access public
+     * @return object the sql object.
+     */
+    public function groupBy($groupBy)
+    {
+        if($this->inCondition and !$this->conditionIsTrue) return $this;
+        if(!preg_match('/^\w+[a-zA-Z0-9_`.,\s]+$/', $groupBy))
+        {
+            $groupBy = htmlspecialchars($groupBy);
+            die("Group is bad query, The group is $groupBy");
+        }
+        $this->sql .= ' ' . DAO::GROUPBY . " $groupBy";
+        return $this;
+    }
 }
