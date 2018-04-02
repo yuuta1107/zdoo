@@ -1013,6 +1013,8 @@ function setFormAction(actionLink, hiddenwin, obj)
  */
 function fixNavbar()
 {
+    if($('.navbar-nav').length == 0) return false;
+
     var $navbar     = $('.navbar-nav');
     var navWidth    = $('#mainNavbar').width();
     var headerWidth = $('.navbar-header').width();
