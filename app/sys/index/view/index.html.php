@@ -66,7 +66,7 @@ js::set('attend', commonModel::isAvailable('attend') ? 1 : 0);
       </div>
     </nav>
     <div id='dashboardWrapper'>
-      <div class='panels-container dashboard' id='dashboard' data-confirm-remove-block='<?php  echo $lang->block->confirmRemoveBlock;?>'>
+      <div class='panels-container dashboard' id='dashboard' data-confirm-remove-block='<?php echo $lang->block->confirmRemoveBlock;?>'>
         <div class='row'>
           <?php
           $index = 0;

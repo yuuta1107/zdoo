@@ -1,5 +1,6 @@
 $(document).ready(function() 
 {
+    fixNavbar();
     setRequiredFields();
 
     /* Enable default ajax options. */

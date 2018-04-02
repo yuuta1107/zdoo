@@ -1004,3 +1004,27 @@ function setFormAction(actionLink, hiddenwin, obj)
 
     $form.attr('action', actionLink).submit();
 }
+
+/**
+ * Fix menus of navbar. 
+ * 
+ * @access public
+ * @return void
+ */
+function fixNavbar()
+{
+    var $navbar     = $('.navbar-nav');
+    var navWidth    = $('#mainNavbar').width();
+    var headerWidth = $('.navbar-header').width();
+    var menuWidth   = $navbar.width();
+    var rightWidth  = $('.dashboard-actions').length == 0 ? 100 : 200;
+
+    if(menuWidth > navWidth - headerWidth - rightWidth)
+    {
+        $navbar.find('.moreMenu').removeClass('hidden');
+        var lastNav = $('.navbar-nav > li').not('.moreMenu').last();
+        $navbar.find('.moreMenu .dropdown-menu').prepend(lastNav);
+
+        fixNavbar();
+    }
+}

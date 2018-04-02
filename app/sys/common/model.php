@@ -424,6 +424,11 @@ class commonModel extends model
             }
         }
 
+        if(!$isMobile)
+        {
+            $string .= "<li class='moreMenu hidden'><a href='javascript:;' class='dropdown-toggle' data-toggle='dropdown'>{$lang->more} <span class='caret'></span></a><ul class='dropdown-menu'></ul></li>";
+        }
+
         $string .= !$isMobile ? "</ul>\n" : '';
         return $string;
     }
