@@ -765,7 +765,11 @@ class attend extends control
             $user = zget($userList, $account, '');
             if($user) $fileName .= $user . ' - ';
         }
-        $fileName .= $currentYear . $this->lang->year . $currentMonth . $this->lang->month . $this->lang->attend->detail;
+        $fileName .= $currentYear;
+        if($this->app->clientLang != 'en') $fileName .= $lang->year;
+        $fileName .= $currentMonth;
+        if($this->app->clientLang != 'en') $fileName .= $lang->month;
+        $fileName .= $this->lang->attend->detail;
 
         $this->view->title        = $this->lang->attend->detail;
         $this->view->dept         = $deptID;

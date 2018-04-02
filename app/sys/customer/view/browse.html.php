@@ -46,7 +46,8 @@
           $date = strpos(',past,today,tomorrow,thisweek,thismonth,', ",{$mode},") != false ? 'date' : 'nextDate';
           ?>
           <th class='w-100px'><?php commonModel::printOrderLink($date, $orderBy, $vars, $lang->customer->nextDate);?></th>
-          <th class='w-200px'><?php echo $lang->actions;?></th>
+          <?php $class = $this->app->clientLang == 'en' ? 'w-280px' : 'w-200px';?>
+          <th class='<?php echo $class;?>'><?php echo $lang->actions;?></th>
         </tr>
       </thead>
       <tbody>

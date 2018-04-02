@@ -46,7 +46,7 @@
         <td class='text-left'><?php echo $file;?></td>
         <td><?php echo $size / 1024 >= 1024 ? round($size / 1024 / 1024, 2) . 'MB' : round($size / 1024, 2) . 'KB';?></td>
         <?php if($i == 0):?>
-        <td <?php if($rowspan > 1) echo "rowspan='$rowspan'"?>>
+        <td  class='text-middle' <?php if($rowspan > 1) echo "rowspan='$rowspan'"?>>
           <?php
           commonModel::printLink('backup', 'restore', "file=$backupFile->name", $lang->backup->restore, "class='restore'");
           commonModel::printLink('backup', 'delete', "file=$backupFile->name", $lang->delete, "class='deleter'");

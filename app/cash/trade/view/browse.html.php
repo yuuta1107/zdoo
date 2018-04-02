@@ -88,7 +88,8 @@
           <th class='w-80px'><?php echo $lang->trade->loanrate;?></th>
           <?php endif;?>
           <th class='text-left visible-lg'><?php echo $lang->trade->desc;?></th>
-          <th class='w-130px'><?php echo $lang->actions;?></th>
+          <?php $class = $this->app->clientLang == 'en' ? 'w-160px' : 'w-130px';?>
+          <th class='<?php echo $class;?>'><?php echo $lang->actions;?></th>
         </tr>
       </thead>
       <tbody>
@@ -170,7 +171,8 @@
                 <td class='w-100px text-nowrap text-ellipsis text-left' title='<?php echo $category;?>'><?php echo $category;?></td>
                 <td colspan='4' class='w-300px'></td>
                 <td class='text-left visible-lg'><div title="<?php echo $trade->desc;?>" class='w-200px text-ellipsis'><?php echo $trade->desc;?><div></td>
-                <td class='w-130px'>
+                <?php $class = $this->app->clientLang == 'en' ? 'w-160px' : 'w-130px';?>
+                <td class='<?php echo $class;?>'>
                   <?php commonModel::printLink('trade', 'view', "tradeID={$trade->id}&mode={$mode}", $lang->view);?>
                   <?php commonModel::printLink('trade', 'edit', "tradeID={$trade->id}&mode={$mode}", $lang->edit);?>
                   <?php commonModel::printLink('trade', 'detail', "tradeID={$trade->id}&mode={$mode}", $lang->trade->detail, "data-toggle='modal'");?>

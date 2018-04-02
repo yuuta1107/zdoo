@@ -60,9 +60,11 @@
             <th><?php echo $lang->overtime->desc;?></th>
             <th class='w-100px'><?php commonModel::printOrderLink('status', $orderBy, $vars, $lang->overtime->status);?></th>
             <?php if($type == 'personal'):?>
-            <th class='w-130px'><?php echo $lang->actions;?></th>
+            <?php $class = $this->app->clientLang == 'en' ? 'w-180px' : 'w-130px';?>
+            <th class='<?php echo $class;?>'><?php echo $lang->actions;?></th>
             <?php else:?>
-            <th class='w-100px'><?php echo $lang->actions;?></th>
+            <?php $class = $this->app->clientLang == 'en' ? 'w-130px' : 'w-100px';?>
+            <th class='<?php echo $class;?>'><?php echo $lang->actions;?></th>
             <?php endif;?>
           </tr>
         </thead>

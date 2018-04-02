@@ -40,7 +40,11 @@
   <div class='main'>
     <div class='panel'>
       <div class='panel-heading text-center'>
-        <strong><?php echo $currentYear . $lang->year . $currentMonth . $lang->month . $lang->attend->report;?></strong>
+        <?php $title = $currentYear;?>
+        <?php if($this->app->clientLang != 'en') $title .= $lang->year;?>
+        <?php $title .= $currentMonth;?>
+        <?php if($this->app->clientLang != 'en') $title .= $lang->month;?>
+        <strong><?php echo $title . $lang->attend->report;?></strong>
       </div>
       <table class='table table-data table-bordered text-center table-fixed'>
         <thead>

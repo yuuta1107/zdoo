@@ -68,11 +68,14 @@
             <th class='w-80px'><?php commonModel::printOrderLink('refundBy', $orderBy, $vars, $lang->refund->refundBy);?></th>
             <th class='w-80px'><?php commonModel::printOrderLink('refundDate', $orderBy, $vars, $lang->refund->refundDate);?></th>
             <?php if($mode == 'personal'):?>
-            <th class='w-130px'><?php echo $lang->actions;?></th>
+            <?php $class = $this->app->clientLang == 'en' ? 'w-180px' : 'w-130px';?>
+            <th class='<?php echo $class;?>'><?php echo $lang->actions;?></th>
             <?php elseif($mode == 'todo'):?>
-            <th class='w-80px'><?php echo $lang->actions;?></th>
+            <?php $class = $this->app->clientLang == 'en' ? 'w-160px' : 'w-80px';?>
+            <th class='<?php echo $class;?>'><?php echo $lang->actions;?></th>
             <?php else:?>
-            <th class='w-40px'><?php echo $lang->actions;?></th>
+            <?php $class = $this->app->clientLang == 'en' ? 'w-60px' : 'w-40px';?>
+            <th class='<?php echo $class;?>'><?php echo $lang->actions;?></th>
             <?php endif;?>
           </tr>
         </thead>

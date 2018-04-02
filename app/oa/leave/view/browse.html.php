@@ -61,9 +61,11 @@
             <th><?php echo $lang->leave->desc;?></th>
             <th class='w-100px'><?php commonModel::printOrderLink('status', $orderBy, $vars, $lang->leave->status);?></th>
             <?php if($type == 'personal'):?>
-            <th class='w-160px'><?php echo $lang->actions;?></th>
+            <?php $class = $this->app->clientLang == 'en' ? 'w-200px' : 'w-160px';?>
+            <th class='<?php echo $class;?>'><?php echo $lang->actions;?></th>
             <?php else:?>
-            <th class='w-130px'><?php echo $lang->actions;?></th>
+            <?php $class = $this->app->clientLang == 'en' ? 'w-160px' : 'w-130px';?>
+            <th class='<?php echo $class;?>'><?php echo $lang->actions;?></th>
             <?php endif;?>
           </tr>
         </thead>

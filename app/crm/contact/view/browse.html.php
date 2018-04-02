@@ -39,7 +39,8 @@
         <th class='w-200px'><?php commonModel::printOrderLink('email', $orderBy, $vars, $lang->contact->email);?></th>
         <th class='w-100px visible-lg'><?php commonModel::printOrderLink('qq', $orderBy, $vars, $lang->contact->qq);?></th>
         <th class='w-100px visible-lg'><?php commonModel::printOrderLink('weixin', $orderBy, $vars, $lang->contact->weixin);?></th>
-        <th class='w-200px'><?php echo $lang->actions;?></th>
+        <?php $class = $this->app->clientLang == 'en' ? 'w-240px' : 'w-200px';?>
+        <th class='<?php echo $class;?>'><?php echo $lang->actions;?></th>
       </tr>
     </thead>
     <tbody>

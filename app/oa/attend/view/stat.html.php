@@ -53,7 +53,13 @@
     <?php else:?>
     <div class='panel'>
       <div class='panel-heading text-center'>
-        <strong><?php echo $currentYear . $lang->year . ($currentMonth ? $currentMonth . $lang->month : '') . $lang->attend->report;?></strong>
+        <?php $title = $currentYear;?>
+        <?php if($this->app->clientLang != 'en') $title .= $lang->year;?>
+        <?php if($currentMonth):?>
+        <?php $title .= $currentMonth;?>
+        <?php if($this->app->clientLang != 'en') $title .= $lang->month;?>
+        <?php endif;?>
+        <strong><?php echo $title . $lang->attend->report;?></strong>
       </div>
       <form id='ajaxForm' method='post' action='<?php echo $this->createLink('attend', 'saveStat', "month=$month")?>'>
         <table class='table table-data table-condensed table-striped table-hover table-bordered text-center' id='attendStat'>

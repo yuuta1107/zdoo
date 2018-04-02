@@ -21,7 +21,7 @@
 <div class='with-side'>
   <div class='side'>
     <div class='panel'>
-      <div class='panel-heading'><strong><?php echo $currentYear . $lang->year . $lang->attend->detail;?></strong></div>
+      <div class='panel-heading'><strong><?php echo $currentYear . ($this->app->clientLang != 'en' ? $lang->year : '') . $lang->attend->detail;?></strong></div>
       <div class='panel-body'>
       <?php 
         $lastmonth = $currentYear == date('Y') ? date('m') : 12;
@@ -29,7 +29,7 @@
         {
             $class = $month == $currentMonth ? 'btn-primary' : '';
             $month = $month < 10 ? '0' . $month : $month;
-            echo "<div class='col-xs-3 monthDIV'>" . html::a(inlink('detail', "date=$currentYear$month"), $month . $lang->month, "class='btn btn-mini $class'") . '</div>';
+            echo "<div class='col-xs-3 monthDIV'>" . html::a(inlink('detail', "date=$currentYear$month"), $month . ($this->app->clientLang != 'en' ? $lang->month : ''), "class='btn btn-mini $class'") . '</div>';
         }
       ?>
       </div>

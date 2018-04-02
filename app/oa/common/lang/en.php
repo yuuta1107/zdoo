@@ -25,7 +25,7 @@ $lang->menu->oa->trip      = 'Trip|trip|personal|';
 $lang->menu->oa->egress    = 'Egress|egress|personal|';
 $lang->menu->oa->refund    = 'Reimburse|refund|personal|';
 $lang->menu->oa->holiday   = 'Holiday|holiday|browse|';
-$lang->menu->oa->setting   = 'Settings|setting|module|app=oa';
+$lang->menu->oa->setting   = 'Settings|setting|modules|app=oa';
 
 $lang->menu->dashboard = $lang->menu->oa;
 
@@ -93,7 +93,7 @@ $lang->refund->menu->review     = 'Review pending|refund|browsereview|status=unr
 $lang->refund->menu->reviewedBy = 'Reviewed by me|refund|browsereview|status=reviewed';
 $lang->refund->menu->todo       = 'Reimburse pending|refund|todo|';
 $lang->refund->menu->company    = 'All|refund|company|';
-$lang->refund->menu->settings   = array('link' => 'Settings|refund|settings|', 'alias' => 'setcategory');
+$lang->refund->menu->settings   = array('link' => 'Settings|refund|setreviewer|', 'alias' => 'setcategory,setdepositor,setrefundby');
 
 if(!isset($lang->holiday)) $lang->holiday = new stdclass();
 $lang->holiday->menu = new stdclass();

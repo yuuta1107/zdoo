@@ -36,7 +36,8 @@
             <th class='w-90px'><?php commonModel::printOrderLink('createdDate',  $orderBy, $vars, $lang->task->createdDate);?></th>
             <th class='w-80px'><?php commonModel::printOrderLink('consumed',     $orderBy, $vars, $lang->task->consumedAB . $lang->task->lblHour);?></th>
             <th class='w-100px'><?php commonModel::printOrderLink('left',        $orderBy, $vars, $lang->task->left . $lang->task->lblHour);?></th>
-            <th class='w-240px'><?php echo $lang->actions;?></th>
+            <?php $class = $this->app->clientLang == 'en' ? 'w-280px' : 'w-240px';?>
+            <th class='<?php echo $class;?>'><?php echo $lang->actions;?></th>
           </tr>
         </thead>
         <tbody>
