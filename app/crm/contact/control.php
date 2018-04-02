@@ -142,7 +142,7 @@ class contact extends control
         $this->app->loadLang('resume', 'crm');
 
         $this->view->title      = $this->lang->contact->edit;
-        $this->view->customers  = $this->loadModel('customer')->getPairs('provider', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit, $contact->customer);
+        $this->view->customers  = $this->loadModel('customer')->getPairs('', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit, $contact->customer);
         $this->view->contact    = $contact;
         $this->view->modalWidth = 1000;
 
@@ -174,7 +174,7 @@ class contact extends control
         $this->view->contact    = $this->contact->getByID($contactID, $status);
         $this->view->addresses  = $this->loadModel('address', 'crm')->getList('contact', $contactID);
         $this->view->resumes    = $this->loadModel('resume', 'crm')->getList($contactID);
-        $this->view->customers  = $this->loadModel('customer')->getPairs('client');
+        $this->view->customers  = $this->loadModel('customer')->getPairs();
         $this->view->preAndNext = $this->loadModel('common', 'sys')->getPreAndNextObject('contact', $contactID); 
         $this->view->fileList   = $fileList;
 
