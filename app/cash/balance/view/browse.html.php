@@ -33,7 +33,7 @@
       </td>
     </tr>
     <?php endforeach;?>
-    <tr><td colspan='5'><?php echo $pager->show('right', 'short');?></td></tr>
+    <tr><td colspan='5' class='footer-pager'><?php echo $pager->show('right', 'short');?></td></tr>
   </tbody>
 </table>
 <?php include '../../../sys/common/view/footer.modal.html.php';?>
