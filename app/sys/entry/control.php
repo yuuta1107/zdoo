@@ -546,7 +546,9 @@ class entry extends control
                     $allEntries->$id = new stdclass();
                     $allEntries->{$id}->id = $id;
                 }
-                $allEntries->{$id}->order = $order * 10;
+                $order = $order * 10;
+                $allEntries->{$id}->order = $order;
+                $this->dao->update(TABLE_ENTRY)->set('`order`')->eq($order)->where('`id`')->eq($id)->exec();
             }
             $this->loadModel('setting')->setItem("{$this->app->user->account}.sys.common.customApp", json_encode($allEntries));
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
