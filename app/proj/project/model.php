@@ -204,6 +204,7 @@ class projectModel extends model
         $user = new stdclass();
         $user->type = 'project';
         $user->id   = $projectID;
+        $user->join = date(DT_DATE1);
         foreach($members as $member)
         {
             if($member == '') continue;
@@ -295,7 +296,6 @@ class projectModel extends model
     {
         $oldProject = $this->getById($projectID);
         $members    = array();
-        $project    = new stdclass();
 
         $oldMembers = $this->dao->select('account')->from(TABLE_TEAM)
             ->where('type')->eq('project')
@@ -314,23 +314,30 @@ class projectModel extends model
                 $member->account = $account;
                 $member->role    = $this->post->role[$key];
 
-                if(!isset($oldMembers[$account])) $this->dao->insert(TABLE_TEAM)->data($member)->autoCheck()->exec();
-                $this->dao->update(TABLE_TEAM)->set('role')->eq($member->role)->where('type')->eq('project')->andWhere('id')->eq($projectID)->andWhere('account')->eq($account)->exec();
-                unset($oldMembers[$account]);
+                if(isset($oldMembers[$account]))
+                {
+                    $member->join = date(DT_DATE1);
+                    $this->dao->update(TABLE_TEAM)->set('role')->eq($member->role)->where('type')->eq('project')->andWhere('id')->eq($projectID)->andWhere('account')->eq($account)->exec();
+                    unset($oldMembers[$account]);
+                }
+                else
+                {
+                    $this->dao->insert(TABLE_TEAM)->data($member)->autoCheck()->exec();
+                }
+
                 $members[$account] = $member;
             }
+
             /* delete old members. */
             if(!empty($oldMembers))
             {
-                foreach($oldMembers as $oldMember)
-                {
-                    $this->dao->delete()->from(TABLE_TEAM)->where('type')->eq('project')->andWhere('id')->eq($projectID)->andWhere('account')->eq($oldMember)->exec();
-                }
+                $this->dao->delete()->from(TABLE_TEAM)->where('type')->eq('project')->andWhere('id')->eq($projectID)->andWhere('account')->in($oldMembers)->exec();
             }
         }
 
         $this->loadModel('doc', 'doc')->setLibUsers($projectID);
 
+        $project = new stdclass();
         $project->members = $members;
         return commonModel::createChanges($oldProject, $project);
     }
