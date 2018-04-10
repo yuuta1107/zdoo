@@ -582,7 +582,6 @@ class entry extends control
                 $allEntries->{$id}->id = $id;
             }
             $allEntries->{$id}->visible = $visible;
-            if(!$visible) unset($allEntries->{$id}->visible);
 
             $this->loadModel('setting')->setItem("{$this->app->user->account}.sys.common.customApp", json_encode($allEntries));
             if(dao::isError()) $this->send(array('result' => 'fael', 'message' => dao::getError()));
