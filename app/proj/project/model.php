@@ -297,16 +297,14 @@ class projectModel extends model
         $members    = array();
         $project    = new stdclass();
 
-        /* Delete old member. */
-        $this->dao->delete()->from(TABLE_TEAM)
+        $oldMembers = $this->dao->select('account')->from(TABLE_TEAM)
             ->where('type')->eq('project')
             ->andWhere('id')->eq($projectID)
-            ->andWhere('role')->ne('manager')
-            ->exec();
+            ->fetchPairs();
 
-        /* save new members. */
         if(!empty($_POST['member']))
         {
+            /* save new members. */ 
             foreach($this->post->member as $key => $account)
             {
                 if(empty($account)) continue;
@@ -315,8 +313,19 @@ class projectModel extends model
                 $member->id      = $projectID;
                 $member->account = $account;
                 $member->role    = $this->post->role[$key];
-                $this->dao->insert(TABLE_TEAM)->data($member)->autoCheck()->exec();
+
+                if(!isset($oldMembers[$account])) $this->dao->insert(TABLE_TEAM)->data($member)->autoCheck()->exec();
+                $this->dao->update(TABLE_TEAM)->set('role')->eq($member->role)->where('type')->eq('project')->andWhere('id')->eq($projectID)->andWhere('account')->eq($account)->exec();
+                unset($oldMembers[$account]);
                 $members[$account] = $member;
+            }
+            /* delete old members. */
+            if(!empty($oldMembers))
+            {
+                foreach($oldMembers as $oldMember)
+                {
+                    $this->dao->delete()->from(TABLE_TEAM)->where('type')->eq('project')->andWhere('id')->eq($projectID)->andWhere('account')->eq($oldMember)->exec();
+                }
             }
         }
 
