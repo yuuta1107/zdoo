@@ -300,6 +300,7 @@ class projectModel extends model
         $oldMembers = $this->dao->select('account')->from(TABLE_TEAM)
             ->where('type')->eq('project')
             ->andWhere('id')->eq($projectID)
+            ->andWhere('role')->ne('manager')
             ->fetchPairs();
 
         if(!empty($_POST['member']))

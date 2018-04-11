@@ -6,16 +6,10 @@ function updateMember()
     $('[name^=member]').each(function()
     {
         var value = $(this).val();
-        if(value != '')
+        $('[name^=member]').each(function()
         {
-            $('[name^=member]').each(function()
-            {
-                if($(this).val() == '')
-                {
-                    $(this).find('[value=' + value + ']').prop('disabled', 'disabled');
-                }
-            });
-        }
+            $(this).find('[value=' + value + ']').prop('disabled', 'disabled');
+        });
     });
     $('.chosen').trigger("chosen:updated");
 }
