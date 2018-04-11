@@ -54,18 +54,21 @@ class balance extends control
     {
         if($_POST)
         {
+            if($this->post->date > date(DT_DATE1)) $this->send(array('result' => 'fail', 'message' => array('date' => sprintf($this->lang->error->le, $this->lang->balance->date, date(DT_DATE1)))));
+
             $balanceID = $this->balance->create(); 
             if(dao::isError())$this->send(array('result' => 'fail', 'message' => dao::getError()));
 
             $this->loadModel('action')->create('depositor', $this->post->depositor, 'createdBalance', $this->post->date . ':'  . $this->post->money . $this->post->currency);
 
-            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => $this->server->http_referer));
+            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'loadInModal'));
         }
 
         $this->view->title            = $this->lang->balance->create;
         $this->view->currentDepositor = $depositor;
         $this->view->depositorList    = $this->loadModel('depositor', 'cash')->getList();
         $this->view->currencyList     = $this->loadModel('common', 'sys')->getCurrencyList();
+        $this->view->modalWidth       = 500;
 
         $this->display();
     }
@@ -83,6 +86,8 @@ class balance extends control
         if(empty($balance)) die();
         if($_POST)
         {
+            if($this->post->date > date(DT_DATE1)) $this->send(array('result' => 'fail', 'message' => array('date' => sprintf($this->lang->error->le, $this->lang->balance->date, date(DT_DATE1)))));
+
             $changes = $this->balance->update($balanceID);
             if(dao::isError())$this->send(array('result' => 'fail', 'message' => dao::getError()));
 
@@ -92,13 +97,14 @@ class balance extends control
                 $this->action->logHistory($actionID, $changes);
             }
             
-            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => inlink('browse')));
+            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'loadInModal'));
         }
        
         $this->view->title         = $this->lang->balance->edit;
         $this->view->balance       = $balance;
         $this->view->depositorList = $this->loadModel('depositor', 'cash')->getList();
         $this->view->currencyList  = $this->loadModel('common', 'sys')->getCurrencyList();
+        $this->view->modalWidth    = 500;
 
         $this->display();
     }
