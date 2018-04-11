@@ -160,7 +160,7 @@ $.extend(
 
                         /* Append error message, set style and set the focus events. */
                         $('#' + errorLabel).remove(); 
-                        var $errorOBJ = form.find(errorOBJ);
+                        var $errorOBJ = $(formID).find(errorOBJ);
                         if($errorOBJ.closest('.input-group').length > 0)
                         {
                             $errorOBJ.closest('.input-group').after(errorMSG)
