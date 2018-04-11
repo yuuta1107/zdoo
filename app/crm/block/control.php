@@ -142,9 +142,7 @@ class block extends control
 
         $this->view->orders = $this->dao->select('*')->from(TABLE_ORDER)
             ->where('deleted')->eq(0)
-            ->beginIF(!isset($this->app->user->rights['crm']['manageall']) and ($this->app->user->admin != 'super'))
             ->andWhere('customer')->in($customerIdList)
-            ->fi()
             ->beginIF($params->type and strpos($params->type, 'status') === false)->andWhere($params->type)->eq($params->account)->fi()
             ->beginIF($params->type and strpos($params->type, 'status') !== false)->andWhere('status')->eq(str_replace('status' , '', $params->type))->fi()
             ->orderBy($params->orderBy)
@@ -168,8 +166,8 @@ class block extends control
         $params = $this->get->param;
         $params = json_decode(base64_decode($params));
 
-        $this->view->sso    = base64_decode($this->get->sso);
-        $this->view->code   = $this->get->blockid;
+        $this->view->sso  = base64_decode($this->get->sso);
+        $this->view->code = $this->get->blockid;
 
         $this->view->tasks = $this->dao->select('*')->from(TABLE_TASK)
             ->where('deleted')->eq(0)
