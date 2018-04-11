@@ -15,7 +15,7 @@
 <?php include '../../../sys/common/view/chosen.html.php';?>
 <?php js::set('currencyList', $currencyList);?>
 <form action='<?php echo inlink('edit', "balanceID={$balance->id}");?>' method='post' id='balanceForm'>
-  <table class='table table-form w-p60'>
+  <table class='table table-form w-p90'>
    <tr>
       <th class='w-70px'><?php echo $lang->balance->depositor;?></th>
       <td>
