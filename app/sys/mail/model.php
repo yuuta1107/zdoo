@@ -304,7 +304,7 @@ class mailModel extends model
                 {
                     foreach($attachmentFile as $file) 
                     {
-                        if(isset($file->realpath)) $this->mta->AddAttachment($file->realpath, $file->title . '.' . $file->extension);
+                        if(isset($file->realpath)) $this->mta->AddAttachment($file->realpath, $file->title);
                     }
                 }
                 else
