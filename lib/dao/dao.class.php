@@ -89,6 +89,56 @@ class dao extends baseDAO
 
         return $this;
     }
+
+    /**
+     * 获取查询记录条数。
+     * The count method, call sql::select() and from().
+     * use as $this->dao->select()->from(TABLE_BUG)->where()->count();
+     *
+     * @param  string $distinctField
+     * @access public
+     * @return void
+     */
+    public function count($distinctField = '')
+    {
+        /* 获得SELECT，FROM的位置，使用count(*)替换其字段。 */
+        /* Get the SELECT, FROM position, thus get the fields, replace it by count(*). */
+        $sql        = $this->get();
+        $selectPOS  = strpos($sql, 'SELECT') + strlen('SELECT');
+        $fromPOS    = strpos($sql, 'FROM');
+        $fields     = substr($sql, $selectPOS, $fromPOS - $selectPOS);
+        $countField = $distinctField ? 'distinct ' . $distinctField : '*';
+        $sql        = str_replace($fields, " COUNT($countField) AS recTotal ", substr($sql, 0, $fromPOS)) . substr($sql, $fromPOS);
+
+        /*
+         * 去掉SQL语句中group, order和limit之后的部分。
+         * Remove the part after group, order and limit.
+         **/
+        $subLength = strlen($sql);
+        $groupPOS  = strripos($sql, 'group by');
+        $orderPOS  = strripos($sql, 'order by');
+        $limitPOS  = strripos($sql, 'limit');
+        if($limitPOS) $subLength = $limitPOS;
+        if($orderPOS) $subLength = $orderPOS;
+        if($groupPOS) $subLength = $groupPOS;
+        $sql = substr($sql, 0, $subLength);
+        self::$querys[] = $sql;
+
+        /*
+         * 获取记录数。
+         * Get the records count.
+         **/
+        try
+        {
+            $row = $this->dbh->query($sql)->fetch(PDO::FETCH_OBJ);
+        }
+        catch (PDOException $e)
+        {
+            $this->sqlError($e);
+        }
+
+        return is_object($row) ? $row->recTotal : 0;
+    }
 }
 
 /**
