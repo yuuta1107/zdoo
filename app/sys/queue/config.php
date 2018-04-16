@@ -16,5 +16,3 @@ $config->queue->setting['message']['setting']  = $config->queue->available['mess
 $config->queue->setting['webhook']['setting']  = $config->queue->available['webhook'];
 $config->queue->setting['xuanxuan']['setting'] = $config->queue->available['xuanxuan'];
 
-$config->queue->special = array();
-$config->queue->special['todo'] = array('notCreateTodo');

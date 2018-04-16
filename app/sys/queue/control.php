@@ -128,7 +128,12 @@ EOT;
         echo "ok\n";
     }
 
-    public function checkSpecial()
+    /**
+     * Check for additional.
+     * @account public
+     * @return void
+     */
+    public function additional()
     {
         $this->loadModel('todo')->notCreateTodo();
     }
