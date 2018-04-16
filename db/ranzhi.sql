@@ -686,6 +686,22 @@ CREATE TABLE IF NOT EXISTS `sys_action` (
   KEY `objectID` (`objectID`),
   KEY `date` (`date`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+-- DROP TABLE IF EXISTS `sys_queue`;
+CREATE TABLE `sys_queue` (
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `objectID` mediumint(8) unsigned NOT NULL,
+  `action` mediumint(9) NOT NULL,
+  `toList` varchar(255) NOT NULL,
+  `ccList` text NOT NULL,
+  `subject` varchar(255) DEFAULT '',
+  `data` text DEFAULT NULL,
+  `createdBy` char(30) NOT NULL,
+  `createdDate` datetime NOT NULL,
+  `sendTime` datetime NOT NULL,
+  `status` varchar(10) NOT NULL DEFAULT 'wait',
+  `failReason` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `sys_block`;
 CREATE TABLE IF NOT EXISTS `sys_block` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,

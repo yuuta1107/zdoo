@@ -15,9 +15,9 @@ class todoModel extends model
 {
     /**
      * Create a todo.
-     * 
-     * @param  date   $date 
-     * @param  string $account 
+     *
+     * @param  date   $date
+     * @param  string $account
      * @access public
      * @return void
      */
@@ -46,7 +46,7 @@ class todoModel extends model
 
     /**
      * Create batch todo
-     * 
+     *
      * @access public
      * @return void
      */
@@ -89,7 +89,7 @@ class todoModel extends model
 
                 $todoID = $this->dao->lastInsertID();
                 $this->loadModel('action')->create('todo', $todoID, 'created');
-                if(!empty($todo->assignedTo)) 
+                if(!empty($todo->assignedTo))
                 {
                     $actionID = $this->loadModel('action')->create('todo', $todoID, 'assigned', '', $todo->assignedTo);
                     $actionList[$todoID] = $actionID;
@@ -110,8 +110,8 @@ class todoModel extends model
 
     /**
      * update a todo.
-     * 
-     * @param  int    $todoID 
+     *
+     * @param  int    $todoID
      * @access public
      * @return void
      */
@@ -139,8 +139,8 @@ class todoModel extends model
     }
 
     /**
-     * Batch update todos. 
-     * 
+     * Batch update todos.
+     *
      * @access public
      * @return bool
      */
@@ -177,7 +177,7 @@ class todoModel extends model
             $changes = commonModel::createChanges($oldTodo, $todo);
 
             if($changes)
-            { 
+            {
                 $actionID = $this->action->create('todo', $id, 'edited');
                 $this->action->logHistory($actionID, $changes);
             }
@@ -188,8 +188,8 @@ class todoModel extends model
 
     /**
      * Change the status of a todo.
-     * 
-     * @param  string $todoID 
+     *
+     * @param  string $todoID
      * @access public
      * @return bool
      */
@@ -207,8 +207,8 @@ class todoModel extends model
 
     /**
      * Change the status of a todo.
-     * 
-     * @param  string $todoID 
+     *
+     * @param  string $todoID
      * @access public
      * @return bool
      */
@@ -224,9 +224,9 @@ class todoModel extends model
 
     /**
      * Change the status of a todo.
-     * 
-     * @param  string $todoID 
-     * @param  string $status 
+     *
+     * @param  string $todoID
+     * @param  string $status
      * @access public
      * @return bool
      */
@@ -248,9 +248,9 @@ class todoModel extends model
     }
 
     /**
-     * Assign to. 
-     * 
-     * @param  int    $todoID 
+     * Assign to.
+     *
+     * @param  int    $todoID
      * @access public
      * @return array|bool
      */
@@ -274,8 +274,8 @@ class todoModel extends model
 
     /**
      * Get info of a todo.
-     * 
-     * @param  int    $todoID 
+     *
+     * @param  int    $todoID
      * @access public
      * @return object|bool
      */
@@ -284,14 +284,14 @@ class todoModel extends model
         $todo = $this->dao->findById((int)$todoID)->from(TABLE_TODO)->fetch();
         if(!$todo) return false;
         if($todo->type == 'task') $todo->name = $this->dao->findById($todo->idvalue)->from(TABLE_TASK)->fetch('name');
-        if($todo->type == 'customer') $todo->name = $this->dao->findById($todo->idvalue)->from(TABLE_CUSTOMER)->fetch('name'); 
-        if($todo->type == 'order') 
+        if($todo->type == 'customer') $todo->name = $this->dao->findById($todo->idvalue)->from(TABLE_CUSTOMER)->fetch('name');
+        if($todo->type == 'order')
         {
             $order = $this->dao->select('c.name, o.createdDate')
                 ->from(TABLE_ORDER)->alias('o')
                 ->leftJoin(TABLE_CUSTOMER)->alias('c')->on('o.customer=c.id')
                 ->where('o.id')->eq($todo->idvalue)
-                ->fetch(); 
+                ->fetch();
             $todo->name = $order->name . '|' . date('Y-m-d', strtotime($order->createdDate));
         }
 
@@ -311,11 +311,11 @@ class todoModel extends model
     }
 
     /**
-     * Get todos by id list. 
-     * 
-     * @param  int    $todoIDList 
+     * Get todos by id list.
+     *
+     * @param  int    $todoIDList
      * @access public
-     * @return array 
+     * @return array
      */
     public function getByIdList($todoIDList)
     {
@@ -331,11 +331,11 @@ class todoModel extends model
         $this->loadModel('sso');
         foreach($todos as $todo)
         {
-            if($todo->type == 'task') $todo->name = zget($tasks, $todo->idvalue); 
-            if($todo->type == 'customer') $todo->name = zget($customers, $todo->idvalue); 
-            if($todo->type == 'order') 
+            if($todo->type == 'task') $todo->name = zget($tasks, $todo->idvalue);
+            if($todo->type == 'customer') $todo->name = zget($customers, $todo->idvalue);
+            if($todo->type == 'order')
             {
-                $order = zget($orders, $todo->idvalue, ''); 
+                $order = zget($orders, $todo->idvalue, '');
                 if($order) $todo->name = $order->name . '|' . date('Y-m-d', strtotime($order->createdDate));
             }
 
@@ -355,13 +355,13 @@ class todoModel extends model
 
     /**
      * Get todo list of a user.
-     * 
+     *
      * @param  string $mode     all|self|assignedToOther|assignedToMe
-     * @param  string $account 
-     * @param  date   $date     all|today|thisweek|lastweek|before, or a date. 
-     * @param  string $status   
-     * @param  string $orderBy   
-     * @param  object $pager   
+     * @param  string $account
+     * @param  date   $date     all|today|thisweek|lastweek|before, or a date.
+     * @param  string $status
+     * @param  string $orderBy
+     * @param  object $pager
      * @access public
      * @return void
      */
@@ -378,12 +378,12 @@ class todoModel extends model
             $begin = strtolower($date['begin']);
             $end   = strtolower($date['end']);
         }
-        elseif($date == 'today') 
+        elseif($date == 'today')
         {
             $begin = date::today();
             $end   = $begin;
         }
-        elseif($date == 'yesterday') 
+        elseif($date == 'yesterday')
         {
             $begin = date::yesterday();
             $end   = $begin;
@@ -446,7 +446,7 @@ class todoModel extends model
             ->orderBy($orderBy)
             ->page($pager)
             ->query();
-        
+
         /* Set session. */
         $sql = explode('WHERE', $this->dao->get());
         $sql = explode('ORDER', $sql[1]);
@@ -455,14 +455,14 @@ class todoModel extends model
         while($todo = $stmt->fetch())
         {
             if($todo->type == 'task') $todo->name = $this->dao->findById($todo->idvalue)->from(TABLE_TASK)->fetch('name');
-            if($todo->type == 'customer') $todo->name = $this->dao->findById($todo->idvalue)->from(TABLE_CUSTOMER)->fetch('name'); 
-            if($todo->type == 'order') 
+            if($todo->type == 'customer') $todo->name = $this->dao->findById($todo->idvalue)->from(TABLE_CUSTOMER)->fetch('name');
+            if($todo->type == 'order')
             {
                 $order = $this->dao->select('c.name, o.createdDate')
                     ->from(TABLE_ORDER)->alias('o')
                     ->leftJoin(TABLE_CUSTOMER)->alias('c')->on('o.customer=c.id')
                     ->where('o.id')->eq($todo->idvalue)
-                    ->fetch(); 
+                    ->fetch();
                 $todo->name = $order->name . '|' . date('Y-m-d', strtotime($order->createdDate));
             }
 
@@ -497,8 +497,8 @@ class todoModel extends model
     }
 
     /**
-     * getCalendarData 
-     * 
+     * getCalendarData
+     *
      * @param  string $date
      * @access public
      * @return object
@@ -564,9 +564,9 @@ class todoModel extends model
 
     /**
      * Judge an action is clickable or not.
-     * 
-     * @param  object    $todo 
-     * @param  string    $action 
+     *
+     * @param  object    $todo
+     * @param  string    $action
      * @access public
      * @return bool
      */
@@ -582,10 +582,10 @@ class todoModel extends model
     }
 
     /**
-     * Check privilage of todo. 
-     * 
-     * @param  object $task 
-     * @param  string $action 
+     * Check privilage of todo.
+     *
+     * @param  object $task
+     * @param  string $action
      * @access public
      * @return bool
      */
@@ -601,9 +601,9 @@ class todoModel extends model
     }
 
     /**
-     * build board list. 
-     * 
-     * @param  array  $items 
+     * build board list.
+     *
+     * @param  array  $items
      * @access public
      * @return string
      */
@@ -619,5 +619,26 @@ class todoModel extends model
             $index += 1;
         }
         return $div;
+    }
+
+    /**
+     * Insert the record of the notification that the user didn't create any todo today to the queue.
+     * @access public
+     * @return void
+     */
+    public function notCreateTodo()
+    {
+        $users = $this->dao->select('id, account')->from(TABLE_USER)->where('status')->eq('online')->fetchPairs();
+        if(empty($users)) return;
+        $todos  = $this->dao->select('account')->from(TABLE_TODO)->where('date')->eq(date('Y-m-d'))->andWhere('account')->in($users)->fetchPairs();
+        $target = array_diff($users, $todos);
+        if(!empty($target))
+        {
+            $link = commonModel::getSysURL() . helper::createLink('sys.todo', 'calendar');
+            $data = array();
+            $data['link']    = $link;
+            $data['actions'] = array('lable' => $this->lang->todo->create, 'url' => $link, 'type' => 'normal');
+            $this->loadModel('queue')->insertQueue(0, 0, join(',', $target), $this->lang->todo->emptyTodo, json_encode($data));
+        }
     }
 }

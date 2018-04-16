@@ -262,8 +262,27 @@ class baseValidater
      */
     public static function checkDate($date)
     {
+        if(empty($date)) return true;
         if($date == '0000-00-00') return true;
         $stamp = strtotime($date);
+        if(!is_numeric($stamp)) return false;
+        return checkdate(date('m', $stamp), date('d', $stamp), date('Y', $stamp));
+    }
+
+    /**
+     * Check datetime.
+     *
+     * @param  string    $datetime
+     * @static
+     * @access public
+     * @return bool
+     */
+    public static function checkDatetime($datetime)
+    {
+        if(empty($datetime)) return true;
+        if($datetime == '0000-00-00') return true;
+        if($datetime == '0000-00-00 00:00:00') return true;
+        $stamp = strtotime($datetime);
         if(!is_numeric($stamp)) return false; 
         return checkdate(date('m', $stamp), date('d', $stamp), date('Y', $stamp));
     }
@@ -679,7 +698,6 @@ class baseValidater
             $pagerCookie = 'pager' . ucfirst($moduleName) . ucfirst($methodName);
             $filter->default->cookie[$pagerCookie] = 'int';
         }
-
         foreach($var as $key => $value)
         {
             if($config->requestType == 'GET' and $type == 'get' and isset($params[$key])) continue;
@@ -700,7 +718,6 @@ class baseValidater
 
             if(!self::checkByRule($value, $rules)) unset($var[$key]);
         }
-
         return $var;
     }
 
@@ -753,7 +770,7 @@ class baseValidater
         global $filter;
 
         if(strpos($rule, '::') !== false) list($operator, $param) = explode('::', $rule);
-        if(strpos($rule,'::') === false) list($operator, $param) = array($rule, '');
+        if(strpos($rule, '::') === false) list($operator, $param) = array($rule, '');
         if($operator == 'reg' and isset($filter->rules->$param)) $param = $filter->rules->$param;
 
         return array($operator, $param);
