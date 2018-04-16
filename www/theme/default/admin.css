@@ -48,9 +48,9 @@ table.tablesorter thead tr div {padding:0; margin:0}
 table.tablesorter thead tr .header {cursor:pointer;}
 table.tablesorter thead tr .header a,table.tablesorter thead tr .headerSortUp a,table.tablesorter thead tr .headerSortDown a{display: inline-block; text-decoration:none}
 table.tablesorter thead tr .header a{color:#707070;}
-table.tablesorter thead tr .header:after {font-family: ZenIcon; font-weight: normal;content: " \e6bd";font-size: 14px;}
-table.tablesorter thead tr .headerSortUp:after {font-family: ZenIcon; font-weight: normal;content: " \e6b9";font-size: 14px;color:#2973EA;}
-table.tablesorter thead tr .headerSortDown:after{font-family: ZenIcon; font-weight: normal;content: " \e6b8";font-size: 14px;color:#2973EA;}
+table.tablesorter thead tr .header > a:after {font-family: ZenIcon; font-weight: normal;content: " \e6bd";font-size: 14px;}
+table.tablesorter thead tr .headerSortUp > a:after {font-family: ZenIcon; font-weight: normal;content: " \e6b9";font-size: 14px;color:#2973EA;}
+table.tablesorter thead tr .headerSortDown > a:after{font-family: ZenIcon; font-weight: normal;content: " \e6b8";font-size: 14px;color:#2973EA;}
 
 /* responsive. */
 @media(max-width:998px) {.affix{position: inherit;} .leftmenu.affix{top: 0; width: 100%; margin-bottom: 20px;}}
