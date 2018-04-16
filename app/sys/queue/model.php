@@ -27,8 +27,20 @@ class queueModel extends model
      * @access public
      * @return void
      */
-    public function send($objectID, $actionID, $toList = '')
+    public function send($queue)
     {
+        $objectID = $queue->objectID;
+        $actionID = $queue->action;
+        $toList   = $queue->toList;
+        $subject  = $queue->subject;
+        $data     = $queue->data;
+
+        if(!$actionID)
+        {
+            $this->sendNoticeToXuanXuan($toList, '', $subject, $data);
+            return;
+        }
+
         $queueSetting = $this->config->queue->setting;
         if(is_string($queueSetting)) $queueSetting = json_decode($queueSetting, true);
 
@@ -82,26 +94,41 @@ class queueModel extends model
      *
      * @param string $toList
      * @param object $action
+     * @param string $subject
+     * @param string $data
      * @access public
      * @return void
      */
-    public function sendNoticeToXuanXuan($toList, $action)
+    public function sendNoticeToXuanXuan($toList, $action, $subject = '', $data = '')
     {
         if(empty($toList)) return;
         $target = $this->dao->select('id')->from(TABLE_USER)->where('account')->in($toList)->fetchPairs();
 
-        $this->loadModel($action->objectType);
-        $info = $this->{$action->objectType}->getById($action->objectID);
-        if(!$info) return;
+        if(is_object($action) && !empty($action))
+        {
+            $this->loadModel($action->objectType);
+            $info = $this->{$action->objectType}->getById($action->objectID);
+            if(!$info) return;
 
-        $actionName = isset($this->lang->{$action->objectType}->{$action->action}) ? $this->lang->{$action->objectType}->{$action->action} : '';
-        $subject    = $actionName . $this->lang->{$action->objectType}->common;
-        $content    = $this->lang->{$action->objectType}->common . "#{$info->id} {$info->name}";
-        $link       = '';
-        $actions    = array();
-        $appInfo    = array('id' => 'ranzhi');
+            $actionName = isset($this->lang->{$action->objectType}->{$action->action}) ? $this->lang->{$action->objectType}->{$action->action} : '';
+            $subject    = $actionName . $this->lang->{$action->objectType}->common;
+            $content    = $this->lang->{$action->objectType}->common . "#{$info->id} {$info->name}";
+            $link       = '';
+            $actions    = array();
+        }
+        elseif(!empty($subject))
+        {
+            $data = json_decode($data, true);
+            $link    = isset($data['link']) ? $data['link'] : '';
+            $actions = isset($data['actions']) ? $data['actions'] : array();
+            $content = isset($data['content']) ? $data['content'] : '';
+        }
+        else
+        {
+            return;
+        }
 
-        $this->loadModel('chat')->createNotify(array_keys($target), $subject, '', $content, 'text', $link, $actions, $appInfo);
+        $this->loadModel('chat')->createNotify(array_keys($target), $subject, '', $content, 'text', $link, $actions, array('id' => 'ranzhi'));
     }
 
     /**
@@ -110,15 +137,19 @@ class queueModel extends model
      * @param  int    $objectID
      * @param  int    $actionID
      * @param  string $toList
+     * @param  string $subject
+     * @param  string $data
      * @access public
      * @return void
      */
-    public function insertQueue($objectID, $actionID, $toList)
+    public function insertQueue($objectID, $actionID, $toList, $subject = '', $data = '')
     {
         $queue = new stdclass();
         $queue->objectID    = $objectID;
         $queue->action      = $actionID;
         $queue->toList      = $toList;
+        $queue->subject     = $subject;
+        $queue->data        = $data;
         $queue->status      = 'wait';
         $queue->createdBy   = $this->app->user->account;
         $queue->createdDate = helper::now();

@@ -114,12 +114,22 @@ EOT;
     public function cron()
     {
         $queueList = $this->queue->getQueues('wait');
-        if(empty($queueList)) return;
+        if(empty($queueList))
+        {
+            echo "ok\n";
+            return;
+        }
         $this->dao->update(TABLE_QUEUE)->set('status')->eq('sended')->set('sendTime')->eq(helper::now())->where('id')->in(array_keys($queueList))->exec();
         foreach($queueList as $queue)
         {
-            $this->queue->send($queue->objectID, $queue->action, $queue->toList);
+            $this->queue->send($queue);
         }
         $this->dao->delete()->from(TABLE_QUEUE)->where('status')->eq('sended')->exec();
+        echo "ok\n";
+    }
+
+    public function checkSpecial()
+    {
+        $this->loadModel('todo')->notCreateTodo();
     }
 }
