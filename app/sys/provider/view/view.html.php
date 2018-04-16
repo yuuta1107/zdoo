@@ -26,6 +26,7 @@
     <div class='page-actions'>
       <?php
       echo "<div class='btn-group'>";
+      commonModel::printLink('action', 'createRecord', "objectType=provider&objectID=$provider->id&customer=$provider->id", $lang->customer->record, "class='btn' data-toggle='modal'");
       commonModel::printLink('provider', 'edit', "providerID=$provider->id", $lang->edit, "class='btn'");
       commonModel::printLink('provider', 'delete', "providerID=$provider->id", $lang->delete, "class='deleter btn'");
       echo '</div>';

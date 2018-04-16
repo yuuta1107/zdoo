@@ -504,8 +504,8 @@ a.list-group-item:focus {color: #353535; text-decoration: none; background-color
 .table tr > th.active,
 .table tr.active > td,
 .table tr.active > th {background-color: #ffe7bc;}
-table.tablesorter thead tr .headerSortUp:after,
-table.tablesorter thead tr .headerSortDown:after {color: #3949ab !important;}
+table.tablesorter thead tr .headerSortUp > a:after,
+table.tablesorter thead tr .headerSortDown > a:after {color: #3949ab !important;}
 
 .chosen-container-single .chosen-search:focus,
 .chosen-container-single .chosen-search input[type="text"]:focus {border-color: #3949ab !important;}
@@ -646,7 +646,7 @@ body.m-index-index {background-color: #3f51b5;}
 
 #fixedHeader thead th, #fixedHeader thead td {background: #3949ab; color: #ccc; font-weight: normal;}
 #fixedHeader thead th a, #fixedHeader thead td a {color: #ccc; font-weight: normal;}
-#fixedHeader thead tr .headerSortUp:after,#fixedHeader thead tr .headerSortDown:after {color: #fff!important;}
+#fixedHeader thead tr .headerSortUp > a:after,#fixedHeader thead tr .headerSortDown > a:after {color: #fff!important;}
 .categoryButton .icon, .categoryMenu li .app-btn .icon {border-radius:0 !important;}
 td i.icon-default {border-radius:0 !important;}
 
