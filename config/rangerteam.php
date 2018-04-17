@@ -72,6 +72,7 @@ if(!defined('TABLE_CRON'))      define('TABLE_CRON',      '`' . $config->db->pre
 if(!defined('TABLE_USERGROUP')) define('TABLE_USERGROUP', '`' . $config->db->prefix . 'sys_usergroup`');
 if(!defined('TABLE_GROUPPRIV')) define('TABLE_GROUPPRIV', '`' . $config->db->prefix . 'sys_grouppriv`');
 if(!defined('TABLE_USERQUERY')) define('TABLE_USERQUERY', '`' . $config->db->prefix . 'sys_userquery`');
+if(!defined('TABLE_QUEUE'))     define('TABLE_QUEUE',     '`' . $config->db->prefix . 'sys_queue`');
 
 /* Tables for crm. */
 if(!defined('TABLE_ADDRESS'))       define('TABLE_ADDRESS',       '`' . $config->db->prefix . 'crm_address`');
