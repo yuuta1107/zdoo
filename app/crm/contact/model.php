@@ -396,7 +396,7 @@ class contactModel extends model
                 if(!$this->post->continue)
                 {
                     $return = $this->checkContact($contact);
-                    if($return['result'] == 'fail') return $return;
+                    if(isset($return['result']) && $return['result'] == 'fail') return $return;
                 }
 
                 $return = $this->loadModel('customer')->create($customer);
@@ -589,6 +589,8 @@ class contactModel extends model
 
         foreach($this->config->contact->contactWayList as $item)
         {
+            if(!$this->post->$item) continue;
+
             if(!empty($contact->$item))
             {
                 if($item == 'phone' or $item == 'mobile')
@@ -614,6 +616,8 @@ class contactModel extends model
                 return array('result' => 'fail', 'error' => $error);
             }
         }
+
+        return true;
     }
 
     /**
