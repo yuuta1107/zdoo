@@ -250,6 +250,8 @@ class userModel extends model
             ->check('email', 'email')
             ->check('email', 'unique')
             ->exec();
+
+        $this->loadModel('action')->create('user', $this->dao->lastInsertID(), 'create');
     }
 
     /**
@@ -287,7 +289,7 @@ class userModel extends model
         }
 
         $user = $user->get();
-        return $this->dao->update(TABLE_USER)
+        $this->dao->update(TABLE_USER)
             ->data($user, $skip = 'password1,password2')
             ->autoCheck()
             ->batchCheck($this->config->user->require->edit, 'notempty')
@@ -296,6 +298,9 @@ class userModel extends model
             ->checkIF($this->post->gtalk != false, 'gtalk', 'email')
             ->where('account')->eq($account)
             ->exec();
+
+        $user = $this->getByAccount($account);
+        return $this->loadModel('action')->create('user', $user->id, 'update');
     }
 
     /**
@@ -653,6 +658,7 @@ class userModel extends model
         if(!$user) return false;
 
         parent::delete(TABLE_USER, $user->id);
+        $this->loadModel('action')->create('user', $user->id, 'delete');
 
         return !dao::isError();
     }
