@@ -117,6 +117,8 @@ $config->rights->member['action']['editcomment']       = 'editcomment';
 $config->rights->member['action']['read']              = 'read';
 $config->rights->member['action']['finishnextcontact'] = 'finishNextContact';
 $config->rights->member['action']['deletenextcontact'] = 'deleteNextContact';
+$config->rights->member['action']['finishdating']      = 'finishDating';
+$config->rights->member['action']['deletedating']      = 'deletedating';
 
 $config->rights->member['file']['buildform']      = 'buildform';
 $config->rights->member['file']['buildlist']      = 'buildlist';
