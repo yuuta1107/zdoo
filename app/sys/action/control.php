@@ -367,6 +367,7 @@ class action extends control
      */
     public function deleteDating($id)
     {
+        $user = $this->app->user->account;
         $dating = $this->action->getDatingById($id);
         if($dating->status != 'wait') $this->send(array('result' => 'fail', 'message' => $this->lang->action->record->deleteFail));
         if($this->app->user->admin != 'super' && $dating->createdBy != $user) $this->send(array('result' => 'fail', 'message' => $this->lang->admin->record->deleteDenied));
