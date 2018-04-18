@@ -136,5 +136,6 @@ EOT;
     public function additional()
     {
         $this->loadModel('todo')->notCreateTodo();
+        echo "ok\n";
     }
 }
