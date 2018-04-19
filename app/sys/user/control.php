@@ -102,7 +102,7 @@ class user extends control
 
                 if(commonModel::hasPriv($module, $method))
                 {
-                    $this->send(array('result'=>'success', 'locate' => urldecode($this->post->referer)));
+                    $this->send(array('result'=>'success', 'locate' => $this->post->referer));
                 }
                 else
                 {
