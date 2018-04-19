@@ -200,6 +200,7 @@ class makeup extends control
         }
         if($status == 'reject')
         {
+            $makeup = $this->makeup->getById($id);
             if($_POST)
             {
                 if(!$canReview) $this->send(array('result' => 'fail', 'message' => $this->lang->makeup->denied));
@@ -215,8 +216,9 @@ class makeup extends control
                 $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
             }
 
-            $this->view->title = $this->lang->makeup->review;
-            $this->view->id    = $id;
+            $this->view->title  = $this->lang->makeup->review;
+            $this->view->id     = $id;
+            $this->view->makeup = $makeup;
             $this->display();
         }
     }
