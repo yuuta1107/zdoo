@@ -111,7 +111,7 @@ EOT;
      * @access public
      * @return void
      */
-    public function cron()
+    public function getQueue()
     {
         $queueList = $this->queue->getQueues('wait');
         if(empty($queueList))
@@ -136,5 +136,6 @@ EOT;
     public function additional()
     {
         $this->loadModel('todo')->notCreateTodo();
+        echo "ok\n";
     }
 }

@@ -78,6 +78,12 @@ class makeup extends control
             $date         = '';
             $currentYear  = ''; 
             $currentMonth = ''; 
+            $monthList    = $this->makeup->getAllMonth($type);
+            $yearList     = array_keys($monthList);
+            $this->view->monthList = $monthList;
+            $this->view->yearList  = $yearList;
+            $this->view->currentYear  = $currentYear;
+            $this->view->currentMonth = $currentMonth;
         }
         else
         {
@@ -194,6 +200,7 @@ class makeup extends control
         }
         if($status == 'reject')
         {
+            $makeup = $this->makeup->getById($id);
             if($_POST)
             {
                 if(!$canReview) $this->send(array('result' => 'fail', 'message' => $this->lang->makeup->denied));
@@ -209,8 +216,9 @@ class makeup extends control
                 $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
             }
 
-            $this->view->title = $this->lang->makeup->review;
-            $this->view->id    = $id;
+            $this->view->title  = $this->lang->makeup->review;
+            $this->view->id     = $id;
+            $this->view->makeup = $makeup;
             $this->display();
         }
     }
@@ -335,7 +343,7 @@ class makeup extends control
         if($_POST)
         {
             $result = $this->makeup->update($id);
-            if(is_array($result) && $result['result'] == 'fail') $this->send($result);
+            if(isset($result['result'])&&is_array($result) && $result['result'] == 'fail') $this->send($result);
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
             if($result)
             {
