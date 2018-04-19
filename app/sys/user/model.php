@@ -628,6 +628,8 @@ class userModel extends model
     public function forbid($account)
     {
         $this->dao->update(TABLE_USER)->set('locked')->eq('2199-12-31 00:00:00')->where('account')->eq($account)->exec();
+        $user = $this->getByAccount($account);
+        $this->loadModel('action')->create('user', $user->id, 'forbid');
         return !dao::isError();
     }
 
@@ -641,6 +643,8 @@ class userModel extends model
     public function active($account)
     {
         $this->dao->update(TABLE_USER)->set('fails')->eq(0)->set('locked')->eq('0000-00-00 00:00:00')->where('account')->eq($account)->exec();
+        $user = $this->getByAccount($account);
+        $this->loadModel('action')->create('user', $user->id, 'active');
         return !dao::isError();
     }
 
