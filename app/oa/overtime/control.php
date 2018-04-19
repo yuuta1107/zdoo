@@ -195,6 +195,7 @@ class overtime extends control
 
         if($status == 'reject')
         {
+            $overtime = $this->overtime->getById($id);
             if($_POST)
             {
                 if(!$canReview) $this->send(array('result' => 'fail', 'message' => $this->lang->overtime->denied));
@@ -212,6 +213,7 @@ class overtime extends control
 
             $this->view->title = $this->lang->overtime->review;
             $this->view->id    = $id;
+            $this->view->overtime = $overtime;
             $this->display();
         }
     }

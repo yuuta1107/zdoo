@@ -78,6 +78,12 @@ class makeup extends control
             $date         = '';
             $currentYear  = ''; 
             $currentMonth = ''; 
+            $monthList    = $this->makeup->getAllMonth($type);
+            $yearList     = array_keys($monthList);
+            $this->view->monthList = $monthList;
+            $this->view->yearList  = $yearList;
+            $this->view->currentYear  = $currentYear;
+            $this->view->currentMonth = $currentMonth;
         }
         else
         {
