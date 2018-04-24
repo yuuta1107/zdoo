@@ -74,12 +74,6 @@ class leave extends control
             $date         = '';
             $currentYear  = '';
             $currentMonth = '';
-            $monthList    = $this->leave->getAllMonth($type);
-            $yearList     = array_keys($monthList); 
-            $this->view->currentYear  = $currentYear;
-            $this->view->currentMonth = $currentMonth;
-            $this->view->monthList    = $monthList;
-            $this->view->yearList     = $yearList;
         }
         else
         {
@@ -227,7 +221,6 @@ class leave extends control
         }
         if($status == 'reject')
         {
-            $leave = $this->leave->getById($id);
             if($_POST)
             {
                 if(!$canReview) $this->send(array('result' => 'fail', 'message' => $this->lang->leave->denied));
@@ -259,7 +252,6 @@ class leave extends control
 
             $this->view->title = $this->lang->leave->review;
             $this->view->id    = $id;
-            $this->view->leave = $leave;
             $this->view->mode  = $mode;
             $this->display();
         }
