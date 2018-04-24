@@ -251,7 +251,7 @@ class userModel extends model
             ->check('email', 'unique')
             ->exec();
 
-        $this->loadModel('action')->create('user', $this->dao->lastInsertID(), 'create');
+        $this->loadModel('action')->create('user', $this->dao->lastInsertID(), 'created');
     }
 
     /**
@@ -300,7 +300,7 @@ class userModel extends model
             ->exec();
 
         $user = $this->getByAccount($account);
-        return $this->loadModel('action')->create('user', $user->id, 'update');
+        return $this->loadModel('action')->create('user', $user->id, 'edited');
     }
 
     /**
@@ -662,7 +662,7 @@ class userModel extends model
         if(!$user) return false;
 
         parent::delete(TABLE_USER, $user->id);
-        $this->loadModel('action')->create('user', $user->id, 'delete');
+        $this->loadModel('action')->create('user', $user->id, 'deleted');
 
         return !dao::isError();
     }
