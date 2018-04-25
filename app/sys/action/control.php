@@ -70,20 +70,6 @@ class action extends control
                 $this->send(array('result' => 'fail', 'message' => sprintf($this->lang->action->record->noPrivilege, $user->realname)));;
             }
 
-            if($this->post->contract)
-            {
-                $objectType = 'contract';
-                $objectID   = $this->post->contract;
-            }
-
-            if($this->post->order)
-            {
-                $objectType = 'order';
-                $objectID   = $this->post->order;
-            }
-
-            if($this->post->customer) $customer = $this->post->customer;
-
             /* Can create contact when objectType is customer. */
             if($this->post->createContact and $objectType == 'customer')
             {
@@ -101,6 +87,20 @@ class action extends control
                     $this->send($return);
                 }
             }
+
+            if($this->post->contract)
+            {
+                $objectType = 'contract';
+                $objectID   = $this->post->contract;
+            }
+
+            if($this->post->order)
+            {
+                $objectType = 'order';
+                $objectID   = $this->post->order;
+            }
+
+            if($this->post->customer) $customer = $this->post->customer;
 
             $result = $this->action->createRecord($objectType, $objectID, $customer, $this->post->contact);
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
