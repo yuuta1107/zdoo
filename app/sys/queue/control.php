@@ -119,12 +119,12 @@ EOT;
             echo "ok\n";
             return;
         }
-        $this->dao->update(TABLE_QUEUE)->set('status')->eq('sended')->set('sendTime')->eq(helper::now())->where('id')->in(array_keys($queueList))->exec();
+        $this->dao->update(TABLE_QUEUE)->set('status')->eq('sent')->set('sendTime')->eq(helper::now())->where('id')->in(array_keys($queueList))->exec();
         foreach($queueList as $queue)
         {
             $this->queue->send($queue);
         }
-        $this->dao->delete()->from(TABLE_QUEUE)->where('status')->eq('sended')->exec();
+        $this->dao->delete()->from(TABLE_QUEUE)->where('status')->eq('sent')->exec();
         echo "ok\n";
     }
 
