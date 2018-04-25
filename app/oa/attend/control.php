@@ -766,9 +766,9 @@ class attend extends control
             if($user) $fileName .= $user . ' - ';
         }
         $fileName .= $currentYear;
-        if($this->app->clientLang != 'en') $fileName .= $lang->year;
+        if($this->app->clientLang != 'en') $fileName .= $this->lang->year;
         $fileName .= $currentMonth;
-        if($this->app->clientLang != 'en') $fileName .= $lang->month;
+        if($this->app->clientLang != 'en') $fileName .= $this->lang->month;
         $fileName .= $this->lang->attend->detail;
 
         $this->view->title        = $this->lang->attend->detail;

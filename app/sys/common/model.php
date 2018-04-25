@@ -390,13 +390,12 @@ class commonModel extends model
             if(isset($config->attend->noAttendUsers) and strpos(",{$config->attend->noAttendUsers},", ",{$app->user->account},") !== false and $module == 'attend' and $method == 'personal')
             {
                 $method = 'department';
-                if($isMobile && (commonModel::hasPriv('attend','browsereview') or commonModel::hasPriv('attend','review')))
+
+                if($isMobile)
                 {
+                    if(!commonModel::hasPriv('attend','browsereview')) continue;
+
                     $method = 'browsereview';
-                }
-                if($isMobile && !(commonModel::hasPriv('attend','browsereview') or commonModel::hasPriv('attend','review')))
-                {
-                    continue; 
                 }
             }
 
