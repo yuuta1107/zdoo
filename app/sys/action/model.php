@@ -71,36 +71,29 @@ class actionModel extends model
      */
     public function createRecord($objectType, $objectID, $customer, $contact)
     {
-        $sendmail = false;
         $actionID = $this->create($objectType, $objectID, $action = 'record', $this->post->comment, $this->post->date, $actor = null, $customer, $contact);
 
         if(!$actionID) return false;
         $this->loadModel('file')->saveUpload('action', $actionID);
 
-        $result = $this->updateDating($objectType, $objectID, $actionID);
-        if($result && $this->post->nextDate)
+        $nextDate   = $this->post->nextDate;
+        $originType = $objectType;
+        $originID   = $objectID;
+        $sendmail   = $this->updateDating($objectType, $objectID, $customer, $contact, $actionID);
+        /* Set the min next date as the post value. */
+        if($this->post->nextDate) $nextDate = $this->getMinDatingDate($objectType, $objectID);
+
+        /* Create record for customer and check the checkbox of contract or order. */
+        if($this->post->contract or $this->post->order)
         {
-            if(isset($this->config->action->datingTables[$objectType]))
-            {
-                $table  = $this->config->action->datingTables[$objectType];
-                $object = $this->dao->select('*')->from($table)->where('id')->eq($objectID)->fetch();
-                if($object)
-                {
-                    $objectName = $this->post->nextDate;
-                    if($this->post->nextContact && $objectType != 'contact' && $objectType != 'leads')
-                    {
-                        $nextContact = $this->post->nextContact == 'ditto' ? $this->post->contact : $this->post->nextContact;
-                        $objectName .= ' ' . $this->dao->select('realname')->from(TABLE_CONTACT)->where('id')->eq($nextContact)->fetch('realname');
-                    }
-                    $actionID = $this->create($objectType, $objectID, $action = 'dating', $this->post->desc, $objectName, $actor = null, $customer, $contact);
-                    $sendmail = !dao::isError();
-                }
-            }
+            $originType = 'customer';
+            $originID   = $customer;
+            $sendmail   = $this->updateDating($originType, $originID, $customer, $contact, $actionID);
+            /* Set the min next date as the post value. */
+            if($this->post->nextDate) $nextDate = $this->getMinDatingDate($originType, $originID);
         }
 
-        /* Set the min next date as the post value. */
-        if($this->post->nextDate) $this->post->nextDate = $this->getMinDatingDate($objectType, $objectID);
-
+        $this->post->nextDate = $nextDate;
         $this->syncContactInfo($objectType, $objectID, $customer, $contact);
 
         return array('sendmail' => $sendmail, 'action' => $actionID);
@@ -111,11 +104,13 @@ class actionModel extends model
      *
      * @param  string $objectType
      * @param  int    $objectID
+     * @param  int    $customer
+     * @param  int    $contact
      * @param  int    $action
      * @access public
      * @return bool
      */
-    public function updateDating($objectType, $objectID, $action)
+    public function updateDating($objectType, $objectID, $customer, $contact, $action)
     {
         $contact = new stdclass();
         $contact->status     = 'done';
@@ -131,7 +126,7 @@ class actionModel extends model
             ->andWhere('contact')->eq($this->post->contact)
             ->exec();
 
-        if(!$this->post->nextDate) return !dao::isError();
+        if(!$this->post->nextDate) return false;
 
         $dating = new stdclass();
         $dating->objectType  = $objectType;
@@ -146,7 +141,29 @@ class actionModel extends model
 
         $this->dao->insert(TABLE_DATING)->data($dating)->autoCheck()->exec();
 
-        return !dao::isError();
+        if(dao::isError()) return false;
+
+        if($this->post->nextDate)
+        {
+            if(isset($this->config->action->datingTables[$objectType]))
+            {
+                $table  = $this->config->action->datingTables[$objectType];
+                $object = $this->dao->select('*')->from($table)->where('id')->eq($objectID)->fetch();
+                if($object)
+                {
+                    $objectName = $this->post->nextDate;
+                    if($this->post->nextContact && $objectType != 'contact' && $objectType != 'leads')
+                    {
+                        $nextContact = $this->post->nextContact == 'ditto' ? $this->post->contact : $this->post->nextContact;
+                        $objectName .= ' ' . $this->dao->select('realname')->from(TABLE_CONTACT)->where('id')->eq($nextContact)->fetch('realname');
+                    }
+                    $actionID = $this->create($objectType, $objectID, $action = 'dating', $this->post->desc, $objectName, $actor = null, $customer, $contact);
+                    return !dao::isError();
+                }
+            }
+        }
+
+        return false;
     }
 
     /**

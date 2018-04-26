@@ -1519,13 +1519,13 @@ class upgradeModel extends model
             ->andWhere('nextDate')->ne('0000-00-00')
             ->fetchPairs();
 
-        $actions = $this->dao->select('id, objectID, contact, actor, date')->from(TABLE_ACTION)
-            ->where('objectType')->eq('customer')
-            ->andWhere('objectID')->in(array_keys($customers))
+        $actions = $this->dao->select('id, customer, contact, actor, date')->from(TABLE_ACTION)
+            ->where('objectType')->in('order, contract, customer')
+            ->andWhere('customer')->in(array_keys($customers))
             ->andWhere('action')->eq('record')
             ->andWhere('contact')->ne(0)
-            ->orderBy('id_desc')
-            ->fetchGroup('objectID');
+            ->orderBy('customer,id_desc')
+            ->fetchGroup('customer');
 
         $dating = new stdclass();
         $dating->objectType = 'customer';
