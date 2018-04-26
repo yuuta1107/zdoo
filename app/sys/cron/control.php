@@ -138,6 +138,7 @@ class cron extends control
         $startedTime = time();
         while(true)
         {
+            dao::$cache = array();
             /* When cron is null then die. */
             if(empty($crons)) break;
             if(empty($parsedCrons)) break;
