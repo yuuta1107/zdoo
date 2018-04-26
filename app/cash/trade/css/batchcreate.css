@@ -5,7 +5,7 @@
 
 .chosen-container[id^="depositor"] .chosen-single {max-width: 140px !important}
 .chosen-container[id^="category"]  .chosen-single {max-width: 130px !important}
-.chosen-container[id^="trader"]    .chosen-single {max-width: 160px !important}
+.chosen-container[id^="trader"]    .chosen-single {max-width: 230px !important}
 .chosen-container[id^="dept"]      .chosen-single {max-width: 130px !important}
 .chosen-container[id^="product"]   .chosen-single {max-width: 100px !important}
 
