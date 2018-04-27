@@ -628,17 +628,26 @@ class todoModel extends model
      */
     public function notCreateTodo()
     {
-        $users = $this->dao->select('id, account')->from(TABLE_USER)->where('status')->eq('online')->fetchPairs();
+        $sessionKey = 'notCreateTodoUsers' . date('Ymd');
+        if(!isset($_SESSION[$sessionKey])) $_SESSION[$sessionKey] = '';
+        $notCreateTodoUsers = $_SESSION[$sessionKey];
+        $users = $this->dao->select('id, account')->from(TABLE_USER)
+            ->where('status')->eq('online')
+            ->beginIF(!empty($notCreateTodoUsers))->andWhere('id')->notin($notCreateTodoUsers)->fi()
+            ->fetchPairs();
         if(empty($users)) return;
         $todos  = $this->dao->select('account')->from(TABLE_TODO)->where('date')->eq(date('Y-m-d'))->andWhere('account')->in($users)->fetchPairs();
         $target = array_diff($users, $todos);
         if(!empty($target))
         {
+            $target = join(',', $target);
+            $_SESSION[$sessionKey] = trim($notCreateTodoUsers . ',' . $target, ',');
+
             $link = commonModel::getSysURL() . helper::createLink('sys.todo', 'calendar');
             $data = array();
             $data['link']    = $link;
             $data['actions'] = array('lable' => $this->lang->todo->create, 'url' => $link, 'type' => 'normal');
-            $this->loadModel('queue')->insertQueue(0, 0, join(',', $target), $this->lang->todo->emptyTodo, json_encode($data));
+            $this->loadModel('queue')->insertQueue(0, 0, $target, $this->lang->todo->emptyTodo, json_encode($data));
         }
     }
 }
