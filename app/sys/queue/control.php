@@ -83,7 +83,7 @@ class queue extends control
             $messages .= $message->data . $newline;
             $idList[]  = $message->id;
         }
-        $this->dao->update(TABLE_NOTIFY)->set('status')->eq('sended')->set('sendTime')->eq(helper::now())->where('id')->in($idList)->exec();
+        $this->dao->update(TABLE_NOTIFY)->set('status')->eq('sent')->set('sendTime')->eq(helper::now())->where('id')->in($idList)->exec();
 
         foreach($todos as $todo) $messages .= $todo->data . $newline;
         if($windowBlur) $messages = strip_tags($messages);
