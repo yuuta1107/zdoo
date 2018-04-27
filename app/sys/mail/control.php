@@ -166,7 +166,7 @@ class mail extends control
                 $error = str_replace('\n', "<br />", join('', $this->mail->getError()));
                 $this->send(array('result' => 'fail', 'message' => $error));
             }
-            $this->send(array('result' => 'success', 'message' => $this->lang->mail->successSended));
+            $this->send(array('result' => 'success', 'message' => $this->lang->mail->sendSuccess));
         }
 
         $this->view->title = $this->lang->mail->common . $this->lang->colon . $this->lang->mail->test;

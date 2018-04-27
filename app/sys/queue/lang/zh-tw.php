@@ -1,8 +1,9 @@
 <?php
-$lang->message->common  = '消息';
-$lang->message->index   = '首頁';
-$lang->message->setting = '設置';
+$lang->queue->common  = '消息隊列';
+$lang->queue->index   = '首頁';
+$lang->queue->setting = '設置';
 
-$lang->message->typeList['mail']    = '郵件';
-$lang->message->typeList['message'] = '瀏覽器通知';
-$lang->message->typeList['webhook'] = 'Webhook';
+$lang->queue->typeList['mail']     = '郵件';
+$lang->queue->typeList['message']  = '瀏覽器通知';
+$lang->queue->typeList['webhook']  = 'Webhook';
+$lang->queue->typeList['xuanxuan'] = '喧喧';
