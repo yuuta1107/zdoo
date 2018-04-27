@@ -201,7 +201,7 @@ class customerModel extends model
                 foreach($idList as $id) if(isset($customers[$id])) $customerList[$id] = $customers[$id];
             }
                 
-            $i = 0;
+            $i = 1;
             foreach($customers as $id => $name)
             {
                 if(!isset($customerIdList[$id])) continue;
