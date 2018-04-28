@@ -1780,4 +1780,4 @@ INSERT INTO `sys_cron` (`m`, `h`, `dom`, `mon`, `dow`, `command`, `remark`, `typ
 ('1', '1', '*', '*', '*', 'appName=sys&moduleName=backup&methodName=batchdelete&saveDays=30', '删除30天前的备份', 'ranzhi', 1, 'normal', '0000-00-00 00:00:00'),
 ('1', '7', '*', '*', '*', 'appName=sys&moduleName=report&methodName=remind', '每日提醒', 'ranzhi', 1, 'normal', '0000-00-00 00:00:00'),
 ('*/1', '*', '*', '*', '*', 'appName=sys&moduleName=queue&methodName=getqueue', '出队列', 'ranzhi', 0, 'normal', '2018-04-18 17:34:32'),
-('*/5', '*', '*', '*', '*', 'appName=sys&moduleName=queue&methodName=additional', '', 'ranzhi', 0, 'normal', '2018-04-18 17:34:32');
+('*/10', '*', '*', '*', '*', 'appName=sys&moduleName=queue&methodName=additional', '', 'ranzhi', 0, 'normal', '2018-04-18 17:34:32');
