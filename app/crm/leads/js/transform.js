@@ -11,7 +11,7 @@ var selectItem = function(item)
     else
     {
         var viewType = config.defaultView;
-        var link     = ref.substr(0, ref.lastIndexOf('.' + viewType)) + '-' + $selectedItem.data('key') + '.' + viewType;
+        var link     = ref.replace('.' + viewType, '') + '-' + $selectedItem.data('key') + '.' + viewType;
     }
     modal.load(link, function(){$(this).find('.modal-dialog').css('width', $(this).data('width')); $.zui.ajustModalPosition()})
 };
