@@ -694,6 +694,8 @@ class customerModel extends model
     {
         $menu = commonModel::createModuleMenu('customer');
 
+        if($this->app->viewType == 'mhtml') return $menu;
+
         $customerIdList = $this->getCustomersSawByMe();
         if(empty($customerIdList)) return $menu;
 

@@ -109,26 +109,17 @@ class makeup extends control
             }
             else
             {
+                $depts      = array();
                 $reviewedBy = $this->makeup->getReviewedBy();
                 if($reviewedBy)
                 { 
-                    if($reviewedBy == $this->app->user->account)
-                    {
-                        $makeupList = $this->makeup->getList($type, $currentYear, $currentMonth, '', array_keys($deptList), '', $orderBy);
-                    }
+                    if($reviewedBy == $this->app->user->account) $depts = $deptList;
                 }
                 else
                 {
                     $depts = $this->loadModel('tree')->getDeptManagedByMe($this->app->user->account);
-                    if(empty($depts))
-                    {
-                        $makeupList = array();
-                    }
-                    else
-                    {
-                        $makeupList = $this->makeup->getList($type, $currentYear, $currentMonth, '', array_keys($depts), '', $orderBy);
-                    }
                 }
+                if($depts) $makeupList = $this->makeup->getList($type, $currentYear, $currentMonth, '', array_keys($depts), '', $orderBy);
             }
         }
         elseif($type == 'company')

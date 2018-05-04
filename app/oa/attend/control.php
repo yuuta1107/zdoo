@@ -393,10 +393,9 @@ class attend extends control
         }
         else
         {
-            $depts = $this->loadModel('tree')->getDeptManagedByMe($this->app->user->account);
-            foreach($depts as $d) $deptList[$d->id] = $d->name;
+            $deptList = $this->loadModel('tree')->getDeptManagedByMe($this->app->user->account);
         }
-        if(!empty($deptList)) $attends = $this->attend->getWaitAttends(array_keys($deptList));
+        if($deptList) $attends = $this->attend->getWaitAttends(array_keys($deptList));
 
         /* Get users info. */
         $users    = $this->loadModel('user')->getList($dept);

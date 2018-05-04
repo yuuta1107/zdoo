@@ -109,26 +109,17 @@ class overtime extends control
             }
             else
             {
+                $depts      = array();
                 $reviewedBy = $this->overtime->getReviewedBy();
                 if($reviewedBy)
                 { 
-                    if($reviewedBy == $this->app->user->account)
-                    {
-                        $overtimeList = $this->overtime->getList($type, $currentYear, $currentMonth, '', array_keys($deptList), '', $orderBy);
-                    }
+                    if($reviewedBy == $this->app->user->account) $depts = $deptList;
                 }
                 else
                 {
                     $depts = $this->loadModel('tree')->getDeptManagedByMe($this->app->user->account);
-                    if(empty($depts))
-                    {
-                        $overtimeList = array();
-                    }
-                    else
-                    {
-                        $overtimeList = $this->overtime->getList($type, $currentYear, $currentMonth, '', array_keys($depts), '', $orderBy);
-                    }
                 }
+                if($depts) $overtimeList = $this->overtime->getList($type, $currentYear, $currentMonth, '', array_keys($depts), '', $orderBy);
             }
         }
         elseif($type == 'company')

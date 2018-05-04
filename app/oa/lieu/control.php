@@ -111,26 +111,17 @@ class lieu extends control
             }
             else
             {
+                $depts      = array();
                 $reviewedBy = $this->lieu->getReviewedBy();
                 if($reviewedBy)
                 { 
-                    if($reviewedBy == $this->app->user->account)
-                    {
-                        $lieuList = $this->lieu->getList($type, $currentYear, $currentMonth, '', array_keys($deptList), '', $orderBy);
-                    }
+                    if($reviewedBy == $this->app->user->account) $depts = $deptList;
                 }
                 else
                 {
                     $depts = $this->loadModel('tree')->getDeptManagedByMe($this->app->user->account);
-                    if(empty($depts))
-                    {
-                        $lieuList = array();
-                    }
-                    else
-                    {
-                        $lieuList = $this->lieu->getList($type, $currentYear, $currentMonth, '', array_keys($depts), '', $orderBy);
-                    }
                 }
+                if($depts) $lieuList = $this->lieu->getList($type, $currentYear, $currentMonth, '', array_keys($depts), '', $orderBy);
             }
         }
         elseif($type == 'company')

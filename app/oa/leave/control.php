@@ -105,26 +105,17 @@ class leave extends control
             }
             else
             {
+                $depts      = array();
                 $reviewedBy = $this->leave->getReviewedBy();
                 if($reviewedBy)
                 { 
-                    if($reviewedBy == $this->app->user->account)
-                    {
-                        $leaveList = $this->leave->getList($type, $currentYear, $currentMonth, '', array_keys($deptList), '', $orderBy);
-                    }
+                    if($reviewedBy == $this->app->user->account) $depts = $deptList;
                 }
                 else
                 {
                     $depts = $this->loadModel('tree')->getDeptManagedByMe($this->app->user->account);
-                    if(empty($depts))
-                    {
-                        $leaveList = array();
-                    }
-                    else
-                    {
-                        $leaveList = $this->leave->getList($type, $currentYear, $currentMonth, '', array_keys($depts), '', $orderBy);
-                    }
                 }
+                if($depts) $leaveList = $this->leave->getList($type, $currentYear, $currentMonth, '', array_keys($depts), '', $orderBy);
             }
         }
         elseif($type == 'company')
