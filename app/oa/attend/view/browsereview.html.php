@@ -30,11 +30,12 @@
     </thead>
     <?php foreach($attends as $attend):?>
     <?php $account = $attend->account;?>
-    <?php $currentDept = $users[$attend->account]->dept;?>
+    <?php if(!isset($users[$account])) continue;?>
+    <?php $user = $users[$attend->account];?>
     <tr>
       <td><?php echo $attend->id;?></td>
-      <td><?php echo $deptList[$currentDept];?></td>
-      <td><?php echo isset($users[$account]) ? $users[$account]->realname : '';?></td>
+      <td><?php echo zget($deptList, $user->dept, '');?></td>
+      <td><?php echo $user->realname;?></td>
       <td><?php echo $attend->date?></td>
       <td><?php echo substr($attend->manualIn, 0, 5)?></td>
       <td><?php echo substr($attend->manualOut, 0, 5)?></td>
