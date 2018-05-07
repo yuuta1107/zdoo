@@ -35,8 +35,6 @@ class my extends control
         $allDepts = $this->loadModel('tree')->getPairs('', 'dept');
         $allDepts['0'] = '/';
         $managedDepts  = $this->loadModel('tree')->getDeptManagedByMe($account);
-
-        $allDepts      = array_keys($allDepts);
         $managedDepts  = array_keys($managedDepts);
 
         /* Get attend list. */
