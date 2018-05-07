@@ -103,23 +103,15 @@ class makeup extends control
         }
         elseif($type == 'browseReview')
         {
-            if($this->app->user->admin == 'super')
+            $reviewedBy = $this->makeup->getReviewedBy();
+            if($this->app->user->admin == 'super' or ($reviewedBy && $reviewedBy == $this->app->user->account))
             {
                 $makeupList = $this->makeup->getList($type, $currentYear, $currentMonth, '', '', '', $orderBy);
             }
             else
             {
-                $depts      = array();
-                $reviewedBy = $this->makeup->getReviewedBy();
-                if($reviewedBy)
-                { 
-                    if($reviewedBy == $this->app->user->account) $depts = $deptList;
-                }
-                else
-                {
-                    $depts = $this->loadModel('tree')->getDeptManagedByMe($this->app->user->account);
-                }
-                if($depts) $makeupList = $this->makeup->getList($type, $currentYear, $currentMonth, '', array_keys($depts), '', $orderBy);
+                $managedDepts = $this->loadModel('tree')->getDeptManagedByMe($this->app->user->account);
+                if($managedDepts) $makeupList = $this->makeup->getList($type, $currentYear, $currentMonth, '', array_keys($managedDepts), '', $orderBy);
             }
         }
         elseif($type == 'company')

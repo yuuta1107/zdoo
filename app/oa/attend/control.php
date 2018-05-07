@@ -381,21 +381,18 @@ class attend extends control
     public function browseReview($dept = '')
     {
         $attends  = array();
-        $deptList = array();
+        $deptList = $this->loadModel('tree')->getPairs('', 'dept');
+        $deptList['0'] = '/';
         /* Get deptments managed by me. */
-        if(!empty($this->config->attend->reviewedBy))
-        { 
-            if(($this->app->user->admin == 'super') or ($this->config->attend->reviewedBy == $this->app->user->account))
-            {
-                $deptList = $this->loadModel('tree')->getPairs('', 'dept');
-                $deptList['0'] = '/';
-            }
+        if($this->app->user->admin == 'super' or (!empty($this->config->attend->reviewedBy) && $this->config->attend->reviewedBy == $this->app->user->account))
+        {
+            $attends = $this->attend->getWaitAttends();
         }
         else
         {
-            $deptList = $this->loadModel('tree')->getDeptManagedByMe($this->app->user->account);
+            $managedDepts = $this->loadModel('tree')->getDeptManagedByMe($this->app->user->account);
+            if($managedDepts) $attends = $this->attend->getWaitAttends(array_keys($managedDepts));
         }
-        if($deptList) $attends = $this->attend->getWaitAttends(array_keys($deptList));
 
         /* Get users info. */
         $users    = $this->loadModel('user')->getList($dept);

@@ -353,33 +353,31 @@ class refund extends control
         /* Get dept info. */
         $allDeptList = $this->loadModel('tree')->getPairs('', 'dept');
         $allDeptList['0'] = '/';
-        $managedDeptList = array();
-        $tmpDept = $this->loadModel('tree')->getDeptManagedByMe($account);
-        foreach($tmpDept as $d) $managedDeptList[$d->id] = $d->name;
+
+        $firstRefunds  = array();
+        $secondRefunds = array();
 
         /* Get refund list for secondReviewer. */
-        $secondRefunds = array();
-        if(!empty($this->config->refund->secondReviewer) and $this->config->refund->secondReviewer == $account)
+        if($this->app->user->admin == 'super' or (!empty($this->config->refund->secondReviewer) and $this->config->refund->secondReviewer == $account))
         {
-            if($status == 'unreviewed') $secondRefunds = $this->refund->getList($mode = 'browseReview', $type, $currentDate, $deptIDList = '', 'doing', '', $orderBy, $pager);
-            if($status == 'reviewed')   $secondRefunds = $this->refund->getList($mode = 'browseReview', $type, $currentDate, $deptIDList = '', 'pass,finish', '', $orderBy, $pager);
+            if($status == 'unreviewed') $secondRefunds = $this->refund->getList('browseReview', $type, $currentDate, '', 'doing', '', $orderBy, $pager);
+            if($status == 'reviewed')   $secondRefunds = $this->refund->getList('browseReview', $type, $currentDate, '', 'pass,finish', '', $orderBy, $pager);
         }
 
         /* Get refund list for firstReviewer. */
-        $firstRefunds = array();
-        if(!empty($this->config->refund->firstReviewer) and $this->config->refund->firstReviewer == $account)
+        if($this->app->user->admin == 'super' or (!empty($this->config->refund->firstReviewer) and $this->config->refund->firstReviewer == $account))
         {
-            $deptList = $allDeptList;
+            if($status == 'unreviewed') $firstRefunds = $this->refund->getList('browseReview', $type, $currentDate, '', 'wait', '', $orderBy, $pager);
+            if($status == 'reviewed')   $firstRefunds = $this->refund->getList('browseReview', $type, $currentDate, '', 'pass,finish', '', $orderBy, $pager);
         }
-        elseif(empty($this->config->refund->firstReviewer))
+        else
         {
-            $deptList = $managedDeptList;
-        }
-
-        if(!empty($deptList))
-        {
-            if($status == 'unreviewed') $firstRefunds = $this->refund->getList($mode = 'browseReview', $type, $currentDate, $deptIDList = array_keys($deptList), 'wait', '', $orderBy, $pager);
-            if($status == 'reviewed')   $firstRefunds = $this->refund->getList($mode = 'browseReview', $type, $currentDate, $deptIDList = array_keys($deptList), 'pass,finish', '', $orderBy, $pager);
+            $managedDepts = $this->loadModel('tree')->getDeptManagedByMe($account);
+            if($managedDepts)
+            {
+                if($status == 'unreviewed') $firstRefunds = $this->refund->getList('browseReview', $type, $currentDate, array_keys($managedDepts), 'wait', '', $orderBy, $pager);
+                if($status == 'reviewed')   $firstRefunds = $this->refund->getList('browseReview', $type, $currentDate, array_keys($managedDepts), 'pass,finish', '', $orderBy, $pager);
+            }
         }
 
         $refunds = array_merge($secondRefunds, $firstRefunds);

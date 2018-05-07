@@ -99,23 +99,15 @@ class leave extends control
         }
         elseif($type == 'browseReview')
         {
-            if($this->app->user->admin == 'super')
+            $reviewedBy = $this->leave->getReviewedBy();
+            if($this->app->user->admin == 'super' or ($reviewedBy && $reviewedBy == $this->app->user->account))
             {
                 $leaveList = $this->leave->getList($type, $currentYear, $currentMonth, '', '', '', $orderBy);
             }
             else
             {
-                $depts      = array();
-                $reviewedBy = $this->leave->getReviewedBy();
-                if($reviewedBy)
-                { 
-                    if($reviewedBy == $this->app->user->account) $depts = $deptList;
-                }
-                else
-                {
-                    $depts = $this->loadModel('tree')->getDeptManagedByMe($this->app->user->account);
-                }
-                if($depts) $leaveList = $this->leave->getList($type, $currentYear, $currentMonth, '', array_keys($depts), '', $orderBy);
+                $managedDepts = $this->loadModel('tree')->getDeptManagedByMe($this->app->user->account);
+                if($managedDepts) $leaveList = $this->leave->getList($type, $currentYear, $currentMonth, '', array_keys($managedDepts), '', $orderBy);
             }
         }
         elseif($type == 'company')

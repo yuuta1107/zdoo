@@ -43,22 +43,13 @@ class my extends control
         $attends = array();
         if($type == 'all' || $type == 'attend')
         {
-            if($isAdmin)
+            if($isAdmin or (!empty($this->config->attends->reviewedBy) && $this->config->attends->reviewedBy == $account))
             {
                 $attends = $this->attend->getWaitAttends();
             }
             else
             {
-                $depts = array();
-                if(!empty($this->config->attend->reviewedBy))
-                {
-                    if($this->config->attend->reviewedBy == $account) $depts = $allDepts;
-                }
-                else
-                {
-                    $depts = $managedDepts;
-                }
-                if($depts) $attends = $this->attend->getWaitAttends($depts);
+                if($managedDepts) $attends = $this->attend->getWaitAttends($managedDepts);
             }
         }
 
@@ -66,23 +57,14 @@ class my extends control
         $leaves = array();
         if($type == 'all' || $type == 'leave')
         {
-            if($isAdmin)
+            $reviewedBy = $this->leave->getReviewedBy();
+            if($isAdmin or ($reviewedBy && $reviewedBy == $account))
             {
                 $leaves = $this->leave->getList('browseReview', '', '', '', '', '', $orderBy);
             }
             else
             {
-                $depts      = array();
-                $reviewedBy = $this->leave->getReviewedBy();
-                if($reviewedBy)
-                {
-                    if($reviewedBy == $account) $depts = $allDepts;
-                }
-                else
-                {
-                    $depts = $managedDepts;
-                }
-                if($depts) $leaves = $this->leave->getList('browseReview', '', '', '', $depts, '', $orderBy);
+                if($managedDepts) $leaves = $this->leave->getList('browseReview', '', '', '', $managedDepts, '', $orderBy);
             }
         }
 
@@ -90,23 +72,14 @@ class my extends control
         $overtimes = array();
         if($type == 'all' || $type == 'overtime')
         {
-            if($isAdmin)
+            $reviewedBy = $this->overtime->getReviewedBy();
+            if($isAdmin or ($reviewedBy && $reviewedBy == $account))
             {
                 $overtimes = $this->overtime->getList('browseReview', '', '', '', '', '', $orderBy);
             }
             else
             {
-                $depts      = array();
-                $reviewedBy = $this->overtime->getReviewedBy();
-                if($reviewedBy)
-                {
-                    if($reviewedBy == $this->app->user->account) $depts = $allDepts;
-                }
-                else
-                {
-                    $depts = $managedDepts;
-                }
-                if($depts) $overtimes = $this->overtime->getList('browseReview', '', '', '', $depts, '', $orderBy);
+                if($managedDepts) $overtimes = $this->overtime->getList('browseReview', '', '', '', $managedDepts, '', $orderBy);
             }
         }
 
@@ -114,23 +87,14 @@ class my extends control
         $makeups = array();
         if($type == 'all' || $type == 'makeup')
         {
-            if($isAdmin)
+            $reviewedBy = $this->makeup->getReviewedBy();
+            if($isAdmin or ($reviewedBy && $reviewedBy == $account))
             {
                 $makeups = $this->makeup->getList('browseReview', '', '', '', '', '', $orderBy);
             }
             else
             {
-                $depts      = array();
-                $reviewedBy = $this->makeup->getReviewedBy();
-                if($reviewedBy)
-                {
-                   if($reviewedBy == $this->app->user->account) $depts = $allDepts;
-                }
-                else
-                {
-                    $depts = $managedDepts;
-                }
-                if($depts) $makeups = $this->makeup->getList('browseReview', '', '', '', $depts, '', $orderBy);
+                if($managedDepts) $makeups = $this->makeup->getList('browseReview', '', '', '', $managedDepts, '', $orderBy);
             }
         }
 
@@ -138,23 +102,14 @@ class my extends control
         $lieus = array();
         if($type == 'all' || $type == 'lieu') 
         {
-            if($isAdmin)
+            $reviewedBy = $this->lieu->getReviewedBy();
+            if($isAdmin or ($reviewedBy && $reviewedBy == $account))
             {
                 $lieus = $this->lieu->getList('browseReview', '', '', '', '', '', $orderBy);
             }
             else
             {
-                $depts      = array();
-                $reviewedBy = $this->lieu->getReviewedBy();
-                if($reviewedBy)
-                {
-                    if($reviewedBy == $this->app->user->account) $depts = $allDepts;
-                }
-                else
-                {
-                    $depts = $managedDepts;
-                }
-                if($depts) $lieus = $this->lieu->getList('browseReview', '', '', '', $depts, '', $orderBy);
+                if($managedDepts) $lieus = $this->lieu->getList('browseReview', '', '', '', $managedDepts, '', $orderBy);
             }
         }
 
@@ -162,7 +117,6 @@ class my extends control
         $refunds = array();
         if($type == 'all' || $type == 'refund')
         {
-            $depts         = array();
             $firstRefunds  = array();
             $secondRefunds = array();
             if($isAdmin or (!empty($this->config->refund->secondReviewer) and $this->config->refund->secondReviewer == $account))
@@ -173,13 +127,12 @@ class my extends control
             /* Get refund list for firstReviewer. */
             if($isAdmin or (!empty($this->config->refund->firstReviewer) and $this->config->refund->firstReviewer == $account))
             {
-                $depts = $allDepts;
+                $firstRefunds = $this->refund->getList('browseReview', '', '', '', 'wait', '', $orderBy);
             }
-            elseif(empty($this->config->refund->firstReviewer))
+            else
             {
-                $depts = $managedDeptList;
+                if($managedDepts) $firstRefunds = $this->refund->getList('browseReview', '', '',  $managedDepts, 'wait', '', $orderBy);
             }
-            if($depts) $firstRefunds = $this->refund->getList('browseReview', '', '',  $depts, 'wait', '', $orderBy);
 
             $refunds = array_merge($secondRefunds, $firstRefunds);
         }
