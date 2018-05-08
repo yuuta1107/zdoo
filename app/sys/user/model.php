@@ -147,7 +147,7 @@ class userModel extends model
             ->beginIF(validater::checkEmail($account))->where('email')->eq($account)->fi()
             ->beginIF(!validater::checkEmail($account))->where('account')->eq($account)->fi()
             ->andWhere('deleted')->eq('0')
-            ->fetch('', false);
+            ->fetch();
     }
 
     /**
@@ -269,7 +269,7 @@ class userModel extends model
             $this->checkPassword();
             if(dao::isError()) return false;
 
-            $password  = $this->createPassword($this->post->password1, $account);
+            $password = $this->createPassword($this->post->password1, $account);
             $this->post->set('password', $password);
         }
 
@@ -298,6 +298,8 @@ class userModel extends model
             ->checkIF($this->post->gtalk != false, 'gtalk', 'email')
             ->where('account')->eq($account)
             ->exec();
+
+        if(dao::isError()) return false;
 
         $user = $this->getByAccount($account);
         return $this->loadModel('action')->create('user', $user->id, 'edited');
