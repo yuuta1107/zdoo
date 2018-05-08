@@ -18,5 +18,5 @@ CREATE TABLE `sys_queue` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `sys_cron` (`m`, `h`, `dom`, `mon`, `dow`, `command`, `remark`, `type`, `buildin`, `status`, `lastTime`) VALUES
-('*/1', '*', '*', '*', '*', 'appName=sys&moduleName=queue&methodName=getqueue', '出队列', 'ranzhi', 0, 'normal', '2018-04-18 17:34:32'),
-('*/5', '*', '*', '*', '*', 'appName=sys&moduleName=queue&methodName=additional', '', 'ranzhi', 0, 'normal', '2018-04-18 17:34:32');
+('*/1', '*', '*', '*', '*', 'appName=sys&moduleName=queue&methodName=getqueue', '出队列', 'ranzhi', 0, 'normal', '0000-00-00 00:00:00'),
+('*/10', '*', '*', '*', '*', 'appName=sys&moduleName=queue&methodName=additional', '检查是否添加待办', 'ranzhi', 0, 'normal', '0000-00-00 00:00:00');
