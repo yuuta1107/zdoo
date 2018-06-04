@@ -35,7 +35,7 @@
             <th class='w-90px'> <?php commonModel::printOrderLink('status',      $orderBy, $vars, $lang->task->status);?></th>
             <th class='w-90px'><?php commonModel::printOrderLink('createdDate',  $orderBy, $vars, $lang->task->createdDate);?></th>
             <th class='w-80px'><?php commonModel::printOrderLink('consumed',     $orderBy, $vars, $lang->task->consumedAB . $lang->task->lblHour);?></th>
-            <th class='w-100px'><?php commonModel::printOrderLink('left',        $orderBy, $vars, $lang->task->left . $lang->task->lblHour);?></th>
+            <th class='w-100px'><?php commonModel::printOrderLink('left',        $orderBy, $vars, $lang->task->leftAB . $lang->task->lblHour);?></th>
             <?php $class = $this->app->clientLang == 'en' ? 'w-280px' : 'w-240px';?>
             <th class='<?php echo $class;?>'><?php echo $lang->actions;?></th>
           </tr>
@@ -46,8 +46,8 @@
             <td class='text-left'><label class='checkbox-inline'><input type='checkbox' name='taskIDList[]' value='<?php echo $task->id;?>'/> <?php echo $task->id;?></td>
             <td><span class='active pri pri-<?php echo $task->pri; ?>'><?php echo $lang->task->priList[$task->pri];?></span></td>
             <td class='text-left' title="<?php echo $task->name;?>">
-              <?php if($task->parent != 0) echo "<span class='label'>{$lang->task->childrenAB}</span>"?>
-              <?php if(!empty($task->team)) echo "<span class='label'>{$lang->task->multipleAB}</span>"?>
+              <?php if($task->parent != 0) echo "<span class='label label-info'>{$lang->task->childrenAB}</span>"?>
+              <?php if(!empty($task->team)) echo "<span class='label label-info'>{$lang->task->multipleAB}</span>"?>
               <?php echo html::a($this->createLink('task', 'view', "taskID=$task->id"), $task->name);?>
               <?php if(!empty($task->children)) echo "<span class='task-toggle'>&nbsp;&nbsp;<i class='icon icon-minus'></i>&nbsp;&nbsp;</span>"?>
             </td>
@@ -68,7 +68,7 @@
                   <td class='w-60px'><?php echo $child->id;?></td>
                   <td class='w-40px'><span class='active pri pri-<?php echo $child->pri; ?>'><?php echo $lang->task->priList[$child->pri];?></span></td>
                   <td class='text-left' title="<?php echo $child->name;?>">
-                    <span class='label'><?php echo $lang->task->childrenAB?></span>
+                    <span class='label label-info'><?php echo $lang->task->childrenAB?></span>
                     <?php echo html::a($this->createLink('task', 'view', "taskID=$child->id"), $child->name);?>
                   </td>
                   <td class='w-100px'>  <?php echo $child->deadline;?></td>
