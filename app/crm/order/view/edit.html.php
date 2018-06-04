@@ -23,6 +23,31 @@
 <form method='post' id='ajaxForm' class='form-condensed'>
   <div class='row-table'>
     <div class='col-main'>
+      <div class='panel'>
+        <div class='panel-heading'><strong><?php echo $lang->order->view?></strong></div>
+        <div class='panel-body'>
+          <?php
+          $payed = $order->status == 'payed';
+          $customerLink = html::a($this->createLink('customer', 'view', "customerID={$customer->id}"), $customer->name);
+          $productLink = '';
+          foreach($order->products as $product)
+          {
+              $productLink .= html::a($this->createLink('product', 'view', "productID={$product->id}"), $product->name);
+          }
+
+          if($contract) $contractLink = html::a($this->createLink('contract', 'view', "contractID={$contract->id}"), $contract->name);
+          ?>
+          <p><?php printf($lang->order->infoBuy, $customerLink, $productLink);?></p>
+          <?php if($contract):?>
+          <p><?php printf($lang->order->infoContract, $contractLink);?></p>
+          <?php endif;?>
+          <p><?php printf($lang->order->infoAmount, zget($currencySign, $order->currency, '') . formatMoney($order->plan), zget($currencySign, $order->currency, '') . formatMoney($order->real))?></p>
+          <p>
+            <?php if(formatTime($order->contactedDate)) printf($lang->order->infoContacted, $order->contactedDate)?>
+            <?php if(formatTime($order->nextDate)) printf($lang->order->infoNextDate, $order->nextDate)?>
+          </p>
+        </div>
+      </div>
       <?php echo $this->fetch('action', 'history', "objectType=order&objectID={$order->id}");?>
       <div class='page-actions'>
         <?php echo html::submitButton();?>

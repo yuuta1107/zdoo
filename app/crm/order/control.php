@@ -141,10 +141,13 @@ class order extends control
 
         $this->view->title        = $this->lang->order->edit;
         $this->view->order        = $order;
-        $this->view->products     = $this->loadModel('product')->getPairs();
-        $this->view->customers    = $this->loadModel('customer')->getPairs('client', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit, $order->customer);
         $this->view->users        = $this->loadModel('user')->getPairs('nodeleted,noforbidden,noclosed');
+        $this->view->products     = $this->loadModel('product')->getPairs();
+        $this->view->customer     = $this->loadModel('customer')->getByID($order->customer);
+        $this->view->contract     = $this->order->getContract($orderID);
+        $this->view->customers    = $this->loadModel('customer')->getPairs('client', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit, $order->customer);
         $this->view->currencyList = $this->loadModel('common', 'sys')->getCurrencyList();
+        $this->view->currencySign = $this->common->getCurrencySign();
 
         $this->display();
     }
