@@ -130,16 +130,18 @@
       <div class='panel'>
         <table class='table table-data'>
           <thead>
-            <tr>
-              <th><?php echo $lang->task->team?></th>
-              <th class='text-center'><?php echo $lang->task->estimate?></th>
-              <th class='text-center'><?php echo $lang->task->consumed?></th>
-              <th class='text-center'><?php echo $lang->task->left?></th>
+            <tr class='text-center'>
+              <th class='text-left'><?php echo $lang->task->team;?></th>
+              <th><?php echo $lang->project->role;?></th>
+              <th><?php echo $lang->task->estimate?></th>
+              <th><?php echo $lang->task->consumed?></th>
+              <th><?php echo $lang->task->left?></th>
             </tr>
           </thead>
           <?php foreach($task->team as $member):?>
           <tr class='text-center'>
             <td class='text-left'><?php echo zget($members, $member->account)?></td>
+            <td><?php echo $member->role;?></td>
             <td><?php echo $member->estimate?></td>
             <td><?php echo $member->consumed?></td>
             <td><?php echo $member->left?></td>

@@ -108,6 +108,10 @@ $config->file = new stdclass();
 $config->file->dangers = 'php,php3,php4,phtml,php5,jsp,py,rb,asp,aspx,ashx,asa,cer,cdx,aspl,shtm,shtml,html,htm';
 $config->file->allowed = 'txt,doc,docx,dot,wps,wri,pdf,ppt,pptx,xls,xlsx,ett,xlt,xlsm,csv,jpg,jpeg,png,psd,gif,ico,bmp,swf,avi,rmvb,rm,mp3,mp4,3gp,flv,mov,movie,rar,zip,bz,bz2,tar,gz';
 
+/* 前端input标签属性设置。Html input tag settings. */
+$config->inputTag = new stdclass();
+$config->inputTag->disableAutocomplete = ',hours,money,workingHours,normal,late,early,absent,trip,egress,paidLeave,unpaidLeave,timeOvertime,restOvertime,holidayOvertime,lieu,deserve,actual,amount,saveDays,m,h,dom,mon,dow,consumed,estimate,left,teamEstimate,teamConsumed,teamLeft,teamEstimate,teamConsumed,teamLeft,reserveDays,values,width,height,investMoney,';// 涉及到数字的输入框禁用自带填充功能，避免造成干扰。 Disable the autocomplete function of html input tag to avoid interference.
+
 /* 配置参数过滤。Filter param settings. */
 $filterConfig = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'filter.php';
 if(file_exists($filterConfig)) include $filterConfig;

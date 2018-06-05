@@ -25,7 +25,7 @@ include $app->getAppRoot() . '../sys/common/view/header.modal.html.php';
           <tr class='text-center'>
             <th class='w-60px'><?php echo $lang->task->id;?></th> 
             <th><?php echo $lang->task->name;?> <span class='required'></span></th>
-            <th class='w-100px'><?php echo $lang->task->assignedTo;?></th>
+            <th class='w-200px'><?php echo $lang->task->assignedTo;?></th>
             <th class='w-p25'><?php echo $lang->task->desc;?></th>
             <th class='w-120px'><?php echo $lang->task->deadline;?></th>
             <th class='w-70px'><?php echo $lang->task->pri;?></th>
@@ -66,10 +66,18 @@ include $app->getAppRoot() . '../sys/common/view/header.modal.html.php';
                 </div>
                 <div class="modal-content">
                   <table class='table-form'>
+                    <thead>
+                      <tr class='text-center'>
+                        <th><?php echo $lang->task->team;?></th>
+                        <th class='w-150px'><?php echo $lang->project->role;?></th>
+                        <th class='w-130px'><?php echo $lang->task->recordEstimate;?></th>
+                      </tr>
+                    </thead>
                     <?php for($mi = 0; $mi < 6; $mi++):?>
                     <tr>
-                      <td class='w-p70'><?php echo html::select("team[$i][]", $teamUsers, '', "class='form-control chosen'")?></td>
-                      <td class='w-p30'>
+                      <td><?php echo html::select("team[$i][]", $teamUsers, '', "class='form-control chosen'")?></td>
+                      <td><?php echo html::input("role[$i][]", '', "class='form-control'")?></td>
+                      <td>
                         <div class='input-group'>
                           <?php echo html::input("teamEstimate[$i][]", '', "class='form-control text-center' placeholder='{$lang->task->estimateAB}'")?>
                           <span class='input-group-addon'><?php echo $lang->task->hour?></span>
@@ -84,8 +92,12 @@ include $app->getAppRoot() . '../sys/common/view/header.modal.html.php';
             </div>
           </td>
           <td>
-            <?php echo html::select("assignedTo[$i]", $users, $member, "class='form-control'");?>
-            <?php echo html::a("#modal{$i}", $lang->task->team, "class='form-control btn hidden' data-toggle='modal' data-target='#modal{$i}'");?>
+            <div class='input-group'>
+              <?php echo html::select("assignedTo[$i]", $users, $member, "class='form-control'");?>
+              <?php echo html::input("teamMember[$i]", '', "class='form-control team-group hidden' readonly='readonly'");?>
+              <span class='input-group-addon fix-border fix-padding team-group hidden'></span>
+              <?php echo html::a("#modal{$i}", $lang->task->team, "class='form-control btn hidden' data-toggle='modal' data-target='#modal{$i}'");?>
+            </div>
           </td>
           <?php endif;?>
           <td><?php echo html::textarea("desc[$i]", '', "rows='1' class='form-control'");?></td>
