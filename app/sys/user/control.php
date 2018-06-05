@@ -13,7 +13,7 @@ class user extends control
 {
     /**
      * The referer
-     * 
+     *
      * @var string
      * @access private
      */
@@ -21,8 +21,8 @@ class user extends control
 
     /**
      * Login.
-     * 
-     * @param string $referer 
+     *
+     * @param string $referer
      * @access public
      * @return void
      */
@@ -131,9 +131,9 @@ class user extends control
     }
 
     /**
-     * logout 
-     * 
-     * @param int $referer 
+     * logout
+     *
+     * @param int $referer
      * @access public
      * @return void
      */
@@ -153,7 +153,7 @@ class user extends control
 
     /**
      * The deny page.
-     * 
+     *
      * @param mixed $module             the denied module
      * @param mixed $method             the deinied method
      * @param string $refererBeforeDeny the referer of the denied page.
@@ -178,7 +178,7 @@ class user extends control
 
     /**
      * The user control panel of the front
-     * 
+     *
      * @access public
      * @return void
      */
@@ -190,7 +190,7 @@ class user extends control
 
     /**
      * View current user's profile.
-     * 
+     *
      * @access public
      * @return void
      */
@@ -204,7 +204,7 @@ class user extends control
 
     /**
      * List threads of one user.
-     * 
+     *
      * @access public
      * @return void
      */
@@ -227,7 +227,7 @@ class user extends control
 
     /**
      * List replies of one user.
-     * 
+     *
      * @access public
      * @return void
      */
@@ -240,7 +240,7 @@ class user extends control
         $pager = new pager($recTotal, $recPerPage, $pageID);
 
         /* Load the thread lang thus to rewrite the page lang items. */
-        $this->app->loadLang('thread');    
+        $this->app->loadLang('thread');
 
         $this->view->replies = $this->loadModel('reply')->getByUser($this->app->user->account, $pager);
         $this->view->pager   = $pager;
@@ -249,32 +249,32 @@ class user extends control
     }
 
     /**
-     * Create user 
-     * 
+     * Create user
+     *
      * @access public
      * @return void
      */
     public function create()
-    {                          
-        if(!empty($_POST))     
-        {   
+    {
+        if(!empty($_POST))
+        {
             if(in_array(strtolower(trim($this->post->account)), $this->config->user->retainAccount)) $this->send(array('result' => 'fail', 'message' => array('account' => sprintf($this->lang->user->retainAccount, trim($this->post->account)))));
 
-            $this->user->create();          
-            if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError())); 
-            /* Go to the referer. */        
+            $this->user->create();
+            if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
+            /* Go to the referer. */
             $this->send( array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate'=>inlink('admin')) );
-        }                      
+        }
 
         $this->view->treeMenu = $this->loadModel('tree')->getTreeMenu('dept', 0, array('treeModel', 'createDeptAdminLink'));
         $this->view->depts    = $this->tree->getOptionMenu('dept');
-        $this->display();      
+        $this->display();
     }
 
     /**
-     * Edit a user. 
-     * 
-     * @param  string    $account 
+     * Edit a user.
+     *
+     * @param  string    $account
      * @access public
      * @return void
      */
@@ -286,8 +286,8 @@ class user extends control
     }
 
     /**
-     * Edit login user. 
-     * 
+     * Edit login user.
+     *
      * @access public
      * @return void
      */
@@ -308,8 +308,8 @@ class user extends control
         $this->view->treeMenu = $this->loadModel('tree')->getTreeMenu('dept', 0, array('treeModel', 'createDeptAdminLink'));
         $this->view->depts    = $this->tree->getOptionMenu('dept');
         $this->view->user     = $this->user->getByAccount($account);
-        if($from == 'admin') 
-        { 
+        if($from == 'admin')
+        {
             $this->display('user', 'edit.admin');
         }
         else
@@ -320,7 +320,7 @@ class user extends control
 
     /**
      * Delete a user.
-     * 
+     *
      * @param  string $account
      * @access public
      * @return void
@@ -328,7 +328,7 @@ class user extends control
     public function delete($account = '')
     {
         $result = $this->user->inTheReviewProcess($account);
-        if($result !== false) 
+        if($result !== false)
         {
             $this->send(array('result' => 'fail', 'message' => sprintf($this->lang->user->actionError, $result)));
         }
@@ -353,6 +353,8 @@ class user extends control
     public function admin($deptID = 0, $mode = 'normal', $search = '', $orderBy = 'id_asc', $recTotal = 0, $recPerPage = 10, $pageID = 1)
     {
         if($this->post->query) die($this->locate(inlink('admin', "deptID=$deptID&mode=&query={$this->post->query}&orderBy=$orderBy&recTotal=0&recPerPage=$recPerPage&pageID=1")));
+
+        if($this->post->search) $search = $this->post->search;
 
         $this->app->loadClass('pager', $static = true);
         $pager = new pager($recTotal, $recPerPage, $pageID);
@@ -413,7 +415,7 @@ class user extends control
         if(!$account) $this->send(array('result'=>'fail', 'message' => $this->lang->user->actionFail));
 
         $result = $this->user->inTheReviewProcess($account);
-        if($result !== false) 
+        if($result !== false)
         {
             $this->send(array('result' => 'fail', 'message' => sprintf($this->lang->user->actionError, $result)));
         }
@@ -425,15 +427,15 @@ class user extends control
     }
 
     /**
-     * Active user 
-     * 
-     * @param  string $account 
+     * Active user
+     *
+     * @param  string $account
      * @access public
      * @return void
      */
     public function active($account = '')
     {
-        if(!$account) $this->send(array('result'=>'fail', 'message' => $this->lang->user->actionFail));       
+        if(!$account) $this->send(array('result'=>'fail', 'message' => $this->lang->user->actionFail));
 
         $result = $this->user->active($account);
         if($result) die($this->send(array('result'=>'success', 'locate' => $this->server->http_referer)));
@@ -442,9 +444,9 @@ class user extends control
     }
 
     /**
-     * set the referer 
-     * 
-     * @param  string $referer 
+     * set the referer
+     *
+     * @param  string $referer
      * @access public
      * @return void
      */
@@ -497,8 +499,8 @@ class user extends control
 
     /**
      * vcard of a user.
-     * 
-     * @param  string    $user 
+     *
+     * @param  string    $user
      * @access public
      * @return void
      */
@@ -521,7 +523,7 @@ EMAIL;TYPE=PREF,INTERNET:{$user->email}
 END:VCARD";
 
         $this->app->loadClass('qrcode');
-        QRcode::png($vcard, false, 4, 6); 
+        QRcode::png($vcard, false, 4, 6);
     }
 
     /**
@@ -535,7 +537,7 @@ END:VCARD";
         if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
             $result = $this->user->uploadAvatar();
-            $this->send($result); 
+            $this->send($result);
         }
 
         $this->view->user  = $this->user->getByAccount($this->app->user->account);
@@ -545,7 +547,7 @@ END:VCARD";
     /**
      * crop avatar
      *
-     * @param  int    $image 
+     * @param  int    $image
      * @access public
      * @return void
      */
