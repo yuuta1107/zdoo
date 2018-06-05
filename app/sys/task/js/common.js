@@ -94,3 +94,40 @@ function setComment()
     $('.ke-container').css('width', '100%');
     setTimeout(function() { $('#commentBox textarea').focus(); }, 50);
 }
+
+function computeTeamMember()
+{
+    var team = '';
+    var estimateTime = 0;
+    if($('#consumed').length) var consumedTime = 0;
+    if($('#left').length)     var leftTime     = 0;
+
+    $('[name*=team]').each(function()
+    {
+        if($(this).find('option:selected').text() != '')
+        {
+            team += ' ' + $(this).find('option:selected').text();
+
+            estimate = parseFloat($(this).parents('td').next('td').next('td').find('[name*=teamEstimate]').val());
+            if(!isNaN(estimate)) estimateTime += estimate;
+
+            if(typeof(consumedTime) != 'undefined')
+            {
+                consumed = parseFloat($(this).parents('td').next('td').next('td').find('[name*=teamConsumed]').val());
+                if(!isNaN(consumed)) consumedTime += consumed;
+            }
+
+            if(typeof(left) != 'undefined') 
+            {
+                left = parseFloat($(this).parents('td').next('td').next('td').find('[name*=teamLeft]').val());
+                if(!isNaN(left)) leftTime += left;
+            }
+        }
+    })
+
+    $('#teamMember').val(team);
+
+    $('#estimate').val(estimateTime);
+    if(typeof(consumedTime) != 'undefined') $('#consumed').val(consumedTime);
+    if(typeof(left) != 'undefined')         $('#left').val(leftTime);
+}
