@@ -63,6 +63,33 @@ class html extends baseHTML
         /* End. */
         return $string .= "</select>\n";
     }
+
+    /**
+     * 生成input输入标签。
+     * Create tags like "<input type='text' />"
+     *
+     * @param  string $name     the name of the text input tag.
+     * @param  string $value    the default value.
+     * @param  string $attrib   other attribs.
+     * @static
+     * @access public
+     * @return string
+     */
+    static public function input($name, $value = "", $attrib = "")
+    {
+        global $config;
+
+        $id = "id='$name'";
+        if(strpos($attrib, 'id=') !== false) $id = '';
+        $value = str_replace("'", '&#039;', $value);
+
+        $originalName = $name;
+        if(strpos($name, '[') !== false) $name = substr($string, 0, strpos($name, '['));
+        $autocomplete = strpos($config->inputTag->disableAutocomplete, ",$name,") !== false ? 'off' : 'on';
+        $name = $originalName;
+
+        return "<input type='text' name='$name' {$id} value='$value' autocomplete='$autocomplete' $attrib />\n";
+    }
 }
 
 /**
