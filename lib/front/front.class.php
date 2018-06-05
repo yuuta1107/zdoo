@@ -5,7 +5,7 @@
  *
  * The author disclaims copyright to this source code.  In place of
  * a legal notice, here is a blessing:
- * 
+ *
  *  May you do good and not evil.
  *  May you find forgiveness for yourself and forgive others.
  *  May you share freely, never taking more than you give.
@@ -15,7 +15,7 @@ helper::import(dirname(dirname(__FILE__)) . '/base/front/front.class.php');
 /**
  * html类，生成html标签。
  * The html class, to build html tags.
- * 
+ *
  * @package framework
  */
 class html extends baseHTML
@@ -84,7 +84,7 @@ class html extends baseHTML
         $value = str_replace("'", '&#039;', $value);
 
         $originalName = $name;
-        if(strpos($name, '[') !== false) $name = substr($string, 0, strpos($name, '['));
+        if(strpos($name, '[') !== false) $name = substr($name, 0, strpos($name, '['));
         $autocomplete = strpos($config->inputTag->disableAutocomplete, ",$name,") !== false ? 'off' : 'on';
         $name = $originalName;
 
@@ -95,7 +95,7 @@ class html extends baseHTML
 /**
  * JS类。
  * JS class.
- * 
+ *
  * @package front
  */
 class js extends baseJS
@@ -159,8 +159,8 @@ class css extends baseCSS
     /**
      * 引入css文件。
      * Import a css file.
-     * 
-     * @param  string $url 
+     *
+     * @param  string $url
      * @access public
      * @return void
      */
