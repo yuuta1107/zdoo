@@ -22,7 +22,7 @@
   <tr data-url='<?php echo $this->createLink('proj.task', 'browse', "projectID=$id"); ?>' <?php echo $appid?>>
     <td class='text-left' title='<?php echo $project->name;?>'><?php echo $project->name;?></td>
     <td><?php echo $project->done;?></td>
-    <td><?php echo $project->wait;?></td>
+    <td><?php echo $project->wait + $project->doing;?></td>
     <td>
       <div class='progress' title="<?php echo $project->rate?>">
         <div style="width: <?php echo $project->rate;?>" aria-valuemax='100' aria-valuemin='0' aria-valuenow="<?php echo $project->rate?>" role='progressbar' class='progress-bar progress-bar-success'></div>
