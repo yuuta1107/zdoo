@@ -14,6 +14,7 @@
 <div class='panel'>
   <div class='panel-heading'>
     <strong><i class="icon-group"></i> <?php echo $lang->depositor->browse;?></strong>
+    <?php echo html::a(inlink('browse', "tag=&status=normal"), $lang->depositor->normalBrowse, $status == 'normal' ? "class='active'" : '');?>
     <?php foreach($tags as $tag):?>
     <?php echo html::a(inlink('browse', "tag=$tag&status=all"), $tag, $currentTag == $tag ? "class='active'" : '');?>
     <?php endforeach;?>
