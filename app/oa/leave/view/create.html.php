@@ -15,6 +15,7 @@
 <?php js::set('signIn', $config->attend->signInLimit)?>
 <?php js::set('signOut', $config->attend->signOutLimit)?>
 <?php js::set('workingHours', $config->attend->workingHours)?>
+<?php js::set('annualTip', sprintf($lang->leave->annualTip, $myLeftAnnuals));?>
 <div class='panel-body'>
   <form id='ajaxForm' method='post' action="<?php echo $this->createLink('oa.leave', 'create')?>">
     <table class='table table-form table-condensed'>

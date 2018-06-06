@@ -70,7 +70,11 @@
           </tr>
         </thead>
         <?php foreach($leaveList as $leave):?>
+        <?php if($type == 'browseReview' && $leave->type == 'annual' && isset($leftAnnualDays[$leave->createdBy])):?>
+        <tr data-toggle='tooltip' data-placement='top' data-tip-class='tooltip-danger' title="<?php echo sprintf($lang->leave->annualTip, $leftAnnualDays[$leave->createdBy]);?>">
+        <?php else:?>
         <tr>
+        <?php endif?>
           <td class='idTD'>
             <?php if($batchReview):?>
             <label class='checkbox-inline'><input type='checkbox' name='leaveIDList[]' value='<?php echo $leave->id;?>'/> <?php echo $leave->id;?></label>

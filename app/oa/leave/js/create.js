@@ -41,4 +41,23 @@ $(document).ready(function()
     });
 
     $('#begin').change();
+
+    $('input[name=type]').click(function()
+    {   
+        $('#typeannual').tooltip(
+        {
+            title: v.annualTip,
+            trigger: 'manual',
+            tipClass: 'w-120px tooltip-danger'
+        });
+
+        if($('#typeannual').prop('checked'))
+        {   
+            $('#typeannual').tooltip('show');
+        }   
+        else
+        {   
+            $('#typeannual').tooltip('destroy');
+        }   
+    }); 
 })

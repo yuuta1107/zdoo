@@ -484,4 +484,116 @@ class leaveModel extends model
 
         return false;
     }
+
+    /**
+     * Save personal annual days.
+     * 
+     * @access public
+     * @return void
+     */
+    public function savePersonalAnnual()
+    {
+        $this->dao->delete()->from(TABLE_CONFIG)
+            ->where('`owner`')->eq('system')
+            ->andWhere('`app`')->eq('oa')
+            ->andWhere('`module`')->eq('leave')
+            ->andWhere('`key`')->eq('annualSetting')
+            ->exec();
+
+        $data = new stdclass();
+        $totalAnnuals = array();
+        foreach($this->post->account as $key => $account)
+        {
+            $totalDays = $this->post->totalDays[$key];
+            $begin = $this->post->begin[$key];
+            $end   = $this->post->end[$key];
+
+            if(!$account or !$totalDays or !$begin or !$end) continue;
+
+            $totalAnnuals[$account] = new stdclass();
+            $totalAnnuals[$account]->totalDays = $totalDays;
+            $totalAnnuals[$account]->begin     = $begin;
+            $totalAnnuals[$account]->end       = $end;
+        }
+
+        $data->annualSetting = helper::jsonEncode($totalAnnuals);
+
+        if($totalAnnuals) $this->loadModel('setting')->setItems('system.oa.leave', $data);
+        return !dao::isError();
+    }
+
+    /**
+     * Compute annual days 
+     * 
+     * @access public
+     * @return array
+     */
+    public function computeAnnualDays()
+    {
+        if(!isset($this->config->leave->annualSetting)) return array();
+
+        $annualSettings = json_decode($this->config->leave->annualSetting);
+
+        $leaves = $this->dao->select('*')->from(TABLE_LEAVE)->where('type')->eq('annual')->andWhere('status')->eq('pass')->fetchAll();
+
+        $usedAnnualDays = array();
+        foreach($leaves as $leave)
+        {
+            if(!isset($annualSettings->{$leave->createdBy})) continue;
+            $currentAnnualSetting = $annualSettings->{$leave->createdBy};
+
+            $attendWorkingHours = $this->config->attend->workingHours;
+
+            if(!isset($usedAnnualDays[$leave->createdBy])) $usedAnnualDays[$leave->createdBy] = 0;
+
+            if($leave->begin == $leave->end)
+            {
+                if($leave->begin < $currentAnnualSetting->begin || $leave->begin > $currentAnnualSetting->end) continue;
+                $usedAnnualDays[$leave->createdBy] += round($leave->hours / $attendWorkingHours, 2);
+            }
+            else
+            {
+                $totalHours = 0;
+                $dates = range(strtotime($leave->begin), strtotime($leave->end), 86400);
+                foreach($dates as $datetime)
+                {
+                    $date = date('Y-m-d', $datetime);
+
+                    if($date < $currentAnnualSetting->begin) continue;
+                    if($date > $currentAnnualSetting->end) continue;
+
+                    $signIn       = strtotime($date . ' ' . $this->config->attend->signInLimit);
+                    $signOut      = strtotime($date . ' ' . $this->config->attend->signOutLimit);
+                    $workingHours = $attendWorkingHours;
+
+                    $hours = 0;
+                    if($date == $leave->begin)
+                    {
+                        $hours = round(($signOut - strtotime($leave->begin . ' ' . $leave->start)) / 3600, 2);
+                    }
+                    elseif($date == $leave->end)
+                    {
+                        $hours = round((strtotime($leave->end . ' ' . $leave->finish) - $signIn) / 3600, 2);
+                    }
+                    else
+                    {
+                        $hours = $workingHours;
+                    }
+
+                    if($hours < 0) $hours = 0;
+                    if($hours > $workingHours) $hours = $workingHours;
+                    if($hours > $leave->hours) $hours = $leave->hours;
+                    if($hours) $totalHours += $hours;
+                }
+                $usedAnnualDays[$leave->createdBy] += round($totalHours / $attendWorkingHours, 2);
+            }
+        }
+
+        $leftAnnualDays = array();
+        foreach($annualSettings as $account => $annualSetting)
+        {
+            $leftAnnualDays[$account] = isset($usedAnnualDays[$account]) ? $annualSetting->totalDays - $usedAnnualDays[$account] : $annualSetting->totalDays;
+        }
+        return $leftAnnualDays;
+    }
 }
