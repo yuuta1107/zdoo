@@ -31,7 +31,7 @@
 
 $.extend(
 {
-    setAjaxForm: function(formID, callback)
+    setAjaxForm: function(formID, callback, beforeSubmit)
     {
         if($(document).data('setAjaxForm:' + formID)) return;
 
@@ -215,7 +215,7 @@ $.extend(
         $(document).on('submit', formID, function()
         { 
             $.disableForm(formID);
-            $(this).ajaxSubmit(options);
+            if(!beforeSubmit || beforeSubmit() !== false) $(this).ajaxSubmit(options);
             return false;    // Prevent the submitting event of the browser.
         }).data('setAjaxForm:' + formID, true);
     },
