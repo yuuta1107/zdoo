@@ -18,9 +18,9 @@ class leaveModel extends model
     }
 
     /**
-     * Get a leave by id. 
-     * 
-     * @param  int    $id 
+     * Get a leave by id.
+     *
+     * @param  int    $id
      * @access public
      * @return object
      */
@@ -31,8 +31,8 @@ class leaveModel extends model
 
     /**
      * Get by idList.
-     * 
-     * @param  array|string $idList 
+     *
+     * @param  array|string $idList
      * @access public
      * @return array
      */
@@ -42,14 +42,14 @@ class leaveModel extends model
     }
 
     /**
-     * Get leave list. 
-     * 
-     * @param  string $type 
-     * @param  string $year 
-     * @param  string $month 
-     * @param  string $account 
-     * @param  string $dept 
-     * @param  string $status 
+     * Get leave list.
+     *
+     * @param  string $type
+     * @param  string $year
+     * @param  string $month
+     * @param  string $account
+     * @param  string $dept
+     * @param  string $status
      * @param  string $orderBy
      * @access public
      * @return array
@@ -57,7 +57,7 @@ class leaveModel extends model
     public function getList($type = 'personal', $year = '', $month = '', $account = '', $dept = '', $status = '', $orderBy = 'id_desc')
     {
         $date = '';
-        if($year)  
+        if($year)
         {
             if(!$month) $date = "$year-%";
             if($month)  $date = "$year-$month-%";
@@ -89,9 +89,9 @@ class leaveModel extends model
     }
 
     /**
-     * Process status of leave list. 
-     * 
-     * @param  array  $leaveList 
+     * Process status of leave list.
+     *
+     * @param  array  $leaveList
      * @access public
      * @return array
      */
@@ -106,7 +106,7 @@ class leaveModel extends model
             if(strpos(',wait,back,', ",$leave->status,") !== false)
             {
                 $reviewer = $this->getReviewedBy();
-                if(!$reviewer) 
+                if(!$reviewer)
                 {
                     $reviewer = trim(zget($managers, $leave->createdBy, ''), ',');
                 }
@@ -119,9 +119,9 @@ class leaveModel extends model
 
     /**
      * Get leave by date and account.
-     * 
-     * @param  string    $date 
-     * @param  string    $account 
+     *
+     * @param  string    $date
+     * @param  string    $account
      * @access public
      * @return object
      */
@@ -134,7 +134,7 @@ class leaveModel extends model
 
     /**
      * Get all month of leave's begin.
-     * 
+     *
      * @param  string $type
      * @access public
      * @return array
@@ -163,9 +163,9 @@ class leaveModel extends model
 
     /**
      * Get list by date.
-     * 
-     * @param  string    $date 
-     * @param  string    $account 
+     *
+     * @param  string    $date
+     * @param  string    $account
      * @access public
      * @return array
      */
@@ -183,8 +183,8 @@ class leaveModel extends model
     }
 
     /**
-     * Get reviewed by. 
-     * 
+     * Get reviewed by.
+     *
      * @access public
      * @return string
      */
@@ -195,7 +195,7 @@ class leaveModel extends model
 
     /**
      * Create a leave.
-     * 
+     *
      * @access public
      * @return bool
      */
@@ -223,8 +223,8 @@ class leaveModel extends model
 
     /**
      * update leave.
-     * 
-     * @param  int    $id 
+     *
+     * @param  int    $id
      * @access public
      * @return bool
      */
@@ -257,9 +257,9 @@ class leaveModel extends model
 
     /**
      * Check date.
-     * 
-     * @param  object $date 
-     * @param  int    $id 
+     *
+     * @param  object $date
+     * @param  int    $id
      * @access public
      * @return void
      */
@@ -269,38 +269,43 @@ class leaveModel extends model
         if("$date->end $date->finish" <= "$date->begin $date->start") return array('result' => 'fail', 'message' => $this->lang->leave->wrongEnd);
 
         $existLeave = $this->checkLeave($date, $this->app->user->account, $id);
-        if(!empty($existLeave)) return array('result' => 'fail', 'message' => sprintf($this->lang->leave->unique, implode(', ', $existLeave))); 
-        
-        $existMakeup = $this->loadModel('makeup', 'oa')->checkMakeup($date, $this->app->user->account);
-        if(!empty($existMakeup)) return array('result' => 'fail', 'message' => sprintf($this->lang->makeup->unique, implode(', ', $existMakeup))); 
-        
-        $existOvertime = $this->loadModel('overtime', 'oa')->checkOvertime($date, $this->app->user->account);
-        if(!empty($existOvertime)) return array('result' => 'fail', 'message' => sprintf($this->lang->overtime->unique, implode(', ', $existOvertime))); 
+        if(!empty($existLeave)) return array('result' => 'fail', 'message' => sprintf($this->lang->leave->unique, implode(', ', $existLeave)));
 
-        $existTrip = $this->loadModel('trip', 'oa')->checkTrip('trip', $date, $this->app->user->account); 
-        if(!empty($existTrip)) return array('result' => 'fail', 'message' => sprintf($this->lang->trip->unique, implode(', ', $existTrip))); 
+        $existMakeup = $this->loadModel('makeup', 'oa')->checkMakeup($date, $this->app->user->account);
+        if(!empty($existMakeup)) return array('result' => 'fail', 'message' => sprintf($this->lang->makeup->unique, implode(', ', $existMakeup)));
+
+        $existOvertime = $this->loadModel('overtime', 'oa')->checkOvertime($date, $this->app->user->account);
+        if(!empty($existOvertime)) return array('result' => 'fail', 'message' => sprintf($this->lang->overtime->unique, implode(', ', $existOvertime)));
+
+        $existTrip = $this->loadModel('trip', 'oa')->checkTrip('trip', $date, $this->app->user->account);
+        if(!empty($existTrip)) return array('result' => 'fail', 'message' => sprintf($this->lang->trip->unique, implode(', ', $existTrip)));
 
         $this->app->loadLang('egress', 'oa');
-        $existEgress = $this->trip->checkTrip('egress', $date, $this->app->user->account); 
-        if(!empty($existEgress)) return array('result' => 'fail', 'message' => sprintf($this->lang->egress->unique, implode(', ', $existEgress))); 
+        $existEgress = $this->trip->checkTrip('egress', $date, $this->app->user->account);
+        if(!empty($existEgress)) return array('result' => 'fail', 'message' => sprintf($this->lang->egress->unique, implode(', ', $existEgress)));
 
         $existLieu = $this->loadModel('lieu', 'oa')->checkLieu($date, $this->app->user->account);
-        if(!empty($existLieu)) return array('result' => 'fail', 'message' => sprintf($this->lang->lieu->unique, implode(', ', $existLieu)));  
+        if(!empty($existLieu)) return array('result' => 'fail', 'message' => sprintf($this->lang->lieu->unique, implode(', ', $existLieu)));
 
         return array('result' => 'success');
     }
 
     /**
      * Check leave.
-     * 
+     *
      * @param  object $currentLeave
-     * @param  string $account 
+     * @param  string $account
      * @param  int    $id
      * @access public
-     * @return bool 
+     * @return bool
      */
     public function checkLeave($currentLeave = null, $account = '', $id = 0)
     {
+        if($id)
+        {
+            $oldLeave = $this->getById($id);
+            if($oldLeave->createdBy != $account) $account = $oldLeave->createdBy;
+        }
         $beginTime  = date('Y-m-d H:i:s', strtotime($currentLeave->begin . ' ' . $currentLeave->start));
         $endTime    = date('Y-m-d H:i:s', strtotime($currentLeave->end   . ' ' . $currentLeave->finish));
         $leaveList  = $this->getList($type = '', $year = '', $month = '', $account, $dept = '', $status = '', $orderBy = 'begin, start');
@@ -312,8 +317,8 @@ class leaveModel extends model
 
             $begin = $leave->begin . ' ' . $leave->start;
             $end   = $leave->end   . ' ' . $leave->finish;
-            if(($beginTime > $begin && $beginTime < $end) 
-                || ($endTime > $begin && $endTime < $end) 
+            if(($beginTime > $begin && $beginTime < $end)
+                || ($endTime > $begin && $endTime < $end)
                 || ($beginTime <= $begin && $endTime >= $end))
             {
                 $existLeave[] = substr($begin, 0, 16) . ' ~ ' . substr($end, 0, 16);
@@ -324,8 +329,8 @@ class leaveModel extends model
 
     /**
      * Back to the company.
-     * 
-     * @param  int    $id 
+     *
+     * @param  int    $id
      * @access public
      * @return bool | array
      */
@@ -344,10 +349,10 @@ class leaveModel extends model
     }
 
     /**
-     * review 
-     * 
-     * @param  int    $id 
-     * @param  string $status 
+     * review
+     *
+     * @param  int    $id
+     * @param  string $status
      * @access public
      * @return bool
      */
@@ -374,8 +379,8 @@ class leaveModel extends model
 
     /**
      * Review back date.
-     * 
-     * @param  int    $id 
+     *
+     * @param  int    $id
      * @param  string $status
      * @access public
      * @return void
@@ -400,7 +405,7 @@ class leaveModel extends model
         $end    = substr($oldLeave->backDate, 0, 10);
         $finish = substr($oldLeave->backDate, 11);
 
-        if($oldLeave->begin == $end) 
+        if($oldLeave->begin == $end)
         {
             $hours = round((strtotime("{$end} {$finish}") - strtotime("{$end} {$oldLeave->start}")) / 3600, 2);
             if($hours > $this->config->attend->workingHours) $hours = $this->config->attend->workingHours;
@@ -444,8 +449,8 @@ class leaveModel extends model
 
     /**
      * delete leave.
-     * 
-     * @param  int    $id 
+     *
+     * @param  int    $id
      * @access public
      * @return bool
      */
@@ -465,10 +470,10 @@ class leaveModel extends model
     }
 
     /**
-     * check date is in leave. 
-     * 
-     * @param  string $date 
-     * @param  string $account 
+     * check date is in leave.
+     *
+     * @param  string $date
+     * @param  string $account
      * @access public
      * @return bool
      */
