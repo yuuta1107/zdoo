@@ -91,7 +91,7 @@
       <td><?php echo $leave->end . ' ' . substr($leave->finish, 0, 5);?></td>
       <td><?php echo formatTime($leave->backDate);?></td>
       <td title='<?php echo $leave->desc?>'><?php echo $leave->desc;?></td>
-      <td class='leave-<?php echo $leave->status?>'><?php echo zget($this->lang->leave->statusList, $leave->status);?></td>
+      <td class='leave-<?php echo $leave->status?>' title='<?php echo $leave->statusLabel;?>'><?php echo $leave->statusLabel;?></td>
       <td>
         <?php $mode = $leave->status == 'pass' ? 'back' : '';?>
         <?php commonModel::printLink('oa.leave', 'review', "id={$leave->id}&status=pass&mode=$mode",   $lang->leave->statusList['pass'],   "data-status='pass' data-toggle='ajax'");?>
@@ -174,7 +174,7 @@
       <td><?php echo $overtime->begin . ' ' . substr($overtime->start, 0, 5);?></td>
       <td><?php echo $overtime->end . ' ' . substr($overtime->finish, 0, 5);?></td>
       <td title='<?php echo $overtime->desc?>'><?php echo $overtime->desc;?></td>
-      <td class='overtime-<?php echo $overtime->status?>'><?php echo zget($this->lang->overtime->statusList, $overtime->status);?></td>
+      <td class='overtime-<?php echo $leave->status?>' title='<?php echo $overtime->statusLabel;?>'><?php echo $overtime->statusLabel;?></td>
       <td>
         <?php commonModel::printLink('oa.overtime', 'review', "id={$overtime->id}&status=pass",   $lang->overtime->statusList['pass'],   "data-status='pass' data-toggle='ajax'");?>
         <?php commonModel::printLink('oa.overtime', 'review', "id={$overtime->id}&status=reject", $lang->overtime->statusList['reject'], "data-toggle='modal'");?>
@@ -214,7 +214,7 @@
       <td><?php echo $lieu->begin . ' ' . substr($lieu->start, 0, 5);?></td>
       <td><?php echo $lieu->end . ' ' . substr($lieu->finish, 0, 5);?></td>
       <td title='<?php echo $lieu->desc?>'><?php echo $lieu->desc;?></td>
-      <td class='lieu-<?php echo $lieu->status?>'><?php echo zget($this->lang->lieu->statusList, $lieu->status);?></td>
+      <td class='lieu-<?php echo $leave->status?>' title='<?php echo $lieu->statusLabel;?>'><?php echo $lieu->statusLabel;?></td>
       <td>
         <?php commonModel::printLink('oa.lieu', 'review', "id={$lieu->id}&status=pass",   $lang->lieu->statusList['pass'],   "data-status='pass' data-toggle='ajax'");?>
         <?php commonModel::printLink('oa.lieu', 'review', "id={$lieu->id}&status=reject", $lang->lieu->statusList['reject'], "data-toggle='modal'");?>

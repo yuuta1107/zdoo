@@ -92,22 +92,31 @@
         </div>
         <div class='modal-content'>
           <table class='table-form'>
+            <thead>
+              <tr class='text-center'>
+                <th><?php echo $lang->task->team;?></th>
+                <th class='w-120px'><?php echo $lang->project->role;?></th>
+                <th class='w-130px'><?php echo $lang->task->recordEstimate;?></th>
+                <th class='w-90px'></th>
+              </tr>
+            </thead>
             <?php for($i = 0; $i < 6; $i++):?>
             <tr>
-              <td class='w-80px'><?php echo html::select("team[]", $members, '', "class='form-control chosen'")?></td>
+              <td><?php echo html::select("team[]", $members, '', "class='form-control chosen'")?></td>
+              <td><?php echo html::input("role[]", '', "class='form-control'")?></td>
               <td>
                 <div class='input-group'>
                   <?php echo html::input("teamEstimate[]", '', "class='form-control text-center' placeholder='{$lang->task->estimateAB}'")?>
                   <span class='input-group-addon'><?php echo $lang->task->hour?></span>
                 </div>
               </td>
-              <td class='w-90px'>
+              <td>
                 <a href='javascript:;' class='btn btn-move-up btn-sm'><i class='icon-arrow-up'></i></a>
                 <a href='javascript:;' class='btn btn-move-down btn-sm'><i class='icon-arrow-down'></i></a>
               </td>
             </tr>
             <?php endfor;?>
-            <tr><td colspan='2' class='text-center'><?php echo html::a('javascript:void(0)', $lang->confirm, "class='btn btn-primary' data-dismiss='modal'")?></td></tr>
+            <tr><td colspan='4' class='text-center'><?php echo html::a('javascript:void(0)', $lang->confirm, "class='btn btn-primary' data-dismiss='modal'")?></td></tr>
           </table>
         </div>
       </div>

@@ -3,7 +3,16 @@ var selectItem = function(item)
 {
     $selectedItem = $(item).first();
     var modal = $('#ajaxModal');
-    var link  = modal.attr('ref') + '&customerID=' + $selectedItem.data('key');
+    var ref   = modal.attr('ref');
+    if(config.requestType == 'GET')
+    {
+        var link  = ref + '&customerID=' + $selectedItem.data('key');
+    }
+    else
+    {
+        var viewType = config.defaultView;
+        var link     = ref.replace('.' + viewType, '') + '-' + $selectedItem.data('key') + '.' + viewType;
+    }
     modal.load(link, function(){$(this).find('.modal-dialog').css('width', $(this).data('width')); $.zui.ajustModalPosition()})
 };
 

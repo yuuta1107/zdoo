@@ -634,12 +634,14 @@ class contract extends control
 
             /* Get related products names. */
             $orderPairs = array();
+            $products   = array();
             $orders = $this->dao->select('*')->from(TABLE_ORDER)->fetchAll('id');
             $this->loadModel('order', 'crm')->setProductsForOrders($orders);
             foreach($orders as $key => $order)
             {
                 $productName = count($order->products) > 1 ? current($order->products) . $this->lang->etc : current($order->products);
                 $orderPairs[$key] = sprintf($this->lang->order->titleLBL, zget($customers, $order->customer), $productName, date('Y-m-d', strtotime($order->createdDate))); 
+                $products[$key]   = $order->products;
             }
 
             foreach($contracts as $contract)
@@ -692,17 +694,24 @@ class contract extends control
                     $contract->handlers = join("; \n", $tmpHandlers);
                 }
 
+                $contract->product = '';
                 if(!empty($contract->order))
                 {
-                    $tmpOrders = array();
+                    $tmpOrders   = array();
+                    $tmpProducts = array();
                     foreach($contract->order as $orderID)
                     {
                         if(!$orderID) continue;
                         $orderID = trim($orderID);
                         $tmpOrders[] = isset($orderPairs[$orderID]) ? $orderPairs[$orderID] : $orderID;
+                        if(isset($products[$orderID]))
+                        {
+                            foreach($products[$orderID] as $product) $tmpProducts[] = $product;
+                        }
                     }
 
-                    $contract->order = join("; \n", $tmpOrders);
+                    $contract->order   = join("; \n", $tmpOrders);
+                    $contract->product = join("; \n", $tmpProducts);
                 }
 
                 /* Set related files. */

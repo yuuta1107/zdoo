@@ -21,6 +21,9 @@ $clientTheme  = $this->app->getClientTheme();
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <?php echo html::favicon($webRoot . 'favicon.ico');?>
+  <?php if($this->moduleName == 'user' and $this->methodName == 'deny'):?>
+  <meta http-equiv='refresh' content="5;url=<?php echo helper::createLink($config->default->module);?>">
+  <?php endif;?>
   <?php
   if(!isset($title)) $title  = '';
   if(!empty($title)) $title .= $lang->minus;

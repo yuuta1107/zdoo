@@ -7,10 +7,15 @@ $(document).ready(function()
         if(checked)
         {
             $('#teamTr').removeClass('hidden');
+            computeTeamMember();
         }
         else
         {
             $('#teamTr').addClass('hidden');
         }
     });
+
+    $('#modalTeam .btn').click(function(){computeTeamMember()});
+
+    $('[name=multiple]').change();
 });

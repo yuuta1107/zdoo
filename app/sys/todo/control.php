@@ -13,7 +13,7 @@ class todo extends control
 {
     /**
      * Construct function, load model of date.
-     * 
+     *
      * @access public
      * @return void
      */
@@ -28,8 +28,8 @@ class todo extends control
 
     /**
      * calendar view.
-     * 
-     * @param  string $date 
+     *
+     * @param  string $date
      * @access public
      * @return void
      */
@@ -68,12 +68,12 @@ class todo extends control
 
     /**
      * browse todos.
-     * 
-     * @param  string $mode 
-     * @param  string $orderBy 
-     * @param  int    $recTotal 
-     * @param  int    $recPerPage 
-     * @param  int    $pageID 
+     *
+     * @param  string $mode
+     * @param  string $orderBy
+     * @param  int    $recTotal
+     * @param  int    $recPerPage
+     * @param  int    $pageID
      * @access public
      * @return void
      */
@@ -121,9 +121,9 @@ class todo extends control
 
     /**
      * Create a todo.
-     * 
-     * @param  string|date $date 
-     * @param  string      $account 
+     *
+     * @param  string|date $date
+     * @param  string      $account
      * @access public
      * @return void
      */
@@ -139,11 +139,11 @@ class todo extends control
             $date = str_replace('-', '', $this->post->date);
             if($date == '')
             {
-                $date = 'future'; 
+                $date = 'future';
             }
             else if($date == date('Ymd'))
             {
-                $date = 'today'; 
+                $date = 'today';
             }
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => $this->createLink('todo', 'calendar', "date=$date")));
         }
@@ -152,13 +152,13 @@ class todo extends control
         $this->view->date       = strftime("%Y-%m-%d", strtotime($date));
         $this->view->times      = date::buildTimeList($this->config->todo->times->begin, $this->config->todo->times->end, $this->config->todo->times->delta);
         $this->view->time       = date::now();
-        $this->display();      
+        $this->display();
     }
 
     /**
      * Batch create todo
-     * 
-     * @param  string $date 
+     *
+     * @param  string $date
      * @access public
      * @return void
      */
@@ -172,18 +172,19 @@ class todo extends control
 
             foreach($actionList as $todoID => $actionID)
             {
-                $this->sendmail($todoID, $actionID);
+                $todo = $this->todo->getById($todoID);
+                $this->loadModel('queue')->insertQueue($todoID, $actionID, $todo->assignedTo);
             }
 
             /* Locate the browser. */
             $date = str_replace('-', '', $this->post->date);
             if($date == '')
             {
-                $date = 'future'; 
+                $date = 'future';
             }
             else if($date == date('Ymd'))
             {
-                $date= 'today'; 
+                $date= 'today';
             }
             $link = empty($_SERVER['HTTP_REFERER']) ? $this->createLink('todo', 'calendar', "date=$date") : $_SERVER['HTTP_REFERER'];
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => $link));
@@ -201,8 +202,8 @@ class todo extends control
 
     /**
      * Edit a todo.
-     * 
-     * @param  int    $todoID 
+     *
+     * @param  int    $todoID
      * @param  bool   $comment
      * @access public
      * @return void
@@ -239,7 +240,7 @@ class todo extends control
         }
 
         if(!helper::isAjaxRequest())$this->view->moduleMenu = commonModel::createModuleMenu($this->moduleName);
-       
+
         if($todo->date != '00000000') $todo->date = strftime("%Y-%m-%d", strtotime($todo->date));
         $this->view->title      = $this->lang->todo->edit;
         $this->view->position[] = $this->lang->todo->common;
@@ -250,9 +251,9 @@ class todo extends control
     }
 
     /**
-     * Batch edit todos. 
-     * 
-     * @param  string $mode 
+     * Batch edit todos.
+     *
+     * @param  string $mode
      * @access public
      * @return void
      */
@@ -290,9 +291,9 @@ class todo extends control
     }
 
     /**
-     * View a todo. 
-     * 
-     * @param  int    $todoID 
+     * View a todo.
+     *
+     * @param  int    $todoID
      * @param  string $from     my|company
      * @access public
      * @return void
@@ -331,8 +332,8 @@ class todo extends control
 
     /**
      * Delete a todo.
-     * 
-     * @param  int    $todoID 
+     *
+     * @param  int    $todoID
      * @access public
      * @return void
      */
@@ -351,8 +352,8 @@ class todo extends control
 
     /**
      * Close a todo.
-     * 
-     * @param  int    $todoID 
+     *
+     * @param  int    $todoID
      * @access public
      * @return void
      */
@@ -366,8 +367,8 @@ class todo extends control
     }
 
     /**
-     * batch close todos. 
-     * 
+     * batch close todos.
+     *
      * @access public
      * @return void
      */
@@ -385,8 +386,8 @@ class todo extends control
 
     /**
      * Activate a todo.
-     * 
-     * @param  int    $todoID 
+     *
+     * @param  int    $todoID
      * @access public
      * @return void
      */
@@ -401,8 +402,8 @@ class todo extends control
 
     /**
      * Finish a todo.
-     * 
-     * @param  int    $todoID 
+     *
+     * @param  int    $todoID
      * @access public
      * @return void
      */
@@ -413,7 +414,7 @@ class todo extends control
         if(strpos('done,closed', $todo->status) === false) $this->todo->finish($todoID);
         if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
 
-        if($todo->type == 'task') 
+        if($todo->type == 'task')
         {
             $task = $this->loadModel('task')->getById($todo->idvalue);
             $_POST['consumed'] = $task->left == 0 ? 1 : $task->left;
@@ -438,9 +439,9 @@ class todo extends control
             $code = $zentaoEntry->code;
             if(!commonModel::hasAppPriv($code)) continue;
 
-            if($todo->type == $code . '_task' or $todo->type == $code . '_bug') 
+            if($todo->type == $code . '_task' or $todo->type == $code . '_bug')
             {
-                if(strpos($zentaoEntry->login, '&') === false) $zentaoUrl = substr($zentaoEntry->login, 0, strrpos($zentaoEntry->login, '/') + 1); 
+                if(strpos($zentaoEntry->login, '&') === false) $zentaoUrl = substr($zentaoEntry->login, 0, strrpos($zentaoEntry->login, '/') + 1);
                 if(strpos($zentaoEntry->login, '&') !== false) $zentaoUrl = substr($zentaoEntry->login, 0, strpos($zentaoEntry->login, '?'));
                 $zentaoConfig = $this->loadModel('sso')->getZentaoServerConfig($zentaoUrl);
 
@@ -464,8 +465,8 @@ class todo extends control
     }
 
     /**
-     * Batch finish todos. 
-     * 
+     * Batch finish todos.
+     *
      * @access public
      * @return void
      */
@@ -479,7 +480,7 @@ class todo extends control
             if(strpos('done,closed', $todo->status) === false) $this->todo->finish($todoID);
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
 
-            if($todo->type == 'task') 
+            if($todo->type == 'task')
             {
                 unset($_POST['todoIDList']);
                 unset($_POST['date']);
@@ -499,9 +500,9 @@ class todo extends control
     }
 
     /**
-     * Assign one todo to someone. 
-     * 
-     * @param  int    $todoID 
+     * Assign one todo to someone.
+     *
+     * @param  int    $todoID
      * @access public
      * @return void
      */
@@ -517,7 +518,7 @@ class todo extends control
             {
                 $actionID = $this->loadModel('action')->create('todo', $todo->id, 'Assigned', '', $this->post->assignedTo);
                 $this->action->logHistory($actionID, $changes);
-                $this->sendmail($todoID, $actionID);
+                $this->loadModel('queue')->insertQueue($todoID, $actionID, $todo->assignTo);
             }
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'closeModal' => 'true', 'locate' => 'reload'));
@@ -533,7 +534,7 @@ class todo extends control
 
     /**
      * Import selected todoes to today.
-     * 
+     *
      * @access public
      * @return void
      */
@@ -548,9 +549,9 @@ class todo extends control
 
     /**
      * Send email.
-     * 
-     * @param  int    $todoID 
-     * @param  int    $actionID 
+     *
+     * @param  int    $todoID
+     * @param  int    $actionID
      * @access public
      * @return void
      */
@@ -566,11 +567,10 @@ class todo extends control
 
         /* Set toList. */
         $todo    = $this->todo->getById($todoID);
-        $users   = $this->loadModel('user')->getPairs();
         $toList  = $todo->assignedTo;
+        $users   = $this->loadModel('user')->getPairs();
         $subject = "{$this->lang->todo->common}#{$todo->id} {$todo->name}";
 
-        /* send notice if user is online and return failed accounts. */
         $toList = $this->loadModel('action')->sendNotice($actionID, $toList);
 
         /* Create the email content. */
@@ -586,10 +586,10 @@ class todo extends control
     }
 
     /**
-     * Check privilage. 
-     * 
-     * @param  obejct $todo 
-     * @param  string $action 
+     * Check privilage.
+     *
+     * @param  obejct $todo
+     * @param  string $action
      * @param  string $errorType   html|json
      * @access public
      * @return bool
@@ -616,8 +616,8 @@ class todo extends control
 
     /**
      * AJAX: get actions of a todo. for web app.
-     * 
-     * @param  int    $todoID 
+     *
+     * @param  int    $todoID
      * @access public
      * @return void
      */

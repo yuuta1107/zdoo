@@ -19,7 +19,7 @@ $(function()
             var restore = $(this);
             restore.text(v.backup.waitting);
 
-            $.getJSON(restore.attr('href'), function(response) 
+            $.getJSON(restore.attr('href'), function(response)
             {
                  bootbox.alert(response.message, function()
                  {
@@ -30,4 +30,4 @@ $(function()
         }
         return false;
     });
-})
+});

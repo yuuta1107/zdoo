@@ -12,8 +12,8 @@
 class backup extends control
 {
     /**
-     * __construct 
-     * 
+     * __construct
+     *
      * @access public
      * @return void
      */
@@ -33,8 +33,8 @@ class backup extends control
     }
 
     /**
-     * Index 
-     * 
+     * Index
+     *
      * @access public
      * @return void
      */
@@ -75,9 +75,9 @@ class backup extends control
     }
 
     /**
-     * Backup 
-     * 
-     * @param  bool  $reload 
+     * Backup
+     *
+     * @param  bool  $reload
      * @access public
      * @return void
      */
@@ -106,9 +106,9 @@ class backup extends control
     }
 
     /**
-     * Restore 
-     * 
-     * @param  string $fileName 
+     * Restore
+     *
+     * @param  string $fileName
      * @access public
      * @return void
      */
@@ -141,7 +141,7 @@ class backup extends control
 
     /**
      * Set save days for backup.
-     * 
+     *
      * @access public
      * @return void
      */
@@ -161,10 +161,10 @@ class backup extends control
     }
 
     /**
-     * Delete 
-     * 
-     * @param  string $fileName 
-     * @param  string $confirm 
+     * Delete
+     *
+     * @param  string $fileName
+     * @param  string $confirm
      * @access public
      * @return void
      */
@@ -187,8 +187,8 @@ class backup extends control
 
     /**
      * Batch delete backup files days ago.
-     * 
-     * @param  int    $saveDays 
+     *
+     * @param  int    $saveDays
      * @access public
      * @return void
      */
@@ -197,7 +197,7 @@ class backup extends control
         $now = strtotime("-{$saveDays}days");
         $sqlFiles  = glob("{$this->backupPath}*.sql.php");
         $fileFiles = glob("{$this->backupPath}*.file.zip.php");
-        
+
         if(!empty($sqlFiles))
         {
             foreach($sqlFiles as $file)

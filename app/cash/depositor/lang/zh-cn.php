@@ -40,6 +40,7 @@ $lang->depositor->export         = '导出';
 $lang->depositor->balance        = '余额';
 $lang->depositor->saveBalance    = '登记余额';
 $lang->depositor->detail         = '明细';
+$lang->depositor->normalBrowse   = '正常账号';
 $lang->depositor->disabledBrowse = '禁用账号';
 
 $lang->depositor->check         = '对账';

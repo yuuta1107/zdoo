@@ -31,10 +31,9 @@
         <th class='w-80px'><?php echo $lang->action->record->status;?></th>
         <th class='w-80px'><?php echo $lang->action->record->createdBy;?></th>
         <th class='w-90px'><?php echo $lang->action->record->createdDate;?></th>
-        <th class='w-80px'><?php echo $lang->actions;?></th>
+        <th class='w-100px'><?php echo $lang->actions;?></th>
       </tr>
     </thead>
-    <?php $user = $this->app->user->account;?>
     <?php foreach($datingList as $dating):?>
     <tr class='text-center'>
       <td><?php echo $dating->date;?></td>
@@ -50,6 +49,7 @@
         <?php 
         if($dating->status == 'wait') 
         {
+            $user = $this->app->user->account;
             if($this->app->user->admin == 'super' or $dating->account == $user or $dating->createdBy == $user)
             {
                 echo html::a(helper::createLink('action', 'finishDating', "id={$dating->id}"), $lang->finish, "class='finishDating'");

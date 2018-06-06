@@ -13,12 +13,13 @@ $lang->leave->back       = 'Back';
 $lang->leave->export     = 'Export';
 $lang->leave->reviewBack = 'Review back date';
 
-$lang->leave->personal     = 'My Leave';
-$lang->leave->browseReview = 'Review List';
-$lang->leave->company      = 'All';
-$lang->leave->setReviewer  = 'Settings';
-$lang->leave->batchReview  = 'Batch Review';
-$lang->leave->batchPass    = 'Batch Pass';
+$lang->leave->personal       = 'My Leave';
+$lang->leave->browseReview   = 'Review List';
+$lang->leave->company        = 'All';
+$lang->leave->setReviewer    = 'Set Reviewer';
+$lang->leave->personalAnnual = 'Personal Annual';
+$lang->leave->batchReview    = 'Batch Review';
+$lang->leave->batchPass      = 'Batch Pass';
 
 $lang->leave->id           = 'ID';
 $lang->leave->year         = 'Year';
@@ -38,6 +39,8 @@ $lang->leave->reviewedDate = 'Reviewed on';
 $lang->leave->date         = 'Date';
 $lang->leave->time         = 'Time';
 $lang->leave->rejectReason = 'Reject Reason';
+$lang->leave->dateRange    = 'Date Range';
+$lang->leave->totalAnnual  = 'Annual Days';
 
 $lang->leave->typeList['affairs']   = 'Private';
 $lang->leave->typeList['sick']      = 'Sick';
@@ -69,7 +72,12 @@ $lang->leave->reviewSuccess = 'Review success';
 $lang->leave->confirmReview['pass']   = 'Do you want to pass it?';
 $lang->leave->confirmReview['reject'] = 'Do you want to reject it?';
 
-$lang->leave->hoursTip = 'Hours';
+$lang->leave->hoursTip  = 'Hours';
+$lang->leave->annualTip = 'The remaining %s days of annual leaves';
 
 $lang->leave->reviewStatusList['pass']   = 'Pass';
 $lang->leave->reviewStatusList['reject'] = 'Reject';
+
+$lang->leave->settings = new stdclass();
+$lang->leave->settings->setReviewer    = "Reviewer|leave|setreviewer";
+$lang->leave->settings->personalAnnual = "Personal annual leave|leave|personalannual";

@@ -74,6 +74,12 @@ class lieu extends control
             $date         = '';
             $currentYear  = ''; 
             $currentMonth = ''; 
+            $monthList    = $this->lieu->getAllMonth($type);
+            $yearList     = array_keys($monthList);
+            $this->view->currentYear  = $currentYear;
+            $this->view->currentMonth = $currentMonth;
+            $this->view->monthList    = $monthList;
+            $this->view->yearList     = $yearList;     
         }
         else
         {
@@ -99,32 +105,15 @@ class lieu extends control
         }
         elseif($type == 'browseReview')
         {
-            if($this->app->user->admin == 'super')
+            $reviewedBy = $this->lieu->getReviewedBy();
+            if($this->app->user->admin == 'super' or ($reviewedBy && $reviewedBy == $this->app->user->account))
             {
                 $lieuList = $this->lieu->getList($type, $currentYear, $currentMonth, '', '', '', $orderBy);
             }
             else
             {
-                $reviewedBy = $this->lieu->getReviewedBy();
-                if($reviewedBy)
-                { 
-                    if($reviewedBy == $this->app->user->account)
-                    {
-                        $lieuList = $this->lieu->getList($type, $currentYear, $currentMonth, '', array_keys($deptList), '', $orderBy);
-                    }
-                }
-                else
-                {
-                    $depts = $this->loadModel('tree')->getDeptManagedByMe($this->app->user->account);
-                    if(empty($depts))
-                    {
-                        $lieuList = array();
-                    }
-                    else
-                    {
-                        $lieuList = $this->lieu->getList($type, $currentYear, $currentMonth, '', array_keys($depts), '', $orderBy);
-                    }
-                }
+                $managedDepts = $this->loadModel('tree')->getDeptManagedByMe($this->app->user->account);
+                if($managedDepts) $lieuList = $this->lieu->getList($type, $currentYear, $currentMonth, '', array_keys($managedDepts), '', $orderBy);
             }
         }
         elseif($type == 'company')

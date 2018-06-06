@@ -201,7 +201,7 @@ class customerModel extends model
                 foreach($idList as $id) if(isset($customers[$id])) $customerList[$id] = $customers[$id];
             }
                 
-            $i = 0;
+            $i = 1;
             foreach($customers as $id => $name)
             {
                 if(!isset($customerIdList[$id])) continue;
@@ -693,6 +693,8 @@ class customerModel extends model
     public function createModuleMenu($mode, $param, $orderBy, $recTotal, $recPerPage, $pageID)
     {
         $menu = commonModel::createModuleMenu('customer');
+
+        if($this->app->viewType == 'mhtml') return $menu;
 
         $customerIdList = $this->getCustomersSawByMe();
         if(empty($customerIdList)) return $menu;

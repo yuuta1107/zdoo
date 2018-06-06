@@ -268,9 +268,10 @@ class block extends control
             }
             $total = $left + $consumed;
 
-            $project->wait = isset($tasks['wait']) ? count($tasks['wait']) : 0;
-            $project->done = (isset($tasks['done']) ? count($tasks['done']) : 0) + (isset($tasks['closed']) ? count($tasks['closed']) : 0);
-            $project->rate = $total ? round(($consumed / $total), 3) * 100 . '%' : '0%';
+            $project->wait  = isset($tasks['wait']) ? count($tasks['wait']) : 0;
+            $project->doing = isset($tasks['doing']) ? count($tasks['doing']) : 0;
+            $project->done  = (isset($tasks['done']) ? count($tasks['done']) : 0) + (isset($tasks['closed']) ? count($tasks['closed']) : 0);
+            $project->rate  = $total ? round(($consumed / $total), 3) * 100 . '%' : '0%';
         }
 
         $this->view->users    = $this->loadModel('user')->getPairs();

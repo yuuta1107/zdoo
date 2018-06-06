@@ -48,7 +48,7 @@ $lang->mail->nextStep       = 'Next';
 $lang->mail->successSaved   = 'The configuration has been successfully saved.';
 $lang->mail->subject        = "This is a testing Email from Zdoo.";
 $lang->mail->content        = 'If you see this notice, it means that the Email notification feature has been enabled!';
-$lang->mail->successSended  = 'Successfully sent!';
+$lang->mail->sendSuccess    = 'Successfully sent!';
 $lang->mail->needConfigure  = "Configuration is not found. Configure it first.";
 
 $lang->mail->mailContentTip = <<<EOT

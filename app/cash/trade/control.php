@@ -1336,6 +1336,37 @@ class trade extends control
     }
 
     /**
+     * Ajax get categories.
+     *
+     * @param  string $type
+     * @access public
+     * @return string
+     */
+    public function ajaxGetCategories($type)
+    {
+
+        $categories = $this->loadModel('tree')->getOptionMenu($type, 0, $removeRoot = true);
+
+        if($this->config->trade->settings->lastCategory)
+        {
+            $allCategories = $this->loadModel('tree')->getListByType($type, 'grade_desc');
+            foreach($allCategories as $category)
+            {
+                $path = explode(',', trim($category->path, ','));
+                if(count($path) > 1)
+                {
+                    array_pop($path);
+                    foreach($path as $categoryID) unset($categories[$categoryID]);
+                }
+            }
+        }
+
+        $output = html::select('category', array('') + (array) $categories, '', "class='form-control'");
+
+        die($output);
+    }
+
+    /**
      * Set report unit. 
      * 
      * @access public

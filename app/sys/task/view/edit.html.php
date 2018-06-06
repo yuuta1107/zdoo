@@ -85,7 +85,11 @@
               <tr class='<?php echo empty($task->team) ? 'hidden' : ''?>' id='teamTr'>
                 <th><?php echo $lang->task->team;?></th>
                 <td>
-                  <?php echo html::a("#modalTeam", $lang->task->team, "class='form-control btn' data-toggle='modal' data-target='#modalTeam'");?>
+                  <div class='input-group'>
+                    <?php echo html::input('teamMember', '', "class='form-control team-group' readonly='readonly'");?>
+                    <span class='input-group-addon fix-border fix-padding team-group'></span>
+                    <?php echo html::a("#modalTeam", $lang->task->team, "class='form-control btn' data-toggle='modal' data-target='#modalTeam'");?>
+                  </div>
                 </td>
               </tr>
               <tr>
@@ -161,16 +165,25 @@
       </div>
     </div>
     <div class="modal fade modal-team" id="modalTeam">
-      <div class="modal-dialog" style='width: 700px'>
+      <div class="modal-dialog" style='width: 850px'>
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">关闭</span></button>
           <h4 class="modal-title"><?php echo $lang->task->team?></h4>
         </div>
         <div class="modal-content">
-          <table class='table table-form'>
+          <table class='table-form'>
+            <thead>
+              <tr class='text-center'>
+                <th><?php echo $lang->task->team;?></th>
+                <th class='w-120px'><?php echo $lang->project->role;?></th>
+                <th class='w-400px'><?php echo $lang->task->recordEstimate;?></th>
+                <th class='w-90px'></th>
+              </tr>
+            </thead>
             <?php foreach($task->team as $member):?>
             <tr>
-              <td class='w-80px'><?php echo html::select("team[]", $projectMembers, $member->account, "class='form-control chosen'")?></td>
+              <td><?php echo html::select("team[]", $projectMembers, $member->account, "class='form-control chosen'")?></td>
+              <td><?php echo html::input("role[]", $member->role, "class='form-control'")?></td>
               <td>
                 <div class='input-group'>
                   <span class='input-group-addon'><?php echo $lang->task->estimate?></span>
@@ -181,7 +194,7 @@
                   <?php echo html::input("teamLeft[]", $member->left, "class='form-control text-center' placeholder='{$lang->task->hour}'")?>
                 </div>
               </td>
-              <td class='w-90px'>
+              <td>
                 <a href='javascript:;' class='btn btn-move-up btn-sm'><i class='icon-arrow-up'></i></a>
                 <a href='javascript:;' class='btn btn-move-down btn-sm'><i class='icon-arrow-down'></i></a>
               </td>
@@ -189,7 +202,8 @@
             <?php endforeach;?>
             <?php for($i = 0; $i < 3; $i++):?>
             <tr>
-              <td class='w-80px'><?php echo html::select("team[]", $projectMembers, '', "class='form-control chosen'")?></td>
+              <td><?php echo html::select("team[]", $projectMembers, '', "class='form-control chosen'")?></td>
+              <td><?php echo html::input("role[]", $member->role, "class='form-control'")?></td>
               <td>
                 <div class='input-group'>
                   <span class='input-group-addon'><?php echo $lang->task->estimate?></span>
@@ -200,14 +214,14 @@
                   <?php echo html::input("teamLeft[]", '', "class='form-control text-center' placeholder='{$lang->task->hour}'")?>
                 </div>
               </td>
-              <td class='w-90px'>
+              <td>
                 <a href='javascript:;' class='btn btn-move-up btn-sm'><i class='icon-arrow-up'></i></a>
                 <a href='javascript:;' class='btn btn-move-down btn-sm'><i class='icon-arrow-down'></i></a>
               </td>
             </tr>
             <?php endfor;?>
             <tr>
-              <td colspan='2' class='text-center'><?php echo html::a('javascript:void(0)', $lang->confirm, "class='btn btn-primary' data-dismiss='modal'")?></td>
+              <td colspan='4' class='text-center'><?php echo html::a('javascript:void(0)', $lang->confirm, "class='btn btn-primary' data-dismiss='modal'")?></td>
             </tr>
           </table>
         </div>

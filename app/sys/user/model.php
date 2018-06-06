@@ -147,7 +147,7 @@ class userModel extends model
             ->beginIF(validater::checkEmail($account))->where('email')->eq($account)->fi()
             ->beginIF(!validater::checkEmail($account))->where('account')->eq($account)->fi()
             ->andWhere('deleted')->eq('0')
-            ->fetch('', false);
+            ->fetch();
     }
 
     /**
@@ -250,6 +250,8 @@ class userModel extends model
             ->check('email', 'email')
             ->check('email', 'unique')
             ->exec();
+
+        $this->loadModel('action')->create('user', $this->dao->lastInsertID(), 'created');
     }
 
     /**
@@ -267,7 +269,7 @@ class userModel extends model
             $this->checkPassword();
             if(dao::isError()) return false;
 
-            $password  = $this->createPassword($this->post->password1, $account);
+            $password = $this->createPassword($this->post->password1, $account);
             $this->post->set('password', $password);
         }
 
@@ -287,7 +289,7 @@ class userModel extends model
         }
 
         $user = $user->get();
-        return $this->dao->update(TABLE_USER)
+        $this->dao->update(TABLE_USER)
             ->data($user, $skip = 'password1,password2')
             ->autoCheck()
             ->batchCheck($this->config->user->require->edit, 'notempty')
@@ -296,6 +298,11 @@ class userModel extends model
             ->checkIF($this->post->gtalk != false, 'gtalk', 'email')
             ->where('account')->eq($account)
             ->exec();
+
+        if(dao::isError()) return false;
+
+        $user = $this->getByAccount($account);
+        return $this->loadModel('action')->create('user', $user->id, 'edited');
     }
 
     /**
@@ -623,6 +630,8 @@ class userModel extends model
     public function forbid($account)
     {
         $this->dao->update(TABLE_USER)->set('locked')->eq('2199-12-31 00:00:00')->where('account')->eq($account)->exec();
+        $user = $this->getByAccount($account);
+        $this->loadModel('action')->create('user', $user->id, 'forbidden');
         return !dao::isError();
     }
 
@@ -636,6 +645,8 @@ class userModel extends model
     public function active($account)
     {
         $this->dao->update(TABLE_USER)->set('fails')->eq(0)->set('locked')->eq('0000-00-00 00:00:00')->where('account')->eq($account)->exec();
+        $user = $this->getByAccount($account);
+        $this->loadModel('action')->create('user', $user->id, 'activated');
         return !dao::isError();
     }
 
@@ -653,6 +664,7 @@ class userModel extends model
         if(!$user) return false;
 
         parent::delete(TABLE_USER, $user->id);
+        $this->loadModel('action')->create('user', $user->id, 'deleted');
 
         return !dao::isError();
     }

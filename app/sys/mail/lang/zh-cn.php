@@ -48,7 +48,7 @@ $lang->mail->nextStep       = '下一步';
 $lang->mail->successSaved   = '配置信息已经成功保存。';
 $lang->mail->subject        = '测试邮件';
 $lang->mail->content        = '邮箱设置成功';
-$lang->mail->successSended  = '成功发送！';
+$lang->mail->sendSuccess    = '成功发送！';
 $lang->mail->needConfigure  = '无法找到邮件配置信息，请先配置邮件发送参数。';
 
 $lang->mail->mailContentTip = <<<EOT

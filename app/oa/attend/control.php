@@ -381,22 +381,18 @@ class attend extends control
     public function browseReview($dept = '')
     {
         $attends  = array();
-        $deptList = array();
+        $deptList = $this->loadModel('tree')->getPairs('', 'dept');
+        $deptList['0'] = '/';
         /* Get deptments managed by me. */
-        if(!empty($this->config->attend->reviewedBy))
-        { 
-            if(($this->app->user->admin == 'super') or ($this->config->attend->reviewedBy == $this->app->user->account))
-            {
-                $deptList = $this->loadModel('tree')->getPairs('', 'dept');
-                $deptList['0'] = '/';
-            }
+        if($this->app->user->admin == 'super' or (!empty($this->config->attend->reviewedBy) && $this->config->attend->reviewedBy == $this->app->user->account))
+        {
+            $attends = $this->attend->getWaitAttends();
         }
         else
         {
-            $depts = $this->loadModel('tree')->getDeptManagedByMe($this->app->user->account);
-            foreach($depts as $d) $deptList[$d->id] = $d->name;
+            $managedDepts = $this->loadModel('tree')->getDeptManagedByMe($this->app->user->account);
+            if($managedDepts) $attends = $this->attend->getWaitAttends(array_keys($managedDepts));
         }
-        if(!empty($deptList)) $attends = $this->attend->getWaitAttends(array_keys($deptList));
 
         /* Get users info. */
         $users    = $this->loadModel('user')->getList($dept);
@@ -766,9 +762,9 @@ class attend extends control
             if($user) $fileName .= $user . ' - ';
         }
         $fileName .= $currentYear;
-        if($this->app->clientLang != 'en') $fileName .= $lang->year;
+        if($this->app->clientLang != 'en') $fileName .= $this->lang->year;
         $fileName .= $currentMonth;
-        if($this->app->clientLang != 'en') $fileName .= $lang->month;
+        if($this->app->clientLang != 'en') $fileName .= $this->lang->month;
         $fileName .= $this->lang->attend->detail;
 
         $this->view->title        = $this->lang->attend->detail;

@@ -99,32 +99,15 @@ class leave extends control
         }
         elseif($type == 'browseReview')
         {
-            if($this->app->user->admin == 'super')
+            $reviewedBy = $this->leave->getReviewedBy();
+            if($this->app->user->admin == 'super' or ($reviewedBy && $reviewedBy == $this->app->user->account))
             {
                 $leaveList = $this->leave->getList($type, $currentYear, $currentMonth, '', '', '', $orderBy);
             }
             else
             {
-                $reviewedBy = $this->leave->getReviewedBy();
-                if($reviewedBy)
-                { 
-                    if($reviewedBy == $this->app->user->account)
-                    {
-                        $leaveList = $this->leave->getList($type, $currentYear, $currentMonth, '', array_keys($deptList), '', $orderBy);
-                    }
-                }
-                else
-                {
-                    $depts = $this->loadModel('tree')->getDeptManagedByMe($this->app->user->account);
-                    if(empty($depts))
-                    {
-                        $leaveList = array();
-                    }
-                    else
-                    {
-                        $leaveList = $this->leave->getList($type, $currentYear, $currentMonth, '', array_keys($depts), '', $orderBy);
-                    }
-                }
+                $managedDepts = $this->loadModel('tree')->getDeptManagedByMe($this->app->user->account);
+                if($managedDepts) $leaveList = $this->leave->getList($type, $currentYear, $currentMonth, '', array_keys($managedDepts), '', $orderBy);
             }
         }
         elseif($type == 'company')
@@ -132,13 +115,14 @@ class leave extends control
             $leaveList = $this->leave->getList($type, $currentYear, $currentMonth, '', '', '', $orderBy);
         }
 
-        $this->view->title     = $this->lang->leave->browse;
-        $this->view->type      = $type;
-        $this->view->deptList  = $deptList;
-        $this->view->users     = $this->loadModel('user')->getPairs();
-        $this->view->leaveList = $leaveList;
-        $this->view->date      = $date;
-        $this->view->orderBy   = $orderBy;
+        $this->view->title          = $this->lang->leave->browse;
+        $this->view->type           = $type;
+        $this->view->deptList       = $deptList;
+        $this->view->users          = $this->loadModel('user')->getPairs();
+        $this->view->leaveList      = $leaveList;
+        $this->view->date           = $date;
+        $this->view->orderBy        = $orderBy;
+        $this->view->leftAnnualDays = $this->leave->computeAnnualDays();
         $this->display();
     }
 
@@ -223,7 +207,6 @@ class leave extends control
         {
             if($_POST)
             {
-
                 if(!$canReview) $this->send(array('result' => 'fail', 'message' => $this->lang->leave->denied));
 
                 if(!$this->post->comment) $this->send(array('result' => 'fail', 'message' => array('comment' => sprintf($this->lang->error->notempty, $this->lang->leave->rejectReason))));
@@ -361,8 +344,11 @@ class leave extends control
             if($leave && strpos(',wait,draft,', $leave->status) !== false) $this->locate(inlink('edit', "id=$leave->id"));
         }
 
-        $this->view->title = $this->lang->leave->create;
-        $this->view->date  = $date;
+        $leftAnnualDays = $this->leave->computeAnnualDays();
+
+        $this->view->title         = $this->lang->leave->create;
+        $this->view->date          = $date;
+        $this->view->myLeftAnnuals = isset($leftAnnualDays[$this->app->user->account]) ? $leftAnnualDays[$this->app->user->account] : 0;
         $this->display();
     }
 
@@ -662,6 +648,35 @@ class leave extends control
         $this->view->title      = $this->lang->leave->setReviewer;
         $this->view->users      = $this->loadModel('user', 'sys')->getPairs('noclosed,noforbidden,nodeleted');
         $this->view->reviewedBy = $this->leave->getReviewedBy();
+        $this->view->module     = $module;
+        $this->display();
+    }
+
+    /**
+     * Personal annual setting.
+     * 
+     * @param  string $module 
+     * @access public
+     * @return void
+     */
+    public function personalAnnual($module = '')
+    {
+        if($_POST)
+        {
+            $this->leave->savePersonalAnnual();
+            if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
+            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
+        }
+
+        if($module)
+        {
+            $this->lang->menuGroups->leave = $module;
+            $this->lang->leave->menu       = $this->lang->$module->menu;
+        }
+
+        $this->view->title  = $this->lang->leave->personalAnnual;
+        $this->view->users  = $this->loadModel('user', 'sys')->getPairs('noclosed,nodeleted,noforbidden');
+        $this->view->module = $module;
         $this->display();
     }
 }

@@ -146,12 +146,10 @@
             <th><?php echo $lang->customer->site;?></th>
             <td><?php echo html::a("$customer->site", $customer->site, "target='_blank'");?></td>
           </tr>
-          <?php if(formatTime($customer->nextDate)):?>
           <tr>
             <th><?php echo $lang->customer->nextDate;?></th>
-            <td><?php echo $customer->nextDate;?></td>
+            <td><?php echo formatTime($customer->nextDate);?></td>
           </tr>
-          <?php endif;?>
         </table>
       </div>
     </div>

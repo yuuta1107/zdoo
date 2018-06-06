@@ -285,7 +285,7 @@ class taskModel extends model
                     $member->type     = 'task';
                     $member->id       = '';
                     $member->account  = $account;
-                    $member->role     = 'member';
+                    $member->role     = $this->post->role[$row];
                     $member->join     = helper::today();
                     $member->estimate = $this->post->teamEstimate[$row] ? $this->post->teamEstimate[$row] : 0;
                     $member->left     = $member->estimate;
@@ -308,7 +308,7 @@ class taskModel extends model
         }
 
         $task = $this->loadModel('file')->processImgURL($task, $this->config->task->editor->create['id']);
-        $this->dao->insert(TABLE_TASK)->data($task, $skip = 'uid,files,labels,team,teamEstimate,multiple,teamMember')
+        $this->dao->insert(TABLE_TASK)->data($task, $skip = 'uid,files,labels,team,role,teamEstimate,multiple,teamMember')
             ->autoCheck()
             ->batchCheck($this->config->task->require->create, 'notempty')
             ->checkIF($task->estimate != '', 'estimate', 'float')
@@ -379,7 +379,7 @@ class taskModel extends model
                     $member->type     = 'task';
                     $member->id       = '';
                     $member->account  = $account;
-                    $member->role     = 'member';
+                    $member->role     = $this->post->role[$key][$row];
                     $member->join     = helper::today();
                     $member->estimate = empty($this->post->teamEstimate[$key][$row]) ? 0 : $this->post->teamEstimate[$key][$row];
                     $member->left     = $member->estimate;
@@ -406,7 +406,7 @@ class taskModel extends model
         $taskIDList = array();
         foreach($tasks as $task)
         {
-            $this->dao->insert(TABLE_TASK)->data($task, 'team')->autoCheck()->exec();
+            $this->dao->insert(TABLE_TASK)->data($task, 'team,teamMember')->autoCheck()->exec();
             if(!dao::isError()) $taskIDList[] = $this->dao->lastInsertID();
 
             /* Save team. */
@@ -466,7 +466,7 @@ class taskModel extends model
                 ->add('editedBy',   $this->app->user->account)
                 ->add('editedDate', $now)
                 ->stripTags('desc', $this->config->allowedTags)
-                ->remove('referer,files,labels,multiple,team,teamEstimate,teamConsumed,teamLeft,remark')
+                ->remove('referer,files,labels,multiple,team,role,teamEstimate,teamConsumed,teamLeft,remark')
                 ->join('mailto', ',')
                 ->get();
 
@@ -483,7 +483,7 @@ class taskModel extends model
                     $member->type     = 'task';
                     $member->id       = $taskID;
                     $member->account  = $account;
-                    $member->role     = 'member';
+                    $member->role     = $this->post->role[$row];
                     $member->join     = helper::today();
                     $member->estimate = $this->post->teamEstimate[$row];
                     $member->consumed = $this->post->teamConsumed[$row];
@@ -514,7 +514,7 @@ class taskModel extends model
         }
 
         if(isset($task->uid)) $task = $this->loadModel('file')->processImgURL($task, $this->config->task->editor->edit['id']);
-        $this->dao->update(TABLE_TASK)->data($task, 'files, children, team, uid')
+        $this->dao->update(TABLE_TASK)->data($task, 'files, children, team, uid, teamMember')
             ->autoCheck()
             ->batchCheckIF($task->status != 'cancel', $this->config->task->require->edit, 'notempty')
 

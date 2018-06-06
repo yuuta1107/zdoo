@@ -304,7 +304,9 @@ class mailModel extends model
                 {
                     foreach($attachmentFile as $file) 
                     {
-                        if(isset($file->realpath)) $this->mta->AddAttachment($file->realpath, $file->title . '.' . $file->extension);
+                        $extension = '.' . $file->extension;
+                        if(strripos($file->title, $extension) === false && $extension != '.') $file->title .= $extension;
+                        if(!empty($file->realpath)) $this->mta->AddAttachment($file->realpath, $file->title);
                     }
                 }
                 else
@@ -353,12 +355,12 @@ class mailModel extends model
                 $emails[$account]->email    = $account;
                 $emails[$account]->realname = $realname;
             }
-            else if(!isset($emails[$account]) or isset($emails[$account]->sended) or strpos($emails[$account]->email, '@') == false)
+            else if(!isset($emails[$account]) or isset($emails[$account]->sent) or strpos($emails[$account]->email, '@') == false)
             {
                 continue;
             }
             $this->mta->addAddress($emails[$account]->email, $emails[$account]->realname);
-            $emails[$account]->sended = true;
+            $emails[$account]->sent = true;
         }
     }
 
@@ -471,9 +473,9 @@ class mailModel extends model
         if(!is_array($ccList)) return;
         foreach($ccList as $account)
         {
-            if(!isset($emails[$account]) or isset($emails[$account]->sended) or strpos($emails[$account]->email, '@') == false) continue;
+            if(!isset($emails[$account]) or isset($emails[$account]->sent) or strpos($emails[$account]->email, '@') == false) continue;
             $this->mta->addCC($emails[$account]->email, $this->convertCharset($emails[$account]->realname));
-            $emails[$account]->sended = true;
+            $emails[$account]->sent = true;
         }
     }
 }

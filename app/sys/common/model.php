@@ -390,6 +390,13 @@ class commonModel extends model
             if(isset($config->attend->noAttendUsers) and strpos(",{$config->attend->noAttendUsers},", ",{$app->user->account},") !== false and $module == 'attend' and $method == 'personal')
             {
                 $method = 'department';
+
+                if($isMobile)
+                {
+                    if(!commonModel::hasPriv('attend','browsereview')) continue;
+
+                    $method = 'browsereview';
+                }
             }
 
             if(!commonModel::isAvailable($module, $method)) continue;
@@ -1489,11 +1496,12 @@ class commonModel extends model
             curl_setopt($ci, CURLOPT_POSTFIELDS, $data);
         }
 
-        $response = curl_exec($ci);
+        $results = curl_exec($ci);
+        $errors  = curl_error($ci);
         curl_close ($ci);
 
-        commonModel::log($url, $response);
-        return $response;
+        commonModel::log($url, $data, $results, $errors);
+        return $results;
     }
 
     /**
@@ -1543,13 +1551,15 @@ class commonModel extends model
      * Log.
      * 
      * @param  string $url 
+     * @param  mixed  $data     string | array
      * @param  string $results 
+     * @param  string $errors
      * @param  string $logFile
      * @static
      * @access public
      * @return void
      */
-    public static function log($url, $results, $logFile = 'saas')
+    public static function log($url, $data, $results, $errors, $logFile = 'saas')
     {
         global $app, $config;
         if(empty($config->debug)) return false;
@@ -1560,8 +1570,9 @@ class commonModel extends model
 
         fwrite($fh, date('Ymd H:i:s') . ": " . $app->getURI() . "\n");
         fwrite($fh, "url:    " . $url . "\n");
-        fwrite($fh, "results:" . print_r($results, true));
-        fwrite($fh, "\n");
+        if(!empty($data)) fwrite($fh, "data:   " . print_r($data, true) . "\n");
+        fwrite($fh, "results:" . print_r($results, true) . "\n");
+        if(!empty($errors)) fwrite($fh, "errors: " . $errors . "\n");
         fclose($fh);
     }
 }

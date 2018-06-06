@@ -5,7 +5,7 @@
  *
  * The author disclaims copyright to this source code.  In place of
  * a legal notice, here is a blessing:
- * 
+ *
  *  May you do good and not evil.
  *  May you find forgiveness for yourself and forgive others.
  *  May you share freely, never taking more than you give.
@@ -15,7 +15,7 @@ helper::import(dirname(dirname(__FILE__)) . '/base/front/front.class.php');
 /**
  * html类，生成html标签。
  * The html class, to build html tags.
- * 
+ *
  * @package framework
  */
 class html extends baseHTML
@@ -63,12 +63,39 @@ class html extends baseHTML
         /* End. */
         return $string .= "</select>\n";
     }
+
+    /**
+     * 生成input输入标签。
+     * Create tags like "<input type='text' />"
+     *
+     * @param  string $name     the name of the text input tag.
+     * @param  string $value    the default value.
+     * @param  string $attrib   other attribs.
+     * @static
+     * @access public
+     * @return string
+     */
+    static public function input($name, $value = "", $attrib = "")
+    {
+        global $config;
+
+        $id = "id='$name'";
+        if(strpos($attrib, 'id=') !== false) $id = '';
+        $value = str_replace("'", '&#039;', $value);
+
+        $originalName = $name;
+        if(strpos($name, '[') !== false) $name = substr($name, 0, strpos($name, '['));
+        $autocomplete = strpos($config->inputTag->disableAutocomplete, ",$name,") !== false ? 'off' : 'on';
+        $name = $originalName;
+
+        return "<input type='text' name='$name' {$id} value='$value' autocomplete='$autocomplete' $attrib />\n";
+    }
 }
 
 /**
  * JS类。
  * JS class.
- * 
+ *
  * @package front
  */
 class js extends baseJS
@@ -132,8 +159,8 @@ class css extends baseCSS
     /**
      * 引入css文件。
      * Import a css file.
-     * 
-     * @param  string $url 
+     *
+     * @param  string $url
      * @access public
      * @return void
      */

@@ -40,6 +40,7 @@ $lang->depositor->export         = 'Export';
 $lang->depositor->balance        = 'Balance';
 $lang->depositor->saveBalance    = 'Save';
 $lang->depositor->detail         = 'Detail';
+$lang->depositor->normalBrowse   = 'Normal Account';
 $lang->depositor->disabledBrowse = 'Disabled Account';
 
 $lang->depositor->check         = 'Check';

@@ -29,3 +29,13 @@ $(document).ready(function()
 
     $('.exchangeRate').hide();
 })
+
+function ajaxGetCategories()
+{
+    var link = createLink('trade', 'ajaxGetCategories', "type=" + v.modeType);
+
+    $('#' + v.modeType + 'CategoryBox').load(link, function()
+    {
+        $('#category').chosen();
+    });
+}

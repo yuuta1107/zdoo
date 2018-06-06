@@ -103,32 +103,15 @@ class makeup extends control
         }
         elseif($type == 'browseReview')
         {
-            if($this->app->user->admin == 'super')
+            $reviewedBy = $this->makeup->getReviewedBy();
+            if($this->app->user->admin == 'super' or ($reviewedBy && $reviewedBy == $this->app->user->account))
             {
                 $makeupList = $this->makeup->getList($type, $currentYear, $currentMonth, '', '', '', $orderBy);
             }
             else
             {
-                $reviewedBy = $this->makeup->getReviewedBy();
-                if($reviewedBy)
-                { 
-                    if($reviewedBy == $this->app->user->account)
-                    {
-                        $makeupList = $this->makeup->getList($type, $currentYear, $currentMonth, '', array_keys($deptList), '', $orderBy);
-                    }
-                }
-                else
-                {
-                    $depts = $this->loadModel('tree')->getDeptManagedByMe($this->app->user->account);
-                    if(empty($depts))
-                    {
-                        $makeupList = array();
-                    }
-                    else
-                    {
-                        $makeupList = $this->makeup->getList($type, $currentYear, $currentMonth, '', array_keys($depts), '', $orderBy);
-                    }
-                }
+                $managedDepts = $this->loadModel('tree')->getDeptManagedByMe($this->app->user->account);
+                if($managedDepts) $makeupList = $this->makeup->getList($type, $currentYear, $currentMonth, '', array_keys($managedDepts), '', $orderBy);
             }
         }
         elseif($type == 'company')
@@ -335,7 +318,7 @@ class makeup extends control
         if($_POST)
         {
             $result = $this->makeup->update($id);
-            if(is_array($result) && $result['result'] == 'fail') $this->send($result);
+            if(isset($result['result']) && $result['result'] == 'fail') $this->send($result);
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
             if($result)
             {
