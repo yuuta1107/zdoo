@@ -39,7 +39,17 @@
         <?php if($type == 'in'):?>
         <tr class='income'>
           <th><?php echo $lang->trade->category;?></th>
-          <td><?php echo html::select('category', array('') + (array) $categories, '', "class='form-control chosen'");?></td>
+          <td>
+            <div class='input-group'>
+              <span id='inCategoryBox'><?php echo html::select('category', array('') + (array) $categories, '', "class='form-control chosen'");?></span>
+              <span class='input-group-btn'>
+                <?php echo html::a($this->createLink('tree', 'browse', "type=$type"), "<i class='icon icon-cog'></i>", "title={$lang->trade->manageCategory} target='_blank' class='btn btn-icon'");?>
+              </span>
+              <span class='input-group-btn'>
+                <?php echo html::commonButton('<i class="icon icon-refresh"></i>', 'btn btn-icon', "title={$lang->trade->refresh} onclick='ajaxGetCategories()'");?>
+              </span>
+            </div>
+          </td>
         </tr>
         <?php endif;?>
         <?php if($type == 'out'):?>
@@ -47,9 +57,20 @@
           <th><?php echo $lang->trade->category;?></th>
           <td>
             <div class='input-group'>
-              <?php echo html::select('category', array('') + (array) $categories, '', "class='form-control chosen'");?>
-              <div class='input-group-addon'><div style='padding-right: 20px;'><?php echo html::checkbox('objectType', $lang->trade->objectTypeList);?></div></div>
+              <span id='outCategoryBox'><?php echo html::select('category', array('') + (array) $categories, '', "class='form-control chosen'");?></span>
+              <span class='input-group-btn'>
+                <?php echo html::a($this->createLink('tree', 'browse', "type=$type"), "<i class='icon icon-cog'></i>", "title={$lang->trade->manageCategory} target='_blank' class='btn btn-icon'");?>
+              </span>
+              <span class='input-group-btn'>
+                <?php echo html::commonButton('<i class="icon icon-refresh"></i>', 'btn btn-icon', "title={$lang->trade->refresh} onclick='ajaxGetCategories()'");?>
+              </span>
             </div>
+          </td>
+        </tr>
+        <tr>
+          <th><?php echo $lang->trade->outType;?></th>
+          <td>
+            <?php echo html::checkbox('objectType', $lang->trade->objectTypeList);?>
           </td>
         </tr>
         <tr class='hide'>
