@@ -1,7 +1,7 @@
 /**
- * Get orders of a customer. 
- * 
- * @param  int $customerID 
+ * Get orders of a customer.
+ *
+ * @param  int $customerID
  * @access public
  * @return void
  */
@@ -90,13 +90,13 @@ $(document).ready(function()
 
         $(this).html($('#tmpData select').html());
         $(this).val(indexValue);
-    })
+    });
 
     $(document).on('click', '.plus', function()
     {
         $(this).parents('tr').after("<tr><th></th><td>" + $('#orderTD').html() + "</td></tr>");
     });
-  
+
     $(document).on('click', '.minus', function()
     {
         if($(this).parents('table').find('.order-real').not('tr.hide .order-real').size() == 1)
@@ -116,7 +116,7 @@ $(document).ready(function()
         $('#address').load(createLink('contract', 'ajaxGetAddresses', 'customer=' + $(this).val()), function()
         {
             $('#address').trigger('chosen:updated');
-        }); 
+        });
     });
 
     $('#createAddress').change(function()
@@ -125,11 +125,11 @@ $(document).ready(function()
         $('#newAddress').toggle($(this).prop('checked'));
     });
 
-    if(v.customer)
-    {
-        $('#customer').change();
-    }
+    // if(v.customer)
+    // {
+    //    $('#customer').change();
+    // }
 
     $('select.select-order:first').change();
     $('#createAddress').change();
-})
+});
