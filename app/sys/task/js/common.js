@@ -68,11 +68,11 @@ $(function()
         var $this = $(this);
         if($this.hasClass('btn-move-up'))
         {
-            $(this).parents('tr').prev().before($(this).parents('tr'));
+            $(this).parent('td').parent('tr').prev().before($(this).parent('td').parent('tr'));
         }
         else
         {
-            $this.parents('tr').next().after($(this).parents('tr'));
+            $this.parent('td').parent('tr').next().after($(this).parent('td').parent('tr'));
         }
         $('.btn-move-up, .btn-move-down').removeClass('disabled').removeAttr('disabled');
 

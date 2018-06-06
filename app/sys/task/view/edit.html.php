@@ -221,7 +221,7 @@
             </tr>
             <?php endfor;?>
             <tr>
-              <td colspan='2' class='text-center'><?php echo html::a('javascript:void(0)', $lang->confirm, "class='btn btn-primary' data-dismiss='modal'")?></td>
+              <td colspan='4' class='text-center'><?php echo html::a('javascript:void(0)', $lang->confirm, "class='btn btn-primary' data-dismiss='modal'")?></td>
             </tr>
           </table>
         </div>

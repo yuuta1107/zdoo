@@ -71,6 +71,7 @@ include $app->getAppRoot() . '../sys/common/view/header.modal.html.php';
                         <th><?php echo $lang->task->team;?></th>
                         <th class='w-150px'><?php echo $lang->project->role;?></th>
                         <th class='w-130px'><?php echo $lang->task->recordEstimate;?></th>
+                        <th class='w-90px'></th>
                       </tr>
                     </thead>
                     <?php for($mi = 0; $mi < 6; $mi++):?>
@@ -83,9 +84,13 @@ include $app->getAppRoot() . '../sys/common/view/header.modal.html.php';
                           <span class='input-group-addon'><?php echo $lang->task->hour?></span>
                         </div>
                       </td>
+                      <td>
+                        <a href='javascript:;' class='btn btn-move-up btn-sm'><i class='icon-arrow-up'></i></a>
+                        <a href='javascript:;' class='btn btn-move-down btn-sm'><i class='icon-arrow-down'></i></a>
+                      </td>
                     </tr>
                     <?php endfor;?>
-                    <tr><td colspan='2' class='text-center'><?php echo html::a('javascript:void(0)', $lang->confirm, "class='btn btn-primary' data-dismiss='modal'")?></td></tr>
+                    <tr><td colspan='4' class='text-center'><?php echo html::a('javascript:void(0)', $lang->confirm, "class='btn btn-primary' data-dismiss='modal'")?></td></tr>
                   </table>
                 </div>
               </div>
