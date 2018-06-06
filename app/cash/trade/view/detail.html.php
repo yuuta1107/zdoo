@@ -14,7 +14,9 @@
 <?php include '../../../sys/common/view/datepicker.html.php';?>
 <?php include '../../../sys/common/view/chosen.html.php';?>
 <?php js::set('key', count($details));?>
-<form method='post' id='ajaxForm' action='<?php echo inlink('detail', "tradeID={$trade->id}")?>' class='form-table'>
+<?php js::set('money', $trade->money);?>
+<?php js::set('detailTip', $lang->trade->detailTip);?>
+<form method='post' id='detailList' action='<?php echo inlink('detail', "tradeID={$trade->id}")?>' class='form-table'>
   <table class='table table-bordered'>
     <thead>
       <tr class='text-center'>
@@ -52,7 +54,7 @@
       <?php endif;?>
       <td><?php echo html::select("handlers[key][]", $users, $trade->handlers, "class='form-control' multiple")?></td>
       <td><?php echo html::textarea("desc[key]", '', "class='form-control'")?></td>
-      <td><i class='btn icon icon-plus'></i> <i class='btn icon icon-remove'></i></td>
+      <td class='text-center text-middle'><i class='btn btn-mini icon icon-plus'></i> <i class='btn btn-mini icon icon-remove'></i></td>
     </tr>
   </tbody>
 </table>

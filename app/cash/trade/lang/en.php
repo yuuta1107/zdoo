@@ -211,6 +211,7 @@ $lang->trade->unique        = 'There has been same record';
 $lang->trade->ignore        = 'Ignore';
 $lang->trade->denied        = 'You have no permission to browse the list, please ask admin to set privilege.';
 $lang->trade->emptyData     = 'The fields with * cannot be empty.';
+$lang->trade->detailTip     = 'The total detail money is different of trade, confirm save current detail trades?';
 
 $lang->trade->chartList['productLine'] = 'by product line';
 $lang->trade->chartList['category']    = 'by category';

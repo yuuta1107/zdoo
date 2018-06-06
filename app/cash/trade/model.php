@@ -446,6 +446,7 @@ class tradeModel extends model
     {
         return $this->dao->select('*, substr(date, 6, 2) as month')->from(TABLE_TRADE)
             ->where('date')->like("$year%")
+            ->andWhere('parent')->eq(0)
             ->beginIf($currency)->andWhere('currency')->eq($currency)->fi()
             ->orderBy('date_desc')
             ->fetchGroup('month');
