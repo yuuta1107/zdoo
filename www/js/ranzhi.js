@@ -215,7 +215,14 @@ $.extend(
         $(document).on('submit', formID, function()
         { 
             $.disableForm(formID);
-            if(!beforeSubmit || beforeSubmit() !== false) $(this).ajaxSubmit(options);
+            if(!beforeSubmit || beforeSubmit() !== false)
+            {
+                $(this).ajaxSubmit(options);
+            }
+            else
+            {
+                $.enableForm(formID);
+            }
             return false;    // Prevent the submitting event of the browser.
         }).data('setAjaxForm:' + formID, true);
     },

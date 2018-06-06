@@ -52,7 +52,7 @@ $(document).ready(function()
     {
         if($('#hiddenDetail').length)
         {
-            if($('#ajaxForm > table tbody tr').size() > 1)
+            if($('#detailList > table tbody tr').size() > 1)
             {
                 $(this).parents('tr').remove();
             }
