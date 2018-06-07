@@ -5,15 +5,15 @@
  * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Yidong Wang <yidong@cnezsoft.com>
- * @package     task 
+ * @package     task
  * @version     $Id$
  * @link        http://www.ranzhi.org
  */
 class task extends control
 {
     /**
-     * Construct function. 
-     * 
+     * Construct function.
+     *
      * @access public
      * @return void
      */
@@ -23,25 +23,25 @@ class task extends control
         $this->lang->menuGroups->task = 'project';
     }
 
-    /** 
+    /**
      * The index page, locate to browse.
-     * 
+     *
      * @access public
      * @return void
      */
     public function index()
-    {   
+    {
         $this->locate(inlink('browse'));
-    }   
+    }
 
     /**
-     * Browse task. 
-     * 
-     * @param  int    $projectID 
-     * @param  string $orderBy 
-     * @param  int    $recTotal 
-     * @param  int    $recPerPage 
-     * @param  int    $pageID 
+     * Browse task.
+     *
+     * @param  int    $projectID
+     * @param  string $orderBy
+     * @param  int    $recTotal
+     * @param  int    $recPerPage
+     * @param  int    $pageID
      * @access public
      * @return void
      */
@@ -74,15 +74,15 @@ class task extends control
         if($projectID)
         {
             $projectMembers = $this->loadModel('project', 'proj')->getMemberPairs($projectID);
-            $this->config->task->search['params']['assignedTo']['values'] = $projectMembers; 
-            $this->config->task->search['params']['createdBy']['values']  = $projectMembers; 
-            $this->config->task->search['params']['finishedBy']['values'] = $projectMembers; 
+            $this->config->task->search['params']['assignedTo']['values'] = $projectMembers;
+            $this->config->task->search['params']['createdBy']['values']  = $projectMembers;
+            $this->config->task->search['params']['finishedBy']['values'] = $projectMembers;
         }
         else
         {
-            $this->config->task->search['params']['assignedTo']['values'] = $users; 
-            $this->config->task->search['params']['createdBy']['values']  = $users; 
-            $this->config->task->search['params']['finishedBy']['values'] = $users; 
+            $this->config->task->search['params']['assignedTo']['values'] = $users;
+            $this->config->task->search['params']['createdBy']['values']  = $users;
+            $this->config->task->search['params']['finishedBy']['values'] = $users;
         }
         $this->search->setSearchParams($this->config->task->search);
 
@@ -106,7 +106,7 @@ class task extends control
 
     /**
      * Create a task.
-     * 
+     *
      * @access public
      * @return void
      */
@@ -133,9 +133,9 @@ class task extends control
 
     /**
      * Batch create task.
-     * 
-     * @param  int $projectID 
-     * @param  int $parent 
+     *
+     * @param  int $projectID
+     * @param  int $parent
      * @access public
      * @return void
      */
@@ -165,8 +165,8 @@ class task extends control
 
     /**
      * Edit a task.
-     * 
-     * @param  int    $taskID 
+     *
+     * @param  int    $taskID
      * @access public
      * @return void
      */
@@ -180,7 +180,7 @@ class task extends control
             $changes = array();
             $files   = array();
             if($comment == false)
-            {    
+            {
                 $changes = $this->task->update($taskID);
                 if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
                 $files = $this->loadModel('file')->saveUpload('task', $taskID);
@@ -212,9 +212,9 @@ class task extends control
     }
 
     /**
-     * View task. 
-     * 
-     * @param  int    $taskID 
+     * View task.
+     *
+     * @param  int    $taskID
      * @access public
      * @return void
      */
@@ -253,7 +253,7 @@ class task extends control
                 if($pre != '')  $preAndNext->pre  = $this->task->getByID($pre);
                 if($pre == '')  $preAndNext->pre  = $this->task->getByID($task->parent);
                 if($next != '') $preAndNext->next = $this->task->getByID($next);
-                if($next == '') 
+                if($next == '')
                 {
                     $parentPRN = $this->loadModel('common', 'sys')->getPreAndNextObject('task', $task->parent);
                     $preAndNext->next = $parentPRN->next;
@@ -277,9 +277,9 @@ class task extends control
     }
 
     /**
-     * Recorde stimate of task. 
-     * 
-     * @param  int    $taskID 
+     * Recorde stimate of task.
+     *
+     * @param  int    $taskID
      * @access public
      * @return void
      */
@@ -298,12 +298,12 @@ class task extends control
                 $actionID = $this->loadModel('action')->create('task', $taskID, 'Edited', $this->post->comment);
                 if($changes) $this->action->logHistory($actionID, $changes);
             }
-            
+
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => $this->server->http_referer));
         }
 
         $left = $task->left;
-        if(!empty($task->team) and $task->assignedTo != '') $left = $task->team[$task->assignedTo]->left; 
+        if(!empty($task->team) and $task->assignedTo != '') $left = $task->team[$task->assignedTo]->left;
 
         $this->view->title = $this->lang->task->recordEstimate;
         $this->view->task  = $task;
@@ -313,12 +313,12 @@ class task extends control
 
     /**
      * Finish task.
-     * 
-     * @param  int    $taskID 
+     *
+     * @param  int    $taskID
      * @access public
      * @return void
      */
-    public function finish($taskID) 
+    public function finish($taskID)
     {
         $task = $this->task->getByID($taskID);
         $this->checkPriv($task, 'finish');
@@ -346,7 +346,11 @@ class task extends control
 
         /* Set task team member if exists task team. */
         $members = $this->loadModel('project', 'proj')->getMemberPairs($task->project);
-        if(!empty($task->team)) $members = $this->task->getMemberPairs($task);
+        if(!empty($task->team))
+        {
+            $members = $this->task->getMemberPairs($task);
+            if(!in_array($task->createdBy, array_keys($members))) $members = $members + array($task->createdBy => $task->createdBy);
+        }
 
         $this->view->title  = $status == 'finish' ? $task->name : $task->name . " <span class='label label-warning'>{$this->lang->task->children} {$this->lang->task->unfinished}</span>";
         $this->view->taskID = $taskID;
@@ -357,8 +361,8 @@ class task extends control
 
     /**
      * Start a task.
-     * 
-     * @param  int    $taskID 
+     *
+     * @param  int    $taskID
      * @access public
      * @return void
      */
@@ -388,12 +392,12 @@ class task extends control
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => $this->server->http_referer));
         }
 
-        $this->view->taskID = $taskID; 
+        $this->view->taskID = $taskID;
         $this->view->task   = $task;
         $this->view->title  = $this->view->task->name . $this->lang->minus . $this->lang->start;
         $this->display();
     }
-    
+
     /**
      * Update assign of task.
      *
@@ -438,9 +442,9 @@ class task extends control
     }
 
     /**
-     * Activate task. 
-     * 
-     * @param  int    $taskID 
+     * Activate task.
+     *
+     * @param  int    $taskID
      * @access public
      * @return void
      */
@@ -473,9 +477,9 @@ class task extends control
     }
 
     /**
-     * Cancel task. 
-     * 
-     * @param  int    $taskID 
+     * Cancel task.
+     *
+     * @param  int    $taskID
      * @access public
      * @return void
      */
@@ -503,9 +507,9 @@ class task extends control
     }
 
     /**
-     * Close task. 
-     * 
-     * @param  int    $taskID 
+     * Close task.
+     *
+     * @param  int    $taskID
      * @access public
      * @return void
      */
@@ -527,7 +531,7 @@ class task extends control
             }
 
             /* Close children */
-            foreach($task->children as $key => $child) 
+            foreach($task->children as $key => $child)
             {
                 $childChanges = $this->task->close($child->id);
                 if($childChanges)
@@ -545,9 +549,9 @@ class task extends control
     }
 
     /**
-     * Delete task 
-     * 
-     * @param  int    $taskID 
+     * Delete task
+     *
+     * @param  int    $taskID
      * @access public
      * @return void
      */
@@ -573,9 +577,9 @@ class task extends control
     }
 
     /**
-     * View task as kanban 
-     * 
-     * @param  int    $taskID 
+     * View task as kanban
+     *
+     * @param  int    $taskID
      * @param  string $groupBy    the field to group by
      * @access public
      * @return void
@@ -622,7 +626,7 @@ class task extends control
         if($groupBy == 'assignedTo' or $groupBy == 'createdBy') $orderBy = 'status';
 
         $tasks   = $this->task->getList($projectID, $mode = null, $orderBy, $pager = null, $groupBy);
-        $tasks   = $this->task->fixTaskGroups($project, $tasks, $groupBy); 
+        $tasks   = $this->task->fixTaskGroups($project, $tasks, $groupBy);
         $backURL = $this->session->projectList ? $this->session->projectList : (helper::createLink('project', 'index'));
 
         $this->view->tasks       = $tasks;
@@ -639,8 +643,8 @@ class task extends control
 
      /**
      * Browse tasks in outline.
-     * 
-     * @param  int    $projectID 
+     *
+     * @param  int    $projectID
      * @param  string $groupBy    the field to group by
      * @access public
      * @return void
@@ -663,7 +667,7 @@ class task extends control
 
         /* Get tasks and group them. */
         $tasks   = $this->task->getList($projectID, $mode = null, $orderBy, $pager = null, $groupBy);
-        $tasks   = $this->task->fixTaskGroups($project, $tasks, $groupBy); 
+        $tasks   = $this->task->fixTaskGroups($project, $tasks, $groupBy);
         $backURL = $this->session->projectList ? $this->session->projectList : (helper::createLink('project', 'index'));
 
         $this->view->tasks     = $tasks;
@@ -679,7 +683,7 @@ class task extends control
 
     /**
      * Batch close tasks.
-     * 
+     *
      * @access public
      * @return void
      */
@@ -709,7 +713,7 @@ class task extends control
                 }
 
                 /* Close children */
-                foreach($task->children as $key => $child) 
+                foreach($task->children as $key => $child)
                 {
                     $childChanges = $this->task->close($child->id);
                     if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
@@ -729,9 +733,9 @@ class task extends control
 
     /**
      * Send email.
-     * 
-     * @param  int    $taskID 
-     * @param  int    $actionID 
+     *
+     * @param  int    $taskID
+     * @param  int    $actionID
      * @access public
      * @return void
      */
@@ -790,9 +794,9 @@ class task extends control
 
     /**
      * get data to export.
-     * 
-     * @param  int $projectID 
-     * @param  string $orderBy 
+     *
+     * @param  int $projectID
+     * @param  string $orderBy
      * @access public
      * @return void
      */
@@ -874,7 +878,7 @@ class task extends control
                 $teams = $this->dao->select('account')->from(TABLE_TEAM)->where('type')->eq('task')->andWhere('id')->eq($task->id)->orderBy('order')->fetchPairs();
                 if($teams)
                 {
-                    foreach($teams as $account) $assignedTo[] = $users[$account]; 
+                    foreach($teams as $account) $assignedTo[] = $users[$account];
                     $task->assignedTo = implode(',', $assignedTo);
                 }
             }
@@ -889,11 +893,11 @@ class task extends control
     }
 
     /**
-     * ajax get user tasks for todo. 
-     * 
-     * @param  string $account 
-     * @param  string $id 
-     * @param  string $type    select|json|board 
+     * ajax get user tasks for todo.
+     *
+     * @param  string $account
+     * @param  string $id
+     * @param  string $type    select|json|board
      * @access public
      * @return void
      */
@@ -913,10 +917,10 @@ class task extends control
             ->orderBy('t1.id_desc');
         $stmt = $sql->query();
         while($task = $stmt->fetch())
-        {    
+        {
             if($task->todo) continue;
             $tasks[$task->id] = $task->project . ' / ' . $task->name;
-        } 
+        }
 
         if($type == 'select')
         {
@@ -931,11 +935,11 @@ class task extends control
     }
 
     /**
-     * Check task privilege and locate project if no privilege. 
-     * 
-     * @param  object $task 
-     * @param  string $action 
-     * @param  string $errorType   html|json 
+     * Check task privilege and locate project if no privilege.
+     *
+     * @param  object $task
+     * @param  string $action
+     * @param  string $errorType   html|json
      * @access private
      * @return void
      */
