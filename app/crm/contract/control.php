@@ -318,7 +318,7 @@ class contract extends control
         $this->view->contract      = $contract;
         $this->view->users         = $this->loadModel('user')->getPairs('nodeleted,noforbidden');
         $this->view->currencySign  = $currencySign;
-        $this->view->depositorList = array('') + $this->loadModel('depositor', 'cash')->getPairs();
+        $this->view->depositorList = array('') + $this->loadModel('depositor', 'cash')->getPairs(true);
         $this->view->deptList      = $this->loadModel('tree')->getOptionMenu('dept', 0, $removeRoot = true);
         $this->view->categories    = $this->loadModel('tree')->getOptionMenu('in', 0);
         $this->view->productList   = array(0 => '') + $productList;

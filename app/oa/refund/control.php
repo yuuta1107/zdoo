@@ -483,7 +483,7 @@ class refund extends control
         $this->view->title         = $this->lang->refund->common;
         $this->view->refundID      = $refundID;
         $this->view->refund        = $this->refund->getById($refundID);
-        $this->view->depositorList = array('') + $this->loadModel('depositor', 'cash')->getPairs();
+        $this->view->depositorList = array('') + $this->loadModel('depositor', 'cash')->getPairs(true);
         $this->view->categoryList  = $this->refund->getCategoryPairs();
         $this->view->orderList     = $this->loadModel('order', 'crm')->getPairs($customerID = 0);
         $this->view->contractList  = $this->loadModel('contract', 'crm')->getList($customerID = 0);
@@ -591,7 +591,7 @@ class refund extends control
         }
 
         $this->view->title         = $this->lang->refund->setDepositor;
-        $this->view->depositorList = $this->loadModel('depositor', 'cash')->getPairs();
+        $this->view->depositorList = $this->loadModel('depositor', 'cash')->getPairs(true);
         $this->view->module        = $module;
         $this->display();
     }
