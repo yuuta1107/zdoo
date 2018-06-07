@@ -19,15 +19,15 @@ class actionModel extends model
 
     /**
      * Create an action.
-     * 
-     * @param  string $objectType 
-     * @param  int    $objectID 
+     *
+     * @param  string $objectType
+     * @param  int    $objectID
      * @param  string $actionType
-     * @param  string $comment 
+     * @param  string $comment
      * @param  mix    $extra        the extra info of this action, like customer, contact, order etc.  according to different modules and actions, can set different extra.
      * @param  string $actor
-     * @param  int    $customer 
-     * @param  int    $contact 
+     * @param  int    $customer
+     * @param  int    $contact
      * @access public
      * @return int
      */
@@ -64,8 +64,8 @@ class actionModel extends model
 
     /**
      * Save a record of an order.
-     * 
-     * @param  object    $order 
+     *
+     * @param  object    $order
      * @access public
      * @return void
      */
@@ -106,13 +106,6 @@ class actionModel extends model
 
         $this->loadModel('file')->saveUpload('action', $actionID);
 
-        $nextDate   = $this->post->nextDate;
-        $originType = $objectType;
-        $originID   = $objectID;
-        $sendmail   = $this->updateDating($objectType, $objectID, $customer, $contact, $actionID);
-        /* Set the min next date as the post value. */
-        if($this->post->nextDate) $nextDate = $this->getMinDatingDate($objectType, $objectID);
-
         /* Create record for customer and check the checkbox of contract or order. */
         if($this->post->contract or $this->post->order)
         {
@@ -121,6 +114,15 @@ class actionModel extends model
             $sendmail   = $this->updateDating($originType, $originID, $customer, $contact, $actionID);
             /* Set the min next date as the post value. */
             if($this->post->nextDate) $nextDate = $this->getMinDatingDate($originType, $originID);
+        }
+        else
+        {
+            $nextDate   = $this->post->nextDate;
+            $originType = $objectType;
+            $originID   = $objectID;
+            $sendmail   = $this->updateDating($objectType, $objectID, $customer, $contact, $actionID);
+            /* Set the min next date as the post value. */
+            if($this->post->nextDate) $nextDate = $this->getMinDatingDate($objectType, $objectID);
         }
 
         $this->post->nextDate = $nextDate;
@@ -234,14 +236,14 @@ class actionModel extends model
 
         return !dao::isError();
     }
-    
+
     /**
      * Sync contact info.
-     * 
-     * @param  int    $objectType 
-     * @param  int    $objectID 
-     * @param  int    $customer 
-     * @param  int    $contact 
+     *
+     * @param  int    $objectType
+     * @param  int    $objectID
+     * @param  int    $customer
+     * @param  int    $contact
      * @access public
      * @return void
      */
@@ -257,7 +259,7 @@ class actionModel extends model
         if($objectType == 'order')    $this->dao->update(TABLE_ORDER)->data($contactInfo)->where('id')->eq($objectID)->andWhere('contactedDate')->lt($this->post->date)->exec();
         if($objectType == 'contract') $this->dao->update(TABLE_CONTRACT)->data($contactInfo)->where('id')->eq($objectID)->andWhere('contactedDate')->lt($this->post->date)->exec();
 
-        $nextDate = $this->post->nextDate ? $this->post->nextDate : ''; 
+        $nextDate = $this->post->nextDate ? $this->post->nextDate : '';
         $this->dao->update(TABLE_CUSTOMER)->set('nextDate')->eq($nextDate)->where('id')->eq($customer)->exec();
         $this->dao->update(TABLE_CONTACT)->set('nextDate')->eq($nextDate)->where('id')->eq($contact)->exec();
         if($objectType == 'order') $this->dao->update(TABLE_ORDER)->set('nextDate')->eq($nextDate)->where('id')->eq($objectID)->exec();
@@ -268,10 +270,10 @@ class actionModel extends model
 
     /**
      * Get actions of an object.
-     * 
-     * @param  string $objectType 
-     * @param  int    $objectID 
-     * @param  string $action 
+     *
+     * @param  string $objectType
+     * @param  int    $objectID
+     * @param  string $action
      * @param  object $pager
      * @access public
      * @return array
@@ -310,8 +312,8 @@ class actionModel extends model
 
     /**
      * Get an action record.
-     * 
-     * @param  int    $actionID 
+     *
+     * @param  int    $actionID
      * @access public
      * @return object
      */
@@ -325,10 +327,10 @@ class actionModel extends model
 
     /**
      * Get deleted objects.
-     * 
-     * @param  string    $type all|hidden 
-     * @param  string    $orderBy 
-     * @param  object    $pager 
+     *
+     * @param  string    $type all|hidden
+     * @param  string    $orderBy
+     * @param  object    $pager
      * @access public
      * @return array
      */
@@ -340,9 +342,9 @@ class actionModel extends model
             ->andWhere('extra')->eq($extra)
             ->orderBy($orderBy)->page($pager)->fetchAll();
         if(!$trashes) return array();
-        
+
         /* Group trashes by objectType, and get there name field. */
-        foreach($trashes as $object) 
+        foreach($trashes as $object)
         {
             $object->objectType = str_replace('`', '', $object->objectType);
             $typeTrashes[$object->objectType][] = $object->objectID;
@@ -373,8 +375,8 @@ class actionModel extends model
 
     /**
      * Get histories of an action.
-     * 
-     * @param  int    $actionID 
+     *
+     * @param  int    $actionID
      * @access public
      * @return array
      */
@@ -385,8 +387,8 @@ class actionModel extends model
 
     /**
      * Get dating by id.
-     * 
-     * @param  int    $id 
+     *
+     * @param  int    $id
      * @access public
      * @return object
      */
@@ -432,15 +434,15 @@ class actionModel extends model
 
     /**
      * Log histories for an action.
-     * 
-     * @param  int    $actionID 
-     * @param  array  $changes 
+     *
+     * @param  int    $actionID
+     * @param  array  $changes
      * @access public
      * @return void
      */
     public function logHistory($actionID, $changes)
     {
-        foreach($changes as $change) 
+        foreach($changes as $change)
         {
             $change['action'] = $actionID;
             $this->dao->insert(TABLE_HISTORY)->data($change)->exec();
@@ -449,8 +451,8 @@ class actionModel extends model
 
     /**
      * Print actions of an object.
-     * 
-     * @param  array    $action 
+     *
+     * @param  array    $action
      * @access public
      * @return void
      */
@@ -502,7 +504,7 @@ class actionModel extends model
         if(is_array($desc))
         {
             $extra = strtolower($action->extra);
-            if(isset($desc['extra'][$extra])) 
+            if(isset($desc['extra'][$extra]))
             {
                 echo str_replace('$extra', $desc['extra'][$extra], $desc['main']);
             }
@@ -519,10 +521,10 @@ class actionModel extends model
 
     /**
      * Get actions as dynamic.
-     * 
-     * @param  string $account 
-     * @param  string $period 
-     * @param  string $orderBy 
+     *
+     * @param  string $account
+     * @param  string $period
+     * @param  string $orderBy
      * @param  object $pager
      * @access public
      * @return array
@@ -551,7 +553,7 @@ class actionModel extends model
         $actions = $this->transformActions($actions);
 
         $idList = array();
-        foreach($actions as $key => $action) 
+        foreach($actions as $key => $action)
         {
             if($this->checkPriv($action)) $idList[] = $action->id;
         }
@@ -567,8 +569,8 @@ class actionModel extends model
 
     /**
      * Transform the actions for display.
-     * 
-     * @param  int    $actions 
+     *
+     * @param  int    $actions
      * @access public
      * @return void
      */
@@ -598,19 +600,19 @@ class actionModel extends model
                 foreach($todos as $id => $todo)
                 {
                     if($todo->type == 'task') $todo->name = $this->dao->findById($todo->idvalue)->from(TABLE_TASK)->fetch('name');
-                    if($todo->type == 'customer') $todo->name = $this->dao->findById($todo->idvalue)->from(TABLE_CUSTOMER)->fetch('name'); 
-                    if($todo->type == 'order') 
+                    if($todo->type == 'customer') $todo->name = $this->dao->findById($todo->idvalue)->from(TABLE_CUSTOMER)->fetch('name');
+                    if($todo->type == 'order')
                     {
                         $order = $this->dao->select('c.name, o.createdDate')
                             ->from(TABLE_ORDER)->alias('o')
                             ->leftJoin(TABLE_CUSTOMER)->alias('c')->on('o.customer=c.id')
                             ->where('o.id')->eq($todo->idvalue)
-                            ->fetch(); 
+                            ->fetch();
                         $todo->name = $order->name . '|' . date('Y-m-d', strtotime($order->createdDate));
                     }
                     if(isset($this->lang->action->objectTypes[$todo->type])) $todo->name = $this->lang->action->objectTypes[$todo->type] . ':' . $todo->name;
 
-                    if($todo->private == 1 and $todo->account != $this->app->user->account) 
+                    if($todo->private == 1 and $todo->account != $this->app->user->account)
                     {
                        $objectNames[$objectType][$id] = $this->lang->todo->thisIsPrivate;
                     }
@@ -619,7 +621,7 @@ class actionModel extends model
                        $objectNames[$objectType][$id] = $todo->name;
                     }
                 }
-            } 
+            }
             else
             {
                 $this->app->loadLang('trade', 'cash');
@@ -655,7 +657,7 @@ class actionModel extends model
 
             /* Open object by modal or not. */
             $action->toggle = '';
-            if(strpos($this->config->action->objectModalLinks, ",{$objectType},") !== false) $action->toggle = "data-toggle = 'modal'"; 
+            if(strpos($this->config->action->objectModalLinks, ",{$objectType},") !== false) $action->toggle = "data-toggle = 'modal'";
 
             /* Other actions, create a link. */
             if(strpos($action->objectLabel, '|') !== false)
@@ -676,10 +678,10 @@ class actionModel extends model
 
     /**
      * Print changes of every action.
-     * 
-     * @param  string    $objectType 
-     * @param  array     $histories 
-     * @param  string    $action 
+     *
+     * @param  string    $objectType
+     * @param  array     $histories
+     * @param  string    $action
      * @access public
      * @return void
      */
@@ -735,8 +737,8 @@ class actionModel extends model
 
     /**
      * Undelete a record.
-     * 
-     * @param  int      $actionID 
+     *
+     * @param  int      $actionID
      * @access public
      * @return void
      */
@@ -761,9 +763,9 @@ class actionModel extends model
 
     /**
      * Update an action.
-     * 
+     *
      * @param  object    $action
-     * @param  int       $actionID 
+     * @param  int       $actionID
      * @access public
      * @return void
      */
@@ -775,8 +777,8 @@ class actionModel extends model
 
     /**
      * Update comment of a action.
-     * 
-     * @param  int    $actionID 
+     *
+     * @param  int    $actionID
      * @access public
      * @return void
      */
@@ -796,9 +798,9 @@ class actionModel extends model
     }
 
     /**
-     * Hide an object. 
-     * 
-     * @param  int    $actionID 
+     * Hide an object.
+     *
+     * @param  int    $actionID
      * @access public
      * @return void
      */
@@ -813,7 +815,7 @@ class actionModel extends model
 
     /**
      * Hide all deleted objects.
-     * 
+     *
      * @access public
      * @return void
      */
@@ -827,10 +829,10 @@ class actionModel extends model
     }
 
     /**
-     * update a action read status to read. 
-     * 
-     * @param  int    $actionID 
-     * @param  string $type 
+     * update a action read status to read.
+     *
+     * @param  int    $actionID
+     * @param  string $type
      * @access public
      * @return bool
      */
@@ -852,17 +854,17 @@ class actionModel extends model
 
         $read = empty($readers) ? 1 : 0;
         $reader = empty($readers) ? '' : ',' . join(',', $readers) . ',';
-        
+
         $this->dao->update(TABLE_ACTION)->set('read')->eq($read)->set('reader')->eq($reader)->where('id')->eq($actionID)->exec();
         return !dao::isError();
     }
 
     /**
      * Send notice to user. return failed user account.
-     * 
-     * @param  int    $actionID 
-     * @param  string $reader 
-     * @param  bool   $onlyNotice 
+     *
+     * @param  int    $actionID
+     * @param  string $reader
+     * @param  bool   $onlyNotice
      * @access public
      * @return string
      */
@@ -872,7 +874,7 @@ class actionModel extends model
         $failedReaders = array();
 
         foreach($readers as $key => $account) if($account == '' or $account == $this->app->user->account) unset($readers[$key]);
-        foreach($readers as $key => $account) 
+        foreach($readers as $key => $account)
         {
             if(!$onlyNotice and !$this->loadModel('user')->isOnline($account))
             {
@@ -881,7 +883,7 @@ class actionModel extends model
             }
         }
 
-        if(!empty($readers)) 
+        if(!empty($readers))
         {
             $reader = ',' . join(',', $readers) . ',';
             $oldReader = $this->dao->select('reader')->from(TABLE_ACTION)->where('id')->eq($actionID)->fetch('reader');
@@ -894,9 +896,9 @@ class actionModel extends model
 
     /**
      * Get unread notice for user.
-     * 
-     * @param  string $account 
-     * @param  string $skipNotice 
+     *
+     * @param  string $account
+     * @param  string $skipNotice
      * @access public
      * @return array
      */
@@ -938,7 +940,7 @@ class actionModel extends model
             /* Get contents. */
             ob_start();
             $this->printAction($action);
-            $notice->content = ob_get_contents(); 
+            $notice->content = ob_get_contents();
             ob_end_clean();
 
             $notices[$action->id] = $notice;
@@ -971,7 +973,7 @@ class actionModel extends model
                     $notice = new stdclass();
                     $notice->id      = 'todo' . $todo->id;
                     $notice->title   = sprintf($this->lang->action->noticeTitle, $this->lang->todo->common, $link, 'oa', "{$todo->begin} {$todo->name}");
-                    $notice->content = ''; 
+                    $notice->content = '';
                     $notice->type    = 'success';
                     $notice->read    = '';
 
@@ -990,7 +992,7 @@ class actionModel extends model
                 $notice = new stdclass();
                 $notice->id      = "emptyTodo";
                 $notice->title   = sprintf($this->lang->action->noticeTitle, $this->lang->todo->common, $link, 'oa', "{$this->lang->todo->emptyTodo}");
-                $notice->content = ''; 
+                $notice->content = '';
                 $notice->type    = 'success';
                 $notice->read    = '';
 
@@ -1011,7 +1013,7 @@ class actionModel extends model
             $notice = new stdclass();
             $notice->id      = 'order' . $order->id;
             $notice->title   = sprintf($this->lang->action->noticeTitle, $this->lang->order->record . $this->lang->order->common, $link, 'crm', $order->title);
-            $notice->content = ''; 
+            $notice->content = '';
             $notice->type    = 'success';
             $notice->read    = helper::createLink('action', 'read', "actionID={$notice->id}&type=order");
 
@@ -1023,7 +1025,7 @@ class actionModel extends model
 
     /**
      * Compute the begin date and end date of a period.
-     * 
+     *
      * @param  string    $period   all|today|yesterday|twodaysago|latest2days|thisweek|lastweek|thismonth|lastmonth
      * @access public
      * @return array
@@ -1059,8 +1061,8 @@ class actionModel extends model
 
     /**
      * Check privilege for action.
-     * 
-     * @param  object    $action 
+     *
+     * @param  object    $action
      * @access public
      * @return bool
      */
