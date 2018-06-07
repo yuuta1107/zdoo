@@ -25,7 +25,7 @@
   <?php $appid = ($this->get->app == 'sys' and isset($_GET['entry'])) ? "class='app-btn' data-id={$this->get->entry}" : ''?>
   <tr <?php echo $appid?>>
     <td class='w-30px text-center'><span class='active pri pri-<?php echo $task->pri;?>'><?php echo $lang->task->priList[$task->pri];?></span></td>
-    <td title='<?php echo $task->name;?>'> <?php echo html::a($this->createLink('proj.task', 'view', "taskID=$task->id"), $task->name);?></td>
+    <td title='<?php echo $task->name;?>' onclick="<?php echo "$.openEntry('proj', '" . $this->createLink('proj.task', 'view', "taskID=$task->id") . "')";?>"> <a href="###"><?php echo $task->name;?></a></td>
     <td class='w-50px'><?php echo $lang->task->statusList[$task->status];?></td>
     <?php if(strpos('createdBy,assignedTo,finishedBy', $type) !== false):?>
     <td class='actions w-50px'>
