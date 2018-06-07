@@ -551,13 +551,12 @@ class taskModel extends model
     /**
      * Update parent task info.
      *
-     * @param  object $task
+     * @param  object $childTask
      * @access public
-     * @return void
+     * @return mixed
      */
-    public function updateParent($task)
+    public function updateParent($childTask)
     {
-        $childTask = $this->dao->select('*')->from(TABLE_TASK)->where('id')->eq($task)->fetch();
         if(empty($childTask->parent)) return true;
 
         $parentID = $childTask->parent;
@@ -661,7 +660,7 @@ class taskModel extends model
     {
         if(!$taskID) return true;
 
-        $tasks = $this->dao->select('`id`,`estimate`,`consumed`,`left`')->from(TABLE_TASK)->where('parent')->eq($taskID)->andWhere('status')->ne('cancel')->andWhere('deleted')->eq(0)->fetchAll('id');
+        $tasks = $this->dao->select('`id`,`estimate`,`consumed`,`left`,`status`')->from(TABLE_TASK)->where('parent')->eq($taskID)->andWhere('status')->ne('cancel')->andWhere('deleted')->eq(0)->fetchAll('id');
         if(empty($tasks)) return true;
 
         $estimate = 0;
