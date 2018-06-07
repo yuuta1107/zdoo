@@ -317,8 +317,9 @@ body > form {margin-top: 20px;} /* form behind body */
 .borderless.form-control:hover,.borderless.form-control:active,.borderless.form-control:focus {border-color: #506EAF; box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);}
 
 label.checkbox, input[type='radio']+label{font-weight: normal;}
-label.checkbox-inline input[type='checkbox'] {position: relative;}
-label.radio-inline input[type='radio'] {position: relative;}
+.checkbox-inline, .radio-inline {padding-left: 18px;}
+label.checkbox-inline input[type='checkbox'],
+label.radio-inline input[type='radio'] {margin-top: 2px; margin-left: -18px;}
 
 .panel-body > form{padding-right: 10px; max-width: 1000px}
 
