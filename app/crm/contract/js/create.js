@@ -19,7 +19,8 @@ function getOrder(customerID)
     $('#orderTD').load(createLink('contract', 'getOrder', 'customerID=' + customerID + '&status=normal'), function()
     {
         $('#orderTR').removeClass('hide');
-        if($('.select-order').length > 1) $('.select-order').parents('tr').not('#orderTR, #tmpData, .orderInfo').remove();
+       // if($('.select-order').length > 1) $('.select-order').parents('tr').not('#orderTR, #tmpData, .orderInfo').remove();
+        if($('.select-order').length > 1) $('#orderTR').hide();
         if(v.order) $('#orderTD [name*=order]').val(v.order);
     })
 }
@@ -125,10 +126,10 @@ $(document).ready(function()
         $('#newAddress').toggle($(this).prop('checked'));
     });
 
-    // if(v.customer)
-    // {
-    //    $('#customer').change();
-    // }
+    if(v.customer)
+    {
+       $('#customer').change();
+    }
 
     $('select.select-order:first').change();
     $('#createAddress').change();
