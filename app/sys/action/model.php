@@ -152,13 +152,22 @@ class actionModel extends model
             ->andWhere('objectType')->eq($objectType)
             ->andWhere('objectID')->eq($objectID)
             ->andWhere('date', true)->le(date('Y-m-d'))
-            ->beginIF($this->post->nextDate)->orWhere('date')->ne($this->post->nextDate)->fi()
+            ->beginIF($this->post->nextDate)->orWhere('date')->lt($this->post->nextDate)->fi()
             ->markRight(1)
             ->andWhere('account')->eq($this->app->user->account)
             ->andWhere('contact')->eq($this->post->contact)
             ->exec();
 
         if(!$this->post->nextDate) return false;
+
+        $this->dao->delete()->from(TABLE_DATING)
+            ->where('status')->eq('wait')
+            ->andWhere('objectType')->eq($objectType)
+            ->andWhere('objectID')->eq($objectID)
+            ->andWhere('date')->gt($this->post->nextDate)
+            ->andWhere('account')->eq($this->app->user->account)
+            ->andWhere('contact')->eq($this->post->contact)
+            ->exec();
 
         $dating = new stdclass();
         $dating->objectType  = $objectType;
