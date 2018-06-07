@@ -13,8 +13,8 @@ class taskModel extends model
 {
     /**
      * Get task by ID.
-     * 
-     * @param  int    $taskID 
+     *
+     * @param  int    $taskID
      * @access public
      * @return object.
      */
@@ -26,12 +26,12 @@ class taskModel extends model
         foreach($task as $key => $value) if(strpos($key, 'Date') !== false and !(int)substr($value, 0, 4)) $task->$key = '';
 
         $children = $this->dao->select("*")->from(TABLE_TASK)->where('parent')->eq($taskID)->andWhere('deleted')->eq(0)->fetchAll('id');
-        if($task) 
+        if($task)
         {
             $task->files    = $this->loadModel('file')->getByObject('task', $taskID);
             $task->children = $children;
         }
-        
+
         $teams = $this->dao->select('*')->from(TABLE_TEAM)->where('type')->eq('task')->andWhere('id')->in(array_keys($children) + array($taskID))->orderBy('order_desc')->fetchGroup('id', 'account');
         foreach($teams as $key => $team) $teams[$key] = array_reverse($team);
         $task->team = isset($teams[$taskID]) ? $teams[$taskID] : array();
@@ -43,11 +43,11 @@ class taskModel extends model
 
     /**
      * Get task list.
-     * 
-     * @param  int       $projectID 
+     *
+     * @param  int       $projectID
      * @param  string    $mode
-     * @param  string    $orderBy 
-     * @param  object    $pager 
+     * @param  string    $orderBy
+     * @param  object    $pager
      * @param  string    $groupBy
      * @access public
      * @return array
@@ -83,14 +83,14 @@ class taskModel extends model
             ->fi()
             ->orderBy($orderBy)
             ->page($pager);
-        
+
         if($groupBy == 'id') $taskList = $this->dao->fetchAll('id');
         if($groupBy != 'id') $taskList = $this->dao->fetchGroup($groupBy, 'id');
 
         /* Save query condition for export and pre/next button. */
         $this->session->set('taskQueryCondition', $this->dao->get());
 
-        if($groupBy == 'id') 
+        if($groupBy == 'id')
         {
             /* Process multiple user task. */
             $teams = $this->dao->select('*')->from(TABLE_TEAM)->where('type')->eq('task')->andWhere('id')->in(array_keys($taskList))->orderBy('order_desc')->fetchGroup('id', 'account');
@@ -101,14 +101,14 @@ class taskModel extends model
             foreach($taskList as $key => $task)
             {
                 if(!isset($task->children)) $task->children = array();
-                if($task->parent != 0 and isset($taskList[$task->parent])) 
+                if($task->parent != 0 and isset($taskList[$task->parent]))
                 {
                     $taskList[$task->parent]->children[$key] = $task;
                     unset($taskList[$key]);
                 }
             }
         }
-        if($groupBy != 'id') 
+        if($groupBy != 'id')
         {
             /* Prosess multiple user task. */
             $idList = array();
@@ -123,7 +123,7 @@ class taskModel extends model
                 foreach($tasks as $key => $task)
                 {
                     if(!isset($task->children)) $task->children = array();
-                    if($task->parent != 0 and isset($taskList[$groupKey][$task->parent])) 
+                    if($task->parent != 0 and isset($taskList[$groupKey][$task->parent]))
                     {
                         $taskList[$groupKey][$task->parent]->children[$key] = $task;
                         unset($taskList[$groupKey][$key]);
@@ -137,8 +137,8 @@ class taskModel extends model
 
     /**
      * Get task list.
-     * 
-     * @param  int|array|string    $taskIDList 
+     *
+     * @param  int|array|string    $taskIDList
      * @access public
      * @return array
      */
@@ -156,7 +156,7 @@ class taskModel extends model
         foreach($taskList as $key => $task)
         {
             if(empty($task->children)) $task->children = array();
-            if($task->parent != 0 and isset($taskList[$task->parent])) 
+            if($task->parent != 0 and isset($taskList[$task->parent]))
             {
                 $taskList[$task->parent]->children[$key] = $task;
                 unset($taskList[$key]);
@@ -165,14 +165,14 @@ class taskModel extends model
 
         return $taskList;
     }
-    
+
     /**
      * Get tasks of a project.
-     * 
-     * @param  int    $projectID 
+     *
+     * @param  int    $projectID
      * @param  string $type       all|wait|doing|done|cancel
      * @param  string $orderBy
-     * @param  object $pager 
+     * @param  object $pager
      * @access public
      * @return array
      */
@@ -213,9 +213,9 @@ class taskModel extends model
 
     /**
      * Fix task groups.
-     * 
-     * @param  array    $tasks 
-     * @param  string   $groupBy 
+     *
+     * @param  array    $tasks
+     * @param  string   $groupBy
      * @access public
      * @return void
      */
@@ -246,8 +246,8 @@ class taskModel extends model
 
     /**
      * Create a task.
-     * 
-     * @param  object    $task 
+     *
+     * @param  object    $task
      * @access public
      * @return void
      */
@@ -334,8 +334,8 @@ class taskModel extends model
 
     /**
      * Batch create.
-     * 
-     * @param  int    $projectID 
+     *
+     * @param  int    $projectID
      * @access public
      * @return array
      */
@@ -426,8 +426,8 @@ class taskModel extends model
 
     /**
      * Update a task.
-     * 
-     * @param  int       $taskID 
+     *
+     * @param  int       $taskID
      * @param  object    $task
      * @access public
      * @return void
@@ -514,6 +514,7 @@ class taskModel extends model
         }
 
         if(isset($task->uid)) $task = $this->loadModel('file')->processImgURL($task, $this->config->task->editor->edit['id']);
+        if($oldTask->status == 'closed') $task->status = 'closed';
         $this->dao->update(TABLE_TASK)->data($task, 'files, children, team, uid, teamMember')
             ->autoCheck()
             ->batchCheckIF($task->status != 'cancel', $this->config->task->require->edit, 'notempty')
@@ -548,9 +549,9 @@ class taskModel extends model
     }
 
     /**
-     * Update parent task info. 
-     * 
-     * @param  object $task 
+     * Update parent task info.
+     *
+     * @param  object $task
      * @access public
      * @return void
      */
@@ -683,9 +684,9 @@ class taskModel extends model
     }
 
     /**
-     * Recordestimate 
-     * 
-     * @param  int    $taskID 
+     * Recordestimate
+     *
+     * @param  int    $taskID
      * @access public
      * @return void
      */
@@ -697,7 +698,7 @@ class taskModel extends model
             $task = new stdclass();
             $task->consumed = $this->post->consumed;
             $task->left     = $this->post->left;
-            $task->status   = (float)$this->post->left ? 'doing' : 'done'; 
+            $task->status   = (float)$this->post->left ? 'doing' : 'done';
             $this->dao->update(TABLE_TASK)->data($task)->autoCheck()->where('id')->eq($taskID)->exec();
         }
 
@@ -712,7 +713,7 @@ class taskModel extends model
             $consumed = (float)$this->post->consumed;
             $left     = (float)$this->post->left;
 
-            foreach($oldTask->team as $member) 
+            foreach($oldTask->team as $member)
             {
                 if($member->account == $account)
                 {
@@ -746,8 +747,8 @@ class taskModel extends model
 
     /**
      * Finish task.
-     * 
-     * @param  int    $taskID 
+     *
+     * @param  int    $taskID
      * @access public
      * @return bool
      */
@@ -762,7 +763,7 @@ class taskModel extends model
             ->setDefault('assignedDate', $now)
             ->setDefault('status', 'done')
             ->setDefault('finishedBy, editedBy', $this->app->user->account)
-            ->setDefault('finishedDate, editedDate', $now) 
+            ->setDefault('finishedDate, editedDate', $now)
             ->remove('files,labels')
             ->get();
 
@@ -800,8 +801,8 @@ class taskModel extends model
 
     /**
      * Start a task.
-     * 
-     * @param  int      $taskID 
+     *
+     * @param  int      $taskID
      * @access public
      * @return void
      */
@@ -812,13 +813,13 @@ class taskModel extends model
         $task = fixer::input('post')
             ->setDefault('assignedTo', $this->app->user->account)
             ->setDefault('editedBy', $this->app->user->account)
-            ->setDefault('editedDate', $now) 
+            ->setDefault('editedDate', $now)
             ->setIF($oldTask->assignedTo != $this->app->user->account, 'assignedDate', $now)
             ->get();
 
         if($this->post->left == 0)
         {
-            $task->status       = 'done'; 
+            $task->status       = 'done';
             $task->finishedBy   = $this->app->user->account;
             $task->finishedDate = helper::now();
         }
@@ -833,7 +834,7 @@ class taskModel extends model
             ->checkIF($this->post->consumed < $oldTask->consumed, 'consumed', 'ge', $this->lang->task->consumedBefore)
             ->where('id')->eq((int)$taskID)
             ->exec();
-        
+
         $this->updateParent($oldTask);
 
         if(!dao::isError()) return commonModel::createChanges($oldTask, $task);
@@ -841,8 +842,8 @@ class taskModel extends model
 
     /**
      * Assign a task to a user again.
-     * 
-     * @param  int    $taskID 
+     *
+     * @param  int    $taskID
      * @access public
      * @return void
      */
@@ -888,9 +889,9 @@ class taskModel extends model
     }
 
     /**
-     * Activate task. 
-     * 
-     * @param  int    $taskID 
+     * Activate task.
+     *
+     * @param  int    $taskID
      * @access public
      * @return array
      */
@@ -927,9 +928,9 @@ class taskModel extends model
     }
 
     /**
-     * Cancel task. 
-     * 
-     * @param  int    $taskID 
+     * Cancel task.
+     *
+     * @param  int    $taskID
      * @access public
      * @return array
      */
@@ -955,9 +956,9 @@ class taskModel extends model
     }
 
     /**
-     * Close task. 
-     * 
-     * @param  int    $taskID 
+     * Close task.
+     *
+     * @param  int    $taskID
      * @access public
      * @return array
      */
@@ -985,31 +986,31 @@ class taskModel extends model
 
     /**
      * Check clickable for action.
-     * 
-     * @param  object    $task 
-     * @param  string    $action 
+     *
+     * @param  object    $task
+     * @param  string    $action
      * @static
      * @access public
      * @return bool
      */
     public static function isClickable($task, $action)
     {
-        $action = strtolower($action);  
+        $action = strtolower($action);
 
         if($action == 'assignto') return $task->status != 'closed' and $task->status != 'cancel';
         if($action == 'start')    return $task->status != 'doing'  and $task->status != 'closed' and $task->status != 'cancel';
         if($action == 'finish')   return $task->status != 'done'   and $task->status != 'closed' and $task->status != 'cancel';
-        if($action == 'close')    return $task->status == 'done'   or  $task->status == 'cancel';  
-        if($action == 'activate') return $task->status == 'done'   or  $task->status == 'closed'  or $task->status == 'cancel' ;  
+        if($action == 'close')    return $task->status == 'done'   or  $task->status == 'cancel';
+        if($action == 'activate') return $task->status == 'done'   or  $task->status == 'closed'  or $task->status == 'cancel' ;
         if($action == 'cancel')   return $task->status != 'done  ' and $task->status != 'closed' and $task->status != 'cancel';
 
         return true;
     }
 
     /**
-     * is could view all tasks. 
-     * 
-     * @param  int    $projectID 
+     * is could view all tasks.
+     *
+     * @param  int    $projectID
      * @access public
      * @return bool
      */
@@ -1021,7 +1022,7 @@ class taskModel extends model
         if(!empty($this->app->user->rights['task']['deleteall'])) return true;
 
         static $projects;
-        if(empty($projects)) 
+        if(empty($projects))
         {
             $projects = $this->loadModel('project', 'proj')->getList();
             /* Process whitelist. */
@@ -1053,17 +1054,17 @@ class taskModel extends model
     }
 
     /**
-     * Check task's privilege for action. 
-     * 
-     * @param  object $task 
-     * @param  string $action 
+     * Check task's privilege for action.
+     *
+     * @param  object $task
+     * @param  string $action
      * @access public
      * @return bool
      */
     public function checkPriv($task, $action)
     {
         if(!isset($task->project)) return false;
-        $action = strtolower($action);  
+        $action = strtolower($action);
 
         if($this->app->user->admin == 'super') return true;
         if($action == 'view' and !empty($this->app->user->rights['task']['viewall'])) return true;
@@ -1071,7 +1072,7 @@ class taskModel extends model
         if($action == 'delete' and !empty($this->app->user->rights['task']['deleteall'])) return true;
 
         static $projects;
-        if(empty($projects)) 
+        if(empty($projects))
         {
             $projects = $this->loadModel('project', 'proj')->getList();
             /* Process whitelist. */
@@ -1124,11 +1125,11 @@ class taskModel extends model
 
     /**
      * Build operate menu.
-     * 
-     * @param  object $task 
-     * @param  string $class 
-     * @param  string $type 
-     * @param  string $print 
+     *
+     * @param  object $task
+     * @param  string $class
+     * @param  string $type
+     * @param  string $print
      * @access public
      * @return string
      */
@@ -1215,8 +1216,8 @@ class taskModel extends model
 
     /**
      * Save data from mind.
-     * 
-     * @param  int    $changes 
+     *
+     * @param  int    $changes
      * @access public
      * @return void
      */
@@ -1244,7 +1245,7 @@ class taskModel extends model
             $task->createdDate = helper::now();
             $this->create($task);
         }
-        
+
         foreach($updatedTasks as $task)
         {
             unset($task->change);
@@ -1256,9 +1257,9 @@ class taskModel extends model
     }
 
     /**
-     * Get next user. 
-     * 
-     * @param  string $users 
+     * Get next user.
+     *
+     * @param  string $users
      * @param  string $current
      * @access public
      * @return void
@@ -1285,9 +1286,9 @@ class taskModel extends model
     }
 
     /**
-     * Get task's team member pairs. 
-     * 
-     * @param  object $task 
+     * Get task's team member pairs.
+     *
+     * @param  object $task
      * @access public
      * @return array
      */
@@ -1303,10 +1304,10 @@ class taskModel extends model
     }
 
     /**
-     * getUserTaskPairs 
-     * 
-     * @param  string $account 
-     * @param  string $status 
+     * getUserTaskPairs
+     *
+     * @param  string $account
+     * @param  string $status
      * @access public
      * @return void
      */
@@ -1322,9 +1323,9 @@ class taskModel extends model
         $sql->orderBy('t1.id_desc');
         $stmt = $sql->query();
         while($task = $stmt->fetch())
-        {    
+        {
             $tasks[$task->id] = $task->project . ' / ' . $task->name;
-        }    
+        }
         return $tasks;
     }
 }
