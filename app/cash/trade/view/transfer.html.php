@@ -26,7 +26,9 @@
           <td>
             <select name='payment' id='payment' class='form-control amount'>
             <?php foreach($depositorList as $depositor):?>
-            <option value="<?php echo $depositor->id;?>" data-currency="<?php echo $depositor->currency;?>"><?php echo $depositor->abbr;?></option>
+            <?php $depositorAbbr = $depositor->abbr;?>
+            <?php if($depositor->status == 'disable') $depositorAbbr .= ' (' . $lang->depositor->statusList['disable'] . ')';?>
+            <option value="<?php echo $depositor->id;?>" data-currency="<?php echo $depositor->currency;?>"><?php echo $depositorAbbr;?></option>
             <?php endforeach;?>
             </select>
           </td>
@@ -36,6 +38,9 @@
           <td>
             <select name='receipt' id='receipt' class='form-control amount'>
             <?php foreach($depositorList as $depositor):?>
+            <?php $depositorAbbr = $depositor->abbr;?>
+            <?php if($depositor->status == 'disable') $depositorAbbr .= ' (' . $lang->depositor->statusList['disable'] . ')';?>
+            <option value="<?php echo $depositor->id;?>" data-currency="<?php echo $depositor->currency;?>"><?php echo $depositorAbbr;?></option>
             <option value="<?php echo $depositor->id;?>" data-currency="<?php echo $depositor->currency;?>"><?php echo $depositor->abbr;?></option>
             <?php endforeach;?>
             </select>

@@ -61,9 +61,21 @@ class depositorModel extends model
      * @access public
      * @return array
      */
-    public function getPairs()
+    public function getPairs($markDisabled = false)
     {
-        return $this->dao->select('id,abbr')->from(TABLE_DEPOSITOR)->fetchPairs('id', 'abbr');
+        if(!$markDisabled) return $this->dao->select('id,abbr')->from(TABLE_DEPOSITOR)->fetchPairs('id', 'abbr');
+        if($markDisabled)
+        {
+            $depositorPairs = array();
+            $depositorList  = $this->dao->select('id,abbr,status')->from(TABLE_DEPOSITOR)->fetchAll('id');
+            foreach($depositorList as $id => $depositor)
+            {
+                $depositorPairs[$id] = $depositor->abbr;
+                if($depositor->status == 'disable') $depositorPairs[$id] .= ' (' . $this->lang->depositor->statusList['disable'] . ')';
+            }
+
+            return $depositorPairs;
+        }
     }
 
     /** 
