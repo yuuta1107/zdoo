@@ -301,4 +301,5 @@ $lang->action->objectTypes['schema']    = 'Trade Template';
 $lang->action->objectTypes['doclib']    = 'Document library';
 $lang->action->objectTypes['action']    = 'Communication record';
 
-$lang->action->noticeTitle = "%s <a href='%s' data-appid='%s'>%s</a>";
+$lang->action->noticeTitle  = "%s <a href='%s' data-appid='%s'>%s</a>";
+$lang->action->uniqueDating = "<stong>%s</strong> has a record for next contact.";

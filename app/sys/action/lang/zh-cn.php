@@ -301,4 +301,5 @@ $lang->action->objectTypes['schema']    = '记账模板';
 $lang->action->objectTypes['doclib']    = '文档库';
 $lang->action->objectTypes['action']    = '沟通记录';
 
-$lang->action->noticeTitle = "%s <a href='%s' data-appid='%s'>%s</a>";
+$lang->action->noticeTitle  = "%s <a href='%s' data-appid='%s'>%s</a>";
+$lang->action->uniqueDating = "<stong>%s</strong>已经有下次联系的记录。";

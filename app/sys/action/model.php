@@ -121,7 +121,9 @@ class actionModel extends model
             ->where('status')->eq('wait')
             ->andWhere('objectType')->eq($objectType)
             ->andWhere('objectID')->eq($objectID)
-            ->andWhere('date')->le(date('Y-m-d'))
+            ->andWhere('date', true)->le(date('Y-m-d'))
+            ->beginIF($this->post->nextDate)->orWhere('date')->ne($this->post->nextDate)->fi()
+            ->markRight(1)
             ->andWhere('account')->eq($this->app->user->account)
             ->andWhere('contact')->eq($this->post->contact)
             ->exec();
@@ -138,6 +140,17 @@ class actionModel extends model
         $dating->desc        = $this->post->desc;
         $dating->createdBy   = $this->app->user->account;
         $dating->createdDate = helper::now();
+
+        $existDating = $this->dao->select('*')->from(TABLE_DATING)
+            ->where('status')->eq('wait')
+            ->andWhere('date')->eq($dating->date)
+            ->andWhere('objectType')->eq($objectType)
+            ->andWhere('objectID')->eq($objectID)
+            ->andWhere('contact')->eq($dating->contact)
+            ->andWhere('account')->eq($dating->account)
+            ->fetch();
+
+        if($existDating) dao::$errors['nextDate'][] = sprintf($this->lang->action->uniqueDating, $dating->date);
 
         $this->dao->insert(TABLE_DATING)->data($dating)->autoCheck()->exec();
 
