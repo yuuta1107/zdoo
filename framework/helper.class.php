@@ -105,7 +105,7 @@ function isonlybody()
  */
 function formatMoney($money, $unit = 1)
 {
-    if($money == 0) return '';
+    if($money === 0) return '';
     
     $decimals    = 2;
     $formatMoney = number_format($money / $unit, $decimals);

@@ -11,6 +11,8 @@
  */
 ?>
 <?php include $app->appRoot . 'common/view/header.html.php';?>
+<?php js::set('mode', $mode);?>
+<li id='bysearchTab'><?php echo html::a('#', "<i class='icon-search icon'></i>" . $lang->search->common)?></li>
 <div id='menuActions'>
   <?php commonModel::printLink('provider', 'create', '', '<i class="icon-plus"></i> ' . $lang->provider->create, 'class="btn btn-primary"');?>
 </div>

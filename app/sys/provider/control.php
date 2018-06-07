@@ -47,6 +47,20 @@ class provider extends control
         $this->app->loadClass('pager', $static = true);
         $pager = new pager($recTotal, $recPerPage, $pageID);
 
+        /* Build search form. */
+        $this->loadModel('search', 'sys');
+        $this->config->customer->search['actionURL'] = $this->createLink('provider', 'browse', 'mode=bysearch');
+        $this->config->customer->search['params']['industry']['values'] = array('' => '') + $this->loadModel('tree')->getOptionMenu('industry');
+        $this->config->customer->search['params']['area']['values']     = array('' => '') + $this->loadModel('tree')->getOptionMenu('area');
+        unset($this->config->customer->search['fields']['intension']);
+        unset($this->config->customer->search['fields']['source']);
+        unset($this->config->customer->search['fields']['level']);
+        unset($this->config->customer->search['fields']['status']);
+        unset($this->config->customer->search['fields']['assignedTo']);
+        unset($this->config->customer->search['fields']['relation']);
+
+        $this->search->setSearchParams($this->config->customer->search);
+
         $providers = $this->customer->getList($mode = $mode, $param = $param, $relation = 'provider', $orderBy, $pager);
 
         $this->session->set('providerList', $this->app->getURI(true));
