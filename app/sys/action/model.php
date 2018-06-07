@@ -74,6 +74,36 @@ class actionModel extends model
         $actionID = $this->create($objectType, $objectID, $action = 'record', $this->post->comment, $this->post->date, $actor = null, $customer, $contact);
 
         if(!$actionID) return false;
+
+        /* Create todo for user who contact the contacts. */
+        if($objectType == 'order' or $objectType == 'customer')
+        {
+            if($objectType == 'order')
+            {
+                $customerID = $this->dao->findById($objectID)->from(TABLE_ORDER)->fetch('customer');
+            }
+            else
+            {
+                $customerID = $objectID;
+            }
+
+            $customerName = $this->dao->findById($customerID)->from(TABLE_CUSTOMER)->fetch('name');
+
+            $todo = new stdclass();
+            $todo->account = $this->post->contactedBy;
+            $todo->date    = $this->post->nextDate;
+            $todo->name    = $customerName;
+            $todo->begin   = '2400';
+            $todo->end     = '2400';
+            $todo->type    = $objectType;
+            $todo->idvalue = $objectID;
+            $todo->pri     = '3';
+            $todo->status  = 'wait';
+            $todo->date    = $this->post->nextDate;
+
+            $this->dao->insert(TABLE_TODO)->data($todo)->autoCheck()->exec();
+        }
+
         $this->loadModel('file')->saveUpload('action', $actionID);
 
         $nextDate   = $this->post->nextDate;
