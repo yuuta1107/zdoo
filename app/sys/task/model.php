@@ -561,9 +561,11 @@ class taskModel extends model
 
         $parentID = $childTask->parent;
 
+        $this->computeWorkingHours($parentID);
+
         $childrenStatus = $this->dao->select('status')->from(TABLE_TASK)->where('parent')->eq($parentID)->andWhere('deleted')->eq(0)->fetchPairs();
         $status         = 'wait';
-        if(isset($childrenStatus['doing']))
+        if(isset($childrenStatus['doing']) or isset($childrenStatus['pause']) or isset($childrenStatus['wait']))
         {
             $status = 'doing';
         }
@@ -585,7 +587,7 @@ class taskModel extends model
         }
 
         $parentTask = $this->dao->select('*')->from(TABLE_TASK)->where('id')->eq($parentID)->fetch();
-        if($status and $parentTask->status != $status)
+        if($parentTask->status != $status)
         {
             $now  = helper::now();
             $task = new stdclass();
@@ -633,7 +635,6 @@ class taskModel extends model
             $this->dao->update(TABLE_TASK)->data($task)->where('id')->eq($parentID)->exec();
             if(!dao::isError())
             {
-                $this->computeWorkingHours($parentID);
                 $changes = commonModel::createChanges($parentTask, $task);
                 $action  = 'Canceled';
                 if($status == 'done') $action = 'Finished';
