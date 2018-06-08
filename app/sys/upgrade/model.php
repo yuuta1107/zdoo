@@ -155,6 +155,8 @@ class upgradeModel extends model
                 $this->processDating();
             case '4_6_2':
                 $this->execSQL($this->getUpgradeFile('4.6.2'));
+            case '4_6_3':
+                $this->execSQL($this->getUpgradeFile('4.6.3'));
 
             default: if(!$this->isError()) $this->loadModel('setting')->updateVersion($this->config->version);
         }
@@ -208,6 +210,7 @@ class upgradeModel extends model
             case '4_6'     : $confirmContent .= file_get_contents($this->getUpgradeFile('4.6'));
             case '4_6_1'   : $confirmContent .= file_get_contents($this->getUpgradeFile('4.6.1'));
             case '4_6_2'   : $confirmContent .= file_get_contents($this->getUpgradeFile('4.6.2'));
+            case '4_6_3'   : $confirmContent .= file_get_contents($this->getUpgradeFile('4.6.3'));
         }
         return $confirmContent;
     }
