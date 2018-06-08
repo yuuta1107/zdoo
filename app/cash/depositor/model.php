@@ -232,7 +232,7 @@ class depositorModel extends model
         foreach($depositorList as $id => $depositor)
         {
             $depositor->origin    = isset($balances[$id][$start]) ? $balances[$id][$start]->money : 0;
-            $depositor->computed  = $depositor->origin + $this->computeTrades($tradeList, $id);
+            $depositor->computed  = bcadd($depositor->origin, $this->computeTrades($tradeList, $id), 2);
             $depositor->actual    = isset($balances[$id][$end]) ? $balances[$id][$end]->money : 0;
             $depositor->tradeList = !empty($tradeList[$id]) ? $tradeList[$id] : array();
         }
@@ -256,15 +256,15 @@ class depositorModel extends model
         {
             foreach($tradeList[$depositorID] as $item)
             {
-                if($item->type == 'in')          $money += $item->money;    
-                if($item->type == 'transferin')  $money += $item->money;    
-                if($item->type == 'redeem')      $money += $item->money;    
-                if($item->type == 'loan')        $money += $item->money;    
-                if($item->type == 'out')         $money -= $item->money;    
-                if($item->type == 'transferout') $money -= $item->money;    
-                if($item->type == 'invest')      $money -= $item->money;    
-                if($item->type == 'repay')       $money -= $item->money;    
-                if($item->type == 'interest')    $money -= $item->money;    
+                if($item->type == 'in')          $money = bcadd($money, $item->money, 2);
+                if($item->type == 'transferin')  $money = bcadd($money, $item->money, 2);
+                if($item->type == 'redeem')      $money = bcadd($money, $item->money, 2);
+                if($item->type == 'loan')        $money = bcadd($money, $item->money, 2);
+                if($item->type == 'out')         $money = bcsub($money, $item->money, 2);
+                if($item->type == 'transferout') $money = bcsub($money, $item->money, 2);
+                if($item->type == 'invest')      $money = bcsub($money, $item->money, 2);
+                if($item->type == 'repay')       $money = bcsub($money, $item->money, 2);
+                if($item->type == 'interest')    $money = bcsub($money, $item->money, 2);
             }
         }
 
