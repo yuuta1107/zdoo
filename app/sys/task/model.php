@@ -421,6 +421,8 @@ class taskModel extends model
             }
         }
 
+        if($task->parent) $this->computeWorkingHours($task->parent);
+
         return $taskIDList;
     }
 
@@ -542,6 +544,8 @@ class taskModel extends model
             foreach($task->team as $member) $this->dao->insert(TABLE_TEAM)->data($member)->autoCheck()->exec();
         }
 
+        $child = $this->dao->select('*')->from(TABLE_TASK)->where('parent')->eq((int)$taskID)->fetch();
+        if($child) $this->updateParent($child);
         $this->updateParent($oldTask);
 
         if(dao::isError()) return false;
@@ -565,7 +569,7 @@ class taskModel extends model
 
         $childrenStatus = $this->dao->select('status')->from(TABLE_TASK)->where('parent')->eq($parentID)->andWhere('deleted')->eq(0)->fetchPairs();
         $status         = 'wait';
-        if(isset($childrenStatus['doing']) or isset($childrenStatus['pause']) or isset($childrenStatus['wait']))
+        if(isset($childrenStatus['doing']) or isset($childrenStatus['pause']))
         {
             $status = 'doing';
         }
