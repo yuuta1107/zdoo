@@ -44,7 +44,9 @@ ranzhi:
 	chmod -R 777 ranzhi/www/data
 	chmod -R 777 ranzhi/config
 	#chmod a+rx ranzhi/bin/*
-	#find ranzhi/ -name ext |xargs chmod -R 777
+	#mkdir ranzhi/config/ext
+	for app in `ls ranzhi/app/`; do for module in `ls ranzhi/app/$$app/`; do mkdir ranzhi/app/$$app/$$module/ext; done; done;
+	find ranzhi/ -name ext |xargs chmod -R 777
 	# zip it.
 	zip -rm -9 ranzhi.$(VERSION).zip ranzhi
 deb:
