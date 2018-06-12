@@ -5,7 +5,7 @@
  * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
- * @package     entry 
+ * @package     entry
  * @version     $Id: admin.html.php 4227 2016-10-25 08:27:56Z liugang $
  * @link        http://www.ranzhi.org
  */
@@ -24,15 +24,15 @@ include '../../common/view/header.html.php';
       <div class='col-table thead w-30px'></div>
       <div class='col-table thead w-200px'><?php echo $lang->entry->name;?></div>
       <div class='col-table thead w-80px'><?php echo $lang->entry->code;?></div>
-      <div class='col-table thead w-240px'><?php echo $lang->entry->key;?></div>
+      <div class='col-table thead w-260px'><?php echo $lang->entry->key;?></div>
       <div class='col-table thead'><?php echo $lang->entry->ip;?></div>
-      <div class='col-table thead w-220px'><?php echo $lang->actions;?></div>
+      <div class='col-table thead w-260px'><?php echo $lang->actions;?></div>
     </div>
     <ul id='entryList'>
       <?php foreach($entries as $entry):?>
-	  <?php
-	  if($entry->code == '')
-	  {
+      <?php
+      if($entry->code == '')
+      {
           echo "<li data-entryid='{$entry->id}'><div class='text-left row-table'>";
           echo "<div class='col-table w-30px'><i class='icon-move sort-handler-1'></i></div>";
           echo '<div class="col-table">';
@@ -52,12 +52,12 @@ include '../../common/view/header.html.php';
               echo '</ul>';
           }
           echo '</li>';
-	  }
-	  else
-      {
-          $this->entry->printInfo($entry);
       }
-	  ?>
+      else
+      {
+        $this->entry->printInfo($entry);
+      }
+      ?>
       <?php endforeach;?>
     </ul>
   </div>

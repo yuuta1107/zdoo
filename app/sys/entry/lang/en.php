@@ -5,7 +5,7 @@
  * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
- * @package     entry 
+ * @package     entry
  * @version     $Id: en.php 4091 2016-09-30 07:16:50Z daitingting $
  * @link        http://www.zdoo.org
  */
@@ -17,7 +17,9 @@ $lang->entry->delete      = 'Delete';
 $lang->entry->createKey   = 'New';
 $lang->entry->order       = 'Sort';
 $lang->entry->style       = 'Style';
-$lang->entry->setCategory = 'Manange';
+$lang->entry->setCategory = 'Manage';
+$lang->entry->online      = 'Online';
+$lang->entry->offline     = 'Offline';
 
 $lang->entry->name        = 'App Name';
 $lang->entry->abbr        = 'Abbr';

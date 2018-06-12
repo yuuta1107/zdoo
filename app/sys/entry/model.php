@@ -5,24 +5,26 @@
  * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Yidong Wang <yidong@cnezsoft.com>
- * @package     entry 
+ * @package     entry
  * @version     $Id: model.php 4205 2016-10-24 08:19:13Z liugang $
  * @link        http://www.ranzhi.org
  */
 class entryModel extends model
 {
     /**
-     * Get all entries. 
-     * 
+     * Get all entries.
+     *
      * @param  string $type custom|system
      * @param  int    $category
+     * @param  string $target
      * @access public
      * @return array
      */
-    public function getEntries($type = 'custom', $category = 0)
+    public function getEntries($type = 'custom', $category = 0, $target = '')
     {
         $entries = $this->dao->select('*')->from(TABLE_ENTRY)
             ->where(1)
+            ->beginIF(!empty($target))->andWhere('target')->like(',' . $target . ',')->fi()
             ->beginIF(!empty($category))->andWhere('category')->eq($category)->fi()
             ->orderBy('`order`, id')
             ->fetchAll();
@@ -76,7 +78,7 @@ class entryModel extends model
             }
 
             if($entry->logo != '' && substr($entry->logo, 0, 1) != '/') $entry->logo = $this->config->webRoot . $entry->logo;
-            if(commonModel::hasAppPriv($entry->code)) $newEntries[] = $entry; 
+            if(commonModel::hasAppPriv($entry->code)) $newEntries[] = $entry;
         }
         $entries = $newEntries;
 
@@ -139,10 +141,10 @@ class entryModel extends model
 
     /**
      * Get entry by id.
-     * 
+     *
      * @param  int    $entryID
      * @access public
-     * @return object 
+     * @return object
      */
     public function getById($entryID)
     {
@@ -151,19 +153,19 @@ class entryModel extends model
 
     /**
      * Get entry by code.
-     * 
-     * @param  string $code 
+     *
+     * @param  string $code
      * @access public
-     * @return object 
+     * @return object
      */
     public function getByCode($code)
     {
-        return $this->dao->select('*')->from(TABLE_ENTRY)->where('code')->eq($code)->fetch(); 
+        return $this->dao->select('*')->from(TABLE_ENTRY)->where('code')->eq($code)->fetch();
     }
 
     /**
-     * Create entry. 
-     * 
+     * Create entry.
+     *
      * @access public
      * @return void
      */
@@ -192,7 +194,7 @@ class entryModel extends model
             ->stripTags('login,logout,block', $this->config->allowedTags)
             ->get();
 
-        if($this->post->chanzhi) 
+        if($this->post->chanzhi)
         {
             $entry->logout = $entry->login . "?m=ranzhi&f=logout";
             $entry->block  = $entry->login . "?m=ranzhi&f=block";
@@ -233,8 +235,8 @@ class entryModel extends model
 
     /**
      * Update entry.
-     * 
-     * @param  int    $code 
+     *
+     * @param  int    $code
      * @access public
      * @return void
      */
@@ -253,8 +255,8 @@ class entryModel extends model
 
     /**
      * Set style for entry.
-     * 
-     * @param  string    $code 
+     *
+     * @param  string    $code
      * @access public
      * @return int
      */
@@ -278,8 +280,8 @@ class entryModel extends model
 
     /**
      * Integration entry.
-     * 
-     * @param  string    $code 
+     *
+     * @param  string    $code
      * @access public
      * @return void
      */
@@ -298,14 +300,14 @@ class entryModel extends model
     }
 
     /**
-     * Delete entry. 
-     * 
-     * @param  string $code 
+     * Delete entry.
+     *
+     * @param  string $code
      * @access public
      * @return void
      */
     public function delete($code, $table = null)
-    { 
+    {
         $entry = $this->getByCode($code);
 
         $this->deleteLogo($entry->id);
@@ -315,11 +317,25 @@ class entryModel extends model
     }
 
     /**
-     * Get key of entry. 
-     * 
-     * @param  string $entry 
+     * Update status for entry.
+     *
+     * @param $code
+     * @return bool
+     */
+    public function updateStatus($code)
+    {
+        $entry  = $this->getByCode($code);
+        $status = $entry->status == 'online' ? 'offline' : 'online';
+        $this->dao->update(TABLE_ENTRY)->set('status')->eq($status)->where('code')->eq($code)->exec();
+        return !dao::isError();
+    }
+
+    /**
+     * Get key of entry.
+     *
+     * @param  string $entry
      * @access public
-     * @return object 
+     * @return object
      */
     public function getAppKey($entry)
     {
@@ -327,9 +343,9 @@ class entryModel extends model
     }
     /**
      * Create a key.
-     * 
+     *
      * @access public
-     * @return string 
+     * @return string
      */
     public function createKey()
     {
@@ -338,9 +354,9 @@ class entryModel extends model
 
     /**
      * Get all departments.
-     * 
+     *
      * @access public
-     * @return object 
+     * @return object
      */
     public function getAllDepts()
     {
@@ -348,10 +364,10 @@ class entryModel extends model
     }
 
     /**
-     * Get all users. 
-     * 
+     * Get all users.
+     *
      * @access public
-     * @return object 
+     * @return object
      */
     public function getAllUsers()
     {
@@ -361,9 +377,9 @@ class entryModel extends model
     }
 
     /**
-     * Update entry logo. 
-     * 
-     * @param  int    $entryID 
+     * Update entry logo.
+     *
+     * @param  int    $entryID
      * @access public
      * @return void
      */
@@ -388,8 +404,8 @@ class entryModel extends model
 
     /**
      * Delete entry logo.
-     * 
-     * @param  int    $entryID 
+     *
+     * @param  int    $entryID
      * @access public
      * @return void
      */
@@ -402,8 +418,8 @@ class entryModel extends model
 
     /**
      * Get blocks by API.
-     * 
-     * @param  object    $entry 
+     *
+     * @param  object    $entry
      * @access public
      * @return array
      */
@@ -415,7 +431,7 @@ class entryModel extends model
         $parseUrl['query'] = empty($parseUrl['query']) ? $blockQuery : $parseUrl['query'] . '&' . $blockQuery;
 
         $link = '';
-        if(!isset($parseUrl['scheme'])) 
+        if(!isset($parseUrl['scheme']))
         {
             $link  = commonModel::getSysURL() . $parseUrl['path'];
             $link .= '?' . $parseUrl['query'];
@@ -423,8 +439,8 @@ class entryModel extends model
         else
         {
             $link .= $parseUrl['scheme'] . '://' . $parseUrl['host'];
-            if(isset($parseUrl['port'])) $link .= ':' . $parseUrl['port']; 
-            if(isset($parseUrl['path'])) $link .= $parseUrl['path']; 
+            if(isset($parseUrl['port'])) $link .= ':' . $parseUrl['port'];
+            if(isset($parseUrl['path'])) $link .= $parseUrl['path'];
             $link .= '?' . $parseUrl['query'];
         }
 
@@ -434,9 +450,9 @@ class entryModel extends model
 
     /**
      * Get block params.
-     * 
-     * @param  object $entry 
-     * @param  int    $blockID 
+     *
+     * @param  object $entry
+     * @param  int    $blockID
      * @access public
      * @return json
      */
@@ -448,7 +464,7 @@ class entryModel extends model
         $parseUrl['query'] = empty($parseUrl['query']) ? $formQuery : $parseUrl['query'] . '&' . $formQuery;
 
         $link = '';
-        if(!isset($parseUrl['scheme'])) 
+        if(!isset($parseUrl['scheme']))
         {
             $link  = commonModel::getSysURL() . $parseUrl['path'];
             $link .= '?' . $parseUrl['query'];
@@ -456,8 +472,8 @@ class entryModel extends model
         else
         {
             $link .= $parseUrl['scheme'] . '://' . $parseUrl['host'];
-            if(isset($parseUrl['port'])) $link .= ':' . $parseUrl['port']; 
-            if(isset($parseUrl['path'])) $link .= $parseUrl['path']; 
+            if(isset($parseUrl['port'])) $link .= ':' . $parseUrl['port'];
+            if(isset($parseUrl['path'])) $link .= $parseUrl['path'];
             $link .= '?' . $parseUrl['query'];
         }
 
@@ -468,7 +484,7 @@ class entryModel extends model
 
     /**
      * Get entries of json.
-     * 
+     *
      * @access public
      * @return void
      */
@@ -484,10 +500,10 @@ class entryModel extends model
             $size    = !empty($entry->size) ? ($entry->size != 'max' ? $entry->size : "'$entry->size'") : "'max'";
             $menu    = $entry->visible ? 'all' : 'list';
             $display = $entry->buildin ? 'fixed' : 'sizeable';
-            
+
             /* add web root if logo not start with /  */
             if($logo != '' && substr($logo, 0, 1) != '/') $logo = $this->config->webRoot . $logo;
-            
+
             if(!isset($entry->control))  $entry->control = '';
             if(!isset($entry->position)) $entry->position = '';
             unset($tmpEntry);
@@ -514,9 +530,9 @@ class entryModel extends model
 
     /**
      * Print entry info.
-     * 
-     * @param  object $entry 
-     * @param  int    $parent 
+     *
+     * @param  object $entry
+     * @param  int    $parent
      * @access public
      * @return void
      */
@@ -528,7 +544,7 @@ class entryModel extends model
         echo "</div>";
         echo "<div class='col-table w-200px'>";
         if($parent) echo "<span style='padding:6px 8px'><i class='icon-move sort-handler-2'></i></span>";
-        if($entry->logo) 
+        if($entry->logo)
         {
             echo "<img src=\"{$entry->logo}\" class='small-icon'/>";
         }
@@ -545,11 +561,12 @@ class entryModel extends model
         echo $entry->name;
         echo "</div>";
         echo "<div class='col-table w-80px'>{$entry->code}</div>";
-        echo "<div class='col-table w-240px'>" . ($entry->integration ? $entry->key : '') . '</div>';
+        echo "<div class='col-table w-260px'>" . ($entry->integration ? $entry->key : '') . '</div>';
         echo "<div class='col-table text-center'>{$entry->ip}</div>";
-        echo "<div class='col-table w-220px'>";
+        echo "<div class='col-table w-260px text-center'>";
         echo html::a(helper::createLink('group', 'manageAppPriv', "type=byApp&appCode=$entry->code"), $this->lang->entry->priv);
         echo html::a(helper::createLink('entry', 'style', "code=$entry->code"), $this->lang->entry->style);
+        echo html::a(helper::createLink('entry', 'status', "code=$entry->code"), $entry->status == 'online' ? $this->lang->entry->offline : $this->lang->entry->online, 'class="entry-status"');
         if(!$entry->buildin)
         {
             echo html::a(helper::createLink('entry', 'integration', "code=$entry->code"), $this->lang->entry->integration);

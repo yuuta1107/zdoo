@@ -5,7 +5,7 @@
  * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
- * @package     entry 
+ * @package     entry
  * @version     $Id: control.php 4227 2016-10-25 08:27:56Z liugang $
  * @link        http://www.ranzhi.org
  */
@@ -13,7 +13,7 @@ class entry extends control
 {
     /**
      * Manage all entries.
-     * 
+     *
      * @access public
      * @return void
      */
@@ -57,7 +57,7 @@ class entry extends control
             $entry->order = $maxOrder ++;
             $entries[]    = $entry;
         }
-        
+
         $this->view->title   = $this->lang->entry->common . $this->lang->colon . $this->lang->entry->admin;
         $this->view->entries = $entries;
         $this->display();
@@ -65,7 +65,7 @@ class entry extends control
 
     /**
      * Create auth.
-     * 
+     *
      * @access public
      * @return void
      */
@@ -75,7 +75,7 @@ class entry extends control
         {
             if((!$this->post->buildin) and (strpos($this->post->login, '/') !== 0) and (!preg_match('/https?\:\/\//Ui', $this->post->login))) $this->send(array('result' => 'fail', 'message' => $this->lang->entry->error->url));
 
-            if($this->post->zentao) 
+            if($this->post->zentao)
             {
                 /* Check admin account, password and code. */
                 $error = array();
@@ -120,9 +120,9 @@ class entry extends control
 
     /**
      * Visit entry.
-     * 
-     * @param  int    $entryID 
-     * @param  string $referer 
+     *
+     * @param  int    $entryID
+     * @param  string $referer
      * @access public
      * @return void
      */
@@ -154,9 +154,9 @@ class entry extends control
     }
 
     /**
-     * Logout 
-     * 
-     * @param  int    $entryID 
+     * Logout
+     *
+     * @param  int    $entryID
      * @access public
      * @return void
      */
@@ -180,8 +180,8 @@ class entry extends control
 
     /**
      * Integration entry.
-     * 
-     * @param  string    $code 
+     *
+     * @param  string    $code
      * @access public
      * @return void
      */
@@ -210,9 +210,9 @@ class entry extends control
     }
 
     /**
-     * Set style for entry. 
-     * 
-     * @param  string    $code 
+     * Set style for entry.
+     *
+     * @param  string    $code
      * @access public
      * @return void
      */
@@ -243,8 +243,8 @@ class entry extends control
 
     /**
      * Edit auth.
-     * 
-     * @param  string $code 
+     *
+     * @param  string $code
      * @access public
      * @return void
      */
@@ -256,7 +256,7 @@ class entry extends control
         {
             if((!$this->post->buildin) and (strpos($this->post->login, '/') !== 0) and (!preg_match('/https?\:\/\//Ui', $this->post->login))) $this->send(array('result' => 'fail', 'message' => $this->lang->entry->error->url));
 
-            if($entry->zentao) 
+            if($entry->zentao)
             {
                 /* Get zentao url. */
                 $loginUrl = $this->post->login;
@@ -293,8 +293,8 @@ class entry extends control
     }
 
     /**
-     * Order entry. 
-     * 
+     * Order entry.
+     *
      * @access public
      * @return void
      */
@@ -338,7 +338,7 @@ class entry extends control
 
     /**
      * Sort entries.
-     * 
+     *
      * @access public
      * @return void
      */
@@ -361,9 +361,9 @@ class entry extends control
 
     /**
      * Delete entry.
-     * 
-     * @param  string $code 
-     * @param  string $confirm 
+     *
+     * @param  string $code
+     * @param  string $confirm
      * @access public
      * @return void
      */
@@ -373,10 +373,16 @@ class entry extends control
         $this->send(array('result' => 'fail', 'message' => dao::getError()));
     }
 
+    public function status($code)
+    {
+        if($this->entry->updateStatus($code)) $this->send(array('result' => 'success'));
+        $this->send(array('result' => 'fail', 'message' => dao::getError()));
+    }
+
     /**
      * Get all departments.
-     * 
-     * @param  string $entry 
+     *
+     * @param  string $entry
      * @access public
      * @return void
      */
@@ -398,9 +404,9 @@ class entry extends control
     }
 
     /**
-     * Get all users. 
-     * 
-     * @param  string $entry 
+     * Get all users.
+     *
+     * @param  string $entry
      * @access public
      * @return void
      */
@@ -423,9 +429,9 @@ class entry extends control
 
     /**
      * Get entry blocks.
-     * 
-     * @param  int    $entryID 
-     * @param  int    $index 
+     *
+     * @param  int    $entryID
+     * @param  int    $index
      * @access public
      * @return void
      */
@@ -458,10 +464,10 @@ class entry extends control
 
     /**
      * Set block that is from entry.
-     * 
-     * @param  int    $index 
-     * @param  int    $entryID 
-     * @param  int    $blockID 
+     *
+     * @param  int    $index
+     * @param  int    $entryID
+     * @param  int    $blockID
      * @access public
      * @return void
      */
@@ -494,8 +500,8 @@ class entry extends control
 
     /**
      * Print buildin entry block.
-     * 
-     * @param  int    $index 
+     *
+     * @param  int    $index
      * @access public
      * @return void
      */
@@ -522,13 +528,13 @@ class entry extends control
         $this->get->set('sso', base64_encode(commonModel::getSysURL() . helper::createLink('entry', 'visit', "entry=$entry->id")));
         $this->get->set('param', $params);
         $html = $this->fetch('block', 'index', array(), $entry->code);
-        
+
         die($html);
     }
 
     /**
-     * custom sort apps. 
-     * 
+     * custom sort apps.
+     *
      * @access public
      * @return void
      */
@@ -557,8 +563,8 @@ class entry extends control
     }
 
     /**
-     * update entry menu. 
-     * 
+     * update entry menu.
+     *
      * @access public
      * @return void
      */
@@ -590,9 +596,9 @@ class entry extends control
     }
 
     /**
-     * Input admin of zentao. 
-     * 
-     * @param  int    $id 
+     * Input admin of zentao.
+     *
+     * @param  int    $id
      * @access public
      * @return void
      */
@@ -617,9 +623,9 @@ class entry extends control
 
     /**
      * Bind user with zentao.
-     * 
-     * @param  int     $id 
-     * @param  string  $sessionID 
+     *
+     * @param  int     $id
+     * @param  string  $sessionID
      * @access public
      * @return void
      */
@@ -650,8 +656,8 @@ class entry extends control
                 else
                 {
                     $data = new stdclass();
-                    $data->ranzhiAccount = $ranzhiAccount; 
-                    $data->zentaoAccount = $this->post->zentaoAccounts[$key]; 
+                    $data->ranzhiAccount = $ranzhiAccount;
+                    $data->zentaoAccount = $this->post->zentaoAccounts[$key];
                     $bindUrl = $this->sso->createZentaoLink($zentaoConfig, $zentaoUrl, 'sso', 'bindUser');
                     $result = commonModel::http($bindUrl, $data);
                     if($result != 'success') $this->send(array('result' => 'fail', 'message' => $result));
@@ -679,8 +685,8 @@ class entry extends control
     }
 
     /**
-     * Set category. 
-     * 
+     * Set category.
+     *
      * @access public
      * @return void
      */
@@ -700,7 +706,7 @@ class entry extends control
 
     /**
      * Get entries of json.
-     * 
+     *
      * @access public
      * @return json
      */
