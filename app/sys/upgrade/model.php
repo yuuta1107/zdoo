@@ -1362,11 +1362,9 @@ class upgradeModel extends model
      */
     public function updateMakeupActions()
     {
-        $makeupList = $this->loadModel('makeup', 'oa')->getList();
-        foreach($makeupList as $makeup)
-        {
-            $this->dao->update(TABLE_ACTION)->set('objectType')->eq('makeup')->where('objectType')->eq('overtime')->andWhere('objectID')->eq($makeup->id)->exec();
-        }
+        $makeupList = $this->dao->select('id')->from(TABLE_OVERTIME)->where('type')->eq('compensate')->fetchPairs();
+
+        $this->dao->update(TABLE_ACTION)->set('objectType')->eq('makeup')->where('objectType')->eq('overtime')->andWhere('objectID')->in($makeupList)->exec();
 
         return !dao::isError();
     }
