@@ -561,6 +561,7 @@ class entryModel extends model
         echo $entry->name;
         echo "</div>";
         echo "<div class='col-table w-80px'>{$entry->code}</div>";
+        echo "<div class='col-table w-80px'>{$entry->version}</div>";
         echo "<div class='col-table w-260px'>" . ($entry->integration ? $entry->key : '') . '</div>';
         echo "<div class='col-table text-center'>{$entry->ip}</div>";
         echo "<div class='col-table w-260px text-center'>";

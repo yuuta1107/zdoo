@@ -373,6 +373,11 @@ class entry extends control
         $this->send(array('result' => 'fail', 'message' => dao::getError()));
     }
 
+    /**
+     * Update status for entry.
+     *
+     * @param $code
+     */
     public function status($code)
     {
         if($this->entry->updateStatus($code)) $this->send(array('result' => 'success'));

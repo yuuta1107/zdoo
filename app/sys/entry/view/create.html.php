@@ -5,7 +5,7 @@
  * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
- * @package     entry 
+ * @package     entry
  * @version     $Id: create.html.php 4091 2016-09-30 07:16:50Z daitingting $
  * @link        http://www.ranzhi.org
  */
@@ -49,6 +49,11 @@ js::set('zentaoName', $lang->entry->zentao);
           <td></td>
         </tr>
         <tr>
+          <th><?php echo $lang->entry->version;?></th>
+          <td><?php echo html::input('version', '', "class='form-control'");?></td>
+          <td></td>
+        </tr>
+        <tr>
           <th><?php echo $lang->entry->login;?></th>
           <td><?php echo html::input('login', '', "class='form-control' placeholder='{$lang->entry->note->login}'");?></td>
           <?php if($this->server->request_scheme == 'https'):?>
@@ -68,9 +73,9 @@ js::set('zentaoName', $lang->entry->zentao);
             <div class='required required-wrapper'></div>
             <div class='input-group'>
               <label class='input-group-addon fix-border'><?php echo $lang->account;?></label>
-            <?php echo html::input('adminAccount', '', "class='form-control' placeholder='{$lang->entry->adminAccount}'");?>
+              <?php echo html::input('adminAccount', '', "class='form-control' placeholder='{$lang->entry->adminAccount}'");?>
               <label class='input-group-addon fix-border'><?php echo $lang->password;?></label>
-            <?php echo html::password('adminPassword', '', "class='form-control' placeholder='{$lang->entry->adminPassword}'");?>
+              <?php echo html::password('adminPassword', '', "class='form-control' placeholder='{$lang->entry->adminPassword}'");?>
             </div>
           </td>
           <td></td>
@@ -89,6 +94,11 @@ js::set('zentaoName', $lang->entry->zentao);
               <?php endforeach?>
             </div>
           </td>
+          <td></td>
+        </tr>
+        <tr>
+          <th><?php echo $lang->entry->target;?></th>
+          <td><?php echo html::checkbox('target',  $lang->entry->targetList, '');?></td>
           <td></td>
         </tr>
         <tr>
