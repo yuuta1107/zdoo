@@ -24,11 +24,10 @@ class entryModel extends model
     {
         $entries = $this->dao->select('*')->from(TABLE_ENTRY)
             ->where(1)
-            ->beginIF(!empty($target))->andWhere('target')->like(',' . $target . ',')->fi()
             ->beginIF(!empty($category))->andWhere('category')->eq($category)->fi()
             ->orderBy('`order`, id')
             ->fetchAll();
-        $categories = $this->dao->select('distinct t1.id, t1.name, t1.order')->from(TABLE_CATEGORY)->alias('t1')
+        $categories = $this->dao->select('distinct t1.id, t1.name, t1.order, t2.target')->from(TABLE_CATEGORY)->alias('t1')
             ->leftJoin(TABLE_ENTRY)->alias('t2')->on('t1.id=t2.category')
             ->where('t1.type')->eq('entry')
             ->andWhere('t2.visible')->eq(1)
@@ -42,6 +41,7 @@ class entryModel extends model
             $entry->name        = $category->name;
             $entry->code        = '';
             $entry->abbr        = $category->name;
+            $entry->target      = $category->target;
             $entry->buildin     = 0;
             $entry->integration = 0;
             $entry->open        = '';
@@ -65,8 +65,13 @@ class entryModel extends model
         /* Remove entry if no rights and fix logo path. */
         $newEntries = array();
         $this->app->loadLang('install');
-        foreach($entries as $entry)
+        foreach($entries as $index => $entry)
         {
+            if(!empty($target) && strpos(',' . $entry->target . ',', ',' . $target . ',') === false)
+            {
+                unset($entries[$index]);
+                continue;
+            }
             if($entry->buildin == 1)
             {
                 $entry->name = $this->lang->install->buildinEntry->{$entry->code}['name'];
