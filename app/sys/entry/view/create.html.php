@@ -103,7 +103,7 @@ js::set('zentaoName', $lang->entry->zentao);
         </tr>
         <tr class="entry-files hide">
           <th><?php echo $lang->files;?></th>
-          <td></td>
+          <td><?php echo $this->fetch('file', 'buildform', 'fileCount=1');?></td>
           <td></td>
         </tr>
         <tr>

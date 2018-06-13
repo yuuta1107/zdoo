@@ -191,7 +191,7 @@ class entryModel extends model
             ->setIF($this->post->zentao, 'open', 'iframe')
             ->setIF($this->post->zentao, 'integration', 1)
             ->setIF($this->post->zentao, 'control', 'full')
-            ->remove('allip,adminAccount,adminPassword')
+            ->remove('allip,adminAccount,adminPassword,files,labels')
             ->stripTags('login,logout,block', $this->config->allowedTags)
             ->get();
 
@@ -216,7 +216,7 @@ class entryModel extends model
         if(dao::isError()) return false;
 
         $entryID = $this->dao->lastInsertID();
-
+        $this->loadModel('file')->saveUpload('entry', $entryID);
         /* Insert app privilage. */
         $groups = $this->post->groups;
         if($groups != false && !empty($groups))
@@ -243,7 +243,8 @@ class entryModel extends model
      */
     public function update($code)
     {
-        $entry = fixer::input('post')->stripTags('login', $this->config->allowedTags)->join('target', ',')->get();
+        $oldEntry = $this->getByCode($code);
+        $entry = fixer::input('post')->stripTags('login', $this->config->allowedTags)->join('target', ',')->remove('files,labels')->get();
         if(!isset($entry->visible)) $entry->visible = 0;
 
         $this->dao->update(TABLE_ENTRY)->data($entry)
@@ -251,6 +252,7 @@ class entryModel extends model
             ->batchCheck($this->config->entry->require->edit, 'notempty')
             ->where('code')->eq($code)
             ->exec();
+        $this->loadModel('file')->saveUpload('entry', $oldEntry->id);
         return !dao::isError();
     }
 

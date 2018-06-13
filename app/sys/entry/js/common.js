@@ -60,4 +60,6 @@ $(document).ready(function()
             location.href = response.locate;
         }
     });
-})
+
+   $("#fileform .w-30px").hide();
+});

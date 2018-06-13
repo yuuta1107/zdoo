@@ -65,7 +65,7 @@ include '../../common/view/chosen.html.php';
         </tr>
         <tr class="entry-files <?php if(!$hasXuanXuan) echo 'hide';?>">
           <th><?php echo $lang->files;?></th>
-          <td></td>
+          <td><?php echo $this->fetch('file', 'buildform', 'fileCount=1');?></td>
           <td></td>
         </tr>
         <tr>
