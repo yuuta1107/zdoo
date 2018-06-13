@@ -63,6 +63,11 @@ include '../../common/view/chosen.html.php';
           <td><?php echo html::input('version', $entry->version, "class='form-control'");?></td>
           <td></td>
         </tr>
+        <tr class="entry-files <?php if(!$hasXuanXuan) echo 'hide';?>">
+          <th><?php echo $lang->files;?></th>
+          <td></td>
+          <td></td>
+        </tr>
         <tr>
           <th></th><td><?php echo html::submitButton() . ' ' . html::backButton();?></td>
         </tr>

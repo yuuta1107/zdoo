@@ -101,6 +101,11 @@ js::set('zentaoName', $lang->entry->zentao);
           <td><?php echo html::input('version', '', "class='form-control'");?></td>
           <td></td>
         </tr>
+        <tr class="entry-files hide">
+          <th><?php echo $lang->files;?></th>
+          <td></td>
+          <td></td>
+        </tr>
         <tr>
           <th></th><td><?php echo html::submitButton() . ' ' . html::backButton();?></td><td></td>
         </tr>

@@ -36,11 +36,11 @@ $('#targetxuanxuan').change(function()
 {
   if($(this).prop('checked'))
   {
-    $('.entry-version').removeClass('hide');
+    $('.entry-version, .entry-files').removeClass('hide');
   }
   else
   {
-    $('.entry-version').addClass('hide');
+    $('.entry-version, .entry-files').addClass('hide');
   }
 });
 
