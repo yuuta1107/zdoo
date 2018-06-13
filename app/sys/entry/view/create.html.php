@@ -49,11 +49,6 @@ js::set('zentaoName', $lang->entry->zentao);
           <td></td>
         </tr>
         <tr>
-          <th><?php echo $lang->entry->version;?></th>
-          <td><?php echo html::input('version', '', "class='form-control'");?></td>
-          <td></td>
-        </tr>
-        <tr>
           <th><?php echo $lang->entry->login;?></th>
           <td><?php echo html::input('login', '', "class='form-control' placeholder='{$lang->entry->note->login}'");?></td>
           <?php if($this->server->request_scheme == 'https'):?>
@@ -99,6 +94,11 @@ js::set('zentaoName', $lang->entry->zentao);
         <tr>
           <th><?php echo $lang->entry->target;?></th>
           <td><?php echo html::checkbox('target',  $lang->entry->targetList, '');?></td>
+          <td></td>
+        </tr>
+        <tr class="entry-version hide">
+          <th><?php echo $lang->entry->version;?></th>
+          <td><?php echo html::input('version', '', "class='form-control'");?></td>
           <td></td>
         </tr>
         <tr>

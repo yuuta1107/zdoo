@@ -186,6 +186,7 @@ class entryModel extends model
             ->setDefault('height', '538')
             ->setDefault('position', 'default')
             ->setDefault('zentao', 0)
+            ->join('target', ',')
             ->setIF($this->post->allip, 'ip', '*')
             ->setIF($this->post->zentao, 'open', 'iframe')
             ->setIF($this->post->zentao, 'integration', 1)
@@ -242,7 +243,7 @@ class entryModel extends model
      */
     public function update($code)
     {
-        $entry = fixer::input('post')->stripTags('login', $this->config->allowedTags)->get();
+        $entry = fixer::input('post')->stripTags('login', $this->config->allowedTags)->join('target', ',')->get();
         if(!isset($entry->visible)) $entry->visible = 0;
 
         $this->dao->update(TABLE_ENTRY)->data($entry)

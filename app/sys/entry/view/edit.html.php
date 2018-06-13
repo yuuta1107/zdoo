@@ -43,11 +43,6 @@ include '../../common/view/chosen.html.php';
           <td></td>
         </tr>
         <tr>
-          <th><?php echo $lang->entry->version;?></th>
-          <td><?php echo html::input('version', $entry->version, "class='form-control'");?></td>
-          <td></td>
-        </tr>
-        <tr>
           <th><?php echo $lang->entry->login;?></th>
           <td><?php echo html::input('login', $entry->login, "class='form-control' placeholder='{$lang->entry->note->login}'");?></td>
         </tr>
@@ -60,6 +55,12 @@ include '../../common/view/chosen.html.php';
         <tr>
           <th><?php echo $lang->entry->target;?></th>
           <td><?php echo html::checkbox('target',  $lang->entry->targetList, $entry->target);?></td>
+          <td></td>
+        </tr>
+        <?php $hasXuanXuan = strpos(',' . $entry->target . ',', ',xuanxuan,') !== false;?>
+        <tr class="entry-version <?php if(!$hasXuanXuan) echo 'hide';?>">
+          <th><?php echo $lang->entry->version;?></th>
+          <td><?php echo html::input('version', $entry->version, "class='form-control'");?></td>
           <td></td>
         </tr>
         <tr>

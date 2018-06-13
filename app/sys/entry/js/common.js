@@ -1,17 +1,17 @@
 /**
  * create key for an entry.
- * 
+ *
  * @access public
  * @return void
  */
 function createKey()
 {
     var chars = '0123456789abcdefghiklmnopqrstuvwxyz'.split('');
-    var key   = ''; 
+    var key   = '';
     for(var i = 0; i < 32; i ++)
-    {   
+    {
         key += chars[Math.floor(Math.random() * chars.length)];
-    }   
+    }
     $('#key').val(key);
     return false;
 }
@@ -30,7 +30,20 @@ $('#allip').change(function()
     {
         $('#ip').removeAttr('disabled');
     }
-})
+});
+
+$('#targetxuanxuan').change(function()
+{
+  if($(this).prop('checked'))
+  {
+    $('.entry-version').removeClass('hide');
+  }
+  else
+  {
+    $('.entry-version').addClass('hide');
+  }
+});
+
 
 /* refresh entries. */
 $(document).ready(function()
@@ -39,7 +52,7 @@ $(document).ready(function()
     {
         if(response.result == 'success')
         {
-            if(response.entries) 
+            if(response.entries)
             {
                 v.entries = JSON.parse(response.entries);
                 $.refreshDesktop(v.entries, true);
