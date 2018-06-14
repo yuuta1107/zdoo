@@ -23,7 +23,7 @@ class entryModel extends model
     public function getEntries($type = 'custom', $category = 0, $target = '')
     {
         $entries = $this->dao->select('*')->from(TABLE_ENTRY)
-            ->where(1)
+            ->where('status')->eq('online')
             ->beginIF(!empty($category))->andWhere('category')->eq($category)->fi()
             ->orderBy('`order`, id')
             ->fetchAll();
@@ -221,7 +221,12 @@ class entryModel extends model
         if(dao::isError()) return false;
 
         $entryID = $this->dao->lastInsertID();
-        $this->loadModel('file')->saveUpload('entry', $entryID);
+        $files = $this->loadModel('file')->saveUpload('entry', $entryID);
+        if($files)
+        {
+            $this->dao->update(TABLE_ENTRY)->set('package')->eq(end(array_keys($files)))->where('id')->eq($entryID)->exec();
+        }
+
         /* Insert app privilage. */
         $groups = $this->post->groups;
         if($groups != false && !empty($groups))
@@ -257,7 +262,11 @@ class entryModel extends model
             ->batchCheck($this->config->entry->require->edit, 'notempty')
             ->where('code')->eq($code)
             ->exec();
-        $this->loadModel('file')->saveUpload('entry', $oldEntry->id);
+        $files = $this->loadModel('file')->saveUpload('entry', $oldEntry->id);
+        if($files)
+        {
+            $this->dao->update(TABLE_ENTRY)->set('package')->eq(end(array_keys($files)))->where('id')->eq($oldEntry->id)->exec();
+        }
         return !dao::isError();
     }
 
