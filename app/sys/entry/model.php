@@ -224,8 +224,8 @@ class entryModel extends model
         $files = $this->loadModel('file')->saveUpload('entry', $entryID);
         if($files)
         {
-            $lastFileID = end(array_keys($files));
-            $this->dao->update(TABLE_ENTRY)->set('package')->eq($lastFileID)->where('id')->eq($entryID)->exec();
+            $lastFileID = array_keys($files);
+            $this->dao->update(TABLE_ENTRY)->set('package')->eq(end($lastFileID))->where('id')->eq($entryID)->exec();
         }
 
         /* Insert app privilage. */
@@ -266,8 +266,8 @@ class entryModel extends model
         $files = $this->loadModel('file')->saveUpload('entry', $oldEntry->id);
         if($files)
         {
-            $lastFileID = end(array_keys($files));
-            $this->dao->update(TABLE_ENTRY)->set('package')->eq($lastFileID)->where('id')->eq($oldEntry->id)->exec();
+            $lastFileID = array_keys($files);
+            $this->dao->update(TABLE_ENTRY)->set('package')->eq(end($lastFileID))->where('id')->eq($oldEntry->id)->exec();
         }
         return !dao::isError();
     }
