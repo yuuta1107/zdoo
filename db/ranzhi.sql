@@ -580,7 +580,7 @@ CREATE TABLE IF NOT EXISTS `cash_depositor` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `cash_balance`;
-CREATE TABLE IF NOT EXISTS `cash_balance` ( 
+CREATE TABLE IF NOT EXISTS `cash_balance` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `depositor` mediumint(8) unsigned NOT NULL,
   `date` date NOT NULL,
@@ -595,7 +595,7 @@ CREATE TABLE IF NOT EXISTS `cash_balance` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `cash_trade`;
 CREATE TABLE IF NOT EXISTS `cash_trade` (
-  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT, 
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `depositor` mediumint(8) unsigned NOT NULL,
   `parent`  mediumint(8) unsigned NOT NULL DEFAULT 0,
   `product` mediumint(8) unsigned NOT NULL,
@@ -791,6 +791,9 @@ CREATE TABLE IF NOT EXISTS `sys_entry` (
   `abbr` char(6) NOT NULL,
   `code` varchar(20) NOT NULL,
   `buildin` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `version` varchar(20) NOT NULL,
+  `target` varchar(255) NOT NULL DEFAULT 'ranzhi',
+  `package` int(11) NOT NULL DEFAULT 0,
   `integration` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `open` varchar(20) NOT NULL,
   `key` char(32) NOT NULL,
@@ -806,6 +809,7 @@ CREATE TABLE IF NOT EXISTS `sys_entry` (
   `order` tinyint(5) unsigned NOT NULL DEFAULT '0',
   `zentao` enum('0', '1') NOT NULL DEFAULT '0',
   `category` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `status` enum('online','offline') NOT NULL DEFAULT 'online',
   PRIMARY KEY (`id`),
   UNIQUE KEY `code` (`code`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -912,7 +916,7 @@ CREATE TABLE IF NOT EXISTS `sys_product` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `category` mediumint(8) unsigned NOT NULL,
   `name` varchar(150) NOT NULL,
-  `code` varchar(20) NOT NULL, 
+  `code` varchar(20) NOT NULL,
   `type` varchar(10) NOT NULL,
   `order` smallint(5) NOT NULL,
   `status` varchar(10) NOT NULL,
