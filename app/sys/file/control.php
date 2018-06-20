@@ -201,10 +201,12 @@ class file extends control
      * 
      * @param  int    $fileID 
      * @param  string $mouse 
+     * @param  int    $time
+     * @param  string $token
      * @access public
      * @return void
      */
-    public function download($fileID, $mouse = '')
+    public function download($fileID, $mouse = '', $time = 0, $token = 0)
     {
         $file = $this->file->getById($fileID);
 
@@ -215,7 +217,17 @@ class file extends control
         $fileTypes = 'txt|jpg|jpeg|gif|png|bmp|xml|html';
         if(stripos($fileTypes, $file->extension) !== false and $mouse == 'left') $mode = 'open';
 
-        if(!$file->public && $this->app->user->account == 'guest') $this->locate($this->createLink('user', 'login'));
+        $verification = true;
+        if(!empty($token))
+        {
+            if(($time + 600) < time() || md5($file->pathname . $time) != $token) $verification = false;
+        }
+        else
+        {
+            if(!$file->public && $this->app->user->account == 'guest') $verification = false;
+        }
+
+        if($verification == false) $this->locate($this->createLink('user', 'login'));
 
         /* If the mode is open, locate directly. */
         if($mode == 'open')
