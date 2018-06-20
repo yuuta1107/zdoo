@@ -54,7 +54,7 @@ include '../../common/view/chosen.html.php';
         <?php endif;?>
         <tr>
           <th><?php echo $lang->entry->platform;?></th>
-          <td><?php echo html::checkbox('platform',  $lang->entry->platform, $entry->platform);?></td>
+          <td><?php echo html::checkbox('platform',  $lang->entry->platformList, $entry->platform);?></td>
           <td></td>
         </tr>
         <?php $hasXuanXuan = strpos(',' . $entry->platform . ',', ',xuanxuan,') !== false;?>
