@@ -32,7 +32,7 @@ $('#allip').change(function()
     }
 });
 
-$('#targetxuanxuan').change(function()
+$('#platformxuanxuan').change(function()
 {
   if($(this).prop('checked'))
   {
