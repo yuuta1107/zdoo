@@ -92,8 +92,8 @@ js::set('zentaoName', $lang->entry->zentao);
           <td></td>
         </tr>
         <tr>
-          <th><?php echo $lang->entry->target;?></th>
-          <td><?php echo html::checkbox('target',  $lang->entry->targetList, '');?></td>
+          <th><?php echo $lang->entry->platform;?></th>
+          <td><?php echo html::checkbox('platform',  $lang->entry->platformList, '');?></td>
           <td></td>
         </tr>
         <tr class="entry-version hide">

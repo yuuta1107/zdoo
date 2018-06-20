@@ -16,18 +16,18 @@ class entryModel extends model
      *
      * @param  string $type custom|system
      * @param  int    $category
-     * @param  string $target
+     * @param  string $platform
      * @access public
      * @return array
      */
-    public function getEntries($type = 'custom', $category = 0, $target = '')
+    public function getEntries($type = 'custom', $category = 0, $platform = '')
     {
         $entries = $this->dao->select('*')->from(TABLE_ENTRY)
             ->where('status')->eq('online')
             ->beginIF(!empty($category))->andWhere('category')->eq($category)->fi()
             ->orderBy('`order`, id')
             ->fetchAll();
-        $categories = $this->dao->select('distinct t1.id, t1.name, t1.order, t2.target')->from(TABLE_CATEGORY)->alias('t1')
+        $categories = $this->dao->select('distinct t1.id, t1.name, t1.order, t2.platform')->from(TABLE_CATEGORY)->alias('t1')
             ->leftJoin(TABLE_ENTRY)->alias('t2')->on('t1.id=t2.category')
             ->where('t1.type')->eq('entry')
             ->andWhere('t2.visible')->eq(1)
@@ -41,7 +41,7 @@ class entryModel extends model
             $entry->name        = $category->name;
             $entry->code        = '';
             $entry->abbr        = $category->name;
-            $entry->target      = $category->target;
+            $entry->platform    = $category->platform;
             $entry->buildin     = 0;
             $entry->integration = 0;
             $entry->open        = '';
@@ -67,7 +67,7 @@ class entryModel extends model
         $this->app->loadLang('install');
         foreach($entries as $index => $entry)
         {
-            if(!empty($target) && strpos(',' . $entry->target . ',', ',' . $target . ',') === false)
+            if(!empty($platform) && strpos(',' . $entry->platform . ',', ',' . $platform . ',') === false)
             {
                 unset($entries[$index]);
                 continue;
@@ -191,7 +191,7 @@ class entryModel extends model
             ->setDefault('height', '538')
             ->setDefault('position', 'default')
             ->setDefault('zentao', 0)
-            ->join('target', ',')
+            ->join('platform', ',')
             ->setIF($this->post->allip, 'ip', '*')
             ->setIF($this->post->zentao, 'open', 'iframe')
             ->setIF($this->post->zentao, 'integration', 1)
@@ -255,7 +255,7 @@ class entryModel extends model
     public function update($code)
     {
         $oldEntry = $this->getByCode($code);
-        $entry = fixer::input('post')->stripTags('login', $this->config->allowedTags)->join('target', ',')->remove('files,labels')->get();
+        $entry = fixer::input('post')->stripTags('login', $this->config->allowedTags)->join('platform', ',')->remove('files,labels')->get();
         if(!isset($entry->visible)) $entry->visible = 0;
 
         $this->dao->update(TABLE_ENTRY)->data($entry)

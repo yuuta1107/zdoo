@@ -792,7 +792,7 @@ CREATE TABLE IF NOT EXISTS `sys_entry` (
   `code` varchar(20) NOT NULL,
   `buildin` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `version` varchar(20) NOT NULL,
-  `target` varchar(255) NOT NULL DEFAULT 'ranzhi',
+  `platform` varchar(255) NOT NULL DEFAULT 'ranzhi',
   `package` int(11) NOT NULL DEFAULT 0,
   `integration` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `open` varchar(20) NOT NULL,

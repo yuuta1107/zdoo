@@ -53,11 +53,11 @@ include '../../common/view/chosen.html.php';
         </tr>
         <?php endif;?>
         <tr>
-          <th><?php echo $lang->entry->target;?></th>
-          <td><?php echo html::checkbox('target',  $lang->entry->targetList, $entry->target);?></td>
+          <th><?php echo $lang->entry->platform;?></th>
+          <td><?php echo html::checkbox('platform',  $lang->entry->platform, $entry->platform);?></td>
           <td></td>
         </tr>
-        <?php $hasXuanXuan = strpos(',' . $entry->target . ',', ',xuanxuan,') !== false;?>
+        <?php $hasXuanXuan = strpos(',' . $entry->platform . ',', ',xuanxuan,') !== false;?>
         <tr class="entry-version <?php if(!$hasXuanXuan) echo 'hide';?>">
           <th><?php echo $lang->entry->version;?></th>
           <td><?php echo html::input('version', $entry->version, "class='form-control'");?></td>

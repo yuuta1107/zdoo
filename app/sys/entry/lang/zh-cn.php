@@ -21,7 +21,7 @@ $lang->entry->setCategory = '维护分组';
 $lang->entry->online      = '上架';
 $lang->entry->offline     = '下架';
 $lang->entry->version     = '版本';
-$lang->entry->target      = '平台';
+$lang->entry->platform    = '平台';
 
 $lang->entry->name        = '名称';
 $lang->entry->abbr        = '缩写';
@@ -107,5 +107,5 @@ $lang->entry->controlList['simple'] = '透明';
 $lang->entry->integrationList[1] = '启用';
 $lang->entry->integrationList[0] = '关闭';
 
-$lang->entry->targetList['ranzhi']   = '然之';
-$lang->entry->targetList['xuanxuan'] = '喧喧';
+$lang->entry->platformList['ranzhi']   = '然之';
+$lang->entry->platformList['xuanxuan'] = '喧喧';

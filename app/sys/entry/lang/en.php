@@ -21,7 +21,7 @@ $lang->entry->setCategory = 'Manage';
 $lang->entry->online      = 'Online';
 $lang->entry->offline     = 'Offline';
 $lang->entry->version     = 'Version';
-$lang->entry->target      = 'Target';
+$lang->entry->platform    = 'Platform';
 
 $lang->entry->name        = 'App Name';
 $lang->entry->abbr        = 'Abbr';
@@ -107,5 +107,5 @@ $lang->entry->controlList['simple'] = 'Transparent';
 $lang->entry->integrationList[1] = 'Open';
 $lang->entry->integrationList[0] = 'Close';
 
-$lang->entry->targetList['ranzhi']   = 'Zdoo';
-$lang->entry->targetList['xuanxuan'] = 'XuanXuan';
+$lang->entry->platformList['ranzhi']   = 'Zdoo';
+$lang->entry->platformList['xuanxuan'] = 'XuanXuan';
