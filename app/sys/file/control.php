@@ -229,32 +229,27 @@ class file extends control
 
         if($verification == false) $this->locate($this->createLink('user', 'login'));
 
-        /* If the mode is open, locate directly. */
-        if($mode == 'open')
+        if(file_exists($file->realPath))
         {
-            if(file_exists($file->realPath)) 
+            /* If the mode is open, locate directly. */
+            if($mode == 'open')
             {
                 /* If the web server is nginx, it will download the file because the extension of file is empty. Use php to output file to avoid this situation. */
                 $mime = in_array($file->extension, $this->config->file->imageExtensions) ? "image/{$file->extension}" : $this->config->file->mimes['default'];
                 header("content-type: $mime");
-                echo file_get_contents($file->realPath);
-                exit;
+                die(file_get_contents($file->realPath));
             }
-            $this->app->triggerError("The file you visit $fileID not found.", __FILE__, __LINE__, true);
-        }
-        else
-        {
-            /* Down the file. */
-            if(file_exists($file->realPath))
+            else
             {
+                /* Down the file. */
                 $fileName = $file->title . '.' . $file->extension;
                 $fileData = file_get_contents($file->realPath);
                 $this->sendDownHeader($fileName, $file->extension, $fileData, filesize($file->realPath));
             }
-            else
-            {
-                $this->app->triggerError("The file you visit $fileID not found.", __FILE__, __LINE__, true);
-            }
+        }
+        else
+        {
+            $this->app->triggerError("The file you visit $fileID not found.", __FILE__, __LINE__, true);
         }
     }
 
