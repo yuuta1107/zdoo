@@ -39,6 +39,7 @@ $lang->leave->reviewedDate = 'Reviewed on';
 $lang->leave->date         = 'Date';
 $lang->leave->time         = 'Time';
 $lang->leave->rejectReason = 'Reject Reason';
+$lang->leave->account      = 'Account';
 $lang->leave->dateRange    = 'Date Range';
 $lang->leave->totalAnnual  = 'Annual Days';
 
