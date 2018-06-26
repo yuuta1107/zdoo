@@ -5,7 +5,7 @@
  * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
- * @package     file 
+ * @package     file
  * @version     $Id: control.php 4029 2016-08-26 06:50:41Z liugang $
  * @link        http://www.ranzhi.org
  */
@@ -13,9 +13,9 @@ class file extends control
 {
     /**
      * Build the upload form.
-     * 
-     * @param int $fileCount 
-     * @param float $percent 
+     *
+     * @param int $fileCount
+     * @param float $percent
      * @access public
      * @return void
      */
@@ -29,7 +29,7 @@ class file extends control
 
     /**
      * Build the list part of files.
-     * 
+     *
      * @param array $files
      * @access public
      * @return string
@@ -39,26 +39,26 @@ class file extends control
         $this->view->files = $files;
         $this->display();
     }
-    
-    /** 
-     * Print files. 
-     * 
-     * @param  array  $files 
-     * @param  string $fieldset 
+
+    /**
+     * Print files.
+     *
+     * @param  array  $files
+     * @param  string $fieldset
      * @access public
      * @return void
      */
     public function printFiles($files, $fieldset)
-    {   
+    {
         $this->view->files    = $files;
         $this->view->fieldset = $fieldset;
         $this->display();
-    }   
+    }
 
     /**
      * AJAX: the api to recive the file posted through ajax.
-     * 
-     * @param  string $uid 
+     *
+     * @param  string $uid
      * @access public
      * @return array
      */
@@ -89,7 +89,7 @@ class file extends control
 
     /**
      * AJAX: get upload request from the web editor.
-     * 
+     *
      * @access public
      * @return void
      */
@@ -108,7 +108,7 @@ class file extends control
             if(!$this->file->checkSavePath()) $this->send(array('state' => $this->lang->file->errorUnwritable));
 
             move_uploaded_file($file['tmpname'], $this->file->savePath . $this->file->getSaveName($file['pathname']));
-            
+
             /* Compress image for jpg and bmp. */
             $file = $this->file->compressImage($file);
 
@@ -127,9 +127,9 @@ class file extends control
 
     /**
      * The list page of an object
-     * 
-     * @param  string $objectType 
-     * @param  int    $objectID 
+     *
+     * @param  string $objectType
+     * @param  int    $objectID
      * @access public
      * @return void
      */
@@ -141,12 +141,12 @@ class file extends control
         $this->view->files      = $this->file->getByObject($objectType, $objectID);
         $this->display();
     }
-  
+
     /**
      * Edit for the file
-     * 
-     * @param  string $objectType 
-     * @param  int    $objectID 
+     *
+     * @param  string $objectType
+     * @param  int    $objectID
      * @access public
      * @return void
      */
@@ -182,9 +182,9 @@ class file extends control
 
     /**
      * Upload files for an object.
-     * 
-     * @param  string $objectType 
-     * @param  string $objectID 
+     *
+     * @param  string $objectType
+     * @param  string $objectID
      * @access public
      * @return void
      */
@@ -198,9 +198,9 @@ class file extends control
 
     /**
      * Down a file.
-     * 
-     * @param  int    $fileID 
-     * @param  string $mouse 
+     *
+     * @param  int    $fileID
+     * @param  string $mouse
      * @param  int    $time
      * @param  string $token
      * @access public
@@ -229,34 +229,27 @@ class file extends control
 
         if($verification == false) $this->locate($this->createLink('user', 'login'));
 
-        if(file_exists($file->realPath))
+        /* If the mode is open, locate directly. */
+        if($mode == 'open')
         {
-            /* If the mode is open, locate directly. */
-            if($mode == 'open')
-            {
-                /* If the web server is nginx, it will download the file because the extension of file is empty. Use php to output file to avoid this situation. */
-                $mime = in_array($file->extension, $this->config->file->imageExtensions) ? "image/{$file->extension}" : $this->config->file->mimes['default'];
-                header("content-type: $mime");
-                die(file_get_contents($file->realPath));
-            }
-            else
-            {
-                /* Down the file. */
-                $fileName = $file->title . '.' . $file->extension;
-                $fileData = file_get_contents($file->realPath);
-                $this->sendDownHeader($fileName, $file->extension, $fileData, filesize($file->realPath));
-            }
+            /* If the web server is nginx, it will download the file because the extension of file is empty. Use php to output file to avoid this situation. */
+            $mime = in_array($file->extension, $this->config->file->imageExtensions) ? "image/{$file->extension}" : $this->config->file->mimes['default'];
+            header("content-type: $mime");
+            die(file_get_contents($file->realPath));
         }
         else
         {
-            $this->app->triggerError("The file you visit $fileID not found.", __FILE__, __LINE__, true);
+            /* Down the file. */
+            $fileName = $file->title . '.' . $file->extension;
+            $fileData = file_get_contents($file->realPath);
+            $this->sendDownHeader($fileName, $file->extension, $fileData, filesize($file->realPath));
         }
     }
 
     /**
      * set a image as primary image.
-     * 
-     * @param  int  $fileID 
+     *
+     * @param  int  $fileID
      * @access public
      * @return void
      */
@@ -279,7 +272,7 @@ class file extends control
 
     /**
      * Export as csv format.
-     * 
+     *
      * @access public
      * @return void
      */
@@ -308,9 +301,9 @@ class file extends control
 
     /**
      * Send the download header to the client.
-     * 
-     * @param  string    $fileName 
-     * @param  string    $extension 
+     *
+     * @param  string    $fileName
+     * @param  string    $extension
      * @access public
      * @return void
      */
@@ -350,15 +343,15 @@ class file extends control
         $file = $this->file->getById($fileID);
 
         $this->file->delete($fileID);
-        if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError())); 
+        if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
 
         $this->loadModel('action')->create($file->objectType, $file->objectID, 'deletedFile', '', $extra=$file->title);
         $this->send(array('result' => 'success'));
     }
 
     /**
-     * Paste image in kindeditor at firefox and chrome. 
-     * 
+     * Paste image in kindeditor at firefox and chrome.
+     *
      * @param  string uid
      * @access public
      * @return void
@@ -372,8 +365,8 @@ class file extends control
     }
 
     /**
-     * Get file from file directory in kindeditor. 
-     * 
+     * Get file from file directory in kindeditor.
+     *
      * @access public
      * @return void
      */
@@ -451,8 +444,8 @@ class file extends control
     }
 
     /**
-     * Sort the file. 
-     * 
+     * Sort the file.
+     *
      * @access public
      * @return void
      */
@@ -480,9 +473,9 @@ class file extends control
     }
 
     /**
-     * Read file. 
-     * 
-     * @param  int    $fileID 
+     * Read file.
+     *
+     * @param  int    $fileID
      * @access public
      * @return void
      */
