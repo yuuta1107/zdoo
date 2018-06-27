@@ -6,5 +6,6 @@
 .table-priv th label input[type="checkbox"] {left: auto;right: 0; margin-left: 0}
 .table-priv td label{width:170px;font-size:12px;padding:0 10px;display: inline-block;}
 .table-priv td label.checkbox-inline+.checkbox-inline {margin-left: 0}
-#search {padding:8px 40px;line-height:20px;}
 .table-priv a:hover{text-decoration: none;}
+.table-priv .checkApp, .table-priv .checkModule {position: inherit !important;}
+#search {padding:8px 40px;line-height:20px;}
