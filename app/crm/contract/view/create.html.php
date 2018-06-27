@@ -18,7 +18,7 @@
 <?php js::set('order', isset($orderID) ? $orderID : 0);?>
 <div class='panel'>
   <div class='panel-heading'>
-    <strong><i class="icon-plus"></i> <?php echo $lang->contract->create;?></strong>
+    <strong><i class='icon-plus'></i> <?php echo $lang->contract->create;?></strong>
   </div>
   <div class='panel-body'>
     <form method='post' id='ajaxForm'>
@@ -64,8 +64,8 @@
           <td class='w-p40'><?php echo html::input('name', '', "class='form-control'");?></td><td></td>
         </tr>
         <tr>
-          <th><?php echo $lang->contract->code;?></th>
-          <td><?php echo html::input('code', '', "class='form-control'");?></td><td></td>
+          <th class='w-80px'><?php echo $lang->contract->code;?></th>
+          <td class='w-p40'><?php echo html::input('code', '', "class='form-control'");?></td><td></td>
         </tr>
         <tr>
           <th><?php echo $lang->contract->amount;?></th>
@@ -84,7 +84,7 @@
           <th><?php echo $lang->contract->address;?></th>
           <td>
             <div class='input-group'>
-              <?php echo html::select('address', array(), '', "class='form-control chosen'");?>
+              <?php echo html::select('address', '', '', "class='form-control chosen'");?>
               <?php echo html::input('newAddress', '', "class='form-control'");?>
               <span class='input-group-addon'>
                 <label class='checkbox-inline'>
