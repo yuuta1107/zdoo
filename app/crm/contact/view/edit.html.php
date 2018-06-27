@@ -77,7 +77,7 @@
             </tr>
             <tr>
               <th><?php echo $lang->resume->join;?></th>
-              <td colspan='2'><?php echo html::input('join', $contact->join, "class='form-control'");?></td>
+              <td colspan='2'><?php echo html::input('join', $contact->join, "class='form-control form-date'");?></td>
             </tr>
             <tr>
               <th><?php echo $lang->contact->birthday;?></th>
