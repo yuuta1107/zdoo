@@ -31,6 +31,7 @@ global $lang, $app;
 $config->contract->search['module'] = 'contract';
 
 $config->contract->search['fields']['name']          = $lang->contract->name;
+$config->contract->search['fields']['code']          = $lang->contract->code;
 $config->contract->search['fields']['amount']        = $lang->contract->amount;
 $config->contract->search['fields']['signedDate']    = $lang->contract->signedDate;
 $config->contract->search['fields']['status']        = $lang->contract->status;
@@ -47,6 +48,7 @@ $config->contract->search['fields']['returnedDate']  = $lang->contract->returned
 $config->contract->search['fields']['id']            = $lang->contract->id;
 
 $config->contract->search['params']['name']          = array('operator' => 'include', 'control' => 'input', 'values' => '');
+$config->contract->search['params']['code']          = array('operator' => 'include', 'control' => 'input', 'values' => '');
 $config->contract->search['params']['amount']        = array('operator' => '>=', 'control' => 'input',  'values' => '');
 $config->contract->search['params']['signedDate']    = array('operator' => '>=', 'control' => 'input',  'values' => '', 'class' => 'date');
 $config->contract->search['params']['status']        = array('operator' => '=',  'control' => 'select', 'values' => $lang->contract->statusList);
