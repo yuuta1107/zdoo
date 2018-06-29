@@ -113,6 +113,7 @@ class tradeModel extends model
 
                 if($trade->type == 'invest')
                 {
+                    $trade->children = array();
                     $trade->status   = 'unReturned';
                     $trade->progress = 0;
                     if(isset($matches[$trade->id]))
