@@ -23,7 +23,7 @@ class entryModel extends model
     public function getEntries($type = 'custom', $category = 0, $platform = '')
     {
         $entries = $this->dao->select('*')->from(TABLE_ENTRY)
-            ->where('status')->eq('online')
+            ->where(1)
             ->beginIF(!empty($category))->andWhere('category')->eq($category)->fi()
             ->orderBy('`order`, id')
             ->fetchAll();
