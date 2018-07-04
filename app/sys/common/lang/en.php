@@ -512,17 +512,17 @@ $lang->currencyTip['w'] = '';
 $lang->currencyTip['y'] = '';
 
 /* Date times. */
-if(!define('DT_DATETIME1'))  define('DT_DATETIME1',  'Y-m-d H:i:s');
-if(!define('DT_DATETIME2'))  define('DT_DATETIME2',  'Y-m-d H:i');
-if(!define('DT_DATETIME3'))  define('DT_DATETIME3',  'y-m-d H:i');
-if(!define('DT_MONTHTIME1')) define('DT_MONTHTIME1', 'n/d H:i');
-if(!define('DT_MONTHTIME2')) define('DT_MONTHTIME2', 'F j, H:i');
-if(!define('DT_DATE1'))      define('DT_DATE1',      'Y-m-d');
-if(!define('DT_DATE2'))      define('DT_DATE2',      'Ymd');
-if(!define('DT_DATE3'))      define('DT_DATE3',      'F j, Y ');
-if(!define('DT_DATE4'))      define('DT_DATE4',      'M j');
-if(!define('DT_DATE5'))      define('DT_DATE5',      'M Y');
-if(!define('DT_TIME1'))      define('DT_TIME1',      'H:i:s');
-if(!define('DT_TIME1'))      define('DT_TIME2',      'H:i');
+if(!defined('DT_DATETIME1'))  define('DT_DATETIME1',  'Y-m-d H:i:s');
+if(!defined('DT_DATETIME2'))  define('DT_DATETIME2',  'Y-m-d H:i');
+if(!defined('DT_DATETIME3'))  define('DT_DATETIME3',  'y-m-d H:i');
+if(!defined('DT_MONTHTIME1')) define('DT_MONTHTIME1', 'n/d H:i');
+if(!defined('DT_MONTHTIME2')) define('DT_MONTHTIME2', 'F j, H:i');
+if(!defined('DT_DATE1'))      define('DT_DATE1',      'Y-m-d');
+if(!defined('DT_DATE2'))      define('DT_DATE2',      'Ymd');
+if(!defined('DT_DATE3'))      define('DT_DATE3',      'F j, Y ');
+if(!defined('DT_DATE4'))      define('DT_DATE4',      'M j');
+if(!defined('DT_DATE5'))      define('DT_DATE5',      'M Y');
+if(!defined('DT_TIME1'))      define('DT_TIME1',      'H:i:s');
+if(!defined('DT_TIME1'))      define('DT_TIME2',      'H:i');
 
 include (dirname(__FILE__) . '/menuOrder.php');
