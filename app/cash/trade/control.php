@@ -928,7 +928,7 @@ class trade extends control
 
             if(!$fields['fee'] and isset($disabledCategories[$data['category']]) and $data['trader']) continue;
  
-            $fee = $data['fee'];
+            $fee = (float)$data['fee'];
             unset($data['fee']);
             $dataList[$i] = $data;
 
@@ -942,7 +942,7 @@ class trade extends control
 
             if($schema->fee and $fee)
             {
-                $i + 1;
+                $i++;
                 $data['type']  = 'out';
                 $data['money'] = $fee;
                 $data['desc']  = '';
