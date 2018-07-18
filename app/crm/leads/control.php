@@ -37,6 +37,11 @@ class leads extends control
         $this->locate(inlink('browse'));
     }
 
+    public function assignedToNull()
+    {
+        die($this->fetch('leads', 'browse'));
+    }
+
     /**
      * Browse contact.
      * 
