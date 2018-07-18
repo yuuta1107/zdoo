@@ -57,7 +57,7 @@ class sso extends control
                     $data->qq       = $user->qq;
 
                     $response['status'] = 'success';
-                    $response['data']   = clone $data;
+                    $response['data']   = base64_encode(json_encode($data));
                     $response['md5']    = md5($response['data']);
 
                     if(!empty($_GET['referer'])) $response['referer'] = $this->get->referer;
