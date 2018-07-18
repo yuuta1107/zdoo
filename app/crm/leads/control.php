@@ -47,7 +47,7 @@ class leads extends control
      * @access public
      * @return void
      */
-    public function assignedToNull($orderBy = 'id_desc', $recTotal = 0, $recPerPage = 20, $pageID = 1)
+    public function assignedToNull($mode = 'assignedToNull', $status = 'wait', $origin = '', $orderBy = 'id_desc', $recTotal = 0, $recPerPage = 20, $pageID = 1)
     {
         die($this->fetch('leads', 'browse', "mode=assignedToNull&status=wait&origin&orderBy=$orderBy&$recTotal=$recTotal&recPerPage=$recPerPage&pageID=$pageID"));
     }
@@ -65,7 +65,7 @@ class leads extends control
      * @access public
      * @return void
      */
-    public function browse($mode = 'all', $status = 'wait', $origin = '',  $orderBy = 'id_desc', $recTotal = 0, $recPerPage = 20, $pageID = 1)
+    public function browse($mode = 'all', $status = 'wait', $origin = '', $orderBy = 'id_desc', $recTotal = 0, $recPerPage = 20, $pageID = 1)
     {   
         $this->app->loadClass('pager', $static = true);
         $pager = new pager($recTotal, $recPerPage, $pageID);
