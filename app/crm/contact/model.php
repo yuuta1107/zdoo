@@ -174,8 +174,9 @@ class contactModel extends model
         {
             $leads = $this->dao->select('*')->from(TABLE_CONTACT)
                 ->where('deleted')->eq(0)
-                ->beginIF($mode != 'bysearch' && $status)->andWhere('status')->eq($status)->fi()    // Makr sure can search the leads which had been transformed to contacts.
+                ->beginIF($mode != 'bysearch' && $mode != 'assignedToNull' && $status)->andWhere('status')->eq($status)->fi()    // Makr sure can search the leads which had been transformed to contacts.
                 ->beginIF($origin)->andWhere('origin')->like("%,$origin,%")->fi()
+                ->beginIF($mode == 'assignedToNull')->andWhere('assignedTo')->eq('')->fi()
                 ->beginIF($mode == 'assignedTo')->andWhere('assignedTo')->eq($this->app->user->account)->fi()
                 ->beginIF($mode == 'ignoredBy')->andWhere('ignoredBy')->eq($this->app->user->account)->fi()
                 ->beginIF($mode == 'bysearch')->andWhere($leadsQuery)->andWhere('origin')->ne('')->fi() // Make sure won't search the contacts which aren't transformed from leads.

@@ -37,9 +37,15 @@ class leads extends control
         $this->locate(inlink('browse'));
     }
 
+    /**
+     * Browse leads assigned to null.
+     *
+     * @access public
+     * @return void
+     */
     public function assignedToNull()
     {
-        die($this->fetch('leads', 'browse'));
+        die($this->fetch('leads', 'browse', 'mode=assignedToNull'));
     }
 
     /**
