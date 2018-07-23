@@ -1,18 +1,19 @@
 <?php
 if(!isset($lang->leads)) $lang->leads = new stdclass();
 
-$lang->leads->common    = 'Leads';
-$lang->leads->browse    = 'Leads';
-$lang->leads->create    = 'Create';
-$lang->leads->edit      = 'Edit';
-$lang->leads->delete    = 'Delete';
-$lang->leads->view      = 'Leads';
-$lang->leads->apply     = 'Apply';
-$lang->leads->assign    = 'Assign';
-$lang->leads->transform = 'Confirm';
-$lang->leads->ignore    = 'Ignroe';
-$lang->leads->settings  = 'Settings';
-$lang->leads->applyRule = 'Apply rules';
+$lang->leads->common         = 'Leads';
+$lang->leads->assignedToNull = 'Assigned To Null';
+$lang->leads->browse         = 'Leads';
+$lang->leads->create         = 'Create';
+$lang->leads->edit           = 'Edit';
+$lang->leads->delete         = 'Delete';
+$lang->leads->view           = 'Leads';
+$lang->leads->apply          = 'Apply';
+$lang->leads->assign         = 'Assign';
+$lang->leads->transform      = 'Confirm';
+$lang->leads->ignore         = 'Ignroe';
+$lang->leads->settings       = 'Settings';
+$lang->leads->applyRule      = 'Apply rules';
 
 $lang->leads->list = 'Leads List';
 

@@ -1,6 +1,6 @@
 $(function()
 {
-    $('#menu .nav li').removeClass('active').find('[href*=' + v.mode + ']').parent().addClass('active');
+    if(config.currentMethod == 'browse') $('#menu .nav li').removeClass('active').find('[href*=browse][href*=' + v.mode + ']').parent().addClass('active');
 
     $(document).on('click', '.leads-apply', function()
     {

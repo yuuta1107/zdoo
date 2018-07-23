@@ -49,23 +49,8 @@
         <?php 
         if($dating->status == 'wait') 
         {
-            $user = $this->app->user->account;
-            if($this->app->user->admin == 'super' or $dating->account == $user or $dating->createdBy == $user)
-            {
-                echo html::a(helper::createLink('action', 'finishDating', "id={$dating->id}"), $lang->finish, "class='finishDating'");
-            }
-            else
-            {
-                echo html::a('javascript:;', $lang->finish, "class='disabled' disabled='disabled'");
-            }
-            if($this->app->user->admin == 'super' or $dating->createdBy == $user)
-            {
-                echo html::a(helper::createLink('action', 'deleteDating', "id={$dating->id}"), $lang->delete, "class='deleter'");
-            }
-            else
-            {
-                echo html::a('javascript:;', $lang->delete, "class='disabled' disabled='disabled'");
-            }
+            commonModel::printLink('action', 'finishDating', "id={$dating->id}", $lang->finish, "class='finishDating'");
+            commonModel::printLink('action', 'deleteDating', "id={$dating->id}", $lang->delete, "class='deleter'");
         }
         ?>
       </td>

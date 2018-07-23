@@ -13,12 +13,13 @@ $lang->leave->back       = '銷假';
 $lang->leave->export     = '導出請假記錄';
 $lang->leave->reviewBack = '審核銷假';
 
-$lang->leave->personal     = '我的請假';
-$lang->leave->browseReview = '審核列表';
-$lang->leave->company      = '所有請假';
-$lang->leave->setReviewer  = '請假設置';
-$lang->leave->batchReview  = '批量審核';
-$lang->leave->batchPass    = '批量通過';
+$lang->leave->personal       = '我的請假';
+$lang->leave->browseReview   = '審核列表';
+$lang->leave->company        = '所有請假';
+$lang->leave->setReviewer    = '審批人';
+$lang->leave->personalAnnual = '個人年假';
+$lang->leave->batchReview    = '批量審核';
+$lang->leave->batchPass      = '批量通過';
 
 $lang->leave->id           = '編號';
 $lang->leave->year         = '年';
@@ -38,6 +39,9 @@ $lang->leave->reviewedDate = '審核時間';
 $lang->leave->date         = '日期';
 $lang->leave->time         = '時間';
 $lang->leave->rejectReason = '拒絶原因';
+$lang->leave->account      = '用戶';
+$lang->leave->dateRange    = '起止時間';
+$lang->leave->totalAnnual  = '個人年假總天數';
 
 $lang->leave->typeList['affairs']   = '事假';
 $lang->leave->typeList['sick']      = '病假';
@@ -69,7 +73,12 @@ $lang->leave->reviewSuccess = '審核成功';
 $lang->leave->confirmReview['pass']   = '您確定要執行通過操作嗎？';
 $lang->leave->confirmReview['reject'] = '您確定要執行拒絶操作嗎？';
 
-$lang->leave->hoursTip = '小時';
+$lang->leave->hoursTip  = '小時';
+$lang->leave->annualTip = '剩餘可用年假 %s 天';
 
 $lang->leave->reviewStatusList['pass']   = '通過';
 $lang->leave->reviewStatusList['reject'] = '拒絶';
+
+$lang->leave->settings = new stdclass();
+$lang->leave->settings->setReviewer    = "審批人|leave|setreviewer";
+$lang->leave->settings->personalAnnual = "個人年假|leave|personalannual";

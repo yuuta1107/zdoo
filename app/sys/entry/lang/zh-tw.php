@@ -5,7 +5,7 @@
  * @copyright   Copyright 2009-2018 青島易軟天創網絡科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
- * @package     entry 
+ * @package     entry
  * @version     $Id: zh-tw.php 4091 2016-09-30 07:16:50Z daitingting $
  * @link        http://www.ranzhi.org
  */
@@ -18,6 +18,10 @@ $lang->entry->createKey   = '重新生成密鑰';
 $lang->entry->order       = '排序';
 $lang->entry->style       = '樣式';
 $lang->entry->setCategory = '維護分組';
+$lang->entry->online      = '上架';
+$lang->entry->offline     = '下架';
+$lang->entry->version     = '版本';
+$lang->entry->platform    = '平台';
 
 $lang->entry->name        = '名稱';
 $lang->entry->abbr        = '縮寫';
@@ -102,3 +106,6 @@ $lang->entry->controlList['simple'] = '透明';
 
 $lang->entry->integrationList[1] = '啟用';
 $lang->entry->integrationList[0] = '關閉';
+
+$lang->entry->platformList['ranzhi']   = '然之';
+$lang->entry->platformList['xuanxuan'] = '喧喧';

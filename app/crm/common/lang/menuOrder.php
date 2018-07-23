@@ -28,11 +28,12 @@ $lang->contact->menuOrder[25] = 'tomorrow';
 $lang->contact->menuOrder[30] = 'thisweek';
 $lang->contact->menuOrder[35] = 'thismonth';
 
-$lang->leads->menuOrder[5]  = 'assignedTo';
-$lang->leads->menuOrder[10] = 'next';
-$lang->leads->menuOrder[15] = 'ignoredBy';
-$lang->leads->menuOrder[20] = 'public';
-$lang->leads->menuOrder[25] = 'setting';
+$lang->leads->menuOrder[5]  = 'assignedToNull';
+$lang->leads->menuOrder[10] = 'assignedTo';
+$lang->leads->menuOrder[15] = 'next';
+$lang->leads->menuOrder[20] = 'ignoredBy';
+$lang->leads->menuOrder[25] = 'public';
+$lang->leads->menuOrder[30] = 'setting';
 
 $lang->contract->menuOrder[5]  = 'browse';
 $lang->contract->menuOrder[10] = 'contactedBy';

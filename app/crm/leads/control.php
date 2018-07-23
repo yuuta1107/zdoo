@@ -38,16 +38,34 @@ class leads extends control
     }
 
     /**
-     * Browse contact.
-     * 
-     * @param string $orderBy     the order by
-     * @param int    $recTotal 
-     * @param int    $recPerPage 
-     * @param int    $pageID 
+     * Browse leads assigned to null.
+     *
+     * @param  string $orderBy
+     * @param  int    $recTotal
+     * @param  int    $recPerPage
+     * @param  int    $pageID
      * @access public
      * @return void
      */
-    public function browse($mode = 'all', $status = 'wait', $origin = '',  $orderBy = 'id_desc', $recTotal = 0, $recPerPage = 20, $pageID = 1)
+    public function assignedToNull($mode = 'assignedToNull', $status = 'wait', $origin = '', $orderBy = 'id_desc', $recTotal = 0, $recPerPage = 20, $pageID = 1)
+    {
+        die($this->fetch('leads', 'browse', "mode=assignedToNull&status=wait&origin&orderBy=$orderBy&$recTotal=$recTotal&recPerPage=$recPerPage&pageID=$pageID"));
+    }
+
+    /**
+     * Browse contact.
+     *
+     * @param  string $mode
+     * @param  string $status
+     * @param  string $origin
+     * @param  string $orderBy
+     * @param  int    $recTotal
+     * @param  int    $recPerPage
+     * @param  int    $pageID
+     * @access public
+     * @return void
+     */
+    public function browse($mode = 'all', $status = 'wait', $origin = '', $orderBy = 'id_desc', $recTotal = 0, $recPerPage = 20, $pageID = 1)
     {   
         $this->app->loadClass('pager', $static = true);
         $pager = new pager($recTotal, $recPerPage, $pageID);

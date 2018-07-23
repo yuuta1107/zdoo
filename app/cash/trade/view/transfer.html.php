@@ -41,7 +41,6 @@
             <?php $depositorAbbr = $depositor->abbr;?>
             <?php if($depositor->status == 'disable') $depositorAbbr .= ' (' . $lang->depositor->statusList['disable'] . ')';?>
             <option value="<?php echo $depositor->id;?>" data-currency="<?php echo $depositor->currency;?>"><?php echo $depositorAbbr;?></option>
-            <option value="<?php echo $depositor->id;?>" data-currency="<?php echo $depositor->currency;?>"><?php echo $depositor->abbr;?></option>
             <?php endforeach;?>
             </select>
           </td>

@@ -916,12 +916,26 @@ class trade extends control
 
             if(!empty($data['product']))
             {
+                $matched = false;
                 foreach($productList as $id => $product)
                 {
-                    if(strpos($product, $data['product']) !== false)
+                    if($product == $data['product'])
                     {
                         $data['product'] = $id;
+                        $matched = true;
                         break;
+                    }
+                }
+
+                if(!$matched)
+                {
+                    foreach($productList as $id => $product)
+                    {
+                        if(strpos($product, $data['product']) !== false)
+                        {
+                            $data['product'] = $id;
+                            break;
+                        }
                     }
                 }
             }
