@@ -35,7 +35,7 @@ class sso extends control
         {
             if($auth == md5($entry->code . $userIP . $token . $entry->key))
             {
-                if($this->session->user->ip == $userIP)
+                if(helper::getRemoteIp() == $userIP)
                 {
                     $user = $this->loadModel('user')->getByAccount($this->session->user->account);
 
