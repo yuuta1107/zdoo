@@ -131,6 +131,8 @@ class entry extends control
         $referer = !empty($_GET['referer']) ? $this->get->referer : $referer;
         $entry   = $this->entry->getById($entryID);
 
+        if(RUN_MODE == 'xuanxuan') $this->session->set('user', $this->dao->select('*')->from(TABLE_USER)->where('id')->eq($this->session->userID)->fetch());
+
         /* deny if no this app rights. */
         if(!commonModel::hasAppPriv($entry->code)) $this->loadModel('common', 'sys')->deny($this->app->getModuleName(), $this->app->getMethodName());
 
@@ -148,6 +150,25 @@ class entry extends control
                 $location = rtrim($location, '?') . "?token=$token";
             }
             if(!empty($referer)) $location .= '&referer=' . base64_encode($referer);
+        }
+
+        if(RUN_MODE == 'xuanxuan')
+        {
+            if(strpos($location, 'http') === false)
+            {
+                $_SERVER['SCRIPT_NAME'] = 'index.php';
+                $location = commonModel::getSysURL() . str_replace('../', '/', $entry->login) . '?' . session_name() . '=' . session_id();
+            }
+            else
+            {
+                $location .= '&sessionid=' . base64_encode(json_encode(array('session_name' => session_name(), 'session_id' => session_id())));
+            }
+            $this->output = new stdclass();
+            $this->output->module = $this->moduleName;
+            $this->output->method = $this->methodName;
+            $this->output->result = 'success';
+            $this->output->data   = $location;
+            die($this->app->encrypt($this->output));
         }
 
         $this->locate($location);
