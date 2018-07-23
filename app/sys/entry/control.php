@@ -154,11 +154,20 @@ class entry extends control
 
         if(RUN_MODE == 'xuanxuan')
         {
+            if(strpos($location, 'http') === false)
+            {
+                $_SERVER['SCRIPT_NAME'] = 'index.php';
+                $location = commonModel::getSysURL() . str_replace('../', '/', $entry->login) . '?' . session_name() . '=' . session_id();
+            }
+            else
+            {
+                $location .= '&sessionid=' . base64_encode(json_encode(array('session_name' => session_name(), 'session_id' => session_id())));
+            }
             $this->output = new stdclass();
             $this->output->module = $this->moduleName;
             $this->output->method = $this->methodName;
             $this->output->result = 'success';
-            $this->output->data   = $location . '&sessionid=' . base64_encode(json_encode(array('session_name' => session_name(), 'session_id' => session_id())));
+            $this->output->data   = $location;
             die($this->app->encrypt($this->output));
         }
 
