@@ -164,7 +164,7 @@ class entry extends control
 
         if(RUN_MODE == 'xuanxuan')
         {
-            if(strpos($location, 'http') === false)
+            if(strpos($location, 'http') !== 0)
             {
                 $_SERVER['SCRIPT_NAME'] = 'index.php';
                 $location = commonModel::getSysURL() . str_replace('../', '/', $entry->login) . '?' . session_name() . '=' . session_id();
