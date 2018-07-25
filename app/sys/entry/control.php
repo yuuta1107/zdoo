@@ -131,7 +131,17 @@ class entry extends control
         $referer = !empty($_GET['referer']) ? $this->get->referer : $referer;
         $entry   = $this->entry->getById($entryID);
 
-        if(RUN_MODE == 'xuanxuan') $this->session->set('user', $this->dao->select('*')->from(TABLE_USER)->where('id')->eq($this->session->userID)->fetch());
+        if(RUN_MODE == 'xuanxuan')
+        {
+            $user   = $this->dao->select('*')->from(TABLE_USER)->where('id')->eq($this->session->userID)->fetch();
+            $groups = $this->loadModel('group')->getByAccount($user->account);
+
+            $user->ip     = helper::getRemoteIp();
+            $user->groups = array_keys($groups);
+            $user->rights = $this->loadModel('user')->authorize($user);
+
+            $this->session->set('user', $user);
+        }
 
         /* deny if no this app rights. */
         if(!commonModel::hasAppPriv($entry->code)) $this->loadModel('common', 'sys')->deny($this->app->getModuleName(), $this->app->getMethodName());
