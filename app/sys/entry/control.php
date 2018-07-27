@@ -177,7 +177,8 @@ class entry extends control
             $this->output->module = $this->moduleName;
             $this->output->method = $this->methodName;
             $this->output->result = 'success';
-            $this->output->data   = $entry->integration ? $location : $entry->login;;
+            $this->output->data   = $entry->integration ? $location : $entry->login;
+            $this->output->users  = array($this->session->userID);
             die($this->app->encrypt($this->output));
         }
 
