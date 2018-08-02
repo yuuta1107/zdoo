@@ -68,27 +68,28 @@ $lang->themes['default'] = 'Default';
 $lang->themes['clear']   = 'Clear';
 
 /* Global lang items. */
-$lang->home           = 'Home';
-$lang->welcome        = '%s Zdoo';
-$lang->messages       = "<strong><i class='icon-comment-alt'></i> %s</strong>";
-$lang->todayIs        = 'Today is %s, ';
-$lang->today          = 'Today';
-$lang->aboutUs        = 'About';
-$lang->about          = 'About';
-$lang->link           = 'Links';
-$lang->frontHome      = 'Front';
-$lang->forumHome      = 'Forum';
-$lang->bookHome       = 'Book';
-$lang->register       = 'Register';
-$lang->logout         = 'Logout';
-$lang->login          = 'Login';
-$lang->account        = 'Account';
-$lang->password       = 'Password';
-$lang->all            = 'All';
-$lang->changePassword = 'Change password';
-$lang->currentPos     = 'Current Page';
-$lang->categoryMenu   = 'Manage Category';
-$lang->basicInfo      = 'Basic Info';
+$lang->home             = 'Home';
+$lang->welcome          = '%s Zdoo';
+$lang->messages         = "<strong><i class='icon-comment-alt'></i> %s</strong>";
+$lang->todayIs          = 'Today is %s, ';
+$lang->today            = 'Today';
+$lang->aboutUs          = 'About';
+$lang->about            = 'About';
+$lang->link             = 'Links';
+$lang->frontHome        = 'Front';
+$lang->forumHome        = 'Forum';
+$lang->bookHome         = 'Book';
+$lang->register         = 'Register';
+$lang->logout           = 'Logout';
+$lang->login            = 'Login';
+$lang->account          = 'Account';
+$lang->password         = 'Password';
+$lang->all              = 'All';
+$lang->changePassword   = 'Change password';
+$lang->currentPos       = 'Current Page';
+$lang->categoryMenu     = 'Manage Category';
+$lang->basicInfo        = 'Basic Info';
+$lang->chooseUserToMail = 'Choose users to send notice...';
 
 /* Global action items. */
 $lang->reset          = 'Reset';
@@ -151,6 +152,7 @@ $lang->signOut        = 'Sign out';
 $lang->sort           = 'Ranking';
 $lang->required       = 'Required';
 $lang->custom         = 'Custom';
+$lang->refresh        = 'Refresh';
 
 $lang->exportAll      = 'Export All';
 $lang->exportThisPage = 'Export This Page';

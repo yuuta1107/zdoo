@@ -68,27 +68,28 @@ $lang->themes['default'] = '默认';
 $lang->themes['clear']   = '清晰';
 
 /* Global lang items. */
-$lang->home           = '首页';
-$lang->welcome        = "%s协同管理系统";
-$lang->messages       = "<strong><i class='icon-comment-alt'></i> %s</strong>";
-$lang->todayIs        = '今天是%s，';
-$lang->today          = '今天';
-$lang->aboutUs        = '关于我们';
-$lang->about          = '关于';
-$lang->link           = '友情链接';
-$lang->frontHome      = '前台';
-$lang->forumHome      = '论坛';
-$lang->bookHome       = '手册';
-$lang->register       = '注册';
-$lang->logout         = '退出';
-$lang->login          = '登录';
-$lang->account        = '帐号';
-$lang->password       = '密码';
-$lang->all            = '全部';
-$lang->changePassword = '修改密码';
-$lang->currentPos     = '当前位置';
-$lang->categoryMenu   = '分类导航';
-$lang->basicInfo      = '基本信息';
+$lang->home             = '首页';
+$lang->welcome          = "%s协同管理系统";
+$lang->messages         = "<strong><i class='icon-comment-alt'></i> %s</strong>";
+$lang->todayIs          = '今天是%s，';
+$lang->today            = '今天';
+$lang->aboutUs          = '关于我们';
+$lang->about            = '关于';
+$lang->link             = '友情链接';
+$lang->frontHome        = '前台';
+$lang->forumHome        = '论坛';
+$lang->bookHome         = '手册';
+$lang->register         = '注册';
+$lang->logout           = '退出';
+$lang->login            = '登录';
+$lang->account          = '帐号';
+$lang->password         = '密码';
+$lang->all              = '全部';
+$lang->changePassword   = '修改密码';
+$lang->currentPos       = '当前位置';
+$lang->categoryMenu     = '分类导航';
+$lang->basicInfo        = '基本信息';
+$lang->chooseUserToMail = '选择要发送提醒的用户...';
 
 /* Global action items. */
 $lang->reset          = '重填';
@@ -151,6 +152,7 @@ $lang->signOut        = '签退';
 $lang->sort           = '排序';
 $lang->required       = '必填';
 $lang->custom         = '自定义';
+$lang->refresh        = '刷新';
 
 $lang->exportAll      = '导出全部记录';
 $lang->exportThisPage = '导出本页记录';

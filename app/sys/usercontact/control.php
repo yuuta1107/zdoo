@@ -77,4 +77,32 @@ class usercontact extends control
 
         $this->send(array('result' => 'success'));
     }
+
+    /**
+     * Build contact list.
+     *
+     * @access public
+     * @return void
+     */
+    public function buildContactList()
+    {
+        $this->view->contacts = $this->usercontact->getPairs();
+        $this->display();
+    }
+
+    /**
+     * Get members of a contact group by ajax.
+     *
+     * @param  int    $id
+     * @access public
+     * @return string
+     */
+    public function ajaxGetContactMembers($id)
+    {
+        $users = $this->loadModel('user')->getPairs('noclosed,nodeleted,noforbidden');
+        if(!$id) return print(html::select('toList[]', $users, '', "class='form-control' multiple data-placeholder='{$this->lang->chooseUserToMail}'"));
+
+        $contact = $this->usercontact->getById($id);
+        return print(html::select('toList[]', $users, empty($contact->member) ? '' : $contact->member, "class='form-control' multiple data-placeholder='{$this->lang->chooseUserToMail}'"));
+    }
 }

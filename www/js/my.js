@@ -224,3 +224,22 @@ function startCron()
 {
     $.ajax({type:"GET", timeout:100, url:createLink('cron', 'ajaxExec')});
 }
+
+/**
+ * Set mailto list from a contact group.
+ *
+ * @param  string $mailto
+ * @param  int    $contactID
+ * @access public
+ * @return void
+ */
+function setMailto(mailto, contactID)
+{
+    link = createLink('usercontact', 'ajaxGetContactMembers', 'id=' + contactID);
+    $.get(link, function(users)
+    {
+        $('#' + mailto).replaceWith(users);
+        $('#' + mailto + '_chosen').remove();
+        $('#' + mailto).chosen();
+    });
+}

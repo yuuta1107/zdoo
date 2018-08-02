@@ -12,23 +12,27 @@
 ?>
 <?php include '../../common/view/header.modal.html.php';?>
 <?php include '../../common/view/chosen.html.php';?>
-<form id='ajaxForm' method='post' action='<?php echo inlink('create');?>'>
+<form id='createContactForm' method='post' action='<?php echo inlink('create');?>'>
   <table class='table table-form'>
     <tr>
-      <th class='w-100px'><?php echo $lang->usercontact->name;?></th>
+      <th class='w-80px'><?php echo $lang->usercontact->name;?></th>
       <td><?php echo html::input('name', '', "class='form-control'");?>
+      <td class='w-40px'></td>
     </tr>
     <tr>
       <th><?php echo $lang->usercontact->member;?></th>
       <td><?php echo html::select('member[]', $users, '', "class='form-control chosen' multiple");?>
+      <td></td>
     </tr>
     <tr>
       <th></th>
       <td><label class='checkbox-inline'><input type='checkbox' id='public' name='public' value='1'><?php echo $lang->usercontact->public;?></label></td>
+      <td></td>
     </tr>
     <tr>
       <th></th>
       <td><?php echo html::submitButton();?></td>
+      <td></td>
     </tr>
   </table>
 </form>

@@ -31,16 +31,24 @@ class usercontactModel extends model
      */
     public function getList()
     {
-        $contacts = $this->dao->select('*')->from(TABLE_USERCONTACT)
-            ->where('account')->eq($this->app->user->account)
-            ->orWhere('public')->eq('1')
-            ->fetchAll('id');
+        $contacts = $this->dao->select('*')->from(TABLE_USERCONTACT)->where('account')->eq($this->app->user->account)->orWhere('public')->eq('1')->fetchAll('id');
         foreach($contacts as $contact)
         {
             $contact->member = explode(',', trim($contact->member, ','));
         }
 
         return $contacts;
+    }
+
+    /**
+     * Get contact pairs.
+     *
+     * @access public
+     * @return array
+     */
+    public function getPairs()
+    {
+        return $this->dao->select('id, name')->from(TABLE_USERCONTACT)->where('account')->eq($this->app->user->account)->orWhere('public')->eq('1')->fetchPairs();
     }
 
     /**

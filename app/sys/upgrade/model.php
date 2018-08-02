@@ -159,6 +159,7 @@ class upgradeModel extends model
                 $this->execSQL($this->getUpgradeFile('4.6.3'));
             case '4_7':
                 $this->execSQL($this->getUpgradeFile('4.7'));
+                if(strpos($this->config->global->version, 'pro') === false) $this->execSQL($this->getUpgradeFile('workflow'));
 
             default: if(!$this->isError()) $this->loadModel('setting')->updateVersion($this->config->version);
         }
@@ -213,7 +214,9 @@ class upgradeModel extends model
             case '4_6_1'   : $confirmContent .= file_get_contents($this->getUpgradeFile('4.6.1'));
             case '4_6_2'   : $confirmContent .= file_get_contents($this->getUpgradeFile('4.6.2'));
             case '4_6_3'   : $confirmContent .= file_get_contents($this->getUpgradeFile('4.6.3'));
-            case '4_7'     : $confirmContent .= file_get_contents($this->getUpgradeFile('4.7'));
+            case '4_7'     :
+                $confirmContent .= file_get_contents($this->getUpgradeFile('4.7'));
+                if(strpos($this->config->global->version, 'pro') === false) $confirmContent .= file_get_contents($this->getUpgradeFile('workflow'));
         }
         return $confirmContent;
     }
