@@ -37,3 +37,6 @@ $lang->my->project->common = 'My Project';
 $lang->my->dynamic->common = 'My Dynamic';
 
 $lang->my->review->module = 'Module';
+
+$lang->my->contact = new stdclass();
+$lang->my->contact->common = 'contact';

@@ -264,6 +264,7 @@ $lang->menu->dashboard->contract = '合同|my|contract|';
 $lang->menu->dashboard->review   = '审批|my|review|';
 $lang->menu->dashboard->company  = '组织|my|company|';
 $lang->menu->dashboard->dynamic  = '动态|my|dynamic|';
+$lang->menu->dashboard->contact  = '联系人|my|contact|';
 
 /* Menu of customer module. */
 if(!isset($lang->customer)) $lang->customer = new stdclass();

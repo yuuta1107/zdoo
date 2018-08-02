@@ -1054,6 +1054,16 @@ CREATE TABLE IF NOT EXISTS `sys_user` (
   KEY `accountPassword` (`account`,`password`),
   KEY `dept` (`dept`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+-- DROP TABLE IF EXISTS `sys_usercontact`;
+CREATE TABLE IF NOT EXISTS `sys_usercontact` (
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `account` char(30) NOT NULL,
+  `name` varchar(60) NOT NULL,
+  `member` text NOT NULL,
+  `public` enum('0', '1') NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `account` (`account`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `sys_group`;
 CREATE TABLE IF NOT EXISTS `sys_group` (
   `id` mediumint(8) unsigned NOT NULL auto_increment,

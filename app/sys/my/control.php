@@ -444,4 +444,12 @@ class my extends control
         $this->view->users   = $this->loadModel('user')->getPairs();
         $this->display();
     }
+
+    public function contact()
+    {
+        $this->view->title    = $this->lang->my->contact->common;
+        $this->view->contacts = $this->loadModel('usercontact', 'sys')->getList();
+        $this->view->users    = $this->loadModel('user', 'sys')->getPairs();
+        $this->display();
+    }
 }

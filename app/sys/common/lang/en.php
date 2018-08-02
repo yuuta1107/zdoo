@@ -264,6 +264,7 @@ $lang->menu->dashboard->contract = 'Contract|my|contract|';
 $lang->menu->dashboard->review   = 'Review|my|review|';
 $lang->menu->dashboard->company  = 'Company|my|company|';
 $lang->menu->dashboard->dynamic  = 'Dynamic|my|dynamic|';
+$lang->menu->dashboard->contact  = 'Contact|my|contact|';
 
 /* Menu of customer module. */
 if(!isset($lang->customer)) $lang->customer = new stdclass();

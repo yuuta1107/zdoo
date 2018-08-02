@@ -25,6 +25,7 @@ $lang->sys->dashboard->menuOrder[25] = 'contract';
 $lang->sys->dashboard->menuOrder[30] = 'review';
 $lang->sys->dashboard->menuOrder[35] = 'company';
 $lang->sys->dashboard->menuOrder[40] = 'dynamic';
+$lang->sys->dashboard->menuOrder[45] = 'contact';
 
 $lang->customer->menuOrder[5]  = 'browse'; 
 $lang->customer->menuOrder[10] = 'assignedTo';

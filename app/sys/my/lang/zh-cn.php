@@ -37,3 +37,6 @@ $lang->my->project->common = '我的项目';
 $lang->my->dynamic->common = '我的动态';
 
 $lang->my->review->module = '模块';
+
+$lang->my->contact = new stdclass();
+$lang->my->contact->common = '联系人';
