@@ -88,6 +88,7 @@
           <th class='w-80px'><?php echo $lang->trade->loanrate;?></th>
           <?php endif;?>
           <th class='text-left visible-lg'><?php echo $lang->trade->desc;?></th>
+          <th class='w-80px text-center'><?php commonModel::printOrderLink('createdDate', $orderBy, $vars, $lang->trade->createdDate);?></th>
           <?php $class = $this->app->clientLang == 'en' ? 'w-160px' : 'w-130px';?>
           <th class='<?php echo $class;?>'><?php echo $lang->actions;?></th>
         </tr>
@@ -140,6 +141,7 @@
           <td><?php if($trade->interest) echo $trade->interest;?></td>
           <?php endif;?>
           <td class='text-left visible-lg'><div title="<?php echo $trade->desc;?>" class='w-200px text-ellipsis'><?php echo $trade->desc;?><div></td>
+          <td class='text-center'><?php echo formatTime($trade->createdDate, DT_DATE1);?></td>
           <td>
             <?php commonModel::printLink('trade', 'view', "tradeID={$trade->id}&mode={$mode}", $lang->view);?>
             <?php commonModel::printLink('trade', 'edit', "tradeID={$trade->id}&mode={$mode}", $lang->edit);?>
