@@ -541,7 +541,7 @@ class actionModel extends model
         /* Get actions. */
         $actions = $this->dao->select('*')->from(TABLE_ACTION)
             ->where(1)
-            ->andWhere('objectType')->notin('attend,refund,leave,overtime,trip,egress,action')
+            ->andWhere('objectType')->notin('attend,refund,leave,overtime,trip,egress,action,usercontact')
             ->beginIF($period != 'bysearch' && $period  != 'all')->andWhere('date')->gt($begin)->fi()
             ->beginIF($period != 'bysearch' && $period  != 'all')->andWhere('date')->lt($end)->fi()
             ->beginIF($period != 'bysearch' && $account != 'all')->andWhere('actor')->eq($account)->fi()
