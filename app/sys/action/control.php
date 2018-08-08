@@ -230,7 +230,14 @@ class action extends control
         }
 
         $contactPairs = array();
-        $contacts     = $this->loadModel('contact', 'crm')->getList($record->objectType == 'customer' ? $object->id : $object->customer);
+        if(!empty($object->relation) && $object->relation == 'provider')
+        {
+            $contacts = $this->loadModel('contact', 'crm')->getList($object->id, 'provider');
+        }
+        else
+        {
+            $contacts = $this->loadModel('contact', 'crm')->getList($record->objectType == 'customer' ? $object->id : $object->customer);
+        }
         foreach($contacts as $contact) $contactPairs[$contact->id] = $contact->realname;
 
         $this->view->title          = $this->lang->action->record->edit;
