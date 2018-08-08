@@ -1238,7 +1238,7 @@ class commonModel extends model
         if(!$queryCondition) return $preAndNextObject;
 
         /* delete limit condition if exist. */
-        if(stripos($queryCondition, 'limit')) $queryCondition = substr($queryCondition, 0, stripos($queryCondition, 'limit'));
+        if(strpos($queryCondition, 'LIMIT')) $queryCondition = substr($queryCondition, 0, strpos($queryCondition, 'LIMIT'));
         $queryObjects = $this->dao->query($queryCondition);
 
         $preOBJ  = false;
