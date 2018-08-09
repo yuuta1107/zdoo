@@ -84,7 +84,6 @@ $lang->trade->compare        = '年度對比表';
 $lang->trade->setReportUnit  = '設置報表單位';
 $lang->trade->settings       = '記賬設置';
 $lang->trade->manageCategory = '維護科目';
-$lang->trade->refresh        = '刷新';
 
 $lang->trade->settingList['trader']       = '必須選擇商戶';
 $lang->trade->settingList['product']      = '必須選擇產品';

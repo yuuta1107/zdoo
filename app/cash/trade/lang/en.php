@@ -84,7 +84,6 @@ $lang->trade->compare        = 'Annual Compare';
 $lang->trade->setReportUnit  = 'Report Unit';
 $lang->trade->settings       = 'Trade Setting';
 $lang->trade->manageCategory = 'Manage Category';
-$lang->trade->refresh        = 'Refresh';
 
 $lang->trade->settingList['trader']       = 'select merchants';
 $lang->trade->settingList['product']      = 'select product';
