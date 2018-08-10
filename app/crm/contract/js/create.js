@@ -19,9 +19,8 @@ function getOrder(customerID)
     $('#orderTD').load(createLink('contract', 'getOrder', 'customerID=' + customerID + '&status=normal'), function()
     {
         $('#orderTR').removeClass('hide');
-       // if($('.select-order').length > 1) $('.select-order').parents('tr').not('#orderTR, #tmpData, .orderInfo').remove();
-        if($('.select-order').length > 1) $('#orderTR').hide();
-        if(v.order) $('#orderTD [name*=order]').val(v.order);
+        if($('.select-order').length > 1) $('.select-order').parents('tr').not('#orderTR, #tmpData, .orderInfo').remove();
+        if(v.order) $('#orderTD .select-order:first').val(v.order).change();
     })
 }
 
@@ -46,7 +45,7 @@ $(document).ready(function()
     {
         if($(this).val() === 'showmore')
         {
-             showSearchModal();
+            showSearchModal();
         }
     });
 
