@@ -192,8 +192,9 @@ $lang->action->label->provider  = 'Supplier|provider|view|providerID=%s';
 $lang->action->label->schema    = 'Trade Template|schema|browse|';
 $lang->action->label->space     = ' ';
 $lang->action->label->task      = 'Task|task|view|taskID=%s';
-$lang->action->label->todo      = '待办|todo|view|todoID=%s';
+$lang->action->label->todo      = 'Todo|todo|view|todoID=%s';
 $lang->action->label->trade     = 'Trade|trade|browse|';
+$lang->action->label->user      = 'User';
 
 $lang->action->label->attend = array();
 $lang->action->label->attend['commited'] = 'attend review|attend|browsereview|';
@@ -228,9 +229,6 @@ $lang->action->label->refund['reviewed']    = 'refund review|refund|view|refundI
 $lang->action->label->refund['reimburse']   = 'refund review|refund|view|refundID=%s';
 $lang->action->label->refund['createtrade'] = 'refund review|refund|view|refundID=%s';
 $lang->action->label->refund['deletedfile'] = 'refund review|refund|view|refundID=%s';
-$lang->action->label->user = array();
-$lang->action->label->user['login']  = 'login|user|login|';
-$lang->action->label->user['logout'] = 'logout|user|logout|';
 
 $lang->action->nextContactList[1]      = 'tomorrow';
 $lang->action->nextContactList[2]      = 'in 2 days';

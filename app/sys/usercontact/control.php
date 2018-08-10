@@ -30,7 +30,7 @@ class usercontact extends control
         }
 
         $this->view->title = $this->lang->usercontact->view;
-        $this->view->users = $this->loadModel('user', 'sys')->getPairs();
+        $this->view->users = $this->loadModel('user')->getPairs('noclosed,nodeleted,noforbidden');
         $this->display();
     }
 
@@ -59,7 +59,7 @@ class usercontact extends control
 
         $this->view->title   = $this->lang->usercontact->view;
         $this->view->contact = $this->usercontact->getById($id);
-        $this->view->users   = $this->loadModel('user', 'sys')->getPairs();
+        $this->view->users   = $this->loadModel('user')->getPairs('noclosed,nodeleted,noforbidden');
         $this->display();
     }
 

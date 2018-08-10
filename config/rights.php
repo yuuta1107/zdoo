@@ -37,6 +37,12 @@ $config->rights->member['user']['uploadavatar']   = 'uploadavatar';
 $config->rights->member['user']['cropavatar']     = 'cropavatar';
 $config->rights->member['user']['editself']       = 'editself';
 
+$config->rights->member['usercontact']['create']                = 'create';
+$config->rights->member['usercontact']['edit']                  = 'edit';
+$config->rights->member['usercontact']['delete']                = 'delete';
+$config->rights->member['usercontact']['buildcontactlist']      = 'buildcontactlist';
+$config->rights->member['usercontact']['ajaxgetcontactmembers'] = 'ajaxgetcontactmembers';
+
 $config->rights->member['search']['buildform']   = 'buildform';
 $config->rights->member['search']['buildquery']  = 'buildquery';
 $config->rights->member['search']['savequery']   = 'savequery';
@@ -199,3 +205,4 @@ $config->rights->member['my']['dynamic']  = 'dynamic';
 $config->rights->member['my']['order']    = 'order';
 $config->rights->member['my']['contract'] = 'contract';
 $config->rights->member['my']['review']   = 'review';
+$config->rights->member['my']['contact']  = 'contact';

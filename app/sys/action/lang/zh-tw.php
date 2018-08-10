@@ -194,6 +194,7 @@ $lang->action->label->space     = ' ';
 $lang->action->label->task      = '任務|task|view|taskID=%s';
 $lang->action->label->todo      = '待辦|todo|view|todoID=%s';
 $lang->action->label->trade     = '賬目|trade|browse|';
+$lang->action->label->user      = '用戶';
 
 $lang->action->label->attend = array();
 $lang->action->label->attend['commited'] = '考勤審核|attend|browsereview|';
@@ -228,9 +229,6 @@ $lang->action->label->refund['reviewed']    = '報銷審批|refund|view|refundID
 $lang->action->label->refund['reimburse']   = '報銷審批|refund|view|refundID=%s';
 $lang->action->label->refund['createtrade'] = '報銷記賬|refund|view|refundID=%s';
 $lang->action->label->refund['deletedfile'] = '報銷審批|refund|view|refundID=%s';
-$lang->action->label->user = array();
-$lang->action->label->user['login']  = '登錄|user|login|';
-$lang->action->label->user['logout'] = '退出|user|logout|';
 
 $lang->action->nextContactList[1]      = '明天';
 $lang->action->nextContactList[2]      = '後天';
