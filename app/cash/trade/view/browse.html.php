@@ -151,7 +151,7 @@
         </tr>
         <?php if(!empty($trade->children)):?>
         <tr class='tr-children'>
-          <td colspan='14'>
+          <td colspan='15'>
             <table class='table table-hover table-striped table-data table-fixed'>
               <?php foreach($trade->children as $trade):?>
               <tr class='text-center'>
@@ -173,6 +173,7 @@
                 <td class='w-100px text-nowrap text-ellipsis text-left' title='<?php echo $category;?>'><?php echo $category;?></td>
                 <td colspan='4' class='w-300px'></td>
                 <td class='text-left visible-lg'><div title="<?php echo $trade->desc;?>" class='w-200px text-ellipsis'><?php echo $trade->desc;?><div></td>
+                <td class='w-80px text-center'><?php echo formatTime($trade->createdDate, DT_DATE1);?></td>
                 <?php $class = $this->app->clientLang == 'en' ? 'w-160px' : 'w-130px';?>
                 <td class='<?php echo $class;?>'>
                   <?php commonModel::printLink('trade', 'view', "tradeID={$trade->id}&mode={$mode}", $lang->view);?>
