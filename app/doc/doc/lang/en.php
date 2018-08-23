@@ -21,7 +21,7 @@ $lang->doc->digest         = 'Summary';
 $lang->doc->comment        = 'Comment';
 $lang->doc->type           = 'Type';
 $lang->doc->content        = 'Content';
-$lang->doc->keywords       = 'Keywords';
+$lang->doc->keywords       = 'Tag';
 $lang->doc->url            = 'URL';
 $lang->doc->files          = 'File';
 $lang->doc->views          = 'Views';
@@ -38,8 +38,8 @@ $lang->doc->edit           = 'Edit';
 $lang->doc->delete         = 'Delete';
 $lang->doc->browse         = 'Documents';
 $lang->doc->view           = 'Documents';
-$lang->doc->manageType     = 'Manage Categories';
-$lang->doc->showFiles      = 'Files Library';
+$lang->doc->manageType     = 'Manage Category';
+$lang->doc->showFiles      = 'File Library';
 $lang->doc->sort           = 'Sort';
 
 $lang->doc->libName        = 'Name';
@@ -50,11 +50,11 @@ $lang->doc->customLibs     = 'Custom Library';
 $lang->doc->projectMainLib = 'Main Library';
 $lang->doc->fileLib        = 'File Library';
 
-$lang->doc->createLib      = 'Create a Library';
+$lang->doc->createLib      = 'Create Library';
 $lang->doc->editLib        = 'Edit';
 $lang->doc->deleteLib      = 'Delete';
-$lang->doc->fixedMenu      = 'Fixed Menu';
-$lang->doc->removedMenu    = 'Remove Menu';
+$lang->doc->fixedMenu      = 'Fix to NavBar';
+$lang->doc->removedMenu    = 'Remove from NavNar';
 
 $lang->doc->editCategory   = 'Edit Category';
 $lang->doc->deleteCategory = 'Delete Category';
@@ -79,7 +79,7 @@ $lang->doc->browseTypeList['tree'] = 'Tree';
 
 $lang->doc->confirmDelete      = "Do you want to delete this doc?";
 $lang->doc->confirmDeleteLib   = "Do you want to delete this doc library?";
-$lang->doc->errorEditSystemDoc = "System doc library cannot be edited.";
+$lang->doc->errorEditSystemDoc = "System document library cannot be edited.";
 
 $lang->doc->placeholder = new stdclass();
 $lang->doc->placeholder->url = 'url';

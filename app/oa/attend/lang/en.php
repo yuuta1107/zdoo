@@ -42,8 +42,8 @@ $lang->attend->report        = 'Report';
 $lang->attend->AM            = 'AM';
 $lang->attend->PM            = 'PM';
 $lang->attend->ipList        = 'IP List';
-$lang->attend->noAttendUsers = 'Clock-in/out not required';
-$lang->attend->signInClient  = 'Clockin Client';
+$lang->attend->noAttendUsers = 'Not required';
+$lang->attend->signInClient  = 'Client';
 $lang->attend->rejectReason  = 'Reject Reason';
 
 $lang->attend->user          = 'User';
@@ -143,14 +143,14 @@ $lang->attend->notice['absent']   = "N/A";
 $lang->attend->confirmReview['pass']   = 'Do you want to pass it?';
 $lang->attend->confirmReview['reject'] = 'Do you want to reject it?';
 
-$lang->attend->settings         = 'Company Attend Settings';
-$lang->attend->personalSettings = 'Personal Attend Settings';
+$lang->attend->settings         = 'Company Settings';
+$lang->attend->personalSettings = 'Personal Settings';
 $lang->attend->setManager       = 'Department Manager Settings';
 $lang->attend->setDept          = 'Set Department';
 
 $lang->attend->beginDate = new stdClass();
-$lang->attend->beginDate->company  = 'Company start record attend';
-$lang->attend->beginDate->personal = 'People start record attend';
+$lang->attend->beginDate->company  = 'Start Date';
+$lang->attend->beginDate->personal = 'Start Date';
 
 $lang->attend->note = new stdClass();
 $lang->attend->note->ip           = "Use commas to separate IPs, and IP segment is OK, e.g. 192.168.1.*";

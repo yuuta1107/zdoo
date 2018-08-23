@@ -17,7 +17,7 @@ $lang->leave->personal       = 'My Leave';
 $lang->leave->browseReview   = 'Review List';
 $lang->leave->company        = 'All';
 $lang->leave->setReviewer    = 'Set Reviewer';
-$lang->leave->personalAnnual = 'Personal Annual';
+$lang->leave->personalAnnual = 'Annual Leave';
 $lang->leave->batchReview    = 'Batch Review';
 $lang->leave->batchPass      = 'Batch Pass';
 
@@ -41,7 +41,7 @@ $lang->leave->time         = 'Time';
 $lang->leave->rejectReason = 'Reject Reason';
 $lang->leave->account      = 'Account';
 $lang->leave->dateRange    = 'Date Range';
-$lang->leave->totalAnnual  = 'Annual Days';
+$lang->leave->totalAnnual  = 'Annual Leave Settings';
 
 $lang->leave->typeList['affairs']   = 'Private';
 $lang->leave->typeList['sick']      = 'Sick';
@@ -81,4 +81,4 @@ $lang->leave->reviewStatusList['reject'] = 'Reject';
 
 $lang->leave->settings = new stdclass();
 $lang->leave->settings->setReviewer    = "Reviewer|leave|setreviewer";
-$lang->leave->settings->personalAnnual = "Personal annual leave|leave|personalannual";
+$lang->leave->settings->personalAnnual = "Annual leave|leave|personalannual";

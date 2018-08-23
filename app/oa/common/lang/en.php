@@ -1,4 +1,4 @@
-<?php
+Company Attend<?php
 /**
  * The en file of common module of RanZhi.
  *
@@ -101,8 +101,8 @@ $lang->holiday->menu->all = 'All|holiday|browse|';
 
 $lang->setting->menu = new stdclass();
 $lang->setting->menu->modules         = 'Modules|setting|modules|app=oa';
-$lang->setting->menu->companyAttend   = 'Company Attend Settings|attend|settings|module=setting';
-$lang->setting->menu->personalAttend  = 'Personal Attend Settings|attend|personalSettings|module=setting';
+$lang->setting->menu->companyAttend   = 'Company Settings|attend|settings|module=setting';
+$lang->setting->menu->personalAttend  = 'Personal Settings|attend|personalSettings|module=setting';
 $lang->setting->menu->deptManager     = 'Dept Manager Settings|attend|setManager|module=setting';
 $lang->setting->menu->leaveReviewer   = 'Leave Settings|leave|setReviewer|module=setting';
 $lang->setting->menu->makeupReviewer  = 'Makeup Settings|makeup|setReviewer|module=setting';
