@@ -89,9 +89,9 @@ $lang->egress->menu->company    = 'Company|egress|company|';
 if(!isset($lang->refund)) $lang->refund = new stdclass();
 $lang->refund->menu = new stdclass();
 $lang->refund->menu->personal   = array('link' => 'My reimbursement|refund|personal|', 'alias' => 'create, edit');
-$lang->refund->menu->review     = 'Review pending|refund|browsereview|status=unreviewed';
+$lang->refund->menu->review     = 'Review wait|refund|browsereview|status=unreviewed';
 $lang->refund->menu->reviewedBy = 'Reviewed by me|refund|browsereview|status=reviewed';
-$lang->refund->menu->todo       = 'Reimburse pending|refund|todo|';
+$lang->refund->menu->todo       = 'Reimburse wait|refund|todo|';
 $lang->refund->menu->company    = 'All|refund|company|';
 $lang->refund->menu->settings   = array('link' => 'Settings|refund|setreviewer|', 'alias' => 'setcategory,setdepositor,setrefundby');
 

@@ -299,11 +299,11 @@ $lang->product->menu->category   = 'Category|tree|browse|type=product';
 $lang->todo = new stdclass();
 $lang->todo->menu = new stdclass();
 $lang->todo->menu->calendar        = 'Calendar|todo|calendar|';
-$lang->todo->menu->all             = 'All|todo|browse|mode=all';
-$lang->todo->menu->assignedToOther = 'Assigned to others|todo|browse|mode=assignedtoother';
-$lang->todo->menu->assignedToMe    = 'Assigned to me|todo|browse|mode=assignedtome';
-$lang->todo->menu->undone          = 'Undone|todo|browse|mode=undone';
-$lang->todo->menu->future          = 'Pending|todo|browse|mode=future';
+$lang->todo->menu->all             = 'All Todos|todo|browse|mode=all';
+$lang->todo->menu->assignedToOther = 'Other Todos|todo|browse|mode=assignedtoother';
+$lang->todo->menu->assignedToMe    = 'My Todos|todo|browse|mode=assignedtome';
+$lang->todo->menu->undone          = 'Unfinished|todo|browse|mode=undone';
+$lang->todo->menu->future          = 'Wait|todo|browse|mode=future';
  
 $lang->my = new stdclass();
 $lang->my->review = new stdclass();
