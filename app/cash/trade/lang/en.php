@@ -26,7 +26,7 @@ $lang->trade->product     = 'Product';
 $lang->trade->order       = 'Order';
 $lang->trade->contract    = 'Contract';
 $lang->trade->category    = 'Category';
-$lang->trade->date        = 'Transaction time';
+$lang->trade->date        = 'Date';
 $lang->trade->deadline    = 'Deadline';
 $lang->trade->handlers    = 'Handler';
 $lang->trade->dept        = 'Dept';
@@ -82,7 +82,7 @@ $lang->trade->quarter        = 'Quarter';
 $lang->trade->export2Excel   = 'Export Excel';
 $lang->trade->compare        = 'Annual Compare';
 $lang->trade->setReportUnit  = 'Report Unit';
-$lang->trade->settings       = 'Trade Setting';
+$lang->trade->settings       = 'Settings';
 $lang->trade->manageCategory = 'Manage Category';
 
 $lang->trade->settingList['trader']       = 'select merchants';
