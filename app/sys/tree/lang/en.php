@@ -39,8 +39,8 @@ $lang->category->name     = 'Name';
 $lang->category->alias    = 'Alias';
 $lang->category->parent   = 'Parent';
 $lang->category->desc     = 'Description';
-$lang->category->keywords = 'Keywords';
-$lang->category->children = "Children";
+$lang->category->keywords = 'Tag';
+$lang->category->children = "Child";
 $lang->category->rights   = 'Rights';
 $lang->category->users    = 'Users';
 $lang->category->groups   = 'Groups';
@@ -54,8 +54,8 @@ $lang->area->name     = 'Name';
 $lang->area->alias    = 'Alias';
 $lang->area->parent   = 'Parent';
 $lang->area->desc     = 'Description';
-$lang->area->keywords = 'Keywords';
-$lang->area->children = 'Children';
+$lang->area->keywords = 'Tag';
+$lang->area->children = 'Child';
 
 /* Lang items for industry. */
 $lang->industry = new stdclass();
@@ -64,8 +64,8 @@ $lang->industry->name     = 'Name';
 $lang->industry->alias    = 'Alias';
 $lang->industry->parent   = 'Parent';
 $lang->industry->desc     = 'Description';
-$lang->industry->keywords = 'Keywords';
-$lang->industry->children = "Children";
+$lang->industry->keywords = 'Tag';
+$lang->industry->children = "Child";
 
 /* Lang items for income. */
 $lang->in = new stdclass();
@@ -101,8 +101,8 @@ $lang->board->name       = 'Board';
 $lang->board->alias      = 'Alias';
 $lang->board->parent     = 'Parent';
 $lang->board->desc       = 'Description';
-$lang->board->keywords   = 'Keyword';
-$lang->board->children   = "Children";
+$lang->board->keywords   = 'Tag';
+$lang->board->children   = "Child";
 $lang->board->readonly   = 'Read Only';
 $lang->board->moderators = 'Board Moderator';
 $lang->board->users      = 'Users';

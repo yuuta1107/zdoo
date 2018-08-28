@@ -37,7 +37,7 @@ $lang->thread->switchStatus = 'Switch Status';
 $lang->thread->deleteFile   = 'Delete File';
 
 $lang->thread->sticks[0] = 'Don\'t stick';
-$lang->thread->sticks[1] = 'Stick on board';
+$lang->thread->sticks[1] = 'Board stick';
 $lang->thread->sticks[2] = 'Global stick';
 
 $lang->thread->statusList['hidden'] = 'hidden';

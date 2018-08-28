@@ -1,4 +1,4 @@
-<?php
+Company Attend<?php
 /**
  * The en file of common module of RanZhi.
  *
@@ -89,9 +89,9 @@ $lang->egress->menu->company    = 'Company|egress|company|';
 if(!isset($lang->refund)) $lang->refund = new stdclass();
 $lang->refund->menu = new stdclass();
 $lang->refund->menu->personal   = array('link' => 'My reimbursement|refund|personal|', 'alias' => 'create, edit');
-$lang->refund->menu->review     = 'Review pending|refund|browsereview|status=unreviewed';
+$lang->refund->menu->review     = 'Review wait|refund|browsereview|status=unreviewed';
 $lang->refund->menu->reviewedBy = 'Reviewed by me|refund|browsereview|status=reviewed';
-$lang->refund->menu->todo       = 'Reimburse pending|refund|todo|';
+$lang->refund->menu->todo       = 'Reimburse wait|refund|todo|';
 $lang->refund->menu->company    = 'All|refund|company|';
 $lang->refund->menu->settings   = array('link' => 'Settings|refund|setreviewer|', 'alias' => 'setcategory,setdepositor,setrefundby');
 
@@ -101,8 +101,8 @@ $lang->holiday->menu->all = 'All|holiday|browse|';
 
 $lang->setting->menu = new stdclass();
 $lang->setting->menu->modules         = 'Modules|setting|modules|app=oa';
-$lang->setting->menu->companyAttend   = 'Company Attend Settings|attend|settings|module=setting';
-$lang->setting->menu->personalAttend  = 'Personal Attend Settings|attend|personalSettings|module=setting';
+$lang->setting->menu->companyAttend   = 'Company Settings|attend|settings|module=setting';
+$lang->setting->menu->personalAttend  = 'Personal Settings|attend|personalSettings|module=setting';
 $lang->setting->menu->deptManager     = 'Dept Manager Settings|attend|setManager|module=setting';
 $lang->setting->menu->leaveReviewer   = 'Leave Settings|leave|setReviewer|module=setting';
 $lang->setting->menu->makeupReviewer  = 'Makeup Settings|makeup|setReviewer|module=setting';
