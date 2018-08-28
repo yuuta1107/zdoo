@@ -10,7 +10,7 @@
  * @link        http://www.ranzhi.org
  */
 $config->user->require = new stdclass();
-$config->user->require->create = 'account,realname,email,password1';
+$config->user->require->create = 'account,realname,email';
 $config->user->require->edit   = 'realname,email';
 
 $config->user->retainAccount = array('guest', 'default');
