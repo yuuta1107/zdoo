@@ -22,9 +22,9 @@
       <th class='w-100px'><?php echo $lang->refund->money;?></th>
       <th class='w-100px'><?php echo $lang->refund->status;?></th>
       <th class='w-120px'><?php echo $lang->refund->category;?></th>
-      <th class='w-90px text-nowrap'><?php echo $lang->refund->desc;?></th>
+      <th class='text-nowrap'><?php echo $lang->refund->desc;?></th>
       <?php if(!empty($refund->detail)):?>
-      <th class='w-160px'>
+      <th class='w-140px'>
         <div class='btn-group'>
           <button class='btn btn-mini all-pass' type='button'><?php echo $lang->refund->reviewAllStatusList['allpass'];?></button>
           <?php echo html::hidden('allPass', '1');?>
@@ -33,7 +33,7 @@
         </div>
       </th>
       <?php else:;?>
-      <th class='w-160px'><?php echo $lang->actions;?></th>
+      <th class='w-120px'><?php echo $lang->actions;?></th>
       <?php endif;?>
     </tr>
     </thead>
@@ -64,20 +64,22 @@
   <table class='table table-borderless'>
     <tr class='reviewMoney'>
       <th class='w-70px text-center text-middle'><?php echo $lang->refund->reviewMoney;?></th>
-      <td>
+      <td class='w-300px'>
         <div class='input-group'>
           <?php echo html::input('money', $refund->money, "class='form-control'");?>
           <span class='input-group-addon'><?php echo zget($lang->currencyList, $refund->currency, $refund->currency);?></span>
         </div>
       </td>
+      <td></td>
     </tr>
     <tr class='reason'>
       <th class='w-70px text-center text-middle'><?php echo $lang->comment;?></th>
-      <td><?php echo html::textarea("reason", '', "class='form-control'");?></td>
+      <td colspan='2'><?php echo html::textarea("reason", '', "class='form-control'");?></td>
     </tr>
     <tr>
       <th></th>
       <td><?php echo html::submitButton();?></td>
+      <td></td>
     </tr>
   </table>
 </form>

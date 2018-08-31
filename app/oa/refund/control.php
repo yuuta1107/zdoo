@@ -102,7 +102,7 @@ class refund extends control
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => inlink('view', "refundID=$refundID&mode=personal")));
         }
 
-        $contracts        = $this->loadModel('contract', 'crm')->getPairs();
+        $contracts        = $this->loadModel('contract', 'crm')->getPairs($refund->customer);
         $contractsSawByMe = $this->contract->getContractsSawByMe();
         foreach($contracts as $id => $name)
         {
@@ -115,7 +115,7 @@ class refund extends control
         $this->view->users        = $this->loadModel('user')->getPairs('noclosed,nodeleted,noforbidden');
         $this->view->deptList     = $this->loadModel('tree')->getOptionMenu('dept');
         $this->view->customers    = $this->loadModel('customer')->getPairs('client', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit, $refund->customer);
-        $this->view->orders       = array('') + $this->loadModel('order', 'crm')->getPairs();
+        $this->view->orders       = array('') + $this->loadModel('order', 'crm')->getPairs($refund->customer);
         $this->view->projects     = array('') + $this->loadModel('project', 'proj')->getPairs();
         $this->view->contracts    = array('') + $contracts;
         $this->view->refund       = $refund;

@@ -15,7 +15,9 @@
 <?php include '../../../sys/common/view/chosen.html.php';?>
 <form id='ajaxForm' method='post' action="<?php echo $this->createLink('oa.refund', 'edit', "refundID={$refund->id}")?>">
   <div class='panel'>
-    <div class='panel-heading'><?php echo $lang->refund->edit;?></div>
+    <div class='panel-heading'>
+      <strong><?php echo $lang->refund->edit;?></strong>
+    </div>
     <div class='panel-body'>
       <table class='table table-form w-p70'>
         <tr>

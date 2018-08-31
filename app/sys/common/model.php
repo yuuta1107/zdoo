@@ -714,7 +714,7 @@ class commonModel extends model
      * @access public
      * @return void
      */
-    public static function printOrderLink($fieldName, $orderBy, $vars, $label, $module = '', $method = '')
+    public static function printOrderLink($fieldName, $orderBy, $vars, $label, $module = '', $method = '', $print = true)
     {
         global $lang, $app;
         if(empty($module)) $module = $app->getModuleName();
@@ -743,8 +743,13 @@ class commonModel extends model
 
         $link = helper::createLink($module, $method, sprintf($vars, $orderBy));
 
-        if(!$isMobile) echo "<div class='header$className'>" . html::a($link, $label) . '</div>';
-        else echo html::a($link, $label, "class='$className'");
+        $html = '';
+        if(!$isMobile) $html = "<div class='header$className'>" . html::a($link, $label) . '</div>';
+        else $html = html::a($link, $label, "class='$className'");
+
+        if(!$print) return $html;
+
+        echo$html;
     }
  
     /**
