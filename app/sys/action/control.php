@@ -349,14 +349,11 @@ class action extends control
      */
     public function finishDating($id)
     {
-        $user = $this->app->user->account;
-
         $dating = $this->action->getDatingById($id);
         if($dating->status != 'wait') $this->send(array('result' => 'success'));
-        if($this->app->user->admin != 'super' && $dating->account != $user && $dating->createdBy != $user) $this->send(array('result' => 'fail', 'message' => $this->lang->admin->record->finishDenied));
 
         $dating->status     = 'done';
-        $dating->editedBy   = $user;
+        $dating->editedBy   = $this->app->user->account;
         $dating->editedDate = helper::now();
         $this->dao->update(TABLE_DATING)->data($dating)->where('id')->eq($id)->exec();
 
@@ -376,7 +373,6 @@ class action extends control
     {
         $dating = $this->action->getDatingById($id);
         if($dating->status != 'wait') $this->send(array('result' => 'fail', 'message' => $this->lang->action->record->deleteFail));
-        if($this->app->user->admin != 'super' && $dating->createdBy != $this->app->user->account) $this->send(array('result' => 'fail', 'message' => $this->lang->admin->record->deleteDenied));
 
         $this->dao->delete()->from(TABLE_DATING)->where('id')->eq($id)->exec();
 
