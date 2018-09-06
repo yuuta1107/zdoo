@@ -662,11 +662,11 @@ $lang->company->methodOrder[10] = 'index';
 
 /* Action. */
 $lang->resource->action = new stdclass();
-$lang->resource->action->finishDating = 'finishDating';
-$lang->resource->action->deleteDating = 'deleteDating';
+$lang->resource->action->finishAllDating = 'finishAllDating';
+$lang->resource->action->deleteAllDating = 'deleteAllDating';
 
-$lang->action->methodOrder[5]  = 'finishDating';
-$lang->action->methodOrder[10] = 'deleteDating';
+$lang->action->methodOrder[5]  = 'finishAllDating';
+$lang->action->methodOrder[10] = 'deleteAllDating';
 
 /* Tree. */
 $lang->resource->tree = new stdclass();
