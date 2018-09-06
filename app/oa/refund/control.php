@@ -705,13 +705,13 @@ class refund extends control
     {
         if($this->app->user->admin == 'super') return true;
 
-        $pass = true;
-        $action = strtolower($action);
+        $pass    = true;
+        $action  = strtolower($action);
         $account = $this->app->user->account;
 
         if(strpos(',edit,delete,', ",$action,") !== false)
         {
-            if(($refund->status != 'wait' and $refund->status != 'draft') or $refund->createdBy != $account) $pass = false;
+            if(($refund->status != 'wait' and $refund->status != 'draft' and $refund->status != 'reject') or $refund->createdBy != $account) $pass = false;
         }
 
         if(!$pass)

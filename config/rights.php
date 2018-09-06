@@ -121,6 +121,8 @@ $config->rights->member['action']['editrecord']   = 'editrecord';
 $config->rights->member['action']['history']      = 'history';
 $config->rights->member['action']['editcomment']  = 'editcomment';
 $config->rights->member['action']['read']         = 'read';
+$config->rights->member['action']['finishdating'] = 'finishDating';
+$config->rights->member['action']['deletedating'] = 'deleteDating';
 
 $config->rights->member['file']['buildform']      = 'buildform';
 $config->rights->member['file']['buildlist']      = 'buildlist';
