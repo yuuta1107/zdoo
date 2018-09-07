@@ -46,13 +46,31 @@ class depositorModel extends model
      */
     public function getList($tag = '', $status = 'all', $orderBy = 'id_desc', $pager = null)
     {
-        return $this->dao->select('*')->from(TABLE_DEPOSITOR)
+        $depositors = $this->dao->select('*')->from(TABLE_DEPOSITOR)
             ->where(1)
             ->beginIF($status != 'all')->andWhere('status')->eq($status)->fi()
             ->beginIF($tag)->andWhere('tags')->like("%{$tag}%")->fi()
             ->orderBy($orderBy)
             ->page($pager)
             ->fetchAll('id');
+
+        $today     = helper::today();
+        $dateGroup = array();
+        $datePairs = $this->loadModel('balance', 'cash')->getDatePairs();
+        foreach($datePairs as $depositor => $date)
+        {
+            if(isset($depositors[$depositor])) $dateGroup[$date][] = $depositor;
+        }
+
+        foreach($dateGroup as $date => $groupDepositors)
+        {
+            $groupDepositors = $this->check($groupDepositors, $date, $today);
+            foreach($groupDepositors as $id => $depositor)
+            {
+                if(isset($depositors[$id])) $depositors[$id]->computed = $depositor->computed;
+            }
+        }
+        return $depositors;
     }
 
     /** 

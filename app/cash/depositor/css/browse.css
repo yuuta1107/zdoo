@@ -17,7 +17,11 @@
 .card-depositor > .card-heading.bank {background: #E5F9FF;}
 .card-depositor > .card-heading.bank > .info > .label {background: #39B3D7;}
 
-.label-balance{ position:absolute; right:20px; bottom:60px; font-size:16px; font-weight:600;}
+.label-balance  {font-size:16px; font-weight:600;}
+.label-actual   {position:absolute; right:20px; bottom:90px;}
+.label-computed {position:absolute; right:20px; bottom:60px;}
 .panel-heading > a {display: inline-block; line-height: 26px; padding: 0 10px;}
 .panel-heading > a.active {background-color: #f05500; border-radius: 13px; color: #fff;}
 .panel-heading > a:hover {text-decoration: none;}
+.panel-actions.pull-right .btn {padding: 6px 12px;}
+.pull-right.balance {margin-top: -5px;}

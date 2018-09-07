@@ -26,6 +26,7 @@
     <?php 
     if($app->user->admin == 'super' or isset($app->user->rights['balance']['browse']))
     {
+        echo "<div class='pull-right balance'><div class='text-success'>{$lang->depositor->saveBalance}";
         foreach($balances as $currency => $balanceList)
         {
             $sum = 0;
@@ -36,8 +37,26 @@
                 if($depositor->status != 'normal') continue;
                 $sum += $balance->money;
             }
-            if($sum) echo "<div class='pull-right'><strong class='text-danger' title='$sum'>" . $currencyList[$currency] . $lang->colon . commonModel::tidyMoney($sum) . '</strong></div>';
+            if($sum) echo " <strong title='$sum'>" . $currencyList[$currency] . $lang->colon . commonModel::tidyMoney($sum) . '</strong>';
         }
+        echo "</div><div class='text-danger'>{$lang->depositor->computedValue}";
+        $totalMoney = array();
+        foreach($depositors as $depositor)
+        {
+            if(isset($totalMoney[$depositor->currency]))
+            {
+                $totalMoney[$depositor->currency] += $depositor->computed;
+            }
+            else
+            {
+                $totalMoney[$depositor->currency] = $depositor->computed;
+            }
+        }
+        foreach($totalMoney as $currency => $total)
+        {
+            echo " <strong title='$total'>" . $currencyList[$currency] . $lang->colon . commonModel::tidyMoney($total) . '</strong>';
+        }
+        echo '</div></div>';
     }    
     ?>
   </div>
@@ -61,17 +80,31 @@
             <?php if($depositor->type == 'online') echo "<dl class='dl-horizontal'><dt>{$lang->depositor->serviceProvider} {$lang->colon} </dt><dd>{$lang->depositor->providerList[$depositor->provider]} </dd></dl>";?>
             <?php echo "<dl class='dl-horizontal'><dt>{$lang->depositor->account} {$lang->colon} </dt><dd>$depositor->account</dd></dl>";?>
             <?php if($depositor->type == 'bank') echo "<dl class='dl-horizontal'><dt>{$lang->depositor->bankcode} {$lang->colon} </dt><dd>$depositor->bankcode</dd></dl>";?>
-           <?php endif;?>
-           <?php if(($app->user->admin == 'super' or isset($app->user->rights['balance']['browse'])) and isset($balances[$depositor->currency][$depositor->id])):?>
-             <span  class='label-balance text-danger'>
-             <?php echo zget($lang->currencySymbols, $depositor->currency)?>
-             <?php if($balances[$depositor->currency][$depositor->id]->money == 0):?>
-             <?php echo $balances[$depositor->currency][$depositor->id]->money;?>
-             <?php else:?>
-             <?php echo formatMoney($balances[$depositor->currency][$depositor->id]->money);?>
-             <?php endif;?>
-             </span>
-           <?php endif;?>
+            <?php endif;?>
+            <?php if(($app->user->admin == 'super' or isset($app->user->rights['balance']['browse'])) and isset($balances[$depositor->currency][$depositor->id])):?>
+            <span  class='label-actual text-success'>
+              <?php echo $lang->depositor->saveBalance;?>
+              <label class='label-balance'>
+              <?php echo zget($lang->currencySymbols, $depositor->currency)?>
+              <?php if($balances[$depositor->currency][$depositor->id]->money == 0):?>
+              <?php echo $balances[$depositor->currency][$depositor->id]->money;?>
+              <?php else:?>
+              <?php echo formatMoney($balances[$depositor->currency][$depositor->id]->money);?>
+              <?php endif;?>
+              </label>
+            </span>
+            <span class='label-computed text-danger'>
+              <?php echo $lang->depositor->computedValue;?>
+              <label class='label-balance'>
+              <?php echo zget($lang->currencySymbols, $depositor->currency)?>
+              <?php if($depositor->computed == 0):?>
+              <?php echo $depositor->computed;?>
+              <?php else:?>
+              <?php echo formatMoney($depositor->computed);?>
+              <?php endif;?>
+              </label>
+            </span>
+            <?php endif;?>
           </div>
           <div class='card-actions'>
             <div class='pull-right'>
