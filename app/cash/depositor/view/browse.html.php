@@ -95,8 +95,6 @@
             <?php if($depositor->type == 'bank') echo "<dl class='dl-horizontal'><dt>{$lang->depositor->bankcode} {$lang->colon} </dt><dd>$depositor->bankcode</dd></dl>";?>
             <?php endif;?>
             <?php if(($app->user->admin == 'super' or isset($app->user->rights['balance']['browse'])) and isset($balances[$depositor->currency][$depositor->id])):?>
-            <?php $balances[$depositor->currency][$depositor->id]->money = 8000;?>
-            <?php $depositor->computed                                   = 8000;?>
             <?php if($balances[$depositor->currency][$depositor->id]->money == 0):?>
             <?php $savedBalance = $balances[$depositor->currency][$depositor->id]->money;?>
             <?php else:?>
