@@ -95,26 +95,33 @@
             <?php if($depositor->type == 'bank') echo "<dl class='dl-horizontal'><dt>{$lang->depositor->bankcode} {$lang->colon} </dt><dd>$depositor->bankcode</dd></dl>";?>
             <?php endif;?>
             <?php if(($app->user->admin == 'super' or isset($app->user->rights['balance']['browse'])) and isset($balances[$depositor->currency][$depositor->id])):?>
+            <?php $balances[$depositor->currency][$depositor->id]->money = 8000;?>
+            <?php $depositor->computed                                   = 8000;?>
+            <?php if($balances[$depositor->currency][$depositor->id]->money == 0):?>
+            <?php $savedBalance = $balances[$depositor->currency][$depositor->id]->money;?>
+            <?php else:?>
+            <?php $savedBalance = formatMoney($balances[$depositor->currency][$depositor->id]->money);?>
+            <?php endif;?>
+            <?php if($depositor->computed == 0):?>
+            <?php $computedBalance = $depositor->computed;?>
+            <?php else:?>
+            <?php $computedBalance = formatMoney($depositor->computed);?>
+            <?php endif;?>
+            <?php $lenA  = strlen(strval($savedBalance))    - substr_count(strval($savedBalance), ',')    + (strpos(strval($savedBalance), '.')    === false ? 1 : 0);?>
+            <?php $lenB  = strlen(strval($computedBalance)) - substr_count(strval($computedBalance), ',') + (strpos(strval($computedBalance), '.') === false ? 1 : 0);?>
+            <?php $width = ($lenA > $lenB ? 10 * $lenA : 10 * $lenB) + 20;?>
             <dl class='dl-horizontal'>
               <dt class='balance-label'><?php echo $lang->depositor->saveBalance . $lang->colon;?></dt>
-              <dd class='balance-value text-success'>
+              <dd class='balance-value text-success text-right' style='width: <?php echo $width;?>px'>
                 <?php echo zget($lang->currencySymbols, $depositor->currency);?>
-                <?php if($balances[$depositor->currency][$depositor->id]->money == 0):?>
-                <?php echo $balances[$depositor->currency][$depositor->id]->money;?>
-                <?php else:?>
-                <?php echo formatMoney($balances[$depositor->currency][$depositor->id]->money);?>
-                <?php endif;?>
+                <?php echo $savedBalance;?>
               </dd>
             </dl>
             <dl class='dl-horizontal'>
               <dt class='balance-label'><?php echo $lang->depositor->computedValue . $lang->colon;?></dt>
-              <dd class='balance-value text-danger'>
+              <dd class='balance-value text-danger text-right' style='width: <?php echo $width;?>px'>
                 <?php echo zget($lang->currencySymbols, $depositor->currency);?>
-                <?php if($depositor->computed == 0):?>
-                <?php echo $depositor->computed;?>
-                <?php else:?>
-                <?php echo formatMoney($depositor->computed);?>
-                <?php endif;?>
+                <?php echo $computedBalance;?>
               </dd>
             </dl>
             <?php endif;?>
