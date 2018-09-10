@@ -46,7 +46,7 @@ class depositorModel extends model
      */
     public function getList($tag = '', $status = 'all', $orderBy = 'id_desc', $pager = null)
     {
-        $depositors = $this->dao->select('*')->from(TABLE_DEPOSITOR)
+        $depositors = $this->dao->select('*, 0 AS computed')->from(TABLE_DEPOSITOR)
             ->where(1)
             ->beginIF($status != 'all')->andWhere('status')->eq($status)->fi()
             ->beginIF($tag)->andWhere('tags')->like("%{$tag}%")->fi()

@@ -26,7 +26,7 @@
     <?php 
     if($app->user->admin == 'super' or isset($app->user->rights['balance']['browse']))
     {
-        echo "<div class='pull-right balance'><div class='text-success'>{$lang->depositor->saveBalance}";
+        $savedHtml = '';
         foreach($balances as $currency => $balanceList)
         {
             $sum = 0;
@@ -37,12 +37,13 @@
                 if($depositor->status != 'normal') continue;
                 $sum += $balance->money;
             }
-            if($sum) echo " <strong title='$sum'>" . $currencyList[$currency] . $lang->colon . commonModel::tidyMoney($sum) . '</strong>';
+            if($sum) $savedHtml .= " <strong title='$sum'>" . $currencyList[$currency] . $lang->colon . commonModel::tidyMoney($sum) . '</strong>';
         }
-        echo "</div><div class='text-danger'>{$lang->depositor->computedValue}";
         $totalMoney = array();
         foreach($depositors as $depositor)
         {
+            if(empty($depositor->computed)) continue;
+
             if(isset($totalMoney[$depositor->currency]))
             {
                 $totalMoney[$depositor->currency] += $depositor->computed;
@@ -52,11 +53,23 @@
                 $totalMoney[$depositor->currency] = $depositor->computed;
             }
         }
+        $computedHtml = '';
         foreach($totalMoney as $currency => $total)
         {
-            echo " <strong title='$total'>" . $currencyList[$currency] . $lang->colon . commonModel::tidyMoney($total) . '</strong>';
+            if($total) $computedHtml .= " <strong title='$total'>" . $currencyList[$currency] . $lang->colon . commonModel::tidyMoney($total) . '</strong>';
         }
-        echo '</div></div>';
+        if($savedHtml)
+        {
+            $savedHtml = "<div class='text-success'>{$lang->depositor->saveBalance}{$savedHtml}</div>";
+        }
+        if($computedHtml)
+        {
+            $computedHtml = "<div class='text-danger'>{$lang->depositor->computedValue}{$computedHtml}</div>";
+        }
+        if($savedHtml or $computedHtml)
+        {
+            echo "<div class='pull-right balance'>$savedHtml$computedHtml</div>";
+        }
     }    
     ?>
   </div>
@@ -82,28 +95,28 @@
             <?php if($depositor->type == 'bank') echo "<dl class='dl-horizontal'><dt>{$lang->depositor->bankcode} {$lang->colon} </dt><dd>$depositor->bankcode</dd></dl>";?>
             <?php endif;?>
             <?php if(($app->user->admin == 'super' or isset($app->user->rights['balance']['browse'])) and isset($balances[$depositor->currency][$depositor->id])):?>
-            <span  class='label-actual text-success'>
-              <?php echo $lang->depositor->saveBalance;?>
-              <label class='label-balance'>
-              <?php echo zget($lang->currencySymbols, $depositor->currency)?>
-              <?php if($balances[$depositor->currency][$depositor->id]->money == 0):?>
-              <?php echo $balances[$depositor->currency][$depositor->id]->money;?>
-              <?php else:?>
-              <?php echo formatMoney($balances[$depositor->currency][$depositor->id]->money);?>
-              <?php endif;?>
-              </label>
-            </span>
-            <span class='label-computed text-danger'>
-              <?php echo $lang->depositor->computedValue;?>
-              <label class='label-balance'>
-              <?php echo zget($lang->currencySymbols, $depositor->currency)?>
-              <?php if($depositor->computed == 0):?>
-              <?php echo $depositor->computed;?>
-              <?php else:?>
-              <?php echo formatMoney($depositor->computed);?>
-              <?php endif;?>
-              </label>
-            </span>
+            <dl class='dl-horizontal'>
+              <dt class='balance-label'><?php echo $lang->depositor->saveBalance . $lang->colon;?></dt>
+              <dd class='balance-value text-success'>
+                <?php echo zget($lang->currencySymbols, $depositor->currency);?>
+                <?php if($balances[$depositor->currency][$depositor->id]->money == 0):?>
+                <?php echo $balances[$depositor->currency][$depositor->id]->money;?>
+                <?php else:?>
+                <?php echo formatMoney($balances[$depositor->currency][$depositor->id]->money);?>
+                <?php endif;?>
+              </dd>
+            </dl>
+            <dl class='dl-horizontal'>
+              <dt class='balance-label'><?php echo $lang->depositor->computedValue . $lang->colon;?></dt>
+              <dd class='balance-value text-danger'>
+                <?php echo zget($lang->currencySymbols, $depositor->currency);?>
+                <?php if($depositor->computed == 0):?>
+                <?php echo $depositor->computed;?>
+                <?php else:?>
+                <?php echo formatMoney($depositor->computed);?>
+                <?php endif;?>
+              </dd>
+            </dl>
             <?php endif;?>
           </div>
           <div class='card-actions'>
