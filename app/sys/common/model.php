@@ -1459,7 +1459,7 @@ class commonModel extends model
             }
             else
             {
-                return $money;
+                return formatMoney($money);
             }
         }
         else
