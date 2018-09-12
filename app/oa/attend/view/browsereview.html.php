@@ -29,8 +29,7 @@
       </tr>
     </thead>
     <?php foreach($attends as $attend):?>
-    <?php $account = $attend->account;?>
-    <?php if(!isset($users[$account])) continue;?>
+    <?php if(!isset($users[$attend->account])) continue;?>
     <?php $user = $users[$attend->account];?>
     <tr>
       <td><?php echo $attend->id;?></td>
