@@ -11,7 +11,7 @@
  */
 if(!isset($lang->action)) $lang->action = new stdclass();
 
-$lang->action->common       = '系统日志';
+$lang->action->common          = '系统日志';
 $lang->action->finishAllDating = '完成所有下次联系';
 $lang->action->deleteAllDating = '删除所有下次联系';
 
