@@ -204,7 +204,7 @@ class leads extends control
 
         $this->contact->delete(TABLE_CONTACT, $contactID);
         if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
-        $this->send(array('result' => 'success', 'locate' => inlink('browse')));
+        $this->send(array('result' => 'success'));
     }
 
     /**

@@ -276,7 +276,7 @@
 </div>
 <?php endif;?>
 
-<?php if($type == 'all'):?>
+<?php if($type == 'all' && (!empty($leaveList) or !empty($makeupList) or !empty($overtimeList) or !empty($lieuList))):?>
 <div class='panel'>
   <table class='table table-data table-hover text-center table-fixed tablesorter <?php echo $appendClass?>' id='leaveTable'>
     <thead>
@@ -355,7 +355,7 @@
       <td><?php echo $lang->lieu->common;?></td>
       <td><?php echo zget($users, $lieu->createdBy);?></td>
       <td><?php echo zget($deptList, $lieu->dept);?></td>
-      <td></td>
+      <td><?php echo $lang->leave->typeList['lieu'];?></td>
       <td><?php echo $lieu->begin . ' ' . substr($lieu->start, 0, 5);?></td>
       <td><?php echo $lieu->end . ' ' . substr($lieu->finish, 0, 5);?></td>
       <td><?php echo $lieu->hours;?></td>
