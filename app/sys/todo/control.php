@@ -518,7 +518,7 @@ class todo extends control
             {
                 $actionID = $this->loadModel('action')->create('todo', $todo->id, 'Assigned', '', $this->post->assignedTo);
                 $this->action->logHistory($actionID, $changes);
-                $this->loadModel('queue')->insertQueue($todoID, $actionID, $todo->assignTo);
+                $this->loadModel('queue')->insertQueue($todoID, $actionID, $todo->assignedTo);
             }
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'closeModal' => 'true', 'locate' => 'reload'));
