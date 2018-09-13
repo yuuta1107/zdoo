@@ -780,7 +780,7 @@ class actionModel extends model
      *
      * @param  int    $actionID
      * @access public
-     * @return void
+     * @return bool
      */
     public function updateComment($actionID)
     {
@@ -795,6 +795,8 @@ class actionModel extends model
             ->set('comment')->eq($action->comment)
             ->where('id')->eq($actionID)
             ->exec();
+
+        return !dao::isError();
     }
 
     /**

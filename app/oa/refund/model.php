@@ -448,7 +448,7 @@ class refundModel extends model
         {
             foreach($refund->detail as $detail)
             {
-                if($_POST["status{$detail->id}"] == 'reject') $data->status = 'reject';
+                $data->status = $_POST["status{$detail->id}"];
                 $this->dao->update(TABLE_REFUND)->data($data, $skip = 'money')->where('id')->eq($detail->id)->exec();
             }
         }
