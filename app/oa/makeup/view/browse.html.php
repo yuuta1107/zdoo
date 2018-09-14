@@ -68,7 +68,7 @@
           </tr>
         </thead>
         <?php foreach($makeupList as $makeup):?>
-        <tr>
+        <tr id='makeup<?php echo $makeup->id;?>'>
           <td class='idTD'>
             <?php if($batchReview):?>
             <label class='checkbox-inline'><input type='checkbox' name='makeupIDList[]' value='<?php echo $makeup->id;?>'/> <?php echo $makeup->id;?></label>

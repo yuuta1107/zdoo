@@ -69,7 +69,7 @@
           </tr>
         </thead>
         <?php foreach($overtimeList as $overtime):?>
-        <tr>
+        <tr id='overtime<?php echo $overtime->id;?>'>
           <td class='idTD'>
             <?php if($batchReview):?>
             <label class='checkbox-inline'><input type='checkbox' name='overtimeIDList[]' value='<?php echo $overtime->id;?>'/> <?php echo $overtime->id;?></label>

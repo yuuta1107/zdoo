@@ -80,7 +80,7 @@
           </tr>
         </thead>
         <?php foreach($refunds as $refund):?>
-        <tr data-url='<?php echo $this->createLink('refund', 'view', "refundID={$refund->id}&mode={$mode}");?>'>
+        <tr id='refund<?php echo $refund->id;?>' data-url='<?php echo $this->createLink('refund', 'view', "refundID={$refund->id}&mode={$mode}");?>'>
           <td><?php echo $refund->id;?></td>
           <td class='text-left visible-lg'><?php echo zget($deptList, $refund->dept);?></td>
           <td class='text-left' title='<?php echo $refund->name;?>'><?php echo $refund->name;?></td>

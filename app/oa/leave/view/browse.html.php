@@ -73,7 +73,7 @@
         <?php if($type == 'browseReview' && $leave->type == 'annual' && isset($leftAnnualDays[$leave->createdBy])):?>
         <tr data-toggle='tooltip' data-placement='top' data-tip-class='tooltip-danger' title="<?php echo sprintf($lang->leave->annualTip, $leftAnnualDays[$leave->createdBy]);?>">
         <?php else:?>
-        <tr>
+        <tr id='leave<?php echo $leave->id;?>'>
         <?php endif?>
           <td class='idTD'>
             <?php if($batchReview):?>

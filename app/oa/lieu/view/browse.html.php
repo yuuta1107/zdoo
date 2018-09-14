@@ -67,7 +67,7 @@
           </tr>
         </thead>
         <?php foreach($lieuList as $lieu):?>
-        <tr>
+        <tr id='lieu<?php echo $lieu->id;?>'>
           <td class='idTD'>
             <?php if($batchReview):?>
             <label class='checkbox-inline'><input type='checkbox' name='lieuIDList[]' value='<?php echo $lieu->id;?>'/> <?php echo $lieu->id;?></label>
