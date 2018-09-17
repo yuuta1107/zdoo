@@ -22,7 +22,7 @@
       <table class='table table-form w-p70'>
         <tr>
           <th class='w-100px'><?php echo $lang->refund->name?></th>
-          <td class='w-500px'><?php echo html::input('name', '', "class='form-control'")?></td>
+          <td class='w-600px'><?php echo html::input('name', '', "class='form-control'")?></td>
           <td></td>
         </tr>
         <tr>
