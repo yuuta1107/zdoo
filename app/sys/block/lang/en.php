@@ -9,14 +9,14 @@
  * @version     $Id$
  * @link        http://www.zdoo.org
  */
-$lang->block->common = 'Widget';
+$lang->block->common = 'Block';
 $lang->block->name   = 'Name';
 $lang->block->style  = 'Style';
-$lang->block->grid   = 'Width';
+$lang->block->grid   = 'Grid';
 $lang->block->color  = 'Color';
 
 $lang->block->lblEntry = 'Entry';
-$lang->block->lblBlock = 'Widget';
+$lang->block->lblBlock = 'Block';
 $lang->block->lblRss   = 'RSS';
 $lang->block->lblNum   = 'Number';
 $lang->block->lblHtml  = 'HTML';
@@ -27,8 +27,8 @@ $lang->block->params->value = 'Value';
 
 $lang->block->createBlock        = 'Create';
 $lang->block->editBlock          = 'Edit';
-$lang->block->ordersSaved        = 'Ranking has been saved.';
-$lang->block->confirmRemoveBlock = 'Are you sure to remove Widget [{0}] ?';
+$lang->block->ordersSaved        = 'Order has been saved.';
+$lang->block->confirmRemoveBlock = 'Do you want to remove Block [{0}] ?';
 
 $lang->block->allEntries  = 'All';
 $lang->block->dynamic     = 'Dynamic';
@@ -44,7 +44,7 @@ $lang->block->default['oa']['2']['grid']  = 4;
 
 $lang->block->default['oa']['2']['params']['num'] = 15;
 
-$lang->block->default['proj']['3']['title'] = 'Tasks assigned to me';
+$lang->block->default['proj']['3']['title'] = 'My Task';
 $lang->block->default['proj']['3']['block'] = 'task';
 $lang->block->default['proj']['3']['grid']  = 4;
 
@@ -70,7 +70,7 @@ $lang->block->default['crm']['1']['params']['orderBy'] = 'id_desc';
 $lang->block->default['crm']['1']['params']['type']    = 'createdBy';
 $lang->block->default['crm']['1']['params']['status']  = array();
 
-$lang->block->default['crm']['2']['title'] = 'My Contracts';
+$lang->block->default['crm']['2']['title'] = 'My Contract';
 $lang->block->default['crm']['2']['block'] = 'contract';
 $lang->block->default['crm']['2']['grid']  = 4;
 
@@ -113,14 +113,14 @@ $lang->block->default['team']['1']['grid']  = 4;
 
 $lang->block->default['team']['1']['params']['num'] = 15;
 
-$lang->block->default['team']['2']['title'] = 'Latest Threads';
+$lang->block->default['team']['2']['title'] = 'Latest Thread';
 $lang->block->default['team']['2']['block'] = 'thread';
 $lang->block->default['team']['2']['grid']  = 4;
 
 $lang->block->default['team']['2']['params']['num'] = 15;
 $lang->block->default['team']['2']['params']['type'] = 'new';
 
-$lang->block->default['team']['3']['title'] = 'Sticked Threads';
+$lang->block->default['team']['3']['title'] = 'Sticky Thread';
 $lang->block->default['team']['3']['block'] = 'thread';
 $lang->block->default['team']['3']['grid']  = 4;
 
@@ -147,15 +147,15 @@ $lang->block->default['sys']['8'] = $lang->block->default['team']['2'];
 $lang->block->default['sys']['8']['source'] = 'team';
 
 $lang->block->moreLinkList = new stdclass();
-$lang->block->moreLinkList->order['assinedTo']    = 'Assigned To Me|sys|my|order|type=assinedTo';
-$lang->block->moreLinkList->order['createdBy']    = 'Created By Me|sys|my|order|type=createdBy';
-$lang->block->moreLinkList->order['signedBy']     = 'Signed By Me|sys|my|order|type=signedBy';
+$lang->block->moreLinkList->order['assinedTo']    = 'Assign To Me|sys|my|order|type=assinedTo';
+$lang->block->moreLinkList->order['createdBy']    = 'Create By Me|sys|my|order|type=createdBy';
+$lang->block->moreLinkList->order['signedBy']     = 'Sign By Me|sys|my|order|type=signedBy';
 $lang->block->moreLinkList->order['normalstatus'] = 'All|crm|order|browse|mode=all';
 $lang->block->moreLinkList->order['signedstatus'] = 'All|crm|order|browse|mode=all';
 $lang->block->moreLinkList->order['closedstatus'] = 'All|crm|order|browse|mode=all';
 
-$lang->block->moreLinkList->contract['returnedBy']     = 'Returned By Me|sys|my|contract|type=returnedBy';
-$lang->block->moreLinkList->contract['deliveredBy']    = 'Delivered By Me|sys|my|contract|type=deliveredBy';
+$lang->block->moreLinkList->contract['returnedBy']     = 'Return By Me|sys|my|contract|type=returnedBy';
+$lang->block->moreLinkList->contract['deliveredBy']    = 'Deliver By Me|sys|my|contract|type=deliveredBy';
 $lang->block->moreLinkList->contract['normalstatus']   = 'Unfinished|crm|contract|browse|mode=unfinished';
 $lang->block->moreLinkList->contract['closedstatus']   = 'Finished|crm|contract|browse|mode=finished';
 $lang->block->moreLinkList->contract['canceledstatus'] = 'Cancelled|crm|contract|browse|mode=canceled';
@@ -170,18 +170,18 @@ $lang->block->moreLinkList->provider  = 'Supplier|cash|provider|browse|';
 $lang->block->moreLinkList->announce = 'Announce|oa|announce|browse|';
 $lang->block->moreLinkList->attend   = 'Attend|sys|todo|calendar|';
 
-$lang->block->moreLinkList->task['assignedTo'] = 'Assigned To Me|sys|my|task|type=assignedTo';
-$lang->block->moreLinkList->task['createdBy']  = 'Created By Me|sys|my|task|type=createdBy';
-$lang->block->moreLinkList->task['finishedBy'] = 'Finished By Me|sys|my|task|type=finishedBy';
-$lang->block->moreLinkList->task['closedBy']   = 'Closed By Me|sys|my|task|type=closedBy';
-$lang->block->moreLinkList->task['canceledBy'] = 'Canceled By Me|sys|my|task|type=canceledBy';
+$lang->block->moreLinkList->task['assignedTo'] = 'Assign To Me|sys|my|task|type=assignedTo';
+$lang->block->moreLinkList->task['createdBy']  = 'Create By Me|sys|my|task|type=createdBy';
+$lang->block->moreLinkList->task['finishedBy'] = 'Finish By Me|sys|my|task|type=finishedBy';
+$lang->block->moreLinkList->task['closedBy']   = 'Close By Me|sys|my|task|type=closedBy';
+$lang->block->moreLinkList->task['canceledBy'] = 'Cancel By Me|sys|my|task|type=canceledBy';
 
 $lang->block->moreLinkList->project['doing']    = 'Doing|proj|project|index|status=doing';
 $lang->block->moreLinkList->project['finished'] = 'Finished|proj|project|index|status=finished';
 $lang->block->moreLinkList->project['suspend']  = 'Suspend|proj|project|index|status=suspend';
 
-$lang->block->moreLinkList->blog = 'Latest Blogs|team|blog|index|';
-$lang->block->moreLinkList->thread['new']   = 'Latest Threads|team|forum|index|';
-$lang->block->moreLinkList->thread['stick'] = 'Sticky Threads|team|forum|index|';
+$lang->block->moreLinkList->blog = 'Latest Blog|team|blog|index|';
+$lang->block->moreLinkList->thread['new']   = 'Latest Thread|team|forum|index|';
+$lang->block->moreLinkList->thread['stick'] = 'Sticky Thread|team|forum|index|';
 
 $lang->block->moreLinkList->report = 'Report|cash|trade|report|';

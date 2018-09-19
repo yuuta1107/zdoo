@@ -19,17 +19,17 @@ $lang->tree->manage      = "Manage";
 $lang->tree->fix         = "Fix data";
 $lang->tree->merge       = "Merge";
 
-$lang->tree->noCategories  = 'No category yet, add one first.';
-$lang->tree->noBoards      = 'No board yet, add one first.';
-$lang->tree->timeCountDown = "Locate to %s manage page in <strong id='countDown'>3</strong> seconds.";
+$lang->tree->noCategories  = 'No category yet. Add one first.';
+$lang->tree->noBoards      = 'No board yet. Add one first.';
+$lang->tree->timeCountDown = "Jump to %s manage page in <strong id='countDown'>3</strong> seconds.";
 $lang->tree->redirect      = 'Create now';
 $lang->tree->aliasRepeat   = 'Alias: %s already exists。';
 $lang->tree->aliasConflict = 'Alias: %s  conflicts with system modules';
-$lang->tree->hasChildren   = "The category has children, can't be deleted.";
-$lang->tree->hasThreads    = "The board has threads, can't be deleted.";
-$lang->tree->hasProducts   = "The category has products, can't be deleted.";
-$lang->tree->confirmDelete = "Are you sure to delete it?";
-$lang->tree->successFixed  = "Successfully fixed.";
+$lang->tree->hasChildren   = "This category has children, so it can't be deleted.";
+$lang->tree->hasThreads    = "This board has threads, so it can't be deleted.";
+$lang->tree->hasProducts   = "This category has products, so it can't be deleted.";
+$lang->tree->confirmDelete = "Do you want to delete it?";
+$lang->tree->successFixed  = "Fixed.";
 $lang->tree->asParent      = "[%s] has children, so it can't be merged.";
 
 /* Lang items for article, products. */
@@ -54,7 +54,7 @@ $lang->area->name     = 'Name';
 $lang->area->alias    = 'Alias';
 $lang->area->parent   = 'Parent';
 $lang->area->desc     = 'Description';
-$lang->area->keywords = 'Tag';
+$lang->area->keywords = 'Tags';
 $lang->area->children = 'Child';
 
 /* Lang items for industry. */
@@ -64,7 +64,7 @@ $lang->industry->name     = 'Name';
 $lang->industry->alias    = 'Alias';
 $lang->industry->parent   = 'Parent';
 $lang->industry->desc     = 'Description';
-$lang->industry->keywords = 'Tag';
+$lang->industry->keywords = 'Tags';
 $lang->industry->children = "Child";
 
 /* Lang items for income. */
@@ -74,9 +74,9 @@ $lang->in->name     = 'Name';
 $lang->in->alias    = 'Alias';
 $lang->in->parent   = 'Parent';
 $lang->in->desc     = 'Description';
-$lang->in->keywords = 'Keywords';
+$lang->in->keywords = 'Tags';
 $lang->in->children = "Child";
-$lang->in->merge    = 'Merge Categories';
+$lang->in->merge    = 'Merge Category';
 
 /* Lang items for expend. */
 $lang->out = new stdclass();
@@ -85,11 +85,11 @@ $lang->out->name     = 'Name';
 $lang->out->alias    = 'Alias';
 $lang->out->parent   = 'Parent';
 $lang->out->desc     = 'Description';
-$lang->out->keywords = 'Keywords';
+$lang->out->keywords = 'Tags';
 $lang->out->children = "Child";
 $lang->out->rights   = 'Rights';
 $lang->out->refund   = 'Reimbursement';
-$lang->out->merge    = 'Merge Categories';
+$lang->out->merge    = 'Merge Category';
 
 $lang->out->refundList[1] = 'Yes';
 $lang->out->refundList[0] = 'No';
@@ -101,7 +101,7 @@ $lang->board->name       = 'Board';
 $lang->board->alias      = 'Alias';
 $lang->board->parent     = 'Parent';
 $lang->board->desc       = 'Description';
-$lang->board->keywords   = 'Tag';
+$lang->board->keywords   = 'Tags';
 $lang->board->children   = "Child";
 $lang->board->readonly   = 'Read Only';
 $lang->board->moderators = 'Board Moderator';
@@ -112,5 +112,5 @@ $lang->board->readonlyList[0] = 'Pulic';
 $lang->board->readonlyList[1] = 'Read Only';
 
 $lang->board->placeholder = new stdclass();
-$lang->board->placeholder->moderators  = "BMs'accounts. Separated with" . '","';
-$lang->board->placeholder->setChildren = 'Forum needs two levels of boards to show.';
+$lang->board->placeholder->moderators  = "BM accounts. Separated with" . '","';
+$lang->board->placeholder->setChildren = 'Only forum needs two-level boards can be seen.';
