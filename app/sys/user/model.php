@@ -247,8 +247,8 @@ class userModel extends model
             ->batchCheck($this->config->user->require->create, 'notempty')
             ->check('account', 'unique')
             ->check('account', 'account')
-            ->check('email', 'email')
-            ->check('email', 'unique')
+            ->checkIF($user->email, 'email', 'email')
+            ->checkIF($user->email, 'email', 'unique')
             ->exec();
 
         $this->loadModel('action')->create('user', $this->dao->lastInsertID(), 'created');
@@ -293,8 +293,8 @@ class userModel extends model
             ->data($user, $skip = 'password1,password2')
             ->autoCheck()
             ->batchCheck($this->config->user->require->edit, 'notempty')
-            ->check('email', 'email')
-            ->check('email', 'unique', "account!='$account'")
+            ->checkIF($user->email, 'email', 'email')
+            ->checkIF($user->email, 'email', 'unique', "account!='$account'")
             ->checkIF($this->post->gtalk != false, 'gtalk', 'email')
             ->where('account')->eq($account)
             ->exec();
@@ -320,7 +320,11 @@ class userModel extends model
         }
         else
         {
-            dao::$errors['password1'][] = $this->lang->user->inputPassword;
+            dao::$errors['password1'][] = sprintf($this->lang->error->notempty, $this->lang->user->password);
+        }
+        if($this->post->password2 == false)
+        {
+            dao::$errors['password2'][] = sprintf($this->lang->error->notempty, $this->lang->user->password2);
         }
         return !dao::isError();
     }

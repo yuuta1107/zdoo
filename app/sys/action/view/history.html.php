@@ -34,6 +34,7 @@
         <th class='w-100px'><?php echo $lang->actions;?></th>
       </tr>
     </thead>
+    <?php $account = $this->app->user->account;?>
     <?php foreach($datingList as $dating):?>
     <tr class='text-center'>
       <td><?php echo $dating->date;?></td>
@@ -49,8 +50,22 @@
         <?php 
         if($dating->status == 'wait') 
         {
-            commonModel::printLink('action', 'finishDating', "id={$dating->id}", $lang->finish, "class='finishDating'");
-            commonModel::printLink('action', 'deleteDating', "id={$dating->id}", $lang->delete, "class='deleter'");
+            if($this->app->user->admin == 'super' or $dating->createdBy == $account or $dating->account == $account or commonModel::hasPriv('action', 'finishAllDating'))
+            {
+                commonModel::printLink('action', 'finishDating', "id={$dating->id}", $lang->finish, "class='finishDating'");
+            }
+            else
+            {
+                echo html::a('javascript:;', $lang->finish, "class='disabled'");
+            }
+            if($this->app->user->admin == 'super' or $dating->createdBy == $account or commonModel::hasPriv('action', 'deleteAllDating'))
+            {
+                commonModel::printLink('action', 'deleteDating', "id={$dating->id}", $lang->delete, "class='deleter'");
+            }
+            else
+            {
+                echo html::a('javascript:;', $lang->delete, "class='disabled'");
+            }
         }
         ?>
       </td>

@@ -67,6 +67,7 @@ $lang->appModule->sys[] = 'setting';
 $lang->appModule->sys[] = 'report';
 $lang->appModule->sys[] = 'my';
 $lang->appModule->sys[] = 'file';
+$lang->appModule->sys[] = 'action';
 
 /* Module order. */
 $lang->moduleOrder[0]   = 'order';
@@ -114,6 +115,7 @@ $lang->moduleOrder[130] = 'setting';
 $lang->moduleOrder[135] = 'report';
 $lang->moduleOrder[140] = 'my';
 $lang->moduleOrder[145] = 'file';
+$lang->moduleOrder[150] = 'action';
 
 $lang->resource = new stdclass();
 
@@ -657,6 +659,14 @@ $lang->resource->company = new stdclass();
 $lang->resource->company->index = 'index';
 
 $lang->company->methodOrder[10] = 'index';
+
+/* Action. */
+$lang->resource->action = new stdclass();
+$lang->resource->action->finishAllDating = 'finishAllDating';
+$lang->resource->action->deleteAllDating = 'deleteAllDating';
+
+$lang->action->methodOrder[5]  = 'finishAllDating';
+$lang->action->methodOrder[10] = 'deleteAllDating';
 
 /* Tree. */
 $lang->resource->tree = new stdclass();

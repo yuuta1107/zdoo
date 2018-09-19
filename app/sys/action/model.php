@@ -628,7 +628,7 @@ class actionModel extends model
                 $trades = $this->dao->select("id, type, money, currency")->from($table)->where('id')->in($objectIds)->fetchAll('id');
                 foreach($trades as $id => $trade)
                 {
-                    $objectNames[$objectType][$id] = $this->lang->trade->typeList[$trade->type] . $this->lang->currencySymbols[$trade->currency] . $trade->money;
+                    $objectNames[$objectType][$id] = zget($this->lang->trade->typeList, $trade->type, '') . zget($this->lang->currencySymbols, $trade->currency, '') . $trade->money;
                 }
             }
         }
@@ -780,7 +780,7 @@ class actionModel extends model
      *
      * @param  int    $actionID
      * @access public
-     * @return void
+     * @return bool
      */
     public function updateComment($actionID)
     {
@@ -795,6 +795,8 @@ class actionModel extends model
             ->set('comment')->eq($action->comment)
             ->where('id')->eq($actionID)
             ->exec();
+
+        return !dao::isError();
     }
 
     /**

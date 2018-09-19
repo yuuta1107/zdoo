@@ -16,13 +16,13 @@
 <form id='ajaxForm' method='post' action="<?php echo $this->createLink('oa.refund', 'create')?>">
   <div class='panel'>
     <div class='panel-heading'>
-      <?php echo $lang->refund->create;?>
+      <strong><?php echo $lang->refund->create;?></strong>
     </div>
     <div class='panel-body'>
       <table class='table table-form w-p70'>
         <tr>
           <th class='w-100px'><?php echo $lang->refund->name?></th>
-          <td class='w-500px'><?php echo html::input('name', '', "class='form-control'")?></td>
+          <td class='w-600px'><?php echo html::input('name', '', "class='form-control'")?></td>
           <td></td>
         </tr>
         <tr>
@@ -41,7 +41,7 @@
           </td>
           <td></td>
         </tr>
-        <tr>
+        <tr class='hide'>
           <th><?php echo $lang->refund->customer;?></th>
           <td>
             <div class='required required-wrapper'></div>
@@ -49,23 +49,23 @@
           </td>
           <td></td>
         </tr>
-        <tr>
+        <tr class='hide'>
           <th><?php echo $lang->refund->order;?></th>
           <td>
             <div class='required required-wrapper'></div>
-            <?php echo html::select('order', $orders, '', "class='form-control chosen'");?>
+            <?php echo html::select('order', '', '', "class='form-control chosen'");?>
           </td>
           <td></td>
         </tr>
-        <tr>
+        <tr class='hide'>
           <th><?php echo $lang->refund->contract;?></th>
           <td>
             <div class='required required-wrapper'></div>
-            <?php echo html::select('contract', $contracts, '', "class='form-control chosen'");?>
+            <?php echo html::select('contract', '', '', "class='form-control chosen'");?>
           </td>
           <td></td>
         </tr>
-        <tr>
+        <tr class='hide'>
           <th><?php echo $lang->refund->project;?></th>
           <td>
             <div class='required required-wrapper'></div>

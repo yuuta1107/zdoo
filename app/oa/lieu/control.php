@@ -74,12 +74,6 @@ class lieu extends control
             $date         = '';
             $currentYear  = ''; 
             $currentMonth = ''; 
-            $monthList    = $this->lieu->getAllMonth($type);
-            $yearList     = array_keys($monthList);
-            $this->view->currentYear  = $currentYear;
-            $this->view->currentMonth = $currentMonth;
-            $this->view->monthList    = $monthList;
-            $this->view->yearList     = $yearList;     
         }
         else
         {

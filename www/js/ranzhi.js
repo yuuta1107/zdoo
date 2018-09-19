@@ -674,14 +674,17 @@ function getShowedNotice()
 /**
  * Adjust notice position.
  * 
+ * @param  string noticeID
  * @access public
  * @return void
  */
-function adjustNoticePosition()
+function adjustNoticePosition(noticeID)
 {
     var bottom = 25;
     $('#noticeBox').find('[id^=notice]').each(function()
     {
+        if(noticeID !== undefined && $(this).attr('id') == noticeID) return true;
+
         $(this).css('bottom',  bottom + 'px');
         bottom += $(this).outerHeight(true) - 10;
     });
@@ -720,13 +723,9 @@ function showNotice(notice)
     /* close */
     $('#notice' + notice['id']).find('.close').click(function()
     {
-        if($(this).data('read') != '')
-        {
-            $.get($(this).data('read'), function()
-            {
-                adjustNoticePosition();
-            });
-        }
+        if($(this).data('read') != '') $.get($(this).data('read'));
+
+        adjustNoticePosition('notice' + notice['id']);
     });
 
     /* read */

@@ -395,7 +395,7 @@ class attend extends control
         }
 
         /* Get users info. */
-        $users    = $this->loadModel('user')->getList($dept);
+        $users    = $this->loadModel('user')->getList($dept, $mode = 'all');
         $newUsers = array();
         foreach($users as $key => $user) $newUsers[$user->account] = $user;
 
