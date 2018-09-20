@@ -67,6 +67,7 @@ class blockModel extends model
 
         $block->params->account = $this->app->user->account;
         $block->params->uid     = $this->app->user->id;
+        $block->params->grid    = $block->grid;
         $params = base64_encode(json_encode($block->params));
 
         $query['mode']    = 'getblockdata';
