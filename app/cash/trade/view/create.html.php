@@ -46,7 +46,7 @@
                 <?php echo html::a($this->createLink('tree', 'browse', "type=$type"), "<i class='icon icon-cog'></i>", "title={$lang->trade->manageCategory} target='_blank' class='btn btn-icon'");?>
               </span>
               <span class='input-group-btn'>
-                <?php echo html::commonButton('<i class="icon icon-refresh"></i>', 'btn btn-icon', "title={$lang->trade->refresh} onclick='ajaxGetCategories()'");?>
+                <?php echo html::commonButton('<i class="icon icon-refresh"></i>', 'btn btn-icon', "title={$lang->refresh} onclick='ajaxGetCategories()'");?>
               </span>
             </div>
           </td>
@@ -62,7 +62,7 @@
                 <?php echo html::a($this->createLink('tree', 'browse', "type=$type"), "<i class='icon icon-cog'></i>", "title={$lang->trade->manageCategory} target='_blank' class='btn btn-icon'");?>
               </span>
               <span class='input-group-btn'>
-                <?php echo html::commonButton('<i class="icon icon-refresh"></i>', 'btn btn-icon', "title={$lang->trade->refresh} onclick='ajaxGetCategories()'");?>
+                <?php echo html::commonButton('<i class="icon icon-refresh"></i>', 'btn btn-icon', "title={$lang->refresh} onclick='ajaxGetCategories()'");?>
               </span>
             </div>
           </td>

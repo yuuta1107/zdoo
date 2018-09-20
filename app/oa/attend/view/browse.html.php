@@ -68,11 +68,11 @@
           <tr>
             <?php if($isFirst):?>
             <td rowspan='<?php echo count($deptAttends);?>' class='text-middle'>
-              <?php echo isset($users[$account]) ? $deptList[$users[$account]->dept] : ''?>
+              <?php echo isset($users[$account]->dept) ? $deptList[$users[$account]->dept] : ''?>
             </td>
             <?php $isFirst = false;?>
             <?php endif;?>
-            <td class='text-middle'><?php echo isset($users[$account]) ? $users[$account]->realname : '';?></td>
+            <td class='text-middle'><?php echo isset($users[$account]->realname) ? $users[$account]->realname : '';?></td>
             <?php for($day = 1; $day <= $dayNum; $day++):?>
               <?php $currentDate = date("Y-m-d", strtotime("{$currentYear}-{$currentMonth}-{$day}"));?>
               <?php if(isset($userAttends[$currentDate])):?>

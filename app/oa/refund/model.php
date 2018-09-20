@@ -219,9 +219,9 @@ class refundModel extends model
             ->add('editedBy', $this->app->user->account)
             ->add('editedDate', helper::now())
             ->add('firstReviewer', '')
-            ->add('firstReviewDate', '0000-00-00')
+            ->add('firstReviewDate', '0000-00-00 00:00:00')
             ->add('secondReviewer', '')
-            ->add('secondReviewDate', '0000-00-00')
+            ->add('secondReviewDate', '0000-00-00 00:00:00')
             ->join('related', ',')
             ->setDefault('date', helper::today())
             ->setForce('money', (float)$this->post->money)
@@ -448,7 +448,7 @@ class refundModel extends model
         {
             foreach($refund->detail as $detail)
             {
-                if($_POST["status{$detail->id}"] == 'reject') $data->status = 'reject';
+                $data->status = $_POST["status{$detail->id}"];
                 $this->dao->update(TABLE_REFUND)->data($data, $skip = 'money')->where('id')->eq($detail->id)->exec();
             }
         }

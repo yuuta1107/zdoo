@@ -133,20 +133,18 @@ $(document).ready(function()
 
 function getOrders(customer)
 {
-    if(!customer) return false;
-
+    var order = $('#order').val();
     $('#order').load(createLink('crm.order', 'ajaxGetOrders', 'customer=' + customer), function()
     {
-        $('#order').trigger('chosen:updated');
+        $('#order').val(order).trigger('chosen:updated');
     });
 }
 
 function getContracts(customer)
 {
-    if(!customer) return false;
-
+    var contract = $('#contract').val();
     $('#contract').load(createLink('crm.contract', 'getOptionMenu', 'customer=' + customer), function()
     {
-        $('#contract').trigger('chosen:updated');
+        $('#contract').val(contract).trigger('chosen:updated');
     });
 }

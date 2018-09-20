@@ -17,10 +17,10 @@ $lang->install->reload  = 'Reload';
 $lang->install->error   = 'Error ';
 
 $lang->install->start            = 'Start install';
-$lang->install->keepInstalling   = 'Keep install this version';
+$lang->install->keepInstalling   = 'Keep installing this version';
 $lang->install->seeLatestRelease = 'See the latest release.';
-$lang->install->welcome          = 'Welcome to use Zdoo.';
-$lang->install->license          = 'Zdoo use license of Z PUBLIC LICENSE(ZPL) 1.2. ';
+$lang->install->welcome          = 'Welcome to Zdoo community.';
+$lang->install->license          = 'Zdoo is under license of Z PUBLIC LICENSE(ZPL) 1.2. ';
 $lang->install->desc             = <<<EOT
 <blockquote>
   <strong>{$lang->ranzhi}</strong> is developed by <strong><a href='http://www.cnezsoft.com' target='_blank' class='red'>QingDao Nature Easy Soft Network Technology Co.,Ltd.</a></strong>
@@ -34,13 +34,13 @@ $lang->install->desc             = <<<EOT
 EOT;
 
 $lang->install->choice     = 'You can ';
-$lang->install->checking   = 'System Checking';
+$lang->install->checking   = 'System Checkup';
 $lang->install->ok         = 'OK(√)';
 $lang->install->fail       = 'Failed(×)';
 $lang->install->loaded     = 'Loaded';
 $lang->install->unloaded   = 'Not loaded';
-$lang->install->exists     = 'Exists ';
-$lang->install->notExists  = 'Do not exists';
+$lang->install->exists     = 'Exist ';
+$lang->install->notExists  = 'Not exists';
 $lang->install->writable   = 'Writable ';
 $lang->install->notWritable= 'Not writable ';
 $lang->install->phpINI     = 'PHP ini file';
@@ -56,31 +56,31 @@ $lang->install->pdo          = 'PDO extension';
 $lang->install->pdoFail      = 'Edit the php.ini file to load PDO extsion.';
 $lang->install->pdoMySQL     = 'PDO_MySQL extension';
 $lang->install->pdoMySQLFail = 'Edit the php.ini file to load PDO_MySQL extsion.';
-$lang->install->tmpRoot      = 'Temp directory';
+$lang->install->tmpRoot      = 'Temporary directory';
 $lang->install->dataRoot     = 'Upload directory.';
 $lang->install->sessionRoot  = 'session directory';
-$lang->install->mkdir        = '<p>Should creat the directory %s. <br /> In Linux, can try<br /> mkdir -p %s</p>';
-$lang->install->chmod        = 'Should change the permission of "%s".<br /> In Linux, can try<br />chmod o=rwx -R %s';
-$lang->install->sessionChmod = 'Should change the permission of "%s".<br /> In Linux, can try<br />sudo chmod o=wtx %s';
+$lang->install->mkdir        = '<p>You have to creat the directory %s. <br /> In Linux, try<br /> mkdir -p %s</p>';
+$lang->install->chmod        = 'You have to change the permission of "%s".<br /> In Linux, try<br />chmod o=rwx -R %s';
+$lang->install->sessionChmod = 'You have to change the permission of "%s".<br /> In Linux, try<br />sudo chmod o=wtx %s';
 
 $lang->install->settingDB    = 'Set Database';
 $lang->install->dbHost     = 'Database Host';
-$lang->install->dbHostNote = 'If 127.0.0.1 can not connect, try localhost';
+$lang->install->dbHostNote = 'If 127.0.0.1 cannot be connected, try localhost';
 $lang->install->dbPort     = 'Host Port';
 $lang->install->dbUser     = 'Database User';
 $lang->install->dbPassword = 'Database Password';
 $lang->install->dbName     = 'Database Name';
 $lang->install->dbPrefix   = 'Table Prefix';
 $lang->install->createDB   = 'Auto Create Database';
-$lang->install->clearDB    = 'Clear data if database exists.';
+$lang->install->clearDB    = 'Clear data if the database exists.';
 
 $lang->install->errorDBName        = "'.' are not allowed in database name";
-$lang->install->errorConnectDB     = 'Database connect failed.';
-$lang->install->errorCreateDB      = 'Database create failed.';
+$lang->install->errorConnectDB     = 'Failed to connect to the database.';
+$lang->install->errorCreateDB      = 'Failed to create the database.';
 $lang->install->errorDBExists      = 'Database exists. If continue installing, check the Clear Database box.';
-$lang->install->errorCreateTable   = 'Table creation failed.';
+$lang->install->errorCreateTable   = 'Failed to create the table.';
 
-$lang->install->setConfig  = 'Create config file';
+$lang->install->setConfig  = 'Create config';
 $lang->install->key        = 'Item';
 $lang->install->value      = 'Value';
 $lang->install->saveConfig = 'Save config';
@@ -92,10 +92,10 @@ $lang->install->success  = "Installed!";
 $lang->install->domainIP = 'IP of domain is %s';
 $lang->install->serverIP = 'IP of LAN is %s';
 $lang->install->publicIP = 'IP of WAN is %s';
-$lang->install->setAdmin = 'Create an Admin';
+$lang->install->setAdmin = 'Create Admin';
 $lang->install->account  = 'Account';
 $lang->install->password = 'Password';
-$lang->install->errorEmptyPassword = "should not be empty";
+$lang->install->errorEmptyPassword = "It should not be empty.";
 
 $lang->install->import['area']     = 'Import area data';
 $lang->install->import['industry'] = 'Import industry data';
@@ -114,22 +114,22 @@ $lang->install->buildinEntry->doc['abbr']  = '';
 $lang->install->buildinEntry->proj['name'] = 'PROJ';
 $lang->install->buildinEntry->proj['abbr'] = '';
 
-$lang->install->categoryList[1] = 'Main business income';
-$lang->install->categoryList[2] = 'Non-core business income';
-$lang->install->categoryList[3] = 'Main business cost';
-$lang->install->categoryList[4] = 'Non-core operating cost';
+$lang->install->categoryList[1] = 'Primary Income';
+$lang->install->categoryList[2] = 'Non-Primary Income';
+$lang->install->categoryList[3] = 'Primary Expense';
+$lang->install->categoryList[4] = 'Non-Primary Expense';
 $lang->install->categoryList[5] = 'Profit';
 $lang->install->categoryList[6] = 'Loss';
 $lang->install->categoryList[7] = 'Fees';
 $lang->install->categoryList[8] = 'Interest';
 
 $lang->install->schemaList[1] = 'Alipay';
-$lang->install->schemaList[2] = 'China CITIC Bank';
+$lang->install->schemaList[2] = 'CITIC Bank';
 
 $lang->install->cronList[1] = 'Monitor cron';
-$lang->install->cronList[2] = 'Backup data & file';
-$lang->install->cronList[3] = 'Auto delete backup before 30 days';
-$lang->install->cronList[4] = 'Daily task reminder';
+$lang->install->cronList[2] = 'Back up data & files';
+$lang->install->cronList[3] = 'Auto delete the data 30 days prior to today';
+$lang->install->cronList[4] = 'Daily Reminder';
 
 $lang->install->groupList[1]['name'] = 'Administrator';
 $lang->install->groupList[1]['desc'] = 'Administrator has all privileges.';
@@ -140,4 +140,4 @@ $lang->install->groupList[3]['desc'] = 'Sales Manager has all privileges of CRM.
 $lang->install->groupList[4]['name'] = 'Sales';
 $lang->install->groupList[4]['desc'] = 'Default privileges for sales.';
 $lang->install->groupList[5]['name'] = 'Common';
-$lang->install->groupList[5]['desc'] = 'Default privileges for common user.';
+$lang->install->groupList[5]['desc'] = 'Default privileges for all users.';

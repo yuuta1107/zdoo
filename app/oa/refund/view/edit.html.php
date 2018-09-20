@@ -15,12 +15,14 @@
 <?php include '../../../sys/common/view/chosen.html.php';?>
 <form id='ajaxForm' method='post' action="<?php echo $this->createLink('oa.refund', 'edit', "refundID={$refund->id}")?>">
   <div class='panel'>
-    <div class='panel-heading'><?php echo $lang->refund->edit;?></div>
+    <div class='panel-heading'>
+      <strong><?php echo $lang->refund->edit;?></strong>
+    </div>
     <div class='panel-body'>
       <table class='table table-form w-p70'>
         <tr>
           <th class='w-100px'><?php echo $lang->refund->name?></th>
-          <td class='w-400px'><?php echo html::input('name', $refund->name, "class='form-control'")?></td>
+          <td class='w-600px'><?php echo html::input('name', $refund->name, "class='form-control'")?></td>
           <td></td>
         </tr>
         <tr>

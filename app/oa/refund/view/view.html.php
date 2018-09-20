@@ -34,22 +34,22 @@
           <tr class="text-center">
             <th class='w-50px'><?php echo $lang->refund->id;?></th>
             <th class='w-100px'><?php echo $lang->refund->money;?></th>
-            <th class='w-100px'><?php echo $lang->refund->date;?></th>
-            <th class='w-100px'><?php echo $lang->refund->category;?></th>
+            <th class='w-80px'><?php echo $lang->refund->date;?></th>
+            <th class='w-200px text-left'><?php echo $lang->refund->category;?></th>
             <th class='w-100px'><?php echo $lang->refund->related;?></th>
-            <th class='w-100px'><?php echo $lang->refund->status;?></th>
-            <th><?php echo $lang->refund->desc;?></th>
+            <th class='w-80px'><?php echo $lang->refund->status;?></th>
+            <th class='text-left'><?php echo $lang->refund->desc;?></th>
           </tr>
           <?php foreach($refund->detail as $d):?>
           <tr>
             <td><?php echo $d->id;?></td>
             <td><?php echo zget($currencySign, $d->currency) . $d->money;?></td>
             <td><?php echo formatTime($d->date, DT_DATE1);?></td>
-            <td><?php echo zget($categories, $d->category, '');?></td>
+            <td class='text-left' title='<?php echo zget($categories, $d->category, '');?>'><?php echo zget($categories, $d->category, '');?></td>
             <?php $related = ''; foreach(explode(',', trim($d->related, ',')) as $account) $related .= ' ' . zget($users, $account);?>
             <td title='<?php echo $related;?>'><?php echo $related;?></td>
             <td><span data-toggle='tooltip' data-original-title="<?php echo $d->reason;?>"><?php echo zget($lang->refund->statusList, $d->status);?></span></td>
-            <td title='<?php echo $d->desc;?>'><?php echo $d->desc;?></td>
+            <td class='text-left' title='<?php echo $d->desc;?>'><?php echo $d->desc;?></td>
           </tr>
           <?php endforeach;?>
         </table>

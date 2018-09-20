@@ -230,7 +230,14 @@ class action extends control
         }
 
         $contactPairs = array();
-        $contacts     = $this->loadModel('contact', 'crm')->getList($record->objectType == 'customer' ? $object->id : $object->customer);
+        if(!empty($object->relation) && $object->relation == 'provider')
+        {
+            $contacts = $this->loadModel('contact', 'crm')->getList($object->id, 'provider');
+        }
+        else
+        {
+            $contacts = $this->loadModel('contact', 'crm')->getList($record->objectType == 'customer' ? $object->id : $object->customer);
+        }
         foreach($contacts as $contact) $contactPairs[$contact->id] = $contact->realname;
 
         $this->view->title          = $this->lang->action->record->edit;
@@ -342,14 +349,17 @@ class action extends control
      */
     public function finishDating($id)
     {
-        $user = $this->app->user->account;
+        $account = $this->app->user->account;
 
         $dating = $this->action->getDatingById($id);
         if($dating->status != 'wait') $this->send(array('result' => 'success'));
-        if($this->app->user->admin != 'super' && $dating->account != $user && $dating->createdBy != $user) $this->send(array('result' => 'fail', 'message' => $this->lang->admin->record->finishDenied));
+        if($this->app->user->admin != 'super' && $dating->account != $account && $dating->createdBy != $account && !commonModel::hasPriv('action', 'finishAllDating'))
+        {
+            $this->send(array('result' => 'fail', 'message' => $this->lang->admin->record->finishDenied));
+        }
 
         $dating->status     = 'done';
-        $dating->editedBy   = $user;
+        $dating->editedBy   = $account;
         $dating->editedDate = helper::now();
         $this->dao->update(TABLE_DATING)->data($dating)->where('id')->eq($id)->exec();
 
@@ -369,7 +379,10 @@ class action extends control
     {
         $dating = $this->action->getDatingById($id);
         if($dating->status != 'wait') $this->send(array('result' => 'fail', 'message' => $this->lang->action->record->deleteFail));
-        if($this->app->user->admin != 'super' && $dating->createdBy != $this->app->user->account) $this->send(array('result' => 'fail', 'message' => $this->lang->admin->record->deleteDenied));
+        if($this->app->user->admin != 'super' && $dating->createdBy != $this->app->user->account && !commonModel::hasPriv('action', 'deleteAllDating'))
+        {
+            $this->send(array('result' => 'fail', 'message' => $this->lang->admin->record->deleteDenied));
+        }
 
         $this->dao->delete()->from(TABLE_DATING)->where('id')->eq($id)->exec();
 

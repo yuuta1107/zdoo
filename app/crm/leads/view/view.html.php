@@ -38,7 +38,7 @@
       echo html::a('#commentBox', $this->lang->comment, "class='btn btn-default' onclick=setComment()");
       echo "</div>";
 
-      $browseLink = $this->session->contactList ? $this->session->contactList : inlink('browse');
+      $browseLink = $this->session->leadsList ? $this->session->leadsList : (isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : inlink('browse'));
       commonModel::printRPN($browseLink, $preAndNext);
       ?>
     </div>

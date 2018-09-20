@@ -71,6 +71,17 @@ class balanceModel extends model
     }
 
     /**
+     * Get date pairs.
+     *
+     * @access public
+     * @return array
+     */
+    public function getDatePairs()
+    {
+        return $this->dao->select('depositor, date')->from(TABLE_BALANCE)->orderBy('depositor,date')->fetchPairs();
+    }
+
+    /**
      * Create a balance.
      * 
      * @param  object    $balance 

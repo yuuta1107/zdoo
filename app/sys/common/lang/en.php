@@ -68,27 +68,28 @@ $lang->themes['default'] = 'Default';
 $lang->themes['clear']   = 'Clear';
 
 /* Global lang items. */
-$lang->home           = 'Home';
-$lang->welcome        = '%s Zdoo';
-$lang->messages       = "<strong><i class='icon-comment-alt'></i> %s</strong>";
-$lang->todayIs        = 'Today is %s, ';
-$lang->today          = 'Today';
-$lang->aboutUs        = 'About';
-$lang->about          = 'About';
-$lang->link           = 'Links';
-$lang->frontHome      = 'Front';
-$lang->forumHome      = 'Forum';
-$lang->bookHome       = 'Book';
-$lang->register       = 'Register';
-$lang->logout         = 'Logout';
-$lang->login          = 'Login';
-$lang->account        = 'Account';
-$lang->password       = 'Password';
-$lang->all            = 'All';
-$lang->changePassword = 'Change password';
-$lang->currentPos     = 'Current Page';
-$lang->categoryMenu   = 'Manage Category';
-$lang->basicInfo      = 'Basic Info';
+$lang->home             = 'Home';
+$lang->welcome          = '%s Zdoo';
+$lang->messages         = "<strong><i class='icon-comment-alt'></i> %s</strong>";
+$lang->todayIs          = 'Today is %s, ';
+$lang->today            = 'Today';
+$lang->aboutUs          = 'About';
+$lang->about            = 'About';
+$lang->link             = 'Links';
+$lang->frontHome        = 'Front';
+$lang->forumHome        = 'Forum';
+$lang->bookHome         = 'Book';
+$lang->register         = 'Register';
+$lang->logout           = 'Logout';
+$lang->login            = 'Login';
+$lang->account          = 'Account';
+$lang->password         = 'Password';
+$lang->all              = 'All';
+$lang->changePassword   = 'Change password';
+$lang->currentPos       = 'Current Page';
+$lang->categoryMenu     = 'Manage Category';
+$lang->basicInfo        = 'Basic Info';
+$lang->chooseUserToMail = 'Choose users to send notice...';
 
 /* Global action items. */
 $lang->reset          = 'Reset';
@@ -151,6 +152,7 @@ $lang->signOut        = 'Sign out';
 $lang->sort           = 'Ranking';
 $lang->required       = 'Required';
 $lang->custom         = 'Custom';
+$lang->refresh        = 'Refresh';
 
 $lang->exportAll      = 'Export All';
 $lang->exportThisPage = 'Export This Page';
@@ -234,9 +236,9 @@ $lang->group   = new stdclass();
 /* Menu entry. */
 $lang->entry       = new stdclass();
 $lang->entry->menu = new stdclass();
-$lang->entry->menu->admin    = array('link' => 'Entries|entry|admin|', 'alias' => 'edit, integration, style, zentaoAdmin');
+$lang->entry->menu->admin    = array('link' => 'API|entry|admin|', 'alias' => 'edit, integration, style, zentaoAdmin');
 $lang->entry->menu->create   = array('link' => 'Create|entry|create|');
-$lang->entry->menu->webapp   = 'Web App|webapp|obtain|';
+$lang->entry->menu->webapp   = 'App|webapp|obtain|';
 $lang->entry->menu->category = 'Category|entry|category|';
 
 /* Menu system. */
@@ -264,6 +266,7 @@ $lang->menu->dashboard->contract = 'Contract|my|contract|';
 $lang->menu->dashboard->review   = 'Review|my|review|';
 $lang->menu->dashboard->company  = 'Company|my|company|';
 $lang->menu->dashboard->dynamic  = 'Dynamic|my|dynamic|';
+$lang->menu->dashboard->contact  = 'Contact|my|contact|';
 
 /* Menu of customer module. */
 if(!isset($lang->customer)) $lang->customer = new stdclass();
@@ -296,11 +299,11 @@ $lang->product->menu->category   = 'Category|tree|browse|type=product';
 $lang->todo = new stdclass();
 $lang->todo->menu = new stdclass();
 $lang->todo->menu->calendar        = 'Calendar|todo|calendar|';
-$lang->todo->menu->all             = 'All|todo|browse|mode=all';
-$lang->todo->menu->assignedToOther = 'Assigned to others|todo|browse|mode=assignedtoother';
-$lang->todo->menu->assignedToMe    = 'Assigned to me|todo|browse|mode=assignedtome';
-$lang->todo->menu->undone          = 'Undone|todo|browse|mode=undone';
-$lang->todo->menu->future          = 'Pending|todo|browse|mode=future';
+$lang->todo->menu->all             = 'All Todos|todo|browse|mode=all';
+$lang->todo->menu->assignedToOther = 'Other Todos|todo|browse|mode=assignedtoother';
+$lang->todo->menu->assignedToMe    = 'My Todos|todo|browse|mode=assignedtome';
+$lang->todo->menu->undone          = 'Unfinished|todo|browse|mode=undone';
+$lang->todo->menu->future          = 'Wait|todo|browse|mode=future';
  
 $lang->my = new stdclass();
 $lang->my->review = new stdclass();

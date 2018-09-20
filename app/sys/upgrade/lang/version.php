@@ -37,3 +37,4 @@ $lang->upgrade->fromVersions['4_6']      = '4.6';
 $lang->upgrade->fromVersions['4_6_1']    = '4.6.1';
 $lang->upgrade->fromVersions['4_6_2']    = '4.6.2';
 $lang->upgrade->fromVersions['4_6_3']    = '4.6.3';
+$lang->upgrade->fromVersions['4_7']      = '4.7';

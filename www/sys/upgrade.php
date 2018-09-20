@@ -31,7 +31,7 @@ include '../../framework/helper.class.php';
 $app = router::createApp('sys');
 $common = $app->loadCommon();
 
-/* Reset the config params to make sure the install program will be lauched. */
+/* Reset the config params to make sure the upgrade program will be lauched. */
 define('REQUESTTYPE', $config->requestType);
 $config->set('requestType', 'GET');
 $config->set('default.module', 'upgrade');

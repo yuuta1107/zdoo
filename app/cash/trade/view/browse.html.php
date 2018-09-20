@@ -88,6 +88,7 @@
           <th class='w-80px'><?php echo $lang->trade->loanrate;?></th>
           <?php endif;?>
           <th class='text-left visible-lg'><?php echo $lang->trade->desc;?></th>
+          <th class='w-80px text-center'><?php commonModel::printOrderLink('createdDate', $orderBy, $vars, $lang->trade->createdDate);?></th>
           <?php $class = $this->app->clientLang == 'en' ? 'w-160px' : 'w-130px';?>
           <th class='<?php echo $class;?>'><?php echo $lang->actions;?></th>
         </tr>
@@ -140,6 +141,7 @@
           <td><?php if($trade->interest) echo $trade->interest;?></td>
           <?php endif;?>
           <td class='text-left visible-lg'><div title="<?php echo $trade->desc;?>" class='w-200px text-ellipsis'><?php echo $trade->desc;?><div></td>
+          <td class='text-center'><?php echo formatTime($trade->createdDate, DT_DATE1);?></td>
           <td>
             <?php commonModel::printLink('trade', 'view', "tradeID={$trade->id}&mode={$mode}", $lang->view);?>
             <?php commonModel::printLink('trade', 'edit', "tradeID={$trade->id}&mode={$mode}", $lang->edit);?>
@@ -149,7 +151,7 @@
         </tr>
         <?php if(!empty($trade->children)):?>
         <tr class='tr-children'>
-          <td colspan='14'>
+          <td colspan='15'>
             <table class='table table-hover table-striped table-data table-fixed'>
               <?php foreach($trade->children as $trade):?>
               <tr class='text-center'>
@@ -171,6 +173,7 @@
                 <td class='w-100px text-nowrap text-ellipsis text-left' title='<?php echo $category;?>'><?php echo $category;?></td>
                 <td colspan='4' class='w-300px'></td>
                 <td class='text-left visible-lg'><div title="<?php echo $trade->desc;?>" class='w-200px text-ellipsis'><?php echo $trade->desc;?><div></td>
+                <td class='w-80px text-center'><?php echo formatTime($trade->createdDate, DT_DATE1);?></td>
                 <?php $class = $this->app->clientLang == 'en' ? 'w-160px' : 'w-130px';?>
                 <td class='<?php echo $class;?>'>
                   <?php commonModel::printLink('trade', 'view', "tradeID={$trade->id}&mode={$mode}", $lang->view);?>

@@ -68,27 +68,28 @@ $lang->themes['default'] = '預設';
 $lang->themes['clear']   = '清晰';
 
 /* Global lang items. */
-$lang->home           = '首頁';
-$lang->welcome        = "%s協同管理系統";
-$lang->messages       = "<strong><i class='icon-comment-alt'></i> %s</strong>";
-$lang->todayIs        = '今天是%s，';
-$lang->today          = '今天';
-$lang->aboutUs        = '關於我們';
-$lang->about          = '關於';
-$lang->link           = '友情連結';
-$lang->frontHome      = '前台';
-$lang->forumHome      = '論壇';
-$lang->bookHome       = '手冊';
-$lang->register       = '註冊';
-$lang->logout         = '退出';
-$lang->login          = '登錄';
-$lang->account        = '帳號';
-$lang->password       = '密碼';
-$lang->all            = '全部';
-$lang->changePassword = '修改密碼';
-$lang->currentPos     = '當前位置';
-$lang->categoryMenu   = '分類導航';
-$lang->basicInfo      = '基本信息';
+$lang->home             = '首頁';
+$lang->welcome          = "%s協同管理系統";
+$lang->messages         = "<strong><i class='icon-comment-alt'></i> %s</strong>";
+$lang->todayIs          = '今天是%s，';
+$lang->today            = '今天';
+$lang->aboutUs          = '關於我們';
+$lang->about            = '關於';
+$lang->link             = '友情連結';
+$lang->frontHome        = '前台';
+$lang->forumHome        = '論壇';
+$lang->bookHome         = '手冊';
+$lang->register         = '註冊';
+$lang->logout           = '退出';
+$lang->login            = '登錄';
+$lang->account          = '帳號';
+$lang->password         = '密碼';
+$lang->all              = '全部';
+$lang->changePassword   = '修改密碼';
+$lang->currentPos       = '當前位置';
+$lang->categoryMenu     = '分類導航';
+$lang->basicInfo        = '基本信息';
+$lang->chooseUserToMail = '選擇要發送提醒的用戶...';
 
 /* Global action items. */
 $lang->reset          = '重填';
@@ -151,6 +152,7 @@ $lang->signOut        = '簽退';
 $lang->sort           = '排序';
 $lang->required       = '必填';
 $lang->custom         = '自定義';
+$lang->refresh        = '刷新';
 
 $lang->exportAll      = '導出全部記錄';
 $lang->exportThisPage = '導出本頁記錄';
@@ -264,6 +266,7 @@ $lang->menu->dashboard->contract = '合同|my|contract|';
 $lang->menu->dashboard->review   = '審批|my|review|';
 $lang->menu->dashboard->company  = '組織|my|company|';
 $lang->menu->dashboard->dynamic  = '動態|my|dynamic|';
+$lang->menu->dashboard->contact  = '聯繫人|my|contact|';
 
 /* Menu of customer module. */
 if(!isset($lang->customer)) $lang->customer = new stdclass();
@@ -512,17 +515,17 @@ $lang->currencyTip['w'] = '萬';
 $lang->currencyTip['y'] = '億';
 
 /* The datetime settings. */
-define('DT_DATETIME1',  'Y-m-d H:i:s');
-define('DT_DATETIME2',  'Y-m-d H:i');
-define('DT_DATETIME3',  'y-m-d H:i');
-define('DT_MONTHTIME1', 'n/d H:i');
-define('DT_MONTHTIME2', 'n月d日 H:i');
-define('DT_DATE1',      'Y-m-d');
-define('DT_DATE2',      'Ymd');
-define('DT_DATE3',      'Y年m月d日');
-define('DT_DATE4',      'n月j日');
-define('DT_DATE5',      'Y年m月');
-define('DT_TIME1',      'H:i:s');
-define('DT_TIME2',      'H:i');
+if(!defined('DT_DATETIME1'))  define('DT_DATETIME1',  'Y-m-d H:i:s');
+if(!defined('DT_DATETIME2'))  define('DT_DATETIME2',  'Y-m-d H:i');
+if(!defined('DT_DATETIME3'))  define('DT_DATETIME3',  'y-m-d H:i');
+if(!defined('DT_MONTHTIME1')) define('DT_MONTHTIME1', 'n/d H:i');
+if(!defined('DT_MONTHTIME2')) define('DT_MONTHTIME2', 'n月d日 H:i');
+if(!defined('DT_DATE1'))      define('DT_DATE1',      'Y-m-d');
+if(!defined('DT_DATE2'))      define('DT_DATE2',      'Ymd');
+if(!defined('DT_DATE3'))      define('DT_DATE3',      'Y年m月d日');
+if(!defined('DT_DATE4'))      define('DT_DATE4',      'n月j日');
+if(!defined('DT_DATE5'))      define('DT_DATE5',      'Y年m月');
+if(!defined('DT_TIME1'))      define('DT_TIME1',      'H:i:s');
+if(!defined('DT_TIME1'))      define('DT_TIME2',      'H:i');
 
 include (dirname(__FILE__) . '/menuOrder.php');

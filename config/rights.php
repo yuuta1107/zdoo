@@ -37,6 +37,12 @@ $config->rights->member['user']['uploadavatar']   = 'uploadavatar';
 $config->rights->member['user']['cropavatar']     = 'cropavatar';
 $config->rights->member['user']['editself']       = 'editself';
 
+$config->rights->member['usercontact']['create']                = 'create';
+$config->rights->member['usercontact']['edit']                  = 'edit';
+$config->rights->member['usercontact']['delete']                = 'delete';
+$config->rights->member['usercontact']['buildcontactlist']      = 'buildcontactlist';
+$config->rights->member['usercontact']['ajaxgetcontactmembers'] = 'ajaxgetcontactmembers';
+
 $config->rights->member['search']['buildform']   = 'buildform';
 $config->rights->member['search']['buildquery']  = 'buildquery';
 $config->rights->member['search']['savequery']   = 'savequery';
@@ -110,15 +116,13 @@ $config->rights->member['reply']['deletefile'] = 'deletefile';
 $config->rights->member['message']['comment'] = 'comment';
 $config->rights->member['message']['post']    = 'post';
 
-$config->rights->member['action']['createrecord']      = 'createrecord';
-$config->rights->member['action']['editrecord']        = 'editrecord';
-$config->rights->member['action']['history']           = 'history';
-$config->rights->member['action']['editcomment']       = 'editcomment';
-$config->rights->member['action']['read']              = 'read';
-$config->rights->member['action']['finishnextcontact'] = 'finishNextContact';
-$config->rights->member['action']['deletenextcontact'] = 'deleteNextContact';
-$config->rights->member['action']['finishdating']      = 'finishDating';
-$config->rights->member['action']['deletedating']      = 'deletedating';
+$config->rights->member['action']['createrecord'] = 'createrecord';
+$config->rights->member['action']['editrecord']   = 'editrecord';
+$config->rights->member['action']['history']      = 'history';
+$config->rights->member['action']['editcomment']  = 'editcomment';
+$config->rights->member['action']['read']         = 'read';
+$config->rights->member['action']['finishdating'] = 'finishDating';
+$config->rights->member['action']['deletedating'] = 'deleteDating';
 
 $config->rights->member['file']['buildform']      = 'buildform';
 $config->rights->member['file']['buildlist']      = 'buildlist';
@@ -199,3 +203,4 @@ $config->rights->member['my']['dynamic']  = 'dynamic';
 $config->rights->member['my']['order']    = 'order';
 $config->rights->member['my']['contract'] = 'contract';
 $config->rights->member['my']['review']   = 'review';
+$config->rights->member['my']['contact']  = 'contact';

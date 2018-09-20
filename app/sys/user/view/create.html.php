@@ -42,23 +42,34 @@ include '../../common/view/treeview.html.php';
             </tr>
             <tr>
               <th><?php echo $lang->user->role;?></th>
-              <td><?php echo html::select('role', $lang->user->roleList, '', "class='form-control'");?></td><td></td>
+              <td><?php echo html::select('role', $lang->user->roleList, '', "class='form-control'");?></td>
+              <td></td>
             </tr>
             <tr>
               <th><?php echo $lang->user->password;?></th>
-              <td><?php echo html::password('password1', '', "class='form-control' autocomplete='off'")?></td><td></td>
+              <td>
+                <div class='required required-wrapper'></div>
+                <?php echo html::password('password1', '', "class='form-control' autocomplete='off'")?>
+              </td>
+              <td></td>
             </tr>  
             <tr>
               <th><?php echo $lang->user->password2;?></th>
-              <td><?php echo html::password('password2', '', "class='form-control' autocomplete='off'");?></td><td></td>
+              <td>
+                <div class='required required-wrapper'></div>
+                <?php echo html::password('password2', '', "class='form-control' autocomplete='off'");?>
+              </td>
+              <td></td>
             </tr>  
             <tr>
               <th><?php echo $lang->user->email;?></th>
               <td><?php echo html::input('email', '', "class='form-control' autocomplete='off'");?></td>
+              <td></td>
             </tr>
             <tr>
               <th></th>
               <td><?php echo html::submitButton();?></td>
+              <td></td>
             </tr>
           </table>
         </form>

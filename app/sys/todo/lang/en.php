@@ -10,9 +10,9 @@
  * @link        http://www.zdoo.org
  */
 if(!isset($lang->todo)) $lang->todo = new stdclass();
-$lang->todo->common       = 'To-Do';
+$lang->todo->common       = 'Todo';
 $lang->todo->index        = "Home";
-$lang->todo->browse       = "To-Dos";
+$lang->todo->browse       = "Todo";
 $lang->todo->create       = "Create";
 $lang->todo->batchCreate  = "Batch create";
 $lang->todo->edit         = "Edit";
@@ -56,7 +56,7 @@ $lang->todo->ranzhi       = 'Zdoo';
 $lang->todo->task         = 'Tasks';
 $lang->todo->bug          = 'Bugs';
 
-$lang->todo->confirmTip  = 'This To-Do is linked to %s #%s. Do you want to change it anyway?';
+$lang->todo->confirmTip  = 'This Todo is linked to %s #%s. Do you want to change it anyway?';
 $lang->todo->assignedTip = '%s at %s';
 $lang->todo->finishedTip = '%s at %s';
 $lang->todo->closedTip   = '%s at %s';
@@ -90,8 +90,8 @@ $lang->todo->periods['thisMonth']  = 'This month';
 $lang->todo->periods['lastmonth']  = 'Last month';
 $lang->todo->periods['thisSeason'] = 'This season';
 $lang->todo->periods['thisYear']   = 'This year';
-$lang->todo->periods['future']     = 'Pending';
-$lang->todo->periods['before']     = 'Undone';
+$lang->todo->periods['future']     = 'Wait';
+$lang->todo->periods['before']     = 'Unfinished';
 $lang->todo->periods['all']        = 'All';
 
 $lang->todo->batchedittips = 'The editing item is not selected';

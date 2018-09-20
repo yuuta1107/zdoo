@@ -50,11 +50,12 @@ $lang->contact->menu->thismonth   = '本月內聯繫|contact|browse|mode=thismon
 
 if(!isset($lang->leads)) $lang->leads = new stdclass();
 $lang->leads->menu = new stdclass();
-$lang->leads->menu->assignedTo  = array('link' => '指派給我|leads|browse|mode=assignedTo', 'alias' => 'create');
-$lang->leads->menu->next        = '下次聯繫|leads|browse|mode=next';
-$lang->leads->menu->ignoredBy   = '由我忽略|leads|browse|mode=ignoredBy&status=ignore';
-$lang->leads->menu->public      = '公共名單|leads|browse|mode=all&status=ignore';
-$lang->leads->menu->setting     = '設置|leads|setting|';
+$lang->leads->menu->assignedToNull = '未分配|leads|assignedToNull|';
+$lang->leads->menu->assignedTo     = array('link' => '指派給我|leads|browse|mode=assignedTo', 'alias' => 'create');
+$lang->leads->menu->next           = '下次聯繫|leads|browse|mode=next';
+$lang->leads->menu->ignoredBy      = '由我忽略|leads|browse|mode=ignoredBy&status=ignore';
+$lang->leads->menu->public         = '公共名單|leads|browse|mode=all&status=ignore';
+$lang->leads->menu->setting        = '設置|leads|setting|';
 
 /* Menu of contract module. */
 if(!isset($lang->contract)) $lang->contract = new stdclass();

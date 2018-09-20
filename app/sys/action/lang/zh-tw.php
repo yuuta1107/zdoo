@@ -11,7 +11,10 @@
  */
 if(!isset($lang->action)) $lang->action = new stdclass();
 
-$lang->action->common   = '系統日誌';
+$lang->action->common       = '系統日誌';
+$lang->action->finishAllDating = '完成所有下次聯繫';
+$lang->action->deleteAllDating = '刪除所有下次聯繫';
+
 $lang->action->product  = '產品';
 $lang->action->actor    = '操作者';
 $lang->action->contact  = '聯繫人';
@@ -194,6 +197,7 @@ $lang->action->label->space     = ' ';
 $lang->action->label->task      = '任務|task|view|taskID=%s';
 $lang->action->label->todo      = '待辦|todo|view|todoID=%s';
 $lang->action->label->trade     = '賬目|trade|browse|';
+$lang->action->label->user      = '用戶';
 
 $lang->action->label->attend = array();
 $lang->action->label->attend['commited'] = '考勤審核|attend|browsereview|';
@@ -228,9 +232,6 @@ $lang->action->label->refund['reviewed']    = '報銷審批|refund|view|refundID
 $lang->action->label->refund['reimburse']   = '報銷審批|refund|view|refundID=%s';
 $lang->action->label->refund['createtrade'] = '報銷記賬|refund|view|refundID=%s';
 $lang->action->label->refund['deletedfile'] = '報銷審批|refund|view|refundID=%s';
-$lang->action->label->user = array();
-$lang->action->label->user['login']  = '登錄|user|login|';
-$lang->action->label->user['logout'] = '退出|user|logout|';
 
 $lang->action->nextContactList[1]      = '明天';
 $lang->action->nextContactList[2]      = '後天';
@@ -301,4 +302,5 @@ $lang->action->objectTypes['schema']    = '記賬模板';
 $lang->action->objectTypes['doclib']    = '文檔庫';
 $lang->action->objectTypes['action']    = '溝通記錄';
 
-$lang->action->noticeTitle = "%s <a href='%s' data-appid='%s'>%s</a>";
+$lang->action->noticeTitle  = "%s <a href='%s' data-appid='%s'>%s</a>";
+$lang->action->uniqueDating = "<stong>%s</strong>已經有下次聯繫的記錄。";

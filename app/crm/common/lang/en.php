@@ -50,11 +50,12 @@ $lang->contact->menu->thismonth   = 'This Month|contact|browse|mode=thismonth';
 
 if(!isset($lang->leads)) $lang->leads = new stdclass();
 $lang->leads->menu = new stdclass();
-$lang->leads->menu->assignedTo  = 'Assigned to me|leads|browse|mode=assignedTo';
-$lang->leads->menu->next        = 'Next contact|leads|browse|mode=next';
-$lang->leads->menu->ignoredBy   = 'Ignored by Me|leads|browse|mode=ignoredBy&status=ignore';
-$lang->leads->menu->public      = 'Public|leads|browse|mode=all&status=ignore';
-$lang->leads->menu->setting     = 'Settings|leads|setting|';
+$lang->leads->menu->assignedToNull = 'Assigned to Null|leads|assignedToNull|';
+$lang->leads->menu->assignedTo     = 'Assigned to Me|leads|browse|mode=assignedTo';
+$lang->leads->menu->next           = 'Next contact|leads|browse|mode=next';
+$lang->leads->menu->ignoredBy      = 'Ignored by Me|leads|browse|mode=ignoredBy&status=ignore';
+$lang->leads->menu->public         = 'Public|leads|browse|mode=all&status=ignore';
+$lang->leads->menu->setting        = 'Settings|leads|setting|';
 
 /* Menu of contract module. */
 if(!isset($lang->contract)) $lang->contract = new stdclass();

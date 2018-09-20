@@ -4,7 +4,7 @@ $(document).ready(function()
      {
           $.setAjaxForm('#editForm', function(response)
           { 
-              if(response.result == 'success')location.reload()
+              if(response.result == 'success') location.reload()
           });
      }
      else

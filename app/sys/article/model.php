@@ -268,8 +268,6 @@ class articleModel extends model
         $article->users  = !empty($article->users) ? ',' . trim($article->users, ',') . ',' : '';
         $article->groups = !empty($article->groups) ? ',' . trim($article->groups, ',') . ',' : '';
 
-        if(empty($article->categories)) dao::$errors['categories'][] = sprintf($this->lang->error->notempty, $this->lang->article->category) ;
-
         $article = $this->loadModel('file')->processImgURL($article, $this->config->article->editor->create['id']);
         $this->dao->insert(TABLE_ARTICLE)
             ->data($article, $skip = 'categories,uid')

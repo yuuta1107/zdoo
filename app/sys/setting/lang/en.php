@@ -71,9 +71,9 @@ $lang->setting->placeholder->lineList = new stdclass();
 $lang->setting->placeholder->lineList->key   = 'Key should be intergers or letters.';
 $lang->setting->placeholder->lineList->value = 'Brief description';
 
-$lang->setting->reserveDays    = 'Hold days in customer pools.';
-$lang->setting->reserveDaysTip = "Customer will be automatically saved in customer pools, if customer info is not updated within certain days. It will be disabled if it is set as '0' days.";
-$lang->setting->currencyTip    = 'When create trade with a depositor whose currency is not main currency, you need to record the exchange rate.';
+$lang->setting->reserveDays    = 'Hold Days';
+$lang->setting->reserveDaysTip = "Customer are automatically saved in customer pools, when its info is not updated within certain days. It will be disabled if it is set as '0' days.";
+$lang->setting->currencyTip    = 'When creating a trade with a depositor but the currency is not main currency, you have to record the exchange rate.';
 
 $lang->setting->moduleList['attend']   = 'Attend';
 $lang->setting->moduleList['leave']    = 'Leave';

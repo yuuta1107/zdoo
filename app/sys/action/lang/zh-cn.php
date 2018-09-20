@@ -11,7 +11,10 @@
  */
 if(!isset($lang->action)) $lang->action = new stdclass();
 
-$lang->action->common   = '系统日志';
+$lang->action->common          = '系统日志';
+$lang->action->finishAllDating = '完成所有下次联系';
+$lang->action->deleteAllDating = '删除所有下次联系';
+
 $lang->action->product  = '产品';
 $lang->action->actor    = '操作者';
 $lang->action->contact  = '联系人';
@@ -194,6 +197,7 @@ $lang->action->label->space     = ' ';
 $lang->action->label->task      = '任务|task|view|taskID=%s';
 $lang->action->label->todo      = '待办|todo|view|todoID=%s';
 $lang->action->label->trade     = '账目|trade|browse|';
+$lang->action->label->user      = '用户';
 
 $lang->action->label->attend = array();
 $lang->action->label->attend['commited'] = '考勤审核|attend|browsereview|';
@@ -228,9 +232,6 @@ $lang->action->label->refund['reviewed']    = '报销审批|refund|view|refundID
 $lang->action->label->refund['reimburse']   = '报销审批|refund|view|refundID=%s';
 $lang->action->label->refund['createtrade'] = '报销记账|refund|view|refundID=%s';
 $lang->action->label->refund['deletedfile'] = '报销审批|refund|view|refundID=%s';
-$lang->action->label->user = array();
-$lang->action->label->user['login']  = '登录|user|login|';
-$lang->action->label->user['logout'] = '退出|user|logout|';
 
 $lang->action->nextContactList[1]      = '明天';
 $lang->action->nextContactList[2]      = '后天';
