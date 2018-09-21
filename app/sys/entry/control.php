@@ -159,7 +159,7 @@ class entry extends control
             {
                 $location = rtrim($location, '?') . "?token=$token";
             }
-            if(!empty($referer)) $location .= '&referer=' . base64_encode($referer);
+            if(!empty($referer)) $location .= '&referer=' . $referer;
         }
 
         if(RUN_MODE == 'xuanxuan')

@@ -21,14 +21,14 @@ $lang->doc->digest         = 'Summary';
 $lang->doc->comment        = 'Comment';
 $lang->doc->type           = 'Type';
 $lang->doc->content        = 'Content';
-$lang->doc->keywords       = 'Keywords';
+$lang->doc->keywords       = 'Tags';
 $lang->doc->url            = 'URL';
 $lang->doc->files          = 'File';
 $lang->doc->views          = 'Views';
-$lang->doc->createdBy      = 'Created by';
-$lang->doc->createdDate    = 'Created on';
-$lang->doc->editedBy       = 'Edited by';
-$lang->doc->editedDate     = 'Edited on';
+$lang->doc->createdBy      = 'Create by';
+$lang->doc->createdDate    = 'Create on';
+$lang->doc->editedBy       = 'Edite by';
+$lang->doc->editedDate     = 'Edite on';
 $lang->doc->basicInfo      = 'Basic Info';
 $lang->doc->deleted        = 'Deleted';
 
@@ -36,10 +36,10 @@ $lang->doc->index          = 'Home';
 $lang->doc->create         = 'Create';
 $lang->doc->edit           = 'Edit';
 $lang->doc->delete         = 'Delete';
-$lang->doc->browse         = 'Documents';
-$lang->doc->view           = 'Documents';
-$lang->doc->manageType     = 'Manage Categories';
-$lang->doc->showFiles      = 'Files Library';
+$lang->doc->browse         = 'Document';
+$lang->doc->view           = 'Document';
+$lang->doc->manageType     = 'Manage Category';
+$lang->doc->showFiles      = 'File Library';
 $lang->doc->sort           = 'Sort';
 
 $lang->doc->libName        = 'Name';
@@ -50,7 +50,7 @@ $lang->doc->customLibs     = 'Custom Library';
 $lang->doc->projectMainLib = 'Main Library';
 $lang->doc->fileLib        = 'File Library';
 
-$lang->doc->createLib      = 'Create a Library';
+$lang->doc->createLib      = 'Create Library';
 $lang->doc->editLib        = 'Edit';
 $lang->doc->deleteLib      = 'Delete';
 $lang->doc->fixedMenu      = 'Fixed Menu';
@@ -77,9 +77,9 @@ $lang->doc->browseTypeList['list'] = 'List';
 $lang->doc->browseTypeList['menu'] = 'Menu';
 $lang->doc->browseTypeList['tree'] = 'Tree';
 
-$lang->doc->confirmDelete      = "Do you want to delete this doc?";
-$lang->doc->confirmDeleteLib   = "Do you want to delete this doc library?";
-$lang->doc->errorEditSystemDoc = "System doc library cannot be edited.";
+$lang->doc->confirmDelete      = "Do you want to delete this document?";
+$lang->doc->confirmDeleteLib   = "Do you want to delete this document library?";
+$lang->doc->errorEditSystemDoc = "System document library cannot be edited.";
 
 $lang->doc->placeholder = new stdclass();
 $lang->doc->placeholder->url = 'url';

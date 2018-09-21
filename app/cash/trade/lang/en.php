@@ -16,7 +16,7 @@ $lang->trade->depositor   = 'Account';
 $lang->trade->type        = 'Type';
 $lang->trade->currency    = 'Currency';
 $lang->trade->exchangeRate= 'Exchange rate';
-$lang->trade->trader      = 'Provider';
+$lang->trade->trader      = 'Trader';
 $lang->trade->customer    = 'Customer';
 $lang->trade->money       = 'Amount';
 $lang->trade->status      = 'Status';
@@ -85,11 +85,11 @@ $lang->trade->setReportUnit  = 'Report Unit';
 $lang->trade->settings       = 'Settings';
 $lang->trade->manageCategory = 'Manage Category';
 
-$lang->trade->settingList['trader']       = 'select merchants';
-$lang->trade->settingList['product']      = 'select product';
-$lang->trade->settingList['dept']         = 'select department';
-$lang->trade->settingList['category']     = 'select subject';
-$lang->trade->settingList['lastCategory'] = 'select final subjects';
+$lang->trade->settingList['trader']       = 'Trader required';
+$lang->trade->settingList['product']      = 'Productrequired';
+$lang->trade->settingList['dept']         = 'Department required';
+$lang->trade->settingList['category']     = 'Category required';
+$lang->trade->settingList['lastCategory'] = 'Last-level Category required';
 
 $lang->trade->report = new stdclass();
 $lang->trade->report->common      = 'Report'; 
