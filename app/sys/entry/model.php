@@ -74,8 +74,8 @@ class entryModel extends model
             }
             if($entry->buildin == 1)
             {
-                $entry->name = $this->lang->install->buildinEntry->{$entry->code}['name'];
-                $entry->abbr = $this->lang->install->buildinEntry->{$entry->code}['abbr'];
+                $entry->name = isset($this->lang->install->buildinEntry->{$entry->code}['name']) ? $this->lang->install->buildinEntry->{$entry->code}['name'] : $entry->code;
+                $entry->abbr = isset($this->lang->install->buildinEntry->{$entry->code}['abbr']) ? $this->lang->install->buildinEntry->{$entry->code}['abbr'] : $entry->code;
             }
             elseif($entry->category != 0)
             {

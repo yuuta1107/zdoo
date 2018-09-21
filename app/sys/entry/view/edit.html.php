@@ -44,7 +44,8 @@ include '../../common/view/chosen.html.php';
         </tr>
         <tr>
           <th><?php echo $lang->entry->login;?></th>
-          <td><?php echo html::input('login', $entry->login, "class='form-control' placeholder='{$lang->entry->note->login}'");?></td>
+          <?php $readonly = $entry->buildin ? "readonly='readonly'" : '';?>
+          <td><?php echo html::input('login', $entry->login, "class='form-control' $readonly placeholder='{$lang->entry->note->login}'");?></td>
         </tr>
         <?php if($entry->buildin == 0):?>
         <tr>

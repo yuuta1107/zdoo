@@ -60,7 +60,7 @@
       <?php endif;?>
       <td class='text-left' title='<?php echo $contact->company;?>'><?php echo $contact->company;?></td>
       <td><?php echo isset($lang->genderList->{$contact->gender}) ? $lang->genderList->{$contact->gender} : '';?></td>
-      <?php $phoneAndMobile =  $contact->phone . ' ' . $contact->mobile;?>
+      <?php $phoneAndMobile =  $contact->phone . (($contact->phone && $contact->mobile) ? $lang->slash : '') . $contact->mobile;?>
       <td class='text-left' title='<?php echo $phoneAndMobile;?>' ><?php echo $phoneAndMobile;?></td>
       <td title='<?php echo $contact->email;?>'><?php echo html::mailto($contact->email, $contact->email)?></td>
       <td class='visible-lg' title='<?php echo $contact->qq;?>'><?php echo empty($contact->qq) ? '' : html::a("tencent://Message/?Uin={$contact->qq}&websiteName=RanZhi&Menu=yes", $contact->qq, "target='_blank'")?></td>

@@ -30,7 +30,8 @@
           <option></option>
           <?php foreach($contacts as $contact):?>
           <?php $optionPinyin = zget($pinyinContacts, $contact->realname, '');?>
-          <option value='<?php echo $contact->id;?>' <?php if($contact->id == $record->contact) echo 'selected';?> data-keys="<?php echo $optionPinyin;?>" data-phone='<?php echo $contact->phone . $lang->slash . $contact->mobile;?>'><?php echo $contact->realname;?></option>
+          <?php $phone = $contact->phone . (($contact->phone && $contact->mobile) ? $lang->slash : '') . $contact->mobile;?>
+          <option value='<?php echo $contact->id;?>' <?php if($contact->id == $record->contact) echo 'selected';?> data-keys="<?php echo $optionPinyin;?>" data-phone='<?php echo $phone;?>'><?php echo $contact->realname;?></option>
           <?php endforeach;?>
         </select>
       </td>
