@@ -97,13 +97,13 @@
           <?php $this->app->loadLang('address', 'crm');?>
           <th><?php echo $lang->customer->address;?></th>
           <td>
-            <div class='col-md-3 nopaddingleft'>
+            <div class='col-xs-3 nopaddingleft'>
               <?php echo html::input('address[title]', '', "id='addresstitle' class='form-control' placeholder='{$lang->address->title}'")?>
             </div>
-            <div class='col-md-3'>
+            <div class='col-xs-3'>
               <?php echo html::select('address[area]', $areaList, '', "id='addressarea' class='form-control chosen' data-placeholder='{$lang->address->area}'")?>
             </div>
-            <div class='col-md-6 nopaddingright'>
+            <div class='col-xs-6 nopaddingright'>
               <?php echo html::input('address[location]', '', "id='addresslocation' class='form-control' placeholder='{$lang->address->location}'")?>
             </div>
           </td>

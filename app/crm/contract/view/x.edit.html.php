@@ -22,26 +22,18 @@
         <table class='table table-form'>
           <tr>
             <th class='w-80px'><?php echo $lang->contract->name;?></th>
-            <td>
-              <div class='form-group'>
-                <span class='col-sm-6'>
-                  <?php echo html::input('name', $contract->name, "class='form-control'");?>
-                </span>
-                <span class='col-sm-6'>
-                  <div class='input-group'>
-                    <div class='input-group-addon'><?php echo $lang->contract->code;?></div>
-                    <?php echo html::input('code', $contract->code, "class='form-control'");?>
-                  </div>
-                </span>
-              </div>
-            </td>
+            <td><?php echo html::input('name', $contract->name, "class='form-control'");?></td>
+          </tr>
+          <tr>
+            <th class='w-80px'><?php echo $lang->contract->code;?></th>
+            <td><?php echo html::input('code', $contract->code, "class='form-control'");?></td>
           </tr>
           <?php foreach($contractOrders as $currentOrder):?>
           <tr>
             <th class='orderTH'><?php echo $lang->contract->order;?></th>
             <td>
               <div class='form-group'>
-                <span class='col-sm-6'>
+                <span class='col-xs-6'>
                   <select name='order[]' class='select-order form-control'>
                     <?php foreach($orders as $order):?>
                     <?php if(!$order):?>
@@ -55,7 +47,7 @@
                     <?php endforeach;?>
                   </select>
                 </span>
-                <span class='col-sm-6'>
+                <span class='col-xs-6'>
                   <div class='input-group'>
                     <div class='input-group-addon order-currency'><?php echo zget($currencySign, $currentOrder->currency, '');?></div>
                     <?php echo html::input('real[]', ($currentOrder->real and $currentOrder->real != '0.00') ? $currentOrder->real : $currentOrder->plan, "class='order-real form-control' placeholder='{$this->lang->contract->placeholder->real}'");?>
@@ -74,7 +66,7 @@
             <th class='orderTH'><?php echo $lang->contract->order;?></th>
             <td>
               <div class='form-group'>
-                <span class='col-sm-6'>
+                <span class='col-xs-6'>
                   <select name='order[]' class='select-order form-control'>
                     <?php foreach($orders as $order):?>
                     <?php if(!$order):?>
@@ -85,7 +77,7 @@
                     <?php endforeach;?>
                   </select>
                 </span>
-                <span class='col-sm-6'>
+                <span class='col-xs-6'>
                   <div class='input-group'>
                     <div class='input-group-addon order-currency'><?php echo zget($currencySign, $contract->currency, $contract->currency)?></div>
                     <?php echo html::input('real[]', '', "class='order-real form-control' placeholder='{$this->lang->contract->placeholder->real}'");?>
@@ -104,8 +96,8 @@
             <th><?php echo $lang->contract->amount;?></th>
             <td>
               <div class='form-group'>
-                <span class='col-sm-6'><?php echo html::select('currency', $currencyList, $contract->currency, "class='form-control'");?></span>
-                <span class='col-sm-6'><?php echo html::input('amount', $contract->amount, "class='form-control'");?></span>
+                <span class='col-xs-6'><?php echo html::select('currency', $currencyList, $contract->currency, "class='form-control'");?></span>
+                <span class='col-xs-6'><?php echo html::input('amount', $contract->amount, "class='form-control'");?></span>
               </div>
             </td>
           </tr>
@@ -233,7 +225,7 @@
     <th class='orderTH'></th>
     <td>
       <div class='form-group'>
-        <span class='col-sm-6'>
+        <span class='col-xs-6'>
           <select name='order[]' class='select-order form-control'>
             <?php foreach($orders as $order):?>
             <?php if(!$order):?>
@@ -244,7 +236,7 @@
             <?php endforeach;?>
           </select>
         </span>
-        <span class='col-sm-6'>
+        <span class='col-xs-6'>
           <div class='input-group'>
             <div class='input-group-addon order-currency'><?php echo zget($currencySign, $contract->currency, $contract->currency)?></div>
             <?php echo html::input('real[]', '', "class='order-real form-control' placeholder='{$this->lang->contract->placeholder->real}'");?>

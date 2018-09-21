@@ -89,8 +89,8 @@
           <th><?php echo $lang->order->plan;?></th>
           <td>
             <div class='row'>
-              <div class='col-sm-3'><?php echo html::select('currency', $currencyList, '', "class='form-control'");?></div>
-              <div class='col-sm-9'><?php echo html::input('plan', '', "class='form-control'");?></div>
+              <div class='col-xs-3'><?php echo html::select('currency', $currencyList, '', "class='form-control'");?></div>
+              <div class='col-xs-9'><?php echo html::input('plan', '', "class='form-control'");?></div>
             </div>
           </td>
         </tr>

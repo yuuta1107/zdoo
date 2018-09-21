@@ -32,7 +32,7 @@
           <th><?php echo $lang->contract->order;?></th>
           <td>
             <div class='form-group'>
-              <span class='col-sm-7'>
+              <span class='col-xs-7'>
                 <select name='order[]' class='select-order form-control'>
                   <option value=''></option>
                   <?php foreach($orders as $order):?>
@@ -41,7 +41,7 @@
                   <?php endforeach;?>
                 </select>
               </span>
-              <span class='col-sm-4'>
+              <span class='col-xs-4'>
                 <div class='input-group'>
                   <div class='input-group-addon order-currency'>
                     <?php echo zget($currencySign, $currentOrder->currency, '');?> 
@@ -49,7 +49,7 @@
                   <?php echo html::input('real[]', $currentOrder->plan, "class='order-real form-control' placeholder='{$this->lang->contract->placeholder->real}'");?>
                 </div>
               </span>
-              <span class='col-sm-1' style='margin-top: 8px;'><?php echo html::a('javascript:;', "<i class='icon-plus'></i>", "class='plus'") . html::a('javascript:;', "<i class='icon-remove'></i>", "class='minus'");?></span>
+              <span class='col-xs-1' style='margin-top: 8px;'><?php echo html::a('javascript:;', "<i class='icon-plus'></i>", "class='plus'") . html::a('javascript:;', "<i class='icon-remove'></i>", "class='minus'");?></span>
             </div>
           </td>
         </tr>
@@ -71,8 +71,8 @@
           <th><?php echo $lang->contract->amount;?></th>
           <td>
             <div class='row'>
-              <div class='col-sm-3'><?php echo html::select('currency', $currencyList, isset($currentOrder) ? $currentOrder->currency : '', "class='form-control'");?></div>
-              <div class='col-sm-9'><?php echo html::input('amount', isset($currentOrder) ? $currentOrder->plan : '', "class='form-control'");?></div>
+              <div class='col-xs-3'><?php echo html::select('currency', $currencyList, isset($currentOrder) ? $currentOrder->currency : '', "class='form-control'");?></div>
+              <div class='col-xs-9'><?php echo html::input('amount', isset($currentOrder) ? $currentOrder->plan : '', "class='form-control'");?></div>
             </div>
           </td>
         </tr>
