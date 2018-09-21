@@ -46,7 +46,7 @@
       <?php if($batchReview):?>
       <form id='ajaxForm' method='post' action='<?php echo inlink('batchReview', 'status=pass');?>'>
       <?php endif;?>
-      <table class='table table-data table-hover text-center table-fixed tablesorter' id='makeupTable'>
+      <table class='table table-hover text-center table-fixed tablesorter' id='makeupTable'>
         <thead>
           <tr class='text-center'>
             <?php $vars = "&date={$date}&orderBy=%s";?>
@@ -55,8 +55,8 @@
             <th class='w-80px visible-lg'><?php echo $lang->user->dept;?></th>
             <th class='w-120px'><?php commonModel::printOrderLink('begin', $orderBy, $vars, $lang->makeup->begin);?></th>
             <th class='w-120px'><?php commonModel::printOrderLink('end', $orderBy, $vars, $lang->makeup->end);?></th>
-            <th class='w-50px visible-lg'><?php commonModel::printOrderLink('hours', $orderBy, $vars, $lang->makeup->hours);?></th>
-            <th><?php echo $lang->makeup->desc;?></th>
+            <th class='w-70px visible-lg'><?php commonModel::printOrderLink('hours', $orderBy, $vars, $lang->makeup->hours);?></th>
+            <th class='text-left'><?php echo $lang->makeup->desc;?></th>
             <th class='w-100px'><?php commonModel::printOrderLink('status', $orderBy, $vars, $lang->makeup->status);?></th>
             <?php if($type == 'personal'):?>
             <?php $class = $this->app->clientLang == 'en' ? 'w-180px' : 'w-130px';?>
@@ -68,7 +68,8 @@
           </tr>
         </thead>
         <?php foreach($makeupList as $makeup):?>
-        <tr id='makeup<?php echo $makeup->id;?>'>
+        <?php $viewUrl = commonModel::hasPriv('oa.leave', 'view') ? $this->createLink('oa.leave', 'view', "id=$makeup->id&type=$type") : '';?>
+        <tr id='makeup<?php echo $makeup->id;?>' data-url='<?php echo $viewUrl;?>'>
           <td class='idTD'>
             <?php if($batchReview):?>
             <label class='checkbox-inline'><input type='checkbox' name='makeupIDList[]' value='<?php echo $makeup->id;?>'/> <?php echo $makeup->id;?></label>
@@ -81,11 +82,11 @@
           <td><?php echo formatTime($makeup->begin . ' ' . $makeup->start, DT_DATETIME2);?></td>
           <td><?php echo formatTime($makeup->end . ' ' . $makeup->finish, DT_DATETIME2);?></td>
           <td class='visible-lg'><?php echo $makeup->hours == 0 ? '' : $makeup->hours;?></td>
-          <td title='<?php echo $makeup->desc?>'><?php echo $makeup->desc;?></td>
+          <td class='text-left' title='<?php echo $makeup->desc?>'><?php echo $makeup->desc;?></td>
           <td class='makeup-<?php echo $makeup->status?>'><?php echo $makeup->statusLabel;?></td>
           <td class='actionTD text-left'>
             <?php
-            commonModel::printLink('oa.makeup', 'view', "id=$makeup->id&type=$type", $lang->detail, "data-toggle='modal'");
+            if($viewUrl) echo html::a($viewUrl, $lang->detail, "data-toggle='modal'");
             if($type == 'personal')
             {
                 $switchLabel = $makeup->status == 'wait' ? $lang->makeup->cancel : $lang->makeup->commit;

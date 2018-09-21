@@ -45,7 +45,7 @@
       <?php if($batchReview):?>
       <form id='ajaxForm' method='post' action='<?php echo inlink('batchReview', 'status=pass');?>'>
       <?php endif;?>
-      <table class='table table-data table-hover text-center table-fixed tablesorter' id='lieuTable'>
+      <table class='table table-hover text-center table-fixed tablesorter' id='lieuTable'>
         <thead>
           <tr class='text-center'>
             <?php $vars = "&date={$date}&orderBy=%s";?>
@@ -54,8 +54,8 @@
             <th class='w-70px visible-lg'><?php echo $lang->user->dept;?></th>
             <th class='w-130px'><?php commonModel::printOrderLink('begin', $orderBy, $vars, $lang->lieu->begin);?></th>
             <th class='w-130px'><?php commonModel::printOrderLink('end', $orderBy, $vars, $lang->lieu->end);?></th>
-            <th class='w-60px'><?php commonModel::printOrderLink('hours', $orderBy, $vars, $lang->lieu->hours);?></th>
-            <th><?php echo $lang->lieu->desc;?></th>
+            <th class='w-70px'><?php commonModel::printOrderLink('hours', $orderBy, $vars, $lang->lieu->hours);?></th>
+            <th class='text-left'><?php echo $lang->lieu->desc;?></th>
             <th class='w-100px'><?php commonModel::printOrderLink('status', $orderBy, $vars, $lang->lieu->status);?></th>
             <?php if($type == 'personal'):?>
             <?php $class = $this->app->clientLang == 'en' ? 'w-180px' : 'w-130px';?>
@@ -67,7 +67,8 @@
           </tr>
         </thead>
         <?php foreach($lieuList as $lieu):?>
-        <tr id='lieu<?php echo $lieu->id;?>'>
+        <?php $viewUrl = commonModel::hasPriv('oa.lieu', 'view') ? $this->createLink('oa.lieu', 'view', "id={$lieu->id}&type=$type") : '';?>
+        <tr id='lieu<?php echo $lieu->id;?>' data-url='<?php echo $viewUrl;?>'>
           <td class='idTD'>
             <?php if($batchReview):?>
             <label class='checkbox-inline'><input type='checkbox' name='lieuIDList[]' value='<?php echo $lieu->id;?>'/> <?php echo $lieu->id;?></label>
@@ -80,11 +81,11 @@
           <td><?php echo formatTime($lieu->begin . ' ' . $lieu->start, DT_DATETIME2);?></td>
           <td><?php echo formatTime($lieu->end . ' ' . $lieu->finish, DT_DATETIME2);?></td>
           <td><?php echo $lieu->hours;?></td>
-          <td title='<?php echo $lieu->desc;?>'><?php echo $lieu->desc;?></td>
+          <td class='text-left' title='<?php echo $lieu->desc;?>'><?php echo $lieu->desc;?></td>
           <td class='lieu-<?php echo $lieu->status?>'><?php echo $lieu->statusLabel;?></td>
           <td class='actionTD text-left'>
             <?php
-            commonModel::printLink('oa.lieu', 'view', "id={$lieu->id}&type=$type", $lang->lieu->view, "data-toggle='modal'");
+            if($viewUrl) echo html::a($viewUrl, $lang->detail, "data-toggle='modal'");
             if($type == 'personal')
             {
                 $switchLabel = $lieu->status == 'wait' ? $lang->lieu->cancel : $lang->lieu->commit;

@@ -318,7 +318,7 @@ class makeup extends control
         if($_POST)
         {
             $result = $this->makeup->update($id);
-            if(isset($result['result']) && $result['result'] == 'fail') $this->send($result);
+            if(!empty($result['result']) && $result['result'] == 'fail') $this->send($result);
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
             if($result)
             {

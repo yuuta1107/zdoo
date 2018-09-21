@@ -227,7 +227,7 @@ class lieu extends control
             }
 
             $result = $this->lieu->update($id);
-            if(is_array($result) && $result['result'] == 'fail') $this->send($result);
+            if(!empty($result['result']) && $result['result'] == 'fail') $this->send($result);
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
             if($result)
             {
