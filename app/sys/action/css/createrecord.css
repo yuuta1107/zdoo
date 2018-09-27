@@ -18,3 +18,5 @@ label input[type='radio']{margin: 6px 2px 0 0;}
 .fileBox{margin:0;}
 .table-condensed th, .table-condensed td{padding: 5px;}
 .table td{max-width: 724px;}
+
+#createRecordForm .page-actions {padding: 0; margin: 0;}

@@ -105,7 +105,7 @@
           <table class='table table-info'>
             <tr>
               <th class='w-70px'><?php echo $lang->order->createdBy;?></th>
-              <td><?php echo $order->createdBy;?></td>
+              <td><?php echo zget($users, $order->createdBy);?></td>
             </tr>
             <tr>
               <th><?php echo $lang->order->contactedDate;?></th>

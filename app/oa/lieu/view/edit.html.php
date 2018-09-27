@@ -16,45 +16,52 @@
 <?php js::set('signIn', $config->attend->signInLimit)?>
 <?php js::set('signOut', $config->attend->signOutLimit)?>
 <?php js::set('workingHours', $config->attend->workingHours)?>
-<div class='panel-body'>
-  <form id='ajaxForm' method='post' action="<?php echo $this->createLink('oa.lieu', 'edit', "id=$lieu->id")?>">
-    <table class='table table-form table-condensed'>
-      <tr>
-        <th class='w-60px'><?php echo $lang->lieu->begin?></th>
-        <td>
-          <div class='input-group'>
-            <span class='input-group-addon'><?php echo $lang->lieu->date;?></span>
-            <?php echo html::input('begin', $lieu->begin, "class='form-control form-date date-picker-down'")?>
-            <span class='input-group-addon fix-border'><?php echo $lang->lieu->time;?></span>
-            <?php echo html::input('start', $lieu->start, "class='form-control form-time date-picker-down'")?>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <th><?php echo $lang->lieu->end?></th>
-        <td>
-          <div class='input-group'>
-            <span class='input-group-addon'><?php echo $lang->lieu->date;?></span>
-            <?php echo html::input('end', $lieu->end, "class='form-control form-date date-picker-down'")?>
-            <span class='input-group-addon fix-border'><?php echo $lang->lieu->time;?></span>
-            <?php echo html::input('finish', $lieu->finish, "class='form-control form-time date-picker-down'")?>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <th><?php echo $lang->lieu->hours;?></th>
-        <td><?php echo html::input('hours', $lieu->hours, "class='form-control'")?></td>
-      </tr>
-      <tr>
-        <th><?php echo $lang->lieu->overtime;?></th>
-        <td><?php echo html::select('overtime[]', $overtimePairs, $lieu->overtime, "class='form-control chosen' multiple")?></td>
-      </tr>
-      <tr>
-        <th><?php echo $lang->lieu->desc;?></th>
-        <td><?php echo html::textarea('desc', $lieu->desc, "class='form-control'")?></td>
-      </tr>
-      <tr><th></th><td clospan='2'><?php echo html::submitButton();?></td></tr>
-    </table>
-  </form>
-</div>
+<form id='ajaxForm' method='post' action="<?php echo $this->createLink('oa.lieu', 'edit', "id=$lieu->id")?>">
+  <table class='table table-form table-condensed'>
+    <tr>
+      <th class='w-60px'><?php echo $lang->lieu->begin?></th>
+      <td>
+        <div class='input-group'>
+          <span class='input-group-addon'><?php echo $lang->lieu->date;?></span>
+          <?php echo html::input('begin', $lieu->begin, "class='form-control form-date date-picker-down'")?>
+          <span class='input-group-addon fix-border'><?php echo $lang->lieu->time;?></span>
+          <?php echo html::input('start', $lieu->start, "class='form-control form-time date-picker-down'")?>
+        </div>
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <th><?php echo $lang->lieu->end?></th>
+      <td>
+        <div class='input-group'>
+          <span class='input-group-addon'><?php echo $lang->lieu->date;?></span>
+          <?php echo html::input('end', $lieu->end, "class='form-control form-date date-picker-down'")?>
+          <span class='input-group-addon fix-border'><?php echo $lang->lieu->time;?></span>
+          <?php echo html::input('finish', $lieu->finish, "class='form-control form-time date-picker-down'")?>
+        </div>
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <th><?php echo $lang->lieu->hours;?></th>
+      <td><?php echo html::input('hours', $lieu->hours, "class='form-control'")?></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th><?php echo $lang->lieu->overtime;?></th>
+      <td><?php echo html::select('overtime[]', $overtimePairs, $lieu->overtime, "class='form-control chosen' multiple")?></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th><?php echo $lang->lieu->desc;?></th>
+      <td><?php echo html::textarea('desc', $lieu->desc, "class='form-control'")?></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th></th>
+      <td><?php echo html::submitButton();?></td>
+      <td></td>
+    </tr>
+  </table>
+</form>
 <?php include '../../../sys/common/view/footer.modal.html.php';?>

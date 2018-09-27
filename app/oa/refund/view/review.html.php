@@ -18,9 +18,9 @@
     <thead>
     <tr class='text-center'>
       <th class='w-80px'><?php echo $lang->refund->date;?></th>
-      <th class='w-100px'><?php echo $lang->refund->dept;?></th>
-      <th class='w-100px'><?php echo $lang->refund->money;?></th>
-      <th class='w-100px'><?php echo $lang->refund->status;?></th>
+      <th class='w-80px'><?php echo $lang->refund->dept;?></th>
+      <th class='w-80px'><?php echo $lang->refund->money;?></th>
+      <th class='w-80px'><?php echo $lang->refund->status;?></th>
       <th class='w-120px'><?php echo $lang->refund->category;?></th>
       <th class='text-nowrap'><?php echo $lang->refund->desc;?></th>
       <?php if(!empty($refund->detail)):?>

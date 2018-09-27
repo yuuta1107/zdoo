@@ -108,6 +108,8 @@
     if($order->status == 'normal' or $order->closedReason == 'failed') commonModel::printLink('order', 'delete', "orderID=$order->id", $lang->delete, "class='btn btn-default deleter'");
     echo html::a('#commentBox', $this->lang->comment, "class='btn btn-default' onclick=setComment()");
     echo '</div>';
+
+    echo html::backButton();
     ?>
   </div>
   <fieldset id='commentBox' class='hide'>

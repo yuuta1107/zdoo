@@ -1,11 +1,11 @@
 <?php
 /**
- * The save order record view file of order module of RanZhi.
+ * The create record view file of action module of RanZhi.
  *
  * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
- * @author      Tingting Dai <daitingting@xirangit.com>
- * @package     order
+ * @author      Gang Liu <liugang@cnezsoft.com>
+ * @package     action
  * @version     $Id$
  * @link        http://www.ranzhi.org
  */
@@ -27,7 +27,7 @@
       <?php if($objectType != 'contact'):?>
       <tr>
         <th class='w-80px'><?php echo $lang->action->record->contact;?></th>
-        <td class='w-300px'>
+        <td>
           <div class='required required-wrapper'></div>
           <div class='input-group'>
             <select id='contact' name='contact' class='form-control chosen'>
@@ -52,35 +52,39 @@
             <?php endif;?>
           </div>
         </td>
-        <th class='w-80px'><?php echo $lang->action->record->date;?></th>
-        <td><?php echo html::input('date', date('Y-m-d H:i:s'), "class='form-control form-datetime'");?></td>
         <th class='w-20px'></th>
       </tr>
       <tr id='phoneTR' class='hide'>
         <th><?php echo $lang->contact->contactInfo;?></th>
-        <td id='phoneTD' colspan='3'></td>
+        <td id='phoneTD'></td>
+      </tr>
+      <tr>
+        <th><?php echo $lang->action->record->date;?></th>
+        <td><?php echo html::input('date', date('Y-m-d H:i:s'), "class='form-control form-datetime'");?></td>
       </tr>
       <?php elseif(!empty($customers)):?>
       <tr>
         <th class='w-80px'><?php echo $lang->action->record->customer;?></th>
-        <td class='w-240px'><?php echo html::select('customer', $customers, '', "class='form-control'");?></td>
-        <th class='w-80px'><?php echo $lang->action->record->date;?></th>
+        <td><?php echo html::select('customer', $customers, '', "class='form-control'");?></td>
+      </tr>
+      <tr>
+        <th><?php echo $lang->action->record->date;?></th>
         <td><?php echo html::input('date', date('Y-m-d H:i:s'), "class='form-control form-datetime'");?></td>
       </tr>
       <?php endif;?>
       <?php if($isCustomer):?>
       <tr style='display:none'>
         <th><?php echo $lang->action->record->contract;?></th>
-        <td colspan='3'><?php echo html::select('contract', $contracts, '', "class='form-control chosen'");?></td>
+        <td><?php echo html::select('contract', $contracts, '', "class='form-control chosen'");?></td>
       </tr>
       <tr style='display:none'>
         <th><?php echo $lang->action->record->order;?></th>
-        <td colspan='3'><?php echo html::select('order', $orders, '', "class='form-control'");?></td>
+        <td><?php echo html::select('order', $orders, '', "class='form-control'");?></td>
       </tr>
       <?php endif;?>
       <tr>
         <th><?php echo $lang->action->record->comment;?></th>
-        <td colspan='3'>
+        <td>
           <div class='required required-wrapper'></div>
           <?php echo html::textarea('comment', '', "class='form-control' rows='3'");?>
         </td>
@@ -91,7 +95,7 @@
           <?php echo $lang->action->record->file;?>
           <span class='text-danger'><?php echo '(' . $config->file->maxSize / 1024 / 1024 . 'M)';?>
         </th>
-        <td colspan='3'><?php echo $this->fetch('file', 'buildForm', "fileCount=1");?></td>
+        <td><?php echo $this->fetch('file', 'buildForm', "fileCount=1");?></td>
       </tr>
       <?php endif;?>
     </table>
@@ -101,25 +105,27 @@
       <strong><?php echo $lang->action->record->next;?></strong>
     </div>
     <table class='table table-form table-condensed'>
+      <?php if($objectType != 'contact' && $objectType != 'leads'):?>
       <tr>
-        <?php $colspan = "colspan='3'";?>
-        <?php if($objectType != 'contact' && $objectType != 'leads'):?>
-        <?php $colspan = '';?>
         <th class='w-80px'><?php echo $lang->action->record->contact;?></th>
-        <td class='w-240px'><?php echo html::select('nextContact', array('ditto' => $lang->action->record->sameContact) + $contactPairs, '', "class='form-control chosen'");?></td>
-        <?php endif;?>
+        <td><?php echo html::select('nextContact', array('ditto' => $lang->action->record->sameContact) + $contactPairs, '', "class='form-control chosen'");?></td>
+      </tr>
+      <?php endif;?>
+      <tr>
         <th class='w-80px'><?php echo $lang->action->record->contactedBy;?></th>
-        <td <?php echo $colspan;?>><?php echo html::select('contactedBy', $users, $this->app->user->account, "class='form-control chosen'");?></td>
+        <td><?php echo html::select('contactedBy', $users, $this->app->user->account, "class='form-control chosen'");?></td>
         <th class='w-20px'></th>
       </tr>
       <tr>
-        <th class='w-80px'><?php echo $lang->action->date;?></th>
-        <td class='w-240px'><?php echo html::input('nextDate', '', "class='form-control form-date'");?></td>
+        <th><?php echo $lang->action->date;?></th>
+        <td><?php echo html::input('nextDate', '', "class='form-control form-date'");?></td>
+      </tr>
+      <tr>
         <th colspan='2'><?php echo html::radio('delta', $lang->action->nextContactList , '', "onclick='computeNextDate(this.value)'");?></th>
       </tr>
       <tr>
         <th><?php echo $lang->action->record->desc;?></th>
-        <td colspan='3'><?php echo html::textarea('desc', '', "rows='3' class='form-control'");?></td>
+        <td><?php echo html::textarea('desc', '', "rows='3' class='form-control'");?></td>
       </tr>
     </table>
   </div>
