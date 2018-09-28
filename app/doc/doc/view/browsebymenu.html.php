@@ -67,13 +67,13 @@
       </div>
       <?php endforeach;?>
       <div class='file create'>
-          <div class='dropdown'>
-            <a href='###' class='addbtn dropdown-toggle' data-toggle='dropdown'> <i class='icon icon-plus'></i></a>
-            <ul class='dropdown-menu' role='menu'>
-              <?php commonModel::printLink('tree', 'browse', "type=doc&moduleID=0&rootID=$libID", $lang->doc->manageType, '', true, '', 'li');?>
-              <?php commonModel::printLink('doc', 'create', "libID=$libID&moduleID=$moduleID&projectID=$lib->project", $lang->doc->create, '', true, '', 'li');?>
-            </ul>
-          </div>
+        <div class='dropdown'>
+          <a href='###' class='addbtn dropdown-toggle' data-toggle='dropdown'> <i class='icon icon-plus'></i></a>
+          <ul class='dropdown-menu' role='menu'>
+            <?php commonModel::printLink('tree', 'browse', "type=doc&moduleID=0&rootID=$libID", $lang->doc->manageType, '', true, '', 'li');?>
+            <?php commonModel::printLink('doc', 'create', "libID=$libID&moduleID=$moduleID&projectID=$lib->project", $lang->doc->create, '', true, '', 'li');?>
+          </ul>
+        </div>
       </div>
     </div>
     <?php if($docs):?>
