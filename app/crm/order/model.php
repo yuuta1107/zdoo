@@ -504,7 +504,7 @@ class orderModel extends model
             ->add('editedDate', $now)
             ->get();
 
-        $this->dao->update(TABLE_ORDER)->data($order, $skip='uid, comment')->autoCheck()->where('id')->eq($orderID)->exec();
+        $this->dao->update(TABLE_ORDER)->data($order, $skip='uid, note')->autoCheck()->where('id')->eq($orderID)->exec();
 
         return !dao::isError();
     }
@@ -527,7 +527,7 @@ class orderModel extends model
             ->get();
 
         $this->dao->update(TABLE_ORDER)
-            ->data($order, $skip = 'uid, comment')
+            ->data($order, $skip = 'uid, note')
             ->autoCheck()
             ->where('id')->eq($orderID)
             ->exec();

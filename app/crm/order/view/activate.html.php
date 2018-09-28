@@ -16,12 +16,12 @@
 <form method='post' id='ajaxForm' action='<?php echo $this->createLink('order', 'activate', "orderID=$orderID")?>'>
   <table class='table table-form'>
     <tr>
-      <th class='w-100px'><?php echo $lang->order->assignedTo;?></th>
-      <td class='w-p40'><?php echo html::select('assignedTo', $users, '', "class='form-control chosen'")?></td><td></td>
+      <th class='w-50px'><?php echo $lang->order->assignedTo;?></th>
+      <td><?php echo html::select('assignedTo', $users, '', "class='form-control chosen'")?></td>
     </tr>
     <tr>
       <th><?php echo $lang->comment?></th>
-      <td colspan='2'><?php echo html::textarea('comment')?></td>
+      <td><?php echo html::textarea('note')?></td>
     </tr>
     <tr>
       <th></th>

@@ -1209,7 +1209,8 @@ class taskModel extends model
         if($task->parent == 0 and !$isMulti)
         {
             $disabled = ($canEdit and self::isClickable($task, 'batchCreate')) ? '' : 'disabled';
-            $misc     = $disabled ? "class='$disabled $class'" : "data-keyboard=false data-toggle='modal' class='$class' data-width='80%'";
+            $width    = $this->app->getViewType() == 'xhtml' ? '' : "data-width='80%'";
+            $misc     = $disabled ? "class='$disabled $class'" : "data-keyboard=false data-toggle='modal' class='$class' $width";
             $menu    .= $type == 'block' ? ($disabled ? "<li class='hide'>" : '<li>') : '';
             $menu    .= $disabled ? html::a('###', $this->lang->task->children, $misc) : commonModel::printLink('proj.task', 'batchCreate', "projectID=$task->project&taskID=$task->id", $this->lang->task->children, $misc, false);
             $menu    .= $type == 'block' ? '</li>' : '';

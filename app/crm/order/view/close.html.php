@@ -15,7 +15,7 @@
 <form method='post' id='ajaxForm' action='<?php echo $this->createLink('order', 'close', "orderID=$orderID")?>'>
   <table class='table table-form'>
     <tr>
-      <th class='w-100px'><?php echo $lang->order->closedReason?></th>
+      <th class='w-60px'><?php echo $lang->order->closedReason?></th>
       <td><?php echo html::select('closedReason', $lang->order->closedReasonList, '', "class='form-control'")?></td>
     </tr>
     <tr>

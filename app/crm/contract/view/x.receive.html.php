@@ -1,11 +1,11 @@
-<?php 
+<?php
 /**
- * The receive payments file of contract module of RanZhi.
+ * The receive view file of contract module of RanZhi.
  *
  * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
- * @author      Tingting Dai <daitingting@xirangit.com>
- * @package     contract 
+ * @author      Gang Liu <liugang@cnezsoft.com>
+ * @package     contract
  * @version     $Id$
  * @link        http://www.ranzhi.org
  */
@@ -18,8 +18,7 @@
   <table class='table table-form table-condensed'>
     <tr>
       <th class='w-60px'><?php echo $lang->contract->all;?></th>
-      <td class='w-p40'><?php echo zget($currencySign, $contract->currency, $contract->currency) . $contract->amount;?></td>
-      <td></td>
+      <td><?php echo zget($currencySign, $contract->currency, $contract->currency) . $contract->amount;?></td>
     </tr>
     <tr>
       <th><?php echo $lang->contract->thisAmount;?></th>
@@ -34,53 +33,42 @@
           </div>
         </div>
       </td>
-      <td></td>
     </tr>
     <tr class='tradeTR'>
       <th><?php echo $lang->trade->depositor;?></th>
       <td><?php echo html::select('depositor', $depositorList, '', "class='form-control'");?></td>
-      <td>
-        <?php unset($depositorList[0]);?>
-        <?php unset($depositorList['']);?>
-        <?php if(!$depositorList) commonModel::printLink('cash.depositor', 'browse', '', $lang->depositor->create, "class='btn createDepositor'");?>
-      </td>
     </tr>
     <tr class='tradeTR'>
       <th><?php echo $lang->trade->category;?></th>
       <td><?php echo html::select('category', array('') + (array) $categories, '', "class='form-control'");?></td>
-      <td></td>
     </tr>
     <tr class='tradeTR'>
       <th><?php echo $lang->trade->dept;?></th>
       <td><?php echo html::select('dept', array('') + (array) $deptList, isset($dept->id) ? $dept->id : '', "class='form-control'");?></td>
-      <td></td>
     </tr>
     <tr class='tradeTR'>
       <th><?php echo $lang->trade->product;?></th>
       <td><?php echo html::select('product', $productList, $product, "class='form-control chosen'");?></td>
-      <td></td>
     </tr>
     <tr>
       <th><?php echo $lang->contract->returnedBy;?></th>
       <td><?php echo html::select('returnedBy', $users, $this->app->user->account, "class='form-control chosen'");?></td>
-      <td></td>
     </tr>
     <tr>
       <th><?php echo $lang->contract->returnedDate;?></th>
       <td><?php echo html::input('returnedDate', '', "class='form-control form-date'");?></td>
-      <td></td>
     </tr>
     <tr>
       <th><?php echo $lang->contract->handlers;?></th>
-      <td colspan='2'><?php echo html::select('handlers[]', $users, $contract->handlers . ',' . $this->app->user->account, "class='form-control chosen' multiple");?></td>
+      <td><?php echo html::select('handlers[]', $users, $contract->handlers . ',' . $this->app->user->account, "class='form-control chosen' multiple");?></td>
     </tr>
     <tr>
       <th><?php echo $lang->comment;?></th>
-      <td colspan='2'><?php echo html::textarea('comment', '', "rows='2'");?></td>
+      <td><?php echo html::textarea('comment', '', "rows='2'");?></td>
     </tr>
     <tr>
       <th></th>
-      <td colspan='2'>
+      <td>
         <?php echo html::submitButton();?>
         <div id='duplicateError' class='hide'></div>
       </td>

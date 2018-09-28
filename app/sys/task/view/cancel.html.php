@@ -15,10 +15,13 @@
 <form id='ajaxForm' method='post' action='<?php echo inlink('cancel', "taskID=$taskID")?>'>
   <table class='table table-form'>
     <tr>
-      <th><?php echo $lang->comment;?></th>
+      <th class='w-40px'><?php echo $lang->comment;?></th>
       <td><?php echo html::textarea('comment', '', "rows='6' class='form-control'");?></td>
     </tr>
-    <tr><td colspan='2' class='text-center'><?php echo html::submitButton();?></td></tr>
+    <tr>
+      <th></th>
+      <td><?php echo html::submitButton();?></td>
+    </tr>
   </table>
 </form>
 <?php include '../../common/view/footer.modal.html.php';?>

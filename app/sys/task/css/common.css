@@ -13,7 +13,7 @@
 #currentItem {margin-right: 1px;}
 
 .children {background: #f0f0f0;}
-.modal-team .table-form {margin: auto; width: 90%;}
+.modal-team .table-form {margin: auto;}
 .modal-team .modal-content {padding: 5px;}
 .modal-team .modal-content .table-form td + td, .table-form th + th {padding-left: 5px;}
 

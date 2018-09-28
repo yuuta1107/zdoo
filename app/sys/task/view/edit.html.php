@@ -203,7 +203,7 @@
             <?php for($i = 0; $i < 3; $i++):?>
             <tr>
               <td><?php echo html::select("team[]", $projectMembers, '', "class='form-control chosen'")?></td>
-              <td><?php echo html::input("role[]", $member->role, "class='form-control'")?></td>
+              <td><?php echo html::input("role[]", '', "class='form-control'")?></td>
               <td>
                 <div class='input-group'>
                   <span class='input-group-addon'><?php echo $lang->task->estimate?></span>

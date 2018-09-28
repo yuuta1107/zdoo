@@ -16,27 +16,31 @@
 <form method='post' id='assignToForm' action='<?php echo $this->createLink('task', 'assignTo', "taskID=$taskID")?>'>
   <table class='table table-form'>
     <tr>
-      <th class='w-100px'><?php echo empty($task->team) ? $lang->task->assignedTo : $lang->task->transmitTo;?></th>
-      <td><?php echo html::select('assignedTo', $users, $task->assignedTo, "class='form-control chosen'");?></td>
+      <th class='w-60px'><?php echo empty($task->team) ? $lang->task->assignedTo : $lang->task->transmitTo;?></th>
+      <td class='w-p45'><?php echo html::select('assignedTo', $users, $task->assignedTo, "class='form-control chosen'");?></td>
+      <td></td>
     </tr>
     <?php if(empty($task->team)):?>
     <tr>
       <th><?php echo $lang->task->left;?></th>
       <td><?php echo html::input('left', $task->left, "class='form-control'");?></td>
+      <td></td>
     </tr>
     <?php else:?>
     <tr>
       <th><?php echo $lang->task->myConsumption;?></th>
       <td><?php echo html::input('consumed', '', "class='form-control' placeholder='{$lang->task->hour}'");?></td>
+      <td></td>
     </tr>
     <?php endif;?>
     <tr>
       <th><?php echo $lang->comment?></th>
-      <td><?php echo html::textarea('comment');?></td>
+      <td colspan='2'><?php echo html::textarea('comment');?></td>
     </tr>
     <tr>
       <th></th>
       <td><?php echo html::submitButton();?></td>
+      <td></td>
     </tr>
   </table>
 </form>

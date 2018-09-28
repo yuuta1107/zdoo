@@ -16,8 +16,9 @@
 <form id='ajaxForm' method='post' action='<?php echo inlink('activate', "taskID=$task->id")?>'>
   <table class='table table-form'>
     <tr>
-      <th class='w-80px'><?php echo $lang->task->assignedTo;?></th>
-      <td class='w-p45'><?php echo html::select('assignedTo', $users, $task->finishedBy, "class='form-control chosen'");?></td><td></td>
+      <th class='w-60px'><?php echo $lang->task->assignedTo;?></th>
+      <td class='w-p45'><?php echo html::select('assignedTo', $users, $task->finishedBy, "class='form-control chosen'");?></td>
+      <td></td>
     </tr>
     <tr <?php if(!empty($task->team)) echo "class='hidden'";?>>
       <th><?php echo $lang->task->left;?></th>
@@ -27,6 +28,7 @@
           <span class='input-group-addon'><?php echo $lang->task->hour;?></span>
         </div>
       </td>
+      <td></td>
     </tr>
     <tr>
       <th><?php echo $lang->comment;?></th>
