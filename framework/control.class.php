@@ -43,6 +43,7 @@ class control extends baseControl
         {
             if(!file_exists($mainViewFile))
             {
+                if($this->viewType == 'xhtml') $this->app->viewType = 'html';
                 $this->devicePrefix = '';
                 $mainViewFile = $modulePath . 'view' . DS . $this->devicePrefix . $methodName . '.' . $viewType . '.php';
             }
@@ -152,7 +153,7 @@ class control extends baseControl
     {
         if($moduleName == '') $moduleName = $this->moduleName;
         if($methodName == '') $methodName = $this->methodName;
-        if($appName == '')    $appName    = $this->appName;
+        if($appName    == '') $appName    = $this->appName;
         if($moduleName == $this->moduleName and $methodName == $this->methodName) 
         {
             $this->parse($moduleName, $methodName);

@@ -99,14 +99,34 @@
             <td id='detailBox'>
               <table class='table table-detail'>
                 <tr>
-                  <td class='w-100px'><?php echo html::input('dateList[1]', '', "class='form-control form-date' placeholder='{$lang->refund->date}'")?></td>
-                  <?php if($categories):?>
-                  <td class='w-160px'><?php echo html::select('categoryList[1]', $categories, '', "class='form-control chosen' placeholder='{$lang->refund->category}'")?></td>
-                  <?php endif;?>
-                  <td class='w-100px'><?php echo html::input('moneyList[1]', '', "class='form-control' placeholder='{$lang->refund->money}'")?></td>
-                  <td class='w-200px'><?php echo html::select('relatedList[1][]', $users, '', "class='form-control chosen' multiple data-placeholder='{$lang->refund->related}'")?></td>
-                  <td><?php echo html::textarea('descList[1]', '', "class='form-control' style='height:32px;' placeholder='{$lang->refund->desc}'")?></td>
-                  <td class='w-70px'><i class='btn btn-mini icon-plus'></i>&nbsp;&nbsp;<i class='btn btn-mini icon-remove'></i></td>
+                  <td>
+                    <div class='form-group'>
+                      <div class='input-group'>
+                        <span class='input-group-addon'><?php echo $lang->refund->date;?></span>
+                        <?php echo html::input("dateList[1]", '', "class='form-control form-date' placeholder='{$lang->refund->date}'")?>
+                        <span class='input-group-addon fix-border'><?php echo $lang->refund->money;?></span>
+                        <?php echo html::input("moneyList[1]", '', "class='form-control' placeholder='{$lang->refund->money}'")?>
+                        <span class='input-group-btn'>
+                          <?php echo html::a('javascript:;', "<i class='icon-plus'></i>", "class='plus btn'");?>
+                          <?php echo html::a('javascript:;', "<i class='icon-remove'></i>", "class='minus btn'");?>
+                        </span>
+                      </div>
+                      <?php if($categories):?>
+                      <div class='input-group'>
+                        <span class='input-group-addon'><?php echo $lang->refund->category;?></span>
+                        <?php echo html::select("categoryList[1]", $categories, '', "class='form-control chosen' placeholder='{$lang->refund->category}'")?>
+                      </div>
+                      <?php endif;?>
+                      <div class='input-group'>
+                        <span class='input-group-addon'><?php echo $lang->refund->related;?></span>
+                        <?php echo html::select("relatedList[1][]", $users, '', "class='form-control chosen' multiple data-placeholder='{$lang->refund->related}'")?>
+                      </div>
+                      <div class='input-group'>
+                        <span class='input-group-addon'><?php echo $lang->refund->desc;?></span>
+                        <?php echo html::textarea("descList[1]", '', "class='form-control' placeholder='{$lang->refund->desc}'")?>
+                      </div>
+                    </div>
+                  </td>
                 </tr>
               </table>
             </td>
@@ -136,14 +156,34 @@
 </div>
 <script type='text/template' id='detailTpl'>
 <tr>
-  <td class='w-100px'><?php echo html::input('dateList[key]', '', "class='form-control form-date' placeholder='{$lang->refund->date}'")?></td>
-  <?php if($categories):?>
-  <td class='w-160px'><?php echo html::select('categoryList[key]', $categories, '', "class='form-control chosen' placeholder='{$lang->refund->category}'")?></td>
-  <?php endif;?>
-  <td class='w-100px'><?php echo html::input('moneyList[key]', '', "class='form-control' placeholder='{$lang->refund->money}'")?></td>
-  <td class='w-200px'><?php echo html::select('relatedList[key][]', $users, '', "class='form-control chosen' multiple data-placeholder='{$lang->refund->related}'")?></td>
-  <td><?php echo html::textarea('descList[key]', '', "class='form-control' style='height:32px;' placeholder='{$lang->refund->desc}'")?></td>
-  <td class='w-70px'><i class='btn btn-mini icon-plus'></i>&nbsp;&nbsp;<i class='btn btn-mini icon-remove'></i></td>
+  <td>
+    <div class='form-group'>
+      <div class='input-group'>
+        <span class='input-group-addon'><?php echo $lang->refund->date;?></span>
+        <?php echo html::input("dateList[key]", '', "class='form-control form-date' placeholder='{$lang->refund->date}'")?>
+        <span class='input-group-addon fix-border'><?php echo $lang->refund->money;?></span>
+        <?php echo html::input("moneyList[key]", '', "class='form-control' placeholder='{$lang->refund->money}'")?>
+        <span class='input-group-btn'>
+          <?php echo html::a('javascript:;', "<i class='icon-plus'></i>", "class='plus btn'");?>
+          <?php echo html::a('javascript:;', "<i class='icon-remove'></i>", "class='minus btn'");?>
+        </span>
+      </div>
+      <?php if($categories):?>
+      <div class='input-group'>
+        <span class='input-group-addon'><?php echo $lang->refund->category;?></span>
+        <?php echo html::select("categoryList[key]", $categories, '', "class='form-control chosen' placeholder='{$lang->refund->category}'")?>
+      </div>
+      <?php endif;?>
+      <div class='input-group'>
+        <span class='input-group-addon'><?php echo $lang->refund->related;?></span>
+        <?php echo html::select("relatedList[key][]", $users, '', "class='form-control chosen' multiple data-placeholder='{$lang->refund->related}'")?>
+      </div>
+      <div class='input-group'>
+        <span class='input-group-addon'><?php echo $lang->refund->desc;?></span>
+        <?php echo html::textarea("descList[key]", '', "class='form-control' placeholder='{$lang->refund->desc}'")?>
+      </div>
+    </div>
+  </td>
 </tr>
 </script>
 <?php js::set('key', 2)?>

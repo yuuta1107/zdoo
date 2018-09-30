@@ -43,6 +43,7 @@ if(RUN_MODE != 'upgrade')
 }
 
 if($app->clientDevice == 'mobile' and strpos($config->installedVersion, 'pro') === 0 and $config->default->view == 'html') $config->default->view = 'mhtml';
+if(!empty($_GET['display']) && $_GET['display'] == 'card') $config->default->view = 'xhtml';
 
 $app->parseRequest();
 $common->checkPriv();

@@ -39,7 +39,7 @@
       </td>
       <?php endif;?>
       <td><?php echo zget($users, $overtime->createdBy);?></td>
-      <td><?php echo zget($this->lang->overtime->typeList, $overtime->type);?></td>
+      <td><?php echo formatTime($overtime->begin . ' ' . $overtime->start, DT_DATETIME2);?></td>
       <td><?php echo formatTime($overtime->end . ' ' . $overtime->finish, DT_DATETIME2);?></td>
       <td class='text-left' title='<?php echo $overtime->desc?>'><?php echo $overtime->desc;?></td>
     </tr>

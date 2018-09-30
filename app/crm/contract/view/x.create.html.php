@@ -31,25 +31,17 @@
         <tr>
           <th><?php echo $lang->contract->order;?></th>
           <td>
-            <div class='form-group'>
-              <span class='col-xs-7'>
-                <select name='order[]' class='select-order form-control'>
-                  <option value=''></option>
-                  <?php foreach($orders as $order):?>
-                  <?php $selected = $orderID == $order->id ? 'selected' : ''; ?>
-                  <option value="<?php echo $order->id;?>" <?php echo $selected;?>  data-real="<?php echo $order->plan;?>" data-currency="<?php echo $order->currency?>"><?php echo $order->title;?></option>
-                  <?php endforeach;?>
-                </select>
-              </span>
-              <span class='col-xs-4'>
-                <div class='input-group'>
-                  <div class='input-group-addon order-currency'>
-                    <?php echo zget($currencySign, $currentOrder->currency, '');?> 
-                  </div>
-                  <?php echo html::input('real[]', $currentOrder->plan, "class='order-real form-control' placeholder='{$this->lang->contract->placeholder->real}'");?>
-                </div>
-              </span>
-              <span class='col-xs-1' style='margin-top: 8px;'><?php echo html::a('javascript:;', "<i class='icon-plus'></i>", "class='plus'") . html::a('javascript:;', "<i class='icon-remove'></i>", "class='minus'");?></span>
+            <div class='input-group'>
+              <select name='order[]' class='select-order form-control'>
+                <option value=''></option>
+                <?php foreach($orders as $order):?>
+                <?php $selected = $orderID == $order->id ? 'selected' : ''; ?>
+                <option value="<?php echo $order->id;?>" <?php echo $selected;?>  data-real="<?php echo $order->plan;?>" data-currency="<?php echo $order->currency?>"><?php echo $order->title;?></option>
+                <?php endforeach;?>
+              </select>
+              <span class='input-group-addon fix-border order-currency'><?php echo zget($currencySign, $currentOrder->currency, '');?></span>
+              <?php echo html::input('real[]', $currentOrder->plan, "class='order-real form-control' placeholder='{$this->lang->contract->placeholder->real}'");?>
+              <span class='input-group-btn'><?php echo html::a('javascript:;', "<i class='icon-plus'></i>", "class='plus btn'") . html::a('javascript:;', "<i class='icon-remove'></i>", "class='minus btn'");?></span>
             </div>
           </td>
         </tr>

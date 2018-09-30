@@ -532,7 +532,7 @@ class contract extends control
             $this->send(array_values($orders));
         }
 
-        $html = "<div class='form-group'><span class='col-sm-7'><select name='order[]' class='select-order form-control'>";
+        $html = "<div class='input-group'><select name='order[]' class='select-order form-control'>";
 
         foreach($orders as $order)
         {
@@ -546,9 +546,9 @@ class contract extends control
             }
         }
 
-        $html .= '</select></span>';
-        $html .= "<span class='col-sm-4'><div class='input-group'><div class='input-group-addon order-currency'></div>" . html::input('real[]', '', "class='order-real form-control' placeholder='{$this->lang->contract->placeholder->real}'") . "</div></span>";
-        $html .= "<span class='col-sm-1'>" . html::a('javascript:;', "<i class='icon-plus'></i>", "class='plus'") . html::a('javascript:;', "<i class='icon-remove'></i>", "class='minus'") . "</span></div>";
+        $html .= '</select>';
+        $html .= "<span class='input-group-addon fix-border order-currency'>￥</span>" . html::input('real[]', '', "class='order-real form-control' placeholder='{$this->lang->contract->placeholder->real}'");
+        $html .= "<span class='input-group-btn'>" . html::a('javascript:;', "<i class='icon-plus'></i>", "class='plus btn'") . html::a('javascript:;', "<i class='icon-remove'></i>", "class='minus btn'") . "</span></div>";
 
         echo $html;
     }

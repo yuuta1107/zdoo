@@ -14,53 +14,55 @@
 <?php include '../../../sys/common/view/kindeditor.html.php';?>
 <?php js::set('detail', !empty($refund->detail) ? true : false);?>
 <form method='post' id='ajaxForm' action='<?php echo inlink('review', "refundID={$refund->id}")?>'>
-  <table class='table table-fixed table-bordered'>
-    <thead>
-    <tr class='text-center'>
-      <th class='w-80px'><?php echo $lang->refund->date;?></th>
-      <th class='w-80px'><?php echo $lang->refund->dept;?></th>
-      <th class='w-80px'><?php echo $lang->refund->money;?></th>
-      <th class='w-80px'><?php echo $lang->refund->status;?></th>
-      <th class='w-120px'><?php echo $lang->refund->category;?></th>
-      <th class='text-nowrap'><?php echo $lang->refund->desc;?></th>
+  <div class='refundTable'>
+    <table class='table table-fixed table-bordered'>
+      <thead>
+      <tr class='text-center'>
+        <th class='w-80px'><?php echo $lang->refund->date;?></th>
+        <th class='w-80px'><?php echo $lang->refund->dept;?></th>
+        <th class='w-80px'><?php echo $lang->refund->money;?></th>
+        <th class='w-80px'><?php echo $lang->refund->status;?></th>
+        <th class='w-120px'><?php echo $lang->refund->category;?></th>
+        <th class='text-nowrap'><?php echo $lang->refund->desc;?></th>
+        <?php if(!empty($refund->detail)):?>
+        <th class='w-140px'>
+          <div class='btn-group'>
+            <button class='btn btn-mini all-pass' type='button'><?php echo $lang->refund->reviewAllStatusList['allpass'];?></button>
+            <?php echo html::hidden('allPass', '1');?>
+            <?php echo html::hidden('allReject', '0');?>
+            <button class='btn btn-mini all-reject' type='button'><?php echo $lang->refund->reviewAllStatusList['allreject'];?></button>
+          </div>
+        </th>
+        <?php else:;?>
+        <th class='w-120px'><?php echo $lang->actions;?></th>
+        <?php endif;?>
+      </tr>
+      </thead>
       <?php if(!empty($refund->detail)):?>
-      <th class='w-140px'>
-        <div class='btn-group'>
-          <button class='btn btn-mini all-pass' type='button'><?php echo $lang->refund->reviewAllStatusList['allpass'];?></button>
-          <?php echo html::hidden('allPass', '1');?>
-          <?php echo html::hidden('allReject', '0');?>
-          <button class='btn btn-mini all-reject' type='button'><?php echo $lang->refund->reviewAllStatusList['allreject'];?></button>
-        </div>
-      </th>
-      <?php else:;?>
-      <th class='w-120px'><?php echo $lang->actions;?></th>
+      <?php foreach($refund->detail as $detail):?>
+      <tr class='text-center'>
+        <td><?php echo $detail->date;?></td>
+        <td><?php echo zget($deptList, $refund->dept);?></td>
+        <td class='text-right'><?php echo zget($currencySign, $detail->currency) . "<span class='detailMoney'>" . $detail->money . "</span>";?></td>
+        <td><?php echo $lang->refund->statusList[$detail->status];?></td>
+        <td class='text-ellipsis' title="<?php echo zget($categories, $detail->category, ' ');?>"><?php echo zget($categories, $detail->category, ' ');?></td>
+        <td class='text-ellipsis' title="<?php echo $detail->desc;?>"><?php echo $detail->desc;?></td>
+        <td><?php echo html::radio("status{$detail->id}", $lang->refund->reviewStatusList, $detail->status == 'reject' ? 'reject' : 'pass');?></td>
+      </tr>
+      <?php endforeach;?>
+      <?php else:?>
+      <tr class='text-center'>
+        <td><?php echo $refund->date;?></td>
+        <td><?php echo zget($deptList, $refund->dept);?></td>
+        <td class='text-right'><?php echo zget($currencySign, $refund->currency) . "<span class='detailMoney'>" . $refund->money . "</span>";?></td>
+        <td><?php echo $lang->refund->statusList[$refund->status];?></td>
+        <td class='text-ellipsis' title="<?php echo zget($categories, $detail->category, ' ');?>"><?php echo zget($categories, $refund->category, ' ');?></td>
+        <td class='text-ellipsis' title="<?php echo $refund->desc;?>"><?php echo $refund->desc;?></td>
+        <td><?php echo html::radio("status", $lang->refund->reviewStatusList, $refund->status == 'reject' ? 'reject' : 'pass');?></td>
+      </tr>
       <?php endif;?>
-    </tr>
-    </thead>
-    <?php if(!empty($refund->detail)):?>
-    <?php foreach($refund->detail as $detail):?>
-    <tr class='text-center'>
-      <td><?php echo $detail->date;?></td>
-      <td><?php echo zget($deptList, $refund->dept);?></td>
-      <td class='text-right'><?php echo zget($currencySign, $detail->currency) . "<span class='detailMoney'>" . $detail->money . "</span>";?></td>
-      <td><?php echo $lang->refund->statusList[$detail->status];?></td>
-      <td class='text-ellipsis' title="<?php echo zget($categories, $detail->category, ' ');?>"><?php echo zget($categories, $detail->category, ' ');?></td>
-      <td class='text-ellipsis' title="<?php echo $detail->desc;?>"><?php echo $detail->desc;?></td>
-      <td><?php echo html::radio("status{$detail->id}", $lang->refund->reviewStatusList, $detail->status == 'reject' ? 'reject' : 'pass');?></td>
-    </tr>
-    <?php endforeach;?>
-    <?php else:?>
-    <tr class='text-center'>
-      <td><?php echo $refund->date;?></td>
-      <td><?php echo zget($deptList, $refund->dept);?></td>
-      <td class='text-right'><?php echo zget($currencySign, $refund->currency) . "<span class='detailMoney'>" . $refund->money . "</span>";?></td>
-      <td><?php echo $lang->refund->statusList[$refund->status];?></td>
-      <td class='text-ellipsis' title="<?php echo zget($categories, $detail->category, ' ');?>"><?php echo zget($categories, $refund->category, ' ');?></td>
-      <td class='text-ellipsis' title="<?php echo $refund->desc;?>"><?php echo $refund->desc;?></td>
-      <td><?php echo html::radio("status", $lang->refund->reviewStatusList, $refund->status == 'reject' ? 'reject' : 'pass');?></td>
-    </tr>
-    <?php endif;?>
-  </table>
+    </table>
+  </div>
   <table class='table table-borderless'>
     <tr class='reviewMoney'>
       <th class='w-70px text-center text-middle'><?php echo $lang->refund->reviewMoney;?></th>
