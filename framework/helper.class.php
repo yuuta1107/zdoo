@@ -287,7 +287,7 @@ function parseDecimal($number)
  * @access public
  * @return string 
  */
-function getRanzhiWebRoot()
+function getRanzhiWebRoot($full = false)
 {
     $path = $_SERVER['SCRIPT_NAME'];
 
@@ -301,8 +301,14 @@ function getRanzhiWebRoot()
         $path = empty($path) ? '/' : preg_replace('/\/www$/', '/www/', $path);
     }
     
-    $path = dirname(dirname($path));
+    if($full)
+    {
+        $http = (isset($_SERVER['HTTPS']) and strtolower($_SERVER['HTTPS']) != 'off') ? 'https://' : 'http://';
+        return $http . $_SERVER['HTTP_HOST'] . substr($path, 0, (strrpos($path, '/') + 1));
+    }
+
+    $path = dirname($path);
+    $path = substr($path, 0, (strrpos($path, '/') + 1));
     $path = str_replace('\\', '/', $path);
-    if($path == '/') return '/';
-    return $path . '/';
+    return $path;
 }
