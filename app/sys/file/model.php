@@ -5,7 +5,7 @@
  * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
- * @package     file 
+ * @package     file
  * @version     $Id: model.php 4182 2016-10-20 09:31:02Z liugang $
  * @link        http://www.ranzhi.org
  */
@@ -19,7 +19,7 @@ class fileModel extends model
 
     /**
      * The construct function, set the save path and web path.
-     * 
+     *
      * @access public
      * @return void
      */
@@ -34,8 +34,8 @@ class fileModel extends model
 
     /**
      * Print files.
-     * 
-     * @param  object $files 
+     *
+     * @param  object $files
      * @access public
      * @return void
      * @todo fix style.
@@ -63,10 +63,10 @@ class fileModel extends model
 
     /**
      * Get files of an object list.
-     * 
-     * @param   string  $objectType 
-     * @param   mixed   $objectID 
-     * @param   bool    $isImage 
+     *
+     * @param   string  $objectType
+     * @param   mixed   $objectID
+     * @param   bool    $isImage
      * @access public
      * @return array
      */
@@ -77,7 +77,7 @@ class fileModel extends model
             ->from(TABLE_FILE)
             ->where('objectType')->eq($objectType)
             ->andWhere('objectID')->in($objectID)
-            ->beginIf($isImage)->andWhere('extension')->in($this->config->file->imageExtensions)->orderBy('`primary`')->fi() 
+            ->beginIf($isImage)->andWhere('extension')->in($this->config->file->imageExtensions)->orderBy('`primary`')->fi()
             ->fetchGroup('objectID');
 
         /* Process these files. */
@@ -93,7 +93,7 @@ class fileModel extends model
      *
      * @param  object $file
      * @return object
-     */    
+     */
     public function processFile($file)
     {
         $realPathName    = $this->getRealPathName($file->pathname);
@@ -117,10 +117,10 @@ class fileModel extends model
 
         return $file;
     }
-    
+
     /**
      * batch run processFile function.
-     * 
+     *
      * @param array $files
      * @return array
      */
@@ -132,8 +132,8 @@ class fileModel extends model
 
     /**
      * Get info of a file.
-     * 
-     * @param string $fileID 
+     *
+     * @param string $fileID
      * @access public
      * @return void
      */
@@ -150,10 +150,10 @@ class fileModel extends model
 
     /**
      * Save the files uploaded.
-     * 
-     * @param string $objectType 
-     * @param string $objectID 
-     * @param string $extra 
+     *
+     * @param string $objectType
+     * @param string $objectID
+     * @param string $extra
      * @access public
      * @return void
      */
@@ -164,7 +164,7 @@ class fileModel extends model
         $files      = $this->getUpload();
 
         foreach($files as $id => $file)
-        {   
+        {
             if(!move_uploaded_file($file['tmpname'], $this->savePath . $this->getSaveName($file['pathname']))) return false;
 
             $file = $this->compressImage($file);
@@ -183,7 +183,7 @@ class fileModel extends model
 
     /**
      * Get the count of uploaded files.
-     * 
+     *
      * @access public
      * @return void
      */
@@ -194,8 +194,8 @@ class fileModel extends model
 
     /**
      * get uploaded files.
-     * 
-     * @param string $htmlTagName 
+     *
+     * @param string $htmlTagName
      * @access public
      * @return void
      */
@@ -234,8 +234,8 @@ class fileModel extends model
 
     /**
      * Get extension name of a file.
-     * 
-     * @param string $filename 
+     *
+     * @param string $filename
      * @access public
      * @return void
      */
@@ -249,8 +249,8 @@ class fileModel extends model
 
     /**
      * Get save name.
-     * 
-     * @param  string    $pathName 
+     *
+     * @param  string    $pathName
      * @access public
      * @return string
      */
@@ -262,8 +262,8 @@ class fileModel extends model
 
     /**
      * Get real path name.
-     * 
-     * @param  string    $pathName 
+     *
+     * @param  string    $pathName
      * @access public
      * @return string
      */
@@ -277,9 +277,9 @@ class fileModel extends model
 
     /**
      * Set the path name.
-     * 
-     * @param string $fileID 
-     * @param string $extension 
+     *
+     * @param string $fileID
+     * @param string $extension
      * @access public
      * @return void
      */
@@ -297,7 +297,7 @@ class fileModel extends model
 
     /**
      * Set the save path.
-     * 
+     *
      * @access public
      * @return void
      */
@@ -307,10 +307,10 @@ class fileModel extends model
         if(!file_exists($savePath)) @mkdir($savePath, 0777, true);
         $this->savePath = dirname($savePath) . '/';
     }
-    
+
     /**
      * Set the web path.
-     * 
+     *
      * @access public
      * @return void
      */
@@ -321,24 +321,24 @@ class fileModel extends model
 
     /**
      * Edit rile
-     * 
-     * @param  int    $fileID 
+     *
+     * @param  int    $fileID
      * @access public
      * @return void
      */
     public function edit($fileID)
     {
         $this->replaceFile($fileID);
-        
+
         $fileInfo = fixer::input('post')->remove('upFile')->get();
         $this->dao->update(TABLE_FILE)->data($fileInfo)->autoCheck()->batchCheck('title', 'notempty')->where('id')->eq($fileID)->exec();
     }
-    
+
     /**
      * Replace a file.
-     * 
+     *
      * @access public
-     * @return bool 
+     * @return bool
      */
     public function replaceFile($fileID, $postName = 'upFile')
     {
@@ -370,11 +370,11 @@ class fileModel extends model
             return false;
         }
     }
- 
+
     /**
      * Delete the record and the file
-     * 
-     * @param  int    $fileID 
+     *
+     * @param  int    $fileID
      * @access public
      * @return void
      */
@@ -387,10 +387,10 @@ class fileModel extends model
     }
 
     /**
-     * Paste image in kindeditor at firefox and chrome. 
-     * 
-     * @param  string    $data 
-     * @param  string    $uid 
+     * Paste image in kindeditor at firefox and chrome.
+     *
+     * @param  string    $data
+     * @param  string    $uid
      * @access public
      * @return string
      */
@@ -431,7 +431,7 @@ class fileModel extends model
 
     /**
      * Check save path is writeable.
-     * 
+     *
      * @access public
      * @return void
      */
@@ -442,10 +442,10 @@ class fileModel extends model
 
     /**
      * Update objectType and objectID for file.
-     * 
-     * @param  string $uid 
-     * @param  int    $objectID 
-     * @param  string $bojectType 
+     *
+     * @param  string $uid
+     * @param  int    $objectID
+     * @param  string $bojectType
      * @access public
      * @return void
      */
@@ -458,16 +458,16 @@ class fileModel extends model
         {
             $this->dao->update(TABLE_FILE)->data($data)->where('id')->in($_SESSION['album'][$uid])->exec();
             if(dao::isError()) return false;
-            return !dao::isError(); 
+            return !dao::isError();
         }
     }
 
     /**
      * Copy file in content from file space.
-     * 
-     * @param  string $content 
-     * @param  int    $objectID 
-     * @param  string $bojectType 
+     *
+     * @param  string $content
+     * @param  int    $objectID
+     * @param  string $bojectType
      * @access public
      * @return bool
      */
@@ -497,39 +497,42 @@ class fileModel extends model
             if($fileExists == 0) $this->dao->insert(TABLE_FILE)->data($data, $skip = 'id')->exec();
         }
 
-        return !dao::isError(); 
+        return !dao::isError();
     }
 
     /**
      * Compress image to config configured size.
-     * 
-     * @param  string  $rawImage 
-     * @param  string  $target 
+     *
+     * @param  string  $rawImage
+     * @param  string  $target
      * @param  int     $x
-     * @param  int     $y 
-     * @param  int     $width 
-     * @param  int     $height 
+     * @param  int     $y
+     * @param  int     $width
+     * @param  int     $height
+     * @param  int     $resizeWidth
+     * @param  int     $resizeHeight
      * @access public
      * @return void
      */
-    public function cropImage($rawImage, $target, $x, $y, $width, $height)
+    public function cropImage($rawImage, $target, $x, $y, $width, $height, $resizeWidth = 0, $resizeHeight = 0)
     {
         $this->app->loadClass('phpthumb', true);
 
         if(!extension_loaded('gd')) return false;
 
         $croper = phpThumbFactory::create($rawImage);
+        if($resizeWidth > 0) $croper->resize($x, $y, $resizeWidth, $resizeHeight);
         $croper->crop($x, $y, $width, $height);
         $croper->save($target);
     }
 
     /**
      * Resize an image.
-     * 
-     * @param  int    $rawImage 
-     * @param  int    $target 
-     * @param  int    $width 
-     * @param  int    $height 
+     *
+     * @param  int    $rawImage
+     * @param  int    $target
+     * @param  int    $width
+     * @param  int    $height
      * @access public
      * @return void
      */
@@ -546,7 +549,7 @@ class fileModel extends model
 
     /**
      * Set max file size by php.ini.
-     * 
+     *
      * @access public
      * @return void
      */
@@ -569,9 +572,9 @@ class fileModel extends model
     }
 
     /**
-     * parse excel file into array. 
-     * 
-     * @param  array  $fields 
+     * parse excel file into array.
+     *
+     * @param  array  $fields
      * @access public
      * @return array
      */
@@ -580,13 +583,13 @@ class fileModel extends model
         $file = $this->session->importFile;
 
         $phpExcel  = $this->app->loadClass('phpexcel');
-        $phpReader = new PHPExcel_Reader_Excel2007(); 
+        $phpReader = new PHPExcel_Reader_Excel2007();
         if(!$phpReader->canRead($file)) $phpReader = new PHPExcel_Reader_Excel5();
 
         $phpExcel     = $phpReader->load($file);
-        $currentSheet = $phpExcel->getSheet(0); 
-        $allRows      = $currentSheet->getHighestRow(); 
-        $allColumns   = $currentSheet->getHighestColumn(); 
+        $currentSheet = $phpExcel->getSheet(0);
+        $allRows      = $currentSheet->getHighestRow();
+        $allColumns   = $currentSheet->getHighestColumn();
         /* In php, 'A'++  === 'B', 'Z'++ === 'AA', 'a'++ === 'b', 'z'++ === 'aa'. */
         $allColumns++;
         $currentColumn = 'A';
@@ -601,8 +604,8 @@ class fileModel extends model
         $dataList = array();
         for($currentRow = 2; $currentRow <= $allRows; $currentRow++)
         {
-            $currentColumn = 'A'; 
-            $data          = new stdclass(); 
+            $currentColumn = 'A';
+            $data          = new stdclass();
             $ignoreRow     = false;
             while($currentColumn != $allColumns)
             {
@@ -620,14 +623,14 @@ class fileModel extends model
             foreach(array_keys($fields) as $key) if(!isset($data->$key)) $data->$key = '';
             $dataList[] = $data;
         }
-        return $dataList;   
+        return $dataList;
     }
 
     /**
      * Process editor.
-     * 
-     * @param  object    $data 
-     * @param  string    $editorList 
+     *
+     * @param  object    $data
+     * @param  string    $editorList
      * @access public
      * @return object
      */
@@ -652,9 +655,9 @@ class fileModel extends model
     }
 
     /**
-     * Compress image 
-     * 
-     * @param  array    $file 
+     * Compress image
+     *
+     * @param  array    $file
      * @access public
      * @return array
      */
@@ -690,15 +693,15 @@ class fileModel extends model
      * Webpage: de77.com
      * Version: 07.02.2010
      * Source : https://github.com/acustodioo/pic/blob/master/imagecreatefrombmp.function.php
-     * 
-     * @param  string    $filename 
+     *
+     * @param  string    $filename
      * @access public
      * @return resource
      */
     public function imagecreatefrombmp($filename) {
         $f = fopen($filename, "rb");
 
-        //read header    
+        //read header
         $header = fread($f, 54);
         $header = unpack('c2identifier/Vfile_size/Vreserved/Vbitmap_data/Vheader_size/'.
             'Vwidth/Vheight/vplanes/vbits_per_pixel/Vcompression/Vdata_size/'.
@@ -731,9 +734,9 @@ class fileModel extends model
     }
 
     /**
-     * Dwordize for imagecreatefrombmp 
-     * 
-     * @param  streing $str 
+     * Dwordize for imagecreatefrombmp
+     *
+     * @param  streing $str
      * @access private
      * @return int
      */
@@ -747,9 +750,9 @@ class fileModel extends model
 
     /**
      * Exclude html.
-     * 
-     * @param  string $content 
-     * @param  string $extra 
+     *
+     * @param  string $content
+     * @param  string $extra
      * @access public
      * @return string
      */
@@ -764,10 +767,10 @@ class fileModel extends model
     }
 
     /**
-     * Revert real src. 
-     * 
-     * @param  object    $data 
-     * @param  string    $fields 
+     * Revert real src.
+     *
+     * @param  object    $data
+     * @param  string    $fields
      * @access public
      * @return object
      */
