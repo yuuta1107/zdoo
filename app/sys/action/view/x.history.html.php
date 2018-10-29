@@ -137,7 +137,7 @@
         <p class='files'>
           <span><strong><?php echo $lang->action->record->uploadFile;?></strong></span>
           <?php foreach($action->files as $file) echo "<span style='margin-right:5px'>" . html::a(helper::createLink('file', 'download', "fileID=$file->id&mouse=left"), $file->title, "target='_blank'") . '</span>';?>
-        </ul>
+        </p>
         <?php endif;?>
         <?php if(!empty($action->comment)) echo "</div>";?>
         <?php endif;?>
