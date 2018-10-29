@@ -26,17 +26,18 @@ $config->doc->markdown->create = array('id' => 'contentMarkdown', 'tools' => 'wi
 
 global $lang;
 $config->doc->search['module']                   = 'doc';
-$config->doc->search['fields']['title']          = $lang->doc->title;
-$config->doc->search['fields']['id']             = $lang->doc->id;
-$config->doc->search['fields']['project']        = $lang->doc->project;
-$config->doc->search['fields']['keywords']       = $lang->doc->keywords;
-$config->doc->search['fields']['type']           = $lang->doc->type;
-$config->doc->search['fields']['module']         = $lang->doc->category;
-$config->doc->search['fields']['lib']            = $lang->doc->lib;
-$config->doc->search['fields']['createdBy']      = $lang->doc->createdBy;
-$config->doc->search['fields']['createdDate']    = $lang->doc->createdDate;
-$config->doc->search['fields']['editedBy']       = $lang->doc->editedBy;
-$config->doc->search['fields']['editedDate']     = $lang->doc->editedDate;
+$config->doc->search['fields']['t1.title']       = $lang->doc->title;
+$config->doc->search['fields']['t1.id']          = $lang->doc->id;
+$config->doc->search['fields']['t1.project']     = $lang->doc->project;
+$config->doc->search['fields']['t1.keywords']    = $lang->doc->keywords;
+$config->doc->search['fields']['t2.content']     = $lang->doc->content;
+$config->doc->search['fields']['t1.type']        = $lang->doc->type;
+$config->doc->search['fields']['t1.module']      = $lang->doc->category;
+$config->doc->search['fields']['t1.lib']         = $lang->doc->lib;
+$config->doc->search['fields']['t1.createdBy']   = $lang->doc->createdBy;
+$config->doc->search['fields']['t1.createdDate'] = $lang->doc->createdDate;
+$config->doc->search['fields']['t1.editedBy']    = $lang->doc->editedBy;
+$config->doc->search['fields']['t1.editedDate']  = $lang->doc->editedDate;
 
 $config->doc->search['params']['title']         = array('operator' => 'include', 'control' => 'input',  'values' => '');
 $config->doc->search['params']['id']            = array('operator' => '=',       'control' => 'input',  'values' => '');
