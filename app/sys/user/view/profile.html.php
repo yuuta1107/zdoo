@@ -17,7 +17,7 @@
       <th class='text-right w-100px'><?php echo $lang->user->realname;?></th>
       <td class='w-p45'><?php echo $user->realname;?></td>
       <td rowspan='9' class='text-top'>
-        <div class='avatar avatar-lg mgb-10'><?php if(!empty($user->avatar)) echo html::image($user->avatar . '?rid=' . rand(), "class='avatar-img'");?></div>
+        <div class='avatar avatar-lg mgb-10'><?php if(!empty($user->avatar)) echo html::image($user->avatar . '?v=' . rand(), "class='avatar-img'");?></div>
         <form method='post' action="<?php echo inlink('uploadAvatar', "account={$user->account}");?>" class='form-condensed' id='avatarForm' enctype='multipart/form-data' class='hide'>
         <?php echo html::file('files', "class='form-control file-control'");?>
         <?php echo html::a('javascript:;', $lang->user->uploadAvatar, "class='btn btn-avatar submit'");?>
