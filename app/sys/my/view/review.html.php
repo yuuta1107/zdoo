@@ -174,7 +174,7 @@
       <td><?php echo $overtime->begin . ' ' . substr($overtime->start, 0, 5);?></td>
       <td><?php echo $overtime->end . ' ' . substr($overtime->finish, 0, 5);?></td>
       <td title='<?php echo $overtime->desc?>'><?php echo $overtime->desc;?></td>
-      <td class='overtime-<?php echo $leave->status?>' title='<?php echo $overtime->statusLabel;?>'><?php echo $overtime->statusLabel;?></td>
+      <td class='overtime-<?php echo $overtime->statusLabel?>' title='<?php echo $overtime->statusLabel;?>'><?php echo $overtime->statusLabel;?></td>
       <td>
         <?php commonModel::printLink('oa.overtime', 'review', "id={$overtime->id}&status=pass",   $lang->overtime->statusList['pass'],   "data-status='pass' data-toggle='ajax'");?>
         <?php commonModel::printLink('oa.overtime', 'review', "id={$overtime->id}&status=reject", $lang->overtime->statusList['reject'], "data-toggle='modal'");?>
