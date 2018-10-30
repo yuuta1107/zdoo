@@ -27,6 +27,8 @@ $lang->attend->saveStat     = 'Save';
 $lang->attend->exportStat   = 'Export Report';
 $lang->attend->exportDetail = 'Export Details';
 $lang->attend->browseReview = 'Review List';
+$lang->attend->batchReview  = 'Batch Review';
+$lang->attend->batchPass    = 'Batch Pass';
 
 $lang->attend->id            = 'ID';
 $lang->attend->date          = 'Date';
@@ -119,11 +121,14 @@ $lang->attend->inFail     = 'Sign in failed.';
 $lang->attend->outSuccess = 'Signed out.';
 $lang->attend->outFail    = 'Sign out failed.';
 
-$lang->attend->signInLimit  = 'Clock-in';
-$lang->attend->signOutLimit = 'Clock-out';
-$lang->attend->workingDays  = 'Working days';
-$lang->attend->workingHours = 'Working hours';
-$lang->attend->mustSignOut  = 'Required';
+$lang->attend->signInLimit   = 'Clock-in';
+$lang->attend->signOutLimit  = 'Clock-out';
+$lang->attend->workingDays   = 'Working days';
+$lang->attend->workingHours  = 'Working hours';
+$lang->attend->mustSignOut   = 'Required';
+$lang->attend->denied        = 'Access denied.';
+$lang->attend->nodata        = 'Select no data.';
+$lang->attend->reviewSuccess = 'Review success';
 
 $lang->attend->workingDaysList['5']  = "Monday ~ Friday";
 $lang->attend->workingDaysList['6']  = "Monday ~ Saturday";

@@ -47,4 +47,9 @@ $(document).ready(function()
         }
         return false;
     });
+
+    $('.batchPass').on('click', function()
+    {
+        $('#ajaxForm').submit();
+    });
 });

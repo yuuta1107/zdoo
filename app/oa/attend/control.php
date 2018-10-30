@@ -446,6 +446,38 @@ class attend extends control
     }
 
     /**
+     * Batch review leaves.
+     *
+     * @param  string $status
+     * @access public
+     * @return void
+     */
+    public function batchReview($status = 'pass')
+    {
+        if(!$this->post->attendIDList) 
+        {
+            $this->send(array('result' => 'fail', 'message' => $this->lang->attend->nodata));
+        }
+
+        /* Check privilage. */
+        $canReview    = commonModel::hasPriv('attend', 'batchReview');
+        $attendIDList = $this->post->attendIDList;
+        if(!$canReview) $this->send(array('result' => 'fail', 'message' => $this->lang->attend->denied));
+        if($status == 'pass')
+        {
+            foreach($attendIDList as $attendID)
+            {
+                $this->attend->review($attendID, $status);
+                if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
+                $actionID = $this->loadModel('action')->create('attend', $attendID, 'reviewed', '', $this->lang->attend->reviewStatusList[$status]);
+                $this->sendmail($attendID, $actionID);
+            }
+            if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
+            $this->send(array('result' => 'success', 'message' => $this->lang->attend->reviewSuccess, 'locate' => 'reload'));
+        }
+    }
+
+    /**
      * Send email.
      * 
      * @param  int    $attendID 
