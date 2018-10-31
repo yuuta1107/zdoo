@@ -45,7 +45,7 @@ $imgCutter.imgCutter(
     ready: function() {$.zui.ajustModalPosition(); $imgCutter.css('width', $imgCutter.closest('.modal-dialog').width() - 50);},
     done: function(response)
     {
-        $('#start .avatar, #startMenu .avatar').html('<img src="<?php echo $user->avatar?>?rid=' + $.zui.uuid() + '" />');
+        $('#start .avatar, #startMenu .avatar').html('<img src="<?php echo $user->avatar?>?v=' + $.zui.uuid() + '" />');
         $('#ajaxModal').load(createLink('user', 'profile'), function(){$.zui.ajustModalPosition()});
     },
 });
