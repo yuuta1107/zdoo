@@ -45,6 +45,10 @@
           <td><?php echo html::input('qq', '', "class='form-control'");?></td>
         </tr>
         <tr>
+          <th><?php echo $lang->provider->depositor;?></th>
+          <td><?php echo html::input('depositor', '', "class='form-control'");?></td>
+        </tr>
+        <tr>
           <th><?php echo $lang->provider->type;?></th>
           <td><?php echo html::select("type", $lang->provider->typeList, '', "class='form-control'");?></td>
         </tr>
