@@ -17,12 +17,13 @@
 <form method='post' id='receiveForm' class='form-table' action='<?php echo $this->createLink('contract', 'receive', "contractID={$contract->id}")?>'>
   <table class='table table-form table-condensed'>
     <tr>
-      <th><?php echo $lang->contract->all;?></th>
-      <td><?php echo zget($currencySign, $contract->currency, $contract->currency) . $contract->amount;?></td>
+      <th class='w-60px'><?php echo $lang->contract->all;?></th>
+      <td class='w-p40'><?php echo zget($currencySign, $contract->currency, $contract->currency) . $contract->amount;?></td>
+      <td></td>
     </tr>
     <tr>
-      <th class='w-80px'><?php echo $lang->contract->thisAmount;?></th>
-      <td class='w-p40'>
+      <th><?php echo $lang->contract->thisAmount;?></th>
+      <td>
         <div class='input-group'>
           <?php echo html::input('amount', '', "class='form-control'");?>
           <div class='input-group-addon'>
@@ -47,22 +48,27 @@
     <tr class='tradeTR'>
       <th><?php echo $lang->trade->category;?></th>
       <td><?php echo html::select('category', array('') + (array) $categories, '', "class='form-control'");?></td>
+      <td></td>
     </tr>
     <tr class='tradeTR'>
       <th><?php echo $lang->trade->dept;?></th>
       <td><?php echo html::select('dept', array('') + (array) $deptList, isset($dept->id) ? $dept->id : '', "class='form-control'");?></td>
+      <td></td>
     </tr>
     <tr class='tradeTR'>
       <th><?php echo $lang->trade->product;?></th>
       <td><?php echo html::select('product', $productList, $product, "class='form-control chosen'");?></td>
+      <td></td>
     </tr>
     <tr>
       <th><?php echo $lang->contract->returnedBy;?></th>
-      <td><?php echo html::select('returnedBy', $users, $this->app->user->account, "class='form-control chosen'");?></td><td></td>
+      <td><?php echo html::select('returnedBy', $users, $this->app->user->account, "class='form-control chosen'");?></td>
+      <td></td>
     </tr>
     <tr>
       <th><?php echo $lang->contract->returnedDate;?></th>
       <td><?php echo html::input('returnedDate', '', "class='form-control form-date'");?></td>
+      <td></td>
     </tr>
     <tr>
       <th><?php echo $lang->contract->handlers;?></th>

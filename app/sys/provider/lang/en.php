@@ -24,6 +24,7 @@ $lang->provider->setCategory = 'Set Category';
 $lang->provider->common        = 'Provider';
 $lang->provider->id            = 'ID';
 $lang->provider->name          = 'Name';
+$lang->provider->depositor     = 'Account';
 $lang->provider->contact       = 'Contact';
 $lang->provider->type          = 'Type';
 $lang->provider->size          = 'Size';

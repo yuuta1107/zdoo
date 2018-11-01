@@ -163,7 +163,8 @@ class doc extends control
             }
         }
 
-        if($this->cookie->browseType == 'bymenu' or $this->app->viewType === 'mhtml')
+        $viewType = $this->app->getViewType();
+        if($this->cookie->browseType == 'bymenu' or $viewType === 'mhtml' or $viewType === 'xhtml')
         {
             $this->view->modules = $browseType == 'bysearch' ? array() : $this->doc->getDocMenu($libID, $moduleID, $orderBy == 'title_asc' ? 'name_asc' : 'id_desc');
         }

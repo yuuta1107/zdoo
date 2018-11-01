@@ -46,7 +46,7 @@
       <?php if($batchReview):?>
       <form id='ajaxForm' method='post' action='<?php echo inlink('batchReview', 'status=pass');?>'>
       <?php endif;?>
-      <table class='table table-data table-hover text-center table-fixed tablesorter' id='leaveTable'>
+      <table class='table table-hover text-center table-fixed tablesorter' id='leaveTable'>
         <thead>
           <tr class='text-center'>
             <?php $vars = "&date={$date}&orderBy=%s";?>
@@ -57,8 +57,8 @@
             <th class='w-140px'><?php commonModel::printOrderLink('begin', $orderBy, $vars, $lang->leave->start);?></th>
             <th class='w-140px'><?php commonModel::printOrderLink('end', $orderBy, $vars, $lang->leave->finish);?></th>
             <th class='w-140px'><?php commonModel::printOrderLink('backDate', $orderBy, $vars, $lang->leave->backDate);?></th>
-            <th class='w-60px visible-lg'><?php commonModel::printOrderLink('hours', $orderBy, $vars, $lang->leave->hours);?></th>
-            <th><?php echo $lang->leave->desc;?></th>
+            <th class='w-70px visible-lg'><?php commonModel::printOrderLink('hours', $orderBy, $vars, $lang->leave->hours);?></th>
+            <th class='text-left'><?php echo $lang->leave->desc;?></th>
             <th class='w-100px'><?php commonModel::printOrderLink('status', $orderBy, $vars, $lang->leave->status);?></th>
             <?php if($type == 'personal'):?>
             <?php $class = $this->app->clientLang == 'en' ? 'w-200px' : 'w-160px';?>
@@ -70,10 +70,11 @@
           </tr>
         </thead>
         <?php foreach($leaveList as $leave):?>
+        <?php $viewUrl = commonModel::hasPriv('oa.leave', 'view') ? $this->createLink('oa.leave', 'view', "id={$leave->id}&type=$type") : '';?>
         <?php if($type == 'browseReview' && $leave->type == 'annual' && isset($leftAnnualDays[$leave->createdBy])):?>
-        <tr data-toggle='tooltip' data-placement='top' data-tip-class='tooltip-danger' title="<?php echo sprintf($lang->leave->annualTip, $leftAnnualDays[$leave->createdBy]);?>">
+        <tr id='leave<?php echo $leave->id;?>' data-url='<?php echo $viewUrl;?>' data-toggle='tooltip' data-placement='top' data-tip-class='tooltip-danger' title="<?php echo sprintf($lang->leave->annualTip, $leftAnnualDays[$leave->createdBy]);?>">
         <?php else:?>
-        <tr id='leave<?php echo $leave->id;?>'>
+        <tr id='leave<?php echo $leave->id;?>' data-url='<?php echo $viewUrl;?>'>
         <?php endif?>
           <td class='idTD'>
             <?php if($batchReview):?>
@@ -89,11 +90,11 @@
           <td><?php echo formatTime($leave->end . ' ' . $leave->finish, DT_DATETIME2);?></td>
           <td><?php echo formatTime($leave->backDate, DT_DATETIME2);?></td>
           <td class='visible-lg'><?php echo $leave->hours == 0 ? '' : $leave->hours;?></td>
-          <td title='<?php echo $leave->desc;?>'><?php echo $leave->desc;?></td>
+          <td class='text-left' title='<?php echo $leave->desc;?>'><?php echo $leave->desc;?></td>
           <td class='leave-<?php echo $leave->status?>' title='<?php echo $leave->statusLabel;?>'><?php echo $leave->statusLabel;?></td>
           <td class='actionTD text-left'>
             <?php
-            commonModel::printLink('oa.leave', 'view', "id={$leave->id}&type=$type", $lang->detail, "data-toggle='modal'");
+            if($viewUrl) echo html::a($viewUrl, $lang->detail, "data-toggle='modal'");
             if($type == 'personal')
             { 
                 if($leave->status == 'pass' and date('Y-m-d H:i:s') > "$leave->begin $leave->start" && date('Y-m-d H:i:s') < "$leave->end $leave->finish" && $leave->backDate != "$leave->end $leave->finish") 

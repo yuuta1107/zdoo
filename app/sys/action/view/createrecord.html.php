@@ -18,13 +18,12 @@
 <?php js::set('objectType', $objectType);?>
 <?php js::set('objectID', $objectID);?>
 <?php js::set('history', $history);?>
-<div class='panel-body'>
 <form method='post' id='createRecordForm' action='<?php echo inlink('createrecord', "objectType={$objectType}&objectID={$objectID}")?>' class='form'>
   <div class='panel'>
     <div class='panel-heading'>
       <strong><?php echo $lang->action->record->title;?></strong>
     </div>
-    <table class='table table-form table-condensed w-700px'>
+    <table class='table table-form table-condensed'>
       <?php if($objectType != 'contact'):?>
       <tr>
         <th class='w-80px'><?php echo $lang->action->record->contact;?></th>
@@ -55,6 +54,7 @@
         </td>
         <th class='w-80px'><?php echo $lang->action->record->date;?></th>
         <td><?php echo html::input('date', date('Y-m-d H:i:s'), "class='form-control form-datetime'");?></td>
+        <th class='w-20px'></th>
       </tr>
       <tr id='phoneTR' class='hide'>
         <th><?php echo $lang->contact->contactInfo;?></th>
@@ -100,7 +100,7 @@
     <div class='panel-heading'>
       <strong><?php echo $lang->action->record->next;?></strong>
     </div>
-    <table class='table table-form table-condensed w-700px'>
+    <table class='table table-form table-condensed'>
       <tr>
         <?php $colspan = "colspan='3'";?>
         <?php if($objectType != 'contact' && $objectType != 'leads'):?>
@@ -110,6 +110,7 @@
         <?php endif;?>
         <th class='w-80px'><?php echo $lang->action->record->contactedBy;?></th>
         <td <?php echo $colspan;?>><?php echo html::select('contactedBy', $users, $this->app->user->account, "class='form-control chosen'");?></td>
+        <th class='w-20px'></th>
       </tr>
       <tr>
         <th class='w-80px'><?php echo $lang->action->date;?></th>
@@ -123,17 +124,15 @@
     </table>
   </div>
   <div class='page-actions'>
-      <?php if($objectType == 'contact') echo html::hidden('contact', $objectID);?>
-      <?php if($objectType == 'contact' && empty($customers)) echo html::hidden('date', date(DT_DATETIME1));?>
-      <?php echo html::submitButton() . html::hidden('customer', $customer);?>
-      <div id='duplicateError' class='hide'></div>
-    </td>
+    <?php if($objectType == 'contact') echo html::hidden('contact', $objectID);?>
+    <?php if($objectType == 'contact' && empty($customers)) echo html::hidden('date', date(DT_DATETIME1));?>
+    <?php echo html::submitButton() . html::hidden('customer', $customer);?>
+    <div id='duplicateError' class='hide'></div>
   </div>
   <?php if($history):?>
   <div id='actionBox'></div>
   <?php endif;?>
 </form>
-</div>
 <div class='errorMessage hide'>
   <div class='alert alert-danger alert-dismissable'>
     <button aria-hidden='true' data-dismiss='alert' class='close' type='button'>×</button>

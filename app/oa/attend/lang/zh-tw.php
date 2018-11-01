@@ -27,6 +27,8 @@ $lang->attend->saveStat     = '保存考勤統計';
 $lang->attend->exportStat   = '導出考勤統計表';
 $lang->attend->exportDetail = '導出考勤明細';
 $lang->attend->browseReview = '補錄列表';
+$lang->attend->batchReview  = '批量審核';
+$lang->attend->batchPass    = '批量通過';
 
 $lang->attend->id            = '編號';
 $lang->attend->date          = '日期';
@@ -119,11 +121,14 @@ $lang->attend->inFail     = '簽到失敗';
 $lang->attend->outSuccess = '簽退成功';
 $lang->attend->outFail    = '簽退失敗';
 
-$lang->attend->signInLimit  = '最晚簽到';
-$lang->attend->signOutLimit = '最早簽退';
-$lang->attend->workingDays  = '每週工作天數';
-$lang->attend->workingHours = '每天工作工時';
-$lang->attend->mustSignOut  = '必須簽退';
+$lang->attend->signInLimit   = '最晚簽到';
+$lang->attend->signOutLimit  = '最早簽退';
+$lang->attend->workingDays   = '每週工作天數';
+$lang->attend->workingHours  = '每天工作工時';
+$lang->attend->mustSignOut   = '必須簽退';
+$lang->attend->denied        = '信息訪問受限';
+$lang->attend->nodata        = '沒有選擇數據';
+$lang->attend->reviewSuccess = '審核成功';
 
 $lang->attend->workingDaysList['5']  = "周一～周五";
 $lang->attend->workingDaysList['6']  = "周一～周六";

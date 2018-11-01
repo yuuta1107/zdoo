@@ -142,7 +142,7 @@
         <table class='table table-form'>
           <tr>
             <th class='w-70px'><?php echo $lang->contract->customer;?></th>
-            <td><?php echo html::select('customer', $customers, $contract->customer, "class='form-control' disabled");?></td><td></td>
+            <td><?php echo html::select('customer', $customers, $contract->customer, "class='form-control' disabled");?></td>
           </tr>
           <tr>
             <th><?php echo $lang->contract->delivery;?></th>

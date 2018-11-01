@@ -46,7 +46,7 @@
       <?php if($batchReview):?>
       <form id='ajaxForm' method='post' action='<?php echo inlink('batchReview', 'status=pass');?>'>
       <?php endif;?>
-      <table class='table table-data table-hover text-center table-fixed tablesorter' id='overtimeTable'>
+      <table class='table table-hover text-center table-fixed tablesorter' id='overtimeTable'>
         <thead>
           <tr class='text-center'>
             <?php $vars = "&date={$date}&orderBy=%s";?>
@@ -56,8 +56,8 @@
             <th class='w-80px'><?php commonModel::printOrderLink('type', $orderBy, $vars, $lang->overtime->type);?></th>
             <th class='w-150px'><?php commonModel::printOrderLink('begin', $orderBy, $vars, $lang->overtime->begin);?></th>
             <th class='w-150px'><?php commonModel::printOrderLink('end', $orderBy, $vars, $lang->overtime->end);?></th>
-            <th class='w-50px visible-lg'><?php commonModel::printOrderLink('hours', $orderBy, $vars, $lang->overtime->hours);?></th>
-            <th><?php echo $lang->overtime->desc;?></th>
+            <th class='w-70px visible-lg'><?php commonModel::printOrderLink('hours', $orderBy, $vars, $lang->overtime->hours);?></th>
+            <th class='text-left'><?php echo $lang->overtime->desc;?></th>
             <th class='w-100px'><?php commonModel::printOrderLink('status', $orderBy, $vars, $lang->overtime->status);?></th>
             <?php if($type == 'personal'):?>
             <?php $class = $this->app->clientLang == 'en' ? 'w-180px' : 'w-130px';?>
@@ -69,7 +69,8 @@
           </tr>
         </thead>
         <?php foreach($overtimeList as $overtime):?>
-        <tr id='overtime<?php echo $overtime->id;?>'>
+        <?php $viewUrl = commonModel::hasPriv('oa.overtime', 'view') ? $this->createLink('oa.overtime', 'view', "id=$overtime->id&type=$type") : '';?>
+        <tr id='overtime<?php echo $overtime->id;?>' data-url='<?php echo $viewUrl;?>'>
           <td class='idTD'>
             <?php if($batchReview):?>
             <label class='checkbox-inline'><input type='checkbox' name='overtimeIDList[]' value='<?php echo $overtime->id;?>'/> <?php echo $overtime->id;?></label>
@@ -83,11 +84,11 @@
           <td><?php echo formatTime($overtime->begin . ' ' . $overtime->start, DT_DATETIME2);?></td>
           <td><?php echo formatTime($overtime->end . ' ' . $overtime->finish, DT_DATETIME2);?></td>
           <td class='visible-lg'><?php echo $overtime->hours == 0 ? '' : $overtime->hours;?></td>
-          <td title='<?php echo $overtime->desc?>'><?php echo $overtime->desc;?></td>
+          <td class='text-left' title='<?php echo $overtime->desc?>'><?php echo $overtime->desc;?></td>
           <td class='overtime-<?php echo $overtime->status?>'><?php echo $overtime->statusLabel;?></td>
           <td class='actionTD text-left'>
             <?php 
-            commonModel::printLink('oa.overtime', 'view', "id=$overtime->id&type=$type", $lang->detail, "data-toggle='modal'");
+            if($viewUrl) echo html::a($viewUrl, $lang->detail, "data-toggle='modal'");
             if($type == 'personal')
             {
                 $switchLabel = $overtime->status == 'wait' ? $lang->overtime->cancel : $lang->overtime->commit;

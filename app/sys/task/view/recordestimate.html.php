@@ -15,20 +15,23 @@
 <form method='post' id='estimateForm' action='<?php echo $this->createLink('task', 'recordEstimate', "taskID=$task->id")?>'>
   <table class='table table-form'>
     <tr>
-      <th><?php echo $lang->task->myConsumption;?></th>
-      <td><?php echo html::input('consumed', $task->consumed, "class='form-control' placeholder='{$lang->task->hour}'");?></td>
+      <th class='w-60px'><?php echo $lang->task->myConsumption;?></th>
+      <td class='w-p45'><?php echo html::input('consumed', $task->consumed, "class='form-control' placeholder='{$lang->task->hour}'");?></td>
+      <td></td>
     </tr>
     <tr>
       <th><?php echo $lang->task->left;?></th>
       <td><?php echo html::input('left', $left, "class='form-control'");?></td>
+      <td></td>
     </tr>
     <tr>
       <th><?php echo $lang->comment?></th>
-      <td><?php echo html::textarea('comment');?></td>
+      <td colspan='2'><?php echo html::textarea('comment');?></td>
     </tr>
     <tr>
       <th></th>
       <td><?php echo html::submitButton();?></td>
+      <td></td>
     </tr>
   </table>
 </form>

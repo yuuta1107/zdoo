@@ -12,7 +12,11 @@
 ?>
 <?php include '../../common/view/header.html.php';?>
 <?php js::set('confirmReview', $lang->attend->confirmReview);?>
+<?php $batchReview = commonModel::hasPriv('attend', 'batchReview');?>
 <div class='panel'>
+  <?php if($batchReview):?>
+  <form id='ajaxForm' method='post' action='<?php echo inlink('batchReview', 'status=pass');?>'>
+  <?php endif;?>
   <table class='table table-hover table-striped table-sorter table-data table-fixed text-center'>
     <thead>
       <tr class='text-center'>
@@ -32,7 +36,13 @@
     <?php if(!isset($users[$attend->account])) continue;?>
     <?php $user = $users[$attend->account];?>
     <tr>
-      <td><?php echo $attend->id;?></td>
+      <td>
+      <?php if($batchReview):?>
+        <label class='checkbox-inline'><input type='checkbox' name='attendIDList[]' value='<?php echo $attend->id;?>'/> <?php echo $attend->id;?></label>
+      <?php else:?>
+      <?php echo $attend->id;?>
+      <?php endif;?>
+      </td>
       <td><?php echo zget($deptList, $user->dept, '');?></td>
       <td><?php echo $user->realname;?></td>
       <td><?php echo $attend->date?></td>
@@ -48,10 +58,21 @@
     </tr>
     <?php endforeach;?>
   </table>
+  <?php if($attends && $batchReview):?>
+  <div class='table-footer'>
+    <div class='pull-left'>
+      <?php echo html::selectButton();?>
+      <?php echo html::a('javascript:;', $lang->attend->batchPass, "class='btn btn-primary batchPass'");?>
+    </div>
+  </div>
+  <?php endif?>
   <?php if(!$attends):?>
   <div class='table-footer'>
     <div class='pager' style='float: right; clear: none'><?php echo $lang->pager->noRecord;?></div>
   </div>
+  <?php endif;?>
+  <?php if($batchReview):?>
+  </form>
   <?php endif;?>
 </div>
 <?php include '../../common/view/footer.html.php';?>

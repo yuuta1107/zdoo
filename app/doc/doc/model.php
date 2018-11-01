@@ -348,12 +348,13 @@ class docModel extends model
         if($this->session->docQuery == false) $this->session->set('docQuery', ' 1 = 1');
         $docQuery = $this->loadModel('search', 'sys')->replaceDynamic($this->session->docQuery);
 
-        $docs = $this->dao->select('*')->from(TABLE_DOC)
-            ->where('deleted')->eq(0)
+        $docs = $this->dao->select('t1.*')->from(TABLE_DOC)->alias('t1')
+            ->leftJoin(TABLE_DOCCONTENT)->alias('t2')->on('t1.id=t2.doc')
+            ->where('t1.deleted')->eq(0)
             ->andWhere($docQuery)
             ->orderBy($orderBy)
             ->fetchAll();
-
+        
         $docs = $this->process($docs, $orderBy, $pager);
         
         return $docs;
@@ -734,10 +735,6 @@ class docModel extends model
     /**
      * Set main menu.
      * 
-     * @param  int    $projectID 
-     * @param  int    $libID 
-     * @param  int    $category 
-     * @param  string $extra 
      * @access public
      * @return void
      */
@@ -828,7 +825,7 @@ class docModel extends model
      * 
      * @param  int    $projectID 
      * @access public
-     * @return void
+     * @return bool
      */
     public function setLibUsers($projectID)
     {

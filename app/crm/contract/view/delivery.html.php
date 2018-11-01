@@ -17,7 +17,7 @@
 <form method='post' id='ajaxForm' action='<?php echo inlink('delivery', "contractID=$contract->id")?>'>
   <table class='table table-form'>
     <tr>
-      <th class='w-80px'><?php echo $lang->contract->deliveredBy;?></th>
+      <th class='w-60px'><?php echo $lang->contract->deliveredBy;?></th>
       <td class='w-p40'>
         <div class='input-group'>
           <?php echo html::select('deliveredBy', $users, $this->app->user->account, "class='form-control chosen'");?>
@@ -25,11 +25,13 @@
             <label class='checkbox-inline'><input type='checkbox' id='finish' name='finish' value='1'> <?php echo $lang->contract->completeDelivery;?></label>
           </div>
         </div>
-      </td><td></td>
+      </td>
+      <td></td>
     </tr>
     <tr>
       <th><?php echo $lang->contract->deliveredDate;?></th>
       <td><?php echo html::input('deliveredDate', '', "class='form-control form-date'");?></td>
+      <td></td>
     </tr>
     <tr>
       <th><?php echo $lang->contract->handlers;?></th>
@@ -42,6 +44,7 @@
     <tr>
       <th></th>
       <td><?php echo html::submitButton();?></td>
+      <td></td>
     </tr>
   </table>
 </form>

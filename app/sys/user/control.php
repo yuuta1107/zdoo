@@ -513,7 +513,7 @@ class user extends control
 
         $role = zget($this->lang->user->roleList, $user->role, ' ');
 
-        $vcard = "BEGIN:VCARD 
+        $vcard = "BEGIN:VCARD
 N:{$user->realname}
 TITLE:{$dept} {$role}
 TEL;TYPE=WORK:{$user->phone}
@@ -558,7 +558,7 @@ END:VCARD";
         if(!empty($_POST))
         {
             $size = fixer::input('post')->get();
-            $this->loadModel('file')->cropImage($image->realPath, $image->realPath, $size->left, $size->top, $size->right - $size->left, $size->bottom - $size->top);
+            $this->loadModel('file')->cropImage($image->realPath, $image->realPath, $size->left, $size->top, $size->right - $size->left, $size->bottom - $size->top, $size->scaled ? $size->width : 0, $size->scaled ? $size->height : 0);
             exit('success');
         }
 

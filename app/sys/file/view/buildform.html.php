@@ -16,7 +16,12 @@ table.fileBox td {padding: 0!important}
 .fileBox .input-control > input[type='file'] {width: 100%; height: 100%; height: 26px; line-height: 26px; border: none; position: relative;}
 .fileBox td .btn {border-radius: 0; border-left: none}
 .file-wrapper.form-control {border-right: 0; border-radius: 0;}
-.file-name .form-control{border-radius: 0;}
+.file-name .form-control {border-radius: 0;}
+
+@media (max-width: 600px){
+.file-name {display: none;}
+.fileBox td .btn-add {border-left: 1px solid rgb(204, 204, 204);}
+}
 </style>
 <?php if(commonModel::hasPriv('file', 'upload')):?>
 <?php if(!$writeable):?>
@@ -28,10 +33,10 @@ table.fileBox td {padding: 0!important}
   $fileRow = <<<EOT
   <table class='fileBox' id='fileBox\$i'>
     <tr>
-      <td class='w-p45'><div class='form-control file-wrapper'><input type='file' name='files[]' class='fileControl'  tabindex='-1' onchange='checkSize(this)'/></div></td>
+      <td class='file-file'><div class='form-control file-wrapper'><input type='file' name='files[]' class='fileControl'  tabindex='-1' onchange='checkSize(this)'/></div></td>
       <td class='file-name'><input type='text' name='labels[]' class='form-control' placeholder='{$lang->file->label}' tabindex='-1' /></td>
-      <td class='w-30px'><a href='javascript:void(0);' onclick='addFile(this)' class='btn btn-block'><i class='icon-plus'></i></a></td>
-      <td class='w-30px'><a href='javascript:void(0);' onclick='delFile(this)' class='btn btn-block'><i class='icon-remove'></i></a></td>
+      <td class='w-30px'><a href='javascript:void(0);' onclick='addFile(this)' class='btn btn-add btn-block'><i class='icon-plus'></i></a></td>
+      <td class='w-30px'><a href='javascript:void(0);' onclick='delFile(this)' class='btn btn-del btn-block'><i class='icon-remove'></i></a></td>
     </tr>
   </table>
 EOT;

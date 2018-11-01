@@ -16,14 +16,10 @@
     <tr>
       <th class='w-70px'><?php echo $lang->product->name;?></th>
       <td>
-        <div class="col-sm-8 no-padding">
+        <div class="input-group">
           <?php echo html::input('name', $product->name, "class='form-control col-sm-8'");?>
-        </div>
-        <div class="col-sm-4 no-padding">
-          <div class="input-group">
-            <span class='input-group-addon'><?php echo $lang->product->order?></span>
-            <?php echo html::input('order', $product->order, "class='form-control'");?>
-          </div>
+          <span class='input-group-addon fix-border'><?php echo $lang->product->order?></span>
+          <?php echo html::input('order', $product->order, "class='form-control'");?>
         </div>
       </td>
     </tr>

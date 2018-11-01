@@ -45,9 +45,9 @@ js::set('uid', $uid);
 
 <script>
 var simple = 
-[ 'formatblock', 'fontsize', '|', 'bold', 'italic','underline', '|', 
+['formatblock', 'fontsize', '|', 'bold', 'italic','underline', '|', 
 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist', 'insertunorderedlist', '|',
-'emoticons', 'image', 'link', '|', 'removeformat','undo', 'redo' ];
+'emoticons', 'image', 'link', '|', 'removeformat','undo', 'redo', 'source'];
 
 var full = 
 [ 'formatblock', 'fontsize', 'lineheight', '|', 'forecolor', 'hilitecolor', '|', 'bold', 'italic','underline', 'strikethrough', '|',

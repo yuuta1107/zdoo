@@ -234,8 +234,8 @@ class order extends control
             $this->order->activate($orderID);
             $this->loadModel('customer')->updateEditedDate($order->customer);
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
-            $this->loadModel('action')->create('order', $orderID, 'Activated', $this->post->comment);
-            $this->loadModel('action')->create('customer', $order->customer, 'activateOrder', $this->post->comment, html::a($this->createLink('order', 'view', "orderID=$orderID"), $orderID));
+            $this->loadModel('action')->create('order', $orderID, 'Activated', $this->post->note);
+            $this->loadModel('action')->create('customer', $order->customer, 'activateOrder', $this->post->note, html::a($this->createLink('order', 'view', "orderID=$orderID"), $orderID));
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => $this->server->http_referer));
         }
 
@@ -294,10 +294,10 @@ class order extends control
 
             if($this->post->assignedTo)
             {
-                $actionID = $this->loadModel('action')->create('order', $orderID, 'Assigned', $this->post->comment, $this->post->assignedTo);
+                $actionID = $this->loadModel('action')->create('order', $orderID, 'Assigned', $this->post->note, $this->post->assignedTo);
                 $this->sendmail($orderID, $actionID);
 
-                $this->loadModel('action')->create('customer', $order->customer, 'assignOrder',  $this->lang->order->assignedTo . $members[$this->post->assignedTo] . '<br />' . $this->post->comment, html::a($this->createLink('order', 'view', "orderID=$orderID"), $orderID));
+                $this->loadModel('action')->create('customer', $order->customer, 'assignOrder',  $this->lang->order->assignedTo . $members[$this->post->assignedTo] . '<br />' . $this->post->note, html::a($this->createLink('order', 'view', "orderID=$orderID"), $orderID));
             }
 
 

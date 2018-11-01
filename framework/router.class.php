@@ -150,6 +150,40 @@ class router extends baseRouter
     }
 
     /**
+     * PATH_INFO方式解析，获取$URI和$viewType。
+     * Parse PATH_INFO, get the $URI and $viewType.
+     *
+     * @access public
+     * @return void
+     */
+    public function parsePathInfo()
+    {
+        parent::parsePathInfo();
+
+        if($this->get->display == 'card')
+        {
+            $this->viewType = 'xhtml';
+        }
+    }
+
+    /**
+     * GET请求方式解析，获取$URI和$viewType。
+     * Parse GET, get $URI and $viewType.
+     *
+     * @access public
+     * @return void
+     */
+    public function parseGET()
+    {
+        parent::parseGET();
+
+        if($this->get->display == 'card')
+        {
+            $this->viewType = 'xhtml';
+        }
+    }
+
+    /**
      * 获取$URL。
      * Get the $URL.
      * 

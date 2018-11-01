@@ -408,22 +408,21 @@ EOT;
 
         /* Add crm. */
         $entry = new stdclass();
-        $entry->name     = $this->lang->install->buildinEntry->crm['name'];
-        $entry->abbr     = $this->lang->install->buildinEntry->crm['abbr'];
-        $entry->code     = 'crm';
-        $entry->open     = 'iframe';
-        $entry->key      = 'epet8b8ae1g89rxzquf4ubv37ul5tite';
-        $entry->ip       = '*';
-        $entry->logo     = 'theme/default/images/ips/app-crm.png';
-        $entry->login    = '../crm';
-        $entry->control  = 'simple';
-        $entry->size     = 'max';
-        $entry->position = 'default';
-        $entry->order    = 10;
-
+        $entry->name        = $this->lang->install->buildinEntry->crm['name'];
+        $entry->abbr        = $this->lang->install->buildinEntry->crm['abbr'];
+        $entry->code        = 'crm';
         $entry->buildin     = 1;
         $entry->integration = 1;
+        $entry->open        = 'iframe';
+        $entry->key         = 'epet8b8ae1g89rxzquf4ubv37ul5tite';
+        $entry->ip          = '*';
+        $entry->logo        = 'theme/default/images/ips/app-crm.png';
+        $entry->login       = '../crm';
+        $entry->control     = 'simple';
+        $entry->size        = 'max';
+        $entry->position    = 'default';
         $entry->visible     = 1;
+        $entry->order       = 10;
 
         $this->dao->insert(TABLE_ENTRY)->data($entry)->exec();
 

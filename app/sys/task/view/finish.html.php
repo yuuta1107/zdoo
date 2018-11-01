@@ -17,30 +17,34 @@
 <form method='post' id='finishForm' action='<?php echo $this->createLink('task', 'finish', "taskID=$taskID")?>'>
   <table class='table table-form'>
     <tr>
-      <th><?php echo empty($task->team) ? $lang->task->consumed : $lang->task->myConsumption;?></th>
-      <td><?php echo html::input('consumed', $task->consumed ? $task->consumed : '', "class='form-control' autocomplete='off'")?></td>
+      <th class='w-60px'><?php echo empty($task->team) ? $lang->task->consumed : $lang->task->myConsumption;?></th>
+      <td class='w-p45'><?php echo html::input('consumed', $task->consumed ? $task->consumed : '', "class='form-control' autocomplete='off'")?></td>
+      <td></td>
     </tr>
     <tr>
       <th><?php echo $lang->task->assignedTo;?></th>
       <td><?php echo html::select('assignedTo', $users, $task->createdBy, "class='form-control'");?></td>
+      <td></td>
     </tr>
     <tr>
       <th><?php echo $lang->task->finishedDate;?></th>
       <td><?php echo html::input('finishedDate', helper::now(), "class='form-control form-datetime'");?></td>
+      <td></td>
     </tr>
     <tr>
       <th><?php echo $lang->comment?></th>
-      <td><?php echo html::textarea('comment');?></td>
+      <td colspan='2'><?php echo html::textarea('comment');?></td>
     </tr>
     <?php if(commonModel::hasPriv('file', 'upload')):?>
     <tr>
       <th><?php echo $lang->files;?></th>
-      <td><?php echo $this->fetch('file', 'buildForm')?></td>
+      <td colspan='2'><?php echo $this->fetch('file', 'buildForm')?></td>
     </tr>
     <?php endif;?>
     <tr>
       <th></th>
       <td><?php echo html::submitButton();?></td>
+      <td></td>
     </tr>
   </table>
 </form>

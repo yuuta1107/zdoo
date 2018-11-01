@@ -2,7 +2,8 @@ $(document).ready(function()
 {
     $(document).on('click', '#lieuTable td:not(.idTD,.actionTD)', function()
     {
-        $(this).parent().find('.actionTD a[href*=view]:not([href*=review])').click();
+        $.zui.modalTrigger.show({name : 'ajaxModal', url : $(this).parent().data('url'), backdrop : 'static'});
+        return false;
     });
 
     $(document).on('click', '.deleteLieu', function()

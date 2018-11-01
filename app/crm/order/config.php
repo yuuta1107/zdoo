@@ -15,8 +15,8 @@ $config->order->require->edit   = 'product,customer';
 
 $config->order->editor = new stdclass();
 $config->order->editor->close    = array('id' => 'closedNote', 'tools' => 'simple');
-$config->order->editor->assign   = array('id' => 'comment', 'tools' => 'simple');
-$config->order->editor->activate = array('id' => 'comment', 'tools' => 'simple');
+$config->order->editor->assign   = array('id' => 'note', 'tools' => 'simple');
+$config->order->editor->activate = array('id' => 'note', 'tools' => 'simple');
 $config->order->editor->view     = array('id' => 'comment,lastComment', 'tools' => 'simple');
 
 $config->order->statusClassList['normal']   = '';

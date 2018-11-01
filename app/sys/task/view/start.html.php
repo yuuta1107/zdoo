@@ -16,23 +16,28 @@
 <form method='post' id='startForm' action='<?php echo $this->createLink('task', 'start', "taskID=$taskID")?>'>
   <table class='table table-form'>
     <tr>
-      <th class='w-80px'><?php echo $lang->task->realStarted;?></th>
-      <td class='w-p40'><?php echo html::input('realStarted', helper::today(), "class='form-control form-date'");?></td><td></td>
+      <th class='w-60px'><?php echo $lang->task->realStarted;?></th>
+      <td class='w-p45'><?php echo html::input('realStarted', helper::today(), "class='form-control form-date'");?></td>
+      <td></td>
     </tr>
     <tr>
       <th><?php echo $lang->task->consumed;?></th>
-      <td><div class='input-group'><?php echo html::input('consumed', $task->consumed, "class='form-control'");?> <span class='input-group-addon'><?php echo $lang->task->hour;?></span></div></td><td></td>
+      <td><div class='input-group'><?php echo html::input('consumed', $task->consumed, "class='form-control'");?> <span class='input-group-addon'><?php echo $lang->task->hour;?></span></div></td>
+      <td></td>
     </tr>
     <tr>
       <th><?php echo $lang->task->left;?></th>
-      <td><div class='input-group'><?php echo html::input('left', $task->left, "class='form-control'");?> <span class='input-group-addon'><?php echo $lang->task->hour;?></span></div></td><td></td>
+      <td><div class='input-group'><?php echo html::input('left', $task->left, "class='form-control'");?> <span class='input-group-addon'><?php echo $lang->task->hour;?></span></div></td>
+      <td></td>
     </tr>
     <tr>
       <th><?php echo $lang->comment;?></th>
       <td colspan='2'><?php echo html::textarea('comment', '', "rows='6' class='form-control'");?></td>
     </tr>
     <tr>
-      <th></th><td colspan='2'><?php echo html::submitButton() . html::hidden('doStart', '');?></td>
+      <th></th>
+      <td><?php echo html::submitButton() . html::hidden('doStart', '');?></td>
+      <td></td>
     </tr>
   </table>
 </form>

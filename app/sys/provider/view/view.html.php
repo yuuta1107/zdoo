@@ -41,7 +41,11 @@
       <div class='panel-heading'><strong><i class="icon-list-info"></i> <?php echo $lang->provider->basicInfo;?></strong></div>
       <table class='table table-info'>
         <tr>
-          <th class='w-50px'><?php echo $lang->provider->size;?></th>
+          <th class='w-70px'><?php echo $lang->customer->depositor;?></th>
+          <td><?php echo $provider->depositor;?></td>
+        </tr>
+        <tr>
+          <th><?php echo $lang->provider->size;?></th>
           <td><?php echo $lang->provider->sizeList[$provider->size];?></td>
         </tr>
         <tr>
