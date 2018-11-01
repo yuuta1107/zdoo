@@ -72,7 +72,7 @@
           <th class='w-80px'><?php commonModel::printOrderLink('dept', $orderBy, $vars, $lang->trade->dept);?></th>
           <th class='w-80px'><?php commonModel::printOrderLink('handlers', $orderBy, $vars, $lang->trade->handlers);?></th>
           <?php if(strpos(',in,all,', ",$mode,") !== false):?>
-          <th class='w-160px'><?php commonModel::printOrderLink('product', $orderBy, $vars,  $lang->trade->product . $lang->slash . $lang->trade->category);?></th>
+          <th class='w-160px'><?php commonModel::printOrderLink('product_asc,category', $orderBy, $vars,  $lang->trade->product . $lang->slash . $lang->trade->category);?></th>
           <?php else:?>
           <th class='w-100px'><?php commonModel::printOrderLink('category', $orderBy, $vars, $lang->trade->category);?></th>
           <?php endif;?>
