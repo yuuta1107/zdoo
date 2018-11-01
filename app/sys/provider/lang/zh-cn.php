@@ -24,6 +24,7 @@ $lang->provider->setCategory = '维护类目';
 $lang->provider->common        = '供应商维护';
 $lang->provider->id            = '编号';
 $lang->provider->name          = '名称';
+$lang->provider->depositor     = '对公账户';
 $lang->provider->contact       = '联系人';
 $lang->provider->type          = '类型';
 $lang->provider->size          = '规模';

@@ -24,6 +24,7 @@ $lang->provider->setCategory = '維護類目';
 $lang->provider->common        = '供應商維護';
 $lang->provider->id            = '編號';
 $lang->provider->name          = '名稱';
+$lang->provider->depositor     = '對公賬戶';
 $lang->provider->contact       = '聯繫人';
 $lang->provider->type          = '類型';
 $lang->provider->size          = '規模';

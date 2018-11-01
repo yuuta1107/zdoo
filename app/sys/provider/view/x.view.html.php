@@ -16,9 +16,15 @@
     <div class='panel-heading'><strong><i class="icon-list-info"></i> <?php echo $lang->provider->basicInfo;?></strong></div>
     <table class='table table-info'>
       <tr>
-        <th class='w-50px'><?php echo $lang->provider->name;?></th>
+        <th class='w-70px'><?php echo $lang->provider->name;?></th>
         <td><?php echo $provider->name;?></td>
       </tr>
+      <?php if($provider->depositor):?>
+      <tr>
+        <th><?php echo $lang->customer->depositor;?></th>
+        <td><?php echo $provider->depositor;?></td>
+      </tr>
+      <?php endif;?>
       <?php if($provider->size):?>
       <tr>
         <th><?php echo $lang->provider->size;?></th>
