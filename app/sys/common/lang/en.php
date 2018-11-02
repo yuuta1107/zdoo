@@ -187,6 +187,7 @@ $lang->js->timeout               = 'Timeout';
 $lang->js->confirmDiscardChanges = 'Discard changes?';
 $lang->js->yes                   = 'Yes';
 $lang->js->no                    = 'No';
+$lang->js->installZipExtension   = "Php-zip extension is required to export .xlsx file.";
 
 /* Contact fields*/
 $lang->company = new stdclass();
