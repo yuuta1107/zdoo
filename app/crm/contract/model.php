@@ -592,6 +592,7 @@ class contractModel extends model
             ->autoCheck()
             ->batchCheck($this->config->contract->require->receive, 'notempty')
             ->exec();
+        $planID = $this->dao->lastInsertId();
 
         if(!dao::isError())
         {
@@ -628,6 +629,8 @@ class contractModel extends model
                 
                 $this->dao->insert(TABLE_TRADE)->data($trade, $skip = 'uid,comment')->autoCheck()->exec();
                 $tradeID     = $this->dao->lastInsertId();
+                $this->dao->update(TABLE_PLAN)->set('tradeID')->eq($tradeID)->where('id')->eq($planID)->exec();
+
                 $actionExtra = html::a(helper::createLink('contract', 'view', "contractID=$contractID"), $contract->name) . $this->lang->contract->return . ' ' . zget($this->lang->currencySymbols, $trade->currency, '') . $this->post->amount;
                 $this->loadModel('action')->create('trade', $tradeID, 'receiveContract', $this->post->comment, $actionExtra, $this->post->returnedBy);
             }
