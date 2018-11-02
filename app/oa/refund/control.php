@@ -483,7 +483,7 @@ class refund extends control
         $this->view->title         = $this->lang->refund->common;
         $this->view->refundID      = $refundID;
         $this->view->refund        = $this->refund->getById($refundID);
-        $this->view->depositorList = array('') + $this->loadModel('depositor', 'cash')->getPairs(true);
+        $this->view->depositorList = array('') + $this->loadModel('depositor', 'cash')->getPairs($status = 'normal');
         $this->view->categoryList  = $this->refund->getCategoryPairs();
         $this->view->orderList     = $this->loadModel('order', 'crm')->getPairs($customerID = 0);
         $this->view->contractList  = $this->loadModel('contract', 'crm')->getList($customerID = 0);
@@ -590,8 +590,19 @@ class refund extends control
             $this->lang->refund->menu       = $this->lang->$module->menu;
         }
 
+        $depositors = $this->loadModel('depositor', 'cash')->getPairs($status = 'normal');
+        if(isset($this->config->refund->depositor))
+        {
+            $depositor = $this->depositor->getById($this->config->refund->depositor);
+            /* If the depositor is not normal, append it to depositors to display it in the select control. */
+            if(isset($depositor->status) && $depositor->status != 'normal')
+            {
+                $depositors += array($depositor->id => $depositor->abbr . '(' . $this->lang->depositor->statusList['disable'] . ')');
+            }
+        }
+
         $this->view->title         = $this->lang->refund->setDepositor;
-        $this->view->depositorList = $this->loadModel('depositor', 'cash')->getPairs(true);
+        $this->view->depositorList = $depositors;
         $this->view->module        = $module;
         $this->display();
     }
