@@ -289,10 +289,11 @@ class trade extends control
     /**
      * Batch create trade.
      * 
+     * @param  string $mode
      * @access public
      * @return void
      */
-    public function batchCreate()
+    public function batchCreate($mode = 'all')
     {
         if($_POST)
         {
@@ -305,7 +306,7 @@ class trade extends control
             $tradeIDList = $result;
             foreach($tradeIDList as $tradeID) $this->action->create('trade', $tradeID, 'created');
 
-            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => inlink('browse')));
+            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => inlink('browse', "mode=$mode")));
         }
 
         unset($this->lang->trade->menu);
@@ -345,6 +346,7 @@ class trade extends control
         $this->view->deptList      = array('') + $this->loadModel('tree')->getOptionMenu('dept', 0);
         $this->view->requireTrader = $this->config->trade->settings->trader;
         $this->view->productList   = array(0 => '') + $this->loadModel('product')->getPairs();
+        $this->view->mode          = $mode;
 
         $this->display();
     }
