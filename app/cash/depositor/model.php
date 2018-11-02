@@ -254,7 +254,10 @@ class depositorModel extends model
             ->beginif($depositors)->andWhere('depositor')->in($depositors)->fi()
             ->fetchGroup('depositor', 'id');
 
-        $depositorList = $this->dao->select('*')->from(TABLE_DEPOSITOR)->beginif($depositors)->where('id')->in($depositors)->fi()->fetchAll('id');
+        $depositorList = $this->dao->select('*')->from(TABLE_DEPOSITOR)
+            ->where('status')->eq('normal')
+            ->beginIF($depositors)->andWhere('id')->in($depositors)->fi()
+            ->fetchAll('id');
 
         foreach($depositorList as $id => $depositor)
         {
