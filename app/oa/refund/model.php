@@ -380,10 +380,9 @@ class refundModel extends model
         {
             if(isset($refundCategories[$key])) 
             {
-                //$path = explode('/', trim($category, '/'));
-                //$path = array_slice($path, 1);
-                //$newCategories[$key] = '/' . implode('/', $path);
-                $newCategories[$key] = $category;
+                $path = explode('/', trim($category, '/'));
+                $path = array_slice($path, 1);
+                $newCategories[$key] = '/' . implode('/', $path);
             }
         }
         
