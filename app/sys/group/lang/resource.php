@@ -476,6 +476,7 @@ $lang->resource->attend->department       = 'department';
 $lang->resource->attend->company          = 'company';
 $lang->resource->attend->browseReview     = 'browseReview';
 $lang->resource->attend->review           = 'review';
+$lang->resource->attend->batchReview      = 'batchReview';
 $lang->resource->attend->export           = 'export';
 $lang->resource->attend->stat             = 'stat';
 $lang->resource->attend->saveStat         = 'saveStat';

@@ -187,6 +187,7 @@ $lang->js->timeout               = '网络超时,请重试';
 $lang->js->confirmDiscardChanges = '表单已更改，确定关闭？';
 $lang->js->yes                   = '是';
 $lang->js->no                    = '否';
+$lang->js->installZipExtension   = "导出xlsx格式，需要安装 php-zip 扩展，<a href='https://www.ranzhi.org/book/ranzhi/165.html'>安装手册</a>";
 
 /* Contact fields*/
 $lang->company = new stdclass();
@@ -526,6 +527,6 @@ if(!defined('DT_DATE3'))      define('DT_DATE3',      'Y年m月d日');
 if(!defined('DT_DATE4'))      define('DT_DATE4',      'n月j日');
 if(!defined('DT_DATE5'))      define('DT_DATE5',      'Y年m月');
 if(!defined('DT_TIME1'))      define('DT_TIME1',      'H:i:s');
-if(!defined('DT_TIME1'))      define('DT_TIME2',      'H:i');
+if(!defined('DT_TIME2'))      define('DT_TIME2',      'H:i');
 
 include (dirname(__FILE__) . '/menuOrder.php');

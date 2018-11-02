@@ -385,7 +385,7 @@ class refundModel extends model
                 $newCategories[$key] = '/' . implode('/', $path);
             }
         }
-
+        
         return array('/') + $newCategories;
     }
 
