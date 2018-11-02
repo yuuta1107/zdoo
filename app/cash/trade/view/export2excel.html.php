@@ -30,6 +30,19 @@ function closeWindow()
         clearInterval(time);
     }
 }
+<?php if(!class_exists('ZipArchive')):?>
+$().ready(function()
+{
+    $('#fileType').change(function()
+    {
+        if($(this).val() == 'xlsx')
+        {
+            $(this).val('xls');
+            $('#phpZipNotice').html(v.lang.installZipExtension).show().fadeOut(10000);
+        }
+    });
+});
+<?php endif;?>
 </script>
 <form class='form-condensed' method='post' target='hiddenwin' onsubmit='setDownloading();' style='padding: 0 5% 30px'>
   <table class='w-p100'>
@@ -45,6 +58,11 @@ function closeWindow()
         </div>
       </td>
       <td><?php echo html::submitButton($lang->export);?></td>
+    </tr>
+    <tr>
+      <td>
+        <?php if(!class_exists('ZipArchive')):?> <div class='text-danger' id="phpZipNotice"></div> <?php endif;?>
+      </td>
     </tr>
   </table>
 </form>
