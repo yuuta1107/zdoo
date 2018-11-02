@@ -173,11 +173,11 @@
           </tr>
           <tr id='firstReviewer'>
             <th><?php echo $lang->refund->firstReviewer;?></th>
-            <td><?php if($refund->firstReviewer) echo zget($users, $refund->firstReviewer) . $lang->at . $refund->firstReviewDate;?></td>
+            <td><?php echo $refund->firstReviewerLabel;?></td>
           </tr>
           <tr id='secondReviewer'>
             <th><?php echo $lang->refund->secondReviewer;?></th>
-            <td><?php if($refund->secondReviewer) echo zget($users, $refund->secondReviewer) . $lang->at . $refund->secondReviewDate;?></td>
+            <td><?php echo $refund->secondReviewerLabel;?></td>
           </tr>
           <tr>
             <th><?php echo $lang->refund->refundBy;?></th>

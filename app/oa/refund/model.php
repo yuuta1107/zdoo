@@ -33,6 +33,34 @@ class refundModel extends model
             if($refund->contract) $objectType  = 'contract';
             if($refund->project)  $objectType .= ',project';
             $refund->objectType = explode(',', trim($objectType, ','));
+
+            $users = $this->loadModel('user')->getPairs();
+            if(empty($refund->firstReviewer))
+            {
+                if(empty($this->config->refund->firstReviewer))
+                {
+                    $managers = $this->loadModel('user')->getUserManagerPairs();
+                    $reviewer = trim(zget($managers, $refund->createdBy, ''), ',');
+                }
+                else
+                {
+                    $reviewer = $this->config->refund->firstReviewer;
+                }
+                $refund->firstReviewerLabel = zget($users, $reviewer) . $this->lang->refund->statusList['doing'];
+            }
+            else
+            {
+                $refund->firstReviewerLabel = zget($users, $refund->firstReviewer) . $this->lang->at . $refund->firstReviewDate;
+            }
+
+            if(empty($refund->secondReviewer))
+            {
+                $refund->secondReviewerLabel = zget($users, $this->config->refund->secondReviewer) . $this->lang->refund->statusList['doing'];
+            }
+            else
+            {
+                $refund->secondReviewerLabel = zget($users, $refund->secondReviewer) . $this->lang->at . $refund->secondReviewDate;;
+            }
         }
         return $refund;
     }
