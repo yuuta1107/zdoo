@@ -605,7 +605,7 @@ class hyperdown
                     break;
 
                 // table
-                case preg_match("/^((?:(?:(?:[ :]*\-[ :]*)+(?:\||\+))|(?:(?:\||\+)(?:[ :]*\-[ :]*)+)|(?:(?:[ :]*\-[ :]*)+(?:\||\+)(?:[ :]*\-[ :]*)+))+)\s*$/", $line, $matches):
+                case preg_match("/^((?:(?:(?:[ :]*\-[ :]*)+(?:\||\+))|(?:(?:\||\+)(?:[ :]*\-[ :]*)+)|(?:(?:[ :]*\-[ :]*)+(?:\||\+)(?:[ :]*\-[ :]*)+)|(?:(?:\||\+)(?:[ :]*\-[ :]*)+(?:\||\+)+))+)\s*$/", $line, $matches):
                     if ($this->isBlock('table')) {
                         $block[3][0][] = $block[3][2];
                         $block[3][2] ++;
@@ -977,7 +977,7 @@ class hyperdown
         list ($ignores, $aligns) = $value;
         $head = count($ignores) > 0 && array_sum($ignores) > 0;
 
-        $html = '<table>';
+        $html = '<table border="1">';
         $body = $head ? NULL : true;
         $output = false;
 
