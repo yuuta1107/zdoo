@@ -32,7 +32,7 @@ include '../../common/view/header.html.php';
     <ul id='entryList'>
       <?php foreach($entries as $entry):?>
       <?php
-      if($entry->code == '')
+      if(zget($entry, 'code', '') == '')
       {
           echo "<li data-entryid='{$entry->id}'><div class='text-left row-table'>";
           echo "<div class='col-table w-30px'><i class='icon-move sort-handler-1'></i></div>";
