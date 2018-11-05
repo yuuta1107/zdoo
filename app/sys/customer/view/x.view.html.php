@@ -129,7 +129,6 @@
         <th class='w-100px'><?php echo $lang->contract->returnedDate;?></th>
         <th class='w-80px'><?php echo $lang->contract->returnedBy;?></th> 
         <th class='w-80px text-right'><?php echo $lang->contract->amount;?></th> 
-        <th class='w-80px'><?php echo $lang->trade->depositor;?></th> 
       </tr>
       <?php foreach($returnList as $return):?>
       <?php $contract = $contracts[$return->contract];?>
@@ -138,7 +137,6 @@
         <td><?php echo $return->returnedDate;?></td>
         <td><?php echo zget($users, $return->returnedBy, $return->returnedBy);?></td>
         <td class='text-right'><?php echo zget($currencySign, $contract->currency, '') . formatMoney($return->amount);?></td>
-        <td><?php echo $return->depositor;?></td>
       </tr>
       <?php endforeach;?>
     </table>
