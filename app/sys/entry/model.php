@@ -40,7 +40,7 @@ class entryModel extends model
             $entry->id          = $category->id;
             $entry->name        = $category->name;
             $entry->code        = '';
-            $entry->abbr        = $category->name;
+            $entry->abbr        = isset($category->abbr) ? $category->abbr : $category->name;
             $entry->platform    = $category->platform;
             $entry->buildin     = 0;
             $entry->integration = 0;
