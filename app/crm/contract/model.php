@@ -175,12 +175,26 @@ class contractModel extends model
      */
     public function getReturnList($contractID = 0, $orderBy = 'id_desc')
     {
-        return $this->dao->select('*')->from(TABLE_PLAN)
+        $returnList = $this->dao->select('*')->from(TABLE_PLAN)
             ->where(1)
             ->beginIF(is_array($contractID))->andWhere('contract')->in($contractID)->fi()
             ->beginIF(!is_array($contractID))->andWhere('contract')->eq($contractID)->fi()
             ->orderBy($orderBy)
             ->fetchAll();
+        if(empty($returnList)) return $returnList;
+
+        $tradeIdList = array();
+        foreach($returnList as $return) $tradeIdList[] = $return->tradeID;
+        if(empty($tradeIdList)) return $returnList;
+
+        $tradeList     = $this->dao->select('id,depositor')->from(TABLE_TRADE)->where('id')->in($tradeIdList)->fetchPairs();
+        $depositorList = $this->loadModel('depositor', 'cash')->getPairs();
+        foreach($tradeList as $trade => $depositor) $tradeDepositorList[$trade] = zget($depositorList, $depositor);
+        foreach($returnList as $return)
+        {
+            $return->depositor = zget($tradeDepositorList, $return->tradeID, '');
+        }
+        return $returnList;
     }
 
     /**

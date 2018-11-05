@@ -162,6 +162,7 @@ class customer extends control
      */
     public function view($customerID)
     {
+        $this->app->loadLang('trade', 'cash');
         $customer = $this->customer->getByID($customerID);
         $this->loadModel('common', 'sys')->checkPrivByCustomer(empty($customer) ? '0' : $customerID);
 
