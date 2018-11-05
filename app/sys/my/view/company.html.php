@@ -83,6 +83,7 @@
       </tr>
       <?php endforeach;?>
     </table>
+    <div class='table-footer'><?php $pager->show();?></div>
   </div>
 </div>
 <?php include $app->getModuleRoot() . 'common/view/footer.html.php';?>

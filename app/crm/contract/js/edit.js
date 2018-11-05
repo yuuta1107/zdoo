@@ -33,14 +33,15 @@ $(document).ready(function()
         {
             $(this).parents('tr').html($('#orderGroup tr').html());
             $(this).parents('td').find('select').val('').change();
+            $('.order-real').change();
 
-            if($('.orderTH:first').html() == '') $('.orderTH:first').html(v.order);
+            if($('.orderTH:first').html() == '') $('.orderTH:first').html(v.label);
             return false;
         }
         $(this).parents('tr').remove();
         $('.order-real').change();
 
-        if($('.orderTH:first').html() == '') $('.orderTH:first').html(v.order);
+        if($('.orderTH:first').html() == '') $('.orderTH:first').html(v.label);
     });
 
     $('#customer').change(function()

@@ -14,7 +14,7 @@
 <?php include '../../common/view/datepicker.html.php';?>
 <?php include '../../../sys/common/view/kindeditor.html.php';?>
 <?php include '../../../sys/common/view/chosen.html.php';?>
-<?php js::set('order', $lang->contract->order);?>
+<?php js::set('label', $lang->contract->order);?>
 <ul id='menuTitle'>
   <li><?php commonModel::printLink('contract', 'browse', '', $lang->contract->list);?></li>
   <li class='divider angle'></li>

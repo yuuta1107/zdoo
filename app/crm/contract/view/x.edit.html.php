@@ -14,7 +14,7 @@
 <?php include '../../common/view/datepicker.html.php';?>
 <?php include '../../../sys/common/view/kindeditor.html.php';?>
 <?php include '../../../sys/common/view/chosen.html.php';?>
-<?php js::set('order', $lang->contract->order);?>
+<?php js::set('label', $lang->contract->order);?>
 <div class='xuanxuan-card'>
   <form method='post' id='ajaxForm'>
     <div class='panel'>
