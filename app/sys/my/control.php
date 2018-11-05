@@ -162,8 +162,11 @@ class my extends control
      * @access public
      * @return void
      */
-    public function company($type = 'todo', $dept = '', $account = '', $begin = '', $end = '')
+    public function company($type = 'todo', $dept = '', $account = '', $begin = '', $end = '', $recTotal = 0, $recPerPage = 10, $pageID = 1)
     {
+        $this->app->loadClass('pager', $static = true);
+        $pager = new pager($recTotal, $recPerPage, $pageID);
+
         $this->loadModel('todo', 'sys');
 
         /* compute begin and end. */
@@ -202,20 +205,23 @@ class my extends control
                     ->orWhere('locked')->lt(helper::now())
                     ->markRight(1)
                     ->orderBy('dept')
+                    ->page($pager)
                     ->fetchPairs();
             }
             else 
             {
-                $users = $this->loadModel('user')->getPairs('nodeleted,noforbidden,noclosed,noempty', $dept);
+                $users = $this->loadModel('user')->getPairs('nodeleted,noforbidden,noclosed,noempty', $dept, $pager);
             }
             $accountList = array_keys($users);
         }
         else
         {
+            $pager = new pager(1, $recPerPage, $pageID);
+
             $accountList[] = $account;
         }
 
-        $todoList   = array();
+        $todoList = array();
         foreach($accountList as $user)
         {
             $todos = $this->todo->getList('self', $user, $date);
@@ -282,6 +288,7 @@ class my extends control
         $this->view->users    = $this->loadModel('user')->getPairs('nodeleted,noforbidden,noclosed');
         $this->view->userDept = $this->dao->select('account,dept')->from(TABLE_USER)->fetchPairs();
         $this->view->dateList = $dateList;
+        $this->view->pager    = $pager;
         $this->display();
     }
 

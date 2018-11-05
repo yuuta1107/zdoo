@@ -68,10 +68,11 @@ class userModel extends model
      * 
      * @param  string    $params  admin|noempty
      * @param  int|array $dept
+     * @param  object    $pager
      * @access public
      * @return array
      */
-    public function getPairs($params = '', $dept = 0)
+    public function getPairs($params = '', $dept = 0, $pager = null)
     {
         $users = $this->dao->select('account, realname')->from(TABLE_USER) 
             ->where(1)
@@ -84,6 +85,7 @@ class userModel extends model
             ->beginIF(strpos($params, 'admin') !== false)->andWhere('admin')->ne('no')->fi()
             ->beginIF($dept != 0)->andWhere('dept')->in($dept)->fi()
             ->orderBy('id_asc')    
+            ->beginIF($pager)->page($pager)->fi()
             ->fetchPairs();
 
         foreach($users as $account => $realname) if($realname == '') $users[$account] = $account; 

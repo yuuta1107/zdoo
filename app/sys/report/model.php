@@ -198,7 +198,8 @@ class reportModel extends model
                 ->where('deleted')->eq('0')
                 ->beginIF($queryCondition)->andWhere($queryCondition)->fi()
                 ->beginIF($currency != '')->andWhere('currency')->eq($currency)->fi()
-                ->groupBy('name')
+                ->setCheckGroupBy(false)
+                ->groupBy('year(createdDate)')
                 ->orderBy('name desc')
                 ->limit(12)
                 ->fetchAll('name');
@@ -209,7 +210,8 @@ class reportModel extends model
                 ->where('deleted')->eq('0')
                 ->beginIF($queryCondition)->andWhere($queryCondition)->fi()
                 ->beginIF($currency != '')->andWhere('currency')->eq($currency)->fi()
-                ->groupBy('name')
+                ->setCheckGroupBy(false)
+                ->groupBy("DATE_FORMAT(createdDate, '%Y%m')")
                 ->orderBy('name desc')
                 ->limit(12)
                 ->fetchAll('name');
@@ -237,7 +239,8 @@ class reportModel extends model
                 ->beginIF($relation)->andWhere('relation')->eq($relation)->fi()
                 ->beginIF($customerIdList)->andWhere('id')->in($customerIdList)->fi()
                 ->beginIF($customerQuery)->andWhere($customerQuery)->fi()
-                ->groupBy('name')
+                ->beginIF($groupBy == '`return`')->setCheckGroupBy(false)->fi()
+                ->groupBy($groupBy)
                 ->orderBy('value_desc')
                 ->fetchAll('name');
         }

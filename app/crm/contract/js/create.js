@@ -94,7 +94,7 @@ $(document).ready(function()
 
     $(document).on('click', '.plus', function()
     {
-        $(this).parents('tr').after("<tr><th></th><td>" + $('#orderTD').html() + "</td></tr>");
+        $(this).parents('tr').after("<tr><th class='orderTH'></th><td>" + $('#orderTD').html() + "</td></tr>");
     });
 
     $(document).on('click', '.minus', function()
@@ -104,10 +104,15 @@ $(document).ready(function()
             $(this).parents('td').html($('#order td').html());
             $(this).parents('td').find('select').val('').change();
             $('.order-real').change();
+
+            if($('.orderTH:first').html() == '') $('.orderTH:first').html(v.label);
             return false;
         }
         $(this).parents('tr').remove();
         $('.order-real').change();
+
+        if($('.orderTH:first').html() == '') $('.orderTH:first').html(v.label);
+        if($('#orderTD').length == 0) $('.minus:first').parents('td').attr('id', 'orderTD');
     });
 
     $('#customer').change(function()
