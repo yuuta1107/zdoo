@@ -3,9 +3,9 @@ $(document).ready(function()
     /* Show real of an order and compute amount of the contract. */
     $(document).on('change', 'select.select-order', function()
     {
-        $(this).parent().find('[name^=real]').val($(this).find('option:selected').attr('data-real'));
-        $(this).parent().find('.order-currency').html(v.currencySign[$(this).find('option:selected').attr('data-currency')]);
-        $(this).parent().find('[name^=real]').change();
+        $(this).parents('td').find('[name^=real]').val($(this).find('option:selected').attr('data-real'));
+        $(this).parents('td').find('.order-currency').html(v.currencySign[$(this).find('option:selected').attr('data-currency')]);
+        $(this).parents('td').find('[name^=real]').change();
     });
 
     /* Recompute amount when change real of an order.  */
