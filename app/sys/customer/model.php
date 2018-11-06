@@ -729,12 +729,13 @@ class customerModel extends model
 
             if($categories)
             {
-                $menu .= "<li class='dropdown'>";
+                $menu .= "<li class='dropdown dropdown-$field'>";
                 $menu .= html::a(inlink('browse', "mode=$field"), $label . "<span class='caret'></span>", "data-toggle='dropdown'");
                 $menu .= "<ul class='dropdown-menu'>";
                 $menu .= $this->getMenuByCategories($categories, $field, $orderBy, $recTotal, $recPerPage, $pageID);
                 $menu .= '</ul></li>';
             }
+            if(count($categories) > 20) $menu .= "<style>li.dropdown-$field > ul{width:320px} li.dropdown-$field > ul > li {width: 50%; display:inline-block;}</style>";
         }
         $menu .= '</ul></nav>';
 
