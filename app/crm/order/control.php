@@ -469,17 +469,21 @@ class order extends control
         $customerIdList = $this->loadModel('customer')->getCustomersSawByMe();
         $products       = $this->loadModel('product')->getPairs();
         $thisWeek       = date::getThisWeek();
-        $orders         = array('');
+        $orders         = array();
         if($account == '') $account = $this->app->user->account;
+
+        $datingList = $this->loadModel('action')->getDatingOfThisWeek($account, 'order');
+        foreach($datingList as $dating) $datingOrderList[] = $dating->objectID;
 
         $sql = $this->dao->select('o.id, o.product, o.createdDate, c.name as customerName, t.id as todo')->from(TABLE_ORDER)->alias('o')
             ->leftJoin(TABLE_CUSTOMER)->alias('c')->on("o.customer=c.id")
             ->leftJoin(TABLE_TODO)->alias('t')->on("t.type='order' and o.id=t.idvalue")
             ->where('o.deleted')->eq(0)
             ->andWhere('o.assignedTo')->eq($account)
-            ->andWhere('o.nextDate')->between($thisWeek['begin'], $thisWeek['end'])
+            ->andWhere('o.id')->in($datingOrderList)
             ->andWhere('o.customer')->in($customerIdList)
             ->orderBy('o.id_desc');
+
         $stmt = $sql->query();
         while($order = $stmt->fetch())
         {    
@@ -494,6 +498,7 @@ class order extends control
 
         if($type == 'select')
         {
+            $orders = array_merge(array(''), $orders);
             if($id) die(html::select("idvalues[$id]", $orders, '', 'class="form-control"'));
             die(html::select('idvalue', $orders, '', 'class=form-control'));
         }
