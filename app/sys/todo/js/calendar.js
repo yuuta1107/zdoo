@@ -178,7 +178,7 @@ $(document).ready(function()
     var lastUpdateHolidayRequest;
     $('.calendar').on('display.zui.calendar', function()
     {
-        if (lastUpdateHolidayRequest)
+        if(lastUpdateHolidayRequest)
         {
             clearTimeout(lastUpdateHolidayRequest);
             lastUpdateHolidayRequest = null;
