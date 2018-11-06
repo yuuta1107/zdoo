@@ -547,21 +547,29 @@ class customer extends control
         $this->app->loadClass('date', $static = true);
         $customerIdList = $this->loadModel('customer')->getCustomersSawByMe();
         $thisWeek       = date::getThisWeek();
-        $customers      = array('');
+        $customers      = array();
         if($account == '') $account = $this->app->user->account;
+
+        $weeklyCustomers = $this->dao->select('*')
+            ->from(TABLE_DATING)
+            ->where('date')->between($thisWeek['begin'], $thisWeek['end'])
+            ->andWhere('account')->eq($account)
+            ->andWhere('objectType')->eq('customer')
+            ->andWhere('status')->eq('wait')
+            ->fetchAll('objectID');
+        $customerIdList = array_intersect($customerIdList, array_keys($weeklyCustomers));
 
         $sql = $this->dao->select('c.id, c.name, c.nextDate, t.id as todo')->from(TABLE_CUSTOMER)->alias('c')
             ->leftJoin(TABLE_TODO)->alias('t')->on("t.type='customer' and c.id = t.idvalue")
             ->where('c.deleted')->eq(0)
-            ->andWhere('c.assignedTo')->eq($account)
             ->andWhere('c.relation')->ne('provider')
-            ->andWhere('c.nextDate')->between($thisWeek['begin'], $thisWeek['end'])
-            ->andWhere('c.nextDate')->ne('0000-00-00')
             ->andWhere('c.id')->in($customerIdList)
             ->orderBy('c.nextDate_asc');
+
         $stmt = $sql->query();
         while($customer = $stmt->fetch())
         {    
+            if(empty($customer)) continue;
             if($customer->todo) continue;
             $customers[$customer->id] = $customer->name . '(' . $customer->nextDate . ')';
         } 
