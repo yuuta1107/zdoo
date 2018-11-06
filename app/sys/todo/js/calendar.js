@@ -56,7 +56,7 @@ $(document).ready(function()
                 'idvalue': from.data('id'),
                 'name': from.data('name'),
                 'begin': '',
-                'end':'' 
+                'end':''
                 }
                 var url = createLink('todo', 'create', '', 'json');
             }
@@ -175,13 +175,28 @@ $(document).ready(function()
 
     fixTableHeader();
     updateWeekendAndHoliday();
+    var lastUpdateHolidayRequest;
+    $('.calendar').on('display.zui.calendar', function()
+    {
+        if (lastUpdateHolidayRequest)
+        {
+            clearTimeout(lastUpdateHolidayRequest);
+            lastUpdateHolidayRequest = null;
+        }
+        lastUpdateHolidayRequest = setTimeout(function()
+        {
+            lastUpdateHolidayRequest = null;
+            updateWeekendAndHoliday();
+        }, 300);
+    });
 });
+
 
 function updateWeekendAndHoliday()
 {
     $('.calendar .label-rest').remove();
 
-    var dates = $('.calendar .cell-day .day').map(function(){return $(this).data('date');}).get();
+    var dates = $('.calendar .cell-day .day').map(function(){return $(this).data('date').toDateString();}).get();
     $.post(createLink('todo', 'ajaxGetWeekendAndHoliday'), {dates: dates}, function(response)
     {
         if(response.status == 'success')
