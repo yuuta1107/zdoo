@@ -174,4 +174,30 @@ $(document).ready(function()
     if($('.current').offset().top >= $(window).scrollTop() + $(window).height()) $(window).scrollTop($('.current').offset().top);
 
     fixTableHeader();
+    updateWeekendAndHoliday();
 });
+
+function updateWeekendAndHoliday()
+{
+    $('.calendar .label-rest').remove();
+
+    var dates = $('.calendar .cell-day .day').map(function(){return $(this).data('date');}).get();
+    $.post(createLink('todo', 'ajaxGetWeekendAndHoliday'), {dates: dates}, function(response)
+    {
+        if(response.status == 'success')
+        {
+            if(response.dates)
+            {
+                for(var date in response.dates)
+                {
+                    var label = response.dates[date];
+                    $(".cell-day .day[data-date='" + date + "'] .heading").prepend("<div class='label-rest'>" + label + "</div>");
+                }
+            }
+        }
+        else
+        {
+            if(response.message) bootbox.alert(response.message);
+        }
+    }, 'json');
+}
