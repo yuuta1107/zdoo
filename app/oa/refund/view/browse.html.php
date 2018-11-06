@@ -125,7 +125,7 @@
                     echo html::a('javascript:;', $lang->delete, "class='disabled'");
                 }
             }
-            if($mode == 'todo') echo html::a($this->createLink('refund', 'reimburse', "refundID={$refund->id}"), $lang->refund->common, "class='refund'");
+            if($mode == 'todo') echo html::a($this->createLink('refund', 'reimburse', "refundID={$refund->id}"), $lang->refund->common, "data-toggle='modal' data-width='540'");
             ?>
           </td>
         </tr>

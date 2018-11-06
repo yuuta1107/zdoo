@@ -1,5 +1,6 @@
 $(document).ready(function()
 {
+  /*
      $.setAjaxJSONER('.refund', function(response)
      {
         if(response.result == 'success')
@@ -31,11 +32,11 @@ $(document).ready(function()
                     }
                 }  
             });
-         }
+         };
 
          return false;
     })
-
-    /* expand active tree. */
-    $('.tree li.active .hitarea').click();
-})
+  */
+  /* expand active tree. */
+  $('.tree li.active .hitarea').click();
+});

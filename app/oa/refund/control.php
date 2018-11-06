@@ -447,14 +447,20 @@ class refund extends control
      */
     public function reimburse($refundID)
     {
-        $this->refund->reimburse($refundID);
-        if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
-            
-        /* send email. */
-        $actionID = $this->loadModel('action')->create('refund', $refundID, 'reimburse');
-        $this->sendmail($refundID, $actionID);
+        if($_POST)
+        {
+            $this->refund->reimburse($refundID);
+            if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
 
-        $this->send(array('result' => 'success', 'refundID' => $refundID));
+            /* send email. */
+            $actionID = $this->loadModel('action')->create('refund', $refundID, 'reimburse');
+            $this->sendmail($refundID, $actionID);
+
+            $this->send(array('result' => 'success', 'refundID' => $refundID, 'trade' => $this->post->trade, 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
+        }
+        
+        $this->view->refund = $this->refund->getByID($refundID);
+        $this->display();
     }
 
     /**

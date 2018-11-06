@@ -34,6 +34,7 @@
           <tr class="text-center">
             <th class='w-50px'><?php echo $lang->refund->id;?></th>
             <th class='w-100px'><?php echo $lang->refund->money;?></th>
+            <th class='w-100px'><?php echo $lang->refund->invoice;?></th>
             <th class='w-80px'><?php echo $lang->refund->date;?></th>
             <th class='w-200px text-left'><?php echo $lang->refund->category;?></th>
             <th class='w-100px'><?php echo $lang->refund->related;?></th>
@@ -44,6 +45,7 @@
           <tr>
             <td><?php echo $d->id;?></td>
             <td><?php echo zget($currencySign, $d->currency) . $d->money;?></td>
+            <td><?php echo zget($currencySign, $d->currency) . $d->invoice;?></td>
             <td><?php echo formatTime($d->date, DT_DATE1);?></td>
             <td class='text-left' title='<?php echo zget($categories, $d->category, '');?>'><?php echo zget($categories, $d->category, '');?></td>
             <?php $related = ''; foreach(explode(',', trim($d->related, ',')) as $account) $related .= ' ' . zget($users, $account);?>
@@ -80,7 +82,7 @@
       }
       if($refund->status == 'pass')
       {
-          commonModel::printLink('refund', 'reimburse', "refundID={$refund->id}", $lang->refund->common, "class='btn btn-default refund'");
+          commonModel::printLink('refund', 'reimburse', "refundID={$refund->id}", $lang->refund->common, "class='btn btn-default' data-toggle='modal' data-width='540'");
       }
       $browseLink = $this->session->refundList ? $this->session->refundList : inlink('personal');
       commonModel::printRPN($browseLink, $preAndNext);
@@ -127,6 +129,10 @@
           <tr>
             <th><?php echo $lang->refund->money;?></th>
             <td><?php echo zget($currencySign, $refund->currency) . $refund->money?></td>
+          </tr>
+          <tr>
+            <th><?php echo $lang->refund->invoice;?></th>
+            <td><?php echo zget($currencySign, $refund->currency) . $refund->invoice?></td>
           </tr>
           <tr>
             <th><?php echo $lang->refund->status;?></th>
