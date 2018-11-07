@@ -33,6 +33,34 @@ class refundModel extends model
             if($refund->contract) $objectType  = 'contract';
             if($refund->project)  $objectType .= ',project';
             $refund->objectType = explode(',', trim($objectType, ','));
+
+            $users = $this->loadModel('user')->getPairs();
+            if(empty($refund->firstReviewer))
+            {
+                if(empty($this->config->refund->firstReviewer))
+                {
+                    $managers = $this->loadModel('user')->getUserManagerPairs();
+                    $reviewer = trim(zget($managers, $refund->createdBy, ''), ',');
+                }
+                else
+                {
+                    $reviewer = $this->config->refund->firstReviewer;
+                }
+                $refund->firstReviewerLabel = zget($users, $reviewer) . $this->lang->refund->statusList['doing'];
+            }
+            else
+            {
+                $refund->firstReviewerLabel = zget($users, $refund->firstReviewer) . $this->lang->at . $refund->firstReviewDate;
+            }
+
+            if(empty($refund->secondReviewer))
+            {
+                $refund->secondReviewerLabel = zget($users, $this->config->refund->secondReviewer) . $this->lang->refund->statusList['doing'];
+            }
+            else
+            {
+                $refund->secondReviewerLabel = zget($users, $refund->secondReviewer) . $this->lang->at . $refund->secondReviewDate;;
+            }
         }
         return $refund;
     }
@@ -385,7 +413,7 @@ class refundModel extends model
                 $newCategories[$key] = '/' . implode('/', $path);
             }
         }
-
+        
         return array('/') + $newCategories;
     }
 
@@ -504,7 +532,7 @@ class refundModel extends model
         $trade->handlers    = $this->post->handlers ? trim(implode(',', $this->post->handlers), ',') : '';
         $trade->category    = $this->post->category;
         $trade->dept        = $this->post->dept;
-        $trade->desc        = $refund->desc;
+        $trade->desc        = $refund->name . "\n" . $refund->desc;
         $trade->createdBy   = $this->app->user->account;
         $trade->createdDate = helper::now();
 
@@ -553,20 +581,24 @@ class refundModel extends model
 
         foreach($currencyList as $key => $currency)
         {
-            $totalMoney[$key] = 0;
             foreach($refunds as $refund)
             {
+                if(!isset($totalMoney[$key][$refund->status])) $totalMoney[$key][$refund->status] = 0;
                 if($refund->currency != $key) continue;
-                $totalMoney[$key] += $refund->money;
+                $totalMoney[$key][$refund->status] += $refund->money;
             }
         }
-
+        
         $totalInfo = '';
-        foreach($totalMoney as $currency => $money)
+        foreach($totalMoney as $currency => $total)
         {
-            if(!$money) continue;
-            $tidyMoney = "<span title='" . $money . "'>" . commonModel::tidyMoney($money) . '</span>';
-            $totalInfo .= sprintf($this->lang->refund->totalMoney, $currencyList[$currency], $tidyMoney);
+            foreach($total as $status => $money)
+            {
+                if(!$money) continue;
+                $totalInfo .= $this->lang->refund->statusList[$status];
+                $tidyMoney  = "<span title='" . $money . "'>" . commonModel::tidyMoney($money) . '</span>';
+                $totalInfo .= sprintf($this->lang->refund->totalMoney, $currencyList[$currency], $tidyMoney);
+            }
         }
 
         return $totalInfo;

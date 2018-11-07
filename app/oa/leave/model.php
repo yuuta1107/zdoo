@@ -89,6 +89,31 @@ class leaveModel extends model
     }
 
     /**
+     * Get leave pairs.
+     *
+     * @param  string $type
+     * @param  string $year
+     * @param  string $month
+     * @param  string $account
+     * @param  string $dept
+     * @param  string $status
+     * @param  string $orderBy
+     * @access public
+     * @return array
+     */
+    public function getPairs($type = 'personal', $year = '', $month = '', $account = '', $dept = '', $status = '', $orderBy = 'id_desc')
+    {
+        $leavePairs = array('');
+        $leaveList  = $this->getList($type, $year, $month, $account, $dept, $status, $orderBy);
+        foreach($leaveList as $leave)
+        {
+            $leavePairs[$leave->id] = formatTime("{$leave->begin} {$leave->start}", DT_DATETIME2) . ' ~ ' . formatTime("{$leave->end} {$leave->finish}", DT_DATETIME2);
+        }
+
+        return $leavePairs;
+    }
+
+    /**
      * Process status of leave list.
      *
      * @param  array  $leaveList
@@ -528,8 +553,8 @@ class leaveModel extends model
     }
 
     /**
-     * Compute annual days 
-     * 
+     * Compute annual days
+     *
      * @access public
      * @return array
      */

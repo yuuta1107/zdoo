@@ -28,6 +28,7 @@ $lang->user->email     = 'Email';
 $lang->user->msn       = 'MSN';
 $lang->user->qq        = 'QQ';
 $lang->user->yahoo     = 'Y!';
+$lang->user->weixin    = 'Wechat';
 $lang->user->gtalk     = 'GTalk';
 $lang->user->wangwang  = 'Wangwang';
 $lang->user->mobile    = 'Mobile';

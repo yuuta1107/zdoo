@@ -13,7 +13,7 @@
 <?php include $app->getModuleRoot() . 'common/view/header.html.php';?>
 <?php include '../../../sys/common/view/datepicker.html.php';?>
 <?php include '../../../sys/common/view/chosen.html.php';?>
-<?php js::set('modeType', 'all');?>
+<?php js::set('modeType', $mode);?>
 <form id='ajaxForm' method='post'>
   <div class='panel'>
     <div class='panel-heading'><strong><?php echo $lang->trade->batchCreate;?></strong></div>
@@ -62,7 +62,7 @@
         ?>
         <tr>
           <td><?php echo html::select("depositor[$i]", $depositors, $depositor, "class='form-control' id='depositor{$i}'");?></td>
-          <td><?php echo html::select("type[$i]", $lang->trade->typeList, 'out', "class='form-control type' id='type{$i}'");?></td>
+          <td><?php echo html::select("type[$i]", $lang->trade->typeList, $mode == 'out' ? 'out' : 'in', "class='form-control type' id='type{$i}'");?></td>
           <td>
             <?php echo html::select("category[$i]", $incomeTypes, $incomeType, "class='form-control in chosen' style='display:none'");?>
             <?php echo html::select("category[$i]", $expenseTypes, $expenseType, "class='form-control out chosen' id='category{$i}'");?>

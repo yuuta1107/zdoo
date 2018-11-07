@@ -182,7 +182,7 @@ class depositor extends control
         $this->view->end           = $this->post->end;
         $this->view->title         = $this->lang->depositor->check;
         $this->view->selected      = $selected;
-        $this->view->depositorList = $this->depositor->getPairs();
+        $this->view->depositorList = $this->depositor->getPairs($status = 'normal');
         $this->view->dateOptions   = (array) $this->loadModel('balance', 'cash')->getDateOptions();
         $this->view->customerList  = $this->loadModel('customer')->getPairs();
         $this->view->categories    = $this->lang->trade->categoryList + $expenseTypes + $incomeTypes;

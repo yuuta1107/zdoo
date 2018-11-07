@@ -1,3 +1,17 @@
+/* Fix zui $.fn.callComEvent not defined */
+if (!$.fn.callComEvent) {
+    $.fn.callComEvent = function(component, eventName, params)
+    {
+        if (params !== undefined && !$.isArray(params)) params = [params];
+        var $this = this;
+        var result = $this.triggerHandler(eventName, params);
+
+        var eventCallback = component.options[eventName];
+        if (eventCallback) result = eventCallback.apply(component, params);
+        return result;
+    };
+}
+
 /* Set trigger modal default name to 'ajaxModal'. */
 (function(){$.ModalTriggerDefaults = {name: 'ajaxModal', backdrop: 'static'}})();
 
@@ -6,7 +20,7 @@
 
 /**
  * force load entry content with iframe when view entry
- * 
+ *
  * @access public
  * @return void
  */
@@ -40,12 +54,12 @@ $.extend(
 
         form = $(formID);
 
-        var options = 
+        var options =
         {
             target  : null,
             timeout : config.timeout,
             dataType:'json',
-            
+
             success: function(response)
             {
                 var submitButton = $(formID).find(':input[type=submit], .submit');
@@ -94,7 +108,7 @@ $.extend(
                         }
                     }
 
-                    if(response.locate) 
+                    if(response.locate)
                     {
                         if(response.locate == 'loadInModal')
                         {
@@ -129,7 +143,7 @@ $.extend(
                 }
 
                 /**
-                 * The response.result is fail. 
+                 * The response.result is fail.
                  */
 
                 $.enableForm(formID);
@@ -162,7 +176,7 @@ $.extend(
                         errorMSG += '</span>';
 
                         /* Append error message, set style and set the focus events. */
-                        $('#' + errorLabel).remove(); 
+                        $('#' + errorLabel).remove();
                         var $errorOBJ = $(formID).find(errorOBJ);
                         if($errorOBJ.closest('.input-group').length > 0)
                         {
@@ -178,7 +192,7 @@ $.extend(
                         {
                             $errorOBJ.css('margin-bottom', 0);
                             $errorOBJ.css('border-color','')
-                            $('#' + errorLabel).remove(); 
+                            $('#' + errorLabel).remove();
                         });
                     })
 
@@ -192,7 +206,7 @@ $.extend(
                     {
                         topOffset = topOffset - parseInt($('.navbar-fixed-top').height());
                     }
-                    
+
                     /* Scroll to the error field and foucus it. */
                     $(document).scrollTop(topOffset);
                     firstErrorField.focus();
@@ -216,7 +230,7 @@ $.extend(
 
         /* Call ajaxSubmit to sumit the form. */
         $(document).on('submit', formID, function()
-        { 
+        {
             $.disableForm(formID);
             if(!beforeSubmit || beforeSubmit() !== false)
             {
@@ -249,7 +263,7 @@ $.extend(
     {
         $.setSubmitButton(formID, 'disable');
     },
-    
+
     /* Enable a form. */
     enableForm: function(formID)
     {
@@ -261,8 +275,8 @@ $.extend(
 {
     /**
      * Set ajax loader.
-     * 
-     * Bind click event for some elements thus when click them, 
+     *
+     * Bind click event for some elements thus when click them,
      * use $.load to load page into target.
      *
      * @param string selector
@@ -289,7 +303,7 @@ $.extend(
             var width = $(this).data('width');
             $target.load(url, function()
             {
-                if(width) $target.find('.modal-dialog').css('width', width); 
+                if(width) $target.find('.modal-dialog').css('width', width);
                 if($target.hasClass('modal') && $.zui.ajustModalPosition) $.zui.ajustModalPosition();
             });
 
@@ -311,7 +325,7 @@ $.extend(
             url = $(this).attr('href');
             if(!url) url = $(this).data('rel');
             if(!url) return false;
-            
+
             $.getJSON(url, function(response)
             {
                 /* If set callback, call it. */
@@ -348,8 +362,8 @@ $.extend(
 
     /**
      * Set ajax deleter.
-     * 
-     * @param  string $selector 
+     *
+     * @param  string $selector
      * @access public
      * @return void
      */
@@ -362,7 +376,7 @@ $.extend(
                 var deleter = $(this);
                 deleter.text(v.lang.deleteing);
 
-                $.getJSON(deleter.attr('href'), function(data) 
+                $.getJSON(deleter.attr('href'), function(data)
                 {
                     callback && callback(data);
                     if(data.result == 'success')
@@ -384,8 +398,8 @@ $.extend(
 
     /**
      * Set reload deleter.
-     * 
-     * @param  string $selector 
+     *
+     * @param  string $selector
      * @access public
      * @return void
      */
@@ -398,7 +412,7 @@ $.extend(
                 var deleter = $(this);
                 deleter.text(v.lang.deleteing);
 
-                $.getJSON(deleter.attr('href'), function(data) 
+                $.getJSON(deleter.attr('href'), function(data)
                 {
                     var afterDelete = deleter.data('afterDelete');
                     if($.isFunction(afterDelete))
@@ -424,11 +438,11 @@ $.extend(
                                 $target.dataTable();
                             }
                             if(typeof sortTable == 'function')
-                            {   
-                                sortTable(); 
-                            }   
+                            {
+                                sortTable();
+                            }
                             else
-                            {   
+                            {
                                 $('tfoot td').css('background', 'white').unbind('click').unbind('hover');
                             }
                         });
@@ -445,8 +459,8 @@ $.extend(
 
     /**
      * Set reload.
-     * 
-     * @param  string $selector 
+     *
+     * @param  string $selector
      * @access public
      * @return void
      */
@@ -455,7 +469,7 @@ $.extend(
         $(document).on('click', selector, function()
         {
             var reload = $(this);
-            $.getJSON(reload.attr('href'), function(data) 
+            $.getJSON(reload.attr('href'), function(data)
             {
                 if(data.result == 'success')
                 {
@@ -464,16 +478,16 @@ $.extend(
 
                     table.wrap("<div id='tmpDiv'></div>");
                     $('#tmpDiv').load(document.location.href + ' #' + replaceID, function()
-                    {   
+                    {
                         $('#tmpDiv').replaceWith($('#tmpDiv').html());
                         if(typeof sortTable == 'function')
-                        {   
-                            sortTable(); 
-                        }   
+                        {
+                            sortTable();
+                        }
                         else
-                        {   
+                        {
                             $('tfoot td').css('background', 'white').unbind('click').unbind('hover');
-                        }   
+                        }
                     });
                 }
                 else
@@ -488,7 +502,7 @@ $.extend(
     /**
      * Reload ajax modal.
      *
-     * @param int duration 
+     * @param int duration
      * @access public
      * @return void
      */
@@ -505,7 +519,7 @@ $.extend(
 
 /**
  * Judge the string is a integer number
- * 
+ *
  * @access public
  * @return bool
  */
@@ -522,12 +536,12 @@ function isNum(s)
 }
 
 /**
- * Create link. 
- * 
- * @param  string $moduleName 
- * @param  string $methodName 
- * @param  string $vars 
- * @param  string $viewType 
+ * Create link.
+ *
+ * @param  string $moduleName
+ * @param  string $methodName
+ * @param  string $vars
+ * @param  string $viewType
  * @access public
  * @return string
  */
@@ -595,20 +609,20 @@ function setRequiredFields()
 
 /**
  * Select lang.
- * 
- * @param  string $lang 
+ *
+ * @param  string $lang
  * @access public
  * @return void
  */
-function selectLang(lang)                                                                                                
-{                                                                                                                        
-    $.cookie('lang', lang, {expires:config.cookieLife, path:config.webRoot});                                            
-    location.href = removeAnchor(location.href);                                                                         
-}                                                                                                                        
+function selectLang(lang)
+{
+    $.cookie('lang', lang, {expires:config.cookieLife, path:config.webRoot});
+    location.href = removeAnchor(location.href);
+}
 
 /**
  * Set theme.
- * 
+ *
  * @param  string theme
  * @access public
  * @return void
@@ -621,8 +635,8 @@ function selectTheme(theme)
 
 /**
  * Remove anchor from the url.
- * 
- * @param  string $url 
+ *
+ * @param  string $url
  * @access public
  * @return string
  */
@@ -634,8 +648,8 @@ function removeAnchor(url)
 }
 
 /**
- * Ping to keep login 
- * 
+ * Ping to keep login
+ *
  * @access public
  * @return void
  */
@@ -659,8 +673,8 @@ function ping()
 }
 
 /**
- * get showed notice id. 
- * 
+ * get showed notice id.
+ *
  * @access public
  * @return array
  */
@@ -676,7 +690,7 @@ function getShowedNotice()
 
 /**
  * Adjust notice position.
- * 
+ *
  * @param  string noticeID
  * @access public
  * @return void
@@ -695,8 +709,8 @@ function adjustNoticePosition(noticeID)
 
 /**
  * Show a notice.
- * 
- * @param  object $notice 
+ *
+ * @param  object $notice
  * @access public
  * @return void
  */
@@ -743,7 +757,7 @@ function showNotice(notice)
 
 /**
  * Fix table header in admin page
- * 
+ *
  * @access public
  * @return void
  */
@@ -796,7 +810,7 @@ function fixTableHeader()
 
 /**
  * Fix table footer in admin page
- * 
+ *
  * @access public
  * @return void
  */
@@ -826,7 +840,7 @@ function fixTableFooter($table)
 
 /**
  * Make form condensed
- * 
+ *
  * @access public
  * @return void
  */
@@ -840,7 +854,7 @@ function condensedForm()
 
 /**
  * Set page actions
- * 
+ *
  * @access public
  * @return void
  */
@@ -891,7 +905,7 @@ function setPageActions()
 
 /**
  * Reload home.
- * 
+ *
  * @access public
  * @return void
  */
@@ -917,13 +931,13 @@ function reloadHome()
 }
 
 /**
- * Show drop menu. 
- * 
+ * Show drop menu.
+ *
  * @param  string $objectType product|project
- * @param  int    $objectID 
- * @param  string $module 
- * @param  string $method 
- * @param  string $extra 
+ * @param  int    $objectID
+ * @param  string $module
+ * @param  string $method
+ * @param  string $extra
  * @access public
  * @return void
  */
@@ -944,14 +958,14 @@ function showDropMenu(objectType, objectID, module, method, extra)
 }
 
 /**
- * Search items. 
- * 
- * @param  string $keywords 
- * @param  string $objectType 
- * @param  int    $objectID 
- * @param  string $module 
- * @param  string $method 
- * @param  string $extra 
+ * Search items.
+ *
+ * @param  string $keywords
+ * @param  string $objectType
+ * @param  int    $objectID
+ * @param  string $module
+ * @param  string $method
+ * @param  string $extra
  * @access public
  * @return void
  */
@@ -970,8 +984,8 @@ function searchItems(keywords, objectType, objectID, module, method, extra)
 }
 
 /**
- * Show or hide more items. 
- * 
+ * Show or hide more items.
+ *
  * @access public
  * @return void
  */
@@ -984,8 +998,8 @@ function switchFinished()
 }
 
 /**
- * Show or hide more items. 
- * 
+ * Show or hide more items.
+ *
  * @access public
  * @return void
  */
@@ -999,8 +1013,8 @@ function switchSuspend()
 
 /**
  * Set form action and submit.
- * 
- * @param  url    $actionLink 
+ *
+ * @param  url    $actionLink
  * @param  string $hiddenwin 'hiddenwin'
  * @access public
  * @return void
@@ -1015,8 +1029,8 @@ function setFormAction(actionLink, hiddenwin, obj)
 }
 
 /**
- * Fix menus of navbar. 
- * 
+ * Fix menus of navbar.
+ *
  * @access public
  * @return void
  */

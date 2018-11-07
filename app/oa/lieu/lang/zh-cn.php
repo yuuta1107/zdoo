@@ -25,6 +25,7 @@ $lang->lieu->start        = '开始时间';
 $lang->lieu->finish       = '结束时间';
 $lang->lieu->hours        = '总时长';
 $lang->lieu->overtime     = '加班记录';
+$lang->lieu->trip         = '出差记录';
 $lang->lieu->status       = '状态';
 $lang->lieu->desc         = '事由';
 $lang->lieu->createdBy    = '申请者';
@@ -52,8 +53,9 @@ $lang->lieu->sameMonth     = '不支持跨月份调休';
 $lang->lieu->wrongEnd      = '结束时间应该大于开始时间';
 $lang->lieu->nodata        = '没有选择数据';
 $lang->lieu->reviewSuccess = '审核成功';
-$lang->lieu->wrongHours    = '加班时长 <strong>%s</strong> 小时，调休时长不能超过加班时长。';
+$lang->lieu->wrongHours    = '加班和出差总时长 <strong>%s</strong> 小时，调休时长不能超过总时长。';
 $lang->lieu->nobccomp      = '请安装bcmath扩展';
+$lang->lieu->bothEmpty     = '<strong>加班记录</strong>和<strong>出差记录</strong>不能同时为空';
 
 $lang->lieu->hoursTip = '小时';
 

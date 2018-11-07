@@ -1301,7 +1301,6 @@ EOT;
         /* Group data list by account. */
         foreach($this->config->attend->typeList as $type)
         {
-            $dataList = ${$type . 'List'};
             foreach(${$type . 'List'} as $key => $data)
             {
                 ${$type . 'List'}[$data->createdBy][] = $data;
