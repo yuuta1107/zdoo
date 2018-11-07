@@ -28,6 +28,7 @@ $lang->user->email     = '邮箱';
 $lang->user->msn       = 'MSN';
 $lang->user->qq        = 'QQ';
 $lang->user->yahoo     = '雅虎通';
+$lang->user->weixin    = '微信号';
 $lang->user->gtalk     = 'Gtalk';
 $lang->user->wangwang  = '旺旺';
 $lang->user->mobile    = '手机';

@@ -65,6 +65,10 @@
       <tr>
         <th><?php echo $lang->user->qq;?></th>
         <td><?php echo html::input('qq', $user->qq, "class='form-control'");?></td>
+        <th><?php echo $lang->user->weixin;?></th>
+        <td><?php echo html::input('weixin', $user->weixin, "class='form-control'");?></td>
+      </tr>
+      <tr>
         <th><?php echo $lang->user->gtalk;?></th>
         <td><?php echo html::input('gtalk', $user->gtalk, "class='form-control'");?></td>
       </tr>
