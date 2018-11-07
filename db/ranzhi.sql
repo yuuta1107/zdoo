@@ -462,6 +462,7 @@ CREATE TABLE IF NOT EXISTS `oa_lieu` (
   `finish` time NOT NULL,
   `hours` float(4,1) unsigned NOT NULL DEFAULT '0.0',
   `overtime` char(255) NOT NULL,
+  `trip` char(255) NOT NULL,
   `desc` text NOT NULL,
   `status` varchar(30) NOT NULL DEFAULT '',
   `createdBy` char(30) NOT NULL,
