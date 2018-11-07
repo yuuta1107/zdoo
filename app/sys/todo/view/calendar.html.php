@@ -72,7 +72,7 @@ function updateCalendar()
         if(response.status == 'success')
         {
             var data = JSON.parse(response.data);
-            for(e in data.data.events) 
+            for(e in data.data.events)
             {
                 data.data.events[e]['start'] = new Date(data.data.events[e]['start']);
                 data.data.events[e]['end']   = new Date(data.data.events[e]['end']);
@@ -112,7 +112,7 @@ function finishTodo(id)
 function adjustWidth()
 {
     var weekendEvents = 0;
-    var width = 80;
+    var width = 100;
     $('.calendar tbody.month-days tr.week-days').each(function()
     {
         weekendEvents += $(this).find('td').eq(5).find('.event').size();

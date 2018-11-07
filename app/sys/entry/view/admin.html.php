@@ -56,7 +56,7 @@ include '../../common/view/header.html.php';
       }
       else
       {
-        $this->entry->printInfo($entry);
+          $this->entry->printInfo($entry);
       }
       ?>
       <?php endforeach;?>

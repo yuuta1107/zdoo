@@ -28,8 +28,7 @@
     <th class='text-middle'><?php echo $lang->lieu->overtime;?></th>
     <td colspan='3'>
       <?php foreach(explode(',', trim($lieu->overtime, ',')) as $overtime):?>
-      <?php if(!$overtime) continue;?>
-      <?php echo zget($overtimePairs, $overtime) . '</br>';?>
+      <?php if($overtime) echo zget($overtimes, $overtime) . '</br>';?>
       <?php endforeach;?>
     </td>
   </tr>

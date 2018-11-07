@@ -30,8 +30,7 @@
     <th class='text-middle'><?php echo $lang->makeup->leave;?></th>
     <td colspan='3'>
       <?php foreach(explode(',', trim($makeup->leave, ',')) as $leave):?>
-      <?php if(!$leave) continue;?>
-      <?php echo zget($leavePairs, $leave) . '</br>';?>
+      <?php if($leave) echo zget($leaves, $leave) . '</br>';?>
       <?php endforeach;?>
     </td>
   </tr>

@@ -59,7 +59,7 @@
     </tr>
     <tr>
       <th><?php echo $lang->makeup->leave;?></th>
-      <td><?php echo html::select('leave[]', $leavePairs, $makeup->leave, "class='form-control chosen' multiple")?></td>
+      <td><?php echo html::select('leave[]', $leaves, $makeup->leave, "class='form-control chosen' multiple")?></td>
       <td></td>
     </tr>
     <tr>
