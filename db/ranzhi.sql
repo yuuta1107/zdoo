@@ -530,6 +530,7 @@ CREATE TABLE IF NOT EXISTS `oa_refund` (
   `category` char(30) NOT NULL DEFAULT '0',
   `date` date NOT NULL,
   `money` decimal(12,2) NOT NULL,
+  `invoice` decimal(12,2) NOT NULL,
   `currency` varchar(30) NOT NULL,
   `desc` text NOT NULL,
   `related` char(200) NOT NULL DEFAULT '',
