@@ -904,7 +904,7 @@ class task extends control
     public function ajaxGetTodoList($account = '', $id = '', $type = 'select')
     {
         $status = 'wait,doing';
-        $tasks  = array('');
+        $tasks  = array();
         if($account == '') $account = $this->app->user->account;
 
         $sql = $this->dao->select('t1.id, t1.name, t2.name as project, t3.id as todo')
@@ -924,6 +924,7 @@ class task extends control
 
         if($type == 'select')
         {
+            $tasks = array_merge(array(''), $tasks);
             if($id) die(html::select("idvalues[$id]", $tasks, '', 'class="form-control"'));
             die(html::select('idvalue', $tasks, '', 'class=form-control'));
         }

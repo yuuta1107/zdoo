@@ -416,6 +416,30 @@ class actionModel extends model
     }
 
     /**
+     * Get dating of this week.
+     * 
+     * @param  string $account 
+     * @param  string $objectType 
+     * @access public
+     * @return array
+     */
+    public function getDatingOfThisWeek($account = '', $objectType = '')
+    {
+        $thisWeek = date::getThisWeek();
+        if($account == '') $account = $this->app->user->account;
+
+        $customers = $this->dao->select('*')
+            ->from(TABLE_DATING)
+            ->where('date')->between($thisWeek['begin'], $thisWeek['end'])
+            ->andWhere('account')->eq($account)
+            ->andWhere('objectType')->eq($objectType)
+            ->andWhere('status')->eq('wait')
+            ->fetchAll('objectID');
+
+        return $customers;
+    }
+
+    /**
      * Get min next date by objectType and objectID.
      *
      * @param  string $objectType
