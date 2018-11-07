@@ -12,9 +12,9 @@
 class tripModel extends model
 {
     /**
-     * Get a trip by id. 
-     * 
-     * @param  int    $id 
+     * Get a trip by id.
+     *
+     * @param  int    $id
      * @access public
      * @return object
      */
@@ -24,10 +24,22 @@ class tripModel extends model
     }
 
     /**
+     * Get by idList.
+     *
+     * @param  array|string $idList
+     * @access public
+     * @return array
+     */
+    public function getByIdList($idList)
+    {
+        return $this->dao->select('*')->from(TABLE_TRIP)->where('id')->in($idList)->fetchAll('id');
+    }
+
+    /**
      * Get leave by date and account.
-     * 
-     * @param  string    $date 
-     * @param  string    $account 
+     *
+     * @param  string    $date
+     * @param  string    $account
      * @access public
      * @return object
      */
@@ -37,13 +49,13 @@ class tripModel extends model
     }
 
     /**
-     * Get trip list. 
-     * 
+     * Get trip list.
+     *
      * @param  string $type
-     * @param  string $year 
-     * @param  string $month 
-     * @param  string $account 
-     * @param  string $dept 
+     * @param  string $year
+     * @param  string $month
+     * @param  string $account
+     * @param  string $dept
      * @param  string $orderBy
      * @access public
      * @return array
@@ -78,8 +90,32 @@ class tripModel extends model
     }
 
     /**
+     * Get trip pairs.
+     *
+     * @param  string $type
+     * @param  string $year
+     * @param  string $month
+     * @param  string $account
+     * @param  string $dept
+     * @param  string $orderBy
+     * @access public
+     * @return array
+     */
+    public function getPairs($type = 'trip', $year = '', $month = '', $account = '', $dept = '', $orderBy = 'id_desc')
+    {
+        $tripPairs = array('');
+        $tripList  = $this->getList($type, $year, $month, $account, $dept, $orderBy);
+        foreach($tripList as $trip)
+        {
+            $tripPairs[$trip->id] = "{$trip->name}({$trip->to})(" . formatTime("{$trip->begin} {$trip->start}", DT_DATETIME2) . ' ~ ' . formatTime("{$trip->end} {$trip->finish}", DT_DATETIME2) . ')';
+        }
+
+        return $tripPairs;
+    }
+
+    /**
      * Get all month of trip's begin.
-     * 
+     *
      * @param  string $type
      * @param  string $mode
      * @access public
@@ -120,11 +156,11 @@ class tripModel extends model
 
     /**
      * Get list by date.
-     * 
-     * @param  int    $date 
-     * @param  int    $account 
+     *
+     * @param  int    $date
+     * @param  int    $account
      * @access public
-     * @return void
+     * @return array
      */
     public function getListByDate($date, $account)
     {
@@ -140,7 +176,7 @@ class tripModel extends model
 
     /**
      * Create a trip.
-     * 
+     *
      * @access public
      * @return bool
      */
@@ -176,10 +212,10 @@ class tripModel extends model
 
     /**
      * update trip.
-     * 
-     * @param  int    $id 
+     *
+     * @param  int    $id
      * @access public
-     * @return bool
+     * @return array
      */
     public function update($id)
     {
@@ -215,11 +251,11 @@ class tripModel extends model
 
     /**
      * Check date.
-     * 
-     * @param  object $date 
-     * @param  int    $id 
+     *
+     * @param  object $date
+     * @param  int    $id
      * @access public
-     * @return void
+     * @return array
      */
     public function checkDate($date, $id = 0)
     {
@@ -251,13 +287,13 @@ class tripModel extends model
 
     /**
      * Check trip.
-     * 
+     *
      * @param  string $type
      * @param  object $currentTrip
-     * @param  string $account 
+     * @param  string $account
      * @param  int    $id
      * @access public
-     * @return bool 
+     * @return array
      */
     public function checkTrip($type = 'trip', $currentTrip = null, $account = '', $id = 0)
     {
@@ -282,11 +318,11 @@ class tripModel extends model
     }
 
     /**
-     * Check date is in trip. 
-     * 
+     * Check date is in trip.
+     *
      * @param  string $type
-     * @param  string $date 
-     * @param  string $account 
+     * @param  string $date
+     * @param  string $account
      * @access public
      * @return bool
      */
@@ -318,9 +354,9 @@ class tripModel extends model
     }
 
     /**
-     * delete trip.
-     * 
-     * @param  int    $id 
+     * Delete trip.
+     *
+     * @param  int    $id
      * @access public
      * @return bool
      */

@@ -342,7 +342,7 @@ class makeup extends control
         $leaveList = $this->loadModel('leave', 'oa')->getByIdList(trim($makeup->leave, ','));
         foreach($leaveList as $key => $leave)
         {
-            $leaves[$leave->id] = formatTime($leave->begin . ' ' . $leave->start, DT_DATETIME2) . ' ~ ' . formatTime($leave->end . ' ' . $leave->finish, DT_DATETIME2);
+            $leaves[$leave->id] = formatTime("{$leave->begin} {$leave->start}", DT_DATETIME2) . ' ~ ' . formatTime("{$leave->end} {$leave->finish}", DT_DATETIME2);
         }
 
         $this->view->title  = $this->lang->makeup->view;

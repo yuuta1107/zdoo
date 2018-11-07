@@ -26,6 +26,7 @@
     <th><?php echo $lang->makeup->end?></th>
     <td><?php echo formatTime($makeup->end . ' ' . $makeup->finish, DT_DATETIME2);?></td>
   </tr>
+  <?php if($makeup->leave):?>
   <tr>
     <th class='text-middle'><?php echo $lang->makeup->leave;?></th>
     <td colspan='3'>
@@ -34,6 +35,7 @@
       <?php endforeach;?>
     </td>
   </tr>
+  <?php endif;?>
   <tr>
     <th><?php echo $lang->makeup->desc?></th>
     <td colspan='3'><?php echo $makeup->desc;?></td>
