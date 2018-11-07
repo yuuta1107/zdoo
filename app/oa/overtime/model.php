@@ -105,9 +105,9 @@ class overtimeModel extends model
     {
         $overtimePairs = array('');
         $overtimeList  = $this->getList($type, $year, $month, $account, $dept, $status, $orderBy);
-        foreach($overtimeList as $key => $overtime)
+        foreach($overtimeList as $overtime)
         {
-            $overtimePairs[$overtime->id] = formatTime($overtime->begin . ' ' . $overtime->start, DT_DATETIME2) . ' ~ ' . formatTime($overtime->end . ' ' . $overtime->finish, DT_DATETIME2);
+            $overtimePairs[$overtime->id] = formatTime("{$overtime->begin} {$overtime->start}", DT_DATETIME2) . ' ~ ' . formatTime("{$overtime->end} {$overtime->finish}", DT_DATETIME2);
         }
 
         return $overtimePairs;

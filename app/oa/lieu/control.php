@@ -163,6 +163,7 @@ class lieu extends control
 
         $this->view->title     = $this->lang->lieu->create;
         $this->view->overtimes = $this->loadModel('overtime', 'oa')->getPairs('company', '', '', $this->app->user->account, '', 'pass');
+        $this->view->trips     = $this->loadModel('trip', 'oa')->getPairs('trip', '', '', $this->app->user->account);
         $this->view->date      = $date;
         $this->display();
     }
@@ -206,6 +207,7 @@ class lieu extends control
 
         $this->view->title     = $this->lang->lieu->edit;
         $this->view->overtimes = $this->loadModel('overtime', 'oa')->getPairs('company', '', '', $this->app->user->account, '', 'pass');
+        $this->view->trips     = $this->loadModel('trip', 'oa')->getPairs('trip', '', '', $this->app->user->account);
         $this->view->lieu      = $lieu;
         $this->display();
     }
@@ -222,17 +224,30 @@ class lieu extends control
     {
         $lieu = $this->lieu->getById($id);
 
-        $overtimes    = array();
-        $overtimeList = $this->loadModel('overtime', 'oa')->getByIdList(trim($lieu->overtime, ','));
-        foreach($overtimeList as $overtime)
+        if($lieu->overtime)
         {
-            $overtimes[$overtime->id] = formatTime($overtime->begin . ' ' . $overtime->start, DT_DATETIME2) . ' ~ ' . formatTime($overtime->end . ' ' . $overtime->finish, DT_DATETIME2);
+            $overtimes    = array();
+            $overtimeList = $this->loadModel('overtime', 'oa')->getByIdList(trim($lieu->overtime, ','));
+            foreach($overtimeList as $overtime)
+            {
+                $overtimes[$overtime->id] = formatTime("{$overtime->begin} {$overtime->start}", DT_DATETIME2) . ' ~ ' . formatTime("{$overtime->end} {$overtime->finish}", DT_DATETIME2);
+            }
+            $this->view->overtimes = $overtimes;
+        }
+        if($lieu->trip)
+        {
+            $trips    = array();
+            $tripList = $this->loadModel('trip', 'oa')->getByIdList(trim($lieu->trip, ','));
+            foreach($tripList as $trip)
+            {
+                $trips[$trip->id] = "{$trip->name}({$trip->to})(" . formatTime("{$trip->begin} {$trip->start}", DT_DATETIME2) . ' ~ ' . formatTime("{$trip->end} {$trip->finish}", DT_DATETIME2) . ')';
+            }
+            $this->view->trips = $trips;
         }
 
         $this->view->title     = $this->lang->lieu->view;
         $this->view->lieu      = $lieu;
         $this->view->users     = $this->loadModel('user', 'sys')->getPairs();
-        $this->view->overtimes = $overtimes;
         $this->view->type      = $type;
         $this->display();
     }

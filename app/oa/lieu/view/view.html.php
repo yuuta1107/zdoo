@@ -24,6 +24,7 @@
     <th><?php echo $lang->lieu->end;?></th>
     <td><?php echo formatTime($lieu->end . ' ' . $lieu->finish, DT_DATETIME2);?></td>
   </tr>
+  <?php if($lieu->overtime):?>
   <tr>
     <th class='text-middle'><?php echo $lang->lieu->overtime;?></th>
     <td colspan='3'>
@@ -32,6 +33,17 @@
       <?php endforeach;?>
     </td>
   </tr>
+  <?php endif;?>
+  <?php if($lieu->trip):?>
+  <tr>
+    <th class='text-middle'><?php echo $lang->lieu->trip;?></th>
+    <td colspan='3'>
+      <?php foreach(explode(',', trim($lieu->trip, ',')) as $trip):?>
+      <?php if($trip) echo zget($trips, $trip) . '</br>';?>
+      <?php endforeach;?>
+    </td>
+  </tr>
+  <?php endif;?>
   <tr>
     <th><?php echo $lang->lieu->desc;?></th>
     <td colspan='3'><?php echo $lieu->desc;?></td>

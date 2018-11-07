@@ -105,9 +105,9 @@ class leaveModel extends model
     {
         $leavePairs = array('');
         $leaveList  = $this->getList($type, $year, $month, $account, $dept, $status, $orderBy);
-        foreach($leaveList as $key => $leave)
+        foreach($leaveList as $leave)
         {
-            $leavePairs[$leave->id] = formatTime($leave->begin . ' ' . $leave->start, DT_DATETIME2) . ' ~ ' . formatTime($leave->end . ' ' . $leave->finish, DT_DATETIME2);
+            $leavePairs[$leave->id] = formatTime("{$leave->begin} {$leave->start}", DT_DATETIME2) . ' ~ ' . formatTime("{$leave->end} {$leave->finish}", DT_DATETIME2);
         }
 
         return $leavePairs;
@@ -553,8 +553,8 @@ class leaveModel extends model
     }
 
     /**
-     * Compute annual days 
-     * 
+     * Compute annual days
+     *
      * @access public
      * @return array
      */

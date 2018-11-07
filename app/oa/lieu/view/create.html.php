@@ -53,6 +53,11 @@
       <td></td>
     </tr>
     <tr>
+      <th><?php echo $lang->lieu->trip;?></th>
+      <td><?php echo html::select('trip[]', $trips, '', "class='form-control chosen' multiple")?></td>
+      <td></td>
+    </tr>
+    <tr>
       <th><?php echo $lang->lieu->desc;?></th>
       <td><?php echo html::textarea('desc', '', "class='form-control'")?></td>
       <td></td>
