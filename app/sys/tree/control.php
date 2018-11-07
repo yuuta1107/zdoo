@@ -22,7 +22,7 @@ class tree extends control
      * @access public
      * @return void
      */
-    public function browse($type = 'article', $startModule = 0, $root = 0)
+    public function browse($type = 'article', $startModule = 0, $root = 0, $from = '')
     {
         if(strpos($this->config->tree->menuGroup->category, ',' . $type . ',') !== false and isset($this->lang->$type->menu))
         {
@@ -50,7 +50,11 @@ class tree extends control
             $this->view->lib = $this->loadModel('doc', 'doc')->getLibById($root);
             $this->view->projects = $this->loadModel('project', 'proj')->getPairs();
         }
-
+        elseif(strpos($this->config->tree->menuGroup->product, ',' . $type . ',') !== false and isset($this->lang->$type->menu))
+        {
+            $this->lang->tree->menu = $this->lang->$type->menu;
+            $this->lang->menuGroups->tree = $this->get->from == 'setting'  ? 'setting' : 'product';
+        }
         $this->view->title    = $this->lang->category->common;
         $this->view->type     = $type;
         $this->view->root     = $root;
