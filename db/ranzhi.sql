@@ -1034,6 +1034,7 @@ CREATE TABLE IF NOT EXISTS `sys_user` (
   `email` char(90) NOT NULL DEFAULT '',
   `skype` char(90) NOT NULL,
   `qq` char(20) NOT NULL DEFAULT '',
+  `weixin` char(50) NOT NULL,
   `yahoo` char(90) NOT NULL DEFAULT '',
   `gtalk` char(90) NOT NULL DEFAULT '',
   `wangwang` char(90) NOT NULL DEFAULT '',
