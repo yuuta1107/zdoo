@@ -135,7 +135,7 @@
         <?php foreach($resumes as $resume):?>
         <tr class='text-center'>
           <td class='w-p25'><?php echo $resume->join . $lang->minus . $resume->left;?></td>
-          <td class='w-p30'><?php if(isset($customers[$resume->customer])) echo $customers[$resume->customer]?></td>
+          <td class='w-p30'><?php if(isset($customers[$resume->customer])) echo html::a(helper::createLink('customer', 'view', "id={$resume->customer}"), $customers[$resume->customer])?></td>
           <td class='w-p20'><?php echo $resume->dept?></td>
           <td class='w-p25'><?php echo $resume->title?></td>
        </tr>
