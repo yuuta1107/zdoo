@@ -38,13 +38,15 @@ class webapp extends control
         if($type == 'bysearch') $param = helper::safe64Encode($this->post->key);
 
         /* Get results from the api. */
+        $this->view->fetchResult = false;
         $recPerPage = $this->cookie->pagerWebappObtain ? $this->cookie->pagerWebappObtain : $recPerPage;
-        $results = $this->webapp->getAppsByAPI($type, $param, $recTotal, $recPerPage, $pageID);
+        $results    = $this->webapp->getAppsByAPI($type, $param, $recTotal, $recPerPage, $pageID);
         if($results)
         {
             $this->app->loadClass('pager', $static = true);
             $pager   = new pager($results->dbPager->recTotal, $results->dbPager->recPerPage, $results->dbPager->pageID);
             $webapps = $results->webapps;
+            $this->view->fetchResult = true;
         }
 
         $this->view->title      = $this->lang->webapp->common . $this->lang->colon . $this->lang->webapp->obtain;
