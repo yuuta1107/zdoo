@@ -122,6 +122,7 @@ class searchModel extends model
                 else
                 {
                     if($this->post->$fieldName == 'o.product') $value = ',' . $value . ',';
+                    if($this->post->module == 'contract' && $this->post->$fieldName == 'product') $value = ',' . $value . ',';
                     $where .= ' LIKE ' . $this->dbh->quote("%$value%");
                 }
             }

@@ -275,6 +275,14 @@ class contractModel extends model
             $contract->address = $addressID;
         }
 
+        if($contract->order)
+        {
+            $product       = '';
+            $orderProducts = $this->dao->select('product')->from(TABLE_ORDER)->where('id')->in($contract->order)->fetchPairs();
+            foreach($orderProducts as $orderProduct) $product .= trim($product, ',') . ',';
+            if($product) $contract->product = ',' . $product;
+        }
+
         $contract = $this->loadModel('file', 'sys')->processImgURL($contract, $this->config->contract->editor->create['id']);
         $this->dao->insert(TABLE_CONTRACT)->data($contract, 'order,uid,files,labels,real')
             ->autoCheck()
@@ -329,15 +337,15 @@ class contractModel extends model
      */
     public function update($contractID)
     {
-        $now      = helper::now();
-        $contract = $this->getByID($contractID);
-        $data     = fixer::input('post')
+        $now         = helper::now();
+        $oldContract = $this->getByID($contractID);
+        $contract    = fixer::input('post')
             ->join('handlers', ',')
             ->add('editedBy', $this->app->user->account)
             ->add('editedDate', $now)
             ->setDefault('order', array())
             ->setDefault('real', array())
-            ->setDefault('customer', $contract->customer)
+            ->setDefault('customer', $oldContract->customer)
             ->setDefault('signedDate', '0000-00-00')
             ->setDefault('finishedDate', '0000-00-00')
             ->setDefault('canceledDate', '0000-00-00')
@@ -357,31 +365,39 @@ class contractModel extends model
             ->stripTags('items', $this->config->allowedTags)
             ->get();
 
-        $data = $this->loadModel('file', 'sys')->processImgURL($data, $this->config->contract->editor->edit['id']);
-        $this->dao->update(TABLE_CONTRACT)->data($data, 'uid,order,real')
+        if($oldContract->order != $contract->order)
+        {
+            $product       = '';
+            $orderProducts = $this->dao->select('product')->from(TABLE_ORDER)->where('id')->in($contract->order)->fetchPairs();
+            foreach($orderProducts as $orderProduct) $product .= trim($product, ',') . ',';
+            if($product) $contract->product = ',' . $product;
+        }
+
+        $contract = $this->loadModel('file', 'sys')->processImgURL($contract, $this->config->contract->editor->edit['id']);
+        $this->dao->update(TABLE_CONTRACT)->data($contract, 'uid,order,real')
             ->where('id')->eq($contractID)
             ->autoCheck()
             ->batchCheck($this->config->contract->require->edit, 'notempty')
-            ->checkIF($contract->end != '0000-00-00', 'end', 'ge', $contract->begin)
+            ->checkIF($oldContract->end != '0000-00-00', 'end', 'ge', $oldContract->begin)
             ->exec();
         
         $this->file->updateObjectID($this->post->uid, $contractID, 'contract');
 
         if(!dao::isError())
         {
-            if($data->order)
+            if($contract->order)
             {
-                $oldOrders = $this->loadModel('order', 'crm')->getByIdList($data->order);
-                foreach($data->order as $key => $orderID)
+                $oldOrders = $this->loadModel('order', 'crm')->getByIdList($contract->order);
+                foreach($contract->order as $key => $orderID)
                 {
                     if(!$orderID) continue;
                     $real[$key] = $oldOrders[$orderID]->real;
                 }
 
-                if($contract->order != $data->order || $real != $data->real)
+                if($oldContract->order != $contract->order || $real != $contract->real)
                 {
                     $this->dao->delete()->from(TABLE_CONTRACTORDER)->where('contract')->eq($contractID)->exec();
-                    foreach($data->order as $key => $orderID)
+                    foreach($contract->order as $key => $orderID)
                     {
                         $oldOrder = $this->loadModel('order', 'crm')->getByID($orderID);
 
@@ -391,9 +407,9 @@ class contractModel extends model
                         $this->dao->insert(TABLE_CONTRACTORDER)->data($contractOrder)->exec();
 
                         $order = new stdclass();
-                        $order->real       = $data->real[$key];
-                        $order->signedBy   = $data->signedBy;
-                        $order->signedDate = $data->signedDate;
+                        $order->real       = $contract->real[$key];
+                        $order->signedBy   = $contract->signedBy;
+                        $order->signedDate = $contract->signedDate;
                         $order->status     = 'signed';
 
                         $this->dao->update(TABLE_ORDER)->data($order)->where('id')->eq($orderID)->exec();
@@ -407,24 +423,24 @@ class contractModel extends model
                 }
             }
 
-            if($contract->status == 'canceled' and $data->status == 'normal')
+            if($oldContract->status == 'canceled' and $contract->status == 'normal')
             {
-                foreach($data->order as $key => $orderID)
+                foreach($contract->order as $key => $orderID)
                 {
                     $order = new stdclass();
                     $order->status     = 'signed';
-                    $order->real       = $data->real[$key];
-                    $order->signedBy   = $data->signedBy;
-                    $order->signedDate = $data->signedDate;
+                    $order->real       = $contract->real[$key];
+                    $order->signedBy   = $contract->signedBy;
+                    $order->signedDate = $contract->signedDate;
 
                     $this->dao->update(TABLE_ORDER)->data($order)->where('id')->eq($orderID)->exec();
                     if(dao::isError()) return false;
                 }
             }
 
-            if($contract->status == 'normal' and $data->status == 'canceled')
+            if($oldContract->status == 'normal' and $contract->status == 'canceled')
             {
-                foreach($data->order as $orderID)
+                foreach($contract->order as $orderID)
                 {
                     $order = new stdclass();
                     $order->status     = 'normal';
@@ -437,7 +453,7 @@ class contractModel extends model
                 }
             }
             
-            return commonModel::createChanges($contract, $data);
+            return commonModel::createChanges($oldContract, $contract);
         }
 
         return false;
@@ -963,5 +979,26 @@ class contractModel extends model
         foreach($totalAmount as $type => $currencyAmount) foreach($currencyAmount as $currency => $amount) $totalAmount[$type][$currency] = "<span title='$amount'>" . $currencySign[$currency] . commonModel::tidyMoney($amount) . "</span>";
 
         return $totalAmount;
+    }
+
+    /**
+     * Update contract product.
+     *
+     * @param  int    $contractID
+     * @access public
+     * @return bool
+     */
+    public function updateContractProduct($contractID)
+    {
+        $product = '';
+        $orders  = $this->dao->select('`order`')->from(TABLE_CONTRACTORDER)->where('contract')->eq($contractID)->fetchPairs();
+        if($orders)
+        {
+            $orderProducts = $this->dao->select('product')->from(TABLE_ORDER)->where('id')->in($orders)->fetchPairs();
+            foreach($orderProducts as $orderProduct) $product .= trim($orderProduct, ',') . ',';
+        }
+        $this->dao->update(TABLE_CONTRACT)->set('product')->eq($product)->where('id')->eq($contractID)->exec();
+
+        return !dao::isError();
     }
 }

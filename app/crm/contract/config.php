@@ -30,8 +30,10 @@ $config->contract->codeFormat = array('Y', 'm', 'd', 'input');
 global $lang, $app;
 $config->contract->search['module'] = 'contract';
 
+$config->contract->search['fields']['id']            = $lang->contract->id;
 $config->contract->search['fields']['name']          = $lang->contract->name;
 $config->contract->search['fields']['code']          = $lang->contract->code;
+$config->contract->search['fields']['product']       = $lang->contract->product;
 $config->contract->search['fields']['amount']        = $lang->contract->amount;
 $config->contract->search['fields']['signedDate']    = $lang->contract->signedDate;
 $config->contract->search['fields']['status']        = $lang->contract->status;
@@ -45,10 +47,11 @@ $config->contract->search['fields']['deliveredDate'] = $lang->contract->delivere
 $config->contract->search['fields']['return']        = $lang->contract->return;
 $config->contract->search['fields']['returnedBy']    = $lang->contract->returnedBy;
 $config->contract->search['fields']['returnedDate']  = $lang->contract->returnedDate;
-$config->contract->search['fields']['id']            = $lang->contract->id;
 
+$config->contract->search['params']['id']            = array('operator' => '=',  'control' => 'input',  'values' => '');
 $config->contract->search['params']['name']          = array('operator' => 'include', 'control' => 'input', 'values' => '');
 $config->contract->search['params']['code']          = array('operator' => 'include', 'control' => 'input', 'values' => '');
+$config->contract->search['params']['product']       = array('operator' => 'include',  'control' => 'select', 'values' => 'set in control');
 $config->contract->search['params']['amount']        = array('operator' => '>=', 'control' => 'input',  'values' => '');
 $config->contract->search['params']['signedDate']    = array('operator' => '>=', 'control' => 'input',  'values' => '', 'class' => 'date');
 $config->contract->search['params']['status']        = array('operator' => '=',  'control' => 'select', 'values' => $lang->contract->statusList);
@@ -62,7 +65,6 @@ $config->contract->search['params']['deliveredDate'] = array('operator' => '>=',
 $config->contract->search['params']['return']        = array('operator' => '=',  'control' => 'select', 'values' => $lang->contract->returnList);
 $config->contract->search['params']['returnedBy']    = array('operator' => '=',  'control' => 'select', 'values' => 'users');
 $config->contract->search['params']['returnedDate']  = array('operator' => '>=', 'control' => 'input',  'values' => '', 'class' => 'date');
-$config->contract->search['params']['id']            = array('operator' => '=',  'control' => 'input',  'values' => '');
 
 $config->contract->list = new stdclass();
 $config->contract->list->exportFields = '
