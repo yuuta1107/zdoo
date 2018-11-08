@@ -453,6 +453,17 @@ class orderModel extends model
 
         if(dao::isError()) return false;
 
+        /* Update product of contract. */
+        if($order->product != $oldOrder->product)
+        {
+            $contracts = $this->dao->select('contract')->from(TABLE_CONTRACTORDER)->where('`order`')->eq($orderID)->fetchPairs();
+            if($contracts)
+            {
+                $this->loadModel('contract');
+                foreach($contracts as $contract) $this->contract->updateContractProduct($contract);
+            }
+        }
+
         return commonModel::createChanges($oldOrder, $order);
     }
 

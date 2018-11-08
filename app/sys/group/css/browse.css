@@ -1,1 +1,4 @@
 .user{display:block; width:80px; float:left; overflow:hidden}
+.user-list div{overflow:hidden;width:90%;float:left}
+.hide-list{display:none}
+.more-list{display:none;float:left}
