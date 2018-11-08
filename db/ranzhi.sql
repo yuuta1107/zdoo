@@ -72,6 +72,7 @@ CREATE TABLE IF NOT EXISTS `crm_delivery` (
 -- DROP TABLE IF EXISTS `crm_plan`;
 CREATE TABLE IF NOT EXISTS `crm_plan` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `trade` mediumint(8) UNSIGNED NOT NULL,
   `amount` decimal(12,2) NOT NULL,
   `contract` mediumint(8) unsigned NOT NULL,
   `returnedBy` char(30) COLLATE 'utf8_general_ci' NOT NULL,

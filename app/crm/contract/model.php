@@ -184,7 +184,7 @@ class contractModel extends model
         if(empty($returnList)) return $returnList;
 
         $tradeIdList = array();
-        foreach($returnList as $return) $tradeIdList[] = $return->tradeID;
+        foreach($returnList as $return) $tradeIdList[] = $return->trade;
         if(empty($tradeIdList)) return $returnList;
 
         $tradeList     = $this->dao->select('id,depositor')->from(TABLE_TRADE)->where('id')->in($tradeIdList)->fetchPairs();
@@ -192,7 +192,7 @@ class contractModel extends model
         foreach($tradeList as $trade => $depositor) $tradeDepositorList[$trade] = zget($depositorList, $depositor);
         foreach($returnList as $return)
         {
-            $return->depositor = zget($tradeDepositorList, $return->tradeID, '');
+            $return->depositor = zget($tradeDepositorList, $return->trade, '');
         }
         return $returnList;
     }
@@ -670,8 +670,8 @@ class contractModel extends model
                 $trade->currency = $depositor->currency;
                 
                 $this->dao->insert(TABLE_TRADE)->data($trade, $skip = 'uid,comment')->autoCheck()->exec();
-                $tradeID     = $this->dao->lastInsertId();
-                $this->dao->update(TABLE_PLAN)->set('tradeID')->eq($tradeID)->where('id')->eq($planID)->exec();
+                $tradeID = $this->dao->lastInsertId();
+                $this->dao->update(TABLE_PLAN)->set('trade')->eq($tradeID)->where('id')->eq($planID)->exec();
 
                 $actionExtra = html::a(helper::createLink('contract', 'view', "contractID=$contractID"), $contract->name) . $this->lang->contract->return . ' ' . zget($this->lang->currencySymbols, $trade->currency, '') . $this->post->amount;
                 $this->loadModel('action')->create('trade', $tradeID, 'receiveContract', $this->post->comment, $actionExtra, $this->post->returnedBy);
