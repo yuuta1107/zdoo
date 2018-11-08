@@ -60,6 +60,7 @@ $lang->todo->confirmTip  = '该Todo关联的是%s #%s，需要修改它吗？';
 $lang->todo->assignedTip = '%s 于 %s';
 $lang->todo->finishedTip = '%s 于 %s';
 $lang->todo->closedTip   = '%s 于 %s';
+$lang->todo->deleteTip   = '拖到此处删除';
 
 $lang->todo->statusList['wait']     = '未开始';
 $lang->todo->statusList['doing']    = '进行中';
