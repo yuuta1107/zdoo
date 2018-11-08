@@ -60,7 +60,7 @@ class backup extends control
                     $backupFile->files[$file] = filesize($file);
                     if(file_exists($this->backupPath . $backupFile->name . '.file.zip.php'))
                     {
-                        $backupFile->files[$this->backupPath . $backupFile->name . '.file.zip.php'] = filesize($this->backupPath . $backupFile->name . '.file.zip.php');
+                        $backupFile->files[$this->backupPath . $backupFile->name . '.file.zip.php'] = abs(filesize($this->backupPath . $backupFile->name . '.file.zip.php'));
                     }
 
                     $backups[$backupFile->name] = $backupFile;
