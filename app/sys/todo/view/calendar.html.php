@@ -59,7 +59,10 @@
       <?php $class = $this->cookie->todoCalendarSide == 'hide' ? 'icon-collapse-full' : 'icon-expand-full'?>
       <?php echo html::a('###', "<i class='$class'></i>", "class='btn'")?>
     </div>
-    <div class='day trash' data-date='1970-01-01' title='<?php echo $lang->delete?>'><i class="icon icon-trash"></i></div>
+    <div class='day trash' data-date='1970-01-01' title='<?php echo $lang->delete?>'>
+      <span class="tip"><?php echo $lang->todo->deleteTip;?></span>
+      <i class="icon icon-trash"></i>
+    </div>
   </div>
 </div>
 <script>
