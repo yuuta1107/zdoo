@@ -42,6 +42,8 @@ $lang->group->all      = 'All';
 $lang->group->extent   = 'extent';
 $lang->group->havePriv = 'Authorized';
 $lang->group->noPriv   = 'Not Authorized';
+$lang->group->hide     = 'hide...';
+$lang->group->show     = 'more...';
 
 $lang->group->manageAll = 'All customers and orders';
 
