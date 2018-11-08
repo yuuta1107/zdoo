@@ -64,6 +64,7 @@ class contract extends control
         /* Build search form. */
         $this->loadModel('search', 'sys');
         $this->config->contract->search['actionURL'] = $this->createLink('contract', 'browse', 'mode=bysearch');
+        $this->config->contract->search['params']['product']['values']  = array('' => '') + $this->loadModel('product')->getPairs();
         $this->search->setSearchParams($this->config->contract->search);
 
         /* Set allowed edit contract ID list. */
