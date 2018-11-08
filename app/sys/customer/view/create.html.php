@@ -66,10 +66,6 @@
           <td><?php echo html::input('qq', '', "class='form-control'");?></td>
         </tr>
         <tr>
-          <th><?php echo $lang->customer->depositor;?></th>
-          <td><?php echo html::input('depositor', '', "class='form-control'");?></td>
-        </tr>
-        <tr>
           <th><?php echo $lang->customer->type;?></th>
           <td><?php echo html::select('type', $lang->customer->typeList, '', "class='form-control'");?></td>
         </tr>
@@ -107,6 +103,10 @@
               <?php echo html::input('address[location]', '', "id='addresslocation' class='form-control' placeholder='{$lang->address->location}'")?>
             </div>
           </td>
+        </tr>
+        <tr>
+          <th><?php echo $lang->customer->depositor;?></th>
+          <td colspan='2'><?php echo html::textarea('depositor', '', "rows='2' class='form-control'");?></td>
         </tr>
         <tr>
           <th><?php echo $lang->customer->intension;?></th>

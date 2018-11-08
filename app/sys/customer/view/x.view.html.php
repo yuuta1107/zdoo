@@ -33,12 +33,6 @@
           <td><?php echo $customer->sourceNote;?></td>
         </tr>
         <?php endif;?>
-        <?php if($customer->depositor):?>
-        <tr>
-          <th><?php echo $lang->customer->depositor;?></th>
-          <td><?php echo $customer->depositor;?></td>
-        </tr>
-        <?php endif;?>
         <?php if($customer->level):?>
         <tr>
           <th><?php echo $lang->customer->level;?></th>
@@ -118,6 +112,12 @@
   <div class='panel'>
     <div class='panel-heading'><strong><?php echo $lang->customer->intension;?></strong></div>
     <div class='panel-body'><?php echo $customer->intension;?></div>
+  </div>
+  <?php endif;?>
+  <?php if($customer->depositor):?>
+  <div class='panel'>
+    <div class='panel-heading'><strong><?php echo $lang->customer->depositor;?></strong></div>
+    <div class='panel-body'><?php echo $customer->depositor;?></div>
   </div>
   <?php endif;?>
   <?php if(!empty($returnList)):?>
