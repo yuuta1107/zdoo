@@ -53,7 +53,7 @@ class tree extends control
         elseif(strpos($this->config->tree->menuGroup->product, ',' . $type . ',') !== false and isset($this->lang->$type->menu))
         {
             $this->lang->tree->menu = $this->lang->$type->menu;
-            $this->lang->menuGroups->tree = $this->get->from == 'setting'  ? 'setting' : 'product';
+            $this->lang->menuGroups->tree = $from == 'setting'  ? 'setting' : 'product';
         }
         $this->view->title    = $this->lang->category->common;
         $this->view->type     = $type;
