@@ -60,6 +60,7 @@ $lang->todo->confirmTip  = 'This Todo is linked to %s #%s. Do you want to change
 $lang->todo->assignedTip = '%s at %s';
 $lang->todo->finishedTip = '%s at %s';
 $lang->todo->closedTip   = '%s at %s';
+$lang->todo->deleteTip   = 'Drag here to delete .';
 
 $lang->todo->statusList['wait']     = 'Wait';
 $lang->todo->statusList['doing']    = 'Doing';
