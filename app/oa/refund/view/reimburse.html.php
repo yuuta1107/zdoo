@@ -27,7 +27,7 @@
     </tr>
     <tr class='reason'>
       <th class='text-center text-middle'><?php echo $lang->refund->createTradeTip;?></th>
-      <td><?php echo html::radio('trade', array('no' => $lang->no, 'yes' => $lang->yes));?></td>
+      <td><?php echo html::radio('trade', array('yes' => $lang->yes, 'no' => $lang->no), 'yes');?></td>
     </tr>
     <tr>
       <th></th>

@@ -458,7 +458,7 @@ class refund extends control
 
             $this->send(array('result' => 'success', 'refundID' => $refundID, 'trade' => $this->post->trade, 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
         }
-        
+        $this->view->title  = $this->lang->refund->common;
         $this->view->refund = $this->refund->getByID($refundID);
         $this->display();
     }
@@ -486,7 +486,7 @@ class refund extends control
         }
 
 
-        $this->view->title         = $this->lang->refund->common;
+        $this->view->title         = $this->lang->refund->createTradeTip;
         $this->view->refundID      = $refundID;
         $this->view->refund        = $this->refund->getById($refundID);
         $this->view->depositorList = array('') + $this->loadModel('depositor', 'cash')->getPairs($status = 'normal');
