@@ -68,6 +68,8 @@
 <script>
 function updateCalendar()
 {
+    $('.calendar .label-rest').remove();
+
     var calendar = $('.calendar').data('zui.calendar');
     var date = calendar.date.format('yyyyMMdd');
     $.get(createLink('todo', 'calendar', 'date=' + date, 'json'), function(response)

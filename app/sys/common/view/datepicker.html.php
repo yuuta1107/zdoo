@@ -73,6 +73,8 @@ $(function()
                 else if($this.hasClass('form-month')) $this.val(date.format('yyyy-MM'));
                 else $this.val(date.format('yyyy-MM-dd'));
             }
+            $(this).attr('autocomplete', 'off');
+
             return $this;
         });
     };

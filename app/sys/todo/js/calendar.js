@@ -194,8 +194,6 @@ $(document).ready(function()
 
 function updateWeekendAndHoliday()
 {
-    $('.calendar .label-rest').remove();
-
     var dates = $('.calendar .cell-day .day').map(function(){return $(this).data('date').toDateString();}).get();
     $.post(createLink('todo', 'ajaxGetWeekendAndHoliday'), {dates: dates}, function(response)
     {
