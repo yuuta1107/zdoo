@@ -40,6 +40,7 @@ $(document).ready(function()
 
             $('#refund-detail').removeClass('hidden');
             $('#money').prop('readonly', 'readonly');
+            $('#invoice').prop('readonly', 'readonly');
             $('#refund-date').addClass('hidden');
             $('#refund-related').addClass('hidden');
             $(this).find('i').removeClass('icon-double-angle-down');
@@ -50,6 +51,7 @@ $(document).ready(function()
             $('input[name^=moneyList]').val('');
             $('#refund-detail').addClass('hidden');
             $('#money').prop('readonly', '');
+            $('#invoice').prop('readonly', '');
             $('#refund-date').removeClass('hidden');
             $('#refund-related').removeClass('hidden');
             $(this).find('i').removeClass('icon-double-angle-up');
