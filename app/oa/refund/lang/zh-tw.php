@@ -21,6 +21,7 @@ $lang->refund->setCategory  = '報銷科目設置';
 $lang->refund->setDepositor = '報銷賬戶設置';
 $lang->refund->setRefundBy  = '報銷者設置';
 $lang->refund->export       = '導出報銷記錄';
+$lang->refund->createTrade  = '關聯記賬';
 
 $lang->refund->id               = '編號';
 $lang->refund->customer         = '客戶';

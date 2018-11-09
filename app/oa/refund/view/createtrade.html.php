@@ -38,11 +38,24 @@
       </td>
     </tr>
     <tr>
+      <th><?php echo $lang->trade->money;?></th>
+      <td>
+        <div class='input-group'>
+          <?php echo html::input('money', $refund->money, "class='form-control' readonly");?>
+          <span class='input-group-addon'><?php echo zget($lang->currencyList, $refund->currency, $refund->currency);?></span>
+        </div>
+      </td>
+    </tr>
+    <tr>
       <th><?php echo $lang->trade->handlers;?></th>
       <td>
         <div class='required required-wrapper'></div>
         <?php echo html::select('handlers[]', $userList, $refund->related, "class='form-control chosen' multiple");?>
       </td>
+    </tr>
+    <tr>
+      <th><?php echo $lang->trade->desc;?></th>
+      <td><?php echo html::textarea('desc', $refund->name . "\n" . $refund->desc, "rows='3' class='form-control'");?></td>
     </tr>
     <tr>
       <th></th>

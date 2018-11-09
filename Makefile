@@ -24,12 +24,17 @@ ranzhi:
 	mkdir ranzhi/tmp/package/
 	cp -fr www ranzhi && rm -fr ranzhi/www/data/ && mkdir -p ranzhi/www/data/upload
 	cp VERSION ranzhi/
-	# combine js and css files.
+	# Combine js and css files.
 	cp -fr tools ranzhi/tools && cd ranzhi/tools/ && php ./minifyfront.php && php ./cn2tw.php
 	rm -fr ranzhi/tools
-	# delete the useless files.
-	find ranzhi -name .git|xargs rm -fr
-	find ranzhi -name tests |xargs rm -fr
+	# Delete the useless files.
+	find ranzhi -name .git | xargs rm -fr
+	find ranzhi -name tests | xargs rm -fr
+	# Add ext directory to config and each module.
+	mkdir ranzhi/config/ext
+	for app in `ls ranzhi/app/`; do for module in `ls ranzhi/app/$$app/`; do mkdir ranzhi/app/$$app/$$module/ext; done; done;
+	find ranzhi/ -name ext | xargs chmod -R 777
+	# Add index.html to each directory.
 	for path in `find ranzhi/ -type d`; do touch "$$path/index.html"; done	
 	rm ranzhi/www/index.html
 	rm ranzhi/www/sys/index.html
@@ -39,15 +44,26 @@ ranzhi:
 	rm ranzhi/www/team/index.html
 	rm ranzhi/www/doc/index.html
 	rm ranzhi/www/proj/index.html
-	# change mode.
+	# Copy .htaccess and .ztaccess
+	cp ranzhi/www/sys/.*taccess ranzhi/www/crm/
+	cp ranzhi/www/sys/.*taccess ranzhi/www/cash/
+	cp ranzhi/www/sys/.*taccess ranzhi/www/oa/
+	cp ranzhi/www/sys/.*taccess ranzhi/www/team/
+	cp ranzhi/www/sys/.*taccess ranzhi/www/doc/
+	cp ranzhi/www/sys/.*taccess ranzhi/www/proj/
+	# Adjust .ztaccess of each app.
+	sed -i 's/\/ranzhi\/sys\/index.php/\/ranzhi\/crm\/index.php/' ranzhi/www/crm/.ztaccess
+	sed -i 's/\/ranzhi\/sys\/index.php/\/ranzhi\/cash\/index.php/' ranzhi/www/cash/.ztaccess
+	sed -i 's/\/ranzhi\/sys\/index.php/\/ranzhi\/oa\/index.php/' ranzhi/www/oa/.ztaccess
+	sed -i 's/\/ranzhi\/sys\/index.php/\/ranzhi\/team\/index.php/' ranzhi/www/team/.ztaccess
+	sed -i 's/\/ranzhi\/sys\/index.php/\/ranzhi\/doc\/index.php/' ranzhi/www/doc/.ztaccess
+	sed -i 's/\/ranzhi\/sys\/index.php/\/ranzhi\/proj\/index.php/' ranzhi/www/proj/.ztaccess
+	# Change mode.
 	chmod -R 777 ranzhi/tmp/
 	chmod -R 777 ranzhi/www/data
 	chmod -R 777 ranzhi/config
-	#chmod a+rx ranzhi/bin/*
-	#mkdir ranzhi/config/ext
-	for app in `ls ranzhi/app/`; do for module in `ls ranzhi/app/$$app/`; do mkdir ranzhi/app/$$app/$$module/ext; done; done;
-	find ranzhi/ -name ext |xargs chmod -R 777
-	# zip it.
+	chmod a+rx ranzhi/bin/*
+	# Zip it.
 	zip -rm -9 ranzhi.$(VERSION).zip ranzhi
 deb:
 	mkdir buildroot

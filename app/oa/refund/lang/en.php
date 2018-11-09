@@ -21,6 +21,7 @@ $lang->refund->setCategory  = 'Set Category';
 $lang->refund->setDepositor = 'Set Account';
 $lang->refund->setRefundBy  = 'Set RefundBy';
 $lang->refund->export       = 'Export';
+$lang->refund->createTrade  = 'Create Trade';
 
 $lang->refund->id               = 'ID';
 $lang->refund->customer         = 'Customer';

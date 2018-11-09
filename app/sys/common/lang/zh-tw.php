@@ -187,7 +187,7 @@ $lang->js->timeout               = '網絡超時,請重試';
 $lang->js->confirmDiscardChanges = '表單已更改，確定關閉？';
 $lang->js->yes                   = '是';
 $lang->js->no                    = '否';
-$lang->js->installZipExtension   = "導出xlsx格式，需要安裝 php-zip 擴展，<a href='https://www.ranzhi.org/book/ranzhi/165.html'>安裝手冊</a>";
+$lang->js->installZipExtension   = "導出xlsx格式，需要安裝 php-zip 擴展，<a href='https://www.ranzhi.org/book/ranzhi/165.html' target='_blank'>安裝手冊</a>";
 
 /* Contact fields*/
 $lang->company = new stdclass();
