@@ -84,7 +84,7 @@ $lang->refund->correctMoney      = '报销额度不能多于申请金额';
 $lang->refund->categoryTips      = '尚未设置支出科目。';
 $lang->refund->setExpense        = '设置科目';
 $lang->refund->moneyTip          = '低于金额只需要一级审批，高于金额需要二级审批';
-$lang->refund->total             = '报销合计：';
+$lang->refund->total             = '合计：';
 $lang->refund->totalMoney        = '%s%s；';
 
 $lang->refund->settings = new stdclass();
