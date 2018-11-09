@@ -27,6 +27,7 @@ class entryModel extends model
             ->beginIF(!empty($category))->andWhere('category')->eq($category)->fi()
             ->orderBy('`order`, id')
             ->fetchAll();
+
         $categories = $this->dao->select('distinct t1.id, t1.name, t1.order, t2.platform')->from(TABLE_CATEGORY)->alias('t1')
             ->leftJoin(TABLE_ENTRY)->alias('t2')->on('t1.id=t2.category')
             ->where('t1.type')->eq('entry')
@@ -34,6 +35,7 @@ class entryModel extends model
             ->andWhere('t2.category')->ne(0)
             ->orderBy('t1.order')
             ->fetchAll('id');
+
         foreach($categories as $category)
         {
             $entry = new stdclass();
@@ -76,10 +78,6 @@ class entryModel extends model
             {
                 $entry->name = isset($this->lang->install->buildinEntry->{$entry->code}['name']) ? $this->lang->install->buildinEntry->{$entry->code}['name'] : $entry->code;
                 $entry->abbr = isset($this->lang->install->buildinEntry->{$entry->code}['abbr']) ? $this->lang->install->buildinEntry->{$entry->code}['abbr'] : $entry->code;
-            }
-            elseif($entry->category != 0)
-            {
-                $entry->abbr = $entry->name;
             }
 
             if($entry->logo != '' && substr($entry->logo, 0, 1) != '/') $entry->logo = $this->config->webRoot . $entry->logo;
