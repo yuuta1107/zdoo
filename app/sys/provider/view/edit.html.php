@@ -40,10 +40,6 @@
           <td><?php echo html::select('relation', $lang->provider->relationList, $provider->relation, "class='form-control'");?></td><td></td>
         </tr>
         <tr>
-          <th><?php echo $lang->provider->depositor;?></th>
-          <td><?php echo html::input('depositor', $provider->depositor, "class='form-control'");?></td>
-        </tr>
-        <tr>
           <th><?php echo $lang->provider->type;?></th>
           <td><?php echo html::select("type", $lang->provider->typeList, $provider->type, "class='form-control'");?></td><td></td>
         </tr>
@@ -70,6 +66,10 @@
         <tr>
           <th><?php echo $lang->provider->site;?></th>
           <td><?php echo html::input('site', $provider->site ? $provider->site : 'http://', "class='form-control'");?></td><td></td>
+        </tr>
+        <tr>
+          <th><?php echo $lang->provider->depositor;?></th>
+          <td colspan='2'><?php echo html::textarea('depositor', $provider->depositor, "rows='2' class='form-control'");?></td>
         </tr>
         <tr>
           <th><?php echo $lang->provider->desc;?></th>
