@@ -195,7 +195,8 @@ class refundModel extends model
             ->join('related', ',')
             ->setDefault('date', helper::today())
             ->setForce('money', (float)$this->post->money)
-            ->remove('customer,order,contract,project,objectType,dateList,moneyList,categoryList,descList,relatedList,files,labels')
+            ->setForce('invoice', (float)$this->post->invoice)
+            ->remove('customer,order,contract,project,objectType,dateList,moneyList,invoiceList,categoryList,descList,relatedList,files,labels')
             ->get();
 
         $result = $this->processRefund($refund);
@@ -253,7 +254,8 @@ class refundModel extends model
             ->join('related', ',')
             ->setDefault('date', helper::today())
             ->setForce('money', (float)$this->post->money)
-            ->remove('customer,order,contract,project,objectType,dateList,moneyList,categoryList,descList,relatedList,files,labels')
+            ->setForce('invoice', (float)$this->post->invoice)
+            ->remove('customer,order,contract,project,objectType,dateList,moneyList,invoiceList,categoryList,descList,relatedList,files,labels')
             ->get();
 
         $result = $this->processRefund($refund);
@@ -328,6 +330,7 @@ class refundModel extends model
         /* Insert detail */
         if(!empty($_POST['moneyList']))
         {
+            $invoiceList = $_POST['invoiceList'];
             foreach($this->post->moneyList as $key => $money)
             {
                 if(!(float)$money) continue;
@@ -337,6 +340,7 @@ class refundModel extends model
                 $detail->currency    = $this->post->currency;
                 $detail->date        = $this->post->dateList[$key] ? $this->post->dateList[$key] : helper::today();
                 $detail->money       = (float)$money;
+                $detail->invoice     = (float)$invoiceList[$key];
                 $detail->desc        = $this->post->descList[$key];
                 $detail->related     = implode(',', $this->post->relatedList[$key]);
                 $detail->status      = 'wait';

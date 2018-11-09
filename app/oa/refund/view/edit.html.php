@@ -108,6 +108,7 @@
                 <td class='w-100px'><?php echo html::select("categoryList[$key]", $categories, $d->category, "class='form-control chosen' placeholder='{$lang->refund->category}'")?></td>
                 <?php endif;?>
                 <td class='w-100px'><?php echo html::input("moneyList[$key]", $d->money, "class='form-control' placeholder='{$lang->refund->money}'")?></td>
+                <td class='w-100px'><?php echo html::input("invoiceList[$key]", $d->invoice, "class='form-control' placeholder='{$lang->refund->invoice}'")?></td>
                 <td class='w-200px'><?php echo html::select("relatedList[$key][]", $users, $d->related, "class='form-control chosen' multiple data-placeholder='{$lang->refund->related}'")?></td>
                 <td><?php echo html::textarea("descList[$key]", $d->desc, "class='form-control' style='height:32px;' placeholder='{$lang->refund->desc}'")?></td>
                 <td class='w-70px'><i class='btn btn-mini icon-plus plus'></i>&nbsp;&nbsp;<i class='btn btn-mini icon-remove minus'></i></td>
@@ -138,7 +139,8 @@
   <?php if($categories):?>
   <td class='w-100px'><?php echo html::select('categoryList[key]', $categories, '', "class='form-control chosen' placeholder='{$lang->refund->category}'")?></td>
   <?php endif;?>
-  <td class='w-100px'><?php echo html::input('moneyList[key]', '', "class='form-control' placeholder='{$lang->refund->money}'")?></td>
+  <td class='w-80px'><?php echo html::input('moneyList[key]', '', "class='form-control' placeholder='{$lang->refund->money}'")?></td>
+  <td class='w-80px'><?php echo html::input('invoiceList[key]', '', "class='form-control' placeholder='{$lang->refund->invoice}'")?></td>
   <td class='w-200px'><?php echo html::select('relatedList[key][]', $users, '', "class='form-control chosen' multiple data-placeholder='{$lang->refund->related}'")?></td>
   <td><?php echo html::textarea('descList[key]', '', "class='form-control' style='height:32px;' placeholder='{$lang->refund->desc}'")?></td>
   <td class='w-70px'><i class='btn btn-mini icon-plus plus'></i>&nbsp;&nbsp;<i class='btn btn-mini icon-remove minus'></i></td>
