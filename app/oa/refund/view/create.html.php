@@ -79,7 +79,7 @@
             <div class='input-group'>
               <div class='input-group-btn w-90px'><?php echo html::select('currency', $currencyList, '', "class='form-control'")?></div>
               <?php echo html::input('money', '', "class='form-control'")?>
-              <div class='input-group-addon w-90px'><?php echo $lang->refund->invoice?></div>
+              <div class='input-group-addon fix-border'><?php echo $lang->refund->invoice?></div>
               <?php echo html::input('invoice', '', "class='form-control'")?>
               <div class='input-group-btn'><?php echo html::a("javascript:void(0)", "<i class='icon-double-angle-down'></i> " . $lang->refund->detail, "class='btn detail'")?></div>
             </div>
