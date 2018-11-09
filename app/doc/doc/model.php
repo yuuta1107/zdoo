@@ -349,7 +349,8 @@ class docModel extends model
         $docQuery = $this->loadModel('search', 'sys')->replaceDynamic($this->session->docQuery);
 
         $docs = $this->dao->select('t1.*')->from(TABLE_DOC)->alias('t1')
-            ->leftJoin(TABLE_DOCCONTENT)->alias('t2')->on('t1.id=t2.doc')
+            ->leftJoin(TABLE_DOCCONTENT)->alias('t2')
+            ->on('t1.id=t2.doc and t2.id=(select `id` from ' . TABLE_DOCCONTENT . ' as t3 where t3.`doc`=t1.`id` order by t3.`id` desc limit 1)')
             ->where('t1.deleted')->eq(0)
             ->andWhere($docQuery)
             ->orderBy($orderBy)
