@@ -42,6 +42,8 @@ $lang->group->all      = '所有權限';
 $lang->group->extent   = '權限範圍';
 $lang->group->havePriv = '已授權';
 $lang->group->noPriv   = '未授權';
+$lang->group->hide     = '收起...';
+$lang->group->show     = '更多...';
 
 $lang->group->manageAll = '可瀏覽所有客戶和訂單';
 

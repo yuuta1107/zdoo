@@ -132,7 +132,7 @@ class refund extends control
      * @access public
      * @return void
      */
-    public function personal($date = '', $type = '', $orderBy = 'status,id_desc', $recTotal = 0, $recPerPage = 20, $pageID = 1)
+    public function personal($date = '', $type = '', $orderBy = 'id_desc', $recTotal = 0, $recPerPage = 20, $pageID = 1)
     {
         $this->browse('personal', $date, $type, $orderBy, $recTotal, $recPerPage, $pageID);
     }
@@ -147,7 +147,7 @@ class refund extends control
      * @access public
      * @return void
      */
-    public function company($date = '', $type = '', $orderBy = 'status,id_desc', $recTotal = 0, $recPerPage = 20, $pageID = 1)
+    public function company($date = '', $type = '', $orderBy = 'id_desc', $recTotal = 0, $recPerPage = 20, $pageID = 1)
     {
         $this->browse('company', $date, $type, $orderBy, $recTotal, $recPerPage, $pageID);
     }
@@ -408,22 +408,22 @@ class refund extends control
      */
     public function review($refundID)
     {
-        $refund = $this->refund->getByID($refundID);
-
         if($_POST)
         {
             $result = $this->refund->review($refundID);
             if(is_array($result)) $this->send($result);
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
             
-            /* send email. */
-            $refund   = $this->refund->getByID($refundID);
-            $actionID = $this->loadModel('action')->create('refund', $refundID, 'reviewed', $this->post->reason, zget($this->lang->refund->statusList, $refund->status));
-            if($refund->status == 'pass' && !empty($this->config->refund->secondReviewer) 
-                && $this->config->refund->secondReviewer != $this->app->user->account && $this->config->refund->secondReviewer == $refund->createdBy)
+            $refund         = $this->refund->getByID($refundID);
+            $status         = $refund->status == 'doing' ? 'pass' : $refund->status;
+            $actionID       = $this->loadModel('action')->create('refund', $refundID, 'reviewed', $this->post->reason, zget($this->lang->refund->statusList, $status));
+            $secondReviewer = !empty($this->config->refund->secondReviewer) ? $this->config->refund->secondReviewer : '';
+            /* Auto review the refund if it is passed by the first reviewer and it is created by the second reviewer. */
+            if($status == 'pass' && !empty($secondReviewer) && $secondReviewer != $this->app->user->account && $secondReviewer == $refund->createdBy)
             {
                 $this->loadModel('action')->create('refund', $refundID, 'reviewed', $this->post->reason, $this->lang->refund->statusList['pass'], $this->config->refund->secondReviewer);
             }
+            /* Send email. */
             $this->sendmail($refundID, $actionID);
 
             $isDetail = ($refund->parent != 0) ? true : false;
@@ -431,7 +431,7 @@ class refund extends control
         }
 
         $this->view->title        = $this->lang->refund->review;
-        $this->view->refund       = $refund;
+        $this->view->refund       = $this->refund->getByID($refundID);
         $this->view->categories   = $this->refund->getCategoryPairs();
         $this->view->deptList     = $this->loadModel('tree')->getOptionMenu('dept');
         $this->view->currencySign = $this->loadModel('common', 'sys')->getCurrencySign();

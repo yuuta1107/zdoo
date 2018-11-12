@@ -100,6 +100,8 @@ class tradeModel extends model
             ->page($pager)
             ->fetchAll('id');
 
+        $this->session->set('tradeQueryCondition', $this->dao->get());
+        
         if($mode == 'invest')
         {
             $matches = $this->dao->select('*')->from(TABLE_TRADE)->where('type')->eq('redeem')->andWhere('investID')->ne(0)->fetchGroup('investID');
@@ -174,7 +176,6 @@ class tradeModel extends model
             }
         }
 
-        $this->session->set('tradeQueryCondition', $this->dao->get());
 
         return $trades;
     }

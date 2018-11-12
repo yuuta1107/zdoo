@@ -44,7 +44,7 @@
 <?php $batchReview = $type == 'browseReview' && commonModel::hasPriv('makeup', 'batchReview');?>
     <div class='panel'>
       <?php if($batchReview):?>
-      <form id='ajaxForm' method='post' action='<?php echo inlink('batchReview', 'status=pass');?>'>
+      <form id='batchReviewForm' method='post' action='<?php echo inlink('batchReview', 'status=pass');?>'>
       <?php endif;?>
       <table class='table table-hover text-center table-fixed tablesorter' id='makeupTable'>
         <thead>
@@ -68,7 +68,7 @@
           </tr>
         </thead>
         <?php foreach($makeupList as $makeup):?>
-        <?php $viewUrl = commonModel::hasPriv('oa.leave', 'view') ? $this->createLink('oa.leave', 'view', "id=$makeup->id&type=$type") : '';?>
+        <?php $viewUrl = commonModel::hasPriv('oa.makeup', 'view') ? $this->createLink('oa.makeup', 'view', "id=$makeup->id&type=$type") : '';?>
         <tr id='makeup<?php echo $makeup->id;?>' data-url='<?php echo $viewUrl;?>'>
           <td class='idTD'>
             <?php if($batchReview):?>

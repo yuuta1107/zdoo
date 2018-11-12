@@ -219,6 +219,7 @@ class upgradeModel extends model
             case '4_6_3'   : $confirmContent .= file_get_contents($this->getUpgradeFile('4.6.3'));
             case '4_7'     : $confirmContent .= file_get_contents($this->getUpgradeFile('4.7'));
             case '4_8'     :
+            case '4_9'     : $confirmContent .= file_get_contents($this->getUpgradeFile('4.9'));
         }
         return $confirmContent;
     }
