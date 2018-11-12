@@ -51,10 +51,10 @@ class tree extends control
             $this->view->lib = $this->loadModel('doc', 'doc')->getLibById($root);
             $this->view->projects = $this->loadModel('project', 'proj')->getPairs();
         }
-        elseif(strpos($this->config->tree->menuGroup->product, ',' . $type . ',') !== false && isset($this->lang->$type->menu))
+        elseif(strpos($this->config->tree->menuGroup->product, ',' . $type . ',') !== false && isset($this->lang->$from->menu))
         {
-            $this->lang->tree->menu = $this->lang->$type->menu;
-            $this->lang->menuGroups->tree = $from == 'setting'  ? 'setting' : 'product';
+            $this->lang->tree->menu = $this->lang->$from->menu;
+            $this->lang->menuGroups->tree = $from;
         }
         $this->view->title    = $this->lang->category->common;
         $this->view->type     = $type;
