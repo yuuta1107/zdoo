@@ -19,9 +19,9 @@
       <strong><?php echo $lang->refund->create;?></strong>
     </div>
     <div class='panel-body'>
-      <table class='table table-form w-p70'>
+      <table class='table table-form w-p80'>
         <tr>
-          <th class='w-100px'><?php echo $lang->refund->name?></th>
+          <th class='w-70px'><?php echo $lang->refund->name?></th>
           <td class='w-600px'><?php echo html::input('name', '', "class='form-control'")?></td>
           <td></td>
         </tr>
@@ -105,8 +105,8 @@
                 <?php if($categories):?>
                 <td class='w-160px'><?php echo html::select('categoryList[1]', $categories, '', "class='form-control chosen' placeholder='{$lang->refund->category}'")?></td>
                 <?php endif;?>
-                <td class='w-80px'><?php echo html::input('moneyList[1]', '', "class='form-control' placeholder='{$lang->refund->money}'")?></td>
-                <td class='w-80px'><?php echo html::input('invoiceList[1]', '', "class='form-control' placeholder='{$lang->refund->invoice}'")?></td>
+                <td class='w-90px'><?php echo html::input('moneyList[1]', '', "class='form-control' placeholder='{$lang->refund->money}'")?></td>
+                <td class='w-90px'><?php echo html::input('invoiceList[1]', '', "class='form-control' placeholder='{$lang->refund->invoice}'")?></td>
                 <td class='w-200px'><?php echo html::select('relatedList[1][]', $users, '', "class='form-control chosen' multiple data-placeholder='{$lang->refund->related}'")?></td>
                 <td><?php echo html::textarea('descList[1]', '', "class='form-control' style='height:32px;' placeholder='{$lang->refund->desc}'")?></td>
                 <td class='w-70px'><i class='btn btn-mini icon-plus plus'></i>&nbsp;&nbsp;<i class='btn btn-mini icon-remove minus'></i></td>
@@ -135,8 +135,8 @@
   <?php if($categories):?>
   <td class='w-160px'><?php echo html::select('categoryList[key]', $categories, '', "class='form-control chosen' placeholder='{$lang->refund->category}'")?></td>
   <?php endif;?>
-  <td class='w-80px'><?php echo html::input('moneyList[key]', '', "class='form-control' placeholder='{$lang->refund->money}'")?></td>
-  <td class='w-80px'><?php echo html::input('invoiceList[key]', '', "class='form-control' placeholder='{$lang->refund->invoice}'")?></td>
+  <td class='w-90px'><?php echo html::input('moneyList[key]', '', "class='form-control' placeholder='{$lang->refund->money}'")?></td>
+  <td class='w-90px'><?php echo html::input('invoiceList[key]', '', "class='form-control' placeholder='{$lang->refund->invoice}'")?></td>
   <td class='w-200px'><?php echo html::select('relatedList[key][]', $users, '', "class='form-control chosen' multiple data-placeholder='{$lang->refund->related}'")?></td>
   <td><?php echo html::textarea('descList[key]', '', "class='form-control' style='height:32px;' placeholder='{$lang->refund->desc}'")?></td>
   <td class='w-70px'><i class='btn btn-mini icon-plus plus'></i>&nbsp;&nbsp;<i class='btn btn-mini icon-remove minus'></i></td>

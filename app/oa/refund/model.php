@@ -13,19 +13,19 @@ class refundModel extends model
 {
     /**
      * Get a refund by id.
-     * 
-     * @param  int    $ID 
+     *
+     * @param  int    $id
      * @access public
-     * @return void
+     * @return object
      */
-    public function getByID($ID)
+    public function getByID($id)
     {
-        $refund = $this->dao->select('*')->from(TABLE_REFUND)->where('id')->eq($ID)->fetch();
+        $refund = $this->dao->select('*')->from(TABLE_REFUND)->where('id')->eq($id)->fetch();
         if($refund)
         {
-            $details = $this->dao->select('*')->from(TABLE_REFUND)->where('parent')->eq($ID)->fetchAll('id');
+            $details = $this->dao->select('*')->from(TABLE_REFUND)->where('parent')->eq($id)->fetchAll('id');
             $refund->detail = $details;
-            $refund->files  = $this->loadModel('file')->getByObject('refund', $ID);
+            $refund->files  = $this->loadModel('file')->getByObject('refund', $id);
 
             $objectType = '';
             if($refund->customer) $objectType  = 'customer';
@@ -34,19 +34,25 @@ class refundModel extends model
             if($refund->project)  $objectType .= ',project';
             $refund->objectType = explode(',', trim($objectType, ','));
 
+            $refund->firstReviewerLabel  = '';
+            $refund->secondReviewerLabel = '';
+
             $users = $this->loadModel('user')->getPairs();
             if(empty($refund->firstReviewer))
             {
-                if(empty($this->config->refund->firstReviewer))
+                if($refund->status == 'wait')
                 {
-                    $managers = $this->loadModel('user')->getUserManagerPairs();
-                    $reviewer = trim(zget($managers, $refund->createdBy, ''), ',');
+                    if(empty($this->config->refund->firstReviewer))
+                    {
+                        $managers = $this->user->getUserManagerPairs();
+                        $reviewer = trim(zget($managers, $refund->createdBy, ''), ',');
+                    }
+                    else
+                    {
+                        $reviewer = $this->config->refund->firstReviewer;
+                    }
+                    $refund->firstReviewerLabel = zget($users, $reviewer) . $this->lang->refund->statusList['doing'];
                 }
-                else
-                {
-                    $reviewer = $this->config->refund->firstReviewer;
-                }
-                $refund->firstReviewerLabel = zget($users, $reviewer) . $this->lang->refund->statusList['doing'];
             }
             else
             {
@@ -55,7 +61,7 @@ class refundModel extends model
 
             if(empty($refund->secondReviewer))
             {
-                $refund->secondReviewerLabel = zget($users, $this->config->refund->secondReviewer) . $this->lang->refund->statusList['doing'];
+                if(!empty($this->config->refund->secondReviewer) && $refund->status == 'doing') $refund->secondReviewerLabel = zget($users, $this->config->refund->secondReviewer) . $this->lang->refund->statusList['doing'];
             }
             else
             {
@@ -253,6 +259,15 @@ class refundModel extends model
             ->setDefault('date', helper::today())
             ->remove('customer,order,contract,project,objectType,dateList,moneyList,invoiceList,categoryList,descList,relatedList,files,labels')
             ->get();
+
+        if($oldRefund->status == 'reject')
+        {
+            $refund->status           = 'wait';
+            $refund->firstReviewer    = '';
+            $refund->firstReviewDate  = '0000-00-00 00:00:00';
+            $refund->secondReviewer   = '';
+            $refund->secondReviewDate = '0000-00-00 00:00:00';
+        }
 
         $result = $this->processRefund($refund);
         if(is_array($result)) return $result;

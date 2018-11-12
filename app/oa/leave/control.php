@@ -570,7 +570,7 @@ class leave extends control
             $users     = $this->loadModel('user')->getList();
             $userPairs = array();
             $userDepts = array();
-            foreach($users as $key => $user) 
+            foreach($users as $user)
             {
                 $userPairs[$user->account] = $user->realname;
                 $userDepts[$user->account] = zget($deptList, $user->dept, ' ');
