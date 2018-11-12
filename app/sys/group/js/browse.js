@@ -4,7 +4,7 @@ $(document).ready(function()
     var setHeight = '18';
     $('.user-list').each(function()
     {
-        var height = $(this).height();
+        var height = $(this).children(':first').height();
         if(height > setHeight)
         {
             $(this).children(':first').css('height', setHeight + 'px');
