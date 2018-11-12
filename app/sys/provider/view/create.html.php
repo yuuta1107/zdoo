@@ -45,10 +45,6 @@
           <td><?php echo html::input('qq', '', "class='form-control'");?></td>
         </tr>
         <tr>
-          <th><?php echo $lang->provider->depositor;?></th>
-          <td><?php echo html::input('depositor', '', "class='form-control'");?></td>
-        </tr>
-        <tr>
           <th><?php echo $lang->provider->type;?></th>
           <td><?php echo html::select("type", $lang->provider->typeList, '', "class='form-control'");?></td>
         </tr>
@@ -75,6 +71,10 @@
         <tr>
           <th><?php echo $lang->provider->site;?></th>
           <td><?php echo html::input('site', 'http://', "class='form-control'");?></td><td></td>
+        </tr>
+        <tr>
+          <th><?php echo $lang->provider->depositor;?></th>
+          <td colspan='2'><?php echo html::textarea('depositor', '', "rows='2' class='form-control'");?></td>
         </tr>
         <tr>
           <th><?php echo $lang->provider->desc;?></th>

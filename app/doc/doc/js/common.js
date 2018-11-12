@@ -78,7 +78,7 @@ $(document).ready(function()
                  }
              }, 'json');
         }
-    })
+    });
 
     $(document).on('click', '.edui-for-fullscreen', function()
     {

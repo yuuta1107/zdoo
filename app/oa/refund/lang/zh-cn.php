@@ -21,6 +21,7 @@ $lang->refund->setCategory  = '报销科目设置';
 $lang->refund->setDepositor = '报销账户设置';
 $lang->refund->setRefundBy  = '报销者设置';
 $lang->refund->export       = '导出报销记录';
+$lang->refund->createTrade  = '关联记账';
 
 $lang->refund->id               = '编号';
 $lang->refund->customer         = '客户';
@@ -78,13 +79,13 @@ $lang->refund->notExist          = '记录不存在';
 $lang->refund->cancelSuccess     = '撤销成功';
 $lang->refund->commitSuccess     = '提交成功';
 $lang->refund->uniqueReviewer    = '第一审批人和第二审批人不能是同一个人';
-$lang->refund->createTradeTip    = '是否关联记账？';
+$lang->refund->createTradeTip    = '关联记账';
 $lang->refund->secondReviewerTip = '二级审批需要设置二级审批人。';
 $lang->refund->correctMoney      = '报销额度不能多于申请金额';
 $lang->refund->categoryTips      = '尚未设置支出科目。';
 $lang->refund->setExpense        = '设置科目';
 $lang->refund->moneyTip          = '低于金额只需要一级审批，高于金额需要二级审批';
-$lang->refund->total             = '报销合计：';
+$lang->refund->total             = '合计：';
 $lang->refund->totalMoney        = '%s%s；';
 
 $lang->refund->settings = new stdclass();

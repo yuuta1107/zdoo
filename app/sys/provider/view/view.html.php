@@ -16,8 +16,14 @@
   <li class='divider angle'></li>
   <li class='title'><?php echo $provider->name;?></li>
 </ul>
-<div class='row'>
-  <div class='col-md-8'>
+<div class='row-table'>
+  <div class='col-main'>
+    <?php if($provider->depositor):?>
+    <div class='panel'>
+      <div class='panel-heading'><strong><?php echo $lang->provider->depositor;?></strong></div>
+      <div class='panel-body'><?php echo $provider->depositor;?></div>
+    </div>
+    <?php endif;?>
     <div class='panel'>
       <div class='panel-heading'><strong><?php echo $lang->provider->desc;?></strong></div>
       <div class='panel-body'><?php echo $provider->desc;?></div>
@@ -36,16 +42,12 @@
       ?>
     </div>
   </div>
-  <div class='col-md-4'>  
+  <div class='col-side'>
     <div class='panel'>
       <div class='panel-heading'><strong><i class="icon-list-info"></i> <?php echo $lang->provider->basicInfo;?></strong></div>
       <table class='table table-info'>
         <tr>
-          <th class='w-70px'><?php echo $lang->customer->depositor;?></th>
-          <td><?php echo $provider->depositor;?></td>
-        </tr>
-        <tr>
-          <th><?php echo $lang->provider->size;?></th>
+          <th class='w-70px'><?php echo $lang->provider->size;?></th>
           <td><?php echo $lang->provider->sizeList[$provider->size];?></td>
         </tr>
         <tr>

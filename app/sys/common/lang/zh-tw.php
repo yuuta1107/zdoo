@@ -187,7 +187,7 @@ $lang->js->timeout               = '網絡超時,請重試';
 $lang->js->confirmDiscardChanges = '表單已更改，確定關閉？';
 $lang->js->yes                   = '是';
 $lang->js->no                    = '否';
-$lang->js->installZipExtension   = "導出xlsx格式，需要安裝 php-zip 擴展，<a href='https://www.ranzhi.org/book/ranzhi/165.html'>安裝手冊</a>";
+$lang->js->installZipExtension   = "導出xlsx格式，需要安裝 php-zip 擴展，<a href='https://www.ranzhi.org/book/ranzhi/165.html' target='_blank'>安裝手冊</a>";
 
 /* Contact fields*/
 $lang->company = new stdclass();
@@ -295,7 +295,7 @@ $lang->product->menu->browse     = '所有產品|product|browse|mode=browse&stat
 $lang->product->menu->normal     = '正常|product|browse|mode=browse&status=normal';
 $lang->product->menu->developing = '研發中|product|browse|mode=browse&status=developing';
 $lang->product->menu->offline    = '下線|product|browse|mode=browse&status=offline';
-$lang->product->menu->category   = '產品分類|tree|browse|type=product';
+$lang->product->menu->category   = '產品分類|tree|browse|type=product&startModule=&root=&from=product';
 
 $lang->todo = new stdclass();
 $lang->todo->menu = new stdclass();

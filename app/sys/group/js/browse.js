@@ -5,10 +5,13 @@ $(document).ready(function()
     $('.user-list').each(function()
     {
         var height = $(this).children(':first').height();
-        if(height > setHeight)
+        $(this).children(':first').css('height', setHeight + 'px');
+        var thisHeight = $(this).height(); 
+        $(this).children(':first').css('height', '');
+        if(height > thisHeight)
         {
-            $(this).children(':first').css('height', setHeight + 'px');
-            $(this).children('a:first').css('margin-top', setHeight - 18 + 'px')
+            $(this).children(':first').css('height', thisHeight + 'px');
+            $(this).children('a:first').css('margin-top', thisHeight - 18 + 'px')
             $(this).children('a:first').show();
         }
     })
@@ -20,7 +23,9 @@ $(document).ready(function()
     })
     $('.hide-list').click(function()
     {
-        $(this).parent().css('height', setHeight + 'px');
+        var thisHeight = $(this).parent().next().css('margin-top');
+        thisHeight = parseInt(thisHeight) + 18;
+        $(this).parent().css('height', thisHeight + 'px');
         $(this).hide();
         $(this).parent().next().show();
     })

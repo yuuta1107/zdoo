@@ -30,6 +30,10 @@
             </td>
           </tr>
           <tr>
+            <th><?php echo $lang->customer->depositor;?></th>
+            <td><?php echo html::textarea('depositor', $customer->depositor, "rows='2' class='form-control'");?></td>
+          </tr>
+          <tr>
             <th><?php echo $lang->customer->intension;?></th>
             <td><?php echo html::textarea('intension', $customer->intension, "class='form-control' rows=2");?></td>
           </tr>
@@ -56,10 +60,6 @@
             <th><?php echo $lang->customer->sourceNote;?></th>
             <td><?php echo html::input('sourceNote', $customer->sourceNote, "class='form-control'");?></td>
           </tr>
-         <tr>
-           <th><?php echo $lang->customer->depositor;?></th>
-           <td><?php echo html::input('depositor', $customer->depositor, "class='form-control'");?></td>
-         </tr>
           <tr>
             <th><?php echo $lang->customer->level;?></th>
             <td><?php echo html::select('level', $levelList, $customer->level, "class='form-control'");?></td>

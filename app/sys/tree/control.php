@@ -19,6 +19,7 @@ class tree extends control
      * @param  string $type 
      * @param  int    $startModule 
      * @param  int    $root 
+     * @param  string $from
      * @access public
      * @return void
      */
@@ -50,7 +51,7 @@ class tree extends control
             $this->view->lib = $this->loadModel('doc', 'doc')->getLibById($root);
             $this->view->projects = $this->loadModel('project', 'proj')->getPairs();
         }
-        elseif(strpos($this->config->tree->menuGroup->product, ',' . $type . ',') !== false and isset($this->lang->$type->menu))
+        elseif(strpos($this->config->tree->menuGroup->product, ',' . $type . ',') !== false && isset($this->lang->$type->menu))
         {
             $this->lang->tree->menu = $this->lang->$type->menu;
             $this->lang->menuGroups->tree = $from == 'setting'  ? 'setting' : 'product';

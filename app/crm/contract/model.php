@@ -184,7 +184,7 @@ class contractModel extends model
         if(empty($returnList)) return $returnList;
 
         $tradeIdList = array();
-        foreach($returnList as $return) $tradeIdList[] = $return->tradeID;
+        foreach($returnList as $return) $tradeIdList[] = $return->trade;
         if(empty($tradeIdList)) return $returnList;
 
         $tradeList     = $this->dao->select('id,depositor')->from(TABLE_TRADE)->where('id')->in($tradeIdList)->fetchPairs();
@@ -192,7 +192,7 @@ class contractModel extends model
         foreach($tradeList as $trade => $depositor) $tradeDepositorList[$trade] = zget($depositorList, $depositor);
         foreach($returnList as $return)
         {
-            $return->depositor = zget($tradeDepositorList, $return->tradeID, '');
+            $return->depositor = zget($tradeDepositorList, $return->trade, '');
         }
         return $returnList;
     }
@@ -277,10 +277,16 @@ class contractModel extends model
 
         if($contract->order)
         {
-            $product       = '';
-            $orderProducts = $this->dao->select('product')->from(TABLE_ORDER)->where('id')->in($contract->order)->fetchPairs();
-            foreach($orderProducts as $orderProduct) $product .= trim($product, ',') . ',';
-            if($product) $contract->product = ',' . $product;
+            $products = array();
+            $orders   = $this->dao->select('id, product')->from(TABLE_ORDER)->where('id')->in($contract->order)->fetchAll();
+            foreach($orders as $order)
+            {
+                foreach(explode(',', trim($order->product, ',')) as $product)
+                {
+                    $products[$product] = $product;
+                }
+            }
+            $contract->product = empty($products) ? '' : ',' . implode(',', $products) . ',';
         }
 
         $contract = $this->loadModel('file', 'sys')->processImgURL($contract, $this->config->contract->editor->create['id']);
@@ -367,10 +373,16 @@ class contractModel extends model
 
         if($oldContract->order != $contract->order)
         {
-            $product       = '';
-            $orderProducts = $this->dao->select('product')->from(TABLE_ORDER)->where('id')->in($contract->order)->fetchPairs();
-            foreach($orderProducts as $orderProduct) $product .= trim($product, ',') . ',';
-            if($product) $contract->product = ',' . $product;
+            $products = array();
+            $orders   = $this->dao->select('id, product')->from(TABLE_ORDER)->where('id')->in($contract->order)->fetchAll();
+            foreach($orders as $order)
+            {
+                foreach(explode(',', trim($order->product, ',')) as $product)
+                {
+                    $products[$product] = $product;
+                }
+            }
+            $contract->product = empty($products) ? '' : ',' . implode(',', $products) . ',';
         }
 
         $contract = $this->loadModel('file', 'sys')->processImgURL($contract, $this->config->contract->editor->edit['id']);
@@ -658,8 +670,8 @@ class contractModel extends model
                 $trade->currency = $depositor->currency;
                 
                 $this->dao->insert(TABLE_TRADE)->data($trade, $skip = 'uid,comment')->autoCheck()->exec();
-                $tradeID     = $this->dao->lastInsertId();
-                $this->dao->update(TABLE_PLAN)->set('tradeID')->eq($tradeID)->where('id')->eq($planID)->exec();
+                $tradeID = $this->dao->lastInsertId();
+                $this->dao->update(TABLE_PLAN)->set('trade')->eq($tradeID)->where('id')->eq($planID)->exec();
 
                 $actionExtra = html::a(helper::createLink('contract', 'view', "contractID=$contractID"), $contract->name) . $this->lang->contract->return . ' ' . zget($this->lang->currencySymbols, $trade->currency, '') . $this->post->amount;
                 $this->loadModel('action')->create('trade', $tradeID, 'receiveContract', $this->post->comment, $actionExtra, $this->post->returnedBy);
@@ -990,13 +1002,20 @@ class contractModel extends model
      */
     public function updateContractProduct($contractID)
     {
-        $product = '';
-        $orders  = $this->dao->select('`order`')->from(TABLE_CONTRACTORDER)->where('contract')->eq($contractID)->fetchPairs();
+        $products = array();
+        $orders   = $this->dao->select('`order`')->from(TABLE_CONTRACTORDER)->where('contract')->eq($contractID)->fetchPairs();
         if($orders)
         {
-            $orderProducts = $this->dao->select('product')->from(TABLE_ORDER)->where('id')->in($orders)->fetchPairs();
-            foreach($orderProducts as $orderProduct) $product .= trim($orderProduct, ',') . ',';
+            $orders = $this->dao->select('id, product')->from(TABLE_ORDER)->where('id')->in($orders)->fetchAll();
+            foreach($orders as $order)
+            {
+                foreach(explode(',', trim($order->product, ',')) as $product)
+                {
+                    $products[$product] = $product;
+                }
+            }
         }
+        $product = empty($products) ? '' : ',' . implode(',', $products) . ',';
         $this->dao->update(TABLE_CONTRACT)->set('product')->eq($product)->where('id')->eq($contractID)->exec();
 
         return !dao::isError();
