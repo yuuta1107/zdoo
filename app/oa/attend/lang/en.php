@@ -127,8 +127,8 @@ $lang->attend->workingDays   = 'Working days';
 $lang->attend->workingHours  = 'Working hours';
 $lang->attend->mustSignOut   = 'Required';
 $lang->attend->denied        = 'Access denied.';
-$lang->attend->nodata        = 'Select no data.';
-$lang->attend->reviewSuccess = 'Review success';
+$lang->attend->nodata        = 'No data selected.';
+$lang->attend->reviewSuccess = 'Reviewed';
 
 $lang->attend->workingDaysList['5']  = "Monday ~ Friday";
 $lang->attend->workingDaysList['6']  = "Monday ~ Saturday";

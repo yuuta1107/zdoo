@@ -69,10 +69,6 @@
         <td><?php echo html::input('weixin', $user->weixin, "class='form-control'");?></td>
       </tr>
       <tr>
-        <th><?php echo $lang->user->gtalk;?></th>
-        <td><?php echo html::input('gtalk', $user->gtalk, "class='form-control'");?></td>
-      </tr>
-      <tr>
         <th><?php echo $lang->user->address;?></th>
         <td colspan='3'><?php echo html::input('address', $user->address, "class='form-control'");?></td>
       </tr>

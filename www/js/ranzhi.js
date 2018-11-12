@@ -1,13 +1,14 @@
 /* Fix zui $.fn.callComEvent not defined */
-if (!$.fn.callComEvent) {
+if(!$.fn.callComEvent)
+{
     $.fn.callComEvent = function(component, eventName, params)
     {
-        if (params !== undefined && !$.isArray(params)) params = [params];
-        var $this = this;
+        if(params !== undefined && !$.isArray(params)) params = [params];
+        var $this  = this;
         var result = $this.triggerHandler(eventName, params);
 
         var eventCallback = component.options[eventName];
-        if (eventCallback) result = eventCallback.apply(component, params);
+        if(eventCallback) result = eventCallback.apply(component, params);
         return result;
     };
 }

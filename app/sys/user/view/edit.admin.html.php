@@ -82,9 +82,7 @@
                 </tr>
                 <tr>
                   <th><?php echo $lang->user->address;?></th>
-                  <td><?php echo html::input('address', $user->address, "class='form-control'");?></td>
-                  <th><?php echo $lang->user->gtalk;?></th>
-                  <td><?php echo html::input('gtalk', $user->gtalk, "class='form-control'");?></td>
+                  <td colspan='3'><?php echo html::input('address', $user->address, "class='form-control'");?></td>
                 </tr>
               </table>
             </fieldset>          

@@ -277,7 +277,7 @@ class userModel extends model
 
         $user = fixer::input('post')
             ->setDefault('gender', 'u')
-            ->cleanInt('imobile, qq, zipcode')
+            ->cleanInt('mobile, zipcode')
             ->remove('ip, account, join, visits')
             ->setIF($from == 'admin' and !$this->post->admin, 'admin', 'no');
 
