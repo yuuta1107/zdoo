@@ -79,6 +79,8 @@
               <div class='input-group'>
                 <div class='input-group-btn w-90px'><?php echo html::select('currency', $currencyList, $refund->currency, "class='form-control'")?></div>
                 <?php echo html::input('money', $refund->money, "class='form-control'")?>
+                <div class='input-group-addon fix-border'><?php echo $lang->refund->invoice?></div>
+                <?php echo html::input('invoice', $refund->invoice, "class='form-control'")?>
                 <div class='input-group-btn'><?php echo html::a("javascript:void(0)", "<i class='icon-double-angle-down'></i> " . $lang->refund->detail, "class='btn detail'")?></div>
               </div>
             </td>
@@ -108,6 +110,8 @@
                         <?php echo html::input("dateList[$key]", $d->date, "class='form-control form-date' placeholder='{$lang->refund->date}'")?>
                         <span class='input-group-addon fix-border'><?php echo $lang->refund->money;?></span>
                         <?php echo html::input("moneyList[$key]", $d->money, "class='form-control' placeholder='{$lang->refund->money}'")?>
+                        <span class='input-group-addon fix-border'><?php echo $lang->refund->invoice;?></span>
+                        <?php echo html::input("invoiceList[$key]", $d->invoice, "class='form-control' placeholder='{$lang->refund->invoice}'")?>
                         <span class='input-group-btn'>
                           <?php echo html::a('javascript:;', "<i class='icon-plus'></i>", "class='plus btn'");?>
                           <?php echo html::a('javascript:;', "<i class='icon-remove'></i>", "class='minus btn'");?>
@@ -167,6 +171,7 @@
         <?php echo html::input("dateList[key]", '', "class='form-control form-date' placeholder='{$lang->refund->date}'")?>
         <span class='input-group-addon fix-border'><?php echo $lang->refund->money;?></span>
         <?php echo html::input("moneyList[key]", '', "class='form-control' placeholder='{$lang->refund->money}'")?>
+        <?php echo html::input("invoiceList[key]", '', "class='form-control' placeholder='{$lang->refund->invoice}'")?>
         <span class='input-group-btn'>
           <?php echo html::a('javascript:;', "<i class='icon-plus'></i>", "class='plus btn'");?>
           <?php echo html::a('javascript:;', "<i class='icon-remove'></i>", "class='minus btn'");?>
