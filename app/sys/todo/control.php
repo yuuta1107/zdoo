@@ -628,7 +628,7 @@ class todo extends control
     }
 
     /**
-     * Check if the dates if weekend or holiday by ajax.
+     * Check if the dates is weekend or holiday by ajax.
      *
      * @access public
      * @return void
