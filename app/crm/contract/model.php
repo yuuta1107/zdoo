@@ -187,6 +187,7 @@ class contractModel extends model
         foreach($returnList as $return) $tradeIdList[] = $return->trade;
         if(empty($tradeIdList)) return $returnList;
 
+        $tradeDepositorList = array();
         $tradeList     = $this->dao->select('id,depositor')->from(TABLE_TRADE)->where('id')->in($tradeIdList)->fetchPairs();
         $depositorList = $this->loadModel('depositor', 'cash')->getPairs();
         foreach($tradeList as $trade => $depositor) $tradeDepositorList[$trade] = zget($depositorList, $depositor);
