@@ -78,17 +78,17 @@ $(document).ready(function()
 
     function updateInvoice()
     {
-      var invoice = 0;
-      $('input[name^=invoiceList]').each(function()
-      {
-        if($.isNumeric($(this).val()))
+        var invoice = 0;
+        $('input[name^=invoiceList]').each(function()
         {
-          invoice += parseFloat($(this).val());
-        }
-      });
-      invoice = Math.round(invoice * 100) / 100;
-      $('#invoice').val(invoice);
-      return false;
+            if($.isNumeric($(this).val()))
+            {
+                invoice += parseFloat($(this).val());
+            }
+        });
+        invoice = Math.round(invoice * 100) / 100;
+        $('#invoice').val(invoice);
+        return false;
     }
     
     $('input[name^=moneyList]').change(updateMoney);
