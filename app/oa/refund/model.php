@@ -55,7 +55,7 @@ class refundModel extends model
 
             if(empty($refund->secondReviewer))
             {
-                $refund->secondReviewerLabel = zget($users, $this->config->refund->secondReviewer) . $this->lang->refund->statusList['doing'];
+                if(!empty($this->config->refund->secondReviewer)) $refund->secondReviewerLabel = zget($users, $this->config->refund->secondReviewer) . $this->lang->refund->statusList['doing'];
             }
             else
             {
