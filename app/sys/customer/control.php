@@ -551,6 +551,7 @@ class customer extends control
         if($account == '') $account = $this->app->user->account;
 
         $datingList = $this->loadModel('action')->getDatingOfThisWeek($account, 'customer');
+        $datingCustomerList = array();
         foreach($datingList as $dating) $datingCustomerList[] = $dating->objectID;
 
         $customerIdList = array_intersect($customerIdList, $datingCustomerList);
