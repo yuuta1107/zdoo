@@ -31,7 +31,7 @@ ranzhi:
 	find ranzhi -name .git | xargs rm -fr
 	find ranzhi -name tests | xargs rm -fr
 	# Add ext directory to config and each module.
-	mkdir ranzhi/config/ext
+	test -d ranzhi/config/ext || mkdir ranzhi/config/ext
 	for app in `ls ranzhi/app/`; do for module in `ls ranzhi/app/$$app/`; do mkdir ranzhi/app/$$app/$$module/ext; done; done;
 	find ranzhi/ -name ext | xargs chmod -R 777
 	# Add index.html to each directory.
