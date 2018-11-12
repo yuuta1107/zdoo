@@ -241,7 +241,7 @@ class overtimeModel extends model
             ->get();
 
         if(isset($overtime->begin) and $overtime->begin != '') $overtime->year = substr($overtime->begin, 0, 4);
-        if($oldOvertime->status == 'reject') $overtime = 'wait';
+        if($oldOvertime->status == 'reject') $overtime->status = 'wait';
 
         $return = $this->checkDate($overtime, $id);
         if($return['result'] == 'fail') return $return;

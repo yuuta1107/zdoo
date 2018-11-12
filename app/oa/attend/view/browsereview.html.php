@@ -15,12 +15,12 @@
 <?php $batchReview = commonModel::hasPriv('attend', 'batchReview');?>
 <div class='panel'>
   <?php if($batchReview):?>
-  <form id='ajaxForm' method='post' action='<?php echo inlink('batchReview', 'status=pass');?>'>
+  <form id='batchReviewForm' method='post' action='<?php echo inlink('batchReview', 'status=pass');?>'>
   <?php endif;?>
     <table class='table table-hover table-striped table-sorter table-data table-fixed text-center'>
       <thead>
         <tr class='text-center'>
-          <th class='w-50px'><?php echo $lang->attend->id;?></th>
+          <th class='w-80px'><?php echo $lang->attend->id;?></th>
           <th class='w-100px'><?php echo $lang->user->dept;?></th>
           <th class='w-100px'><?php echo $lang->attend->account;?></th>
           <th class='w-100px'><?php echo $lang->attend->date;?></th>

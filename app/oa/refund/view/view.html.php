@@ -62,11 +62,11 @@
     <div class='page-actions'>
       <?php
       $switchLabel = $refund->status == 'wait' ? $lang->refund->cancel : $lang->refund->commit;
-      if($this->app->user->admin == 'super' or $refund->createdBy == $this->app->user->account)
+      if($refund->createdBy == $this->app->user->account)
       {
           if(strpos(',wait,draft,', ",{$refund->status},") !== false)
           {
-              commonModel::printLink('refund', 'switchstatus', "id=$refund->id", $switchLabel, "class='btn switchStatus'");
+              commonModel::printLink('refund', 'switchStatus', "id=$refund->id", $switchLabel, "class='btn switchStatus'");
           }
           if(strpos(',wait,draft,reject,', ",{$refund->status},") !== false)
           {
