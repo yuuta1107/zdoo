@@ -1,4 +1,4 @@
-Company Attend<?php
+<?php
 /**
  * The en file of common module of RanZhi.
  *
