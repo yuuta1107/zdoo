@@ -428,15 +428,13 @@ class actionModel extends model
         $thisWeek = date::getThisWeek();
         if($account == '') $account = $this->app->user->account;
 
-        $customers = $this->dao->select('*')
+        return $this->dao->select('*')
             ->from(TABLE_DATING)
             ->where('date')->between($thisWeek['begin'], $thisWeek['end'])
             ->andWhere('account')->eq($account)
             ->andWhere('objectType')->eq($objectType)
             ->andWhere('status')->eq('wait')
             ->fetchAll('objectID');
-
-        return $customers;
     }
 
     /**

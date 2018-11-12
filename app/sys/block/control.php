@@ -61,12 +61,12 @@ class block extends control
      * @access public
      * @return void
      */
-    public function set($index, $type, $blockID = 0)
+    public function set($index, $type = '', $blockID = 0)
     {
         if($_POST)
         {
             $this->block->save($index, $type, 'sys', $blockID);
-            if(dao::isError())  $this->send(array('result' => 'fail', 'message' => dao::geterror()));
+            if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::geterror()));
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => $this->createLink('index')));
         }
 

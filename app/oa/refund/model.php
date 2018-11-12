@@ -194,8 +194,6 @@ class refundModel extends model
             ->add('createdDate', helper::now()) 
             ->join('related', ',')
             ->setDefault('date', helper::today())
-            ->setForce('money', (float)$this->post->money)
-            ->setForce('invoice', (float)$this->post->invoice)
             ->remove('customer,order,contract,project,objectType,dateList,moneyList,invoiceList,categoryList,descList,relatedList,files,labels')
             ->get();
 
@@ -253,8 +251,6 @@ class refundModel extends model
             ->add('secondReviewDate', '0000-00-00 00:00:00')
             ->join('related', ',')
             ->setDefault('date', helper::today())
-            ->setForce('money', (float)$this->post->money)
-            ->setForce('invoice', (float)$this->post->invoice)
             ->remove('customer,order,contract,project,objectType,dateList,moneyList,invoiceList,categoryList,descList,relatedList,files,labels')
             ->get();
 
@@ -536,7 +532,6 @@ class refundModel extends model
         $trade->handlers    = $this->post->handlers ? trim(implode(',', $this->post->handlers), ',') : '';
         $trade->category    = $this->post->category;
         $trade->dept        = $this->post->dept;
-        $trade->desc        = $refund->name . "\n" . $refund->desc;
         $trade->createdBy   = $this->app->user->account;
         $trade->createdDate = helper::now();
 

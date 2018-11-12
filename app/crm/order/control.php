@@ -472,6 +472,7 @@ class order extends control
         if($account == '') $account = $this->app->user->account;
 
         $datingList = $this->loadModel('action')->getDatingOfThisWeek($account, 'order');
+        $datingOrderList = array();
         foreach($datingList as $dating) $datingOrderList[] = $dating->objectID;
 
         $sql = $this->dao->select('o.id, o.product, o.createdDate, c.name as customerName, t.id as todo')->from(TABLE_ORDER)->alias('o')
