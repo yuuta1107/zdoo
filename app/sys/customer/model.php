@@ -705,6 +705,7 @@ class customerModel extends model
             ->andWhere('id')->in($customerIdList)
             ->fetchAll();
 
+        $css  = '';
         $menu = str_replace('</ul></nav>', '', $menu);
         foreach(array('area', 'industry') as $field)
         {
@@ -735,10 +736,12 @@ class customerModel extends model
                 $menu .= $this->getMenuByCategories($categories, $field, $orderBy, $recTotal, $recPerPage, $pageID);
                 $menu .= '</ul></li>';
             }
-            if(count($categories) > 20) $menu .= "<style>li.dropdown-$field > ul{width:320px} li.dropdown-$field > ul > li {width: 50%; display:inline-block;}</style>";
+            if(count($categories) > 20) $css .= "li.dropdown-$field > ul{width:320px} li.dropdown-$field > ul > li {width: 50%; display:inline-block;}\n";
         }
         $menu .= '</ul></nav>';
 
-        return $menu;
+        if($css) $css = "<style>$css</style>";
+
+        return $css . $menu;
     }
 }
