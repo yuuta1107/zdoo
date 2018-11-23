@@ -284,7 +284,7 @@ class commonModel extends model
      */
     public function deny($module, $method)
     {
-        if(helper::isAjaxRequest()) 
+        if(helper::isAjaxRequest())
         {
             $this->app->loadLang($module);
             $this->app->loadLang('user');
@@ -516,6 +516,20 @@ class commonModel extends model
 
             /* Split the methodLink to label, module, method, vars. */
             list($label, $module, $method, $vars) = explode('|', $methodLink);
+
+            /* If has no privilege to access the method but the alias, change method to alias. */
+            if(!commonModel::hasPriv($module, $method) && $methodAlias != '')
+            {
+                $aliases = explode(',', trim($methodAlias, ','));
+                foreach($aliases as $alias)
+                {
+                    if(commonModel::hasPriv($module, trim($alias)))
+                    {
+                        $method = trim($alias);
+                        break;
+                    }
+                }
+            }
 
             if(commonModel::hasPriv($module, $method))
             {

@@ -51,7 +51,7 @@ $lang->leave->menu = new stdclass();
 $lang->leave->menu->personal     = 'My leave|leave|personal|';
 $lang->leave->menu->browseReview = 'Review by me|leave|browsereview|';
 $lang->leave->menu->company      = 'All|leave|company|';
-$lang->leave->menu->settings     = 'Settings|leave|setReviewer|';
+$lang->leave->menu->settings     = array('link' => 'Settings|leave|setReviewer|', 'alias' => 'personalAnnual');
 
 if(!isset($lang->makeup)) $lang->makeup = new stdclass();
 $lang->makeup->menu = new stdclass();
@@ -105,6 +105,7 @@ $lang->setting->menu->companyAttend   = 'Company|attend|settings|module=setting'
 $lang->setting->menu->personalAttend  = 'Personal|attend|personalSettings|module=setting';
 $lang->setting->menu->deptManager     = 'Dept Manager|attend|setManager|module=setting';
 $lang->setting->menu->leaveReviewer   = 'Leave|leave|setReviewer|module=setting';
+$lang->setting->menu->personalAnnual  = 'Annual|leave|personalAnnual|module=setting';
 $lang->setting->menu->makeupReviewer  = 'Makeup|makeup|setReviewer|module=setting';
 $lang->setting->menu->lieuReviewer    = 'Lieu|lieu|setReviewer|module=setting';
 $lang->setting->menu->overtimeReviewer= 'Overtime|overtime|setReviewer|module=setting';
