@@ -89,7 +89,7 @@ $lang->changePassword   = 'Change password';
 $lang->currentPos       = 'Current Page';
 $lang->categoryMenu     = 'Manage Category';
 $lang->basicInfo        = 'Basic Info';
-$lang->chooseUserToMail = 'Choose users to send notice...';
+$lang->chooseUserToMail = 'Choose users to send messages to ...';
 
 /* Global action items. */
 $lang->reset          = 'Reset';
