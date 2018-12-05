@@ -12,8 +12,8 @@
 if(!isset($lang->action)) $lang->action = new stdclass();
 
 $lang->action->common          = 'Logs';
-$lang->action->finishAllDating = 'Finish All Dating';
-$lang->action->deleteAllDating = 'Delete All Dating';
+$lang->action->finishAllDating = 'Finish All Next Contact';
+$lang->action->deleteAllDating = 'Delete All Next Contact';
 
 $lang->action->product  = 'Product';
 $lang->action->actor    = 'Account';

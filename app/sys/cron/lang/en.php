@@ -6,7 +6,7 @@ $lang->cron->list    = 'List';
 $lang->cron->create  = 'Create';
 $lang->cron->edit    = 'Edit';
 $lang->cron->delete  = 'Delete';
-$lang->cron->toggle  = 'Activation/Disable';
+$lang->cron->toggle  = 'Activate/Disable';
 $lang->cron->turnon  = 'Open/Close';
 
 $lang->cron->m        = 'Minute';
@@ -30,11 +30,11 @@ $lang->cron->statusList['stop']    = 'Stop';
 $lang->cron->typeList['ranzhi'] = 'Self call';
 $lang->cron->typeList['system'] = 'System command';
 
-$lang->cron->toggleList['start'] = 'Activation';
+$lang->cron->toggleList['start'] = 'Activate';
 $lang->cron->toggleList['stop']  = 'Disable';
 
 $lang->cron->confirmDelete = 'Do you want to delete the task?';
-$lang->cron->confirmTurnon = 'Do you want to trunoff cron?';
+$lang->cron->confirmTurnon = 'Do you want to trun off cron?';
 $lang->cron->introduction  = <<<EOD
 <p>Timing tasks such as compute burn , backup. Absolve themselves of layout timing task.</p>
 <p>This function has yet to be perfect, so the function is turned off by default</p>

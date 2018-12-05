@@ -16,7 +16,7 @@ $lang->install->pre     = 'Back';
 $lang->install->reload  = 'Reload';
 $lang->install->error   = 'Error ';
 
-$lang->install->start            = 'Start install';
+$lang->install->start            = 'Start';
 $lang->install->keepInstalling   = 'Keep installing this version';
 $lang->install->seeLatestRelease = 'See the latest release.';
 $lang->install->welcome          = 'Welcome to Zdoo community.';
@@ -34,7 +34,7 @@ $lang->install->desc             = <<<EOT
 EOT;
 
 $lang->install->choice     = 'You can ';
-$lang->install->checking   = 'System Checkup';
+$lang->install->checking   = 'System Check';
 $lang->install->ok         = 'OK(√)';
 $lang->install->fail       = 'Failed(×)';
 $lang->install->loaded     = 'Loaded';

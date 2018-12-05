@@ -26,7 +26,7 @@ $lang->entry->platform    = 'Platform';
 $lang->entry->name        = 'App Name';
 $lang->entry->abbr        = 'Abbr';
 $lang->entry->code        = 'Alias';
-$lang->entry->buildin     = 'Build-in';
+$lang->entry->buildin     = 'Built-in';
 $lang->entry->integration = 'Integrate';
 $lang->entry->key         = 'Key';
 $lang->entry->block       = 'Block URL';
@@ -86,10 +86,10 @@ $lang->entry->error->ip    = 'Please enter IP';
 $lang->entry->error->url   = 'No built-in application login address. /, http:// or https:// must be included.';
 
 $lang->entry->error->admin         = 'Wrong admin account or password.';
-$lang->entry->error->zentaoSetting = 'ZenTao PMS config failed. Upgrade Zentao PMS to head.';
-$lang->entry->error->version       = 'Your ZenTao PMS version is lower than %s';
-$lang->entry->error->zentaoUrl     = 'Wrong ZenTao PMS login url.';
-$lang->entry->error->accessDenied  = 'Access denied';
+$lang->entry->error->zentaoSetting = 'ZenTao configuration failed. Upgrade Zentao to continue.';
+$lang->entry->error->version       = 'Your ZenTao version is lower than %s';
+$lang->entry->error->zentaoUrl     = 'Wrong ZenTao login URL.';
+$lang->entry->error->accessDenied  = 'Access is denied';
 
 $lang->entry->openList['blank']  = 'Blank';
 $lang->entry->openList['iframe'] = 'Iframe';

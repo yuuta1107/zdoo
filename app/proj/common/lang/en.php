@@ -27,8 +27,8 @@ $lang->project->menu->finished  = 'Finished|project|index|ststus=finished';
 $lang->project->menu->suspend   = 'Suspended|project|index|ststus=suspend';
 
 $lang->task->menu = new stdclass();
-$lang->task->menu->assignedTo = 'Assigned To Me|task|browse|projectID=&mode=assignedTo';
-$lang->task->menu->createdBy  = 'Created By Me|task|browse|projectID=&mode=createdBy';
-$lang->task->menu->finishedBy = 'Finished By Me|task|browse|projectID=&mode=finishedBy';
+$lang->task->menu->assignedTo = 'AssignToMe|task|browse|projectID=&mode=assignedTo';
+$lang->task->menu->createdBy  = 'CreateByMe|task|browse|projectID=&mode=createdBy';
+$lang->task->menu->finishedBy = 'FinishByMe|task|browse|projectID=&mode=finishedBy';
 
 include (dirname(__FILE__) . '/menuOrder.php');
