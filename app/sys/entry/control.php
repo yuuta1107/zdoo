@@ -50,7 +50,7 @@ class entry extends control
         /* Merge category. */
         foreach($categories as $categoryID => $category)
         {
-            $entry = json_decode(json_encode($categoryEntry));
+            $entry = (object) json_decode(json_encode($categoryEntry));
             $entry->id    = $categoryID;
             $entry->name  = $category;
             $entry->abbr  = $category;

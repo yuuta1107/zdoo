@@ -160,6 +160,9 @@ class upgradeModel extends model
             case '4_7':
                 $this->execSQL($this->getUpgradeFile('4.7'));
             case '4_8':
+            case '4_9':
+                $this->execSQL($this->getUpgradeFile('4.9'));
+                $this->updateContractProduct();
 
             default: if(!$this->isError()) $this->loadModel('setting')->updateVersion($this->config->version);
         }
@@ -216,6 +219,7 @@ class upgradeModel extends model
             case '4_6_3'   : $confirmContent .= file_get_contents($this->getUpgradeFile('4.6.3'));
             case '4_7'     : $confirmContent .= file_get_contents($this->getUpgradeFile('4.7'));
             case '4_8'     :
+            case '4_9'     : $confirmContent .= file_get_contents($this->getUpgradeFile('4.9'));
         }
         return $confirmContent;
     }
@@ -1586,6 +1590,47 @@ class upgradeModel extends model
             $dating->createdDate = $action->date;
 
             $this->dao->insert(TABLE_DATING)->data($dating)->autoCheck()->exec();
+        }
+
+        return !dao::isError();
+    }
+
+    /**
+     * Update contract product.
+     *
+     * @access public
+     * @return bool
+     */
+    public function updateContractProduct()
+    {
+        $orders         = array();
+        $contracts      = array();
+        $contractOrders = $this->dao->select('*')->from(TABLE_CONTRACTORDER)->where('contract')->ne(0)->andWhere('`order`')->ne(0)->fetchAll();
+        foreach($contractOrders as $contractOrder)
+        {
+            $orders[$contractOrder->order] = $contractOrder->order;
+            $contracts[$contractOrder->contract][$contractOrder->order] = $contractOrder->order;
+        }
+
+        $orders = $this->dao->select('id, product')->from(TABLE_ORDER)->where('id')->in($orders)->fetchAll('id');
+        foreach($orders as $order) $order->product = explode(',', trim($order->product, ','));
+
+        foreach($contracts as $contract => $contractOrders)
+        {
+            $product = array();
+            foreach($contractOrders as $orderID)
+            {
+                if(!isset($orders[$orderID])) continue;
+
+                $order   = $orders[$orderID];
+                $product = array_merge($product, $order->product);
+            }
+
+            if($product)
+            {
+                $product = ',' . implode(',', $product) . ',';
+                $this->dao->update(TABLE_CONTRACT)->set('product')->eq($product)->where('id')->eq($contract)->exec();
+            }
         }
 
         return !dao::isError();

@@ -89,6 +89,31 @@ class overtimeModel extends model
     }
 
     /**
+     * Get overtime pairs.
+     *
+     * @param  string $type
+     * @param  string $year
+     * @param  string $month
+     * @param  string $account
+     * @param  string $dept
+     * @param  string $status
+     * @param  string $orderBy
+     * @access public
+     * @return array
+     */
+    public function getPairs($type = 'personal', $year = '', $month = '', $account = '', $dept = '', $status = '', $orderBy = 'id_desc')
+    {
+        $overtimePairs = array('');
+        $overtimeList  = $this->getList($type, $year, $month, $account, $dept, $status, $orderBy);
+        foreach($overtimeList as $overtime)
+        {
+            $overtimePairs[$overtime->id] = formatTime("{$overtime->begin} {$overtime->start}", DT_DATETIME2) . ' ~ ' . formatTime("{$overtime->end} {$overtime->finish}", DT_DATETIME2);
+        }
+
+        return $overtimePairs;
+    }
+
+    /**
      * Process status of overtime list. 
      * 
      * @param  array  $overtimeList 
@@ -216,7 +241,7 @@ class overtimeModel extends model
             ->get();
 
         if(isset($overtime->begin) and $overtime->begin != '') $overtime->year = substr($overtime->begin, 0, 4);
-        if($oldOvertime->status == 'reject') $overtime = 'wait';
+        if($oldOvertime->status == 'reject') $overtime->status = 'wait';
 
         $return = $this->checkDate($overtime, $id);
         if($return['result'] == 'fail') return $return;

@@ -30,7 +30,7 @@ class depositorModel extends model
      * @access public
      * @return object
      */
-    public function getByID($id)
+    public function getById($id)
     {
         return $this->dao->select('*')->from(TABLE_DEPOSITOR)->where('id')->eq($id)->fetch();
     }
@@ -75,17 +75,20 @@ class depositorModel extends model
 
     /** 
      * Get depositor option menu.
-     * 
+     *
+     * @param  string $status
+     * @param  bool   $markDisabled
      * @access public
      * @return array
      */
-    public function getPairs($markDisabled = false)
+    public function getPairs($status = 'all', $markDisabled = false)
     {
-        if(!$markDisabled) return $this->dao->select('id,abbr')->from(TABLE_DEPOSITOR)->fetchPairs('id', 'abbr');
         if($markDisabled)
         {
             $depositorPairs = array();
-            $depositorList  = $this->dao->select('id,abbr,status')->from(TABLE_DEPOSITOR)->fetchAll('id');
+            $depositorList  = $this->dao->select('id,abbr,status')->from(TABLE_DEPOSITOR)
+                ->beginIF($status && $status != 'all')->where('status')->eq($status)->fi()
+                ->fetchAll('id');
             foreach($depositorList as $id => $depositor)
             {
                 $depositorPairs[$id] = $depositor->abbr;
@@ -93,6 +96,12 @@ class depositorModel extends model
             }
 
             return $depositorPairs;
+        }
+        else
+        {
+            return $this->dao->select('id,abbr')->from(TABLE_DEPOSITOR)
+                ->beginIF($status && $status != 'all')->where('status')->eq($status)->fi()
+                ->fetchPairs();
         }
     }
 
@@ -245,7 +254,10 @@ class depositorModel extends model
             ->beginif($depositors)->andWhere('depositor')->in($depositors)->fi()
             ->fetchGroup('depositor', 'id');
 
-        $depositorList = $this->dao->select('*')->from(TABLE_DEPOSITOR)->beginif($depositors)->where('id')->in($depositors)->fi()->fetchAll('id');
+        $depositorList = $this->dao->select('*')->from(TABLE_DEPOSITOR)
+            ->where('status')->eq('normal')
+            ->beginIF($depositors)->andWhere('id')->in($depositors)->fi()
+            ->fetchAll('id');
 
         foreach($depositorList as $id => $depositor)
         {

@@ -43,7 +43,7 @@
 <?php $batchReview = $type == 'browseReview' && commonModel::hasPriv('lieu', 'batchReview');?>
     <div class='panel'>
       <?php if($batchReview):?>
-      <form id='ajaxForm' method='post' action='<?php echo inlink('batchReview', 'status=pass');?>'>
+      <form id='batchReviewForm' method='post' action='<?php echo inlink('batchReview', 'status=pass');?>'>
       <?php endif;?>
       <table class='table table-hover text-center table-fixed tablesorter' id='lieuTable'>
         <thead>

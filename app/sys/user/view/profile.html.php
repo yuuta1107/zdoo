@@ -49,8 +49,8 @@
       <td><?php echo $user->qq;?></td>
     </tr>
     <tr>
-      <th><?php echo $lang->user->gtalk;?></th>
-      <td><?php echo $user->gtalk;?></td>
+      <th><?php echo $lang->user->weixin;?></th>
+      <td><?php echo $user->weixin;?></td>
     </tr>
     <tr>
       <th></th>

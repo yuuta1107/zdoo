@@ -16,3 +16,5 @@
 .chosen-container[id^="trader"] .chosen-results > li.no-results {cursor: pointer;}
 .chosen-container[id^="trader"] .chosen-results > li.no-results:hover {color: #1a4f85; background-color: #ddd;}
 .chosen-container[id^="trader"] .chosen-results > li.no-results > span {font-weight: bold;}
+
+.checkbox-inline {display: inline;}

@@ -72,9 +72,11 @@
     <?php endforeach;?>
   </div>
   <div class='clearfix'><?php if($pager) $pager->show();?></div>
-  <?php else:?>
+  <?php elseif(!$fetchResult):?>
     <div class='box-title'><?php echo $lang->webapp->errorOccurs;?></div>
     <div class='box-content'><?php echo $lang->webapp->errorGetExtensions;?></div>
+  <?php else:?>
+    <div class='box-content text-muted'><?php echo $lang->webapp->noApps;?></div>
   <?php endif;?>
 </div>
 <?php js::set('installed', $lang->webapp->installed)?>

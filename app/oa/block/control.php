@@ -163,6 +163,14 @@ class block extends control
             $endDate   = date('Y-m-d', strtotime("next Sunday $startDate"));
         }
         $attends = $this->attend->getByAccount($this->app->user->account, $startDate, $endDate);
+        if(is_array($attends))
+        {
+            /* Check reason is lieu . Task#3934 */
+            foreach($attends as $attend)
+            {
+                if($attend->reason == 'lieu') $attend->status = 'lieu';
+            }
+        }
 
         $dateLimit = array();
         $dateLimit['begin'] = $startDate;

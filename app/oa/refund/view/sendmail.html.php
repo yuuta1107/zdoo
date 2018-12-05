@@ -76,13 +76,13 @@
           </tr>
           <tr>
             <th><?php echo $lang->refund->firstReviewer?></th>
-            <td><?php echo zget($users, $refund->firstReviewer)?></td>
+            <td><?php echo $refund->firstReviewerLabel?></td>
             <th><?php echo $lang->refund->firstReviewDate?></th>
             <td><?php echo formatTime($refund->firstReviewDate)?></td>
           </tr>
           <tr>
             <th><?php echo $lang->refund->secondReviewer?></th>
-            <td><?php echo zget($users, $refund->secondReviewer)?></td>
+            <td><?php echo $refund->secondReviewerLabel?></td>
             <th><?php echo $lang->refund->secondReviewDate?></th>
             <td><?php echo formatTime($refund->secondReviewDate)?></td>
           </tr>

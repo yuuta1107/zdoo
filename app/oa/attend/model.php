@@ -1301,11 +1301,12 @@ EOT;
         /* Group data list by account. */
         foreach($this->config->attend->typeList as $type)
         {
-            $dataList = ${$type . 'List'};
-            foreach(${$type . 'List'} as $key => $data)
+            $variable = $type . 'List';
+            $dataList = $$variable;
+            foreach($dataList as $key => $data)
             {
-                ${$type . 'List'}[$data->createdBy][] = $data;
-                unset(${$type . 'List'}[$key]);
+                $dataList[$data->createdBy][] = $data;
+                unset($dataList[$key]);
             }
         }
 
@@ -1314,7 +1315,10 @@ EOT;
             /* Get datas of current account. */
             foreach($this->config->attend->typeList as $type)
             {
-                ${$type . 's'} = zget(${$type . 'List'}, $account, array());
+                $variable      = $type . 'List';
+                $dataList      = $$variable;
+                $listVariable  = $type . 's';
+                $$listVariable = zget($dataList, $account, array());
             }
 
             foreach($attends as $attend)
@@ -1324,9 +1328,10 @@ EOT;
                 /* Compute status hours. */
                 foreach($this->config->attend->typeList as $type)
                 {
-                    if(${$type . 's'}) 
+                    $listVariable = $type . 's';
+                    if($$listVariable) 
                     {
-                        $hours = $this->computeHours($attend, ${$type . 's'}, $type);
+                        $hours = $this->computeHours($attend, $$listVariable, $type);
                         if($hours) $hoursList[$type] = $hours;
                     }
                 }

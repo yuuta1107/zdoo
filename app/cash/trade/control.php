@@ -46,11 +46,14 @@ class trade extends control
         $this->session->set('tradeList', $this->app->getURI(true));
         if($date) $this->session->set('date', $date);
 
+        $depositorList = $this->loadModel('depositor', 'cash')->getPairs();
+        $productList   = $this->loadModel('product')->getPairs();
+
         /* Build search form. */
         $this->loadModel('search', 'sys');
         $this->config->trade->search['actionURL'] = $this->createLink('trade', 'browse', "mode={$mode}_bysearch");
-        $this->config->trade->search['params']['depositor']['values'] = array('' => '') + $this->loadModel('depositor', 'cash')->getPairs();
-        $this->config->trade->search['params']['product']['values']   = array('' => '') + $this->loadModel('product')->getPairs();
+        $this->config->trade->search['params']['depositor']['values'] = array('' => '') + $depositorList;
+        $this->config->trade->search['params']['product']['values']   = array('' => '') + $productList;
 
         $traders = '';
         if($this->session->tradeForm)
@@ -198,13 +201,13 @@ class trade extends control
         $this->view->date          = $currentDate;
         $this->view->pager         = $pager;
         $this->view->orderBy       = $orderBy;
-        $this->view->depositorList = $this->loadModel('depositor', 'cash')->getPairs();
+        $this->view->depositorList = $depositorList;
         $this->view->customerList  = $this->loadModel('customer')->getPairs();
         $this->view->deptList      = $this->tree->getPairs(0, 'dept');
         $this->view->users         = $this->loadModel('user')->getPairs();
         $this->view->currencySign  = $this->loadModel('common', 'sys')->getCurrencySign();
         $this->view->currencyList  = $this->common->getCurrencyList();
-        $this->view->productList   = $this->loadModel('product')->getPairs();
+        $this->view->productList   = $productList;
         $this->view->currentYear   = $currentYear;
         $this->view->moduleMenu    = $moduleMenu; 
         $this->view->bysearch      = $bysearch; 
@@ -268,7 +271,7 @@ class trade extends control
         unset($this->lang->trade->menu);
         $this->view->title             = $this->lang->trade->{$type};
         $this->view->type              = $type;
-        $this->view->depositorList     = array('' => '') + $this->loadModel('depositor', 'cash')->getPairs(true);
+        $this->view->depositorList     = array('' => '') + $this->loadModel('depositor', 'cash')->getPairs($status = 'normal');
         $this->view->productList       = $this->loadModel('product')->getPairs();
         $this->view->productCategories = $this->loadModel('tree')->getOptionMenu('product', 0, true);
         $this->view->orderList         = $orderList;
@@ -286,10 +289,11 @@ class trade extends control
     /**
      * Batch create trade.
      * 
+     * @param  string $mode
      * @access public
      * @return void
      */
-    public function batchCreate()
+    public function batchCreate($mode = 'all')
     {
         if($_POST)
         {
@@ -302,7 +306,7 @@ class trade extends control
             $tradeIDList = $result;
             foreach($tradeIDList as $tradeID) $this->action->create('trade', $tradeID, 'created');
 
-            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => inlink('browse')));
+            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => inlink('browse', "mode=$mode")));
         }
 
         unset($this->lang->trade->menu);
@@ -333,7 +337,7 @@ class trade extends control
         }
 
         $this->view->title         = $this->lang->trade->batchCreate;
-        $this->view->depositors    = array('' => '') + $this->loadModel('depositor', 'cash')->getPairs(true);
+        $this->view->depositors    = array('' => '') + $this->loadModel('depositor', 'cash')->getPairs($status = 'normal');
         $this->view->users         = $this->loadModel('user')->getPairs('nodeleted,noforbidden,noclosed');
         $this->view->customerList  = $this->loadModel('customer')->getPairs('client', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit);
         $this->view->traderList    = $this->customer->getPairs('provider', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit);
@@ -342,6 +346,7 @@ class trade extends control
         $this->view->deptList      = array('') + $this->loadModel('tree')->getOptionMenu('dept', 0);
         $this->view->requireTrader = $this->config->trade->settings->trader;
         $this->view->productList   = array(0 => '') + $this->loadModel('product')->getPairs();
+        $this->view->mode          = $mode;
 
         $this->display();
     }
@@ -401,7 +406,7 @@ class trade extends control
 
         $this->view->objectType = $objectType;
 
-        $depositorList = $this->loadModel('depositor', 'cash')->getPairs(true);
+        $depositorList = $this->loadModel('depositor', 'cash')->getPairs($status = 'all', $markDisable = true);
         $currencySign  = $this->loadModel('common', 'sys')->getCurrencySign();
        
         $this->view->title         = $this->lang->trade->edit;
@@ -533,7 +538,7 @@ class trade extends control
         $this->view->title         = $this->lang->trade->transfer;
         $this->view->users         = $this->loadModel('user')->getPairs('nodeleted,noforbidden');
         $this->view->deptList      = array('') + $this->loadModel('tree')->getOptionMenu('dept', 0);
-        $this->view->depositorList = $this->loadModel('depositor', 'cash')->getList();
+        $this->view->depositorList = $this->loadModel('depositor', 'cash')->getList($tag = '', $status = 'normal');
 
         $this->display();
     }
@@ -555,7 +560,8 @@ class trade extends control
         }
 
         $currencySign     = $this->loadModel('common', 'sys')->getCurrencySign();
-        $depositorList    = array('' => '') + $this->loadModel('depositor', 'cash')->getPairs(true);
+        $allDepositors    = $this->loadModel('depositor', 'cash')->getPairs();
+        $depositorList    = array('' => '') + $this->depositor->getPairs($status = 'normal');
         $investCategories = $this->trade->getSystemCategoryPairs('invest');
 
         $invests = $this->dao->select('*')->from(TABLE_TRADE)->where('type')->eq('invest')->fetchAll();
@@ -564,7 +570,7 @@ class trade extends control
         {
             $redeem = $this->dao->select("sum(money) as value")->from(TABLE_TRADE)->where('investID')->eq($invest->id)->andWhere('type')->eq('redeem')->fetch('value');
             if($redeem >= $invest->money) continue;
-            $investList[$invest->id] = $invest->date . $depositorList[$invest->depositor] . $this->lang->trade->invest . zget($currencySign, $invest->currency) . $invest->money;
+            $investList[$invest->id] = $invest->date . $allDepositors[$invest->depositor] . $this->lang->trade->invest . zget($currencySign, $invest->currency) . $invest->money;
         }
 
         unset($this->lang->trade->menu);
@@ -596,8 +602,9 @@ class trade extends control
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => inlink('browse', 'mode=loan')));
         }
 
-        $depositorList = array('' => '') + $this->loadModel('depositor', 'cash')->getPairs(true);
         $currencySign  = $this->loadModel('common', 'sys')->getCurrencySign();
+        $allDepositors = $this->loadModel('depositor', 'cash')->getPairs();
+        $depositorList = array('' => '') + $this->depositor->getPairs($status = 'normal');
 
         $loans = $this->dao->select('*')->from(TABLE_TRADE)->where('type')->eq('loan')->fetchAll();
         $loanList = array('' => '');
@@ -605,7 +612,7 @@ class trade extends control
         {
             $repay = $this->dao->select("sum(money) as value")->from(TABLE_TRADE)->where('loanID')->eq($loan->id)->andWhere('type')->eq('repay')->fetch('value');
             if($repay >= $loan->money) continue;
-            $loanList[$loan->id] = $loan->date . $depositorList[$loan->depositor] . $this->lang->trade->loan . zget($currencySign, $loan->currency) . $loan->money;
+            $loanList[$loan->id] = $loan->date . $allDepositors[$loan->depositor] . $this->lang->trade->loan . zget($currencySign, $loan->currency) . $loan->money;
         }
 
         unset($this->lang->trade->menu);
@@ -699,7 +706,7 @@ class trade extends control
         $this->view->title      = $this->lang->trade->import;
         $this->view->modalWidth = 600;
         $this->view->schemas    = $this->loadModel('schema')->getPairs();
-        $this->view->depositors = array('' => '') + $this->loadModel('depositor', 'cash')->getPairs(true);
+        $this->view->depositors = array('' => '') + $this->loadModel('depositor', 'cash')->getPairs($status = 'normal');
         $this->display();
     }
 
@@ -754,7 +761,7 @@ class trade extends control
 
         $this->view->title              = $this->lang->trade->batchCreate;
         $this->view->trades             = $trades;
-        $this->view->depositors         = $this->loadModel('depositor', 'cash')->getPairs(true);
+        $this->view->depositors         = $this->loadModel('depositor', 'cash')->getPairs($status = 'all', $markDisable = true);
         $this->view->users              = $this->loadModel('user')->getPairs('nodeleted,noforbidden,noclosed');
         $this->view->customerList       = $this->loadModel('customer')->getPairs('client', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit, $customerIDList);
         $this->view->traderList         = $this->customer->getPairs('provider', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit, $customerIDList);

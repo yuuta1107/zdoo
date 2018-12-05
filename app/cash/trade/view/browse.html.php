@@ -52,7 +52,7 @@
   <?php if($mode == 'invest')   commonModel::printLink('trade', 'invest',   'type=redeem', "<i class='icon-plus'> </i>" . $lang->trade->redeem,    "class='btn btn-primary'");?>
   <?php if($mode == 'loan')     commonModel::printLink('trade', 'loan',     'type=loan',   "<i class='icon-plus'> </i>" . $lang->trade->loan,      "class='btn btn-primary'");?>
   <?php if($mode == 'loan')     commonModel::printLink('trade', 'loan',     'type=repay',  "<i class='icon-plus'> </i>" . $lang->trade->repay,     "class='btn btn-primary'");?>
-  <?php if($mode == 'all' || $mode == 'in' || $mode == 'out') commonModel::printLink('trade', 'batchcreate', '', "<i class='icon-sitemap'> </i>" . $lang->trade->batchCreate, "class='btn btn-primary'")?>
+  <?php if($mode == 'all' || $mode == 'in' || $mode == 'out') commonModel::printLink('trade', 'batchcreate', "mode=$mode", "<i class='icon-sitemap'> </i>" . $lang->trade->batchCreate, "class='btn btn-primary'")?>
 </div>
 <div class='panel'>
   <?php $batchEdit = ($mode == 'in' or $mode == 'out') && commonModel::hasPriv('trade', 'batchEdit');?>
@@ -72,7 +72,7 @@
           <th class='w-80px'><?php commonModel::printOrderLink('dept', $orderBy, $vars, $lang->trade->dept);?></th>
           <th class='w-80px'><?php commonModel::printOrderLink('handlers', $orderBy, $vars, $lang->trade->handlers);?></th>
           <?php if(strpos(',in,all,', ",$mode,") !== false):?>
-          <th class='w-160px'><?php commonModel::printOrderLink('product', $orderBy, $vars,  $lang->trade->product . $lang->slash . $lang->trade->category);?></th>
+          <th class='w-160px'><?php commonModel::printOrderLink('product_asc,category', $orderBy, $vars,  $lang->trade->product . $lang->slash . $lang->trade->category);?></th>
           <?php else:?>
           <th class='w-100px'><?php commonModel::printOrderLink('category', $orderBy, $vars, $lang->trade->category);?></th>
           <?php endif;?>

@@ -16,6 +16,7 @@
 <?php include '../../../sys/common/view/chosen.html.php';?>
 <?php js::set('customer', isset($customer) ? $customer : 0);?>
 <?php js::set('order', isset($orderID) ? $orderID : 0);?>
+<?php js::set('label', $lang->contract->order);?>
 <div class='panel xuanxuan-card'>
   <div class='panel-heading'>
     <strong><i class='icon-plus'></i> <?php echo $lang->contract->create;?></strong>
@@ -29,7 +30,7 @@
         </tr>
         <?php if(isset($currentOrder)):?>
         <tr>
-          <th><?php echo $lang->contract->order;?></th>
+          <th class='orderTH'><?php echo $lang->contract->order;?></th>
           <td>
             <div class='input-group'>
               <select name='order[]' class='select-order form-control'>
@@ -47,7 +48,7 @@
         </tr>
         <?php endif;?>
         <tr id='orderTR' class='hide'>
-          <th><?php echo $lang->contract->order;?></th>
+          <th class='orderTH'><?php echo $lang->contract->order;?></th>
           <td id='orderTD'></td>
         </tr>
         <tr class='hide' id='tmpData'><td></td></tr>

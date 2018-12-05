@@ -40,6 +40,7 @@ $(document).ready(function()
 
             $('#refund-detail').removeClass('hidden');
             $('#money').prop('readonly', 'readonly');
+            $('#invoice').prop('readonly', 'readonly');
             $('#refund-date').addClass('hidden');
             $('#refund-related').addClass('hidden');
             $(this).find('i').removeClass('icon-double-angle-down');
@@ -50,6 +51,7 @@ $(document).ready(function()
             $('input[name^=moneyList]').val('');
             $('#refund-detail').addClass('hidden');
             $('#money').prop('readonly', '');
+            $('#invoice').prop('readonly', '');
             $('#refund-date').removeClass('hidden');
             $('#refund-related').removeClass('hidden');
             $(this).find('i').removeClass('icon-double-angle-up');
@@ -73,7 +75,24 @@ $(document).ready(function()
         $('#money').val(money);
         return false;
     }
+
+    function updateInvoice()
+    {
+        var invoice = 0;
+        $('input[name^=invoiceList]').each(function()
+        {
+            if($.isNumeric($(this).val()))
+            {
+                invoice += parseFloat($(this).val());
+            }
+        });
+        invoice = Math.round(invoice * 100) / 100;
+        $('#invoice').val(invoice);
+        return false;
+    }
+    
     $('input[name^=moneyList]').change(updateMoney);
+    $('input[name^=invoiceList]').change(updateInvoice);
 
     /* Add a trade detail item. */
     $(document).on('click', '.table-detail .plus', function()
@@ -96,6 +115,7 @@ $(document).ready(function()
         tr.next().find('select[name^=relatedList]').val($('#related').val()).chosen(window.chosenDefaultOptions);
         tr.next().find('textarea[name^=descList]').val($('#desc').val());
         $('input[name^=moneyList]').change(updateMoney);
+        $('input[name^=invoiceList]').change(updateInvoice);
         v.key++;
         return false;
     });
@@ -112,6 +132,7 @@ $(document).ready(function()
             $(this).closest('tr').find('input,select').val('');
         }
         $('input[name^=moneyList]').change();
+        $('input[name^=invoiceList]').change();
         return false;
     });
 

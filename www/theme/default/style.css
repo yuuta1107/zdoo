@@ -146,7 +146,7 @@ body.page-actions-fixed {padding-bottom: 70px}
 .article-files > li.file > a {line-height: 25px; padding: 40px 15px 5px 15px;max-width: 180px;white-space:nowrap; text-overflow:ellipsis; -o-text-overflow:ellipsis; overflow:hidden;}
 .article-files > li.file > a:before {display: block; width: 100%; font-size: 30px; position: absolute; top: 10px; text-align: center; left: 0; content: '\e6d4'; font-family: ZenIcon;}
 .article-files > li.article-files-heading {float: none; display: block; color: #999;font-weight: bold;}
-.article-files > li .file-actions {display: block; position: absolute; right: 5px; top: 0;} 
+.article-files > li .file-actions {display: block; position: absolute; right: 5px; top: 0;}
 .article-files > li .file-actions > a {opacity: 0; display: inline-block; background-color: #D9E8F5; color: #666; padding: 3px 7px;}
 .article-files > li:hover .file-actions > a,.article-files > li .file-actions > a:hover {opacity: 1;  background-color: #279DC0; color: #fff; text-decoration: none;}
 
@@ -309,7 +309,6 @@ body > form {margin-top: 20px;} /* form behind body */
 .form-control[type='file']:hover {background-color: #fff;}
 .page-form {padding-left: 15px; padding-right: 15px;}
 .input-group {width: 100%;}
-.input-group > .form-control:first-child{border-radius: 4px 0 0 4px!important;}
 .ie-8 .input-group > .form-control + .input-group-btn > .btn {margin-left: -1px}
 @media (min-width: 768px){.form-inline .input-group .form-control {width: 100%}}
 
@@ -320,6 +319,8 @@ label.checkbox, input[type='radio']+label{font-weight: normal;}
 .checkbox-inline, .radio-inline {padding-left: 18px;}
 label.checkbox-inline input[type='checkbox'],
 label.radio-inline input[type='radio'] {margin-top: 2px; margin-left: -18px;}
+.input-group-addon label.checkbox-inline input[type='checkbox'],
+.input-group-addon label.radio-inline input[type='radio'] {margin-top: 1px;}
 
 .panel-body > form{padding-right: 10px; max-width: 1000px}
 
@@ -336,7 +337,8 @@ label.radio-inline input[type='radio'] {margin-top: 2px; margin-left: -18px;}
 .table-form td > .row > [class*="col-"] {padding-right: 0;line-height: 34px}
 .table-form td .checkbox {margin: 0}
 
-.form-control {padding: 5px 10px}
+.form-control, .form-condensed .form-control{padding: 5px 10px;border-radius:0;}
+.form-condensed .input-group>.form-control{border-radius:0;}
 .form-control.input-sm {padding: 3px 5px; height: 20px}
 .table-form {margin-bottom: 0;}
 .table-form td, .table-form th {padding: 5px; font-size: 12px;}
@@ -346,9 +348,9 @@ fieldset.fieldset-pure {background: none; padding: 0; border: none; padding-top:
 fieldset > legend {width: auto; margin: 0 0 0 -5px; font-size: 13px; font-weight: bold; border-bottom: none; padding: 0 5px}
 fieldset > .form-group {margin-bottom: 0;}
 
-form .chosen-container-single .chosen-single {padding: 4px 10px; height: 30px}
+form .chosen-container-single .chosen-single {padding: 4px 10px; height: 30px;border-radius:0}
 form .chosen-container-single .chosen-single div {padding: 4px 10px 4px 8px;}
-form .chosen-container-multi .chosen-choices {min-height: 30px}
+form .chosen-container-multi .chosen-choices {min-height: 30px; border-radius:0}
 form .chosen-container-multi .chosen-choices li {margin: 4px 0 0 4px}
 form .chosen-container-multi .chosen-choices li.search-field {margin-bottom: 4px;}
 form .chosen-container {font-size: 13px}
@@ -356,8 +358,11 @@ form .chosen-container-single .chosen-single {padding: 5px 10px}
 form .chosen-container-single .chosen-single abbr {right: 24px}
 form .chosen-container-single .chosen-search:before {top: 10px}
 
-.input-group .chosen-container-single .chosen-single {height: 34px; line-height: 24px; border-radius: 4px 0 0 4px;}
-
+.input-group .chosen-container-single .chosen-single {height: 34px; line-height: 24px; border-radius: 0px;}
+.input-group-addon{border-radius:0}
+.input-group .input-group-btn .btn{border-radius: 0}
+.input-group .input-group-btn lable{border-radius: 0}
+.form-condensed .input-group>.form-control, .form-condensed .input-group>.input-group-addon, .form-condensed .input-group>.input-group-btn>.btn {border-radius:0}
 .form-condensed .btn-mini {padding: 1px 5px;}
 
 td #aliasLabel {display: table-row;}
@@ -511,7 +516,7 @@ td #aliasLabel {display: table-row;}
 .article {border: 1px solid #ddd; border-radius: 4px; box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05); margin-bottom: 20px;}
 .article > header h1,.article > header h2,.article > header h3{font-size: 22px}
 .article > header > dl {margin: 0 0 10px; background: transparent; border: 0;padding: 5px 2px 0 2px;}
-.article > footer > p {padding: 0 0 10px;} 
+.article > footer > p {padding: 0 0 10px;}
 .article > header > .abstract {margin: 0; padding: 10px;}
 .article > footer {position: relative;padding-top: 15px; margin-top: 10px;}
 .article > footer .pager {margin-bottom: 0;}
@@ -521,7 +526,7 @@ td #aliasLabel {display: table-row;}
 /* avatar */
 .avatar {display: inline-block; width: 48px; height: 48px; max-width: 100%; max-height: 100%; border-radius: 4px; position: relative; overflow: hidden;}
 .avatar:before {content: '\e608'; font-family: ZenIcon; color: #fff; position: absolute; z-index: 1; font-size: 36px; width: 100%; height: 100%; left: 0; top: 0; line-height: 48px; text-align: center; background: #777; display: block;}
-.avatar:not(:empty):before {display: none} 
+.avatar:not(:empty):before {display: none}
 .avatar > img {border-radius: 4px; width: 100%; height: 100%; z-index: 2; position: absolute; left: 0; top: 0;}
 .avatar.avatar-lg {border-radius: 6px; width: 128px; height: 128px;}
 .avatar.avatar-md {border-radius: 4px; width: 28px; height: 28px;}
@@ -612,3 +617,5 @@ td #aliasLabel {display: table-row;}
 .no-padding-l{padding-left: 0;}
 
 .xuanxuan-card {width: 525px;}
+
+.ke-container{border-radius:0px !important;}

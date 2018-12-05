@@ -1488,8 +1488,8 @@ class baseRouter
             /* 通过反射获得hook脚本对应的方法所在的文件和起止行数。Reflection the hooked method to get it's defined position. */
             $methodRelfection = new reflectionMethod($tmpModelClass, $method);
             $definedFile = $methodRelfection->getFileName();
-            $startLine   = $methodRelfection->getStartLine() . ' ';
-            $endLine     = $methodRelfection->getEndLine() . ' ';
+            $startLine   = $methodRelfection->getStartLine();
+            $endLine     = $methodRelfection->getEndLine();
 
             /* 将Hook脚本和老的代码合并在一起，并替换原来的定义。Merge hook codes with old codes and replace back. */
             $oldCodes  = $definedFile == $tmpModelFile ? $mergedModelCodes : $mainModelCodes;

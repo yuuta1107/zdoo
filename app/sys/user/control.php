@@ -558,7 +558,9 @@ END:VCARD";
         if(!empty($_POST))
         {
             $size = fixer::input('post')->get();
-            $this->loadModel('file')->cropImage($image->realPath, $image->realPath, $size->left, $size->top, $size->right - $size->left, $size->bottom - $size->top, $size->scaled ? $size->width : 0, $size->scaled ? $size->height : 0);
+            $this->loadModel('file')->cropImage($image->realPath, $image->realPath, $size->left, $size->top, $size->right - $size->left, $size->bottom - $size->top, $size->scaled ? $size->scaleWidth : 0, $size->scaled ? $size->scaleHeight : 0);
+            $user = $this->user->getByAccount($this->app->user->account);
+            $this->app->user->avatar = $user->avatar;
             exit('success');
         }
 

@@ -19,12 +19,6 @@
         <th class='w-70px'><?php echo $lang->provider->name;?></th>
         <td><?php echo $provider->name;?></td>
       </tr>
-      <?php if($provider->depositor):?>
-      <tr>
-        <th><?php echo $lang->customer->depositor;?></th>
-        <td><?php echo $provider->depositor;?></td>
-      </tr>
-      <?php endif;?>
       <?php if($provider->size):?>
       <tr>
         <th><?php echo $lang->provider->size;?></th>
@@ -69,6 +63,12 @@
       <?php endif;?>
     </table>
   </div>
+  <?php if($provider->depositor):?>
+  <div class='panel'>
+    <div class='panel-heading'><strong><?php echo $lang->provider->depositor;?></strong></div>
+    <div class='panel-body'><?php echo $provider->depositor;?></div>
+  </div>
+  <?php endif;?>
   <?php if($provider->desc):?>
   <div class='panel'>
     <div class='panel-heading'><strong><?php echo $lang->provider->desc;?></strong></div>

@@ -94,8 +94,7 @@ class order extends control
         }
 
         unset($this->lang->order->menu);
-        $products = $this->loadModel('product')->getPairs($status = 'normal');
-        $this->view->products          = array( 0 => '') + $products;
+        $this->view->products          = array('') + $this->loadModel('product')->getPairs($status = 'normal');
         $this->view->customers         = $this->loadModel('customer')->getPairs('client', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit);
         $this->view->title             = $this->lang->order->create;
         $this->view->currencyList      = $this->loadModel('common', 'sys')->getCurrencyList();
@@ -142,7 +141,7 @@ class order extends control
         $this->view->title        = $this->lang->order->edit;
         $this->view->order        = $order;
         $this->view->users        = $this->loadModel('user')->getPairs('nodeleted,noforbidden,noclosed');
-        $this->view->products     = $this->loadModel('product')->getPairs();
+        $this->view->products     = $this->loadModel('product')->getPairs($status = 'normal');
         $this->view->customer     = $this->loadModel('customer')->getByID($order->customer);
         $this->view->contract     = $this->order->getContract($orderID);
         $this->view->customers    = $this->loadModel('customer')->getPairs('client', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit, $order->customer);
@@ -469,17 +468,22 @@ class order extends control
         $customerIdList = $this->loadModel('customer')->getCustomersSawByMe();
         $products       = $this->loadModel('product')->getPairs();
         $thisWeek       = date::getThisWeek();
-        $orders         = array('');
+        $orders         = array();
         if($account == '') $account = $this->app->user->account;
+
+        $datingList = $this->loadModel('action')->getDatingOfThisWeek($account, 'order');
+        $datingOrderList = array();
+        foreach($datingList as $dating) $datingOrderList[] = $dating->objectID;
 
         $sql = $this->dao->select('o.id, o.product, o.createdDate, c.name as customerName, t.id as todo')->from(TABLE_ORDER)->alias('o')
             ->leftJoin(TABLE_CUSTOMER)->alias('c')->on("o.customer=c.id")
             ->leftJoin(TABLE_TODO)->alias('t')->on("t.type='order' and o.id=t.idvalue")
             ->where('o.deleted')->eq(0)
             ->andWhere('o.assignedTo')->eq($account)
-            ->andWhere('o.nextDate')->between($thisWeek['begin'], $thisWeek['end'])
+            ->andWhere('o.id')->in($datingOrderList)
             ->andWhere('o.customer')->in($customerIdList)
             ->orderBy('o.id_desc');
+
         $stmt = $sql->query();
         while($order = $stmt->fetch())
         {    
@@ -494,6 +498,7 @@ class order extends control
 
         if($type == 'select')
         {
+            $orders = array_merge(array(''), $orders);
             if($id) die(html::select("idvalues[$id]", $orders, '', 'class="form-control"'));
             die(html::select('idvalue', $orders, '', 'class=form-control'));
         }

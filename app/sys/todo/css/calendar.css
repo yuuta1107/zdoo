@@ -29,7 +29,9 @@
 
 .trash {position: absolute; top: 0; right: 350px; padding: 3px 8px 3px 180px; transition: all 0.3s ease 0s;}
 .hide-side .trash {right: 50px;}
-.trash:hover {background: #f0f0f0;}
+.trash .tip{position: absolute; left: 60px; top:10px; display: none;}
+.event-dragging .tip{display: block;}
+.event-dragging .trash {background: #f0f0f0;}
 .trash .icon{font-size: 30px;}
 
 .calendar-views{padding-top: 43px;}
@@ -39,4 +41,4 @@
 
 .assign{position:relative;padding:5px 5px;left:-5px;top:0;background-color:rgba(0, 0, 0, 0.25)}
 
-.event-dragging .trash {background-color: #fff0d5}
+.calendar .label-rest {float: left; margin-top: 2px; display: inline-block; width: 16px; height: 16px; border-radius: 8px; background-color: #EA644A; color: #FFF; font-size: 13px ; text-align: center;}

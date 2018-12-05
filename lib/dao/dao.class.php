@@ -149,6 +149,20 @@ class dao extends baseDAO
  */
 class sql extends baseSQL
 {
+    public $checkGroupBy = true;
+
+    /**
+     * Set Check groupby.
+     * 
+     * @param  bool    $open 
+     * @access public
+     * @return void
+     */
+    public function setCheckGroupBy($open = true)
+    {
+        $this->checkGroupBy = $open;
+    }
+
     /**
      * 创建ORDER BY部分。
      * Create the order by part.
@@ -184,7 +198,7 @@ class sql extends baseSQL
     public function groupBy($groupBy)
     {
         if($this->inCondition and !$this->conditionIsTrue) return $this;
-        if(!preg_match('/^\w+[a-zA-Z0-9_`.,\s]+$/', $groupBy))
+        if($this->checkGroupBy and !preg_match('/^\w+[a-zA-Z0-9_`.,\s]+$/', $groupBy))
         {
             $groupBy = htmlspecialchars($groupBy);
             die("Group is bad query, The group is $groupBy");

@@ -28,12 +28,18 @@
       <div class='panel-heading'><strong><?php echo $lang->customer->desc;?></strong></div>
       <div class='panel-body'><?php echo $customer->desc;?></div>
     </div>
-
+    <?php if($customer->intension):?>
     <div class='panel'>
       <div class='panel-heading'><strong><?php echo $lang->customer->intension;?></strong></div>
       <div class='panel-body'><?php echo $customer->intension;?></div>
     </div>
-
+    <?php endif;?>
+    <?php if($customer->depositor):?>
+    <div class='panel'>
+      <div class='panel-heading'><strong><?php echo $lang->customer->depositor;?></strong></div>
+      <div class='panel-body'><?php echo $customer->depositor;?></div>
+    </div>
+    <?php endif;?>
     <?php if(!empty($returnList)):?>
     <div class='panel'>
       <div class='panel-heading'><strong><?php echo $lang->contract->returnRecords;?></strong></div>
@@ -43,6 +49,7 @@
           <th class='w-100px'><?php echo $lang->contract->returnedDate;?></th>
           <th class='w-100px'><?php echo $lang->contract->returnedBy;?></th> 
           <th class='w-160px'><?php echo $lang->contract->amount;?></th> 
+          <th class='w-160px'><?php echo $lang->trade->depositor;?></th>
         </tr>
         <?php foreach($returnList as $return):?>
         <?php $contract = $contracts[$return->contract];?>
@@ -51,6 +58,7 @@
           <td><?php echo $return->returnedDate;?></td>
           <td><?php echo zget($users, $return->returnedBy, $return->returnedBy);?></td>
           <td><?php echo zget($currencySign, $contract->currency, '') . formatMoney($return->amount);?></td>
+          <td><?php echo $return->depositor;?></td>
         </tr>
         <?php endforeach;?>
       </table>
@@ -101,10 +109,6 @@
           <tr>
             <th><?php echo $lang->customer->sourceNote;?></th>
             <td><?php echo $customer->sourceNote;?></td>
-          </tr>
-          <tr>
-            <th><?php echo $lang->customer->depositor;?></th>
-            <td><?php echo $customer->depositor;?></td>
           </tr>
           <tr>
             <th><?php echo $lang->customer->level;?></th>

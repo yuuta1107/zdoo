@@ -64,6 +64,7 @@ class contract extends control
         /* Build search form. */
         $this->loadModel('search', 'sys');
         $this->config->contract->search['actionURL'] = $this->createLink('contract', 'browse', 'mode=bysearch');
+        $this->config->contract->search['params']['product']['values']  = array('' => '') + $this->loadModel('product')->getPairs();
         $this->search->setSearchParams($this->config->contract->search);
 
         /* Set allowed edit contract ID list. */
@@ -318,7 +319,7 @@ class contract extends control
         $this->view->contract      = $contract;
         $this->view->users         = $this->loadModel('user')->getPairs('nodeleted,noforbidden');
         $this->view->currencySign  = $currencySign;
-        $this->view->depositorList = array('') + $this->loadModel('depositor', 'cash')->getPairs(true);
+        $this->view->depositorList = array('') + $this->loadModel('depositor', 'cash')->getPairs($status = 'normal');
         $this->view->deptList      = $this->loadModel('tree')->getOptionMenu('dept', 0, $removeRoot = true);
         $this->view->categories    = $this->loadModel('tree')->getOptionMenu('in', 0);
         $this->view->productList   = array(0 => '') + $productList;

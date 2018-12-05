@@ -13,6 +13,9 @@
  */
 
 if(!function_exists('getRanzhiWebRoot')){function getRanzhiWebRoot(){}}
+
+$config->version = '5.0';                    // 然之的版本。 The version of RanZhi. Don't change it.
+
 /* 基本设置。Rangerteam basic settings. */
 $config->webRoot       = getRanzhiWebRoot(); // URL根目录。                               The root path of the url.
 $config->cookiePath    = '/';                // cookies路径分隔符。                       The path of cookies.

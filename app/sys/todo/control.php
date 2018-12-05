@@ -626,4 +626,36 @@ class todo extends control
         $this->view->actions = $this->loadModel('action')->getList('todo', $todoID);
         $this->display();
     }
+
+    /**
+     * Check if the dates is weekend or holiday by ajax.
+     *
+     * @access public
+     * @return void
+     */
+    public function ajaxGetWeekendAndHoliday()
+    {
+        $dates = array();
+
+        if($this->post->dates)
+        {
+            $this->loadModel('attend', 'oa');
+            $this->loadModel('holiday', 'oa');
+            foreach($this->post->dates as $originDate)
+            {
+                $date = date('Y-m-d', strtotime($originDate));
+
+                if($this->holiday->isHoliday($date))
+                {
+                    $dates[$originDate] = $this->lang->attend->abbrStatusList['leave'];
+                }
+                elseif($this->attend->isRestDay($date))
+                {
+                    $dates[$originDate] = $this->lang->attend->abbrStatusList['rest'];
+                }
+            }
+        }
+
+        $this->send(array('status' => 'success', 'dates' => $dates));
+    }
 }

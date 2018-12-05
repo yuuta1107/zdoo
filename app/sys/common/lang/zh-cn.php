@@ -44,7 +44,7 @@ $lang->apps->superadmin = '后台';
 
 /* Lang items for ranzhi. */
 $lang->ranzhi    = '然之协同';
-$lang->agreement = "已阅读并同意<a href='http://zpl.pub/page/zplv11.html' target='_blank'>《Z PUBLIC LICENSE授权协议1.2》</a>。<span class='text-danger'>未经许可，不得去除、隐藏或遮掩然之系统的任何标志及链接。</span>";
+$lang->agreement = "已阅读并同意<a href='http://zpl.pub/page/zplv12.html' target='_blank'>《Z PUBLIC LICENSE授权协议1.2》</a>。<span class='text-danger'>未经许可，不得去除、隐藏或遮掩然之系统的任何标志及链接。</span>";
 $lang->poweredBy = "<a href='http://www.ranzhi.org/?v=%s' target='_blank'>{$lang->ranzhi}%s</a>";
 $lang->ipLimited = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8' /></head><body>抱歉，管理员限制当前IP登录，请联系管理员解除限制。</body></html>";
 
@@ -187,6 +187,7 @@ $lang->js->timeout               = '网络超时,请重试';
 $lang->js->confirmDiscardChanges = '表单已更改，确定关闭？';
 $lang->js->yes                   = '是';
 $lang->js->no                    = '否';
+$lang->js->installZipExtension   = "导出xlsx格式，需要安装 php-zip 扩展，<a href='https://www.ranzhi.org/book/ranzhi/165.html' target='_blank'>安装手册</a>";
 
 /* Contact fields*/
 $lang->company = new stdclass();
@@ -294,7 +295,7 @@ $lang->product->menu->browse     = '所有产品|product|browse|mode=browse&stat
 $lang->product->menu->normal     = '正常|product|browse|mode=browse&status=normal';
 $lang->product->menu->developing = '研发中|product|browse|mode=browse&status=developing';
 $lang->product->menu->offline    = '下线|product|browse|mode=browse&status=offline';
-$lang->product->menu->category   = '产品分类|tree|browse|type=product';
+$lang->product->menu->category   = '产品分类|tree|browse|type=product&startModule=&root=&from=product';
 
 $lang->todo = new stdclass();
 $lang->todo->menu = new stdclass();
@@ -526,6 +527,6 @@ if(!defined('DT_DATE3'))      define('DT_DATE3',      'Y年m月d日');
 if(!defined('DT_DATE4'))      define('DT_DATE4',      'n月j日');
 if(!defined('DT_DATE5'))      define('DT_DATE5',      'Y年m月');
 if(!defined('DT_TIME1'))      define('DT_TIME1',      'H:i:s');
-if(!defined('DT_TIME1'))      define('DT_TIME2',      'H:i');
+if(!defined('DT_TIME2'))      define('DT_TIME2',      'H:i');
 
 include (dirname(__FILE__) . '/menuOrder.php');

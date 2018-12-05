@@ -56,7 +56,7 @@ $(document).ready(function()
                 'idvalue': from.data('id'),
                 'name': from.data('name'),
                 'begin': '',
-                'end':'' 
+                'end':''
                 }
                 var url = createLink('todo', 'create', '', 'json');
             }
@@ -174,4 +174,43 @@ $(document).ready(function()
     if($('.current').offset().top >= $(window).scrollTop() + $(window).height()) $(window).scrollTop($('.current').offset().top);
 
     fixTableHeader();
+    updateWeekendAndHoliday();
+    var lastUpdateHolidayRequest;
+    $('.calendar').on('display.zui.calendar', function()
+    {
+        if(lastUpdateHolidayRequest)
+        {
+            clearTimeout(lastUpdateHolidayRequest);
+            lastUpdateHolidayRequest = null;
+        }
+        lastUpdateHolidayRequest = setTimeout(function()
+        {
+            lastUpdateHolidayRequest = null;
+            updateWeekendAndHoliday();
+        }, 300);
+    });
 });
+
+
+function updateWeekendAndHoliday()
+{
+    var dates = $('.calendar .cell-day .day').map(function(){return $(this).data('date').toDateString();}).get();
+    $.post(createLink('todo', 'ajaxGetWeekendAndHoliday'), {dates: dates}, function(response)
+    {
+        if(response.status == 'success')
+        {
+            if(response.dates)
+            {
+                for(var date in response.dates)
+                {
+                    var label = response.dates[date];
+                    $(".cell-day .day[data-date='" + date + "'] .heading").prepend("<div class='label-rest'>" + label + "</div>");
+                }
+            }
+        }
+        else
+        {
+            if(response.message) bootbox.alert(response.message);
+        }
+    }, 'json');
+}

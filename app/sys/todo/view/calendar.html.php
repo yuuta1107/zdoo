@@ -59,12 +59,17 @@
       <?php $class = $this->cookie->todoCalendarSide == 'hide' ? 'icon-collapse-full' : 'icon-expand-full'?>
       <?php echo html::a('###', "<i class='$class'></i>", "class='btn'")?>
     </div>
-    <div class='day trash' data-date='1970-01-01' title='<?php echo $lang->delete?>'><i class="icon icon-trash"></i></div>
+    <div class='day trash' data-date='1970-01-01' title='<?php echo $lang->delete?>'>
+      <span class="tip"><?php echo $lang->todo->deleteTip;?></span>
+      <i class="icon icon-trash"></i>
+    </div>
   </div>
 </div>
 <script>
 function updateCalendar()
 {
+    $('.calendar .label-rest').remove();
+
     var calendar = $('.calendar').data('zui.calendar');
     var date = calendar.date.format('yyyyMMdd');
     $.get(createLink('todo', 'calendar', 'date=' + date, 'json'), function(response)
@@ -72,7 +77,7 @@ function updateCalendar()
         if(response.status == 'success')
         {
             var data = JSON.parse(response.data);
-            for(e in data.data.events) 
+            for(e in data.data.events)
             {
                 data.data.events[e]['start'] = new Date(data.data.events[e]['start']);
                 data.data.events[e]['end']   = new Date(data.data.events[e]['end']);
@@ -112,7 +117,7 @@ function finishTodo(id)
 function adjustWidth()
 {
     var weekendEvents = 0;
-    var width = 80;
+    var width = 100;
     $('.calendar tbody.month-days tr.week-days').each(function()
     {
         weekendEvents += $(this).find('td').eq(5).find('.event').size();

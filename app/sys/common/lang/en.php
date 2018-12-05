@@ -44,7 +44,7 @@ $lang->apps->superadmin = 'ADMIN';
 
 /* Lang items for ranzhi. */
 $lang->ranzhi    = 'Zdoo';
-$lang->agreement = "I have read and agreed to  <a href='http://zpl.pub/page/zplv11.html' target='_blank'>Z PUBLIC LICENSE 1.2</a>, <span class='text-danger'>and will keep the logos and links of Zdoo.</span>";
+$lang->agreement = "I have read and agreed to  <a href='http://zpl.pub/page/zplv12.html' target='_blank'>Z PUBLIC LICENSE 1.2</a>, <span class='text-danger'>and will keep the logos and links of Zdoo.</span>";
 $lang->poweredBy = "<a href='http://www.zdoo.org/?v=%s' target='_blank'>{$lang->ranzhi} %s</a>";
 $lang->ipLimited = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8' /></head><body>Sorry, your current IP is blocked. Please contact the Administrator to get privilege.</body></html>";
 
@@ -132,10 +132,10 @@ $lang->year           = 'Year';
 $lang->month          = 'Month';
 $lang->day            = 'Day';
 $lang->loading        = 'Loading...';
-$lang->saveSuccess    = 'Saved.';
-$lang->setSuccess     = 'Saved.';
-$lang->sendSuccess    = 'Sent.';
-$lang->fail           = 'Failed.';
+$lang->saveSuccess    = 'Saved';
+$lang->setSuccess     = 'Saved';
+$lang->sendSuccess    = 'Sent';
+$lang->fail           = 'Failed';
 $lang->noResultsMatch = 'No match found.';
 $lang->searchMore     = "More results：";
 $lang->files          = 'Files';
@@ -187,6 +187,7 @@ $lang->js->timeout               = 'Timeout';
 $lang->js->confirmDiscardChanges = 'Discard changes?';
 $lang->js->yes                   = 'Yes';
 $lang->js->no                    = 'No';
+$lang->js->installZipExtension   = "Php-zip extension is required to export .xlsx file.";
 
 /* Contact fields*/
 $lang->company = new stdclass();
@@ -294,7 +295,7 @@ $lang->product->menu->browse     = 'All Products|product|browse|mode=browse&stat
 $lang->product->menu->normal     = 'Normal|product|browse|mode=browse&status=normal';
 $lang->product->menu->developing = 'Developing|product|browse|mode=browse&status=developing';
 $lang->product->menu->offline    = 'Offline|product|browse|mode=browse&status=offline';
-$lang->product->menu->category   = 'Category|tree|browse|type=product';
+$lang->product->menu->category   = 'Category|tree|browse|type=product&startModule=&root=&from=product';
 
 $lang->todo = new stdclass();
 $lang->todo->menu = new stdclass();
@@ -526,6 +527,6 @@ if(!defined('DT_DATE3'))      define('DT_DATE3',      'F j, Y ');
 if(!defined('DT_DATE4'))      define('DT_DATE4',      'M j');
 if(!defined('DT_DATE5'))      define('DT_DATE5',      'M Y');
 if(!defined('DT_TIME1'))      define('DT_TIME1',      'H:i:s');
-if(!defined('DT_TIME1'))      define('DT_TIME2',      'H:i');
+if(!defined('DT_TIME2'))      define('DT_TIME2',      'H:i');
 
 include (dirname(__FILE__) . '/menuOrder.php');

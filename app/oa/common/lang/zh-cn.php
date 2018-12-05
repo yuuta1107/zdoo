@@ -51,7 +51,7 @@ $lang->leave->menu = new stdclass();
 $lang->leave->menu->personal     = '我的请假|leave|personal|';
 $lang->leave->menu->browseReview = '我的审核|leave|browsereview|';
 $lang->leave->menu->company      = '所有请假|leave|company|';
-$lang->leave->menu->settings     = '设置|leave|setReviewer|';
+$lang->leave->menu->settings     = array('link' => '设置|leave|setReviewer|', 'alias' => 'personalAnnual');
 
 if(!isset($lang->makeup)) $lang->makeup = new stdclass();
 $lang->makeup->menu = new stdclass();
@@ -105,6 +105,7 @@ $lang->setting->menu->companyAttend   = '公司考勤设置|attend|settings|modu
 $lang->setting->menu->personalAttend  = '个人考勤设置|attend|personalSettings|module=setting';
 $lang->setting->menu->deptManager     = '部门经理设置|attend|setManager|module=setting';
 $lang->setting->menu->leaveReviewer   = '请假设置|leave|setReviewer|module=setting';
+$lang->setting->menu->personalAnnual  = '个人年假|leave|personalAnnual|module=setting';
 $lang->setting->menu->makeupReviewer  = '补班设置|makeup|setReviewer|module=setting';
 $lang->setting->menu->lieuReviewer    = '调休设置|lieu|setReviewer|module=setting';
 $lang->setting->menu->overtimeReviewer= '加班设置|overtime|setReviewer|module=setting';

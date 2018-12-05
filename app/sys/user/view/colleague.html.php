@@ -67,6 +67,7 @@ js::set('deptID', $deptID);
                 <?php $companyName = isset($config->company->name) ? $config->company->name : '';?>
                 <?php if($user->phone or $user->mobile) echo "<dd><i class='icon icon-phone-sign'></i> $user->phone $user->mobile</dd>";?>
                 <?php if($user->qq) echo "<dd><i class='icon icon-qq'></i> " . html::a("http://wpa.qq.com/msgrd?v=3&uin={$user->qq}&site={$companyName}&menu=yes", $user->qq, "target='_blank'") . "</dd>";?>
+                <?php if($user->weixin) echo "<dd><i class='icon icon-wechat'></i> " . $user->weixin . "</dd>";?>
                 <?php if($user->email) echo "<dd><i class='icon icon-envelope-alt'></i> " . html::mailto($user->email, $user->email) . "</dd>";?>
                 <?php if($user->address) echo "<dd><i class='icon icon-home'></i> $user->address </dd>";?>
               </dl>

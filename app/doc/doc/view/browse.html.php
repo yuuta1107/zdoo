@@ -14,7 +14,7 @@
 <?php include '../../../sys/common/view/treeview.html.php';?>
 <?php js::set('libID ', $libID);?>
 <?php js::set('libType', $lib->project ? 'project' : 'custom');?>
-
+<?php js::set('mode', $browseType);?>
 <?php if($this->cookie->browseType == 'bymenu'):?>
 <?php include dirname(__FILE__) . '/browsebymenu.html.php';?>
 <?php elseif($this->cookie->browseType == 'bytree'):?>

@@ -13,19 +13,19 @@ class refundModel extends model
 {
     /**
      * Get a refund by id.
-     * 
-     * @param  int    $ID 
+     *
+     * @param  int    $id
      * @access public
-     * @return void
+     * @return object
      */
-    public function getByID($ID)
+    public function getByID($id)
     {
-        $refund = $this->dao->select('*')->from(TABLE_REFUND)->where('id')->eq($ID)->fetch();
+        $refund = $this->dao->select('*')->from(TABLE_REFUND)->where('id')->eq($id)->fetch();
         if($refund)
         {
-            $details = $this->dao->select('*')->from(TABLE_REFUND)->where('parent')->eq($ID)->fetchAll('id');
+            $details = $this->dao->select('*')->from(TABLE_REFUND)->where('parent')->eq($id)->fetchAll('id');
             $refund->detail = $details;
-            $refund->files  = $this->loadModel('file')->getByObject('refund', $ID);
+            $refund->files  = $this->loadModel('file')->getByObject('refund', $id);
 
             $objectType = '';
             if($refund->customer) $objectType  = 'customer';
@@ -33,6 +33,40 @@ class refundModel extends model
             if($refund->contract) $objectType  = 'contract';
             if($refund->project)  $objectType .= ',project';
             $refund->objectType = explode(',', trim($objectType, ','));
+
+            $refund->firstReviewerLabel  = '';
+            $refund->secondReviewerLabel = '';
+
+            $users = $this->loadModel('user')->getPairs();
+            if(empty($refund->firstReviewer))
+            {
+                if($refund->status == 'wait')
+                {
+                    if(empty($this->config->refund->firstReviewer))
+                    {
+                        $managers = $this->user->getUserManagerPairs();
+                        $reviewer = trim(zget($managers, $refund->createdBy, ''), ',');
+                    }
+                    else
+                    {
+                        $reviewer = $this->config->refund->firstReviewer;
+                    }
+                    $refund->firstReviewerLabel = zget($users, $reviewer) . $this->lang->refund->statusList['doing'];
+                }
+            }
+            else
+            {
+                $refund->firstReviewerLabel = zget($users, $refund->firstReviewer) . $this->lang->at . $refund->firstReviewDate;
+            }
+
+            if(empty($refund->secondReviewer))
+            {
+                if(!empty($this->config->refund->secondReviewer) && $refund->status == 'doing') $refund->secondReviewerLabel = zget($users, $this->config->refund->secondReviewer) . $this->lang->refund->statusList['doing'];
+            }
+            else
+            {
+                $refund->secondReviewerLabel = zget($users, $refund->secondReviewer) . $this->lang->at . $refund->secondReviewDate;;
+            }
         }
         return $refund;
     }
@@ -166,8 +200,7 @@ class refundModel extends model
             ->add('createdDate', helper::now()) 
             ->join('related', ',')
             ->setDefault('date', helper::today())
-            ->setForce('money', (float)$this->post->money)
-            ->remove('customer,order,contract,project,objectType,dateList,moneyList,categoryList,descList,relatedList,files,labels')
+            ->remove('customer,order,contract,project,objectType,dateList,moneyList,invoiceList,categoryList,descList,relatedList,files,labels')
             ->get();
 
         $result = $this->processRefund($refund);
@@ -224,9 +257,17 @@ class refundModel extends model
             ->add('secondReviewDate', '0000-00-00 00:00:00')
             ->join('related', ',')
             ->setDefault('date', helper::today())
-            ->setForce('money', (float)$this->post->money)
-            ->remove('customer,order,contract,project,objectType,dateList,moneyList,categoryList,descList,relatedList,files,labels')
+            ->remove('customer,order,contract,project,objectType,dateList,moneyList,invoiceList,categoryList,descList,relatedList,files,labels')
             ->get();
+
+        if($oldRefund->status == 'reject')
+        {
+            $refund->status           = 'wait';
+            $refund->firstReviewer    = '';
+            $refund->firstReviewDate  = '0000-00-00 00:00:00';
+            $refund->secondReviewer   = '';
+            $refund->secondReviewDate = '0000-00-00 00:00:00';
+        }
 
         $result = $this->processRefund($refund);
         if(is_array($result)) return $result;
@@ -300,6 +341,7 @@ class refundModel extends model
         /* Insert detail */
         if(!empty($_POST['moneyList']))
         {
+            $invoiceList = $_POST['invoiceList'];
             foreach($this->post->moneyList as $key => $money)
             {
                 if(!(float)$money) continue;
@@ -309,6 +351,7 @@ class refundModel extends model
                 $detail->currency    = $this->post->currency;
                 $detail->date        = $this->post->dateList[$key] ? $this->post->dateList[$key] : helper::today();
                 $detail->money       = (float)$money;
+                $detail->invoice     = (float)$invoiceList[$key];
                 $detail->desc        = $this->post->descList[$key];
                 $detail->related     = implode(',', $this->post->relatedList[$key]);
                 $detail->status      = 'wait';
@@ -385,7 +428,7 @@ class refundModel extends model
                 $newCategories[$key] = '/' . implode('/', $path);
             }
         }
-
+        
         return array('/') + $newCategories;
     }
 
@@ -504,7 +547,6 @@ class refundModel extends model
         $trade->handlers    = $this->post->handlers ? trim(implode(',', $this->post->handlers), ',') : '';
         $trade->category    = $this->post->category;
         $trade->dept        = $this->post->dept;
-        $trade->desc        = $refund->desc;
         $trade->createdBy   = $this->app->user->account;
         $trade->createdDate = helper::now();
 
@@ -553,20 +595,24 @@ class refundModel extends model
 
         foreach($currencyList as $key => $currency)
         {
-            $totalMoney[$key] = 0;
             foreach($refunds as $refund)
             {
+                if(!isset($totalMoney[$key][$refund->status])) $totalMoney[$key][$refund->status] = 0;
                 if($refund->currency != $key) continue;
-                $totalMoney[$key] += $refund->money;
+                $totalMoney[$key][$refund->status] += $refund->money;
             }
         }
-
+        
         $totalInfo = '';
-        foreach($totalMoney as $currency => $money)
+        foreach($totalMoney as $currency => $total)
         {
-            if(!$money) continue;
-            $tidyMoney = "<span title='" . $money . "'>" . commonModel::tidyMoney($money) . '</span>';
-            $totalInfo .= sprintf($this->lang->refund->totalMoney, $currencyList[$currency], $tidyMoney);
+            foreach($total as $status => $money)
+            {
+                if(!$money) continue;
+                $totalInfo .= $this->lang->refund->statusList[$status];
+                $tidyMoney  = "<span title='" . $money . "'>" . commonModel::tidyMoney($money) . '</span>';
+                $totalInfo .= sprintf($this->lang->refund->totalMoney, $currencyList[$currency], $tidyMoney);
+            }
         }
 
         return $totalInfo;

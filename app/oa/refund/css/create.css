@@ -1,7 +1,6 @@
 i.btn {font-family: ZenIcon;}
 #detailBox .row {margin-top: 5px; margin-bottom: 5px;}
 #detailBox .form-group .input-group {margin-bottom: 2px;}
-#currency {border-top-left-radius: 4px; border-bottom-left-radius: 4px;}
 #detailBox .table-detail td, #detailBox .table-detail th {padding-left: 5px;}
 #category_chosen + .input-group-addon {padding-right: 30px;}
 

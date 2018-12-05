@@ -240,9 +240,23 @@ class file extends control
         else
         {
             /* Down the file. */
-            $fileName = $file->title . '.' . $file->extension;
-            $fileData = file_get_contents($file->realPath);
-            $this->sendDownHeader($fileName, $file->extension, $fileData, filesize($file->realPath));
+            setcookie('downloading', 1);
+            $fileType = $file->extension;
+            $fileName = $file->title . '.' . $fileType;
+            $fileSize = filesize($file->realPath);
+            $isIE = (strpos($this->server->http_user_agent, 'Trident') !== false) or (strpos($this->server->http_user_agent, 'MSIE') !== false) ;
+            if($isIE) $fileName = urlencode($fileName);
+            /* Judge the content type. */
+            $mimes = $this->config->file->mimes;
+            $contentType = isset($mimes[$fileType]) ? $mimes[$fileType] : $mimes['default'];
+
+            header("Content-type: $contentType");
+            header("Content-Disposition: attachment; filename=\"$fileName\"");
+            header("Pragma: no-cache");
+            header("Expires: 0");
+            header("Content-length: $fileSize");
+            readfile($file->realPath);
+            die();
         }
     }
 

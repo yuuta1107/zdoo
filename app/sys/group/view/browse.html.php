@@ -35,7 +35,13 @@
       <td class='text-center'><?php echo $group->id;?></td>
       <td><?php echo $group->name;?></td>
       <td class='visible-lg'><?php echo $group->desc;?></td>
-      <td title='<?php echo $users;?>'><?php echo $users;?></td>
+      <td class='user-list' title='<?php echo $users;?>'>
+        <div>
+          <?php echo $users;?>
+          <a class ="hide-list" href="javascript:#"><?php echo $lang->group->hide;?></a>
+        </div>
+        <a class ="more-list" href="javascript:#"><?php echo $lang->group->show;?></a> 
+      </td>
       <td class='text-center'>
         <?php echo html::a(inlink('manageAppPriv', "type=byGroup&param={$group->id}"), $lang->group->manageAppPriv);?>
         <?php echo html::a(inlink('manageMember', "groupID={$group->id}"), $lang->group->manageMember);?>

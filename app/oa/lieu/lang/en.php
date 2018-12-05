@@ -24,7 +24,8 @@ $lang->lieu->end          = 'End';
 $lang->lieu->start        = 'Start';
 $lang->lieu->finish       = 'Finish';
 $lang->lieu->hours        = 'Hours';
-$lang->lieu->overtime     = 'Overtimes';
+$lang->lieu->overtime     = 'Overtime';
+$lang->lieu->trip         = 'Trip';
 $lang->lieu->status       = 'Status';
 $lang->lieu->desc         = 'Description';
 $lang->lieu->createdBy    = 'Created By';
@@ -50,10 +51,11 @@ $lang->lieu->denied        = 'Access denied.';
 $lang->lieu->unique        = 'There was a record of lieu in %s.';
 $lang->lieu->sameMonth     = 'Lieu must be in the same month.';
 $lang->lieu->wrongEnd      = 'End time should be greater than begin time.';
-$lang->lieu->nodata        = 'Select no data.';
-$lang->lieu->reviewSuccess = 'Review success';
-$lang->lieu->wrongHours    = 'Overtime <strong>%s</strong> hours. Lieu hours can not be greater than overtime hours.';
+$lang->lieu->nodata        = 'No data selected.';
+$lang->lieu->reviewSuccess = 'Reviewed';
+$lang->lieu->wrongHours    = 'The total time of overtime and trip are <strong>%s</strong> hours. Lieu hours can not be greater than the total time.';
 $lang->lieu->nobccomp      = 'Please install the extension php-bcmath.';
+$lang->lieu->bothEmpty     = '<strong>Overtime</strong> records and <strong>trip</strong> records cannot be empty at the same time.';
 
 $lang->lieu->hoursTip = 'Hours';
 

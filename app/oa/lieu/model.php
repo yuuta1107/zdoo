@@ -169,13 +169,17 @@ class lieuModel extends model
             ->add('createdBy', $this->app->user->account)
             ->add('createdDate', helper::now())
             ->join('overtime', ',')
+            ->join('trip', ',')
             ->get();
 
         $lieu->overtime = isset($lieu->overtime) ? ',' . trim($lieu->overtime, ',') . ',' : '';
+        $lieu->trip     = isset($lieu->trip) ? ',' . trim($lieu->trip, ',') . ',' : '';
         if(isset($lieu->begin) and $lieu->begin != '') $lieu->year = substr($lieu->begin, 0, 4);
 
         $return = $this->checkDate($lieu);
         if($return['result'] == 'fail') return $return;
+
+        if(!$this->post->overtime && !$this->post->trip) dao::$errors['overtime'] = $this->lang->lieu->bothEmpty;
 
         $this->dao->insert(TABLE_LIEU)->data($lieu)->autoCheck()
             ->batchCheck($this->config->lieu->require->create, 'notempty')
@@ -201,14 +205,18 @@ class lieuModel extends model
             ->remove('createdBy')
             ->remove('createdDate')
             ->join('overtime', ',')
+            ->join('trip', ',')
             ->get();
 
         $lieu->overtime = isset($lieu->overtime) ? ',' . trim($lieu->overtime, ',') . ',' : '';
+        $lieu->trip     = isset($lieu->trip) ? ',' . trim($lieu->trip, ',') . ',' : '';
         if(isset($lieu->begin) and $lieu->begin != '') $lieu->year = substr($lieu->begin, 0, 4);
         if($oldLieu->status == 'reject') $lieu->status = 'wait';
 
         $return = $this->checkDate($lieu, $id);
         if($return['result'] == 'fail') return $return;
+
+        if(!$this->post->overtime && !$this->post->trip) dao::$errors['overtime'] = $this->lang->lieu->bothEmpty;
 
         $this->dao->update(TABLE_LIEU)->data($lieu)->autoCheck()
             ->batchCheck($this->config->lieu->require->edit, 'notempty')
@@ -227,17 +235,29 @@ class lieuModel extends model
      */
     public function checkHours()
     {
-        if(!$this->post->overtime) return true;
+        if(!$this->post->overtime && !$this->post->trip) return true;
 
         if(!function_exists('bccomp') or !function_exists('bcadd')) return array('result' => 'fail', 'message' => $this->lang->lieu->nobcmath);
 
-        $lieuHours     = $this->post->hours;
-        $overtimeHours = 0;
-
-        $overtimes = $this->loadModel('overtime', 'oa')->getByIdList($this->post->overtime);
-        foreach($overtimes as $overtime) $overtimeHours = bcadd($overtimeHours, $overtime->hours);
+        $totalHours = 0;
+        if($this->post->overtime)
+        {
+            $overtimes = $this->loadModel('overtime', 'oa')->getByIdList($this->post->overtime);
+            foreach($overtimes as $overtime) $totalHours = bcadd($totalHours, $overtime->hours);
+        }
+        if($this->post->trip)
+        {
+            $this->app->loadModuleConfig('attend');
+            $trips = $this->loadModel('trip', 'oa')->getByIdList($this->post->trip);
+            foreach($trips as $trip)
+            {
+                $hours = round((strtotime("{$trip->end} {$trip->finish}") - strtotime("{$trip->begin} {$trip->start}")) / 3600, 2);
+                if($hours > $this->config->attend->workingHours) $hours = $this->config->attend->workingHours;
+                $totalHours = bcadd($totalHours, $hours);
+            }
+        }
         
-        if(bccomp($lieuHours, $overtimeHours, 2) === 1) return array('result' => 'fail', 'message' => array('hours' => sprintf($this->lang->lieu->wrongHours, $overtimeHours)));
+        if(bccomp($this->post->hours, $totalHours, 2) === 1) return array('result' => 'fail', 'message' => array('hours' => sprintf($this->lang->lieu->wrongHours, $totalHours)));
 
         return true;
     }

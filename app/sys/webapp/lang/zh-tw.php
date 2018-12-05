@@ -76,6 +76,7 @@ $lang->webapp->addTypeList['custom'] = '自定義應用';
 $lang->webapp->errorOccurs        = '錯誤：';
 $lang->webapp->errorGetModules    = '從www.ranzhi.org獲得插件分類失敗。可能是因為網絡方面的原因，請檢查後重新刷新頁面。';
 $lang->webapp->errorGetExtensions = '從www.ranzhi.org獲得插件失敗。可能是因為網絡方面的原因，請檢查後重新刷新頁面。';
+$lang->webapp->noApps             = '暫無此類應用。';
 $lang->webapp->successInstall     = '成功安裝應用！';
 $lang->webapp->confirmDelete      = '是否刪除該應用？';
 $lang->webapp->noticeAbstract     = '用一句話介紹應用，不多於30個字';

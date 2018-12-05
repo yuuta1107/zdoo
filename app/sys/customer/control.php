@@ -162,6 +162,7 @@ class customer extends control
      */
     public function view($customerID)
     {
+        $this->app->loadLang('trade', 'cash');
         $customer = $this->customer->getByID($customerID);
         $this->loadModel('common', 'sys')->checkPrivByCustomer(empty($customer) ? '0' : $customerID);
 
@@ -546,27 +547,33 @@ class customer extends control
         $this->app->loadClass('date', $static = true);
         $customerIdList = $this->loadModel('customer')->getCustomersSawByMe();
         $thisWeek       = date::getThisWeek();
-        $customers      = array('');
+        $customers      = array();
         if($account == '') $account = $this->app->user->account;
+
+        $datingList = $this->loadModel('action')->getDatingOfThisWeek($account, 'customer');
+        $datingCustomerList = array();
+        foreach($datingList as $dating) $datingCustomerList[] = $dating->objectID;
+
+        $customerIdList = array_intersect($customerIdList, $datingCustomerList);
 
         $sql = $this->dao->select('c.id, c.name, c.nextDate, t.id as todo')->from(TABLE_CUSTOMER)->alias('c')
             ->leftJoin(TABLE_TODO)->alias('t')->on("t.type='customer' and c.id = t.idvalue")
             ->where('c.deleted')->eq(0)
-            ->andWhere('c.assignedTo')->eq($account)
             ->andWhere('c.relation')->ne('provider')
-            ->andWhere('c.nextDate')->between($thisWeek['begin'], $thisWeek['end'])
-            ->andWhere('c.nextDate')->ne('0000-00-00')
             ->andWhere('c.id')->in($customerIdList)
             ->orderBy('c.nextDate_asc');
+
         $stmt = $sql->query();
         while($customer = $stmt->fetch())
         {    
+            if(empty($customer)) continue;
             if($customer->todo) continue;
             $customers[$customer->id] = $customer->name . '(' . $customer->nextDate . ')';
         } 
 
         if($type == 'select')
         {
+            $customers = array_merge(array(''), $customers);
             if($id) die(html::select("idvalues[$id]", $customers, '', 'class="form-control"'));
             die(html::select('idvalue', $customers, '', 'class=form-control'));
         }

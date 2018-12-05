@@ -13,7 +13,7 @@ class lieu extends control
 {
     /**
      * Index.
-     * 
+     *
      * @access public
      * @return void
      */
@@ -23,9 +23,9 @@ class lieu extends control
     }
 
     /**
-     * personal's lieu. 
-     * 
-     * @param  string $date 
+     * personal's lieu.
+     *
+     * @param  string $date
      * @access public
      * @return void
      */
@@ -35,9 +35,9 @@ class lieu extends control
     }
 
     /**
-     * The lieu browse for review. 
-     * 
-     * @param  string  $date 
+     * The lieu browse for review.
+     *
+     * @param  string  $date
      * @access public
      * @return void
      */
@@ -47,9 +47,9 @@ class lieu extends control
     }
 
     /**
-     * Company's lieu. 
-     * 
-     * @param  string $date 
+     * Company's lieu.
+     *
+     * @param  string $date
      * @access public
      * @return void
      */
@@ -60,9 +60,9 @@ class lieu extends control
 
     /**
      * Browse lieu list.
-     * 
-     * @param  string $type 
-     * @param  string $date 
+     *
+     * @param  string $type
+     * @param  string $date
      * @access public
      * @return void
      */
@@ -72,8 +72,8 @@ class lieu extends control
         if($type == 'browseReview')
         {
             $date         = '';
-            $currentYear  = ''; 
-            $currentMonth = ''; 
+            $currentYear  = '';
+            $currentMonth = '';
         }
         else
         {
@@ -126,34 +126,8 @@ class lieu extends control
     }
 
     /**
-     * View a lieu.
-     * 
-     * @param  int    $id 
-     * @access public
-     * @return void
-     */
-    public function view($id, $type = '')
-    {
-        $lieu = $this->lieu->getById($id);
-
-        $overtimePairs = array();
-        $overtimeList  = $this->loadModel('overtime', 'oa')->getByIdList(trim($lieu->overtime, ','));
-        foreach($overtimeList as $overtime) 
-        {
-            $overtimePairs[$overtime->id] = formatTime($overtime->begin . ' ' . $overtime->start, DT_DATETIME2) . ' ~ ' . formatTime($overtime->end . ' ' . $overtime->finish, DT_DATETIME2);
-        }
-
-        $this->view->title         = $this->lang->lieu->view;
-        $this->view->lieu          = $lieu;
-        $this->view->users         = $this->loadModel('user', 'sys')->getPairs();
-        $this->view->overtimePairs = $overtimePairs;
-        $this->view->type          = $type;
-        $this->display();
-    }
-
-    /**
      * Create lieu.
-     * 
+     *
      * @param  string $date
      * @access public
      * @return void
@@ -187,23 +161,17 @@ class lieu extends control
             if($lieu && strpos(',wait,draft,', $lieu->status) !== false) $this->locate(inlink('edit', "id=$lieu->id"));
         }
 
-        $overtimePairs = array('');
-        $overtimeList  = $this->loadModel('overtime', 'oa')->getList('company', '', '', $this->app->user->account, '', 'pass');
-        foreach($overtimeList as $key => $overtime)
-        {
-            $overtimePairs[$overtime->id] = formatTime($overtime->begin . ' ' . $overtime->start, DT_DATETIME2) . ' ~ ' . formatTime($overtime->end . ' ' . $overtime->finish, DT_DATETIME2);
-        }
-
-        $this->view->title         = $this->lang->lieu->create;
-        $this->view->overtimePairs = $overtimePairs;
-        $this->view->date          = $date;
+        $this->view->title     = $this->lang->lieu->create;
+        $this->view->overtimes = $this->loadModel('overtime', 'oa')->getPairs('company', '', '', $this->app->user->account, '', 'pass');
+        $this->view->trips     = $this->loadModel('trip', 'oa')->getPairs('trip', '', '', $this->app->user->account);
+        $this->view->date      = $date;
         $this->display();
     }
 
     /**
      * Edit lieu.
-     * 
-     * @param  int    $id 
+     *
+     * @param  int    $id
      * @access public
      * @return void
      */
@@ -237,23 +205,57 @@ class lieu extends control
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
         }
 
-        $overtimePairs = array('');
-        $overtimeList  = $this->loadModel('overtime', 'oa')->getList('company', '', '', $this->app->user->account, '', 'pass');
-        foreach($overtimeList as $key => $overtime)
+        $this->view->title     = $this->lang->lieu->edit;
+        $this->view->overtimes = $this->loadModel('overtime', 'oa')->getPairs('company', '', '', $this->app->user->account, '', 'pass');
+        $this->view->trips     = $this->loadModel('trip', 'oa')->getPairs('trip', '', '', $this->app->user->account);
+        $this->view->lieu      = $lieu;
+        $this->display();
+    }
+
+    /**
+     * View a lieu.
+     *
+     * @param  int    $id
+     * @param  string $type
+     * @access public
+     * @return void
+     */
+    public function view($id, $type = '')
+    {
+        $lieu = $this->lieu->getById($id);
+
+        if($lieu->overtime)
         {
-            $overtimePairs[$overtime->id] = formatTime($overtime->begin . ' ' . $overtime->start, DT_DATETIME2) . ' ~ ' . formatTime($overtime->end . ' ' . $overtime->finish, DT_DATETIME2);
+            $overtimes    = array();
+            $overtimeList = $this->loadModel('overtime', 'oa')->getByIdList(trim($lieu->overtime, ','));
+            foreach($overtimeList as $overtime)
+            {
+                $overtimes[$overtime->id] = formatTime("{$overtime->begin} {$overtime->start}", DT_DATETIME2) . ' ~ ' . formatTime("{$overtime->end} {$overtime->finish}", DT_DATETIME2);
+            }
+            $this->view->overtimes = $overtimes;
+        }
+        if($lieu->trip)
+        {
+            $trips    = array();
+            $tripList = $this->loadModel('trip', 'oa')->getByIdList(trim($lieu->trip, ','));
+            foreach($tripList as $trip)
+            {
+                $trips[$trip->id] = "{$trip->name}({$trip->to})(" . formatTime("{$trip->begin} {$trip->start}", DT_DATETIME2) . ' ~ ' . formatTime("{$trip->end} {$trip->finish}", DT_DATETIME2) . ')';
+            }
+            $this->view->trips = $trips;
         }
 
-        $this->view->title         = $this->lang->lieu->edit;
-        $this->view->overtimePairs = $overtimePairs;
-        $this->view->lieu          = $lieu;
+        $this->view->title     = $this->lang->lieu->view;
+        $this->view->lieu      = $lieu;
+        $this->view->users     = $this->loadModel('user', 'sys')->getPairs();
+        $this->view->type      = $type;
         $this->display();
     }
 
     /**
      * Delete lieu.
-     * 
-     * @param  int    $id 
+     *
+     * @param  int    $id
      * @access public
      * @return void
      */
@@ -269,8 +271,8 @@ class lieu extends control
 
     /**
      * Cancel or commit a lieu.
-     * 
-     * @param  int    $lieuID 
+     *
+     * @param  int    $lieuID
      * @access public
      * @return void
      */
@@ -303,10 +305,10 @@ class lieu extends control
     }
 
     /**
-     * review 
-     * 
-     * @param  int    $id 
-     * @param  string $status 
+     * Review a lieu.
+     *
+     * @param  int    $id
+     * @param  string $status
      * @access public
      * @return void
      */
@@ -346,7 +348,7 @@ class lieu extends control
 
             $this->send(array('result' => 'success'));
         }
-        
+
         if($status == 'reject')
         {
             if($_POST)
@@ -371,8 +373,8 @@ class lieu extends control
     }
 
     /**
-     * Batch review lieus. 
-     * 
+     * Batch review lieus.
+     *
      * @param  string $status
      * @access public
      * @return void
@@ -392,7 +394,7 @@ class lieu extends control
         {
             $reviewedBy = $this->lieu->getReviewedBy();
             if($reviewedBy)
-            { 
+            {
                 if($reviewedBy == $this->app->user->account) $canReview = true;
             }
             else
@@ -428,9 +430,9 @@ class lieu extends control
 
     /**
      * Send email.
-     * 
-     * @param  int    $lieuID 
-     * @param  int    $actionID 
+     *
+     * @param  int    $lieuID
+     * @param  int    $actionID
      * @access public
      * @return void
      */
@@ -458,7 +460,7 @@ class lieu extends control
             $reviewedBy = $this->lieu->getReviewedBy();
             if($reviewedBy)
             {
-                $toList = $reviewedBy; 
+                $toList = $reviewedBy;
             }
             else
             {
@@ -485,9 +487,9 @@ class lieu extends control
     }
 
     /**
-     * Set reviewer. 
-     * 
-     * @param  string $module 
+     * Set reviewer.
+     *
+     * @param  string $module
      * @access public
      * @return void
      */
