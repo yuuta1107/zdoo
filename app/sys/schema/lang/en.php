@@ -18,8 +18,8 @@ $lang->schema->delete   = 'Delete';
 $lang->schema->csvFile  = 'Template Files';
 
 $lang->schema->name     = 'Name';
-$lang->schema->feeRow   = 'Fee is a record';
-$lang->schema->diffCol  = 'Different column';
+$lang->schema->feeRow   = 'Fee is a record.';
+$lang->schema->diffCol  = 'separate columns';
 
 $lang->schema->placeholder = new stdclass();
 $lang->schema->placeholder->selectField = 'Please select the correct field';

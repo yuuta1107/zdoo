@@ -40,10 +40,10 @@ $lang->message->commentAt      = 'Comment at ';
 $lang->message->deletedObject  = 'Deleted';
 $lang->message->contactHidden  = "Your phone, email, etc. will only be send to administrator.";
 
-$lang->message->confirmDeleteSingle = 'Are you sure to delete this comment?';
-$lang->message->confirmDeletePre    = 'Are you sure to delete comments previous?';
-$lang->message->confirmPassSingle   = 'Are you sure to pass this comment?';
-$lang->message->confirmPassPre      = 'Are you sure to pass comment previous?';
+$lang->message->confirmDeleteSingle = 'Do you want to delete this comment?';
+$lang->message->confirmDeletePre    = 'Do you want to delete comments previous?';
+$lang->message->confirmPassSingle   = 'Do you want to pass this comment?';
+$lang->message->confirmPassPre      = 'Do you want to pass comment previous?';
 
 $lang->message->statusList[0] = 'Unreviewed';
 $lang->message->statusList[1] = 'Reviewed';
@@ -74,14 +74,14 @@ $lang->comment->manage        = 'Manage';
 $lang->comment->delete        = 'Delete';
 $lang->comment->passPre       = 'Pass previous';
 $lang->comment->deletePre     = 'Delete previous';
-$lang->comment->commentTo     = 'Comment on';
+$lang->comment->commentTo     = 'Commented';
 $lang->comment->commentAt     = 'Commented at';
 $lang->comment->deletedObject = 'Deleted';
 
-$lang->comment->confirmDeleteSingle = 'Are you sure to delete this comment?';
-$lang->comment->confirmDeletePre    = 'Are you sure to delete comments previous?';
-$lang->comment->confirmPassSingle   = 'Are you sure to pass this comment?';
-$lang->comment->confirmPassPre      = 'Are you sure to pass comment previous?';
+$lang->comment->confirmDeleteSingle = 'Do you want to delete this comment?';
+$lang->comment->confirmDeletePre    = 'Do you want to delete comments previous?';
+$lang->comment->confirmPassSingle   = 'Do you want to pass this comment?';
+$lang->comment->confirmPassPre      = 'Do you want to pass comment previous?';
 
 $lang->comment->statusList[0] = 'Unreviewed';
 $lang->comment->statusList[1] = 'Reviewed';

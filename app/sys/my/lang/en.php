@@ -24,11 +24,11 @@ $lang->my->company->end     = 'End';
 $lang->my->company->view    = 'View';
 
 $lang->my->task->common     = 'My Task';
-$lang->my->task->assignedTo = 'Assigned To Me';
-$lang->my->task->createdBy  = 'Created By Me';
-$lang->my->task->finishedBy = 'Finished By Me';
-$lang->my->task->closedBy   = 'Closed By Me';
-$lang->my->task->canceledBy = 'Canceled By Me';
+$lang->my->task->assignedTo = 'AssignToMe';
+$lang->my->task->createdBy  = 'CreateByMe';
+$lang->my->task->finishedBy = 'FinishByMe';
+$lang->my->task->closedBy   = 'CloseByMe';
+$lang->my->task->canceledBy = 'CancelByMe';
 $lang->my->task->unclosed   = 'Unclosed';
 
 $lang->my->project = new stdclass();

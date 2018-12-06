@@ -70,7 +70,7 @@ $lang->user->forbid          = 'Disable';
 $lang->user->forbidList      = 'Disabled Users';
 $lang->user->normalList      = 'Normal Users';
 $lang->user->active          = 'Active';
-$lang->user->setReferer      = 'Set Referer';
+$lang->user->setReferer      = 'Set Referrer';
 $lang->user->vcard           = 'Vcard';
 $lang->user->uploadAvatar    = 'Upload avatar';
 $lang->user->cropAvatar      = 'Crop avatar';
@@ -79,12 +79,12 @@ $lang->user->adminUser       = 'User';
 
 $lang->user->profile     = 'Profile';
 $lang->user->editProfile = 'Edit';
-$lang->user->thread      = 'My Threads';
-$lang->user->reply       = 'My Replies';
+$lang->user->thread      = 'My Thread';
+$lang->user->reply       = 'My Reply';
 $lang->user->message     = 'My Message';
 
 $lang->user->inputAccount   = 'Please enter account';
-$lang->user->inputColleague = "Please enter colleauge's name";
+$lang->user->inputColleague = "Please enter colleauge name";
 $lang->user->inputPassword  = 'Please enter password';
 $lang->user->searchUser     = 'Search';
 
@@ -94,7 +94,7 @@ $lang->user->locked        = "Failed too many times. Please login ten minutes la
 $lang->user->lockedForEver = "User has been disabled permanently.";
 $lang->user->forbidSuccess = 'Forbidden.';
 $lang->user->actionFail    = 'Failed.';
-$lang->user->uploadSuccess = 'Successfully uploaded.';
+$lang->user->uploadSuccess = 'Uploaded.';
 $lang->user->actionError   = 'Error, there are records created by this user.';
 $lang->user->retainAccount = 'You cannot set <strong>%s</strong> as an account.';
 
@@ -147,7 +147,7 @@ $lang->dept->edit       = 'Manage Dept';
 $lang->dept->parent     = 'Parent';
 $lang->dept->children   = 'Child';
 $lang->dept->desc       = 'Description';
-$lang->dept->keywords   = 'Keywords';
+$lang->dept->keywords   = 'Tags';
 $lang->dept->moderators = 'Dept Manager';
   
 $lang->user->roleList['']           = ''; 
@@ -156,7 +156,7 @@ $lang->user->roleList['pm']         = 'Project Manager';
 $lang->user->roleList['market']     = 'Marketing';
 $lang->user->roleList['sale']       = 'Sales';
 $lang->user->roleList['hr']         = 'HR';
-$lang->user->roleList['office']     = 'Office';
+$lang->user->roleList['office']     = 'Administrator';
 $lang->user->roleList['service']    = 'Service';
 $lang->user->roleList['support']    = 'Support';
 $lang->user->roleList['marketmgr']  = 'Marketing Manager';
@@ -187,7 +187,7 @@ Please click the link to change your password: <br />
 </div>
 <div style='height:20px;border-bottom:1px solid #ddd;'></div>
 <div style='margin:20px 0 0 0 ;'>
-System letter, please do not reply
+System message. Please do not reply.
 </div>
 </body>
 </html>

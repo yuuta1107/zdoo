@@ -17,14 +17,14 @@ $lang->thread->board      = 'Board';
 $lang->thread->author     = 'Author';
 $lang->thread->content    = 'Content ';
 $lang->thread->file       = 'File ';
-$lang->thread->postedDate = 'Posted on';
+$lang->thread->postedDate = 'Posted';
 $lang->thread->replies    = 'Reply';
 $lang->thread->views      = 'Views';
 $lang->thread->lastReply  = 'Last reply';
 
 $lang->thread->post         = 'Post';
 $lang->thread->postTo       = 'Post to';
-$lang->thread->browse       = 'Threads';
+$lang->thread->browse       = 'Thread';
 $lang->thread->stick        = 'Sticky';
 $lang->thread->edit         = 'Edit';
 $lang->thread->view         = 'View';
@@ -43,21 +43,21 @@ $lang->thread->sticks[2] = 'Global stick';
 $lang->thread->statusList['hidden'] = 'hidden';
 $lang->thread->statusList['normal'] = 'normal';
 
-$lang->thread->confirmDeleteThread = "Are you sure to delete this thread?";
-$lang->thread->confirmHideReply    = "Are you sure to hide this reply?";
-$lang->thread->confirmHideThread   = "Are you sure to hide this thread?";
-$lang->thread->confirmDeleteReply  = "Are you sure to delete this reply?";
-$lang->thread->confirmDeleteFile   = "Are you sure to delete this file?";
+$lang->thread->confirmDeleteThread = "Do you want to delete this thread?";
+$lang->thread->confirmHideReply    = "Do you want to hide this reply?";
+$lang->thread->confirmHideThread   = "Do you want to hide this thread?";
+$lang->thread->confirmDeleteReply  = "Do you want to delete this reply?";
+$lang->thread->confirmDeleteFile   = "Do you want to delete this file?";
 
-$lang->thread->lblEdited       = '%s Last edited, %s';
+$lang->thread->lblEdited       = '%s last edited, %s';
 $lang->thread->message         = '%s reply at #%s in forum, the thread is: %s, the content is: %s';
 $lang->thread->readonly        = 'Read only';
 $lang->thread->successStick    = 'Successfully sticky.';
 $lang->thread->successUnstick  = 'Successfully unsticky.';
 $lang->thread->successHide     = 'Successfully hide it.';
 $lang->thread->successShow     = 'Successfully show it.';
-$lang->thread->readonlyMessage = 'The thread has been set <strong>READONLY</strong>，you can not post new reply。';
-$lang->thread->successTransfer = 'Successfully Transfered';
+$lang->thread->readonlyMessage = 'The thread has been set as <strong>READONLY</strong>，so you cannot post new reply。';
+$lang->thread->successTransfer = 'Successfully Transfered.';
 
 /* Adjust the pager. */
 if(!isset($lang->pager->settedInForum))

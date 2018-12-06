@@ -10,11 +10,11 @@
  * @link        http://www.zdoo.org
  */
 if(!isset($lang->tag)) $lang->tag = new stdclass();
-$lang->tag->common = 'keywords';
+$lang->tag->common = 'Tags';
 $lang->tag->rank   = 'Rank';
 $lang->tag->link   = 'link';
 $lang->tag->search = 'Search';
 
-$lang->tag->admin     = 'Manage keywords';
+$lang->tag->admin     = 'Manage tags';
 $lang->tag->editLink  = 'Edit Link';
-$lang->tag->inputLink = 'Please input link';
+$lang->tag->inputLink = 'Please enter a link';

@@ -13,11 +13,11 @@ $lang->mail->common = 'Email Settings';
 $lang->mail->index  = 'Home';
 $lang->mail->detect = 'Detect';
 $lang->mail->edit   = 'Configure';
-$lang->mail->save   = 'Successfully saved.';
+$lang->mail->save   = 'Saved.';
 $lang->mail->test   = 'Testing';
 $lang->mail->reset  = 'Reset';
 
-$lang->mail->turnon      = 'Turnon';
+$lang->mail->turnon      = 'Switch';
 $lang->mail->fromAddress = 'From email';
 $lang->mail->fromName    = 'From';
 $lang->mail->mta         = 'MTA';
@@ -29,8 +29,8 @@ $lang->mail->password    = 'SMTP password';
 $lang->mail->secure      = 'Secure';
 $lang->mail->debug       = 'Debugging';
 
-$lang->mail->turnonList[1] = 'on';
-$lang->mail->turnonList[0] = 'off';
+$lang->mail->turnonList[1] = 'On';
+$lang->mail->turnonList[0] = 'Off';
 
 $lang->mail->debugList[0] = 'off';
 $lang->mail->debugList[1] = 'normal';
@@ -45,14 +45,14 @@ $lang->mail->secureList['tls'] = 'tls';
 
 $lang->mail->inputFromEmail = 'Please enter Email address';
 $lang->mail->nextStep       = 'Next';
-$lang->mail->successSaved   = 'The configuration has been successfully saved.';
+$lang->mail->successSaved   = 'The configuration is saved.';
 $lang->mail->subject        = "This is a testing Email from Zdoo.";
 $lang->mail->content        = 'If you see this notice, it means that the Email notification feature has been enabled!';
-$lang->mail->sendSuccess    = 'Successfully sent!';
+$lang->mail->sendSuccess    = 'Sent!';
 $lang->mail->needConfigure  = "Configuration is not found. Configure it first.";
 
 $lang->mail->mailContentTip = <<<EOT
 <strong>%s</strong>(%s) Powered by <a href='https://www.zdoo.org' target='blank'>RanZhi OA</a>.<br />
 <a href='http://www.cnezsoft.com' target='blank'>Nature Easy Soft</a>
 EOT;
-$lang->mail->openTip = 'Send E-mail notifications when any update to orders, customers and tasks, reviews and reimbursements.';
+$lang->mail->openTip = 'Send E-mail notifications, if any changes to orders, customers and tasks, reviews and reimbursements.';
