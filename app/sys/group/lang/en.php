@@ -23,9 +23,9 @@ $lang->group->byModuleTips       = '<span class="tips"> (Press shift or control 
 $lang->group->manageMember       = 'Members';
 $lang->group->linkMember         = 'Link Members';
 $lang->group->unlinkMember       = 'Unlink Member';
-$lang->group->confirmDelete      = 'Are you sure to delete this group?';
+$lang->group->confirmDelete      = 'Do you want to delete this group?';
 $lang->group->successSaved       = 'Saved.';
-$lang->group->errorNotSaved      = 'Not saved, please make sure you have selected some actions and groups.';
+$lang->group->errorNotSaved      = 'Not saved. Please make sure you have selected actions and groups.';
 
 $lang->group->id       = 'Id';
 $lang->group->name     = 'Name';
@@ -42,8 +42,8 @@ $lang->group->all      = 'All';
 $lang->group->extent   = 'extent';
 $lang->group->havePriv = 'Authorized';
 $lang->group->noPriv   = 'Not Authorized';
-$lang->group->hide     = 'hide...';
-$lang->group->show     = 'more...';
+$lang->group->hide     = 'Hide...';
+$lang->group->show     = 'More...';
 
 $lang->group->manageAll = 'All customers and orders';
 

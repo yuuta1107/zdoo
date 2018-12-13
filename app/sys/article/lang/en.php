@@ -10,18 +10,18 @@
  * @link        http://www.zdoo.org
  */
 $lang->article->common      = 'Article';
-$lang->article->createDraft = 'Create draft';
+$lang->article->createDraft = 'Create Draft';
 
 $lang->article->id          = 'Id';
 $lang->article->category    = 'Category';
-$lang->article->categories  = 'Categories';
+$lang->article->categories  = 'Category';
 $lang->article->title       = 'Title';
 $lang->article->alias       = 'Alias';
 $lang->article->content     = 'Content';
 $lang->article->original    = 'Original';
 $lang->article->copySite    = 'Site';
 $lang->article->copyURL     = 'URL';
-$lang->article->keywords    = 'Keywords';
+$lang->article->keywords    = 'Tags';
 $lang->article->summary     = 'Summary';
 $lang->article->author      = 'Author';
 $lang->article->editor      = 'Editor';

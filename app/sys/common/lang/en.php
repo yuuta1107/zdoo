@@ -89,7 +89,7 @@ $lang->changePassword   = 'Change password';
 $lang->currentPos       = 'Current Page';
 $lang->categoryMenu     = 'Manage Category';
 $lang->basicInfo        = 'Basic Info';
-$lang->chooseUserToMail = 'Choose users to send notice...';
+$lang->chooseUserToMail = 'Choose users to send messages to ...';
 
 /* Global action items. */
 $lang->reset          = 'Reset';
@@ -143,7 +143,7 @@ $lang->addFiles       = 'Add Files ';
 $lang->comment        = 'Comment';
 $lang->selectAll      = 'All';
 $lang->selectReverse  = 'Inverse';
-$lang->continueSave   = 'Continue To Save';
+$lang->continueSave   = 'Continue saving';
 $lang->submitting     = 'Saving...';
 $lang->yes            = 'YES';
 $lang->no             = 'NO';
@@ -184,7 +184,7 @@ $lang->js->confirmFinish         = 'Do you want to finish it?';
 $lang->js->deleteing             = 'Deleting...';
 $lang->js->doing                 = 'Processing...';
 $lang->js->timeout               = 'Timeout';
-$lang->js->confirmDiscardChanges = 'Discard changes?';
+$lang->js->confirmDiscardChanges = 'Cancel changes?';
 $lang->js->yes                   = 'Yes';
 $lang->js->no                    = 'No';
 $lang->js->installZipExtension   = "Php-zip extension is required to export .xlsx file.";
@@ -259,7 +259,7 @@ $lang->article->menu->create = array('link' => 'Add|article|create|type=article'
 $lang->menuGroups = new stdclass();
 
 $lang->menu->dashboard = new stdclass();
-$lang->menu->dashboard->todo     = 'To-do|todo|calendar|';
+$lang->menu->dashboard->todo     = 'Todo|todo|calendar|';
 $lang->menu->dashboard->task     = 'Task|my|task|';
 $lang->menu->dashboard->project  = 'Project|my|project|';
 $lang->menu->dashboard->order    = 'Order|my|order|';
@@ -273,9 +273,9 @@ $lang->menu->dashboard->contact  = 'Contact|my|contact|';
 if(!isset($lang->customer)) $lang->customer = new stdclass();
 $lang->customer->menu = new stdclass();
 $lang->customer->menu->browse      = 'All Customers|customer|browse|mode=all';
-$lang->customer->menu->assignedTo  = 'Assigned To Me|customer|browse|mode=assignedtome';
-$lang->customer->menu->contactedBy = 'Contacted By Me|customer|browse|mode=contactedby';
-$lang->customer->menu->past        = 'Urgently need contacted|customer|browse|mode=past';
+$lang->customer->menu->assignedTo  = 'AssignToMe|customer|browse|mode=assignedtome';
+$lang->customer->menu->contactedBy = 'ContactByMe|customer|browse|mode=contactedby';
+$lang->customer->menu->past        = 'Contact Now |customer|browse|mode=past';
 $lang->customer->menu->today       = 'Contact Today|customer|browse|mode=today';
 $lang->customer->menu->tomorrow    = 'Contact Tomorrow|customer|browse|mode=tomorrow';
 $lang->customer->menu->thisweek    = 'Contact This Week|customer|browse|mode=thisweek';
@@ -322,9 +322,9 @@ $lang->my->order->menu = new stdclass();
 $lang->my->order->menu->past       = 'Urgent|my|order|type=past';
 $lang->my->order->menu->today      = 'Today|my|order|type=today';
 $lang->my->order->menu->tomorrow   = 'Tomorrow|my|order|type=tomorrow';
-$lang->my->order->menu->assignedTo = 'Assigned To Me|my|order|type=assignedTo';
-$lang->my->order->menu->createdBy  = 'Created By Me|my|order|type=createdBy';
-$lang->my->order->menu->signedBy   = 'Signed By Me|my|order|type=signedBy';
+$lang->my->order->menu->assignedTo = 'AssignToMe|my|order|type=assignedTo';
+$lang->my->order->menu->createdBy  = 'CreateByMe|my|order|type=createdBy';
+$lang->my->order->menu->signedBy   = 'SignByMe|my|order|type=signedBy';
 $lang->my->order->menu->all        = 'All|my|order|type=all';
 
 $lang->my->contract = new stdclass();
@@ -337,10 +337,10 @@ $lang->my->contract->menu->deliveredBy = 'Delivered|my|contract|type=deliveredBy
 
 $lang->my->task = new stdclass();
 $lang->my->task->menu = new stdclass();
-$lang->my->task->menu->assignedToMe = 'Assigned To Me|my|task|type=assignedTo';
-$lang->my->task->menu->createdByMe  = 'Created By Me|my|task|type=createdBy';
-$lang->my->task->menu->finishedByMe = 'Finished By Me|my|task|type=finishedBy';
-$lang->my->task->menu->closedByMe   = 'Closed By Me|my|task|type=closedBy';
+$lang->my->task->menu->assignedToMe = 'AssignToMe|my|task|type=assignedTo';
+$lang->my->task->menu->createdByMe  = 'CreateByMe|my|task|type=createdBy';
+$lang->my->task->menu->finishedByMe = 'FinishByMe|my|task|type=finishedBy';
+$lang->my->task->menu->closedByMe   = 'CloseByMe|my|task|type=closedBy';
 $lang->my->task->menu->canceledByMe = 'Cancelled By Me|my|task|type=canceledBy';
 $lang->my->task->menu->unclosed     = 'Unclosed|my|task|type=unclosed';
 

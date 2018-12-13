@@ -12,7 +12,7 @@
 $lang->tree->common      = "Tree";
 $lang->tree->add         = "Add";
 $lang->tree->edit        = "Edit";
-$lang->tree->children    = "Add child";
+$lang->tree->children    = "Add Child";
 $lang->tree->delete      = "Delete";
 $lang->tree->browse      = "Area, Industry, Income Categories, Expend Categories, Forum Boards, Blog Categories, Depts";
 $lang->tree->manage      = "Manage";
@@ -41,7 +41,7 @@ $lang->category->parent   = 'Parent';
 $lang->category->desc     = 'Description';
 $lang->category->keywords = 'Tag';
 $lang->category->children = "Child";
-$lang->category->rights   = 'Rights';
+$lang->category->rights   = 'Privilege';
 $lang->category->users    = 'Users';
 $lang->category->groups   = 'Groups';
 $lang->category->origin   = 'Origin Category';
@@ -87,7 +87,7 @@ $lang->out->parent   = 'Parent';
 $lang->out->desc     = 'Description';
 $lang->out->keywords = 'Tags';
 $lang->out->children = "Child";
-$lang->out->rights   = 'Rights';
+$lang->out->rights   = 'Privilege';
 $lang->out->refund   = 'Reimbursement';
 $lang->out->merge    = 'Merge Category';
 

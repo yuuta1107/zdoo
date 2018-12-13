@@ -9,8 +9,8 @@
  * @version     $Id$
  * @link        http://www.zdoo.org
  */
-$lang->block->common   = 'Widgets';
-$lang->block->blog     = 'Latest Blogs';
+$lang->block->common   = 'Widget';
+$lang->block->blog     = 'Latest Blog';
 $lang->block->lblBlock = 'Widget';
 $lang->block->admin    = 'Manage';
 $lang->block->num      = 'Number';
@@ -18,7 +18,7 @@ $lang->block->type     = 'Type';
 
 $lang->block->availableBlocks = new stdclass();
 $lang->block->availableBlocks->blog   = 'Latest Blog';
-$lang->block->availableBlocks->thread = 'Threads';
+$lang->block->availableBlocks->thread = 'Thread';
 
-$lang->block->typeList->thread['new']   = 'latest Thread';
-$lang->block->typeList->thread['stick'] = 'Sticked Threads';
+$lang->block->typeList->thread['new']   = 'Latest Thread';
+$lang->block->typeList->thread['stick'] = 'Sticky Thread';

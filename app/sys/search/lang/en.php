@@ -22,10 +22,10 @@ $lang->search->buildForm     = 'Search form';
 $lang->search->buildQuery    = 'Execute query';
 $lang->search->saveQuery     = 'Save query';
 $lang->search->deleteQuery   = 'Delete query';
-$lang->search->setQueryTitle = 'Please input the title（execute searching before save）：';
+$lang->search->setQueryTitle = 'Please enter the title（execute searching before save）：';
 $lang->search->storyTitle    = 'Story title';
 $lang->search->taskTitle     = 'Task title';
-$lang->search->select        = 'Stories/Tasks filter';
+$lang->search->select        = 'Story/Task filter';
 $lang->search->me            = 'Me';
 
 $lang->search->operators['=']          = '=';
@@ -36,7 +36,7 @@ $lang->search->operators['<']          = '<';
 $lang->search->operators['<=']         = '<=';
 $lang->search->operators['include']    = 'include';
 $lang->search->operators['between']    = 'between';
-$lang->search->operators['notinclude'] = 'not include';
+$lang->search->operators['notinclude'] = 'exclude';
 $lang->search->operators['belong']     = 'belongs to';
 
 $lang->search->andor['and']         = 'And';

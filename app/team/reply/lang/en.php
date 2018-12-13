@@ -11,11 +11,11 @@
  */
 $lang->reply = new stdclass();
 $lang->reply->common      = 'Reply';
-$lang->reply->id          = 'Id';
-$lang->reply->list        = 'Replies';
+$lang->reply->id          = 'ID';
+$lang->reply->list        = 'Reply';
 $lang->reply->content     = 'Content';
 $lang->reply->author      = 'Author';
-$lang->reply->files       = 'Files:';
+$lang->reply->files       = 'File:';
 $lang->reply->createdDate = 'Date';
 $lang->reply->admin       = 'Reply';
 

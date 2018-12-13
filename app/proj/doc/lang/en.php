@@ -26,9 +26,9 @@ $lang->doc->url            = 'URL';
 $lang->doc->files          = 'File';
 $lang->doc->views          = 'Views';
 $lang->doc->createdBy      = 'Create by';
-$lang->doc->createdDate    = 'Create on';
+$lang->doc->createdDate    = 'Create';
 $lang->doc->editedBy       = 'Edite by';
-$lang->doc->editedDate     = 'Edite on';
+$lang->doc->editedDate     = 'Edite';
 $lang->doc->basicInfo      = 'Basic Info';
 $lang->doc->deleted        = 'Deleted';
 

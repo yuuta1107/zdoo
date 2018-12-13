@@ -14,13 +14,13 @@ $lang->setting->reset  = 'Reset';
 $lang->setting->key    = 'Key';
 $lang->setting->value  = 'Value';
 
-$lang->setting->lang = 'Product status, Product lines, Customer types, Customer Size, Customer Level, Customer Status, Currency, Roles';
+$lang->setting->lang = 'Product Status, Product Line, Customer Type, Customer Size, Customer Level, Customer Status, Currency, Roles';
 
 $lang->setting->customerPool = 'Customer settings';
 $lang->setting->modules      = 'Modules settings';
 
 $lang->setting->module = new stdClass();
-$lang->setting->module->user     = 'User roles';
+$lang->setting->module->user     = 'User role';
 $lang->setting->module->product  = 'Product status';
 $lang->setting->module->customer = 'Customer level';
 

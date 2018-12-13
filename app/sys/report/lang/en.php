@@ -12,7 +12,7 @@
 if(!isset($lang->report)) $lang->report = new stdclass();
 $lang->report->common     = 'Report';
 $lang->report->browse     = 'View Report';
-$lang->report->list       = 'Reports';
+$lang->report->list       = 'Report';
 $lang->report->item       = 'Item';
 $lang->report->value      = 'Value';
 $lang->report->percent    = 'Percent';
@@ -20,7 +20,7 @@ $lang->report->undefined  = 'Undefined';
 $lang->report->time       = 'Time';
 $lang->report->select     = 'Pleace select the type of reports';
 $lang->report->create     = 'Generate';
-$lang->report->tip        = 'Note: Report is generated from search results. Please search in the list page before you generate a report.';
+$lang->report->tip        = 'Note: The report is generated from search results. Please search on the list page before you generate a report.';
 
 $lang->report->options = new stdclass();
 $lang->report->options->type   = 'pie';
@@ -33,7 +33,7 @@ $lang->report->options->graph->caption   = 'DEFAULT';   // 是否显示柱状图
 
 $lang->report->customer = new stdclass();
 $lang->report->customer->common = 'Customer Report';
-$lang->report->customer->chartList['assignedTo'] = 'Assigned To';
+$lang->report->customer->chartList['assignedTo'] = 'Assign To';
 $lang->report->customer->chartList['status']     = 'Status';
 $lang->report->customer->chartList['level']      = 'Level';
 $lang->report->customer->chartList['type']       = 'Type';
@@ -97,13 +97,13 @@ $lang->report->order->value['assignedTo']   = 'Order';
 $lang->report->order->value['createdBy']    = 'Order';
 $lang->report->order->value['year']         = 'Order';
 $lang->report->order->value['month']        = 'Order';
-$lang->report->order->value['productA']     = 'Real money';
-$lang->report->order->value['productLineA'] = 'Real money';
-$lang->report->order->value['statusA']      = 'Real money';
-$lang->report->order->value['assignedToA']  = 'Real money';
-$lang->report->order->value['createdByA']   = 'Real money';
-$lang->report->order->value['yearA']        = 'Real money';
-$lang->report->order->value['monthA']       = 'Real money';
+$lang->report->order->value['productA']     = 'Amount';
+$lang->report->order->value['productLineA'] = 'Amount';
+$lang->report->order->value['statusA']      = 'Amount';
+$lang->report->order->value['assignedToA']  = 'Amount';
+$lang->report->order->value['createdByA']   = 'Amount';
+$lang->report->order->value['yearA']        = 'Amount';
+$lang->report->order->value['monthA']       = 'Amount';
 
 $lang->report->order->options = new stdclass();
 $lang->report->order->options->typeList['year']    = 'bar';
@@ -134,7 +134,7 @@ $lang->report->contract->chartList['contactedByA'] = 'Contacted By(Amount)';
 $lang->report->contract->chartList['yearA']        = 'Year (Amount)';
 $lang->report->contract->chartList['monthA']       = 'Month (Amount)';
 
-$lang->report->contract->item['status']       = 'Stuatus';
+$lang->report->contract->item['status']       = 'Status';
 $lang->report->contract->item['delivery']     = 'Delivery';
 $lang->report->contract->item['return']       = 'Payment';
 $lang->report->contract->item['createdBy']    = 'User';

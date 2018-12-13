@@ -11,8 +11,8 @@
  */
 if(!isset($lang->project)) $lang->project = new stdclass();
 $lang->project->common     = 'Project';
-$lang->project->browse     = 'Projects List';
-$lang->project->index      = 'Projects';
+$lang->project->browse     = 'Project List';
+$lang->project->index      = 'Project';
 $lang->project->create     = "Create Project";
 $lang->project->edit       = 'Edit';
 $lang->project->view       = 'Project Detail';
@@ -21,7 +21,7 @@ $lang->project->delete     = 'Delete';
 $lang->project->enter      = 'Enter';
 $lang->project->suspend    = 'Suspend';
 $lang->project->activate   = 'Activate';
-$lang->project->mine       = 'I charge : ';
+$lang->project->mine       = 'Mine : ';
 $lang->project->other      = 'Other : ';
 $lang->project->deleted    = 'Deleted';
 $lang->project->finished   = 'Finished';
@@ -32,7 +32,7 @@ $lang->project->import     = 'Import';
 $lang->project->importTask = 'Import task';
 $lang->project->role       = 'Role';
 $lang->project->project    = 'Project';
-$lang->project->dateRange  = 'Date Range';
+$lang->project->dateRange  = 'Time Frame';
 
 $lang->project->id          = 'ID';
 $lang->project->name        = 'Name';
@@ -43,7 +43,7 @@ $lang->project->manager     = 'Manager';
 $lang->project->member      = 'Team';
 $lang->project->end         = 'End';
 $lang->project->createdBy   = 'Created by';
-$lang->project->createdDate = 'Created on';
+$lang->project->createdDate = 'Created';
 $lang->project->fromproject = 'From Project';
 $lang->project->whitelist   = 'Whitelist';
 $lang->project->doc         = 'Document';

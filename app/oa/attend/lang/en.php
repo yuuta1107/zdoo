@@ -10,7 +10,7 @@ $lang->attend->edited       = 'Clock In';
 $lang->attend->leave        = 'Leave';
 $lang->attend->leaved       = 'Already leave';
 $lang->attend->makeup       = 'Makeup times';
-$lang->attend->makeuped     = 'Alread makeup times';
+$lang->attend->makeuped     = 'Already makeup';
 $lang->attend->lieu         = 'Lieu';
 $lang->attend->lieud        = 'Already lieu';
 $lang->attend->trip         = 'Trip';
@@ -58,7 +58,7 @@ $lang->attend->manualOut    = 'Clock-Out';
 $lang->attend->reason       = 'Reasons';
 $lang->attend->reviewStatus = 'Review';
 $lang->attend->reviewedBy   = 'Reviewed By';
-$lang->attend->reviewedDate = 'Reviewed Date';
+$lang->attend->reviewedDate = 'Reviewed';
 $lang->attend->deserveDays  = 'Deserved Days';
 $lang->attend->actualDays   = 'Actual';
 
