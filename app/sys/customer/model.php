@@ -173,11 +173,11 @@ class customerModel extends model
      * @param  bool    $emptyOption 
      * @param  string  $orderBy
      * @param  int     $limit
-     * @param  int     $customerID
+     * @param  string  $customerID
      * @access public
      * @return array
      */
-    public function getPairs($relation = '', $emptyOption = true, $orderBy = 'id_desc', $limit = 0, $customerID = 0)
+    public function getPairs($relation = '', $emptyOption = true, $orderBy = 'id_desc', $limit = 0, $customerID = '')
     {
         $customerList   = array();
         $customerIdList = $this->getCustomersSawByMe();

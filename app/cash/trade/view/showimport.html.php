@@ -66,7 +66,7 @@
                 <label class="checkbox-inline">
                   <input type="checkbox" name="createTrader[<?php echo $i;?>]" value="1">
                   <?php echo $lang->trade->newTrader;?>
-                  <?php if(!$hasCustomer and empty($trader['trader'])):?><i class='red icon-question' title="<?php echo $lang->trade->noTraderMatch;?>"></i><?php endif;?>
+                  <?php if(!$hasCustomer):?><i class='red icon-question' title="<?php echo $lang->trade->noTraderMatch;?>"></i><?php endif;?>
                 </label>
               </div>
             </div>
