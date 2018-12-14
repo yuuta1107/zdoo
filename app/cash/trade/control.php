@@ -992,7 +992,7 @@ class trade extends control
             $flipTraders = array_flip($customers);
             foreach($dataList as $key => $data)
             {
-                if($data['trader'] && !empty($flipTraders[$data['trader']])) $data[$key]['trader'] = $flipTraders[$data['trader']];
+                if($data['trader'] && !empty($flipTraders[$data['trader']])) $dataList[$key]['trader'] = $flipTraders[$data['trader']];
             }
         }
         else
