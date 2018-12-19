@@ -906,7 +906,7 @@ class trade extends control
             if(isset($flipTypeList[$data['type']])) $data['type'] = $flipTypeList[$data['type']];
 
             /* Record trader name. */
-            if($data['trader']) $traderList[] = $data['trader'];
+            if($data['trader']) $traders[] = $data['trader'];
 
             if(!empty($data['category']) and in_array($data['type'], array('in', 'out')))
             {
@@ -954,7 +954,8 @@ class trade extends control
             $dataList[$i] = $data;
 
             $existTrade = $this->dao->select('*')->from(TABLE_TRADE)
-                ->where('money')->eq($data['money'])
+                ->where('depositor')->eq($depositorID)
+                ->andWhere('money')->eq($data['money'])
                 ->andWhere('date')->eq($data['date'])
                 ->andWhere('type')->eq($data['type'])
                 ->andWhere('category')->eq($data['category'])
@@ -991,7 +992,7 @@ class trade extends control
             $flipTraders = array_flip($customers);
             foreach($dataList as $key => $data)
             {
-                if($data['trader'] && !empty($flipTraders[$data['trader']])) $data['trader'] = $flipTraders[$data['trader']];
+                if($data['trader'] && !empty($flipTraders[$data['trader']])) $dataList[$key]['trader'] = $flipTraders[$data['trader']];
             }
         }
         else

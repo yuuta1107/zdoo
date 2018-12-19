@@ -95,10 +95,11 @@ class excel extends model
      */
     public function init($data)
     {
-        $this->rawExcelData = $data;
-        $this->fields       = $this->rawExcelData->fields;
-        $this->rows         = $this->rawExcelData->rows;
-        $this->fieldsKey    = array_keys($this->fields);
+        $this->rawExcelData   = $data;
+        $this->fields         = $data->fields;
+        $this->rows           = $data->rows;
+        $this->headerRowCount = isset($data->headerRowCount) ? $data->headerRowCount : 1;
+        $this->fieldsKey      = $this->headerRowCount == 1 ? array_keys($this->fields) : array_keys(reset($this->fields));
     }
 
     /**
@@ -137,53 +138,95 @@ class excel extends model
             $excelSheet = $this->phpExcel->getSheet($index);
             $sheetTitle = isset($this->rawExcelData->title) ? $this->rawExcelData->title : $this->rawExcelData->kind;
             if($sheetTitle) $excelSheet->setTitle($sheetTitle);
-            foreach($this->fields as $key => $field) $excelSheet->setCellValueExplicit($this->excelKey[$key] . '1', $field, PHPExcel_Cell_DataType::TYPE_STRING);
+
+            $i = 1;
+            if($this->headerRowCount == 1)
+            {
+                foreach($this->fields as $key => $field) $excelSheet->setCellValueExplicit($this->excelKey[$key] . '1', $field, PHPExcel_Cell_DataType::TYPE_STRING);
+                $i++;
+            }
+            else
+            {
+                foreach($this->fields as $num => $fields)
+                {
+                    foreach($fields as $key => $field)
+                    {
+                        if(isset($this->excelKey[$key]))
+                        {
+                            $cell = $this->excelKey[$key] . $i;
+                            /* Merge Cells.*/
+                            if(isset($this->rawExcelData->headerRowspan[$num][$key]) && is_int($this->rawExcelData->headerRowspan[$num][$key]))
+                            {
+                                $endCell = $this->excelKey[$key] . ($i + $this->rawExcelData->headerRowspan[$num][$key] - 1);
+                                $excelSheet->mergeCells($cell . ":" . $endCell);
+                            }
+                            if(isset($this->rawExcelData->headerColspan[$num][$key]) && is_int($this->rawExcelData->headerColspan[$num][$key]))
+                            {
+                                $column  = $this->setExcelField($this->rawExcelData->headerColspan[$num][$key] - 1, $this->excelKey[$key]);
+                                $endCell = $column . $i;
+                                $excelSheet->mergeCells($cell . ":" . $endCell);
+                            }
+
+                            $excelSheet->setCellValueExplicit($cell, $field, PHPExcel_Cell_DataType::TYPE_STRING);
+                        }
+                    }
+                    $i++;
+                }
+            }
 
             /* Write system data in excel.*/
             $this->writeSysData();
 
-            $i = 1;
             foreach($this->rows as $num => $row)
             {
-                $i++;
                 foreach($row as $key => $value)
                 {
                     if(isset($this->excelKey[$key]))
                     {
+                        $cell = $this->excelKey[$key] . $i;
                         /* Merge Cells.*/
                         if(isset($this->rawExcelData->rowspan[$num][$key]) && is_int($this->rawExcelData->rowspan[$num][$key]))
                         {
-                            $excelSheet->mergeCells($this->excelKey[$key] . $i . ":" . $this->excelKey[$key] . ($i + $this->rawExcelData->rowspan[$num][$key]));
+                            $endCell = $this->excelKey[$key] . ($i + $this->rawExcelData->rowspan[$num][$key] - 1);
+                            $excelSheet->mergeCells($cell . ":" . $endCell);
                         }
                         if(isset($this->rawExcelData->colspan[$num][$key]) && is_int($this->rawExcelData->colspan[$num][$key]))
                         {
-                            $column = $this->setExcelField($this->rawExcelData->colspan[$num][$key] - 1, $this->excelKey[$key]);
-                            $excelSheet->mergeCells($this->excelKey[$key] . $i . ":" . $column . $i);
+                            $column  = $this->setExcelField($this->rawExcelData->colspan[$num][$key] - 1, $this->excelKey[$key]);
+                            $endCell = $column . $i;
+                            $excelSheet->mergeCells($cell . ":" . $endCell);
                         }
 
                         /* Wipe off html tags.*/
                         if(isset($this->config->excel->editor[$this->rawExcelData->kind]) and in_array($key, $this->config->excel->editor[$this->rawExcelData->kind])) $value = $this->file->excludeHtml($value);
-                        if(isset($this->rawExcelData->numberFields) && in_array($key, $this->rawExcelData->numberFields))
+                        if(isset($this->rawExcelData->percentageFields[$num][$key]))
                         {
-                            $excelSheet->setCellValueExplicit($this->excelKey[$key] . $i, $value, PHPExcel_Cell_DataType::TYPE_NUMERIC);
+                            $excelSheet->setCellValueExplicit($cell, $value, PHPExcel_Cell_DataType::TYPE_STRING);
+                        }
+                        elseif(isset($this->rawExcelData->numberFields) && in_array($key, $this->rawExcelData->numberFields))
+                        {
+                            $excelSheet->setCellValueExplicit($cell, $value, PHPExcel_Cell_DataType::TYPE_NUMERIC);
                         }
                         else
                         {
-                            $excelSheet->setCellValueExplicit($this->excelKey[$key] . $i, $value, PHPExcel_Cell_DataType::TYPE_STRING);
+                            $excelSheet->setCellValueExplicit($cell, $value, PHPExcel_Cell_DataType::TYPE_STRING);
                         }
+
                         /* Add comments to cell, Excel5 don't work, must be Excel2007. */
                         if(isset($this->rawExcelData->comments[$num][$key])) 
                         {
-                            $excelSheet->getComment($this->excelKey[$key] . $i)->getText()->createTextRun($this->rawExcelData->comments[$num][$key]);
+                            $excelSheet->getComment($cell)->getText()->createTextRun($this->rawExcelData->comments[$num][$key]);
                         }
                     }
 
                     /* Build excel list.*/
                     if(isset($this->rawExcelData->listStyle) and in_array($key, $this->rawExcelData->listStyle)) $this->buildList($excelSheet, $key, $i);
                 }
+                $i++;
             }
 
             $this->setStyle($excelSheet, $i);
+            $this->setAlignment($excelSheet);
             $i++;
             if(isset($this->rawExcelData->help)) 
             {
@@ -228,6 +271,7 @@ class excel extends model
      */
     public function setStyle($excelSheet, $i)
     {
+        $startRow  = $this->headerRowCount + 1;
         $endColumn = $this->setExcelField(count($this->excelKey) - 1);
         if(isset($this->rawExcelData->help) and isset($this->rawExcelData->extraNum)) $i--;
         /* Freeze column.*/
@@ -235,7 +279,7 @@ class excel extends model
         {
             $column = $this->excelKey[$this->config->excel->freeze->{$this->rawExcelData->kind}];
             $column++;
-            $excelSheet->FreezePane($column . '2');
+            $excelSheet->FreezePane($column . $startRow);
         }
 
         $excelSheet->getRowDimension(1)->setRowHeight(20);
@@ -256,7 +300,7 @@ class excel extends model
                 )
             )
         );
-        $this->setAreaStyle($excelSheet, $contentStyle, 'A2:' . $endColumn . $i);
+        $this->setAreaStyle($excelSheet, $contentStyle, 'A' . $startRow . ':' . $endColumn . $i);
 
         /* Set header style for this table.*/
         $headerStyle = array(
@@ -272,6 +316,7 @@ class excel extends model
             ),
             'alignment' => array(
                 'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+                'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER
             ),
             'fill' => array(
                  'type'       => PHPExcel_Style_Fill::FILL_SOLID,
@@ -283,7 +328,7 @@ class excel extends model
             $headerStyle['font']['color']['rgb']      = '000000';
             $headerStyle['fill']['startcolor']['rgb'] = 'ffffff';
         }
-        $this->setAreaStyle($excelSheet, $headerStyle, 'A1:' . $endColumn . '1');
+        $this->setAreaStyle($excelSheet, $headerStyle, 'A1:' . $endColumn . $this->headerRowCount);
         $customWidth = isset($this->rawExcelData->customWidth) ? array_keys($this->rawExcelData->customWidth) : array();
         foreach($this->excelKey as $key => $letter)
         {
@@ -309,7 +354,7 @@ class excel extends model
                         )
                     )
                 );
-                $this->setAreaStyle($excelSheet, $centerStyle, $letter . '2:' . $letter . $i);
+                $this->setAreaStyle($excelSheet, $centerStyle, $letter . $startRow . ':' . $letter . $i);
             }
 
             if(strpos($key, 'Date') !== false or in_array($key, $this->config->excel->dateFields))
@@ -332,7 +377,7 @@ class excel extends model
                         )
                     )
                 );
-                $this->setAreaStyle($excelSheet, $dateFormat, $letter . '2:' . $letter . $i);
+                $this->setAreaStyle($excelSheet, $dateFormat, $letter . $startRow . ':' . $letter . $i);
             }
             if(in_array($key, $customWidth)) $excelSheet->getColumnDimension($letter)->setWidth($this->rawExcelData->customWidth[$key]);
         }
@@ -350,7 +395,7 @@ class excel extends model
         elseif(!isset($this->rawExcelData->nocolor))
         {
             /* Set interlaced color for this table. */
-            for($row = 2; $row <= $i; $row++)
+            for($row = $startRow; $row <= $i; $row++)
             {
                 $excelSheet->getRowDimension($row)->setRowHeight(20);
 
@@ -360,6 +405,21 @@ class excel extends model
                 $excelFill  = $excelStyle->getFill();
                 $excelFill->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
                 $excelFill->getStartColor()->setARGB($color);
+            }
+        }
+    }
+
+    public function setAlignment($excelSheet)
+    {
+        foreach($this->rawExcelData->percentageFields as $num => $fields)
+        {
+            foreach($fields as $key => $field)
+            {
+                if(isset($this->excelKey[$key]))
+                {
+                    $cell = $this->excelKey[$key] . ($this->headerRowCount + $num + 1);
+                    $excelSheet->getStyle($cell)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+                }
             }
         }
     }

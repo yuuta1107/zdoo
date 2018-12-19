@@ -1,6 +1,4 @@
 <?php
-$config->group = new stdclass();
-$config->group->create = new stdclass();
-$config->group->edit   = new stdclass();
-$config->group->create->requiredFields = 'name';
-$config->group->edit->requiredFields   = 'name';
+$config->group->require = new stdclass();
+$config->group->require->create = 'name';
+$config->group->require->edit   = 'name';

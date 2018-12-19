@@ -22,7 +22,7 @@ class groupModel extends model
     public function create()
     {
         $group = fixer::input('post')->specialChars('name, desc')->get();
-        return $this->dao->insert(TABLE_GROUP)->data($group)->batchCheck($this->config->group->create->requiredFields, 'notempty')->exec();
+        return $this->dao->insert(TABLE_GROUP)->data($group)->batchCheck($this->config->group->require->create, 'notempty')->exec();
     }
 
     /**
@@ -35,7 +35,7 @@ class groupModel extends model
     public function update($groupID)
     {
         $group = fixer::input('post')->specialChars('name, desc')->get();
-        return $this->dao->update(TABLE_GROUP)->data($group)->batchCheck($this->config->group->edit->requiredFields, 'notempty')->where('id')->eq($groupID)->exec();
+        return $this->dao->update(TABLE_GROUP)->data($group)->batchCheck($this->config->group->require->edit, 'notempty')->where('id')->eq($groupID)->exec();
     }
 
     /**

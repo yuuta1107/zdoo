@@ -53,15 +53,13 @@ class holidayModel extends model
      */
     public function isHoliday($date)
     {
-        static $holidayList = null;
-        if($holidayList == null)
-        {
-            $year = substr($date, 0, 4);
-            $holidayList = $this->getList($year, 'holiday');
-        }
+        static $holidayList = array();
+
+        $year = substr($date, 0, 4);
+        if(empty($holidayList[$year])) $holidayList[$year] = $this->getList($year, 'holiday');
 
         $result = false;
-        foreach($holidayList as $holiday)
+        foreach($holidayList[$year] as $holiday)
         {
             if(strtotime($date) >= strtotime($holiday->begin) and strtotime($date) <= strtotime($holiday->end))
             {
