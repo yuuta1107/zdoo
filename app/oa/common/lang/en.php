@@ -49,28 +49,28 @@ $lang->attend->menu->settings   = array('link' => 'Settings|attend|settings|', '
 if(!isset($lang->leave)) $lang->leave = new stdclass();
 $lang->leave->menu = new stdclass();
 $lang->leave->menu->personal     = 'My leave|leave|personal|';
-$lang->leave->menu->browseReview = 'Review by me|leave|browsereview|';
+$lang->leave->menu->browseReview = 'My Review|leave|browsereview|';
 $lang->leave->menu->company      = 'All|leave|company|';
 $lang->leave->menu->settings     = array('link' => 'Settings|leave|setReviewer|', 'alias' => 'personalAnnual');
 
 if(!isset($lang->makeup)) $lang->makeup = new stdclass();
 $lang->makeup->menu = new stdclass();
 $lang->makeup->menu->personal     = 'My makeup|makeup|personal|';
-$lang->makeup->menu->browseReview = 'Review by me|makeup|browsereview|';
+$lang->makeup->menu->browseReview = 'My Review|makeup|browsereview|';
 $lang->makeup->menu->company      = 'All|makeup|company|';
 $lang->makeup->menu->settings     = 'Settings|makeup|setReviewer|';
 
 if(!isset($lang->overtime)) $lang->overtime = new stdclass();
 $lang->overtime->menu = new stdclass();
 $lang->overtime->menu->personal     = 'My overtime|overtime|personal|';
-$lang->overtime->menu->browseReview = 'Review by me|overtime|browsereview|';
+$lang->overtime->menu->browseReview = 'My Review|overtime|browsereview|';
 $lang->overtime->menu->company      = 'All|overtime|company|';
 $lang->overtime->menu->settings     = 'Settings|overtime|setReviewer|';
 
 if(!isset($lang->lieu)) $lang->lieu = new stdclass();
 $lang->lieu->menu = new stdclass();
 $lang->lieu->menu->personal     = 'My lieu|lieu|personal|';
-$lang->lieu->menu->browseReview = 'Review By Me|lieu|browsereview|';
+$lang->lieu->menu->browseReview = 'My Review|lieu|browsereview|';
 $lang->lieu->menu->company      = 'All|lieu|company|';
 $lang->lieu->menu->settings     = 'Settings|lieu|setReviewer|';
 
@@ -89,9 +89,9 @@ $lang->egress->menu->company    = 'Company|egress|company|';
 if(!isset($lang->refund)) $lang->refund = new stdclass();
 $lang->refund->menu = new stdclass();
 $lang->refund->menu->personal   = array('link' => 'My reimbursement|refund|personal|', 'alias' => 'create, edit');
-$lang->refund->menu->review     = 'Review wait|refund|browsereview|status=unreviewed';
-$lang->refund->menu->reviewedBy = 'Review by me|refund|browsereview|status=reviewed';
-$lang->refund->menu->todo       = 'Reimburse wait|refund|todo|';
+$lang->refund->menu->review     = 'Review Wait|refund|browsereview|status=unreviewed';
+$lang->refund->menu->reviewedBy = 'My Review|refund|browsereview|status=reviewed';
+$lang->refund->menu->todo       = 'Reimburse Wait|refund|todo|';
 $lang->refund->menu->company    = 'All|refund|company|';
 $lang->refund->menu->settings   = array('link' => 'Settings|refund|setreviewer|', 'alias' => 'setcategory,setdepositor,setrefundby');
 
