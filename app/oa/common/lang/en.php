@@ -15,7 +15,7 @@ $lang->app->name = 'OA';
 $lang->menu->oa = new stdclass();
 $lang->menu->oa->dashboard = 'Home|dashboard|index|';
 $lang->menu->oa->my        = 'Review|my|review|';
-$lang->menu->oa->announce  = 'Announce|announce|index|';
+$lang->menu->oa->announce  = 'Notice|announce|index|';
 $lang->menu->oa->attend    = 'Attendance|attend|personal|';
 $lang->menu->oa->leave     = 'Leave|leave|personal|';
 $lang->menu->oa->makeup    = 'Makeup|makeup|personal|';
@@ -33,7 +33,7 @@ $lang->dashboard = new stdclass();
 
 if(!isset($lang->announce)) $lang->announce = new stdclass();
 $lang->announce->menu = new stdclass();
-$lang->announce->menu->browse   = array('link' => 'Announcement|announce|browse|', 'alias' => 'create,edit,view');
+$lang->announce->menu->browse   = array('link' => 'Notice|announce|browse|', 'alias' => 'create,edit,view');
 $lang->announce->menu->category = 'Category|tree|browse|type=announce|';
 
 if(!isset($lang->attend)) $lang->attend = new stdclass();
@@ -82,7 +82,7 @@ $lang->trip->menu->company    = 'Company|trip|company|';
 
 if(!isset($lang->egress)) $lang->egress = new stdclass();
 $lang->egress->menu = new stdclass();
-$lang->egress->menu->personal   = 'Mine|egress|personal|';
+$lang->egress->menu->personal   = 'My Egress|egress|personal|';
 $lang->egress->menu->department = 'Department|egress|department|';
 $lang->egress->menu->company    = 'Company|egress|company|';
 
