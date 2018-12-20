@@ -9,6 +9,8 @@
  * @version     $Id$
  * @link        http://www.ranzhi.org
  */
+$config->contract->memberCount = 5;
+
 $config->contract->require = new stdclass();
 $config->contract->require->create  = 'customer, name';
 $config->contract->require->edit    = 'customer, name';

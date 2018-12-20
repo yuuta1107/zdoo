@@ -77,6 +77,7 @@ $lang->contract->deleteDelivery   = '刪除交付';
 $lang->contract->export           = '導出';
 $lang->contract->totalReturn      = '回款合計';
 $lang->contract->tradeList        = '收支記錄';
+$lang->contract->manageTeam       = '維護團隊';
 
 $lang->contract->deliveryList[]        = '';
 $lang->contract->deliveryList['wait']  = '等待交付';
@@ -108,6 +109,18 @@ $lang->contract->returnInfo         = "<p>%s, 由 <strong>%s</strong> 回款%s�
 $lang->contract->deliveryInfo       = "<p>%s由%s交付。</p>";
 $lang->contract->deleteReturnInfo   = "%s的回款%s";
 $lang->contract->deleteDeliveryInfo = "%s的交付";
+$lang->contract->teamTips           = '成員或者提成比例為空不保存。';
+
+$lang->contract->error = new stdclass();
+$lang->contract->error->wrongRate      = '<strong>提成比例</strong>應該是數字';
+$lang->contract->error->wrongTotalRate = '<strong>提成比例總額</strong>應該不大於100%';
+
+$lang->contract->team = new stdclass();
+$lang->contract->team->common  = '團隊';
+$lang->contract->team->account = '成員';
+$lang->contract->team->rate    = '提成比例(%)';
+$lang->contract->team->money   = '金額';
+$lang->contract->team->total   = '合計';
 
 $lang->plan = new stdclass();
 $lang->plan->amount = $lang->contract->thisAmount;

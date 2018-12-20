@@ -411,14 +411,17 @@ class excel extends model
 
     public function setAlignment($excelSheet)
     {
-        foreach($this->rawExcelData->percentageFields as $num => $fields)
+        if(isset($this->rawExcelData->percentageFields))
         {
-            foreach($fields as $key => $field)
+            foreach($this->rawExcelData->percentageFields as $num => $fields)
             {
-                if(isset($this->excelKey[$key]))
+                foreach($fields as $key => $field)
                 {
-                    $cell = $this->excelKey[$key] . ($this->headerRowCount + $num + 1);
-                    $excelSheet->getStyle($cell)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+                    if(isset($this->excelKey[$key]))
+                    {
+                        $cell = $this->excelKey[$key] . ($this->headerRowCount + $num + 1);
+                        $excelSheet->getStyle($cell)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+                    }
                 }
             }
         }

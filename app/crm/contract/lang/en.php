@@ -77,6 +77,7 @@ $lang->contract->deleteDelivery   = 'Delete';
 $lang->contract->export           = 'Export';
 $lang->contract->totalReturn      = 'Total';
 $lang->contract->tradeList        = 'Trade List';
+$lang->contract->manageTeam       = 'Manage Team';
 
 $lang->contract->deliveryList[]        = '';
 $lang->contract->deliveryList['wait']  = 'Wait';
@@ -108,6 +109,18 @@ $lang->contract->returnInfo         = "<p>%s, received by <strong>%s</strong>, %
 $lang->contract->deliveryInfo       = "<p>%s, delivered by %s.</p>";
 $lang->contract->deleteReturnInfo   = "%s in %s";
 $lang->contract->deleteDeliveryInfo = "in %s";
+$lang->contract->teamTips           = "Empty member or rate won't be saved.";
+
+$lang->contract->error = new stdclass();
+$lang->contract->error->wrongRate      = 'Commission rate should be number';
+$lang->contract->error->wrongTotalRate = 'Total commission rate should not be greater than 100%';
+
+$lang->contract->team = new stdclass();
+$lang->contract->team->common  = 'Team';
+$lang->contract->team->account = 'Member';
+$lang->contract->team->rate    = 'Rate(%)';
+$lang->contract->team->money   = 'Money';
+$lang->contract->team->total   = 'Total';
 
 $lang->plan = new stdclass();
 $lang->plan->amount = $lang->contract->thisAmount;

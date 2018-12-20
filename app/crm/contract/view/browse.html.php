@@ -57,7 +57,7 @@
         <td><?php echo $lang->contract->returnList[$contract->return];?></td>
         <td><?php echo $lang->contract->deliveryList[$contract->delivery];?></td>
         <td class='<?php echo "contract-{$contract->status}";?>'><?php echo $lang->contract->statusList[$contract->status];?></td>
-        <td class='operate'><?php echo $this->contract->buildOperateMenu($contract) ?></td>
+        <td class='operate'><?php echo $this->contract->buildOperateMenu($contract);?></td>
       </tr>
       <?php endforeach;?>
     </tbody>
@@ -71,4 +71,7 @@
     <?php $pager->show();?>
   </div>
 </div>
+<script>
+<?php helper::import('../js/team.js');?>
+</script>
 <?php include '../../common/view/footer.html.php';?>

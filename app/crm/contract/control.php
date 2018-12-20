@@ -517,6 +517,33 @@ class contract extends control
     }
 
     /**
+     * Manage team.
+     *
+     * @param  int    $contractID
+     * @access public
+     * @return void
+     */
+    public function manageTeam($contractID)
+    {
+        if($_POST)
+        {
+            $result = $this->contract->checkTeam();
+            if(!empty($result['result']) && $result['result'] == 'fail') $this->send($result);
+
+            $this->contract->manageTeam($contractID);
+            if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
+
+            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
+        }
+
+        $this->view->title    = $this->lang->contract->manageTeam;
+        $this->view->contract = $this->contract->getByID($contractID);
+        $this->view->users    = $this->loadModel('user')->getPairs('noclosed,nodelete,noforbidden');
+        $this->view->members  = $this->contract->getMembers($contractID);
+        $this->display();
+    }
+
+    /**
      * Get order.
      *
      * @param  int       $customerID
