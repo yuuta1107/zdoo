@@ -615,6 +615,7 @@ CREATE TABLE IF NOT EXISTS `cash_trade` (
   `exchangeRate` decimal(12,4) NOT NULL DEFAULT 1,
   `currency` varchar(30) NOT NULL,
   `date` date NOT NULL,
+  `time` time NOT NULL,
   `deadline` date NOT NULL,
   `handlers` varchar(255) NOT NULL,
   `category` char(30) NOT NULL DEFAULT '0',

@@ -980,6 +980,7 @@ class tradeModel extends model
             $trade->handlers       = $handlers;
             $trade->product        = isset($this->post->product[$key])        ? $this->post->product[$key] : 0;
             $trade->date           = $this->post->date[$key];
+            $trade->time           = $this->post->time[$key];
             $trade->desc           = strip_tags(nl2br($this->post->desc[$key]));
             $trade->currency       = $depositor->currency;
             $trade->createdBy      = $this->app->user->account;

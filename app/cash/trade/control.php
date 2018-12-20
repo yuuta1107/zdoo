@@ -899,7 +899,13 @@ class trade extends control
                 }
 
                 $data[$field] = (is_int($col) and isset($row[$col])) ? trim($row[$col]) : '';
-                if($field == 'date') $data[$field] = date('Y-m-d', strtotime($data[$field]));
+                if($field == 'date')
+                {
+                    $datetime = $data[$field];
+
+                    $data['date'] = date('Y-m-d', strtotime($datetime));
+                    $data['time'] = date('H:i:s', strtotime($datetime));
+                }
             }
 
             if(isset($flipDeptList[$data['dept']])) $data['dept'] = $flipDeptList[$data['dept']];
@@ -971,10 +977,11 @@ class trade extends control
 
             $existTrade = $this->dao->select('*')->from(TABLE_TRADE)
                 ->where('depositor')->eq($depositorID)
-                ->andWhere('money')->eq($data['money'])
-                ->andWhere('date')->eq($data['date'])
-                ->andWhere('type')->eq($data['type'])
-                ->andWhere('category')->eq($data['category'])
+                ->beginIF(isset($data['money']))->andWhere('money')->eq($data['money'])->fi()
+                ->beginIF(isset($data['date']))->andWhere('date')->eq($data['date'])->fi()
+                ->beginIF(isset($data['time']))->andWhere('time')->eq($data['time'])->fi()
+                ->beginIF(isset($data['type']))->andWhere('type')->eq($data['type'])->fi()
+                ->beginIF(isset($data['category']))->andWhere('category')->eq($data['category'])->fi()
                 ->fetchAll();
             if($existTrade) $existTrades[$i] = $existTrade;
 

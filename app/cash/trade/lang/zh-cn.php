@@ -206,12 +206,14 @@ $lang->trade->loss          = '亏';
 $lang->trade->balance       = '收支平衡';
 $lang->trade->total         = '总计';
 
-$lang->trade->noTraderMatch = '没有匹配到相应的商户，点击新建';
-$lang->trade->unique        = '今天已经有相同金额的账目';
-$lang->trade->ignore        = '忽略';
-$lang->trade->denied        = '您没有权限浏览此类账目，请联系管理员设置权限。';
-$lang->trade->emptyData     = '带有*的内容不能为空';
-$lang->trade->detailTip     = '明细总金额和当前交易金额不相等，确定保存当前明细吗？';
+$lang->trade->noTraderMatch  = '没有匹配到相应的商户，点击新建';
+$lang->trade->unique         = '今天已经有相同金额的账目';
+$lang->trade->showExistTrade = '展开重复账目';
+$lang->trade->hideExistTrade = '收起重复账目';
+$lang->trade->ignore         = '忽略';
+$lang->trade->denied         = '您没有权限浏览此类账目，请联系管理员设置权限。';
+$lang->trade->emptyData      = '带有*的内容不能为空';
+$lang->trade->detailTip      = '明细总金额和当前交易金额不相等，确定保存当前明细吗？';
 
 $lang->trade->chartList['productLine'] = '按产品线统计';
 $lang->trade->chartList['category']    = '按科目统计';
