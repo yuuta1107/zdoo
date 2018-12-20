@@ -87,6 +87,8 @@ $lang->refund->setExpense        = 'Set Category';
 $lang->refund->moneyTip          = 'If requested amont is less than this, 1st review is required. If not, 2nd review is required.';
 $lang->refund->total             = 'Total:';
 $lang->refund->totalMoney        = '%s%s；';
+$lang->refund->reviewing         = 'waiting for <strong>%s</strong>';
+$lang->refund->reviewed          = 'review finished';
 
 $lang->refund->settings = new stdclass();
 $lang->refund->settings->setReviewer  = "Reviewer|refund|setreviewer";

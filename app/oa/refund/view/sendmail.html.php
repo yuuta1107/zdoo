@@ -55,10 +55,28 @@
             <th><?php echo $lang->refund->status?></th>
             <td>
               <span style='color: red'>
-              <?php
-              if($refund->status == 'doing') echo zget($users, $refund->firstReviewer) . ' ' . $lang->refund->statusList['pass'];
-              if($refund->status != 'doing') echo zget($lang->refund->statusList, $refund->status);
-              ?>
+                <?php
+                if(!empty($refund->secondReviewer))
+                {
+                    echo zget($users, $refund->firstReviewer) . $lang->refund->statusList['pass'];
+                    echo '<br>' . zget($users, $refund->secondReviewer) . zget($lang->refund->statusList, $refund->status);
+                }
+                elseif(!empty($refund->firstReviewer))
+                {
+                    echo zget($users, $refund->firstReviewer);
+                    $status = $refund->status == 'doing' ? 'pass' : $refund->status;
+                    echo zget($lang->refund->reviewStatusList, $status);
+                    if($refund->status == 'doing' && !empty($this->config->refund->secondReviewer))
+                    {
+                        echo '<br>' . sprintf($lang->refund->reviewing, zget($users, $this->config->refund->secondReviewer));
+                    }
+                }
+                else
+                {
+                    if($refund->status == 'draft') echo $lang->refund->statusList['draft'];
+                    if($refund->status == 'wait' && !empty($this->config->refund->firstReviewer)) echo sprintf($lang->refund->reviewing, zget($users, $this->config->refund->firstReviewer));
+                }
+                ?>
               </span>
             </td>
           </tr>

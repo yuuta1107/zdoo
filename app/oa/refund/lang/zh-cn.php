@@ -87,6 +87,8 @@ $lang->refund->setExpense        = '设置科目';
 $lang->refund->moneyTip          = '低于金额只需要一级审批，高于金额需要二级审批';
 $lang->refund->total             = '合计：';
 $lang->refund->totalMoney        = '%s%s；';
+$lang->refund->reviewing         = '等待 <strong>%s</strong> 审批';
+$lang->refund->reviewed          = '审批完成';
 
 $lang->refund->settings = new stdclass();
 $lang->refund->settings->setReviewer  = "审批人|refund|setreviewer";
