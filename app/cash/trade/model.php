@@ -951,6 +951,21 @@ class tradeModel extends model
             $category = $this->post->category[$key] == 'ditto' ? $category : $this->post->category[$key];
             $dept     = $this->post->dept[$key]     == 'ditto' ? $dept : $this->post->dept[$key];
 
+            $postHandlers = '';
+            if(isset($this->post->handlers[$key]))
+            {
+                $postHandlers = $this->post->handlers[$key];
+                if(count($postHandlers) > 1)
+                {
+                    $postHandlers = array_flip($postHandlers);
+                    unset($postHandlers['ditto']);
+                    $postHandlers = array_flip($postHandlers);
+                }
+
+                $postHandlers = trim(join(',', $postHandlers), ',');
+            }
+            $handlers = $postHandlers == 'ditto' ? $handlers : $postHandlers;
+
             $trade = new stdclass();
             $trade->type           = $type;
             $trade->depositor      = $depositorID;
@@ -962,7 +977,7 @@ class tradeModel extends model
             $trade->traderName     = isset($this->post->traderName[$key])     ? $this->post->traderName[$key] : '';
             $trade->createCustomer = isset($this->post->createCustomer[$key]) ? $this->post->createCustomer[$key] : '';
             $trade->customerName   = isset($this->post->customerName[$key])   ? $this->post->customerName[$key] : '';
-            $trade->handlers       = !empty($this->post->handlers[$key]) ? join(',', $this->post->handlers[$key]) : '';
+            $trade->handlers       = $handlers;
             $trade->product        = isset($this->post->product[$key])        ? $this->post->product[$key] : 0;
             $trade->date           = $this->post->date[$key];
             $trade->desc           = strip_tags(nl2br($this->post->desc[$key]));

@@ -184,6 +184,7 @@ $lang->trade->importedFields['dept']     = 'Department';
 $lang->trade->importedFields['desc']     = 'Description';
 $lang->trade->importedFields['fee']      = 'Fee';
 $lang->trade->importedFields['product']  = 'Product';
+$lang->trade->importedFields['handlers'] = 'Handler';
 
 $lang->trade->statusList['returned']   = 'Returned';
 $lang->trade->statusList['returning']  = 'Returning';

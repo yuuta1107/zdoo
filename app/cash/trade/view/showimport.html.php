@@ -24,8 +24,8 @@
           <th class='w-120px'><?php echo $lang->trade->category;?></th> 
           <th class='w-220px'><?php echo $lang->trade->trader;?></th> 
           <th class='w-100px'><?php echo $lang->trade->money;?></th>
-          <th class='w-80px'><?php echo $lang->trade->dept;?></th>
-          <th class='w-170px'><?php echo $lang->trade->handlers;?></th>
+          <th class='w-130px'><?php echo $lang->trade->dept;?></th>
+          <th class='w-120px'><?php echo $lang->trade->handlers;?></th>
           <th class='w-120px'><?php echo $lang->trade->product;?></th>
           <?php if(!empty($existTrades)):?>
           <th class='w-180px'><?php echo $lang->trade->date;?></th>
@@ -37,15 +37,18 @@
       </thead>
       <tbody>
         <?php $deptList['ditto'] = $lang->ditto;?>
+        <?php $users['ditto']    = $lang->ditto;?>
         <?php foreach($trades as $i => $trade):?>
         <?php
         if($i == 0)
         {
-            $trade['dept'] = $trade['dept'] ? $trade['dept'] : '';
+            $trade['dept']     = $trade['dept']     ? $trade['dept']     : '';
+            $trade['handlers'] = $trade['handlers'] ? $trade['handlers'] : '';
         }
         else
         {
-            $trade['dept'] = $trade['dept'] ? $trade['dept'] : 'ditto';
+            $trade['dept']     = $trade['dept']     ? $trade['dept']     : 'ditto';
+            $trade['handlers'] = $trade['handlers'] ? $trade['handlers'] : 'ditto';
         }
         ?>
         <tr <?php echo !empty($existTrades[$i]) ? "class='repeat-record' title={$lang->trade->unique} data-toggle='tooltip'" : '';?>>
@@ -84,7 +87,7 @@
           </td>
           <td><?php echo html::input("money[$i]", $trade['money'], "class='form-control'");?></td>
           <td><?php echo html::select("dept[$i]", $deptList, $trade['dept'], "class='form-control chosen'");?></td>
-          <td><?php echo html::select("handlers[$i][]", $users, '', "class='form-control chosen' id='handlers{$i}' multiple");?></td>
+          <td><?php echo html::select("handlers[$i][]", $users, $trade['handlers'], "class='form-control chosen' id='handlers{$i}' multiple");?></td>
           <td><?php echo html::select("product[$i]", $productList, $trade['product'], "class='form-control chosen' id='product{$i}'");?></td>
           <td>
             <?php if(!empty($existTrades[$i])):?>
@@ -105,7 +108,7 @@
         </tr>
         <?php endforeach;?>
       </tbody>
-      <tfoot><tr><td colspan='9' class='text-center'><?php echo html::submitButton() . ' ' . html::backButton();?></td></tr></tfoot>
+      <tfoot><tr><td colspan='10' class='text-center'><?php echo html::submitButton() . ' ' . html::backButton();?></td></tr></tfoot>
     </table>
   </div>
 </form>

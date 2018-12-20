@@ -184,6 +184,7 @@ $lang->trade->importedFields['dept']     = '部門';
 $lang->trade->importedFields['desc']     = '備註';
 $lang->trade->importedFields['fee']      = '手續費';
 $lang->trade->importedFields['product']  = '產品';
+$lang->trade->importedFields['handlers'] = '經手人';
 
 $lang->trade->statusList['returned']   = '已贖回';
 $lang->trade->statusList['returning']  = '贖回中';
