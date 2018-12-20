@@ -11,7 +11,7 @@
  */
 $lang->blog->common = "Blog";
 
-$lang->blog->latestArticles = 'Latest Articles';
+$lang->blog->latestArticles = 'Latest Article';
 
 $lang->blog->index  = "Home";
 $lang->blog->create = "Create Blog";
