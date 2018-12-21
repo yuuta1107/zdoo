@@ -101,9 +101,6 @@ $lang->contract->codeUnitList['d']     = 'Day';
 $lang->contract->codeUnitList['fix']   = 'Fix';
 $lang->contract->codeUnitList['input'] = 'Input';
 
-$lang->contract->placeholder = new stdclass();
-$lang->contract->placeholder->real = 'Turnover';
-
 $lang->contract->totalAmount        = 'The total payment is %s. %s on this page, %s this month.';
 $lang->contract->returnInfo         = "<p>%s, received by <strong>%s</strong>, %s.</p>";
 $lang->contract->deliveryInfo       = "<p>%s, delivered by %s.</p>";
@@ -111,9 +108,8 @@ $lang->contract->deleteReturnInfo   = "%s in %s";
 $lang->contract->deleteDeliveryInfo = "in %s";
 $lang->contract->teamTips           = "Empty member or rate won't be saved.";
 
-$lang->contract->error = new stdclass();
-$lang->contract->error->wrongRate      = 'Commission rate should be number';
-$lang->contract->error->wrongTotalRate = 'Total commission rate should not be greater than 100%';
+$lang->contract->placeholder = new stdclass();
+$lang->contract->placeholder->real = 'Turnover';
 
 $lang->contract->team = new stdclass();
 $lang->contract->team->common  = 'Team';
@@ -121,6 +117,10 @@ $lang->contract->team->account = 'Member';
 $lang->contract->team->rate    = 'Rate(%)';
 $lang->contract->team->money   = 'Money';
 $lang->contract->team->total   = 'Total';
+
+$lang->contract->error = new stdclass();
+$lang->contract->error->wrongRate      = 'Commission rate should be number';
+$lang->contract->error->wrongTotalRate = 'Total commission rate should not be greater than 100%';
 
 $lang->plan = new stdclass();
 $lang->plan->amount = $lang->contract->thisAmount;

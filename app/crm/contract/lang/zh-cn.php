@@ -101,19 +101,15 @@ $lang->contract->codeUnitList['d']     = '日';
 $lang->contract->codeUnitList['fix']   = '固定值';
 $lang->contract->codeUnitList['input'] = '输入值';
 
-$lang->contract->placeholder = new stdclass();
-$lang->contract->placeholder->real = '成交金额';
-
 $lang->contract->totalAmount        = '本页合同总金额：%s，已回款：%s，其中本月回款：%s；';
 $lang->contract->returnInfo         = "<p>%s, 由 <strong>%s</strong> 回款%s。</p>";
 $lang->contract->deliveryInfo       = "<p>%s由%s交付。</p>";
 $lang->contract->deleteReturnInfo   = "%s的回款%s";
 $lang->contract->deleteDeliveryInfo = "%s的交付";
-$lang->contract->teamTips           = '成员或者提成比例为空不保存。';
+$lang->contract->teamTips           = '<strong>成员为空</strong>或者<strong>提成比例为空</strong>不保存。';
 
-$lang->contract->error = new stdclass();
-$lang->contract->error->wrongRate      = '<strong>提成比例</strong>应该是数字';
-$lang->contract->error->wrongTotalRate = '<strong>提成比例总额</strong>应该不大于100%';
+$lang->contract->placeholder = new stdclass();
+$lang->contract->placeholder->real = '成交金额';
 
 $lang->contract->team = new stdclass();
 $lang->contract->team->common  = '团队';
@@ -121,6 +117,10 @@ $lang->contract->team->account = '成员';
 $lang->contract->team->rate    = '提成比例(%)';
 $lang->contract->team->money   = '金额';
 $lang->contract->team->total   = '合计';
+
+$lang->contract->error = new stdclass();
+$lang->contract->error->wrongRate      = '<strong>提成比例</strong>应该是数字';
+$lang->contract->error->wrongTotalRate = '<strong>提成比例总额</strong>应该不大于100%';
 
 $lang->plan = new stdclass();
 $lang->plan->amount = $lang->contract->thisAmount;

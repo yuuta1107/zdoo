@@ -55,7 +55,7 @@
         <td></td>
       </tr>
       <tr>
-        <td class='text-danger'><strong><?php echo $lang->contract->teamTips;?></strong></td>
+        <td class='text-danger'><?php echo $lang->contract->teamTips;?></td>
         <td class='text-center'><?php echo html::submitButton();?></td>
         <td colspan='2'></td>
       </tr>

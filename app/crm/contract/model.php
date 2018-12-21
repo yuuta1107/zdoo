@@ -244,7 +244,11 @@ class contractModel extends model
      */
     public function getMembers($contractID)
     {
-        return $this->dao->select('*')->from(TABLE_TEAM)->where('type')->eq('contract')->andWhere('id')->eq($contractID)->fetchAll();
+        return $this->dao->select('*')->from(TABLE_TEAM)
+            ->where('type')->eq('contract')
+            ->andWhere('id')->eq($contractID)
+            ->orderBy('rate_desc')
+            ->fetchAll('account');
     }
 
     /**

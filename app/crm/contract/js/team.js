@@ -45,6 +45,11 @@ $(function()
         $select.val(account).trigger('chosen:updated');
     });
 
+    $(document).on('change', '[name^=account]', function()
+    {
+        if($(this).val() == '') $(this).parents('tr').find('input').val('').change();
+    });
+
     $(document).on('change', '[name^=rate]', function()
     {
         var rate = $(this).val() == '' ? 0 : $(this).val();
@@ -87,4 +92,6 @@ function computeTotal()
 
     $('#totalRate').html(totalRate);
     $('#totalMoney').html(totalMoney);
+    $('#totalRateLabel').remove();
+    $('#totalMoneyLabel').remove();
 }
