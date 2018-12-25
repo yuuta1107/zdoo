@@ -106,7 +106,7 @@ $lang->contract->returnInfo         = "<p>%s, received by <strong>%s</strong>, %
 $lang->contract->deliveryInfo       = "<p>%s, delivered by %s.</p>";
 $lang->contract->deleteReturnInfo   = "%s in %s";
 $lang->contract->deleteDeliveryInfo = "in %s";
-$lang->contract->teamTips           = "Empty member or rate won't be saved.";
+$lang->contract->teamTips           = "The record has empty member or rate won't be saved.";
 
 $lang->contract->placeholder = new stdclass();
 $lang->contract->placeholder->real = 'Turnover';
@@ -119,8 +119,8 @@ $lang->contract->team->money   = 'Money';
 $lang->contract->team->total   = 'Total';
 
 $lang->contract->error = new stdclass();
-$lang->contract->error->wrongRate      = 'Commission rate should be number';
-$lang->contract->error->wrongTotalRate = 'Total commission rate should not be greater than 100%';
+$lang->contract->error->wrongRate      = '<strong>Commission rate</strong> should be number';
+$lang->contract->error->wrongTotalRate = '<strong>Total commission rate</strong> should not be greater than 100%';
 
 $lang->plan = new stdclass();
 $lang->plan->amount = $lang->contract->thisAmount;
