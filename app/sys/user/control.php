@@ -352,9 +352,7 @@ class user extends control
      */
     public function admin($deptID = 0, $mode = 'normal', $search = '', $orderBy = 'id_asc', $recTotal = 0, $recPerPage = 10, $pageID = 1)
     {
-        if($this->post->query) die($this->locate(inlink('admin', "deptID=$deptID&mode=&query={$this->post->query}&orderBy=$orderBy&recTotal=0&recPerPage=$recPerPage&pageID=1")));
-
-        if($this->post->search) $search = $this->post->search;
+        if($this->post->search) die($this->locate(inlink('admin', "deptID=$deptID&mode=&search={$this->post->search}&orderBy=$orderBy&recTotal=0&recPerPage=$recPerPage&pageID=1")));
 
         $this->app->loadClass('pager', $static = true);
         $pager = new pager($recTotal, $recPerPage, $pageID);
@@ -386,7 +384,7 @@ class user extends control
      */
     public function colleague($deptID = 0, $search = '', $orderBy = 'id_asc', $recTotal = 0, $recPerPage = 10, $pageID = 1)
     {
-        if($this->post->query) die($this->locate(inlink('colleague', "deptID=$deptID&query={$this->post->query}&orderBy=$orderBy&recTotal=0&recPerPage=$recPerPage&pageID=1")));
+        if($this->post->search) die($this->locate(inlink('colleague', "deptID=$deptID&search={$this->post->search}&orderBy=$orderBy&recTotal=0&recPerPage=$recPerPage&pageID=1")));
 
         $this->app->loadLang('user', 'sys');
         $this->app->loadClass('pager', $static = true);
