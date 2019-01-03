@@ -63,7 +63,7 @@ class contractModel extends model
 
         if($mode == 'contactedby')
         {
-            return $this->dao->select('*')->from(TABLE_CONTRACT)->alias('t1')
+            return $this->dao->select('t1.*')->from(TABLE_CONTRACT)->alias('t1')
                 ->leftJoin(TABLE_DATING)->alias('t2')->on('t1.id=t2.objectID')
                 ->where('t1.deleted')->eq(0)
                 ->andWhere('t2.status')->eq('wait')
