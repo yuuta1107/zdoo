@@ -88,8 +88,8 @@ class orderModel extends model
         if($this->session->orderQuery == false) $this->session->set('orderQuery', ' 1 = 1');
         $orderQuery = $this->loadModel('search', 'sys')->replaceDynamic($this->session->orderQuery);
 
-        if(strpos($orderBy, 'status') !== false) $orderBy .= ', closedReason';
-        if(strpos($orderBy, 'id') === false) $orderBy .= ', id_desc';
+        if(strpos($orderBy, 'status') !== false) $orderBy .= ', o.closedReason';
+        if(strpos($orderBy, 'id') === false) $orderBy .= ', o.id_desc';
 
         if(strpos(',contactedby,past,today,tomorrow,thisweek,thismonth,', ",{$mode},") !== false or ($mode == 'bysearch' && strpos($orderQuery, '`nextDate`') !== false))
         {
@@ -107,8 +107,7 @@ class orderModel extends model
                 ->beginIF($mode == 'thismonth')->andWhere('d.date')->between($thisMonth['begin'], $thisMonth['end'])->fi()
                 ->beginIF($mode == 'bysearch')->andWhere(str_replace('`nextDate`', 'd.date', $orderQuery))->fi()
                 ->andWhere('o.customer')->in($customerIdList)
-                ->beginIF(strpos($orderBy, 'date') !== false)->orderBy("d.$orderBy")->fi()
-                ->beginIF(strpos($orderBy, 'date') === false)->orderBy("o.$orderBy")->fi()
+                ->orderBy($orderBy)
                 ->page($pager, 'o.id')
                 ->fetchAll('id');
 
@@ -150,7 +149,7 @@ class orderModel extends model
                 ->beginIF($mode == 'query')->andWhere($param)->fi()
                 ->beginIF($mode == 'bysearch')->andWhere($orderQuery)->fi()
                 ->andWhere('o.customer')->in($customerIdList)
-                ->orderBy("o.$orderBy")
+                ->orderBy($orderBy)
                 ->page($pager)
                 ->fetchAll('id');
 
