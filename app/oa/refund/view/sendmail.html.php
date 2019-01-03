@@ -14,7 +14,7 @@
 <?php include '../../../sys/common/view/mail.header.html.php';?>
 <tr>
   <td>
-    <table cellpadding='0' cellspacing='0' width='600' style='border: none; border-collapse: collapse;'>
+    <table cellpadding='0' cellspacing='0' width='700' style='border: none; border-collapse: collapse;'>
       <tr>
         <td style='padding: 10px; background-color: #F8FAFE; border: none; font-size: 14px; font-weight: 500; border-bottom: 1px solid #e5e5e5;'>
           <?php
@@ -117,25 +117,26 @@
         </table>
         <?php if(!empty($refund->detail)):?>
         <p><?php echo $lang->refund->detail?></p>
-        <table>
+        <table style='font-size: 13px; width: 100%; text-align: left;'>
           <tr>
-            <th><?php echo $lang->refund->date?></th>
-            <th><?php echo $lang->refund->category?></th>
-            <th><?php echo $lang->refund->money?></th>
-            <th><?php echo $lang->refund->status?></th>
-            <th><?php echo $lang->refund->related?></th>
-            <th><?php echo $lang->refund->desc?></th>
-            <th><?php echo $lang->refund->reason?></th>
+            <th style='width: 80px'><?php echo $lang->refund->date?></th>
+            <th style='width: 100px'><?php echo $lang->refund->category?></th>
+            <th style='width: 60px'><?php echo $lang->refund->money?></th>
+            <th style='width: 60px'><?php echo $lang->refund->status?></th>
+            <th style='width: 80px'><?php echo $lang->refund->related?></th>
+            <th style='width: 240px'><?php echo $lang->refund->desc?></th>
           </tr>
           <?php foreach($refund->detail as $detail):?>
           <tr>
             <td><?php echo $detail->date?></td>
-            <td><?php echo zget($categories, $detail->category, ' ')?></td>
+            <?php $category = zget($categories, $detail->category, ' ')?>
+            <td title='<?php echo $category;?>'><div style='width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;'><?php echo $category?></div></td>
             <td><?php echo $detail->money?></td>
             <td><?php echo zget($lang->refund->statusList, $detail->status)?></td>
-            <td><?php foreach(explode(',', $detail->related) as $account) echo zget($users, $account) . ' '?></td>
-            <td><?php echo $detail->desc?></td>
-            <td><?php echo $detail->reason?></td>
+            <?php $related = '';?>
+            <?php foreach(explode(',', $detail->related) as $account) $related .= zget($users, $account) . ' '?>
+            <td title='<?php echo $related;?>'><div style='width: 80px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;'><?php echo $related;?></div></td>
+            <td title='<?php echo $detail->desc;?>'><div style='width: 240px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;'><?php echo $detail->desc?></div></td>
           </tr>
           <?php endforeach;?>
         </table>
