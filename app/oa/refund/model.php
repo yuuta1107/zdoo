@@ -341,17 +341,17 @@ class refundModel extends model
         /* Insert detail */
         if(!empty($_POST['moneyList']))
         {
-            $invoiceList = $_POST['invoiceList'];
             foreach($this->post->moneyList as $key => $money)
             {
-                if(!(float)$money) continue;
+                if(!(float)$money && !(float)$this->post->invoiceList[$key]) continue;
+
                 $detail = new stdclass();
                 $detail->parent      = $refundID;
                 $detail->category    = $this->post->categoryList[$key];
                 $detail->currency    = $this->post->currency;
                 $detail->date        = $this->post->dateList[$key] ? $this->post->dateList[$key] : helper::today();
                 $detail->money       = (float)$money;
-                $detail->invoice     = (float)$invoiceList[$key];
+                $detail->invoice     = (float)$this->post->invoiceList[$key];
                 $detail->desc        = $this->post->descList[$key];
                 $detail->related     = implode(',', $this->post->relatedList[$key]);
                 $detail->status      = 'wait';
@@ -562,6 +562,7 @@ class refundModel extends model
             foreach($refund->detail as $detail)
             {
                 if($detail->status != 'finish') continue;
+                if($detail->money <= 0) continue;
 
                 $tradeDetail = new stdclass();
                 $tradeDetail->type        = 'out';
