@@ -163,6 +163,8 @@ class upgradeModel extends model
             case '4_9':
                 $this->execSQL($this->getUpgradeFile('4.9'));
                 $this->updateContractProduct();
+            case '5_0':
+                $this->execSQL($this->getUpgradeFile('5.0'));
 
             default: if(!$this->isError()) $this->loadModel('setting')->updateVersion($this->config->version);
         }
@@ -220,6 +222,7 @@ class upgradeModel extends model
             case '4_7'     : $confirmContent .= file_get_contents($this->getUpgradeFile('4.7'));
             case '4_8'     :
             case '4_9'     : $confirmContent .= file_get_contents($this->getUpgradeFile('4.9'));
+            case '5_0'     : $confirmContent .= file_get_contents($this->getUpgradeFile('5.0'));
         }
         return $confirmContent;
     }
