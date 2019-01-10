@@ -217,7 +217,7 @@ class refund extends control
         $this->config->refund->search['params']['refundBy']['values']       = $users;
         $this->search->setSearchParams($this->config->refund->search);
 
-        if($mode == 'todo')
+        if($mode == 'todo' or $type == 'bysearch')
         {
             $date         = '';
             $currentYear  = ''; 

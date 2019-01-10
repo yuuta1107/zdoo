@@ -884,6 +884,22 @@ class contractModel extends model
     }
 
     /**
+     * Check if all members of a contract accepted the commission rate.
+     *
+     * @access public
+     * @return bool
+     */
+    public function checkAllMembersAccepted()
+    {
+        $members = $this->dao->select('status')->from(TABLE_TEAM)
+            ->where('type')->eq('contract')
+            ->andWhere('id')->eq($contractID)
+            ->fetchPairs();
+
+        return count($members) == 1 && reset($members) == 'accept';
+    }
+
+    /**
      * Manage team.
      *
      * @param  int    $contractID
@@ -908,6 +924,28 @@ class contractModel extends model
 
             $this->dao->insert(TABLE_TEAM)->data($member)->autoCheck()->exec();
         }
+
+        return !dao::isError();
+    }
+
+    /**
+     * Accept or reject a commission rate.
+     *
+     * @param  int    $contractID
+     * @param  string $status
+     * @access public
+     * @return bool
+     */
+    public function confirmTeam($contractID, $status)
+    {
+        if($status != 'accept' && $status != 'reject') return false;
+
+        $this->dao->update(TABLE_TEAM)
+            ->set('status')->eq($status)
+            ->where('type')->eq('contract')
+            ->andWhere('id')->eq($contractID)
+            ->andWhere('account')->eq($this->app->user->account)
+            ->exec();
 
         return !dao::isError();
     }

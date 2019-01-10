@@ -78,6 +78,7 @@ $lang->contract->export           = 'Export';
 $lang->contract->totalReturn      = 'Total';
 $lang->contract->tradeList        = 'Trade List';
 $lang->contract->manageTeam       = 'Manage Team';
+$lang->contract->confirmTeam      = 'Confirm Commission Rate';
 
 $lang->contract->deliveryList[]        = '';
 $lang->contract->deliveryList['wait']  = 'Wait';
@@ -116,7 +117,14 @@ $lang->contract->team->common  = 'Team';
 $lang->contract->team->account = 'Member';
 $lang->contract->team->rate    = 'Rate(%)';
 $lang->contract->team->money   = 'Money';
+$lang->contract->team->status  = 'Status';
+$lang->contract->team->accept  = 'Accept';
+$lang->contract->team->reject  = 'Reject';
 $lang->contract->team->total   = 'Total';
+
+$lang->contract->team->statusList['wait']   = 'Waiting';
+$lang->contract->team->statusList['accept'] = 'Accepted';
+$lang->contract->team->statusList['reject'] = 'Rejected';
 
 $lang->contract->error = new stdclass();
 $lang->contract->error->wrongRate      = '<strong>Commission rate</strong> should be number';

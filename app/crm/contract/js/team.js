@@ -64,6 +64,8 @@ $(function()
 
     $(document).on('change', '[name^=money]', function()
     {
+        if(!$.isNumeric(v.amount) || v.amount == 0) return;
+
         var money = $(this).val() == '' ? 0 : $(this).val();
         if(!$.isNumeric(money)) return;
 

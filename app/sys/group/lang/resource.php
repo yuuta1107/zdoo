@@ -160,6 +160,7 @@ $lang->resource->contract->editReturn     = 'editReturn';
 $lang->resource->contract->deleteReturn   = 'deleteReturn';
 $lang->resource->contract->export         = 'export';
 $lang->resource->contract->manageTeam     = 'manageTeam';
+$lang->resource->contract->confirmTeam    = 'confirmTeam';
 
 $lang->contract->methodOrder[5]  = 'browse';
 $lang->contract->methodOrder[10] = 'create';
@@ -176,6 +177,7 @@ $lang->contract->methodOrder[60] = 'editReturn';
 $lang->contract->methodOrder[65] = 'deleteReturn';
 $lang->contract->methodOrder[70] = 'export';
 $lang->contract->methodOrder[75] = 'manageTeam';
+$lang->contract->methodOrder[80] = 'confirmTeam';
 
 /* Customer. */
 $lang->resource->customer = new stdclass();

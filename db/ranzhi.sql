@@ -1021,6 +1021,7 @@ CREATE TABLE IF NOT EXISTS `sys_team` (
   `left` decimal(12,1) unsigned NOT NULL,
   `order` tinyint(3) unsigned NOT NULL,
   `rate` decimal(6,2) unsigned NOT NULL,
+  `status` enum('wait', 'accept', 'reject') NOT NULL DEFAULT 'wait',
   PRIMARY KEY (`type`,`id`,`account`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- DROP TABLE IF EXISTS `sys_user`;
