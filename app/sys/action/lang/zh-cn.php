@@ -111,6 +111,8 @@ $lang->action->desc->createtrip            = '$date, 由 <strong>$actor</strong>
 $lang->action->desc->createegress          = '$date, 由 <strong>$actor</strong> 创建外出：<strong>$extra</strong>。' . "\n";
 $lang->action->desc->imported              = '$date, 由 <strong>$actor</strong> 导入。' . "\n";
 $lang->action->desc->dating                = '$date, 由 <strong>$actor</strong> 创建下次联系：<strong>$extra</strong>。' . "\n";
+$lang->action->desc->manageteam            = '$date, 由 <strong>$actor</strong> 设置团队提成比例。' . "\n";
+$lang->action->desc->confirmteam           = '$date, 由 <strong>$actor</strong> 确认团队提成比例：<strong>$extra</strong>。' . "\n";
 
 /* 用来显示动态信息。*/
 $lang->action->label = new stdclass();
@@ -183,7 +185,6 @@ $lang->action->label->balance   = '余额|balance|browse|depositorID=%s';
 $lang->action->label->doc       = '文档|doc|view|docID=%s';
 $lang->action->label->doclib    = '文档库|doc|browse|doclibID=%s';
 $lang->action->label->contact   = '联系人|contact|view|contactID=%s';
-$lang->action->label->contract  = '合同|contract|view|contractID=%s';
 $lang->action->label->customer  = '客户|customer|view|customerID=%s';
 $lang->action->label->depositor = '账户|depositor|browse|';
 $lang->action->label->holiday   = '放假安排|holiday|browse|';
@@ -199,6 +200,10 @@ $lang->action->label->todo      = '待办|todo|view|todoID=%s';
 $lang->action->label->trade     = '账目|trade|browse|';
 $lang->action->label->user      = '用户';
 
+$lang->action->label->contract = array();
+$lang->action->label->contract['common']      = '合同|contract|view|contractID=%s';
+$lang->action->label->contract['manageteam']  = '合同|contract|confirmTeam|contractID=%s';
+$lang->action->label->contract['confirmteam'] = '合同|contract|manageTeam|contractID=%s';
 $lang->action->label->attend = array();
 $lang->action->label->attend['commited'] = '考勤审核|attend|browsereview|';
 $lang->action->label->attend['reviewed'] = '考勤审核|attend|personal|';

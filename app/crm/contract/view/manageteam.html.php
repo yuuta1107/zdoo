@@ -15,7 +15,7 @@
 <?php js::set('amount', $contract->amount);?>
 <?php js::set('users', helper::jsonEncode($users));?>
 <div class='panel container'>
-  <form id='teamForm' method='post' action='<?php echo inlink('manageTeam', "contractID={$contract->id}&mode={$mode}");?>'>
+  <form id='teamForm' method='post' action='<?php echo inlink('manageTeam', "contractID={$contract->id}");?>'>
     <table class='table table-condensed table-borderless'>
       <thead>
         <tr class='text-center'>

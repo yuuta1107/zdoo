@@ -15,11 +15,11 @@
   <table class='table table-condensed table-borderless'>
     <thead>
       <tr class='text-center'>
-        <th class='w-200px'><?php echo $lang->contract->team->account;?></th>
+        <th><?php echo $lang->contract->team->account;?></th>
         <th><?php echo $lang->contract->team->rate;?></th>
         <th><?php echo $lang->contract->team->money;?></th>
-        <th class='w-80px'><?php echo $lang->contract->team->status;?></th>
-        <th class='w-80px'><?php echo $lang->actions;?></th>
+        <th><?php echo $lang->contract->team->status;?></th>
+        <th class='w-100px'><?php echo $lang->actions;?></th>
       </tr>
     </thead>
     <?php foreach($members as $member):?>
@@ -28,7 +28,7 @@
       <td><?php echo $member->rate == 0 ? '' : $member->rate;?></td>
       <td><?php echo round($contract->amount * $member->rate / 100, 2);?></td>
       <td class='team-<?php echo $member->status;?>'><?php echo zget($lang->contract->team->statusList, $member->status);?></td>
-      <td class='w-100px'>
+      <td>
         <?php if($member->status != 'accept' && $member->account == $this->app->user->account):?>
         <?php commonModel::printLink('crm.contract', 'confirmTeam', "contractID={$contract->id}&status=accept", $lang->contract->team->accept, "class='btn btn-xs jsoner'");?>
         <?php commonModel::printLink('crm.contract', 'confirmTeam', "contractID={$contract->id}&status=reject", $lang->contract->team->reject, "class='btn btn-xs jsoner'");?>
@@ -38,4 +38,4 @@
     <?php endforeach;?>
   </table>
 </div>
-<?php include '../../common/view/footer.modal.html.php';?>
+<?php include '../../common/view/footer.html.php';?>

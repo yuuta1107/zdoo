@@ -244,7 +244,7 @@ class contractModel extends model
      */
     public function getMembers($contractID)
     {
-        return $this->dao->select('*')->from(TABLE_TEAM)
+        return $this->dao->select('account, rate, contribution, status')->from(TABLE_TEAM)
             ->where('type')->eq('contract')
             ->andWhere('id')->eq($contractID)
             ->orderBy('rate_desc')
@@ -909,6 +909,8 @@ class contractModel extends model
     public function manageTeam($contractID)
     {
         $this->dao->delete()->from(TABLE_TEAM)->where('type')->eq('contract')->andWhere('id')->eq($contractID)->exec();
+
+        if(!$this->post->account) return true;
 
         $member = new stdclass();
         $member->type = 'contract';

@@ -10,13 +10,15 @@
  * @link        http://www.ranzhi.org
  */
 ?>
+<?php $mailLink  = $this->loadModel('common')->getSysURL() . rtrim($config->webRoot, '/') . inlink('confirmTeam', "contractID={$contract->id}");?>
+<?php $mailTitle = html::a($mailLink, $lang->contract->common . str_replace('(%)', '', $this->lang->contract->team->rate) . '#' . $contract->id . ' ' . $this->app->user->realname . ' - ' . $contract->name);?>
 <?php include '../../../sys/common/view/mail.header.html.php';?>
 <tr>
   <td>
     <table cellpadding='0' cellspacing='0' width='600' style='border: none; border-collapse: collapse;'>
       <tr>
         <td style='padding: 10px; background-color: #F8FAFE; border: none; font-size: 14px; font-weight: 500; border-bottom: 1px solid #e5e5e5;'>
-          <?php echo $lang->contract->common . '#' . $contract->name;?>
+          <?php echo $mailTitle;?>
         </td>
       </tr>
     </table>
@@ -24,13 +26,13 @@
 </tr>
 <tr>
   <td style='padding: 10px; border: none;'>
-    <table>
+    <table style="font-size: 13px; width: 100%; text-align: center;">
       <thead>
         <tr>
-          <th><?php echo $lang->contract->team->account;?></th>
-          <th><?php echo $lang->contract->team->rate;?></th>
-          <th><?php echo $lang->contract->team->money;?></th>
-          <th><?php echo $lang->contract->team->status;?></th>
+          <th style='width: 80px'><?php echo $lang->contract->team->account;?></th>
+          <th style='width: 120px'><?php echo $lang->contract->team->rate;?></th>
+          <th style='width: 120px'><?php echo $lang->contract->team->money;?></th>
+          <th style='width: 80px'><?php echo $lang->contract->team->status;?></th>
         </tr>
       </thead>
       <?php foreach($members as $member):?>

@@ -669,8 +669,15 @@ class actionModel extends model
             if(isset($this->lang->action->label->$objectType))
             {
                 $objectLabel = $this->lang->action->label->$objectType;
-                if(!is_array($objectLabel)) $action->objectLabel = $objectLabel;
-                if(is_array($objectLabel) and isset($objectLabel[$actionType])) $action->objectLabel = $objectLabel[$actionType];
+                if(is_array($objectLabel))
+                {
+                    if(isset($objectLabel['common']))    $action->objectLabel = $objectLabel['common'];
+                    if(isset($objectLabel[$actionType])) $action->objectLabel = $objectLabel[$actionType];
+                }
+                else
+                {
+                    $action->objectLabel = $objectLabel;
+                }
             }
 
             /* app name. */

@@ -78,6 +78,7 @@ $lang->contract->export           = '導出';
 $lang->contract->totalReturn      = '回款合計';
 $lang->contract->tradeList        = '收支記錄';
 $lang->contract->manageTeam       = '維護團隊';
+$lang->contract->confirmTeam      = '確認提成';
 
 $lang->contract->deliveryList[]        = '';
 $lang->contract->deliveryList['wait']  = '等待交付';
@@ -116,7 +117,14 @@ $lang->contract->team->common  = '團隊';
 $lang->contract->team->account = '成員';
 $lang->contract->team->rate    = '提成比例(%)';
 $lang->contract->team->money   = '金額';
+$lang->contract->team->status  = '狀態';
+$lang->contract->team->accept  = '接受';
+$lang->contract->team->reject  = '拒絶';
 $lang->contract->team->total   = '合計';
+
+$lang->contract->team->statusList['wait']   = '待確認';
+$lang->contract->team->statusList['accept'] = '已接受';
+$lang->contract->team->statusList['reject'] = '已拒絶';
 
 $lang->contract->error = new stdclass();
 $lang->contract->error->wrongRate      = '<strong>提成比例</strong>應該是數字';

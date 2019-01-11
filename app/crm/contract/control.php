@@ -530,11 +530,16 @@ class contract extends control
             $result = $this->contract->checkTeam();
             if(!empty($result['result']) && $result['result'] == 'fail') $this->send($result);
 
+            $oldMembers = $this->contract->getMembers($contractID);
             $this->contract->manageTeam($contractID);
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
 
-            $actionID = $this->loadModel('action')->create('contract', $contractID, 'manageTeam');
-            $this->sendmail($contractID, $actionID);
+            $members = $this->contract->getMembers($contractID);
+            if($members && $members != $oldMembers)
+            {
+                $actionID = $this->loadModel('action')->create('contract', $contractID, 'manageTeam');
+                $this->sendmail($contractID, $actionID);
+            }
 
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
         }
@@ -561,7 +566,7 @@ class contract extends control
             $this->contract->confirmTeam($contractID, $status);
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
 
-            $actionID = $this->loadModel('action')->create('contract', $contractID, 'confirmTeam');
+            $actionID = $this->loadModel('action')->create('contract', $contractID, 'confirmTeam', '', $this->lang->contract->team->statusList[$status]);
             if($status == 'reject') $this->sendmail($contractID, $actionID);
 
             $this->send(array('result' => 'success', 'locate' => inlink('browse')));
@@ -593,8 +598,9 @@ class contract extends control
         $action->history = isset($history[$actionID]) ? $history[$actionID] : array();
 
         /* Set toList and ccList. */
-        $users  = $this->loadModel('user')->getPairs();
-        $toList = '';
+        $toList  = '';
+        $users   = $this->loadModel('user')->getPairs();
+        $subject = "{$this->lang->contract->common}#{$contractID} " . str_replace('(%)', '', $this->lang->contract->team->rate) . ' - ' . zget($users, $this->app->user->account);
         if($action->action == 'manageteam')
         {
             $toList = $this->dao->select('account')->from(TABLE_TEAM)
@@ -602,8 +608,7 @@ class contract extends control
                 ->andWhere('id')->eq($contractID)
                 ->andWhere('status')->ne('accept')
                 ->fetchPairs();
-            $toList  = implode(',', $toList);
-            $subject = "{$this->lang->contract->common}#{$contractID} " . str_replace('(%)', '', $this->lang->contract->team->rate) . ' ' . zget($users, $this->app->user->account);
+            $toList = implode(',', $toList);
         }
         elseif($action->action == 'confirmteam')
         {
@@ -615,7 +620,7 @@ class contract extends control
                 ->limit(1)
                 ->fetch('actor');
 
-            $subject = "{$this->lang->contract->common}#{$contract->id} " . str_replace('(%)', '', $this->lang->contract->team->rate) . "{$this->lang->contract->team->statusList['reject']} " . zget($users, $this->app->user->account);
+            $subject .= '#' . $this->lang->contract->team->statusList['reject'];
         }
 
         /* send notice if user is online and return failed accounts. */
