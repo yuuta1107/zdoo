@@ -498,6 +498,7 @@ class contract extends control
         $this->view->deptList      = $this->loadModel('tree')->getPairs(0, 'dept');
         $this->view->categories    = $expenseTypes + $incomeTypes; 
         $this->view->preAndNext    = $this->common->getPreAndNextObject('contract', $contractID);
+        $this->view->members       = $this->contract->getMembers($contractID);
 
         $this->display();
     }

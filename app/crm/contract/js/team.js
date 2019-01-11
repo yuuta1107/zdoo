@@ -89,6 +89,9 @@ function computeTotal()
         if($.isNumeric($moneyList[i].value)) totalMoney += parseFloat($moneyList[i].value);
     }
 
+    totalRate  = Math.round(totalRate * 100) / 100;
+    totalMoney = Math.round(totalMoney * 100) / 100;
+
     totalRate  = totalRate  == 0 ? '' : totalRate + '%';
     totalMoney = totalMoney == 0 ? '' : totalMoney;
 

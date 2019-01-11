@@ -201,9 +201,8 @@ $lang->action->label->trade     = 'Trade|trade|browse|';
 $lang->action->label->user      = 'User';
 
 $lang->action->label->contract = array();
-$lang->action->label->contract['common']      = 'Contract|contract|view|contractID=%s';
-$lang->action->label->contract['manageteam']  = 'Contract|contract|confirmTeam|contractID=%s';
-$lang->action->label->contract['confirmteam'] = 'Contract|contract|manageTeam|contractID=%s';
+$lang->action->label->contract['common']     = 'Contract|contract|view|contractID=%s';
+$lang->action->label->contract['manageteam'] = 'Contract|contract|confirmTeam|contractID=%s';
 $lang->action->label->attend = array();
 $lang->action->label->attend['commited'] = 'attend review|attend|browsereview|';
 $lang->action->label->attend['reviewed'] = 'attend review|attend|personal|';

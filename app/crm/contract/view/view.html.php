@@ -143,7 +143,7 @@
           </tr>
           <tr>
             <th><?php echo $lang->contract->address;?></th>
-            <td><?php echo zget($addresses, $contract->address);?></td>
+            <td><?php echo zget($addresses, $contract->address, '');?></td>
           </tr>
           <tr>
             <th><?php echo $lang->contract->begin;?></th>
@@ -167,14 +167,50 @@
         </table>
       </div>
     </div>
+    <?php if($members):?>
+    <div class='panel'>
+      <table id='memberTable' class='table table-data table-condensed table-fixed'>
+        <tr class='text-center'>
+          <th><?php echo $lang->contract->team->account;?></th>
+          <th><?php echo $lang->contract->team->rate;?></th>
+          <th class='w-90px'><?php echo $lang->contract->team->status;?></th>
+        </tr>
+        <?php foreach($members as $member):?>
+        <tr class='text-center'>
+          <td><?php echo zget($users, $member->account);?></td>
+          <td><?php echo $member->rate == 0 ? '' : $member->rate;?></td>
+          <td class='team-<?php echo $member->status;?>'>
+            <?php
+            $status     = zget($lang->contract->team->statusList, $member->status);
+            $canConfirm = $member->account == $this->app->user->account && commonModel::hasPriv('crm.contract', 'confirmTeam');
+            if($member->status == 'wait' && $canConfirm)
+            {
+                echo html::a(inlink('confirmTeam', "contractID={$contract->id}&status=accept"), $lang->contract->team->accept, "class='btn btn-xs jsoner'");
+                echo html::a(inlink('confirmTeam', "contractID={$contract->id}&status=reject"), $lang->contract->team->reject, "class='btn btn-xs jsoner'");
+            }
+            elseif($member->status == 'reject' && $canConfirm)
+            {
+                echo html::a(inlink('confirmTeam', "contractID={$contract->id}"), $status);
+            }
+            else
+            {
+                echo $status;
+            }
+            ?>
+          </td>
+        </tr>
+        <?php endforeach;?>
+      </table>
+    </div>
+    <?php endif;?>
     <?php if(!empty($contract->returnList)):?>
     <div class='panel'>
       <table class='table table-data table-condensed table-fixed'>
         <tr>
           <th class='w-80px'><?php echo $lang->contract->returnedDate;?></th>
           <th class='w-80px'><?php echo $lang->contract->returnedBy;?></th> 
-          <th class=''><?php echo $lang->contract->amount;?></th> 
-          <th class='w-50px'></th>
+          <th><?php echo $lang->contract->amount;?></th>
+          <th class='w-50px'><?php echo $lang->actions;?></th>
         </tr>
         <?php foreach($contract->returnList as $return):?>
         <tr>
@@ -184,7 +220,7 @@
           <td class='text-center'>
             <?php commonModel::printLink('contract', 'editReturn', "id=$return->id", "<i class='icon-pencil'></i>", "data-toggle='modal' title='{$lang->edit}'");?>
             <?php commonModel::printLink('contract', 'deleteReturn', "id=$return->id", "<i class='icon-remove'></i>", "class='deleter' title='{$lang->delete}'");?>
-         </td>
+          </td>
         </tr>
         <?php endforeach;?>
       </table>
@@ -196,8 +232,8 @@
         <tr>
           <th class='w-80px'><?php echo $lang->contract->deliveredDate;?></th>
           <th class='w-80px'><?php echo $lang->contract->deliveredBy;?></th> 
-          <th class=''><?php echo $lang->comment;?></th> 
-          <th class='w-50px'></th>
+          <th><?php echo $lang->comment;?></th>
+          <th class='w-50px'><?php echo $lang->actions;?></th>
         </tr>
         <?php foreach($contract->deliveryList as $delivery):?>
         <tr>
@@ -207,7 +243,7 @@
           <td class='text-center'>
             <?php commonModel::printLink('contract', 'editDelivery', "id=$delivery->id", "<i class='icon-pencil'></i>", "data-toggle='modal' title='{$lang->edit}'");?>
             <?php commonModel::printLink('contract', 'deleteDelivery', "id=$delivery->id", "<i class='icon-remove'></i>", "class='deleter' title='{$lang->delete}'");?>
-         </td>
+          </td>
         </tr>
         <?php endforeach;?>
       </table>

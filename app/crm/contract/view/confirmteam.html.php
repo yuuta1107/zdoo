@@ -11,6 +11,11 @@
  */
 ?>
 <?php include '../../common/view/header.html.php';?>
+<ul id='menuTitle'>
+  <li><?php commonModel::printLink('contract', 'browse', '', $lang->contract->list);?></li>
+  <li class='divider angle'></li>
+  <li class='title'><?php echo $contract->name;?></li>
+</ul>
 <div class='panel container'>
   <table class='table table-condensed table-borderless'>
     <thead>
@@ -37,5 +42,6 @@
     </tr>
     <?php endforeach;?>
   </table>
+  <div class='table-footer text-center'><?php commonModel::printLink('crm.contract', 'view', "contractID={$contract->id}", $lang->goback, "class='btn btn-primary'");?></div>
 </div>
 <?php include '../../common/view/footer.html.php';?>

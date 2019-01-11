@@ -14,12 +14,12 @@
 <?php include '../../../sys/common/view/chosen.html.php';?>
 <?php js::set('amount', $contract->amount);?>
 <?php js::set('users', helper::jsonEncode($users));?>
-<div class='panel container'>
+<div class='panel'>
   <form id='teamForm' method='post' action='<?php echo inlink('manageTeam', "contractID={$contract->id}");?>'>
     <table class='table table-condensed table-borderless'>
       <thead>
         <tr class='text-center'>
-          <th class='w-200px'><?php echo $lang->contract->team->account;?></th>
+          <th class='w-180px'><?php echo $lang->contract->team->account;?></th>
           <th><?php echo $lang->contract->team->rate;?></th>
           <th><?php echo $lang->contract->team->money;?></th>
           <th class='w-80px'><?php echo $lang->contract->team->status;?></th>
@@ -61,9 +61,10 @@
         <td></td>
       </tr>
       <tr>
-        <td class='text-danger'><?php echo $lang->contract->teamTips;?></td>
-        <td class='text-center'><?php echo html::submitButton();?></td>
-        <td colspan='3'></td>
+        <td class='text-center text-danger' colspan='5'>
+          <?php echo html::submitButton();?>
+          <?php echo $lang->contract->teamTips;?>
+        </td>
       </tr>
     </table>
   </form>

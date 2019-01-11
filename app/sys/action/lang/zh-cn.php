@@ -201,9 +201,8 @@ $lang->action->label->trade     = '账目|trade|browse|';
 $lang->action->label->user      = '用户';
 
 $lang->action->label->contract = array();
-$lang->action->label->contract['common']      = '合同|contract|view|contractID=%s';
-$lang->action->label->contract['manageteam']  = '合同|contract|confirmTeam|contractID=%s';
-$lang->action->label->contract['confirmteam'] = '合同|contract|manageTeam|contractID=%s';
+$lang->action->label->contract['common']     = '合同|contract|view|contractID=%s';
+$lang->action->label->contract['manageteam'] = '合同|contract|confirmTeam|contractID=%s';
 $lang->action->label->attend = array();
 $lang->action->label->attend['commited'] = '考勤审核|attend|browsereview|';
 $lang->action->label->attend['reviewed'] = '考勤审核|attend|personal|';
