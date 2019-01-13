@@ -886,10 +886,11 @@ class contractModel extends model
     /**
      * Check if all members of a contract accepted the commission rate.
      *
+     * @param  int    $contractID
      * @access public
      * @return bool
      */
-    public function checkAllMembersAccepted()
+    public function checkAllMembersAccepted($contractID)
     {
         $members = $this->dao->select('status')->from(TABLE_TEAM)
             ->where('type')->eq('contract')
