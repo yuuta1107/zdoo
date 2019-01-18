@@ -1426,7 +1426,7 @@ class commonModel extends model
         /* Set super rights. */
         $this->loadModel('user');
         $user = $this->dao->select('*')->from(TABLE_USER)->where('admin')->eq('super')->limit(1)->fetch();
-        $groups = $this->loadModel('group')->getByAccount($account);
+        $groups = $this->loadModel('group')->getByAccount($user->account);
         $user->groups = array_keys($groups);
         $user->rights = $this->user->authorize($user);
         $this->session->set('user', $user);
