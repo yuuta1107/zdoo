@@ -1423,6 +1423,15 @@ class commonModel extends model
         if(!$this->checkIP($entry->ip))          $this->response('IP_DENIED');
         if(!$this->checkEntryToken($entry->key)) $this->response('INVALID_TOKEN');
 
+        /* Set super rights. */
+        $this->loadModel('user');
+        $user = $this->dao->select('*')->from(TABLE_USER)->where('admin')->eq('super')->limit(1)->fetch();
+        $groups = $this->loadModel('group')->getByAccount($user->account);
+        $user->groups = array_keys($groups);
+        $user->rights = $this->user->authorize($user);
+        $this->session->set('user', $user);
+        $this->app->user = $this->session->user;
+
         $this->session->set('entryCode', $this->get->code);
         $this->session->set('validEntry', md5(md5($this->get->code) . $this->server->remote_addr));
         //$this->loadModel('entry')->saveLog($entry->id, $this->server->request_uri);
