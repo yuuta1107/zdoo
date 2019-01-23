@@ -52,7 +52,7 @@ $config->contact->list->exportFields = '
   contactedBy, contactedDate, nextDate, desc, resume, address';
 
 $config->contact->templateFields   = array('origin', 'company', 'realname', 'nickname', 'gender', 'mobile', 'phone', 'email', 'qq', 'weibo', 'weixin', 'birthday', 'skype', 'yahoo', 'gtalk', 'wangwang', 'fax', 'site', 'desc');
-$config->contact->excelCustomWidth = array('origin' => 15, 'company' => 15, 'realname' => 15, 'nickname' => 15, 'gender' => 10, 'mobile' => 15, 'phone' => 15, 'email' => 15, 'qq' => 15, 'weibo' => 15, 'weixin' => 15, 'birthday' => 15, 'skype' => 15, 'yahoo' => 15, 'gtalk' => 15, 'wangwang' => 15, 'site' => 15, 'fax' => 15, 'desc' => 40);
+$config->contact->excelCustomWidth = array('origin' => 15, 'company' => 15, 'realname' => 15, 'nickname' => 15, 'gender' => 10, 'mobile' => 15, 'phone' => 15, 'email' => 15, 'qq' => 15, 'weibo' => 15, 'weixin' => 15, 'birthday' => 15, 'skype' => 15, 'yahoo' => 15, 'gtalk' => 15, 'wangwang' => 15, 'fax' => 15, 'site' => 15, 'desc' => 40);
 $config->contact->listFields       = array('gender');
 
 /* Excel items. */
