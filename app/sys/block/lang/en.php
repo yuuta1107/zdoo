@@ -147,15 +147,15 @@ $lang->block->default['sys']['8'] = $lang->block->default['team']['2'];
 $lang->block->default['sys']['8']['source'] = 'team';
 
 $lang->block->moreLinkList = new stdclass();
-$lang->block->moreLinkList->order['assinedTo']    = 'Assign To Me|sys|my|order|type=assinedTo';
-$lang->block->moreLinkList->order['createdBy']    = 'Create By Me|sys|my|order|type=createdBy';
-$lang->block->moreLinkList->order['signedBy']     = 'Sign By Me|sys|my|order|type=signedBy';
+$lang->block->moreLinkList->order['assinedTo']    = 'AssignToMe|sys|my|order|type=assinedTo';
+$lang->block->moreLinkList->order['createdBy']    = 'CreateByMe|sys|my|order|type=createdBy';
+$lang->block->moreLinkList->order['signedBy']     = 'SignByMe|sys|my|order|type=signedBy';
 $lang->block->moreLinkList->order['normalstatus'] = 'All|crm|order|browse|mode=all';
 $lang->block->moreLinkList->order['signedstatus'] = 'All|crm|order|browse|mode=all';
 $lang->block->moreLinkList->order['closedstatus'] = 'All|crm|order|browse|mode=all';
 
-$lang->block->moreLinkList->contract['returnedBy']     = 'Return By Me|sys|my|contract|type=returnedBy';
-$lang->block->moreLinkList->contract['deliveredBy']    = 'Deliver By Me|sys|my|contract|type=deliveredBy';
+$lang->block->moreLinkList->contract['returnedBy']     = 'ReturnByMe|sys|my|contract|type=returnedBy';
+$lang->block->moreLinkList->contract['deliveredBy']    = 'DeliverByMe|sys|my|contract|type=deliveredBy';
 $lang->block->moreLinkList->contract['normalstatus']   = 'Unfinished|crm|contract|browse|mode=unfinished';
 $lang->block->moreLinkList->contract['closedstatus']   = 'Finished|crm|contract|browse|mode=finished';
 $lang->block->moreLinkList->contract['canceledstatus'] = 'Cancelled|crm|contract|browse|mode=canceled';
@@ -170,11 +170,11 @@ $lang->block->moreLinkList->provider  = 'Supplier|cash|provider|browse|';
 $lang->block->moreLinkList->announce = 'Announce|oa|announce|browse|';
 $lang->block->moreLinkList->attend   = 'Attend|sys|todo|calendar|';
 
-$lang->block->moreLinkList->task['assignedTo'] = 'Assign To Me|sys|my|task|type=assignedTo';
-$lang->block->moreLinkList->task['createdBy']  = 'Create By Me|sys|my|task|type=createdBy';
-$lang->block->moreLinkList->task['finishedBy'] = 'Finish By Me|sys|my|task|type=finishedBy';
-$lang->block->moreLinkList->task['closedBy']   = 'Close By Me|sys|my|task|type=closedBy';
-$lang->block->moreLinkList->task['canceledBy'] = 'Cancel By Me|sys|my|task|type=canceledBy';
+$lang->block->moreLinkList->task['assignedTo'] = 'AssignToMe|sys|my|task|type=assignedTo';
+$lang->block->moreLinkList->task['createdBy']  = 'CreateByMe|sys|my|task|type=createdBy';
+$lang->block->moreLinkList->task['finishedBy'] = 'FinishByMe|sys|my|task|type=finishedBy';
+$lang->block->moreLinkList->task['closedBy']   = 'CloseByMe|sys|my|task|type=closedBy';
+$lang->block->moreLinkList->task['canceledBy'] = 'CancelByMe|sys|my|task|type=canceledBy';
 
 $lang->block->moreLinkList->project['doing']    = 'Doing|proj|project|index|status=doing';
 $lang->block->moreLinkList->project['finished'] = 'Finished|proj|project|index|status=finished';

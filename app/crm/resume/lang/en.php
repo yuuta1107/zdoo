@@ -19,7 +19,7 @@ $lang->resume->dept     = 'Dept';
 $lang->resume->title    = 'Post';
 $lang->resume->address  = 'Address';
 $lang->resume->join     = 'Join date';
-$lang->resume->left     = 'Left date';
+$lang->resume->left     = 'Resign date';
 $lang->resume->time     = 'Time';
 
 $lang->resume->browse = 'Browse Resume';

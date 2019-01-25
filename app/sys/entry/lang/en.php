@@ -70,13 +70,13 @@ $lang->entry->note->name    = 'Name';
 $lang->entry->note->abbr    = 'Abbreviation';
 $lang->entry->note->logo    = 'Logo size 64*64. if upload the PNG format, you must keep transparency.';
 $lang->entry->note->code    = 'Entry alias should be letters, digits or underline.';
-$lang->entry->note->login   = 'Login URL or access App.';
+$lang->entry->note->login   = 'Login URL or use App.';
 $lang->entry->note->logout  = 'Logout URL ';
 $lang->entry->note->visible = 'Display on the left';
 $lang->entry->note->api     = 'The URL of getting blocks.';
 $lang->entry->note->ip      = "Use comma between two IPs. IP segment is supported, e.g. 192.168.1.*";
 $lang->entry->note->allip   = 'All';
-$lang->entry->note->scheme  = 'The current scheme is https, and the iframe window can only open the https URL.';
+$lang->entry->note->scheme  = 'The current protocol is https, and the iframe window can only open the https URL.';
 
 $lang->entry->error = new stdClass();
 $lang->entry->error->name  = 'Please enter name';

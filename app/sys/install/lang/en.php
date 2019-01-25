@@ -23,9 +23,9 @@ $lang->install->welcome          = 'Welcome to Zdoo community.';
 $lang->install->license          = 'Zdoo is under license of Z PUBLIC LICENSE(ZPL) 1.2. ';
 $lang->install->desc             = <<<EOT
 <blockquote>
-  <strong>{$lang->ranzhi}</strong> is developed by <strong><a href='http://www.cnezsoft.com' target='_blank' class='red'>QingDao Nature Easy Soft Network Technology Co.,Ltd.</a></strong>
-  <!--With projects, customers, cash flow, office and communication of the five core functions.-->
-  Tailored specifically for small and medium sized groups, small and medium sized team of information technology tool of choice!
+  <strong>{$lang->ranzhi}</strong> is developed by <strong><a href='http://en.easysoft.com' target='_blank' class='red'>QingDao Nature Easy Soft Network Technology Co.,Ltd.</a></strong>
+  <!--With projects, customers, cash flow, office automation and communication, the five core functions.-->
+  Tailored specifically for small and medium sized teams!
 
   Website:<a href='http://www.zdoo.org' target='_blank'>http://www.zdoo.org</a>
   Suport: <a href='http://www.zdoo.org/forum/' target='_blank'>http://www.zdoo.org/forum/</a>

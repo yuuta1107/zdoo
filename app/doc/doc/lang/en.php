@@ -26,9 +26,9 @@ $lang->doc->url            = 'URL';
 $lang->doc->files          = 'File';
 $lang->doc->views          = 'Views';
 $lang->doc->createdBy      = 'Created by';
-$lang->doc->createdDate    = 'Created on';
+$lang->doc->createdDate    = 'Created';
 $lang->doc->editedBy       = 'Edited by';
-$lang->doc->editedDate     = 'Edited on';
+$lang->doc->editedDate     = 'Edited';
 $lang->doc->basicInfo      = 'Basic Info';
 $lang->doc->deleted        = 'Deleted';
 
@@ -87,4 +87,4 @@ $lang->doc->placeholder->url = 'url';
 $lang->doc->notFound     = 'The document does not exist.';
 $lang->doc->libNotFound  = 'The document library does not exist.';
 $lang->doc->libNotEmpty  = 'There are documents in this document library.';
-$lang->doc->errorMainLib = 'The main library can not be deleted.';
+$lang->doc->errorMainLib = 'The main library cannot be deleted.';

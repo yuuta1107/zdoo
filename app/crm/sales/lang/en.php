@@ -1,8 +1,8 @@
 <?php
 if(!isset($lang->sales)) $lang->sales = new stdclass();
 $lang->sales->common = 'Sales';
-$lang->sales->admin  = 'Privileges';
-$lang->sales->browse = 'Manage Groups';
+$lang->sales->admin  = 'Privilege';
+$lang->sales->browse = 'Manage Group';
 $lang->sales->list   = 'Sales Team';
 $lang->sales->create = 'Create';
 $lang->sales->edit   = 'Edit';

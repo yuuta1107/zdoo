@@ -11,7 +11,7 @@
  */
 $lang->thread->common    = 'Thread';
 
-$lang->thread->id         = 'Id';
+$lang->thread->id         = 'ID';
 $lang->thread->title      = 'Title';
 $lang->thread->board      = 'Board';
 $lang->thread->author     = 'Author';
@@ -20,7 +20,7 @@ $lang->thread->file       = 'File ';
 $lang->thread->postedDate = 'Posted';
 $lang->thread->replies    = 'Reply';
 $lang->thread->views      = 'Views';
-$lang->thread->lastReply  = 'Last reply';
+$lang->thread->lastReply  = 'Last replied';
 
 $lang->thread->post         = 'Post';
 $lang->thread->postTo       = 'Post to';
@@ -36,9 +36,9 @@ $lang->thread->transfer     = 'Transfer';
 $lang->thread->switchStatus = 'Switch Status';
 $lang->thread->deleteFile   = 'Delete File';
 
-$lang->thread->sticks[0] = 'Don\'t stick';
-$lang->thread->sticks[1] = 'Board stick';
-$lang->thread->sticks[2] = 'Global stick';
+$lang->thread->sticks[0] = 'No sticky';
+$lang->thread->sticks[1] = 'Board sticky';
+$lang->thread->sticks[2] = 'Global sticky';
 
 $lang->thread->statusList['hidden'] = 'hidden';
 $lang->thread->statusList['normal'] = 'normal';
@@ -52,11 +52,11 @@ $lang->thread->confirmDeleteFile   = "Do you want to delete this file?";
 $lang->thread->lblEdited       = '%s last edited, %s';
 $lang->thread->message         = '%s reply at #%s in forum, the thread is: %s, the content is: %s';
 $lang->thread->readonly        = 'Read only';
-$lang->thread->successStick    = 'Successfully sticky.';
-$lang->thread->successUnstick  = 'Successfully unsticky.';
-$lang->thread->successHide     = 'Successfully hide it.';
-$lang->thread->successShow     = 'Successfully show it.';
-$lang->thread->readonlyMessage = 'The thread has been set as <strong>READONLY</strong>，so you cannot post new reply。';
+$lang->thread->successStick    = 'Sticky!';
+$lang->thread->successUnstick  = 'Unsticky!';
+$lang->thread->successHide     = 'Hidden!';
+$lang->thread->successShow     = 'Displayed.';
+$lang->thread->readonlyMessage = 'The thread has been set as <strong>READ ONLY</strong>，so you cannot post any new reply.';
 $lang->thread->successTransfer = 'Successfully Transfered.';
 
 /* Adjust the pager. */

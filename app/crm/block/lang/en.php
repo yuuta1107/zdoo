@@ -53,19 +53,19 @@ $lang->block->orderByList->customer['id_desc']      = 'ID DESC';
 
 $lang->block->typeList = new stdclass();
 
-$lang->block->typeList->order['assignedTo']   = 'To me';
-$lang->block->typeList->order['createdBy']    = 'My created';
-$lang->block->typeList->order['signedBy']     = 'My signed';
-$lang->block->typeList->order['closedBy']     = 'My closed';
-$lang->block->typeList->order['activatedBy']  = 'My activated';
+$lang->block->typeList->order['assignedTo']   = 'AssignToMe';
+$lang->block->typeList->order['createdBy']    = 'CreatedByMe';
+$lang->block->typeList->order['signedBy']     = 'SignedByMe';
+$lang->block->typeList->order['closedBy']     = 'ClosedByMe';
+$lang->block->typeList->order['activatedBy']  = 'ActivatedByMe';
 $lang->block->typeList->order['normalstatus'] = 'Normal';
 $lang->block->typeList->order['signedstatus'] = 'Signed';
 $lang->block->typeList->order['closedstatus'] = 'Closed';
 
-$lang->block->typeList->contract['returnedBy']     = 'My recieved';
-$lang->block->typeList->contract['deliveredBy']    = 'My delivered';
-$lang->block->typeList->contract['createdBy']      = 'My created';
-$lang->block->typeList->contract['canceledBy']     = 'My canceled';
+$lang->block->typeList->contract['returnedBy']     = 'RecievedByMe';
+$lang->block->typeList->contract['deliveredBy']    = 'DeliveredByMe';
+$lang->block->typeList->contract['createdBy']      = 'CreatedByMe';
+$lang->block->typeList->contract['canceledBy']     = 'CanceledByMe';
 $lang->block->typeList->contract['normalstatus']   = 'Normal';
 $lang->block->typeList->contract['closedstatus']   = 'Closed';
 $lang->block->typeList->contract['canceledstatus'] = 'Canceled';

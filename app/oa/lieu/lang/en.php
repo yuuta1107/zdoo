@@ -1,7 +1,7 @@
 <?php
 if(!isset($lang->lieu)) $lang->lieu = new stdclass();
 $lang->lieu->common = 'Lieu';
-$lang->lieu->browse = 'Lieus';
+$lang->lieu->browse = 'Lieu';
 $lang->lieu->create = 'Create';
 $lang->lieu->edit   = 'Edit';
 $lang->lieu->view   = 'View';
@@ -10,8 +10,8 @@ $lang->lieu->review = 'Review';
 $lang->lieu->cancel = 'Cancel';
 $lang->lieu->commit = 'Commit';
 
-$lang->lieu->personal     = 'My Lieus';
-$lang->lieu->browseReview = 'Reviews';
+$lang->lieu->personal     = 'My Lieu';
+$lang->lieu->browseReview = 'Review';
 $lang->lieu->company      = 'All';
 $lang->lieu->setReviewer  = 'Settings';
 $lang->lieu->batchReview  = 'Batch Review';
@@ -29,9 +29,9 @@ $lang->lieu->trip         = 'Trip';
 $lang->lieu->status       = 'Status';
 $lang->lieu->desc         = 'Description';
 $lang->lieu->createdBy    = 'Created By';
-$lang->lieu->createdDate  = 'Created On';
+$lang->lieu->createdDate  = 'Created';
 $lang->lieu->reviewedBy   = 'Reviewed By';
-$lang->lieu->reviewedDate = 'Reviewed On';
+$lang->lieu->reviewedDate = 'Reviewed';
 $lang->lieu->date         = 'Date';
 $lang->lieu->time         = 'Time';
 $lang->lieu->rejectReason = 'Reject Reason';
@@ -60,7 +60,7 @@ $lang->lieu->bothEmpty     = '<strong>Overtime</strong> records and <strong>trip
 $lang->lieu->hoursTip = 'Hours';
 
 $lang->lieu->checkHoursList['0'] = 'Not check';
-$lang->lieu->checkHoursList['1'] = 'Lieu hours can not be greater than overtime hours (%s)';
+$lang->lieu->checkHoursList['1'] = 'Lieu hours can not be longer than overtime hours (%s)';
 
 $lang->lieu->reviewStatusList['pass']   = 'Pass';
 $lang->lieu->reviewStatusList['reject'] = 'Reject';

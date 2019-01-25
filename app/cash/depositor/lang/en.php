@@ -12,7 +12,7 @@
 if(!isset($lang->depositor)) $lang->depositor = new stdclass();
 $lang->depositor->common          = 'Account';
 $lang->depositor->id              = 'ID';
-$lang->depositor->abbr            = 'Abbreviation';
+$lang->depositor->abbr            = 'Alias';
 $lang->depositor->serviceProvider = 'Provider';
 $lang->depositor->bankProvider    = 'Bank';
 $lang->depositor->title           = 'Title';
@@ -24,9 +24,9 @@ $lang->depositor->type            = 'Type';
 $lang->depositor->currency        = 'Currency';
 $lang->depositor->status          = 'Status';
 $lang->depositor->createdBy       = 'Created By';
-$lang->depositor->createdDate     = 'Created Date';
+$lang->depositor->createdDate     = 'Created';
 $lang->depositor->editedBy        = 'Edited By';
-$lang->depositor->editedDate      = 'Edited Date';
+$lang->depositor->editedDate      = 'Edited';
 
 $lang->depositor->all            = 'All';
 $lang->depositor->create         = 'Create';
@@ -73,5 +73,5 @@ $lang->depositor->statusList['normal']  = 'Normal';
 $lang->depositor->statusList['disable'] = 'Disable';
 
 $lang->depositor->placeholder = new stdclass();
-$lang->depositor->placeholder->tags     = 'Please divide tags with commas';
+$lang->depositor->placeholder->tags     = 'Please separate tags with commas';
 $lang->depositor->placeholder->noBccomp = 'Please install bccmom extension first.';

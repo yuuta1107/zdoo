@@ -23,12 +23,12 @@ $lang->schema->diffCol  = 'separate columns';
 
 $lang->schema->placeholder = new stdclass();
 $lang->schema->placeholder->selectField = 'Please select the correct field';
-$lang->schema->placeholder->common      = 'Fill in to the column field , such as: A';
+$lang->schema->placeholder->common      = 'Fill in to the column field, e.g. A';
 $lang->schema->placeholder->type        = 'Fill in "Income / Expense" column';
 $lang->schema->placeholder->date        = 'Fill out the "payment time" column';
 $lang->schema->placeholder->product     = 'Fill in "product" column';
-$lang->schema->placeholder->desc        = 'The accounts note, use "," separated, such as: I,O';
-$lang->schema->placeholder->in          = 'The column of income such as E';
-$lang->schema->placeholder->out         = 'The column of expenses such as D';
+$lang->schema->placeholder->desc        = 'The accounts note, use "," separated, e.g. I,O';
+$lang->schema->placeholder->in          = 'The column of income, e.g. E';
+$lang->schema->placeholder->out         = 'The column of expenses, e.g. D';
 
 $lang->schema->fieldRequired = '%s you must select correct field';

@@ -27,8 +27,8 @@ $lang->menu->crm->setting   = 'Settings|setting|lang|module=product&field=status
 if(!isset($lang->order)) $lang->order = new stdclass();
 $lang->order->menu = new stdclass();
 $lang->order->menu->browse      = 'All|order|browse|mode=all';
-$lang->order->menu->assignedTo  = 'Assigned To Me|order|browse|mode=assignedtome';
-$lang->order->menu->contactedBy = 'Contacted By Me|order|browse|mode=contactedby';
+$lang->order->menu->assignedTo  = 'AssignToMe|order|browse|mode=assignedtome';
+$lang->order->menu->contactedBy = 'ContactByMe|order|browse|mode=contactedby';
 $lang->order->menu->past        = 'Urgent|order|browse|mode=past';
 $lang->order->menu->today       = 'Today|order|browse|mode=today';
 $lang->order->menu->tomorrow    = 'Tomorrow|order|browse|mode=tomorrow';
@@ -50,10 +50,10 @@ $lang->contact->menu->thismonth   = 'This Month|contact|browse|mode=thismonth';
 
 if(!isset($lang->leads)) $lang->leads = new stdclass();
 $lang->leads->menu = new stdclass();
-$lang->leads->menu->assignedToNull = 'Assigned to Null|leads|assignedToNull|';
-$lang->leads->menu->assignedTo     = 'Assigned to Me|leads|browse|mode=assignedTo';
+$lang->leads->menu->assignedToNull = 'Not Assigned|leads|assignedToNull|';
+$lang->leads->menu->assignedTo     = 'AssignToMe|leads|browse|mode=assignedTo';
 $lang->leads->menu->next           = 'Next contact|leads|browse|mode=next';
-$lang->leads->menu->ignoredBy      = 'Ignore by Me|leads|browse|mode=ignoredBy&status=ignore';
+$lang->leads->menu->ignoredBy      = 'IgnorebyMe|leads|browse|mode=ignoredBy&status=ignore';
 $lang->leads->menu->public         = 'Public|leads|browse|mode=all&status=ignore';
 $lang->leads->menu->setting        = 'Settings|leads|setting|';
 

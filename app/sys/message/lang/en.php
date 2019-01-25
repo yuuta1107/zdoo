@@ -36,9 +36,9 @@ $lang->message->delete         = 'Delete';
 $lang->message->deleteSelected = 'Delete the selected';
 $lang->message->passPre        = 'Pass previous';
 $lang->message->deletePre      = 'Delete previous';
-$lang->message->commentAt      = 'Comment at ';
+$lang->message->commentAt      = 'Comment ';
 $lang->message->deletedObject  = 'Deleted';
-$lang->message->contactHidden  = "Your phone, email, etc. will only be send to administrator.";
+$lang->message->contactHidden  = "Your phone, email, etc. will only be sent to your administrator.";
 
 $lang->message->confirmDeleteSingle = 'Do you want to delete this comment?';
 $lang->message->confirmDeletePre    = 'Do you want to delete comments previous?';
@@ -69,24 +69,24 @@ $lang->comment->thanks      = 'Thanks for your comment!';
 
 $lang->comment->pass          = 'Pass';
 $lang->comment->reply         = 'Reply';
-$lang->comment->replyAt       = 'Reply at';
+$lang->comment->replyAt       = 'Reply ';
 $lang->comment->manage        = 'Manage';
 $lang->comment->delete        = 'Delete';
 $lang->comment->passPre       = 'Pass previous';
 $lang->comment->deletePre     = 'Delete previous';
 $lang->comment->commentTo     = 'Commented';
-$lang->comment->commentAt     = 'Commented at';
+$lang->comment->commentAt     = 'Commented ';
 $lang->comment->deletedObject = 'Deleted';
 
 $lang->comment->confirmDeleteSingle = 'Do you want to delete this comment?';
-$lang->comment->confirmDeletePre    = 'Do you want to delete comments previous?';
+$lang->comment->confirmDeletePre    = 'Do you want to delete previous comments?';
 $lang->comment->confirmPassSingle   = 'Do you want to pass this comment?';
-$lang->comment->confirmPassPre      = 'Do you want to pass comment previous?';
+$lang->comment->confirmPassPre      = 'Do you want to pass previous comment?';
 
 $lang->comment->statusList[0] = 'Unreviewed';
 $lang->comment->statusList[1] = 'Reviewed';
 
-$lang->message->replyItem = "<dd><strong>%s</strong> reply at <em>%s</em>：%s</dd>";
-$lang->comment->replyItem = "<dd><strong>%s</strong> reply at <em>%s</em>：%s</dd>";
+$lang->message->replyItem = "<dd><strong>%s</strong> reply <em>%s</em>：%s</dd>";
+$lang->comment->replyItem = "<dd><strong>%s</strong> reply <em>%s</em>：%s</dd>";
 
 $lang->message->replySubject = 'Reply from administrator of %s';

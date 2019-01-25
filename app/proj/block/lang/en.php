@@ -11,7 +11,7 @@
  */
 $lang->block->common   = 'Blocks';
 $lang->block->lblBlock = 'Block';
-$lang->block->admin    = 'Manage Blocks';
+$lang->block->admin    = 'Manage Block';
 $lang->block->type     = 'Type';
 $lang->block->waitTask = 'Wait';
 $lang->block->doneTask = 'Done';
@@ -19,7 +19,7 @@ $lang->block->rate     = 'Rate';
 
 $lang->block->availableBlocks = new stdclass();
 $lang->block->availableBlocks->task     = 'Tasks';
-$lang->block->availableBlocks->project  = 'Projects';
+$lang->block->availableBlocks->project  = 'Project';
 
 $lang->block->num     = 'Number';
 $lang->block->orderBy = 'Order';
@@ -45,11 +45,11 @@ $lang->block->orderByList->project['begin_desc']       = 'Begin DESC';
 $lang->block->orderByList->project['end_asc']          = 'End ASC';
 $lang->block->orderByList->project['end_desc']         = 'End DESC';
 
-$lang->block->typeList->task['assignedTo'] = 'Assigned to me';
-$lang->block->typeList->task['createdBy']  = 'My Created';
-$lang->block->typeList->task['finishedBy'] = 'My Finished';
-$lang->block->typeList->task['closedBy']   = 'My Closed';
-$lang->block->typeList->task['canceledBy'] = 'My CancelLed';
+$lang->block->typeList->task['assignedTo'] = 'AssignedToMe';
+$lang->block->typeList->task['createdBy']  = 'CreatedByMe';
+$lang->block->typeList->task['finishedBy'] = 'FinishedByMe';
+$lang->block->typeList->task['closedBy']   = 'ClosedByMe';
+$lang->block->typeList->task['canceledBy'] = 'CancelLedByMe';
 
 $lang->block->statusList->project['involved'] = 'Involved';
 $lang->block->statusList->project['doing']    = 'Doing';

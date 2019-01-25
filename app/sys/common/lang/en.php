@@ -166,7 +166,7 @@ $lang->importFail     = 'Failed.';
 /* Items for lifetime. */
 $lang->lifetime = new stdclass();
 $lang->lifetime->createdBy    = 'Created By';
-$lang->lifetime->assignedTo   = 'Assigned to';
+$lang->lifetime->assignedTo   = 'Assign to';
 $lang->lifetime->signedBy     = 'Signed By';
 $lang->lifetime->closedBy     = 'Closed By';
 $lang->lifetime->closedReason = 'Closed Reason';
@@ -259,7 +259,7 @@ $lang->article->menu->create = array('link' => 'Add|article|create|type=article'
 $lang->menuGroups = new stdclass();
 
 $lang->menu->dashboard = new stdclass();
-$lang->menu->dashboard->todo     = 'Todo|todo|calendar|';
+$lang->menu->dashboard->todo     = 'To-do|todo|calendar|';
 $lang->menu->dashboard->task     = 'Task|my|task|';
 $lang->menu->dashboard->project  = 'Project|my|project|';
 $lang->menu->dashboard->order    = 'Order|my|order|';
@@ -467,7 +467,7 @@ $lang->datepicker->dpText->TEXT_TODAY       = 'Today';
 $lang->datepicker->dpText->TEXT_NEXT_YEAR   = 'Next Year';
 $lang->datepicker->dpText->TEXT_NEXT_MONTH  = 'Next Month';
 $lang->datepicker->dpText->TEXT_CLOSE       = 'Close';
-$lang->datepicker->dpText->TEXT_DATE        = 'select time frame';
+$lang->datepicker->dpText->TEXT_DATE        = 'Time Frame';
 $lang->datepicker->dpText->TEXT_CHOOSE_DATE = 'Choose date';
 
 $lang->datepicker->dayNames     = array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');

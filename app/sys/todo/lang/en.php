@@ -98,5 +98,5 @@ $lang->todo->periods['all']        = 'All';
 $lang->todo->batchedittips = 'The editing item is not selected';
 
 $lang->todo->action = new stdclass();
-$lang->todo->action->finished = array('main' => '$date, Finished by <strong>$actor</strong>');
-$lang->todo->action->marked   = array('main' => '$date, Change status to <stong>$extra</strong> by <strong>$actor</strong>。', 'extra' => 'statusList');
+$lang->todo->action->finished = array('main' => '$date, finished by <strong>$actor</strong>');
+$lang->todo->action->marked   = array('main' => '$date, change status to <stong>$extra</strong> by <strong>$actor</strong>。', 'extra' => 'statusList');

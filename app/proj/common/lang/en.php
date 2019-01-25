@@ -21,8 +21,8 @@ $lang->dashboard = new stdclass();
 
 if(!isset($lang->project)) $lang->project = new stdclass();
 $lang->project->menu = new stdclass();
-$lang->project->menu->involved  = 'My Involved|project|index|status=involved';
-$lang->project->menu->doing     = 'Projects|project|index|status=doing';
+$lang->project->menu->involved  = 'InvolveMe|project|index|status=involved';
+$lang->project->menu->doing     = 'Project|project|index|status=doing';
 $lang->project->menu->finished  = 'Finished|project|index|ststus=finished';
 $lang->project->menu->suspend   = 'Suspended|project|index|ststus=suspend';
 
