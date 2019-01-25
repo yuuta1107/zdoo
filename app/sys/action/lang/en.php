@@ -111,6 +111,8 @@ $lang->action->desc->createtrip            = '$date, <strong>$actor</strong> cre
 $lang->action->desc->createegress          = '$date, <strong>$actor</strong> created egress:<strong>$extra</strong>.' . "\n";
 $lang->action->desc->imported              = '$date, import by <strong>$actor</strong>.' . "\n";
 $lang->action->desc->dating                = '$date, <strong>$actor</strong> created a dating : <strong>$extra</strong>。' . "\n";
+$lang->action->desc->manageteam            = '$date, <strong>$actor</strong> managed commission rate.' . "\n";
+$lang->action->desc->confirmteam           = '$date, <strong>$actor</strong> confirmed commission rate : <strong>$extra</strong>.' . "\n";
 
 /* The action labels. */
 $lang->action->label = new stdclass();
@@ -183,7 +185,6 @@ $lang->action->label->balance   = 'Balance|balance|browse|depositorID=%s';
 $lang->action->label->doc       = 'Document|doc|view|docID=%s';
 $lang->action->label->doclib    = 'Document Library|doc|browse|doclibID=%s';
 $lang->action->label->contact   = 'Contact|contact|view|contactID=%s';
-$lang->action->label->contract  = 'Contract|contract|view|contractID=%s';
 $lang->action->label->customer  = 'Customer|customer|view|customerID=%s';
 $lang->action->label->depositor = 'Account|depositor|browse|';
 $lang->action->label->holiday   = 'Holiday|hiloday|browse|';
@@ -199,6 +200,9 @@ $lang->action->label->todo      = 'Todo|todo|view|todoID=%s';
 $lang->action->label->trade     = 'Trade|trade|browse|';
 $lang->action->label->user      = 'User';
 
+$lang->action->label->contract = array();
+$lang->action->label->contract['common']     = 'Contract|contract|view|contractID=%s';
+$lang->action->label->contract['manageteam'] = 'Contract|contract|confirmTeam|contractID=%s';
 $lang->action->label->attend = array();
 $lang->action->label->attend['commited'] = 'attend review|attend|browsereview|';
 $lang->action->label->attend['reviewed'] = 'attend review|attend|personal|';

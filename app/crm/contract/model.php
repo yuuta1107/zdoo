@@ -63,7 +63,7 @@ class contractModel extends model
 
         if($mode == 'contactedby')
         {
-            return $this->dao->select('*')->from(TABLE_CONTRACT)->alias('t1')
+            return $this->dao->select('t1.*')->from(TABLE_CONTRACT)->alias('t1')
                 ->leftJoin(TABLE_DATING)->alias('t2')->on('t1.id=t2.objectID')
                 ->where('t1.deleted')->eq(0)
                 ->andWhere('t2.status')->eq('wait')
@@ -233,6 +233,22 @@ class contractModel extends model
     public function getDeliveryList($contractID = 0, $orderBy = 'id_desc')
     {
         return $this->dao->select('*')->from(TABLE_DELIVERY)->where('contract')->eq($contractID)->orderBy($orderBy)->fetchAll();
+    }
+
+    /**
+     * Get member list.
+     *
+     * @param  int    $contractID
+     * @access public
+     * @return array
+     */
+    public function getMembers($contractID)
+    {
+        return $this->dao->select('account, rate, status')->from(TABLE_TEAM)
+            ->where('type')->eq('contract')
+            ->andWhere('id')->eq($contractID)
+            ->orderBy('rate_desc')
+            ->fetchAll('account');
     }
 
     /**
@@ -841,6 +857,103 @@ class contractModel extends model
     }
 
     /**
+     * Check team.
+     *
+     * @access public
+     * @return bool | array
+     */
+    public function checkTeam()
+    {
+        $total  = 0;
+        $errors = array();
+        foreach($this->post->account as $key => $account)
+        {
+            $rate = $this->post->rate[$key];
+
+            if(!$account or !$rate) continue;
+
+            if(!is_numeric($rate)) $errors["rate{$key}"] = $this->lang->contract->error->wrongRate;
+
+            $total += (float)$rate;
+        }
+        if($total > 100) $errors['totalRate'] = $this->lang->contract->error->wrongTotalRate;
+
+        if($errors) return array('result' => 'fail', 'message' => $errors);
+
+        return true;
+    }
+
+    /**
+     * Check if all members of a contract accepted the commission rate.
+     *
+     * @param  int    $contractID
+     * @access public
+     * @return bool
+     */
+    public function checkAllMembersAccepted($contractID)
+    {
+        $members = $this->dao->select('status')->from(TABLE_TEAM)
+            ->where('type')->eq('contract')
+            ->andWhere('id')->eq($contractID)
+            ->fetchPairs();
+
+        return count($members) == 1 && reset($members) == 'accept';
+    }
+
+    /**
+     * Manage team.
+     *
+     * @param  int    $contractID
+     * @access public
+     * @return bool
+     */
+    public function manageTeam($contractID)
+    {
+        $this->dao->delete()->from(TABLE_TEAM)->where('type')->eq('contract')->andWhere('id')->eq($contractID)->exec();
+
+        if(!$this->post->account) return true;
+
+        $member = new stdclass();
+        $member->type = 'contract';
+        $member->id   = $contractID;
+        foreach($this->post->account as $key => $account)
+        {
+            $rate = (float)$this->post->rate[$key];
+
+            if(!$account or !$rate) continue;
+
+            $member->account = $account;
+            $member->rate    = $rate;
+
+            $this->dao->insert(TABLE_TEAM)->data($member)->autoCheck()->exec();
+        }
+
+        return !dao::isError();
+    }
+
+    /**
+     * Accept or reject a commission rate.
+     *
+     * @param  int    $contractID
+     * @param  string $status
+     * @access public
+     * @return bool
+     */
+    public function confirmTeam($contractID, $status)
+    {
+        if($status != 'accept' && $status != 'reject') return false;
+
+        $this->dao->update(TABLE_TEAM)
+            ->set('status')->eq($status)
+            ->where('type')->eq('contract')
+            ->andWhere('id')->eq($contractID)
+            ->andWhere('account')->eq($this->app->user->account)
+            ->exec();
+
+        return !dao::isError();
+    }
+
+    /**
      * Build operate menu.
      * 
      * @param  object $contract 
@@ -851,25 +964,23 @@ class contractModel extends model
      */
     public function buildOperateMenu($contract, $class = '', $type = 'browse')
     {
-        $menu  = '';
+        $canReceive  = commonModel::hasPriv('contract', 'receive');
+        $canDelivery = commonModel::hasPriv('contract', 'delivery');
+        $canFinish   = commonModel::hasPriv('contract', 'finish');
+        $canEdit     = commonModel::hasPriv('contract', 'edit');
+        $canCancel   = commonModel::hasPriv('contract', 'cancel');
+        $canDelete   = commonModel::hasPriv('contract', 'delete');
 
-        $canCreateRecord = commonModel::hasPriv('action', 'createRecord');
-        $canReceive      = commonModel::hasPriv('contract', 'receive');
-        $canDelivery     = commonModel::hasPriv('contract', 'delivery');
-        $canFinish       = commonModel::hasPriv('contract', 'finish');
-        $canEdit         = commonModel::hasPriv('contract', 'edit');
-        $canCancel       = commonModel::hasPriv('contract', 'cancel');
-        $canDelete       = commonModel::hasPriv('contract', 'delete');
-
+        $menu = '';
         if($type == 'view') $menu .= "<div class='btn-group'>";
 
         $history = $type == 'view' ? '&history=' : '';
-        if($canCreateRecord) $menu .= commonModel::printLink('action', 'createRecord', "objectType=contract&objectID={$contract->id}&customer={$contract->customer}$history", $this->lang->contract->record, "class='$class' data-toggle='modal' data-width='800'", false);
+        $menu .= commonModel::printLink('action', 'createRecord', "objectType=contract&objectID={$contract->id}&customer={$contract->customer}$history", $this->lang->contract->record, "class='$class' data-toggle='modal' data-width='800'", false);
         $menu .= commonModel::printLink('customer', 'contact', "customerID={$contract->customer}", $this->lang->contract->contact, "data-toggle='modal' class='$class'", false);
 
         if($contract->return != 'done' and $contract->status == 'normal' and $canReceive)
         {
-            $menu .= commonModel::printLink('crm.contract', 'receive',  "contractID=$contract->id", $this->lang->contract->return, "data-toggle='modal' class='$class'", false);
+            $menu .= html::a(helper::createLink('crm.contract', 'receive',  "contractID=$contract->id"), $this->lang->contract->return, "data-toggle='modal' class='$class'");
         }
         else
         {
@@ -878,7 +989,7 @@ class contractModel extends model
 
         if($contract->delivery != 'done' and $contract->status == 'normal' and $canDelivery)
         {
-            $menu .= commonModel::printLink('crm.contract', 'delivery', "contractID=$contract->id", $this->lang->contract->delivery, "data-toggle='modal' class='$class'", false);
+            $menu .= html::a(helper::createLink('crm.contract', 'delivery', "contractID=$contract->id"), $this->lang->contract->delivery, "data-toggle='modal' class='$class'");
         }
         else
         {
@@ -889,7 +1000,7 @@ class contractModel extends model
 
         if($contract->status == 'normal' and $contract->return == 'done' and $contract->delivery == 'done' and $canFinish)
         {
-            $menu .= commonModel::printLink('crm.contract', 'finish', "contractID=$contract->id", $this->lang->finish, "data-toggle='modal' class='$class'", false);
+            $menu .= html::a(helper::createLink('crm.contract', 'finish', "contractID=$contract->id"), $this->lang->finish, "data-toggle='modal' class='$class'");
         }
         else
         {
@@ -897,22 +1008,23 @@ class contractModel extends model
         }
 
         if($canEdit) $menu .= commonModel::printLink('crm.contract', 'edit', "contractID=$contract->id", $this->lang->edit, "class='$class'", false);
+        if($type == 'view') $menu .= commonModel::printLink('crm.contract', 'manageTeam', "contractID=$contract->id", $this->lang->contract->team->common, "data-toggle='modal' class='$class'", false);
 
         if($type == 'view')
         {
             $menu .= "</div><div class='btn-group'>";
             if($contract->status == 'normal' and !($contract->return == 'done' and $contract->delivery == 'done') and $canCancel)
             {
-                $menu .= commonModel::printLink('crm.contract', 'cancel', "contractID=$contract->id", $this->lang->cancel, "data-toggle='modal' class='$class'", false);
+                $menu .= html::a(helper::createLink('crm.contract', 'cancel', "contractID=$contract->id"), $this->lang->cancel, "data-toggle='modal' class='$class'");
             }
             else
             {
                 $menu .= "<a href='###' disabled='disabled' class='disabled $class'>" . $this->lang->cancel . '</a> ';
             }
 
-            if($contract->status == 'canceled' or ($contract->status == 'normal' and !($contract->return == 'done' and $contract->delivery == 'done')) and $canDelete)
+            if(($contract->status == 'canceled' or ($contract->status == 'normal' and !($contract->return == 'done' and $contract->delivery == 'done'))) and $canDelete)
             {
-                $menu .= commonModel::printLink('crm.contract', 'delete', "contractID=$contract->id", $this->lang->delete, "class='deleter $class'", false);
+                $menu .= html::a(helper::createLink('crm.contract', 'delete', "contractID=$contract->id"), $this->lang->delete, "class='deleter $class'");
             }
             else
             {
@@ -924,19 +1036,20 @@ class contractModel extends model
         if($type == 'browse')
         {
             $menu .="<div class='dropdown'><a data-toggle='dropdown' href='javascript:;'>" . $this->lang->more . "<span class='caret'></span> </a><ul class='dropdown-menu pull-right'>";
+            $menu .= commonModel::printLink('crm.contract', 'manageTeam', "contractID=$contract->id", $this->lang->contract->team->common, "data-toggle='modal' class='$class'", false, '', 'li');
 
             if($contract->status == 'normal' and !($contract->return == 'done' and $contract->delivery == 'done') and $canCancel)
             {
-                $menu .= commonModel::printLink('crm.contract', 'cancel', "contractID=$contract->id", $this->lang->cancel, "data-toggle='modal' class='$class'", false, '', 'li');
+                $menu .= '<li>' . html::a(helper::createLink('crm.contract', 'cancel', "contractID=$contract->id"), $this->lang->cancel, "data-toggle='modal' class='$class'") . '</li>';
             }
             else
             {
                 $menu .= "<li><a href='###' disabled='disabled' class='disabled $class'>" . $this->lang->cancel . '</a></li> ';
             }
 
-            if($contract->status == 'canceled' or ($contract->status == 'normal' and !($contract->return == 'done' and $contract->delivery == 'done')) and $canDelete)
+            if(($contract->status == 'canceled' or ($contract->status == 'normal' and !($contract->return == 'done' and $contract->delivery == 'done'))) and $canDelete)
             {
-                $menu .= commonModel::printLink('crm.contract', 'delete', "contractID=$contract->id", $this->lang->delete, "class='reloadDeleter $class'", false, '', 'li');
+                $menu .= '<li>' . html::a(helper::createLink('crm.contract', 'delete', "contractID=$contract->id"), $this->lang->delete, "class='reloadDeleter $class'") . '<li>';
             }
             else
             {

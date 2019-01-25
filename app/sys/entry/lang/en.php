@@ -109,3 +109,13 @@ $lang->entry->integrationList[0] = 'Close';
 
 $lang->entry->platformList['ranzhi']   = 'Zdoo';
 $lang->entry->platformList['xuanxuan'] = 'XuanXuan';
+
+$lang->entry->errmsg['PARAM_CODE_MISSING']    = 'Param code is missing.';
+$lang->entry->errmsg['PARAM_TOKEN_MISSING']   = 'Param token is missing.';
+$lang->entry->errmsg['SESSION_CODE_MISSING']  = 'Session code is missing.';
+$lang->entry->errmsg['EMPTY_KEY']             = 'Key of entry is missing.';
+$lang->entry->errmsg['INVALID_TOKEN']         = 'Invalid token.';
+$lang->entry->errmsg['SESSION_VERIFY_FAILED'] = 'Session verification failed.';
+$lang->entry->errmsg['IP_DENIED']             = 'IP is denied.';
+$lang->entry->errmsg['ACCOUNT_UNBOUND']       = 'Account unbound.';
+$lang->entry->errmsg['EMPTY_ENTRY']           = 'Key of entry is missing.';

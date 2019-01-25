@@ -30,18 +30,18 @@
     <thead>
       <tr class='text-center'>
         <?php $vars = "mode={$mode}&orderBy=%s&recTotal={$pager->recTotal}&recPerPage={$pager->recPerPage}&pageID={$pager->pageID}";?>
-        <th class='w-60px'><?php commonModel::printOrderLink('id', $orderBy, $vars, $lang->order->id);?></th>
-        <th class='w-60px visible-lg'><?php commonModel::printOrderLink('level', $orderBy, $vars, $lang->customer->level);?></th>
-        <th class='text-left'><?php commonModel::printOrderLink('customer', $orderBy, $vars, $lang->order->customer);?></th>
-        <th class='w-130px'><?php commonModel::printOrderLink('product', $orderBy, $vars, $lang->order->product);?></th>
-        <th class='w-90px'><?php commonModel::printOrderLink('plan', $orderBy, $vars, $lang->order->plan);?></th>
-        <th class='w-90px'><?php commonModel::printOrderLink('real', $orderBy, $vars, $lang->order->real);?></th>
-        <th class='w-80px'><?php commonModel::printOrderLink('assignedTo', $orderBy, $vars, $lang->order->assignedTo);?></th>
-        <th class='w-60px'><?php commonModel::printOrderLink('status', $orderBy, $vars, $lang->order->status);?></th>
-        <th class='w-90px visible-lg'><?php commonModel::printOrderLink('contactedDate', $orderBy, $vars, $lang->order->contactedDate);?></th>
+        <th class='w-60px'><?php commonModel::printOrderLink('o.id', $orderBy, $vars, $lang->order->id);?></th>
+        <th class='w-60px visible-lg'><?php commonModel::printOrderLink('c.level', $orderBy, $vars, $lang->customer->level);?></th>
+        <th class='text-left'><?php commonModel::printOrderLink('o.customer', $orderBy, $vars, $lang->order->customer);?></th>
+        <th class='w-130px'><?php commonModel::printOrderLink('o.product', $orderBy, $vars, $lang->order->product);?></th>
+        <th class='w-90px'><?php commonModel::printOrderLink('o.plan', $orderBy, $vars, $lang->order->plan);?></th>
+        <th class='w-90px'><?php commonModel::printOrderLink('o.real', $orderBy, $vars, $lang->order->real);?></th>
+        <th class='w-80px'><?php commonModel::printOrderLink('o.assignedTo', $orderBy, $vars, $lang->order->assignedTo);?></th>
+        <th class='w-60px'><?php commonModel::printOrderLink('o.status', $orderBy, $vars, $lang->order->status);?></th>
+        <th class='w-90px visible-lg'><?php commonModel::printOrderLink('o.contactedDate', $orderBy, $vars, $lang->order->contactedDate);?></th>
         <?php
         /* The next date is searched from the table crm_dating, so use date instead of nextDate to avoid occur errors when order by this field. */
-        $date = strpos(',past,today,tomorrow,thisweek,thismonth,', ",{$mode},") != false ? 'date' : 'nextDate';
+        $date = strpos(',past,today,tomorrow,thisweek,thismonth,', ",{$mode},") != false ? 'd.date' : 'o.nextDate';
         ?>
         <th class='w-90px'><?php commonModel::printOrderLink($date, $orderBy, $vars, $lang->order->nextDate);?></th>
         <th class='w-220px text-center'><?php echo $lang->actions;?></th>

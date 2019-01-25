@@ -48,8 +48,8 @@ class customer extends control
         /* Build search form. */
         $this->loadModel('search', 'sys');
         $this->config->customer->search['actionURL'] = $this->createLink('customer', 'browse', 'mode=bysearch');
-        $this->config->customer->search['params']['industry']['values'] = array('' => '') + $this->loadModel('tree')->getOptionMenu('industry');
-        $this->config->customer->search['params']['area']['values']     = array('' => '') + $this->loadModel('tree')->getOptionMenu('area');
+        $this->config->customer->search['params']['t1.industry']['values'] = array('' => '') + $this->loadModel('tree')->getOptionMenu('industry');
+        $this->config->customer->search['params']['t1.area']['values']     = array('' => '') + $this->loadModel('tree')->getOptionMenu('area');
         $this->search->setSearchParams($this->config->customer->search);
 
         $customers = $this->customer->getList($mode, $param, $relation = 'client', $orderBy, $pager);
@@ -390,11 +390,12 @@ class customer extends control
      * get data to export.
      * 
      * @param  string $mode 
+     * @param  string $type
      * @param  string $orderBy 
      * @access public
      * @return void
      */
-    public function export($mode = 'all', $orderBy = 'id_desc')
+    public function export($mode = 'all', $type = 'all', $orderBy = 'id_desc')
     { 
         if($_POST)
         {
@@ -411,14 +412,14 @@ class customer extends control
             }
 
             $customers = array();
-            if($mode == 'all')
+            if($type == 'all')
             {
                 $customerQueryCondition = $this->session->customerQueryCondition;
                 if(strpos($customerQueryCondition, 'LIMIT') !== false) $customerQueryCondition = substr($customerQueryCondition, 0, strpos($customerQueryCondition, 'LIMIT'));
                 $stmt = $this->dbh->query($customerQueryCondition);
                 while($row = $stmt->fetch()) $customers[$row->id] = $row;
             }
-            if($mode == 'thisPage')
+            if($type == 'thisPage')
             {
                 $stmt = $this->dbh->query($this->session->customerQueryCondition);
                 while($row = $stmt->fetch()) $customers[$row->id] = $row;
@@ -455,7 +456,33 @@ class customer extends control
                 $customer->editedDate    = formatTime($customer->editedDate, DT_DATE1);
                 $customer->assignedDate  = formatTime($customer->assignedDate, DT_DATE1);
                 $customer->contactedDate = formatTime($customer->contactedDate, DT_DATE1);
-                $customer->nextDate      = formatTime($customer->contactedDate, DT_DATE1);
+                $customer->nextDate      = formatTime($customer->nextDate, DT_DATE1);
+            }
+
+            if($this->session->customerQuery == false) $this->session->set('customerQuery', ' 1 = 1');
+            $customerQuery = $this->loadModel('search', 'sys')->replaceDynamic($this->session->customerQuery);
+
+            if(strpos(',contactedby,past,today,tomorrow,thisweek,thismonth,', ",{$mode},") !== false or ($mode == 'bysearch' && strpos($customerQuery, '`nextDate`') !== false))
+            {
+                $this->app->loadClass('date', $static = true);
+                $thisMonth = date::getThisMonth();
+                $thisWeek  = date::getThisWeek();
+
+                $datingList = $this->dao->select('objectID, MIN(date) AS date')->from(TABLE_DATING)
+                    ->where('status')->eq('wait')
+                    ->andWhere('objectType')->eq('customer')
+                    ->andWhere('objectID')->in(array_keys($customers))
+                    ->beginIF($mode == 'contactedby')->andWhere('account')->eq($this->app->user->account)->fi()
+                    ->beginIF($mode == 'past')->andWhere('date')->lt(helper::today())->fi()
+                    ->beginIF($mode == 'today')->andWhere('date')->eq(helper::today())->fi()
+                    ->beginIF($mode == 'tomorrow')->andWhere('date')->eq(formattime(date::tomorrow(), DT_DATE1))->fi()
+                    ->beginIF($mode == 'thisweek')->andWhere('date')->between($thisWeek['begin'], $thisWeek['end'])->fi()
+                    ->beginIF($mode == 'thismonth')->andWhere('date')->between($thisMonth['begin'], $thisMonth['end'])->fi()
+                    ->andWhere('date')->ne('0000-00-00')
+                    ->groupBy('objectID')
+                    ->fetchPairs();
+
+                foreach($customers as $id => $customer) $customer->nextDate = zget($datingList, $id, $customer->nextDate);
             }
 
             $this->post->set('fields', $fields);

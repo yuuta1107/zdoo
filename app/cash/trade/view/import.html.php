@@ -26,7 +26,7 @@
       <td>
         <div class='input-group'>
           <?php echo html::file('files', "class='form-control'")?>
-          <span class='input-group-addon'><?php echo $lang->trade->encode?></span>
+          <span class='input-group-addon fix-border'><?php echo $lang->trade->encode?></span>
           <?php echo html::select('encode', $lang->trade->encodeList, '', "class='form-control'")?>
         </div>
       </td>

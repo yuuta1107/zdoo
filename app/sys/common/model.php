@@ -1398,6 +1398,80 @@ class commonModel extends model
     }
 
     /**
+     * Check an entry.
+     *
+     * @access public
+     * @return void
+     */
+    public function checkEntry()
+    {
+        $this->loadModel('entry');
+
+        if($this->session->validEntry)
+        {
+            if(!$this->session->entryCode) $this->response('SESSION_CODE_MISSING');
+            if($this->session->validEntry != md5(md5($this->get->code) . $this->server->remote_addr)) $this->response('SESSION_VERIFY_FAILED');
+            return true;
+        }
+
+        if(!$this->get->code)  $this->response('PARAM_CODE_MISSING');
+        if(!$this->get->token) $this->response('PARAM_TOKEN_MISSING');
+
+        $entry = $this->entry->getByCode($this->get->code);
+        if(!$entry)                              $this->response('EMPTY_ENTRY');
+        if(!$entry->key)                         $this->response('EMPTY_KEY');
+        if(!$this->checkIP($entry->ip))          $this->response('IP_DENIED');
+        if(!$this->checkEntryToken($entry->key)) $this->response('INVALID_TOKEN');
+
+        /* Set super rights. */
+        $this->loadModel('user');
+        $user = $this->dao->select('*')->from(TABLE_USER)->where('admin')->eq('super')->limit(1)->fetch();
+        $groups = $this->loadModel('group')->getByAccount($user->account);
+        $user->groups = array_keys($groups);
+        $user->rights = $this->user->authorize($user);
+        $this->session->set('user', $user);
+        $this->app->user = $this->session->user;
+
+        $this->session->set('entryCode', $this->get->code);
+        $this->session->set('validEntry', md5(md5($this->get->code) . $this->server->remote_addr));
+        //$this->loadModel('entry')->saveLog($entry->id, $this->server->request_uri);
+
+        unset($_GET['code']);
+        unset($_GET['token']);
+    }
+
+    /**
+     * Response.
+     *
+     * @param  string $code
+     * @access public
+     * @return void
+     */
+    public function response($code)
+    {
+        $response = new stdclass();
+        $response->errcode = $this->config->entry->errcode[$code];
+        $response->errmsg  = $this->lang->entry->errmsg[$code];
+
+        die(helper::jsonEncode($response));
+    }
+
+    /**
+     * Check token of an entry.
+     *
+     * @param  string $key
+     * @access public
+     * @return void
+     */
+    public function checkEntryToken($key)
+    {
+        parse_str($this->server->query_String, $queryString);
+        unset($queryString['token']);
+        $queryString = http_build_query($queryString);
+        return $this->get->token == md5(md5($queryString) . $key);
+    }
+
+    /**
      * Get currency list.
      * 
      * @access public

@@ -16,7 +16,7 @@
   <div class='panel-heading'>
     <strong class='text-danger'><?php echo sprintf($lang->contact->importResult, count($successList), count($errorList));?></strong>
     <div class="panel-actions pull-right">
-      <?php echo html::a(inlink('browse', "mode=all&status=wait"), $lang->contact->showImport, "class='btn btn-primary'");?>
+      <?php echo html::a($this->createLink('crm.browse', "mode=all&status=wait"), $lang->contact->showImport, "class='btn btn-primary'");?>
     </div>
   </div>
   <?php if(!empty($errorList)):?>

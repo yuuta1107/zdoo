@@ -77,6 +77,8 @@ $lang->contract->deleteDelivery   = 'Delete';
 $lang->contract->export           = 'Export';
 $lang->contract->totalReturn      = 'Total';
 $lang->contract->tradeList        = 'Trade List';
+$lang->contract->manageTeam       = 'Manage Team';
+$lang->contract->confirmTeam      = 'Confirm Commission Rate';
 
 $lang->contract->deliveryList[]        = '';
 $lang->contract->deliveryList['wait']  = 'Wait';
@@ -100,14 +102,33 @@ $lang->contract->codeUnitList['d']     = 'Day';
 $lang->contract->codeUnitList['fix']   = 'Fix';
 $lang->contract->codeUnitList['input'] = 'Input';
 
-$lang->contract->placeholder = new stdclass();
-$lang->contract->placeholder->real = 'Turnover';
-
 $lang->contract->totalAmount        = 'The total payment is %s. %s on this page, %s this month.';
 $lang->contract->returnInfo         = "<p>%s, received by <strong>%s</strong>, %s.</p>";
 $lang->contract->deliveryInfo       = "<p>%s, delivered by %s.</p>";
 $lang->contract->deleteReturnInfo   = "%s in %s";
 $lang->contract->deleteDeliveryInfo = "in %s";
+$lang->contract->teamTips           = "The record has empty member or rate won't be saved.";
+
+$lang->contract->placeholder = new stdclass();
+$lang->contract->placeholder->real = 'Turnover';
+
+$lang->contract->team = new stdclass();
+$lang->contract->team->common  = 'Team';
+$lang->contract->team->account = 'Member';
+$lang->contract->team->rate    = 'Rate(%)';
+$lang->contract->team->money   = 'Money';
+$lang->contract->team->status  = 'Status';
+$lang->contract->team->accept  = 'Accept';
+$lang->contract->team->reject  = 'Reject';
+$lang->contract->team->total   = 'Total';
+
+$lang->contract->team->statusList['wait']   = 'Waiting';
+$lang->contract->team->statusList['accept'] = 'Accepted';
+$lang->contract->team->statusList['reject'] = 'Rejected';
+
+$lang->contract->error = new stdclass();
+$lang->contract->error->wrongRate      = '<strong>Commission rate</strong> should be number';
+$lang->contract->error->wrongTotalRate = '<strong>Total commission rate</strong> should not be greater than 100%';
 
 $lang->plan = new stdclass();
 $lang->plan->amount = $lang->contract->thisAmount;

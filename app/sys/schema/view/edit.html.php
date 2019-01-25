@@ -73,6 +73,10 @@
           <td><?php echo html::input('product', $schema->product, "class='form-control' placeholder='{$lang->schema->placeholder->product}'");?></td>
         </tr>
         <tr>
+          <th><?php echo $lang->trade->handlers;?></th>
+          <td><?php echo html::input('handlers', $schema->handlers, "class='form-control' placeholder='{$lang->schema->placeholder->handlers}'");?></td>
+        </tr>
+        <tr>
           <th><?php echo $lang->trade->desc;?></th>
           <td><?php echo html::input('desc', $schema->desc, "class='form-control' placeholder='{$lang->schema->placeholder->desc}'");?></td>
         </tr>

@@ -87,6 +87,8 @@ $lang->refund->setExpense        = '設置科目';
 $lang->refund->moneyTip          = '低於金額只需要一級審批，高於金額需要二級審批';
 $lang->refund->total             = '合計：';
 $lang->refund->totalMoney        = '%s%s；';
+$lang->refund->reviewing         = '等待 <strong>%s</strong> 審批';
+$lang->refund->reviewed          = '審批完成';
 
 $lang->refund->settings = new stdclass();
 $lang->refund->settings->setReviewer  = "審批人|refund|setreviewer";

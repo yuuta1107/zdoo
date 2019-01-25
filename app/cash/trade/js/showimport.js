@@ -92,4 +92,19 @@ $(document).ready(function()
             $(this).parents('.input-group').find('input[type=text][id*=customerName]').hide();
         }
     })
+
+    $('.toggleHide').click(function()
+    {
+        if($(this).hasClass('showed'))
+        {
+            $(this).attr('title', v.showExistTrade);
+        }
+        else
+        {
+            $(this).attr('title', v.hideExistTrade);
+        }
+        $(this).toggleClass('showed');
+        $(this).find('i').toggleClass('icon-plus icon-minus');
+        $('.existTrades' + $(this).data('key')).toggle();
+    });
 });

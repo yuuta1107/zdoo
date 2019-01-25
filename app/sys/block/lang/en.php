@@ -38,13 +38,13 @@ $lang->block->default['oa']['1']['title'] = 'Calendar';
 $lang->block->default['oa']['1']['block'] = 'attend';
 $lang->block->default['oa']['1']['grid']  = 6;
 
-$lang->block->default['oa']['2']['title'] = 'Announcement';
+$lang->block->default['oa']['2']['title'] = 'Announcements';
 $lang->block->default['oa']['2']['block'] = 'announce';
 $lang->block->default['oa']['2']['grid']  = 4;
 
 $lang->block->default['oa']['2']['params']['num'] = 15;
 
-$lang->block->default['proj']['3']['title'] = 'My Task';
+$lang->block->default['proj']['3']['title'] = 'My Tasks';
 $lang->block->default['proj']['3']['block'] = 'task';
 $lang->block->default['proj']['3']['grid']  = 4;
 
@@ -53,7 +53,7 @@ $lang->block->default['proj']['3']['params']['orderBy'] = 'id_desc';
 $lang->block->default['proj']['3']['params']['status']  = array();
 $lang->block->default['proj']['3']['params']['type']    = 'assignedTo';
 
-$lang->block->default['proj']['4']['title'] = 'ProjectS';
+$lang->block->default['proj']['4']['title'] = 'Projects';
 $lang->block->default['proj']['4']['block'] = 'project';
 $lang->block->default['proj']['4']['grid']  = 4;
 
@@ -70,7 +70,7 @@ $lang->block->default['crm']['1']['params']['orderBy'] = 'id_desc';
 $lang->block->default['crm']['1']['params']['type']    = 'createdBy';
 $lang->block->default['crm']['1']['params']['status']  = array();
 
-$lang->block->default['crm']['2']['title'] = 'My Contract';
+$lang->block->default['crm']['2']['title'] = 'My Contracts';
 $lang->block->default['crm']['2']['block'] = 'contract';
 $lang->block->default['crm']['2']['grid']  = 4;
 
@@ -87,20 +87,20 @@ $lang->block->default['crm']['3']['params']['num']     = 15;
 $lang->block->default['crm']['3']['params']['orderBy'] = 'id_desc';
 $lang->block->default['crm']['3']['params']['type']    = 'thisweek';
 
-$lang->block->default['cash']['1']['title'] = 'Depositor';
+$lang->block->default['cash']['1']['title'] = 'Depositors';
 $lang->block->default['cash']['1']['block'] = 'depositor';
 $lang->block->default['cash']['1']['grid']  = 4;
 
 $lang->block->default['cash']['1']['params'] = array();
 
-$lang->block->default['cash']['2']['title'] = 'Trade';
+$lang->block->default['cash']['2']['title'] = 'Trades';
 $lang->block->default['cash']['2']['block'] = 'depositor';
 $lang->block->default['cash']['2']['grid']  = 4;
 
 $lang->block->default['cash']['2']['params']['num']     = 15;
 $lang->block->default['cash']['2']['params']['orderBy'] = 'id_desc';
 
-$lang->block->default['cash']['3']['title'] = 'Supplier';
+$lang->block->default['cash']['3']['title'] = 'Suppliers';
 $lang->block->default['cash']['3']['block'] = 'depositor';
 $lang->block->default['cash']['3']['grid']  = 4;
 
@@ -113,14 +113,14 @@ $lang->block->default['team']['1']['grid']  = 4;
 
 $lang->block->default['team']['1']['params']['num'] = 15;
 
-$lang->block->default['team']['2']['title'] = 'Latest Thread';
+$lang->block->default['team']['2']['title'] = 'Latest Threads';
 $lang->block->default['team']['2']['block'] = 'thread';
 $lang->block->default['team']['2']['grid']  = 4;
 
 $lang->block->default['team']['2']['params']['num'] = 15;
 $lang->block->default['team']['2']['params']['type'] = 'new';
 
-$lang->block->default['team']['3']['title'] = 'Sticky Thread';
+$lang->block->default['team']['3']['title'] = 'Sticky Threads';
 $lang->block->default['team']['3']['block'] = 'thread';
 $lang->block->default['team']['3']['grid']  = 4;
 
@@ -129,7 +129,7 @@ $lang->block->default['team']['3']['params']['type'] = 'stick';
 
 $lang->block->default['sys']['1'] = $lang->block->default['oa']['1'];
 $lang->block->default['sys']['1']['source'] = 'oa';
-$lang->block->default['sys']['2']['title']  = 'Dynamic';
+$lang->block->default['sys']['2']['title']  = 'Dynamics';
 $lang->block->default['sys']['2']['block']  = 'dynamic';
 $lang->block->default['sys']['2']['grid']   = 6;
 $lang->block->default['sys']['2']['source'] = '';

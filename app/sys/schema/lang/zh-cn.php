@@ -27,6 +27,7 @@ $lang->schema->placeholder->common      = '填写对账单对应到该字段的�
 $lang->schema->placeholder->type        = '填写“收入/支出”所对应的列';
 $lang->schema->placeholder->date        = '填写“付款时间”所对应的列';
 $lang->schema->placeholder->product     = '填写“产品”所对应的列';
+$lang->schema->placeholder->handlers    = '填写“经手人”所对应的列';
 $lang->schema->placeholder->desc        = '账目备注，可以填写多列，用,隔开，如：I,O';
 $lang->schema->placeholder->in          = '收款所在的列，如：E';
 $lang->schema->placeholder->out         = '付款所在的列，如：D';

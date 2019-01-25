@@ -83,7 +83,7 @@ class userModel extends model
             ->markRight(1)
             ->fi()
             ->beginIF(strpos($params, 'admin') !== false)->andWhere('admin')->ne('no')->fi()
-            ->beginIF($dept != 0)->andWhere('dept')->in($dept)->fi()
+            ->beginIF($dept)->andWhere('dept')->in($dept)->fi()
             ->orderBy('id_asc')    
             ->beginIF($pager)->page($pager)->fi()
             ->fetchPairs();

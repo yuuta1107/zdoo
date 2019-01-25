@@ -51,7 +51,7 @@ $().ready(function()
         <div class='input-group'>
           <span class='input-group-addon'><?php echo $lang->setFileNum;?></span>
           <?php echo html::input('num', '10', 'class=form-control');?>
-          <span class='input-group-addon'><?php echo $lang->setFileType;?></span>
+          <span class='input-group-addon fix-border'><?php echo $lang->setFileType;?></span>
           <?php echo html::select('fileType', array('xls' => 'xls', 'xlsx' => 'xlsx'), 'xls', "class='form-control'");?>
         </div>
       </td>

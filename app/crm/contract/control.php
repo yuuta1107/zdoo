@@ -498,6 +498,7 @@ class contract extends control
         $this->view->deptList      = $this->loadModel('tree')->getPairs(0, 'dept');
         $this->view->categories    = $expenseTypes + $incomeTypes; 
         $this->view->preAndNext    = $this->common->getPreAndNextObject('contract', $contractID);
+        $this->view->members       = $this->contract->getMembers($contractID);
 
         $this->display();
     }
@@ -514,6 +515,129 @@ class contract extends control
         $this->contract->delete(TABLE_CONTRACT, $contractID);
         if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
         $this->send(array('result' => 'success', 'locate' => inlink('browse')));
+    }
+
+    /**
+     * Manage team.
+     *
+     * @param  int    $contractID
+     * @access public
+     * @return void
+     */
+    public function manageTeam($contractID)
+    {
+        if($_POST)
+        {
+            $result = $this->contract->checkTeam();
+            if(!empty($result['result']) && $result['result'] == 'fail') $this->send($result);
+
+            $oldMembers = $this->contract->getMembers($contractID);
+            $this->contract->manageTeam($contractID);
+            if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
+
+            $members = $this->contract->getMembers($contractID);
+            if($members && $members != $oldMembers)
+            {
+                $actionID = $this->loadModel('action')->create('contract', $contractID, 'manageTeam');
+                $this->sendmail($contractID, $actionID);
+            }
+
+            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
+        }
+
+        $this->view->title    = $this->lang->contract->manageTeam;
+        $this->view->contract = $this->contract->getByID($contractID);
+        $this->view->users    = $this->loadModel('user')->getPairs('noclosed,nodelete,noforbidden');
+        $this->view->members  = $this->contract->getMembers($contractID);
+        $this->display();
+    }
+
+    /**
+     * Confirm commission rate of a team.
+     *
+     * @param  int    $contractID
+     * @param  string $status
+     * @access public
+     * @return void
+     */
+    public function confirmTeam($contractID, $status = '')
+    {
+        if($status == 'accept' or $status == 'reject')
+        {
+            $this->contract->confirmTeam($contractID, $status);
+            if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
+
+            $actionID = $this->loadModel('action')->create('contract', $contractID, 'confirmTeam', '', $this->lang->contract->team->statusList[$status]);
+            if($status == 'reject') $this->sendmail($contractID, $actionID);
+
+            $this->send(array('result' => 'success', 'locate' => inlink('browse')));
+        }
+
+        $this->view->title    = $this->lang->contract->confirmTeam;
+        $this->view->contract = $this->contract->getByID($contractID);
+        $this->view->users    = $this->loadModel('user')->getPairs('noclosed,nodelete,noforbidden');
+        $this->view->members  = $this->contract->getMembers($contractID);
+        $this->display();
+    }
+
+    /**
+     * Send notice or email.
+     *
+     * @param  int    $contractID
+     * @param  int    $actionID
+     * @access public
+     * @return void
+     */
+    public function sendmail($contractID, $actionID)
+    {
+        /* Reset $this->output. */
+        $this->clear();
+
+        /* Get action info. */
+        $action          = $this->loadModel('action')->getById($actionID);
+        $history         = $this->action->getHistory($actionID);
+        $action->history = isset($history[$actionID]) ? $history[$actionID] : array();
+
+        /* Set toList and ccList. */
+        $toList  = '';
+        $users   = $this->loadModel('user')->getPairs();
+        $subject = "{$this->lang->contract->common}#{$contractID} " . str_replace('(%)', '', $this->lang->contract->team->rate) . ' - ' . zget($users, $this->app->user->account);
+        if($action->action == 'manageteam')
+        {
+            $toList = $this->dao->select('account')->from(TABLE_TEAM)
+                ->where('type')->eq('contract')
+                ->andWhere('id')->eq($contractID)
+                ->andWhere('status')->ne('accept')
+                ->fetchPairs();
+            $toList = implode(',', $toList);
+        }
+        elseif($action->action == 'confirmteam')
+        {
+            $toList = $this->dao->select('actor')->from(TABLE_ACTION)
+                ->where('objectType')->eq('contract')
+                ->andWhere('objectID')->eq($contractID)
+                ->andWhere('action')->eq('manageteam')
+                ->orderBy('id_desc')
+                ->limit(1)
+                ->fetch('actor');
+
+            $subject .= '#' . $this->lang->contract->team->statusList['reject'];
+        }
+
+        /* send notice if user is online and return failed accounts. */
+        $toList = $this->loadModel('action')->sendNotice($actionID, $toList);
+
+        /* Create the email content. */
+        $this->view->contract = $this->contract->getById($contractID);
+        $this->view->members  = $this->contract->getMembers($contractID); 
+        $this->view->action   = $action;
+        $this->view->users    = $users;
+
+        $mailContent = $this->parse($this->moduleName, 'sendmail');
+
+        /* Send emails. */
+        $this->loadModel('mail')->send($toList, $subject, $mailContent);
+        if($this->mail->isError()) trigger_error(join("\n", $this->mail->getError()));
     }
 
     /**

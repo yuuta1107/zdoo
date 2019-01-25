@@ -851,6 +851,7 @@ class trade extends control
         $flipTypeList       = array_flip($this->lang->trade->typeList);
         $flipDeptList       = array_flip($deptList);
         $disabledCategories = $this->dao->select('*')->from(TABLE_CATEGORY)->where('major')->in('5,6,7,8')->fetchAll('id');
+        $userList           = $this->loadModel('user')->getPairs('noclosed,nodeleted,noforbidden');
 
         $traders     = array();
         $dataList    = array();
@@ -898,7 +899,13 @@ class trade extends control
                 }
 
                 $data[$field] = (is_int($col) and isset($row[$col])) ? trim($row[$col]) : '';
-                if($field == 'date') $data[$field] = date('Y-m-d', strtotime($data[$field]));
+                if($field == 'date')
+                {
+                    $datetime = $data[$field];
+
+                    $data['date'] = date('Y-m-d', strtotime($datetime));
+                    $data['time'] = date('H:i:s', strtotime($datetime));
+                }
             }
 
             if(isset($flipDeptList[$data['dept']])) $data['dept'] = $flipDeptList[$data['dept']];
@@ -947,6 +954,21 @@ class trade extends control
                 }
             }
 
+            if(!empty($data['handlers']))
+            {
+                $matched = false;
+                foreach($userList as $account => $realname)
+                {
+                    if($realname == $data['handlers'])
+                    {
+                        $data['handlers'] = $account;
+                        $matched = true;
+                        break;
+                    }
+                }
+                if(!$matched) $data['handlers'] = '';
+            }
+
             if(!$fields['fee'] and isset($disabledCategories[$data['category']]) and $data['trader']) continue;
  
             $fee = (float)$data['fee'];
@@ -955,11 +977,12 @@ class trade extends control
 
             $existTrade = $this->dao->select('*')->from(TABLE_TRADE)
                 ->where('depositor')->eq($depositorID)
-                ->andWhere('money')->eq($data['money'])
-                ->andWhere('date')->eq($data['date'])
-                ->andWhere('type')->eq($data['type'])
-                ->andWhere('category')->eq($data['category'])
-                ->fetch();
+                ->beginIF(isset($data['money']))->andWhere('money')->eq($data['money'])->fi()
+                ->beginIF(isset($data['date']))->andWhere('date')->eq($data['date'])->fi()
+                ->beginIF(isset($data['time']))->andWhere('time')->eq($data['time'])->fi()
+                ->beginIF(isset($data['type']))->andWhere('type')->eq($data['type'])->fi()
+                ->beginIF(isset($data['category']))->andWhere('category')->eq($data['category'])->fi()
+                ->fetchAll();
             if($existTrade) $existTrades[$i] = $existTrade;
 
             if($schema->fee and $fee)
@@ -985,7 +1008,6 @@ class trade extends control
             }
         }
 
-
         /* Set the trader as trader id. */
         if($customers)
         {
@@ -1003,7 +1025,7 @@ class trade extends control
         $this->view->title        = $this->lang->trade->showImport;
         $this->view->trades       = $dataList;
         $this->view->depositor    = $this->loadModel('depositor', 'cash')->getByID($depositorID);
-        $this->view->users        = $this->loadModel('user')->getPairs('noclosed,nodeleted,noforbidden');
+        $this->view->users        = $userList;
         $this->view->customerList = array('' => '') + $customers;
         $this->view->traderList   = array('' => '') + $customers;
         $this->view->expenseTypes = $expenseTypes;

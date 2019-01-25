@@ -244,4 +244,7 @@
     </form>
   </fieldset>      
 </div>
+<script>
+<?php helper::import('../js/team.js');?>
+</script>
 <?php include '../../common/view/footer.html.php';?>

@@ -24,7 +24,7 @@ $config->trade->require->loan   = 'depositor,money,type,handlers';
 
 $config->trade->batchCreateCount = 10;
 
-$config->trade->importField = 'category,dept,trader,type,money,desc,date,fee,product';
+$config->trade->importField = 'category,dept,trader,type,money,desc,date,fee,product,handlers';
 
 global $lang;
 $config->trade->search['module'] = 'trade';

@@ -13,6 +13,8 @@
 <?php include $app->getModuleRoot() . 'common/view/header.html.php';?>
 <?php include '../../../sys/common/view/datepicker.html.php';?>
 <?php include '../../../sys/common/view/chosen.html.php';?>
+<?php js::set('showExistTrade', $lang->trade->showExistTrade);?>
+<?php js::set('hideExistTrade', $lang->trade->hideExistTrade);?>
 <form id='ajaxForm' method='post'>
   <div class='panel'>
     <div class='panel-heading'><strong><?php echo $lang->trade->showImport;?></strong></div>
@@ -24,8 +26,8 @@
           <th class='w-120px'><?php echo $lang->trade->category;?></th> 
           <th class='w-220px'><?php echo $lang->trade->trader;?></th> 
           <th class='w-100px'><?php echo $lang->trade->money;?></th>
-          <th class='w-80px'><?php echo $lang->trade->dept;?></th>
-          <th class='w-170px'><?php echo $lang->trade->handlers;?></th>
+          <th class='w-130px'><?php echo $lang->trade->dept;?></th>
+          <th class='w-120px'><?php echo $lang->trade->handlers;?></th>
           <th class='w-120px'><?php echo $lang->trade->product;?></th>
           <?php if(!empty($existTrades)):?>
           <th class='w-180px'><?php echo $lang->trade->date;?></th>
@@ -37,15 +39,18 @@
       </thead>
       <tbody>
         <?php $deptList['ditto'] = $lang->ditto;?>
+        <?php $users['ditto']    = $lang->ditto;?>
         <?php foreach($trades as $i => $trade):?>
         <?php
         if($i == 0)
         {
-            $trade['dept'] = $trade['dept'] ? $trade['dept'] : '';
+            $trade['dept']     = $trade['dept']     ? $trade['dept']     : '';
+            $trade['handlers'] = $trade['handlers'] ? $trade['handlers'] : '';
         }
         else
         {
-            $trade['dept'] = $trade['dept'] ? $trade['dept'] : 'ditto';
+            $trade['dept']     = $trade['dept']     ? $trade['dept']     : 'ditto';
+            $trade['handlers'] = $trade['handlers'] ? $trade['handlers'] : 'ditto';
         }
         ?>
         <tr <?php echo !empty($existTrades[$i]) ? "class='repeat-record' title={$lang->trade->unique} data-toggle='tooltip'" : '';?>>
@@ -54,8 +59,8 @@
             <?php echo html::select("type[$i]", $lang->trade->typeList, $trade['type'], "class='form-control type' id='type{$i}'");?>
           </td>
           <td>
-            <?php echo html::select("category[$i]", $incomeTypes, $trade['category'], "class='form-control in' style='display:none'");?>
-            <?php echo html::select("category[$i]", $expenseTypes, $trade['category'], "class='form-control out'");?>
+            <?php echo html::select("category[$i]", $incomeTypes, $trade['category'], "class='form-control in' title='" . zget($incomeTypes, $trade['category']) . "' style='display:none'");?>
+            <?php echo html::select("category[$i]", $expenseTypes, $trade['category'], "class='form-control out' title='" . zget($expenseTypes, $trade['category']) . "'");?>
           </td>
           <td>
             <?php $hasCustomer = (is_numeric($trade['trader']) or empty($trade['trader']));?>
@@ -84,28 +89,48 @@
           </td>
           <td><?php echo html::input("money[$i]", $trade['money'], "class='form-control'");?></td>
           <td><?php echo html::select("dept[$i]", $deptList, $trade['dept'], "class='form-control chosen'");?></td>
-          <td><?php echo html::select("handlers[$i][]", $users, '', "class='form-control chosen' id='handlers{$i}' multiple");?></td>
+          <td><?php echo html::select("handlers[$i][]", $users, $trade['handlers'], "class='form-control chosen' id='handlers{$i}' multiple");?></td>
           <td><?php echo html::select("product[$i]", $productList, $trade['product'], "class='form-control chosen' id='product{$i}'");?></td>
           <td>
             <?php if(!empty($existTrades[$i])):?>
             <div class='input-group'>
-              <?php echo html::input("date[$i]", $trade['date'], "class='form-control form-date' id='date{$i}'");?>
+              <?php echo html::input("date[$i]", $trade['date'], "class='form-control form-date' id='date{$i}' title='{$trade['date']}'");?>
               <div class='input-group-addon'>
                 <label class="checkbox-inline">
                   <input type='checkbox' checked='checked' name="ignoreUnique[<?php echo $i;?>]" value='1'>
                   <?php echo $lang->trade->ignore;?>
                 </label>
               </div>
+              <div class='input-group-btn'>
+                <a href='javascript:;' class='btn toggleHide' data-key='<?php echo $i;?>' title='<?php echo $lang->trade->showExistTrade;?>'><i class='icon icon-plus'></i></a>
+              </div>
             </div>
             <?php else:?>
             <?php echo html::input("date[$i]", $trade['date'], "class='form-control form-date' id='date{$i}'");?>
             <?php endif;?>
+            <?php echo html::hidden("time[$i]", $trade['time']);?>
           </td>
-          <td><?php echo html::textarea("desc[$i]", $trade['desc'], "rows='1' class='form-control'");?></td>
+          <td><?php echo html::textarea("desc[$i]", $trade['desc'], "rows='1' class='form-control' title='{$trade['desc']}'");?></td>
+        </tr>
+        <?php if(!empty($existTrades[$i])):?>
+        <?php foreach($existTrades[$i] as $trade):?>
+        <tr class='text-middle existTrades<?php echo $i;?> hide'>
+          <td class='text-middle'><?php echo $depositor->abbr;?></td>
+          <td><?php echo zget($lang->trade->typeList, $trade->type);?></td>
+          <td><?php echo $trade->type == 'in' ? zget($incomeTypes, $trade->category, '') : zget($expenseTypes, $trade->category, '');?></td>
+          <td><?php echo zget($customerList, $trade->trader, '');?></td>
+          <td><?php echo $trade->money;?></td>
+          <td><?php echo zget($deptList, $trade->dept, '');?></td>
+          <td><?php foreach(explode(',', trim($trade->handlers, ',')) as $handler) echo zget($users, $handler, '') . ' ';?></td>
+          <td><?php echo zget($productList, $trade->product, '');?></td>
+          <td><?php echo formatTime($trade->date . ' ' . $trade->time);?></td>
+          <td><?php echo $trade->desc;?></td>
         </tr>
         <?php endforeach;?>
+        <?php endif;?>
+        <?php endforeach;?>
       </tbody>
-      <tfoot><tr><td colspan='9' class='text-center'><?php echo html::submitButton() . ' ' . html::backButton();?></td></tr></tfoot>
+      <tfoot><tr><td colspan='10' class='text-center'><?php echo html::submitButton() . ' ' . html::backButton();?></td></tr></tfoot>
     </table>
   </div>
 </form>
