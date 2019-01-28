@@ -221,6 +221,8 @@ class refundModel extends model
         $this->dao->insert(TABLE_REFUND)
             ->data($refund)
             ->batchCheck($this->config->refund->require->create, 'notempty')
+            ->checkIF($refund->invoice, 'invoice', 'float')
+            ->checkIF($refund->money, 'money', 'float')
             ->autoCheck()
             ->exec();
 
@@ -287,6 +289,8 @@ class refundModel extends model
         $this->dao->update(TABLE_REFUND)
             ->data($refund)
             ->batchCheck($this->config->refund->require->edit, 'notempty')
+            ->checkIF($refund->invoice, 'invoice', 'float')
+            ->checkIF($refund->money, 'money', 'float')
             ->autoCheck()
             ->where('id')->eq($refundID)
             ->exec();
@@ -547,6 +551,7 @@ class refundModel extends model
         $trade->handlers    = $this->post->handlers ? trim(implode(',', $this->post->handlers), ',') : '';
         $trade->category    = $this->post->category;
         $trade->dept        = $this->post->dept;
+        $trade->desc        = $this->post->desc;
         $trade->createdBy   = $this->app->user->account;
         $trade->createdDate = helper::now();
 
