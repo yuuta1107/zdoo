@@ -5,15 +5,15 @@
  * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Xiying Guan <guanxiying@xirangit.com>
- * @package     customer 
+ * @package     customer
  * @version     $Id$
  * @link        http://www.ranzhi.org
  */
 class customer extends control
 {
-    /** 
+    /**
      * The index page, locate to the browse page.
-     * 
+     *
      * @access public
      * @return void
      */
@@ -24,13 +24,13 @@ class customer extends control
 
     /**
      * Browse customer.
-     * 
+     *
      * @param string $mode
      * @param string $param
-     * @param string $orderBy     the order by
-     * @param int    $recTotal 
-     * @param int    $recPerPage 
-     * @param int    $pageID 
+     * @param string $orderBy
+     * @param int    $recTotal
+     * @param int    $recPerPage
+     * @param int    $pageID
      * @access public
      * @return void
      */

@@ -632,7 +632,7 @@ class todoModel extends model
         if(!isset($_SESSION[$sessionKey])) $_SESSION[$sessionKey] = '';
         $notCreateTodoUsers = $_SESSION[$sessionKey];
         $users = $this->dao->select('id, account')->from(TABLE_USER)
-            ->where('status')->eq('online')
+            ->where('clientStatus')->eq('online')
             ->beginIF(!empty($notCreateTodoUsers))->andWhere('account')->notin($notCreateTodoUsers)->fi()
             ->fetchPairs();
         if(empty($users)) return;

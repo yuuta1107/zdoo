@@ -307,9 +307,9 @@ class reportModel extends model
         }
 
         /* Query by pairs. */
-        $tasks     = $this->dao->select('id,name')->from(TABLE_TASK)->where('id')->in($taskTodoPairs)->fetchPairs('id', 'name');
-        $customers = $this->dao->select('id,name')->from(TABLE_CUSTOMER)->where('id')->in($customerTodoPairs)->fetchPairs('id', 'name');
-        $orders    = $this->dao->select('o.id, c.name, o.createdDate')->from(TABLE_ORDER)->alias('o')
+        $tasks     = empty($taskTodoPairs) ? array() : $this->dao->select('id,name')->from(TABLE_TASK)->where('id')->in($taskTodoPairs)->fetchPairs('id', 'name');
+        $customers = empty($customerTodoPairs) ? array() : $this->dao->select('id,name')->from(TABLE_CUSTOMER)->where('id')->in($customerTodoPairs)->fetchPairs('id', 'name');
+        $orders    = empty($orderTodoPairs) ? array() : $this->dao->select('o.id, c.name, o.createdDate')->from(TABLE_ORDER)->alias('o')
             ->leftJoin(TABLE_CUSTOMER)->alias('c')->on('o.customer=c.id')
             ->where('o.deleted')->eq(0)
             ->andWhere('c.deleted')->eq(0)
@@ -320,11 +320,11 @@ class reportModel extends model
         $userTodos = array();
         foreach($todos as $todoID => $todo)
         {
-			if($todo->type == 'task')     $todo->name = $tasks[$todo->idvalue];
-			if($todo->type == 'customer') $todo->name = $customers[$todo->idvalue]; 
+			if($todo->type == 'task')     $todo->name = zget($tasks, $todo->idvalue);
+			if($todo->type == 'customer') $todo->name = zget($customers, $todo->idvalue);
 			if($todo->type == 'order') 
 			{
-				$order = $orders[$todo->idvalue];
+				$order = zget($orders, $todo->idvalue);
 				$todo->name = $order->name . '|' . substr($order->createdDate, 0, 10);
 			}
 

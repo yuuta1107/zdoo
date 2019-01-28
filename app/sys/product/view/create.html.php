@@ -37,7 +37,7 @@
     </tr>
     <tr>
       <th><?php echo $lang->product->status;?></th>
-      <td><?php echo html::select("status", $lang->product->statusList, '', "class='form-control'");?></td>
+      <td><?php echo html::select("status", $lang->product->statusList, 'normal', "class='form-control'");?></td>
     </tr>
     <?php if(commonModel::hasPriv('file', 'upload')):?>
     <tr>

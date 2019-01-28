@@ -15,13 +15,14 @@ class productModel extends model
      * Get produt by id.
      * 
      * @param  int    $id 
+     * @param  bool   $getFiles
      * @access public
      * @return object 
      */
-    public function getByID($id = 0)
+    public function getByID($id = 0, $getFiles = true)
     {
         $product = $this->dao->select('*')->from(TABLE_PRODUCT)->where('id')->eq($id)->fetch();
-        if($product) $product->files = $this->loadModel('file', 'sys')->getByObject('product', $product->id);
+        if($product && $getFiles) $product->files = $this->loadModel('file', 'sys')->getByObject('product', $product->id);
         return $product;
     }
 
@@ -114,7 +115,7 @@ class productModel extends model
      */
     public function update($productID = 0)
     {
-        $oldProduct = $this->getByID($productID);
+        $oldProduct = $this->getByID($productID, $getFiles = false);
 
         $product = fixer::input('post')
             ->add('editedBy', $this->app->user->account)
