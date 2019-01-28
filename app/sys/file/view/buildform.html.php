@@ -10,6 +10,10 @@
  * @link        http://www.ranzhi.org
  */
 ?>
+<?php if(commonModel::hasPriv('file', 'upload')):?>
+<?php if(!$writeable):?>
+<h5 class='text-danger text-left'> <?php echo $this->lang->file->errorUnwritable;?> </h5>
+<?php else:?>
 <style>
 .fileBox {margin-bottom: 10px; width: 100%}
 table.fileBox td {padding: 0!important}
@@ -23,10 +27,7 @@ table.fileBox td {padding: 0!important}
 .fileBox td .btn-add {border-left: 1px solid rgb(204, 204, 204);}
 }
 </style>
-<?php if(commonModel::hasPriv('file', 'upload')):?>
-<?php if(!$writeable):?>
-<h5 class='text-danger text-left'> <?php echo $this->lang->file->errorUnwritable;?> </h5>
-<?php else:?>
+
 <div id='fileform'>
   <?php 
   /* Define the html code of a file row. */
@@ -44,8 +45,6 @@ EOT;
   printf($lang->file->sizeLimit, $this->config->file->maxSize / 1024 / 1024);
 ?>
 </div>
-<?php endif;?>
-<?php endif;?>
 
 <script language='javascript'>
 /**
@@ -126,3 +125,5 @@ function updateID()
     $('.fileID').each(function(){$(this).html(i ++)});
 }
 </script>
+<?php endif;?>
+<?php endif;?>
