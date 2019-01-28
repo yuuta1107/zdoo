@@ -37,7 +37,7 @@ $lang->user->dept      = 'Department';
 $lang->user->address   = 'Address';
 $lang->user->zipcode   = 'Zipcode';
 $lang->user->join      = 'Join date';
-$lang->user->visits    = 'Visits';
+$lang->user->visits    = 'Visit';
 $lang->user->ip        = 'Last IP';
 $lang->user->last      = 'Last login';
 $lang->user->allowTime = 'Allow time';
@@ -83,12 +83,12 @@ $lang->user->thread      = 'My Thread';
 $lang->user->reply       = 'My Reply';
 $lang->user->message     = 'My Message';
 
-$lang->user->inputAccount   = 'Please enter account';
-$lang->user->inputColleague = "Please enter colleauge name";
+$lang->user->inputAccount   = 'Please enter an account';
+$lang->user->inputColleague = "Please enter a colleauge name";
 $lang->user->inputPassword  = 'Please enter password';
 $lang->user->searchUser     = 'Search';
 
-$lang->user->errorDeny     = "Sorry, you don't have the permission to access <b>%s</b>'s <b>%s</b>. Please contact the administrator.<br/> This page will jump to homepage after 5 seconds";
+$lang->user->errorDeny     = "Sorry, you don't have the permission to visit <b>%s</b>'s <b>%s</b>. Please contact the administrator.<br/> This page will jump to homepage after 5 seconds";
 $lang->user->loginFailed   = "Login failed. Check you account and password.";
 $lang->user->locked        = "Failed too many times. Please login ten minutes later.";
 $lang->user->lockedForEver = "User has been disabled permanently.";
@@ -119,7 +119,7 @@ $lang->user->statusList->forbidden = "<label class='label label-danger'>Forbidde
 $lang->user->statusList->normal    = "<label class='label label-success'>Normal</label>";
 
 $lang->user->notice = new stdclass();
-$lang->user->notice->password = 'Numbers and letters, at least six characters.';
+$lang->user->notice->password = 'Numbers and letters, at least 6 characters.';
 
 $lang->user->login  = new stdclass();
 $lang->user->login->common  = "Login";

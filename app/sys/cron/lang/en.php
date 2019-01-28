@@ -44,7 +44,7 @@ $lang->cron->confirmOpen = <<<EOD
 EOD;
 
 $lang->cron->notice = new stdclass();
-$lang->cron->notice->m   = 'Range : 0-59，"*" express the range of numbers, "/" express "Every", "-" express digital range.';
+$lang->cron->notice->m   = 'Range : 0-59，"*" means the range of numbers, "/" means "Every", "-" means digital range.';
 $lang->cron->notice->h   = 'Range : 0-23';
 $lang->cron->notice->dom = 'Range : 1-31';
 $lang->cron->notice->mon = 'Range : 1-12';

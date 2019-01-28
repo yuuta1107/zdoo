@@ -93,7 +93,7 @@ $lang->task->recordEstimate = 'Man-Hour';
 
 $lang->task->confirmFinish     = '"Left" man-hour is 0, so this task status will be "done". Do you want to finish it?';
 $lang->task->consumedBefore    = 'cost before';
-$lang->task->mailtoPlaceholder = 'Choose users to mail...';
+$lang->task->mailtoPlaceholder = 'Choose users to email...';
 
 $lang->task->lblPri  = 'P';
 $lang->task->lblHour = '(h)';
@@ -120,9 +120,9 @@ $lang->task->reasonList['']       = '';
 $lang->task->reasonList['done']   = 'Done';
 $lang->task->reasonList['cancel'] = 'Cancelled';
 
-$lang->task->createdByMe  = 'CreateByMe';
+$lang->task->createdByMe  = 'CreatedByMe';
 $lang->task->assignedToMe = 'AssignToMe';
-$lang->task->finishedByMe = 'FinishByMe';
+$lang->task->finishedByMe = 'FinishedByMe';
 $lang->task->untilToday   = 'Till Today';
 $lang->task->expired      = 'Expired';
 $lang->task->all          = 'All';

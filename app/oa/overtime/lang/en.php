@@ -1,7 +1,7 @@
 <?php
 if(!isset($lang->overtime)) $lang->overtime = new stdclass();
 $lang->overtime->common = 'Overtime';
-$lang->overtime->browse = 'Browse Overtime';
+$lang->overtime->browse = 'Overtime';
 $lang->overtime->create = 'Apply';
 $lang->overtime->edit   = 'Edit';
 $lang->overtime->view   = 'View';
@@ -25,14 +25,14 @@ $lang->overtime->end          = 'End';
 $lang->overtime->start        = 'Start';
 $lang->overtime->finish       = 'Finish';
 $lang->overtime->hours        = 'Hours';
-$lang->overtime->leave        = 'Leaves';
+$lang->overtime->leave        = 'Leave';
 $lang->overtime->type         = 'Type';
 $lang->overtime->desc         = 'Desc';
 $lang->overtime->status       = 'Status';
 $lang->overtime->createdBy    = 'Created By';
-$lang->overtime->createdDate  = 'Created Date';
+$lang->overtime->createdDate  = 'Created';
 $lang->overtime->reviewedBy   = 'Reviewed By';
-$lang->overtime->reviewedDate = 'Reviewed Date';
+$lang->overtime->reviewedDate = 'Reviewed';
 $lang->overtime->date         = 'Date';
 $lang->overtime->time         = 'Time';
 $lang->overtime->rejectReason = 'Reject Reason';

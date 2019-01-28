@@ -37,14 +37,14 @@ $lang->trade->menu = new stdclass();
 /* Menu of contact module. */
 if(!isset($lang->contact)) $lang->contact = new stdclass();
 $lang->contact->menu = new stdclass();
-$lang->contact->menu->browse = array('link' => 'Contacts|contact|browse|', 'alias' => 'create,edit,view');
+$lang->contact->menu->browse = array('link' => 'Contact|contact|browse|', 'alias' => 'create,edit,view');
 
 /* Menu of report module. */
 if(!isset($lang->report)) $lang->report = new stdclass();
 $lang->report->menu = new stdclass();
-$lang->report->menu->annual  = 'Annual balance sheet|trade|report|';
-$lang->report->menu->compare = 'Annual Comparison sheet|trade|compare|';
-$lang->report->menu->export  = 'Profit and loss statement|trade|export2Excel|mode=depositor';
+$lang->report->menu->annual  = 'Annual Balance Sheet|trade|report|';
+$lang->report->menu->compare = 'Annual Comparison Sheet|trade|compare|';
+$lang->report->menu->export  = 'Profit and Loss Statement|trade|export2Excel|mode=depositor';
 $lang->report->menu->setting = 'Report Unit|trade|setReportUnit|';
 
 /* Menu of setting module. */

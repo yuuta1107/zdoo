@@ -46,7 +46,7 @@ $lang->webapp->views       = 'Views';
 $lang->webapp->packup      = 'Fold';
 $lang->webapp->custom      = 'Custom';
 
-$lang->webapp->byDownloads   = 'Most Downloads';
+$lang->webapp->byDownloads   = 'Top Downloaded';
 $lang->webapp->byAddedTime   = 'Latest Added';
 $lang->webapp->byUpdatedTime = 'Latest Update';
 $lang->webapp->bySearch      = 'Search';

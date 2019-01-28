@@ -83,4 +83,4 @@ $lang->article->directory = 'Back';
 $lang->article->back2Top  = 'Back to top';
 
 $lang->article->note = new stdclass();
-$lang->article->note->createdDate = 'Can be delayed until the selected time publish.';
+$lang->article->note->createdDate = 'It can be published on the selected date.';

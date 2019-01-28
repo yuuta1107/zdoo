@@ -72,7 +72,7 @@ $lang->setting->placeholder->lineList->key   = 'Key should be intergers or lette
 $lang->setting->placeholder->lineList->value = 'Brief description';
 
 $lang->setting->reserveDays    = 'Hold Days';
-$lang->setting->reserveDaysTip = "Customer are automatically saved in customer pools, when its info is not updated within certain days. It will be disabled if it is set as '0' days.";
+$lang->setting->reserveDaysTip = "Customer are automatically saved in customer pools, if its information is not updated within certain days. It will be disabled if it is set as '0' days.";
 $lang->setting->currencyTip    = 'When creating a trade with a depositor but the currency is not main currency, you have to record the exchange rate.';
 
 $lang->setting->moduleList['attend']   = 'Attend';

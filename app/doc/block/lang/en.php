@@ -11,7 +11,7 @@
  */
 $lang->block->common   = 'Blocks';
 $lang->block->lblBlock = 'Block';
-$lang->block->admin    = 'Manage Blocks';
+$lang->block->admin    = 'Manage Block';
 $lang->block->type     = 'Type';
 $lang->block->waitTask = 'Wait';
 $lang->block->doneTask = 'Done';

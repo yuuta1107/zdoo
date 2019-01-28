@@ -1,8 +1,8 @@
 <?php
 if(!isset($lang->leads)) $lang->leads = new stdclass();
 
-$lang->leads->common         = 'Leads';
-$lang->leads->assignedToNull = 'Assign To Null';
+$lang->leads->common         = 'Lead';
+$lang->leads->assignedToNull = 'Not Assigned';
 $lang->leads->browse         = 'Leads';
 $lang->leads->create         = 'Create';
 $lang->leads->edit           = 'Edit';

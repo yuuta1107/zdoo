@@ -1,7 +1,7 @@
 <?php
 if(!isset($lang->trip)) $lang->trip = new stdclass();
 $lang->trip->common = 'Trip';
-$lang->trip->browse = 'Trips';
+$lang->trip->browse = 'Trip';
 $lang->trip->create = 'Create';
 $lang->trip->edit   = 'Edit';
 $lang->trip->view   = 'Details';
@@ -20,7 +20,7 @@ $lang->trip->from        = 'From';
 $lang->trip->to          = 'To';
 $lang->trip->desc        = 'Description';
 $lang->trip->createdBy   = 'Created By';
-$lang->trip->createdDate = 'Created On';
+$lang->trip->createdDate = 'Created';
 $lang->trip->date        = 'Date';
 $lang->trip->time        = 'Time';
 

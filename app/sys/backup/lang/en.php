@@ -19,13 +19,13 @@ $lang->backup->confirmRestore = 'Do you want to restore this backup?';
 $lang->backup->deleteInfo     = 'Delete backup before %s days';
 
 $lang->backup->success = new stdclass();
-$lang->backup->success->backup  = 'Success backup!';
-$lang->backup->success->restore = 'Success restore!';
+$lang->backup->success->backup  = 'Backup!';
+$lang->backup->success->restore = 'Restore!';
 
 $lang->backup->error = new stdclass();
-$lang->backup->error->noWritable  = "Cannot backup! <code>%s</code> do not write! Please check the directory permissions.";
-$lang->backup->error->noDelete    = "The file %s cannot delete, modify permissions or deleted manually.";
-$lang->backup->error->restoreSQL  = "The database restore failed. Error: %s";
-$lang->backup->error->restoreFile = "Attachments failed to restore. Error: %s";
-$lang->backup->error->backupFile  = "Attachments failed to backup. Error: %s";
-$lang->backup->error->setSaveDays = "Backup should save more than 0 days";
+$lang->backup->error->noWritable  = "Failed to backup! <code>%s</code> cannot be written! Please check the directory permissions.";
+$lang->backup->error->noDelete    = "The file %s cannot be deleted. Change its privilege or delete it manually.";
+$lang->backup->error->restoreSQL  = "The database restoration failed. Error: %s";
+$lang->backup->error->restoreFile = "Failed to restore files. Error: %s";
+$lang->backup->error->backupFile  = "Failed to backup files. Error: %s";
+$lang->backup->error->setSaveDays = "Backup should be saved more than 0 days";

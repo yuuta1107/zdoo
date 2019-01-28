@@ -11,7 +11,7 @@
  */
 if(!isset($lang->project)) $lang->project = new stdclass();
 $lang->project->common     = 'Project';
-$lang->project->browse     = 'Project List';
+$lang->project->browse     = 'Project';
 $lang->project->index      = 'Project';
 $lang->project->create     = "Create Project";
 $lang->project->edit       = 'Edit';

@@ -14,14 +14,14 @@ $lang->tree->add         = "Add";
 $lang->tree->edit        = "Edit";
 $lang->tree->children    = "Add Child";
 $lang->tree->delete      = "Delete";
-$lang->tree->browse      = "Area, Industry, Income Categories, Expend Categories, Forum Boards, Blog Categories, Depts";
+$lang->tree->browse      = "Area, Industry, Income Category, Expend Category, Forum Board, Blog Category, Department";
 $lang->tree->manage      = "Manage";
 $lang->tree->fix         = "Fix data";
 $lang->tree->merge       = "Merge";
 
 $lang->tree->noCategories  = 'No category yet. Add one first.';
 $lang->tree->noBoards      = 'No board yet. Add one first.';
-$lang->tree->timeCountDown = "Jump to %s manage page in <strong id='countDown'>3</strong> seconds.";
+$lang->tree->timeCountDown = "Jump to %s to manage the page in <strong id='countDown'>3</strong> seconds.";
 $lang->tree->redirect      = 'Create now';
 $lang->tree->aliasRepeat   = 'Alias: %s already exists。';
 $lang->tree->aliasConflict = 'Alias: %s  conflicts with system modules';
@@ -113,4 +113,4 @@ $lang->board->readonlyList[1] = 'Read Only';
 
 $lang->board->placeholder = new stdclass();
 $lang->board->placeholder->moderators  = "BM accounts. Separated with" . '","';
-$lang->board->placeholder->setChildren = 'Only forum needs two-level boards can be seen.';
+$lang->board->placeholder->setChildren = 'Only forums with two-level boards can be seen.';

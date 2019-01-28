@@ -8,7 +8,7 @@ $lang->attend->detail       = 'Details';
 $lang->attend->edit         = 'Edit';
 $lang->attend->edited       = 'Clock In';
 $lang->attend->leave        = 'Leave';
-$lang->attend->leaved       = 'Already leave';
+$lang->attend->leaved       = 'Already left';
 $lang->attend->makeup       = 'Makeup times';
 $lang->attend->makeuped     = 'Already makeup';
 $lang->attend->lieu         = 'Lieu';
@@ -117,9 +117,9 @@ $lang->attend->reviewStatusList['pass']   = 'Pass';
 $lang->attend->reviewStatusList['reject'] = 'Reject';
 
 $lang->attend->inSuccess  = 'Signed in.';
-$lang->attend->inFail     = 'Sign in failed.';
+$lang->attend->inFail     = 'Signin failed.';
 $lang->attend->outSuccess = 'Signed out.';
-$lang->attend->outFail    = 'Sign out failed.';
+$lang->attend->outFail    = 'Signout failed.';
 
 $lang->attend->signInLimit   = 'Clock-in';
 $lang->attend->signOutLimit  = 'Clock-out';
@@ -158,15 +158,15 @@ $lang->attend->beginDate->company  = 'Start Date';
 $lang->attend->beginDate->personal = 'Start Date';
 
 $lang->attend->note = new stdClass();
-$lang->attend->note->ip           = "Use commas to separate IPs, and IP segment is OK, e.g. 192.168.1.*";
+$lang->attend->note->ip           = "Use comma to separate IPs, and IP segment is OK, e.g. 192.168.1.*";
 $lang->attend->note->allip        = 'All IPs';
 $lang->attend->note->IPDenied     = 'IP denied.';
 $lang->attend->note->beginDate    = 'Set a date to begin record attend status. The attend status of days before this date will not be record.';
-$lang->attend->note->signInClient = 'Choose all to sign in by any way, otherwise sign in by the chose one.';
+$lang->attend->note->signInClient = 'Select All to sign in by any way, otherwise sign in by the selected one.';
 
 $lang->attend->h = 'hours';
 $lang->attend->m = 'minutes';
 $lang->attend->s = 'seconds';
 
-$lang->attend->signInClientError = 'Signin failed. It has been set can only sign in by %s.';
+$lang->attend->signInClientError = 'Signin failed. It is set as sign in by %s only.';
 $lang->attend->waitReviews       = 'There are <strong>%s</strong> records waitting to be reviewed.';
