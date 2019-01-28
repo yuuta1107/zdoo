@@ -67,7 +67,7 @@
       <?php if(commonModel::hasPriv('file', 'upload')):?>
       <form id="fileForm" method='post' enctype='multipart/form-data' action='<?php echo inlink('upload', "objectType=$objectType&objectID=$objectID");?>'>
         <table class='table table-form'>
-          <?php if($writeable):?>
+          <?php if($writable):?>
           <tr>
             <td class='text-middle'><?php echo $lang->file->upload . $lang->file->limit;?></td>
             <td><?php echo $this->fetch('file', 'buildForm');?></td>

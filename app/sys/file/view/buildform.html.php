@@ -11,7 +11,7 @@
  */
 ?>
 <?php if(commonModel::hasPriv('file', 'upload')):?>
-<?php if(!$writeable):?>
+<?php if(!$writable):?>
 <h5 class='text-danger text-left'> <?php echo $this->lang->file->errorUnwritable;?> </h5>
 <?php else:?>
 <style>

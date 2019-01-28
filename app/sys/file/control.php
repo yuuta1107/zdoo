@@ -21,7 +21,7 @@ class file extends control
      */
     public function buildForm($fileCount = 2, $percent = 0.9)
     {
-        $this->view->writeable = $this->file->checkSavePath();
+        $this->view->writable  = $this->file->checkSavePath();
         $this->view->fileCount = $fileCount;
         $this->view->percent   = $percent;
         $this->display();
@@ -135,7 +135,7 @@ class file extends control
      */
     public function browse($objectType, $objectID)
     {
-        $this->view->writeable  = $this->file->checkSavePath();
+        $this->view->writable   = $this->file->checkSavePath();
         $this->view->objectType = $objectType;
         $this->view->objectID   = $objectID;
         $this->view->files      = $this->file->getByObject($objectType, $objectID);

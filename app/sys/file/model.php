@@ -430,7 +430,7 @@ class fileModel extends model
     }
 
     /**
-     * Check save path is writeable.
+     * Check save path is writable.
      *
      * @access public
      * @return void
