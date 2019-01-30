@@ -21,9 +21,10 @@ $(document).ready(function()
 
     $('#productCategory').change(function()
     {
-        $('#productBox').load(createLink('product', 'ajaxGetByCategory', 'status=&category=' + $(this).val()), function()
+        var product = $('#product').val();
+        $('#product').load(createLink('product', 'ajaxGetByCategory', 'status=normal&category=' + $(this).val()), function()
         {
-            $('#product').chosen(chosenDefaultOptions);
+            $('#product').val(product).trigger('chosen:updated');
         })
     })
 

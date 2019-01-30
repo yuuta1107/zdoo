@@ -148,9 +148,9 @@ class product extends control
 
     /**
      * Ajax get product by category.
-     * 
-     * @param  string $status 
-     * @param  string $line 
+     *
+     * @param  string $status
+     * @param  string $line
      * @access public
      * @return void
      */
@@ -158,6 +158,9 @@ class product extends control
     {
         $products = $this->product->getPairs($status, $category);
 
-        echo html::select('product', array('') + $products, '', "class='form-control chosen'");
+        $html = '<option></option>';
+        foreach($products as $id => $name) $html .= "<option value='{$id}'>{$name}</option>";
+
+        die($html);
     }
 }

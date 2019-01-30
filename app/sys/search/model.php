@@ -150,6 +150,11 @@ class searchModel extends model
                     $allDepts = $this->loadModel('dept')->getAllChildId($value);
                     $where .= helper::dbIN($allDepts);
                 }
+                elseif($this->post->$fieldName == 'category')
+                {
+                    $categories = $this->loadModel('tree')->getFamily($value);
+                    $where .= helper::dbIn($categories);
+                }
                 elseif($this->post->$fieldName == 'contract.productLine')
                 {
                     $where .= " = '-1'";

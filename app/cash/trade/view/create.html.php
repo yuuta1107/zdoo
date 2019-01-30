@@ -34,7 +34,7 @@
         <?php endif;?>
         <tr>
           <th><?php echo $lang->trade->product;?></th>
-          <td id='productBox'><?php echo html::select('product', array('') + $productList, '', "class='form-control chosen'");?></td>
+          <td><?php echo html::select('product', array('') + $productList, '', "class='form-control chosen'");?></td>
         </tr>
         <?php if($type == 'in'):?>
         <tr class='income'>
