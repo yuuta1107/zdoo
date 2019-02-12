@@ -17,6 +17,7 @@ $lang->product->code        = 'Alias';
 $lang->product->type        = 'Type';
 $lang->product->status      = 'Status';
 $lang->product->category    = 'Product Category';
+$lang->product->subject     = 'Income Category';
 $lang->product->desc        = 'Introduction';
 $lang->product->order       = 'Order';
 $lang->product->roles       = 'Roles';
