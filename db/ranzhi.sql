@@ -920,6 +920,7 @@ CREATE TABLE IF NOT EXISTS `sys_lang` (
 CREATE TABLE IF NOT EXISTS `sys_product` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `category` mediumint(8) unsigned NOT NULL,
+  `subject` mediumint(8) unsigned NOT NULL,
   `name` varchar(150) NOT NULL,
   `code` varchar(20) NOT NULL,
   `type` varchar(10) NOT NULL,
