@@ -2,5 +2,5 @@ $(function()
 {
     $.setAjaxForm('#teamForm');
 
-    $('[name^=rate]').change();
+    $('[name^=contribution]').change();
 })

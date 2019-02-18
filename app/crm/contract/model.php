@@ -244,10 +244,10 @@ class contractModel extends model
      */
     public function getMembers($contractID)
     {
-        return $this->dao->select('account, rate, status')->from(TABLE_TEAM)
+        return $this->dao->select('account, contribution, status')->from(TABLE_TEAM)
             ->where('type')->eq('contract')
             ->andWhere('id')->eq($contractID)
-            ->orderBy('rate_desc')
+            ->orderBy('contribution_desc')
             ->fetchAll('account');
     }
 
@@ -868,15 +868,15 @@ class contractModel extends model
         $errors = array();
         foreach($this->post->account as $key => $account)
         {
-            $rate = $this->post->rate[$key];
+            $contribution = $this->post->contribution[$key];
 
-            if(!$account or !$rate) continue;
+            if(!$account or !$contribution) continue;
 
-            if(!is_numeric($rate)) $errors["rate{$key}"] = $this->lang->contract->error->wrongRate;
+            if(!is_numeric($contribution)) $errors["contribution{$key}"] = $this->lang->contract->error->wrongContribution;
 
-            $total += (float)$rate;
+            $total += (float)$contribution;
         }
-        if($total > 100) $errors['totalRate'] = $this->lang->contract->error->wrongTotalRate;
+        if($total > 100) $errors['totalContribution'] = $this->lang->contract->error->wrongTotalContribution;
 
         if($errors) return array('result' => 'fail', 'message' => $errors);
 
@@ -884,7 +884,7 @@ class contractModel extends model
     }
 
     /**
-     * Check if all members of a contract accepted the commission rate.
+     * Check if all members of a contract accepted the contribution.
      *
      * @param  int    $contractID
      * @access public
@@ -918,12 +918,12 @@ class contractModel extends model
         $member->id   = $contractID;
         foreach($this->post->account as $key => $account)
         {
-            $rate = (float)$this->post->rate[$key];
+            $contribution = (float)$this->post->contribution[$key];
 
-            if(!$account or !$rate) continue;
+            if(!$account or !$contribution) continue;
 
-            $member->account = $account;
-            $member->rate    = $rate;
+            $member->account      = $account;
+            $member->contribution = $contribution;
 
             $this->dao->insert(TABLE_TEAM)->data($member)->autoCheck()->exec();
         }
@@ -932,7 +932,7 @@ class contractModel extends model
     }
 
     /**
-     * Accept or reject a commission rate.
+     * Accept or reject the contribution of a contract.
      *
      * @param  int    $contractID
      * @param  string $status

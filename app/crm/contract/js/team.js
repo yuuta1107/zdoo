@@ -50,12 +50,12 @@ $(function()
         if($(this).val() == '') $(this).parents('tr').find('input').val('').change();
     });
 
-    $(document).on('change', '[name^=rate]', function()
+    $(document).on('change', '[name^=contribution]', function()
     {
-        var rate = $(this).val() == '' ? 0 : $(this).val();
-        if(!$.isNumeric(rate)) return;
+        var contribution = $(this).val() == '' ? 0 : $(this).val();
+        if(!$.isNumeric(contribution)) return;
 
-        var money = Math.round(parseFloat(rate) * parseFloat(v.amount)) / 100;
+        var money = Math.round(parseFloat(contribution) * parseFloat(v.amount)) / 100;
             money = money == 0 ? '' : money;
         $(this).parents('tr').find('[name^=money]').val(money);
 
@@ -69,9 +69,9 @@ $(function()
         var money = $(this).val() == '' ? 0 : $(this).val();
         if(!$.isNumeric(money)) return;
 
-        var rate = Math.round(parseFloat(money) / parseFloat(v.amount) * 100);
-            rate = rate == 0 ? '' : rate;
-        $(this).parents('tr').find('[name^=rate]').val(rate);
+        var contribution = Math.round(parseFloat(money) / parseFloat(v.amount) * 100);
+            contribution = contribution == 0 ? '' : contribution;
+        $(this).parents('tr').find('[name^=contribution]').val(contribution);
 
         computeTotal();
     });
@@ -79,24 +79,24 @@ $(function()
 
 function computeTotal()
 {
-    var totalRate  = 0;
-    var totalMoney = 0;
-    var $rateList  = $('[name^=rate]');
+    var totalContribution = 0;
+    var totalMoney        = 0;
+    var $contributionList = $('[name^=contribution]');
     var $moneyList = $('[name^=money]');
-    for(var i = 0; i < $rateList.length; i++)
+    for(var i = 0; i < $contributionList.length; i++)
     {
-        if($.isNumeric($rateList[i].value))  totalRate  += parseFloat($rateList[i].value);
+        if($.isNumeric($contributionList[i].value)) totalContribution += parseFloat($contributionList[i].value);
         if($.isNumeric($moneyList[i].value)) totalMoney += parseFloat($moneyList[i].value);
     }
 
-    totalRate  = Math.round(totalRate * 100) / 100;
+    totalContribution = Math.round(totalContribution * 100) / 100;
     totalMoney = Math.round(totalMoney * 100) / 100;
 
-    totalRate  = totalRate  == 0 ? '' : totalRate + '%';
+    totalContribution = totalContribution == 0 ? '' : totalContribution + '%';
     totalMoney = totalMoney == 0 ? '' : totalMoney;
 
-    $('#totalRate').html(totalRate);
+    $('#totalContribution').html(totalContribution);
     $('#totalMoney').html(totalMoney);
-    $('#totalRateLabel').remove();
+    $('#totalContributionLabel').remove();
     $('#totalMoneyLabel').remove();
 }

@@ -172,13 +172,13 @@
       <table id='memberTable' class='table table-data table-condensed table-fixed'>
         <tr class='text-center'>
           <th><?php echo $lang->contract->team->account;?></th>
-          <th><?php echo $lang->contract->team->rate;?></th>
+          <th><?php echo $lang->contract->team->contribution;?></th>
           <th class='w-90px'><?php echo $lang->contract->team->status;?></th>
         </tr>
         <?php foreach($members as $member):?>
         <tr class='text-center'>
           <td><?php echo zget($users, $member->account);?></td>
-          <td><?php echo $member->rate == 0 ? '' : $member->rate;?></td>
+          <td><?php echo $member->contribution == 0 ? '' : $member->contribution;?></td>
           <td class='team-<?php echo $member->status;?>'>
             <?php
             $status     = zget($lang->contract->team->statusList, $member->status);

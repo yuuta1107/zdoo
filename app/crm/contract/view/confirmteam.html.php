@@ -21,7 +21,7 @@
     <thead>
       <tr class='text-center'>
         <th><?php echo $lang->contract->team->account;?></th>
-        <th><?php echo $lang->contract->team->rate;?></th>
+        <th><?php echo $lang->contract->team->contribution;?></th>
         <th><?php echo $lang->contract->team->money;?></th>
         <th><?php echo $lang->contract->team->status;?></th>
         <th class='w-100px'><?php echo $lang->actions;?></th>
@@ -30,8 +30,8 @@
     <?php foreach($members as $member):?>
     <tr class='text-center text-middle'>
       <td><?php echo zget($users, $member->account);?></td>
-      <td><?php echo $member->rate == 0 ? '' : $member->rate;?></td>
-      <td><?php echo round($contract->amount * $member->rate / 100, 2);?></td>
+      <td><?php echo $member->contribution == 0 ? '' : $member->contribution;?></td>
+      <td><?php echo round($contract->amount * $member->contribution / 100, 2);?></td>
       <td class='team-<?php echo $member->status;?>'><?php echo zget($lang->contract->team->statusList, $member->status);?></td>
       <td>
         <?php if($member->status != 'accept' && $member->account == $this->app->user->account):?>

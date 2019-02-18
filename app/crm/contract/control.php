@@ -553,7 +553,7 @@ class contract extends control
     }
 
     /**
-     * Confirm commission rate of a team.
+     * Confirm contribution of a team.
      *
      * @param  int    $contractID
      * @param  string $status
@@ -601,7 +601,7 @@ class contract extends control
         /* Set toList and ccList. */
         $toList  = '';
         $users   = $this->loadModel('user')->getPairs();
-        $subject = "{$this->lang->contract->common}#{$contractID} " . str_replace('(%)', '', $this->lang->contract->team->rate) . ' - ' . zget($users, $this->app->user->account);
+        $subject = "{$this->lang->contract->common}#{$contractID} " . str_replace('(%)', '', $this->lang->contract->team->contribution) . ' - ' . zget($users, $this->app->user->account);
         if($action->action == 'manageteam')
         {
             $toList = $this->dao->select('account')->from(TABLE_TEAM)

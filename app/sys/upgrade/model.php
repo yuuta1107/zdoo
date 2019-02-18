@@ -167,6 +167,7 @@ class upgradeModel extends model
                 $this->execSQL($this->getUpgradeFile('5.0'));
             case '5_1':
                 $this->execSQL($this->getUpgradeFile('5.1'));
+                $this->processTeam();
 
             default: if(!$this->isError()) $this->loadModel('setting')->updateVersion($this->config->version);
         }
@@ -1640,5 +1641,32 @@ class upgradeModel extends model
         }
 
         return !dao::isError();
+    }
+
+    /**
+     * Process team.
+     *
+     * @access public
+     * @return bool
+     */
+    public function processTeam()
+    {
+        $hasContribution = false;
+        $fields = $this->dbh->query('DESC ' . TABLE_TEAM)->fetchAll();
+        foreach($fields as $field)
+        {
+            if($field->Field == 'contribution') return true;
+        }
+
+        try
+        {
+            $this->dbh->exec('ALTER TABLE ' . TABLE_TEAM . ' CHANGE `rate` `contribution` decimal(6, 2) NOT NULL');
+        }
+        catch (PDOException $e)
+        {
+            return false;
+        }
+
+        return true;
     }
 }

@@ -11,7 +11,7 @@
  */
 ?>
 <?php $mailLink  = $this->loadModel('common')->getSysURL() . rtrim($config->webRoot, '/') . inlink('confirmTeam', "contractID={$contract->id}");?>
-<?php $mailTitle = html::a($mailLink, $lang->contract->common . str_replace('(%)', '', $this->lang->contract->team->rate) . '#' . $contract->id . ' ' . $this->app->user->realname . ' - ' . $contract->name);?>
+<?php $mailTitle = html::a($mailLink, $lang->contract->common . str_replace('(%)', '', $this->lang->contract->team->contribution) . '#' . $contract->id . ' ' . $this->app->user->realname . ' - ' . $contract->name);?>
 <?php include '../../../sys/common/view/mail.header.html.php';?>
 <tr>
   <td>
@@ -30,7 +30,7 @@
       <thead>
         <tr>
           <th style='width: 80px'><?php echo $lang->contract->team->account;?></th>
-          <th style='width: 120px'><?php echo $lang->contract->team->rate;?></th>
+          <th style='width: 120px'><?php echo $lang->contract->team->contribution;?></th>
           <th style='width: 120px'><?php echo $lang->contract->team->money;?></th>
           <th style='width: 80px'><?php echo $lang->contract->team->status;?></th>
         </tr>
@@ -38,8 +38,8 @@
       <?php foreach($members as $member):?>
       <tr>
         <td><?php echo zget($users, $member->account);?></td>
-        <td><?php echo $member->rate == 0 ? '' : $member->rate;?></td>
-        <td><?php echo round($contract->amount * $member->rate / 100, 2);?></td>
+        <td><?php echo $member->contribution == 0 ? '' : $member->contribution;?></td>
+        <td><?php echo round($contract->amount * $member->contribution / 100, 2);?></td>
         <td><?php echo zget($lang->contract->team->statusList, $member->status);?></td>
       </tr>
       <?php endforeach;?>
