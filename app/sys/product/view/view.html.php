@@ -60,6 +60,10 @@
             <th><?php echo $lang->product->status;?></th>
             <td><?php echo $lang->product->statusList[$product->status];?></td>
           </tr>
+          <tr>
+            <th><?php echo $lang->product->subject;?></th>
+            <td><?php echo $subjects[$product->subject];?></td>
+          </tr>
         </table>
       </div>
     </div> 

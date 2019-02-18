@@ -39,6 +39,10 @@
       <th><?php echo $lang->product->status;?></th>
       <td><?php echo html::select('status', $lang->product->statusList, $product->status, "class='form-control'");?></td>
     </tr>
+    <tr>
+      <th><?php echo $lang->product->subject;?></th>
+      <td><?php echo html::select("subject", $subjects, $product->subject, "class='form-control'");?></td>
+    </tr>
     <?php if(commonModel::hasPriv('file', 'upload')):?>
     <tr>
       <th><?php echo $lang->files;?></th>
