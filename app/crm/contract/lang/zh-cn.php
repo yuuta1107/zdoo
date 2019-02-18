@@ -107,7 +107,7 @@ $lang->contract->returnInfo         = "<p>%s, 由 <strong>%s</strong> 回款%s�
 $lang->contract->deliveryInfo       = "<p>%s由%s交付。</p>";
 $lang->contract->deleteReturnInfo   = "%s的回款%s";
 $lang->contract->deleteDeliveryInfo = "%s的交付";
-$lang->contract->teamTips           = '<strong>成员为空</strong>或者<strong>提成比例为空</strong>不保存。';
+$lang->contract->teamTips           = '<strong>成员为空</strong>或者<strong>贡献度为空</strong>不保存。';
 
 $lang->contract->placeholder = new stdclass();
 $lang->contract->placeholder->real = '成交金额';

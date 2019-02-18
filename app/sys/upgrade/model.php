@@ -168,6 +168,7 @@ class upgradeModel extends model
             case '5_1':
                 $this->execSQL($this->getUpgradeFile('5.1'));
                 $this->processTeam();
+                $this->processContractHandlers();
 
             default: if(!$this->isError()) $this->loadModel('setting')->updateVersion($this->config->version);
         }
@@ -1668,5 +1669,38 @@ class upgradeModel extends model
         }
 
         return true;
+    }
+
+    /**
+     * Process contract handlers to team.
+     *
+     * @access public
+     * @return bool
+     */
+    public function processContractHandlers()
+    {
+        $teamContracts = $this->dao->select('DISTINCT id')->from(TABLE_TEAM)->where('type')->eq('contract')->fetchPairs();
+        $contracts     = $this->dao->select('*')->from(TABLE_CONTRACT)
+            ->where('handlers')->ne('')
+            ->andWhere('id')->notin($teamContracts)
+            ->fetchAll();
+        foreach($contracts as $contract)
+        {
+            $member = new stdclass();
+            $member->type = 'contract';
+            $member->id   = $contract->id;
+
+            $handlers = explode(',', trim($contract->handlers, ','));
+            if(count($handlers) == 1) $member->contribution = 100;
+
+            foreach($handlers as $account)
+            {
+                $member->account = $account;
+
+                $this->dao->insert(TABLE_TEAM)->data($member)->autoCheck()->exec();
+            }
+        }
+
+        return !dao::isError();
     }
 }
