@@ -158,7 +158,7 @@ class product extends control
     {
         $products = $this->product->getPairs($status, $category);
 
-        $html = '<option></option>';
+        $html = "<option value='0'></option>";
         foreach($products as $id => $name) $html .= "<option value='{$id}'>{$name}</option>";
 
         die($html);

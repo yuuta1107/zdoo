@@ -130,6 +130,7 @@ $lang->switchDisplay  = '切换显示';
 $lang->feature        = '未来';
 $lang->year           = '年';
 $lang->month          = '月';
+$lang->week           = '周';
 $lang->day            = '日';
 $lang->loading        = '稍候...';
 $lang->saveSuccess    = '保存成功';

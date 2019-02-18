@@ -130,6 +130,7 @@ $lang->switchDisplay  = 'Switch Display';
 $lang->feature        = 'Features';
 $lang->year           = 'Year';
 $lang->month          = 'Month';
+$lang->week           = 'Week';
 $lang->day            = 'Day';
 $lang->loading        = 'Loading...';
 $lang->saveSuccess    = 'Saved';

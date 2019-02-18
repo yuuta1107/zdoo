@@ -41,6 +41,7 @@
             <?php if(!empty($this->config->leave->annualSetting)):?>
             <?php $annualSettings = json_decode($this->config->leave->annualSetting);?>
             <?php foreach($annualSettings as $account => $annualSetting):?>
+            <?php if(!isset($users[$account])) continue;?>
             <tr>
               <td><?php echo html::select("account[]", $users, $account, "class='form-control chosen'");?></td>
               <td>
