@@ -50,7 +50,7 @@ class productModel extends model
         return $this->dao->select('*')->from(TABLE_PRODUCT)
             ->where('deleted')->eq(0)
             ->beginIF($mode == 'browse' && $status && $status != 'all')->andWhere('status')->eq($status)->fi()
-            ->beginIF($mode == 'browse' && $category)->andWhere('category')->in($categories)->fi()
+            ->beginIF($mode == 'browse' && $categories)->andWhere('category')->in($categories)->fi()
             ->beginIF($mode == 'bysearch')->andWhere($productQuery)->fi()
             ->orderBy($orderBy)
             ->page($pager)
@@ -68,7 +68,8 @@ class productModel extends model
      */
     public function getPairs($status = '', $category = '', $orderBy = 'order_desc')
     {
-        $categories = $this->loadModel('tree')->getFamily($category);
+        $categories = array();
+        if($category) $categories = $this->loadModel('tree')->getFamily($category);
         return $this->dao->select('id, name')->from(TABLE_PRODUCT)
             ->where('deleted')->eq(0)
             ->beginIF($status)->andWhere('status')->in($status)->fi()
