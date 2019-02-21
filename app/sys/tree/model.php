@@ -221,6 +221,13 @@ class treeModel extends model
             ->get();
     }
 
+    public function getMajorInSubjects()
+    {
+        $majorInRoot = $this->dao->select('id')->from(TABLE_CATEGORY)->where('major')->eq(1)->fetch('id');
+
+        return $this->getOptionMenu('in', $majorInRoot);
+    }
+
     /**
      * Create a tree menu in <select> tag.
      * 

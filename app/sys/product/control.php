@@ -46,11 +46,14 @@ class product extends control
         $this->config->product->search['params']['category']['values'] = $this->loadModel('tree')->getOptionMenu('product', 0);
         $this->config->product->search['params']['subject']['values']  = $this->loadModel('tree')->getOptionMenu('in', 1);
         $this->search->setSearchParams($this->config->product->search);
+
+        $majorInRoot = $this->dao->select('id')->from(TABLE_CATEGORY)->where('major')->eq(1)->fetch('id');
+        $subjects    = $this->loadModel('tree')->getPairs($majorInRoot, 'in');
         
         $this->view->title      = $this->lang->product->browse;
         $this->view->products   = $this->product->getList($mode, $status, $category, $orderBy, $pager);
         $this->view->categories = $this->loadModel('tree')->getPairs(0, 'product');
-        $this->view->subjects   = $this->loadModel('tree')->getPairs('1', 'in');
+        $this->view->subjects   = $subjects;
         $this->view->treeMenu   = $this->tree->getTreeMenu('product', 0, array('treeModel', 'createProductAdminLink'));
         $this->view->mode       = $mode;
         $this->view->status     = $status;
@@ -82,7 +85,7 @@ class product extends control
         $this->view->title      = $this->lang->product->create;
         $this->view->order      = $maxID + 1;
         $this->view->categories = $this->loadModel('tree')->getOptionMenu('product', 0, $removeRoot = true);
-        $this->view->subjects   = $this->loadModel('tree')->getOptionMenu('in', 1);
+        $this->view->subjects   = $this->loadModel('tree')->getMajorInSubjects();
         $this->display();
     }
 
@@ -115,7 +118,7 @@ class product extends control
         $this->view->title      = $this->lang->product->edit;
         $this->view->product    = $this->product->getByID($productID);
         $this->view->categories = $this->loadModel('tree')->getOptionMenu('product', 0);
-        $this->view->subjects   = $this->loadModel('tree')->getOptionMenu('in', 1);
+        $this->view->subjects   = $this->loadModel('tree')->getMajorInSubjects();
         $this->display();
     }
 
@@ -130,7 +133,7 @@ class product extends control
     {
         $this->view->title      = $this->lang->product->view;
         $this->view->categories = $this->loadModel('tree')->getOptionMenu('product', 0);
-        $this->view->subjects   = $this->loadModel('tree')->getOptionMenu('in', 1);
+        $this->view->subjects   = $this->loadModel('tree')->getMajorInSubjects();
         $this->view->product    = $this->product->getByID($productID);
         $this->view->users      = $this->loadModel('user')->getPairs();
         
