@@ -85,7 +85,7 @@ class product extends control
         $this->view->title      = $this->lang->product->create;
         $this->view->order      = $maxID + 1;
         $this->view->categories = $this->loadModel('tree')->getOptionMenu('product', 0, $removeRoot = true);
-        $this->view->subjects   = $this->loadModel('tree')->getMajorInSubjects();
+        $this->view->subjects   = $this->loadModel('tree')->getOptionMenuByMajor();
         $this->display();
     }
 
@@ -118,7 +118,7 @@ class product extends control
         $this->view->title      = $this->lang->product->edit;
         $this->view->product    = $this->product->getByID($productID);
         $this->view->categories = $this->loadModel('tree')->getOptionMenu('product', 0);
-        $this->view->subjects   = $this->loadModel('tree')->getMajorInSubjects();
+        $this->view->subjects   = $this->loadModel('tree')->getOptionMenuByMajor();
         $this->display();
     }
 
@@ -133,7 +133,7 @@ class product extends control
     {
         $this->view->title      = $this->lang->product->view;
         $this->view->categories = $this->loadModel('tree')->getOptionMenu('product', 0);
-        $this->view->subjects   = $this->loadModel('tree')->getMajorInSubjects();
+        $this->view->subjects   = $this->loadModel('tree')->getOptionMenuByMajor();
         $this->view->product    = $this->product->getByID($productID);
         $this->view->users      = $this->loadModel('user')->getPairs();
         

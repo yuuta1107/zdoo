@@ -24,7 +24,13 @@ class treeModel extends model
     public function getByID($categoryID, $type = 'article')
     {
         $category = $this->dao->select('*')->from(TABLE_CATEGORY)->where('id')->eq($categoryID)->fetch();
-        if(!$category) $category = $this->dao->select('*')->from(TABLE_CATEGORY)->where('alias')->eq($categoryID)->beginIF($type)->andWhere('type')->eq($type)->fi()->fetch();
+        if(!$category)
+        {
+            $category = $this->dao->select('*')->from(TABLE_CATEGORY)
+                ->where('alias')->eq($categoryID)
+                ->beginIF($type)->andWhere('type')->eq($type)->fi()
+                ->fetch();
+        }
         if(!$category) return false;
 
         if($category->type == 'forum') 
@@ -40,7 +46,11 @@ class treeModel extends model
             }
         }
 
-        $category->pathNames = $this->dao->select('id, name')->from(TABLE_CATEGORY)->where('id')->in($category->path)->orderBy('grade')->fetchPairs();
+        $category->pathNames = $this->dao->select('id, name')->from(TABLE_CATEGORY)
+            ->where('deleted')->eq('0')
+            ->andWhere('id')->in($category->path)
+            ->orderBy('grade')
+            ->fetchPairs();
         $category = $this->loadModel('file')->replaceImgURL($category, 'desc');
         return $category;
     }
@@ -56,9 +66,12 @@ class treeModel extends model
     public function getFirst($type = 'article', $root = 0)
     {
         return $this->dao->select('*')->from(TABLE_CATEGORY)
-            ->where('type')->eq($type)
+            ->where('deleted')->eq('0')
+            ->andWhere('type')->eq($type)
             ->beginIF($root)->andWhere('root')->eq((int)$root)->fi()
-            ->orderBy('id')->limit(1)->fetch();
+            ->orderBy('id')
+            ->limit(1)
+            ->fetch();
     }
 
     /**
@@ -72,7 +85,7 @@ class treeModel extends model
     public function getPairs($categories = '', $type = 'article')
     {
         $categories = $this->dao->select('*')->from(TABLE_CATEGORY)
-            ->where(1)
+            ->where('deleted')->eq('0')
             ->beginIF($type)->andWhere('type')->eq($type)->fi()
             ->fetchAll('id');
 
@@ -96,7 +109,11 @@ class treeModel extends model
      */
     public function getListByType($type = 'article', $orderBy = 'id_asc')
     {
-        return $this->dao->select('*')->from(TABLE_CATEGORY)->where('type')->eq($type)->orderBy($orderBy)->fetchAll('id');
+        return $this->dao->select('*')->from(TABLE_CATEGORY)
+            ->where('deleted')->eq('0')
+            ->andWhere('type')->eq($type)
+            ->orderBy($orderBy)
+            ->fetchAll('id');
     }
 
     /**
@@ -114,7 +131,11 @@ class treeModel extends model
         $path = trim($path, ',');
         if(!$path) return array();
 
-        return $this->dao->select('*')->from(TABLE_CATEGORY)->where('id')->in($path)->orderBy('grade')->fetchAll('id');
+        return $this->dao->select('*')->from(TABLE_CATEGORY)
+            ->where('deleted')->eq('0')
+            ->andWhere('id')->in($path)
+            ->orderBy('grade')
+            ->fetchAll('id');
     }
 
     /**
@@ -131,11 +152,18 @@ class treeModel extends model
         if($categoryID == 0 and empty($type)) return array();
         $category = $this->getById($categoryID);
 
-        if($category) return $this->dao->select('id')->from(TABLE_CATEGORY)->where('path')->like($category->path . '%')->fetchPairs();
+        if($category)
+        {
+            return $this->dao->select('id')->from(TABLE_CATEGORY)
+                ->where('deleted')->eq('0')
+                ->andWhere('path')->like($category->path . '%')
+                ->fetchPairs();
+        }
         if(!$category)
         {
             return $this->dao->select('id')->from(TABLE_CATEGORY)
-                ->where('type')->eq($type)
+                ->where('deleted')->eq('0')
+                ->andWhere('type')->eq($type)
                 ->beginIF($root)->andWhere('root')->eq((int)$root)->fi()
                 ->fetchPairs();
         }
@@ -153,7 +181,8 @@ class treeModel extends model
     public function getChildren($categoryID, $type = 'article', $root = 0)
     {
         $categories = $this->dao->select('*')->from(TABLE_CATEGORY)
-            ->where('parent')->eq((int)$categoryID)
+            ->where('deleted')->eq('0')
+            ->andWhere('parent')->eq((int)$categoryID)
             ->andWhere('type')->eq($type)
             ->beginIF($root)->andWhere('root')->eq((int)$root)->fi()
             ->orderBy('`order`')
@@ -176,7 +205,10 @@ class treeModel extends model
         $module = $this->getById((int)$moduleID);
         if(empty($module)) return array();
 
-        return $this->dao->select('id')->from(TABLE_CATEGORY)->where('path')->like($module->path . '%')->fetchPairs();
+        return $this->dao->select('id')->from(TABLE_CATEGORY)
+            ->where('deleted')->eq('0')
+            ->andWhere('path')->like($module->path . '%')
+            ->fetchPairs();
     }
 
     /**
@@ -189,7 +221,8 @@ class treeModel extends model
     public function getDeptManagedByMe($account)
     {
         return $this->dao->select('*')->from(TABLE_CATEGORY)
-            ->where('moderators')->eq(",$account,")
+            ->where('deleted')->eq('0')
+            ->andWhere('moderators')->eq(",$account,")
             ->andWhere('type')->eq('dept')
             ->fetchAll('id');
     }
@@ -214,18 +247,12 @@ class treeModel extends model
         }
 
         return $this->dao->select('*')->from(TABLE_CATEGORY)
-            ->where('type')->eq($type)
+            ->where('deleted')->eq('0')
+            ->andWhere('type')->eq($type)
             ->beginIF($root)->andWhere('root')->eq((int)$root)->fi()
             ->beginIF($startPath)->andWhere('path')->like($startPath)->fi()
             ->orderBy('grade desc, `order`')
             ->get();
-    }
-
-    public function getMajorInSubjects()
-    {
-        $majorInRoot = $this->dao->select('id')->from(TABLE_CATEGORY)->where('major')->eq(1)->fetch('id');
-
-        return $this->getOptionMenu('in', $majorInRoot);
     }
 
     /**
@@ -308,6 +335,20 @@ class treeModel extends model
     }
 
     /**
+     * Get option menu by major.
+     *
+     * @param  int    $major
+     * @access public
+     * @return array
+     */
+    public function getOptionMenuByMajor($major = 1)
+    {
+        $category = $this->dao->select('*')->from(TABLE_CATEGORY)->where('major')->eq(1)->fetch();
+
+        return $this->getOptionMenu($category->type, $category->id);
+    }
+
+    /**
      * Get the tree menu in <ul><ol> type.
      * 
      * @param  string   $type           the tree type
@@ -364,8 +405,8 @@ class treeModel extends model
     {
         $menu = "<ul class='tree'>";
         $products = $this->loadModel('product')->getPairs();
-        $modules  = $this->dao->findByType('productdoc')->from(TABLE_CATEGORY)->orderBy('`order`')->fetchAll();
-        $projectModules = $this->dao->findByType('projectdoc')->from(TABLE_CATEGORY)->orderBy('`order`')->fetchAll();
+        $modules  = $this->dao->findByType('productdoc')->from(TABLE_CATEGORY)->where('deleted')->eq('0')->orderBy('`order`')->fetchAll();
+        $projectModules = $this->dao->findByType('projectdoc')->from(TABLE_CATEGORY)->where('deleted')->eq('0')->orderBy('`order`')->fetchAll();
 
         foreach($products as $productID =>$productName)
         {
@@ -451,7 +492,8 @@ class treeModel extends model
         }
 
         return $this->dao->select('*')->from(TABLE_CATEGORY)
-            ->where('root')->eq((int)$rootID)
+            ->where('deleted')->eq('0')
+            ->andWhere('root')->eq((int)$rootID)
             ->andWhere('type')->eq($type)
             ->beginIF($startCategoryPath)->andWhere('path')->like($startCategoryPath)->fi()
             ->orderBy('grade desc, `order`')
@@ -700,9 +742,9 @@ class treeModel extends model
         $category = $this->getById($categoryID);
         $family   = $this->getFamily($categoryID);
 
-        $this->dao->update(TABLE_CATEGORY)->set('grade = grade - 1')->where('id')->in($family)->exec();                      // Update family's grade.
-        $this->dao->update(TABLE_CATEGORY)->set('parent')->eq($category->parent)->where('parent')->eq($categoryID)->exec();  // Update children's parent to their grandpa.
-        $this->dao->delete()->from(TABLE_CATEGORY)->where('id')->eq($categoryID)->exec();                                    // Delete my self.
+        $this->dao->update(TABLE_CATEGORY)->set('grade = grade - 1')->where('deleted')->eq('0')->andWhere('id')->in($family)->exec();                      // Update family's grade.
+        $this->dao->update(TABLE_CATEGORY)->set('parent')->eq($category->parent)->where('deleted')->eq('0')->andWhere('parent')->eq($categoryID)->exec();  // Update children's parent to their grandpa.
+        $this->dao->update(TABLE_CATEGORY)->set('deleted')->eq('1')->where('id')->eq($categoryID)->exec();                                    // Delete my self.
         $this->fixPath($category->type);
         if($category->type == 'entry') $this->dao->update(TABLE_ENTRY)->set('category')->eq('0')->where('category')->eq($categoryID)->exec(); // Update entry's category.
 
@@ -729,7 +771,7 @@ class treeModel extends model
             if(!empty($children)) return array('result' => 'fail', 'message' => sprintf($this->lang->tree->asParent, $originCategory->name));
 
             $this->dao->update(TABLE_TRADE)->set('category')->eq($targetCategoryID)->where('category')->eq($originCategoryID)->exec();
-            if(!dao::isError()) $this->dao->delete()->from(TABLE_CATEGORY)->where('id')->eq($originCategoryID)->exec();
+            if(!dao::isError()) $this->dao->update(TABLE_CATEGORY)->set('deleted')->eq('1')->where('id')->eq($originCategoryID)->exec();
         }
 
         return !dao::isError();
@@ -808,7 +850,9 @@ class treeModel extends model
     {
         /* Get all categories grouped by parent. */
         $groupCategories = $this->dao->select('id, parent')->from(TABLE_CATEGORY)
-            ->where('type')->eq($type)
+            ->where('deleted')->eq('0')
+            ->andWhere('type')->eq($type)
+            ->andWhere('deleted')->eq('0')
             ->fetchGroup('parent', 'id');
         $categories = array();
 
