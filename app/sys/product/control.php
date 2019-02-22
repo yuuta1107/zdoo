@@ -168,4 +168,17 @@ class product extends control
 
         die($html);
     }
+
+    /**
+     * Get product subject by ajax.
+     *
+     * @param  int    $product
+     * @access public
+     * @return void
+     */
+    public function ajaxGetSubject($product)
+    {
+        $product = $this->product->getByID($product, $getFiles = false);
+        die($product->subject);
+    }
 }

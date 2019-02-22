@@ -50,4 +50,6 @@ $(document).ready(function()
     $.setAjaxLoader('#treeMenuBox .ajax, .panel-actions .ajax', '#categoryBox');
 
     if(v.type == 'customdoc') $('.leftmenu .nav li a[href*=createlib]').modalTrigger({type:'ajax', width:800});
+
+    $('.tree li .hitarea').click();
 })
