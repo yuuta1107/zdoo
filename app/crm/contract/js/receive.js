@@ -12,6 +12,15 @@ $(document).ready(function()
         }
     });
 
+    $('#product').change(function()
+    {
+        var product = $(this).val();
+        $.get(createLink('product', 'ajaxGetSubject', 'product=' + product), function(category)
+        {
+            $('#category').val(category).trigger('chosen:updated');
+        });
+    });
+
     $.setAjaxForm('#receiveForm', function(response)
     {
         if(response.result == 'fail')

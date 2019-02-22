@@ -28,6 +28,17 @@ $(document).ready(function()
         })
     })
 
+    $('#product').change(function()
+    {
+        if(v.modeType != 'in') return false;
+
+        var product = $(this).val();
+        $.get(createLink('product', 'ajaxGetSubject', 'product=' + product), function(category)
+        {
+            $('#category').val(category).trigger('chosen:updated');
+        });
+    });
+
     $('.exchangeRate').hide();
 })
 

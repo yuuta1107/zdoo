@@ -11,5 +11,17 @@ $(document).ready(function()
         $(this).parents('tr').find('div.' + type).show();
     })
 
+    $('[name^=product]').change(function()
+    {
+        var $tr = $(this).parents('tr');
+        if($tr.find('[name^=type]').val() != 'in') return false;
+
+        var product = $(this).val();
+        $.get(createLink('product', 'ajaxGetSubject', 'product=' + product), function(category)
+        {
+            $tr.find('[name^=category]').val(category).trigger('chosen:updated');
+        });
+    });
+
     $('.type').change();
 });
