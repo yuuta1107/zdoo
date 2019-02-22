@@ -10,8 +10,8 @@
  * @link        http://www.ranzhi.org
  */
 $config->product->require = new stdclass();
-$config->product->require->create = 'name, code';
-$config->product->require->edit   = 'name, code';
+$config->product->require->create = 'name, code, subject';
+$config->product->require->edit   = 'name, code, subject';
 
 global $lang, $app;
 $config->product->search['module'] = 'product';

@@ -28,6 +28,10 @@
       <td><?php echo html::input('code', '', "class='form-control'");?></td>
     </tr>
     <tr>
+      <th><?php echo $lang->product->subject;?></th>
+      <td><?php echo html::select("subject", $subjects, '', "class='form-control'");?></td>
+    </tr>
+    <tr>
       <th><?php echo $lang->product->category;?></th>
       <td><?php echo html::select("category", $categories, '', "class='form-control'");?></td>
     </tr>
@@ -38,10 +42,6 @@
     <tr>
       <th><?php echo $lang->product->status;?></th>
       <td><?php echo html::select("status", $lang->product->statusList, 'normal', "class='form-control'");?></td>
-    </tr>
-    <tr>
-      <th><?php echo $lang->product->subject;?></th>
-      <td><?php echo html::select("subject", $subjects, '', "class='form-control'");?></td>
     </tr>
     <?php if(commonModel::hasPriv('file', 'upload')):?>
     <tr>
