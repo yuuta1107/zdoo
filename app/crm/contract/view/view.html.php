@@ -109,14 +109,13 @@
               <?php endforeach;?>
             </td>
           </tr>
-          <?php if(!empty($orders)):?>
+          <?php $contractProducts = explode(',', trim($contract->product, ','));?>
+          <?php if(!empty($contractProducts)):?>
           <tr>
             <th><?php echo $lang->order->product;?></th>
             <td>
-              <?php foreach($orders as $order):?>
-                <?php foreach($order->products as $product):?>
-                <span><?php echo $product?> </span>
-                <?php endforeach;?>
+              <?php foreach($contractProducts as $productID):?>
+              <span><?php echo zget($products, $productID, '');?> </span>
               <?php endforeach;?>
             </td>
           </tr>
