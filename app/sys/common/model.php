@@ -467,7 +467,7 @@ class commonModel extends model
         if(!$isMobile && strpos(',setting,tree,schema,sales,group,', ",$currentModule,") !== false) 
         {
             $string = "<nav class='menu leftmenu affix'><ul class='nav nav-primary'>\n";
-            if($currentModule == 'setting' && strpos(',ameba,flow,psi,xuanxuan,modules,', ",$currentMethod,") !== false)
+            if($currentModule == 'setting' && strpos(',ameba,flow,psi,xuanxuan,modules,xxcversion,', ",$currentMethod,") !== false)
             {
                 $string = "<nav id='menu'><ul class='nav'>\n";
             }
