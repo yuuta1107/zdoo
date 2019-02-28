@@ -749,6 +749,7 @@ CREATE TABLE IF NOT EXISTS `sys_category` (
   `rights` varchar(255) NOT NULL,
   `refund` enum('0','1') NOT NULL DEFAULT '0',
   `major` enum('0','1','2','3','4','5','6','7','8') NOT NULL DEFAULT '0',
+  `deleted` enum('0', '1') NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `type` (`type`),
   KEY `order` (`order`),

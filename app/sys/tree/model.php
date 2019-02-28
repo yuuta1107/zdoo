@@ -744,7 +744,7 @@ class treeModel extends model
 
         $this->dao->update(TABLE_CATEGORY)->set('grade = grade - 1')->where('deleted')->eq('0')->andWhere('id')->in($family)->exec();                      // Update family's grade.
         $this->dao->update(TABLE_CATEGORY)->set('parent')->eq($category->parent)->where('deleted')->eq('0')->andWhere('parent')->eq($categoryID)->exec();  // Update children's parent to their grandpa.
-        $this->dao->update(TABLE_CATEGORY)->set('deleted')->eq('1')->where('id')->eq($categoryID)->exec();                                    // Delete my self.
+        parent::delete(TABLE_CATEGORY, $categoryID);
         $this->fixPath($category->type);
         if($category->type == 'entry') $this->dao->update(TABLE_ENTRY)->set('category')->eq('0')->where('category')->eq($categoryID)->exec(); // Update entry's category.
 
