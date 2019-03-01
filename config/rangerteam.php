@@ -123,7 +123,6 @@ $config->objectTables['announce']    = TABLE_ARTICLE;
 $config->objectTables['article']     = TABLE_ARTICLE;
 $config->objectTables['attend']      = TABLE_ATTEND;
 $config->objectTables['blog']        = TABLE_ARTICLE;
-$config->objectTables['category']    = TABLE_CATEGORY;
 $config->objectTables['contact']     = TABLE_CONTACT;
 $config->objectTables['contract']    = TABLE_CONTRACT;
 $config->objectTables['cron']        = TABLE_CRON;

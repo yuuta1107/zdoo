@@ -343,6 +343,18 @@ class actionModel extends model
             ->orderBy($orderBy)->page($pager)->fetchAll();
         if(!$trashes) return array();
 
+        $this->app->loadLang('tree');
+        $this->app->loadLang('user');
+        $categoryTypes = $this->dao->select('DISTINCT type')->from(TABLE_CATEGORY)->fetchPairs();
+        foreach($categoryTypes as $categoryType)
+        {
+            $objectType = $categoryType . '_category';
+            $this->config->objectTables[$objectType]             = TABLE_CATEGORY;
+            $this->config->action->objectNameFields[$objectType] = 'name';
+            $this->config->action->objectAppNames[$objectType]   = 'sys';
+            $this->lang->action->objectTypes[$objectType]        = isset($this->lang->$categoryType->common) ? $this->lang->$categoryType->common : $this->lang->tree->common;
+        }
+
         /* Group trashes by objectType, and get there name field. */
         foreach($trashes as $object)
         {
@@ -775,6 +787,13 @@ class actionModel extends model
     {
         $action = $this->loadModel('action')->getById($actionID);
         if($action->action != 'deleted') return;
+
+        $categoryTypes = $this->dao->select('DISTINCT type')->from(TABLE_CATEGORY)->fetchPairs();
+        foreach($categoryTypes as $categoryType)
+        {
+            $objectType = $categoryType . '_category';
+            $this->config->objectTables[$objectType] = TABLE_CATEGORY;
+        }
 
         /* Update deleted field in object table. */
         $table = $this->config->objectTables[$action->objectType];
