@@ -224,7 +224,7 @@ class reportModel extends model
                 $customerIdList = $this->session->customerIdList;
 
                 if($this->session->customerQuery == false) $this->session->set('customerQuery', ' 1 = 1');
-                $customerQuery = $this->loadModel('search', 'sys')->replaceDynamic($this->session->customerQuery);
+                $customerQuery = $this->loadModel('search')->replaceDynamic($this->session->customerQuery);
             }
             else
             {

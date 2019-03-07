@@ -91,7 +91,7 @@ class resumeModel extends model
                 if($return['result'] == 'fail') return false;
 
                 $resume->customer = $return['customerID'];
-                $this->loadModel('action', 'sys')->create('customer', $resume->customer, 'Created');
+                $this->loadModel('action')->create('customer', $resume->customer, 'Created');
             }
         }
 

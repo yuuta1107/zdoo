@@ -76,7 +76,7 @@ class leads extends control
         $this->app->user->canEditContactIdList = ',' . implode(',', array_keys($contacts)) . ',';
 
         /* Build search form. */
-        $this->loadModel('search', 'sys');
+        $this->loadModel('search');
         $this->config->leads->search['actionURL'] = $this->createLink('leads', 'browse', 'mode=bysearch');
         $this->search->setSearchParams($this->config->leads->search);
 
@@ -184,7 +184,7 @@ class leads extends control
         $this->view->status     = $status;
         $this->view->contact    = $this->contact->getByID($contactID, $status);
         $this->view->addresses  = $this->loadModel('address', 'crm')->getList('contact', $contactID);
-        $this->view->preAndNext = $this->loadModel('common', 'sys')->getPreAndNextObject('contact', $contactID); 
+        $this->view->preAndNext = $this->loadModel('common')->getPreAndNextObject('contact', $contactID);
         $this->view->fileList   = $fileList;
 
         $this->display();

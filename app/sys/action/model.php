@@ -566,7 +566,7 @@ class actionModel extends model
     public function getDynamic($account = 'all', $period = 'all', $orderBy = 'date_desc', $pager = null)
     {
         if($this->session->myQuery == false) $this->session->set('myQuery', ' 1 = 1');
-        $myQuery = $this->loadModel('search', 'sys')->replaceDynamic($this->session->myQuery);
+        $myQuery = $this->loadModel('search')->replaceDynamic($this->session->myQuery);
 
         /* Computer the begin and end date of a period. */
         $beginAndEnd = $this->computeBeginAndEnd($period);
@@ -1000,7 +1000,7 @@ class actionModel extends model
         $interval = $this->config->pingInterval;
         $now      = helper::now();
         $link     = helper::createLink('sys.todo', 'calendar');
-        $todos    = $this->loadModel('todo', 'sys')->getList('self', $account, date(DT_DATE1), 'undone');
+        $todos    = $this->loadModel('todo')->getList('self', $account, date(DT_DATE1), 'undone');
         if($todos)
         {
             $begins[1]  = date('Hi', strtotime($now));
@@ -1146,7 +1146,7 @@ class actionModel extends model
         if($action->objectType == 'task')
         {
             $task = $this->loadModel('task')->getByID($action->objectID);
-            if(!($this->loadModel('task', 'sys')->checkPriv($task, 'view'))) $canView = false;
+            if(!($this->loadModel('task')->checkPriv($task, 'view'))) $canView = false;
         }
 
         if($action->objectType == 'trade')

@@ -58,7 +58,7 @@ class contact extends control
                 }
             }
         }
-        $this->loadModel('search', 'sys');
+        $this->loadModel('search');
         $this->config->contact->search['actionURL'] = $this->createLink('contact', 'browse', 'mode=bysearch');
         $this->config->contact->search['params']['t2.customer']['values'] = $this->loadModel('customer')->getPairs('', $emptyOption = true, 'id_desc', $limit = $this->config->customerLimit, $traders);
         $this->search->setSearchParams($this->config->contact->search);
@@ -112,7 +112,7 @@ class contact extends control
     public function edit($contactID, $comment = false)
     {
         $contact = $this->contact->getByID($contactID);
-        $this->loadModel('common', 'sys')->checkPrivByCustomer(empty($contact) ? 0 : $contact->customer, 'edit');
+        $this->loadModel('common')->checkPrivByCustomer(empty($contact) ? 0 : $contact->customer, 'edit');
 
         if($_POST)
         {
@@ -126,7 +126,7 @@ class contact extends control
             if($this->post->comment != '' or !empty($changes))
             {
                 $action   = $this->post->comment == '' ? 'Edited' : 'Commented';
-                $actionID = $this->loadModel('action', 'sys')->create('contact', $contactID, $action, $this->post->comment);
+                $actionID = $this->loadModel('action')->create('contact', $contactID, $action, $this->post->comment);
                 $this->action->logHistory($actionID, $changes);
             }
 
@@ -161,9 +161,9 @@ class contact extends control
         if($this->session->customerList == $this->session->contactList) $this->session->set('customerList', $this->app->getURI(true));
         $this->app->user->canEditContactIdList = ',' . implode(',', $this->contact->getContactsSawByMe('edit', (array)$contactID)) . ',';
 
-        $actionList = $this->loadModel('action', 'sys')->getList('contact', $contactID);
+        $actionList = $this->loadModel('action')->getList('contact', $contactID);
         $actionIDList = array_keys($actionList);
-        $actionFiles = $this->loadModel('file', 'sys')->getByObject('action', $actionIDList);
+        $actionFiles = $this->loadModel('file')->getByObject('action', $actionIDList);
         $fileList = array();
         foreach($actionFiles as $files)
         {
@@ -175,7 +175,7 @@ class contact extends control
         $this->view->addresses  = $this->loadModel('address', 'crm')->getList('contact', $contactID);
         $this->view->resumes    = $this->loadModel('resume', 'crm')->getList($contactID);
         $this->view->customers  = $this->loadModel('customer')->getPairs();
-        $this->view->preAndNext = $this->loadModel('common', 'sys')->getPreAndNextObject('contact', $contactID); 
+        $this->view->preAndNext = $this->loadModel('common')->getPreAndNextObject('contact', $contactID);
         $this->view->fileList   = $fileList;
 
         $this->display();
@@ -204,7 +204,7 @@ class contact extends control
     public function delete($contactID)
     {
         $contact = $this->contact->getByID($contactID);
-        $this->loadModel('common', 'sys')->checkPrivByCustomer(empty($contact) ? 0 : $contact->customer, 'edit');
+        $this->loadModel('common')->checkPrivByCustomer(empty($contact) ? 0 : $contact->customer, 'edit');
 
         $this->contact->delete(TABLE_CONTACT, $contactID);
         if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
@@ -301,12 +301,12 @@ END:VCARD";
                 while($row = $stmt->fetch()) $contacts[$row->id] = $row;
             }
 
-            $users     = $this->loadModel('user', 'sys')->getPairs();
+            $users     = $this->loadModel('user')->getPairs();
             $customers = $this->loadModel('customer')->getPairs();
 
             $resumes     = $this->dao->select('*')->FROM(TABLE_RESUME)->where('deleted')->eq(0)->fetchGroup('contact');
             $addressList = $this->dao->select('*')->FROM(TABLE_ADDRESS)->fetchGroup('objectID');
-            $areaList    = $this->loadModel('tree', 'sys')->getOptionMenu('area');
+            $areaList    = $this->loadModel('tree')->getOptionMenu('area');
 
             foreach($contacts as $id => $contact)
             {
@@ -418,7 +418,7 @@ END:VCARD";
     {
         if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
-            $file = $this->loadModel('file', 'sys')->getUpload('files');
+            $file = $this->loadModel('file')->getUpload('files');
             if(empty($file)) $this->send(array('result' => 'fail', 'message' => $this->lang->contact->noFile));
             $file = $file[0];
 

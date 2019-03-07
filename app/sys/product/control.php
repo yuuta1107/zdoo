@@ -41,7 +41,7 @@ class product extends control
         $pager = new pager($recTotal, $recPerPage, $pageID);
 
         /* Build search form. */
-        $this->loadModel('search', 'sys');
+        $this->loadModel('search');
         $this->config->product->search['actionURL'] = $this->createLink('product', 'browse', 'mode=bysearch');
         $this->config->product->search['params']['category']['values'] = $this->loadModel('tree')->getOptionMenu('product', 0);
         $this->config->product->search['params']['subject']['values']  = $this->loadModel('tree')->getOptionMenu('in', 1);
@@ -103,7 +103,7 @@ class product extends control
             $changes = $this->product->update($productID);
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
 
-            $files = $this->loadModel('file', 'sys')->saveUpload('product', $productID);
+            $files = $this->loadModel('file')->saveUpload('product', $productID);
             if($changes or $files)
             {
                 $fileAction = $files ? $this->lang->addFiles . join(',', $files) : '';

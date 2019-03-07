@@ -68,7 +68,7 @@ class articleModel extends model
     {
         $moduleQuery = $type . 'Query';
         if($this->session->$moduleQuery == false) $this->session->set($moduleQuery, ' 1 = 1');
-        $$moduleQuery = $this->loadModel('search', 'sys')->replaceDynamic($this->session->$moduleQuery);
+        $$moduleQuery = $this->loadModel('search')->replaceDynamic($this->session->$moduleQuery);
 
         /* Get articles(use groupBy to distinct articles).  */
         $articles = $this->dao->select('t1.*, t2.category')->from(TABLE_ARTICLE)->alias('t1')

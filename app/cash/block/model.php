@@ -103,7 +103,7 @@ class cashblockModel extends blockModel
     public function getReportParams()
     {
         $this->app->loadLang('trade', 'cash');
-        $this->app->loadLang('report', 'sys');
+        $this->app->loadLang('report');
 
         $options = $this->lang->block->typeList->trade;
         unset($options['all']);
@@ -119,7 +119,7 @@ class cashblockModel extends blockModel
         $params->groupBy['control'] = 'select';
 
         $params->currency['name']    = $this->lang->trade->currency;
-        $params->currency['options'] = $this->loadModel('common', 'sys')->getCurrencyList();
+        $params->currency['options'] = $this->loadModel('common')->getCurrencyList();
         $params->currency['control'] = 'select';
 
         return json_encode($params);

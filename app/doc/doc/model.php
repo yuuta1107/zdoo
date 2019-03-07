@@ -346,7 +346,7 @@ class docModel extends model
     public function getDocListBySearch($orderBy, $pager)
     {
         if($this->session->docQuery == false) $this->session->set('docQuery', ' 1 = 1');
-        $docQuery = $this->loadModel('search', 'sys')->replaceDynamic($this->session->docQuery);
+        $docQuery = $this->loadModel('search')->replaceDynamic($this->session->docQuery);
 
         $docs = $this->dao->select('t1.*')->from(TABLE_DOC)->alias('t1')
             ->leftJoin(TABLE_DOCCONTENT)->alias('t2')

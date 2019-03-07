@@ -87,7 +87,7 @@ class refundModel extends model
     public function getList($mode = 'company', $type = '', $date = '', $deptID = '', $status = '', $createdBy = '', $orderBy = 'id_desc', $pager = null)
     {
         if($this->session->refundQuery == false) $this->session->set('refundQuery', ' 1 = 1');
-        $refundQuery = $this->loadModel('search', 'sys')->replaceDynamic($this->session->refundQuery);
+        $refundQuery = $this->loadModel('search')->replaceDynamic($this->session->refundQuery);
 
         $users   = $this->loadModel('user')->getPairs('noclosed,noempty', $deptID);
         $refunds = $this->dao->select('*')->from(TABLE_REFUND)
@@ -597,7 +597,7 @@ class refundModel extends model
     public function total($refunds)
     {
         $totalMoney  = array();
-        $currencyList = $this->loadModel('common', 'sys')->getCurrencySign();
+        $currencyList = $this->loadModel('common')->getCurrencySign();
 
         foreach($currencyList as $key => $currency)
         {

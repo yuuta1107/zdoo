@@ -53,7 +53,7 @@ class block extends control
      */
     public function admin($index = 0, $blockID = '')
     {
-        $this->app->loadLang('block', 'sys');
+        $this->app->loadLang('block');
         $title = $index == 0 ? $this->lang->block->createBlock : $this->lang->block->editBlock;
 
         if(!$index) $index = $this->block->getLastKey('crm') + 1;
@@ -161,7 +161,7 @@ class block extends control
     public function printTaskBlock()
     {
         $this->lang->task = new stdclass();
-        $this->app->loadLang('task', 'sys');
+        $this->app->loadLang('task');
 
         $params = $this->get->param;
         $params = json_decode(base64_decode($params));

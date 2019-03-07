@@ -132,7 +132,7 @@ class entry extends control
         $entry   = $this->entry->getById($entryID);
 
         /* deny if no this app rights. */
-        if(!commonModel::hasAppPriv($entry->code)) $this->loadModel('common', 'sys')->deny($this->app->getModuleName(), $this->app->getMethodName());
+        if(!commonModel::hasAppPriv($entry->code)) $this->loadModel('common')->deny($this->app->getModuleName(), $this->app->getMethodName());
 
         $location = $entry->login;
         $pathinfo = parse_url($location);
@@ -528,7 +528,7 @@ class entry extends control
         $this->get->set('blockid', $block->block);
         $this->get->set('hash', $entry->key);
         $this->get->set('entry', $entry->id);
-        $this->get->set('app', 'sys');
+        $this->get->set('app');
         $this->get->set('lang', $this->app->getClientLang());
         $this->get->set('sso', base64_encode(commonModel::getSysURL() . helper::createLink('entry', 'visit', "entry=$entry->id")));
         $this->get->set('param', $params);

@@ -446,7 +446,7 @@ class upgradeModel extends model
      */
     public function changeBuildinName()
     {
-        $this->app->loadLang('install', 'sys');
+        $this->app->loadLang('install');
 
         foreach($this->lang->install->buildinEntry as $code => $name)
         {
@@ -1141,7 +1141,7 @@ class upgradeModel extends model
      */
     public function updateTradeCategories() 
     {
-        $this->app->loadLang('tree', 'sys');
+        $this->app->loadLang('tree');
 
         $majorIncomeCategories = $this->dao->select('*')->from(TABLE_CATEGORY)
             ->where('major')->eq('1')
@@ -1197,7 +1197,7 @@ class upgradeModel extends model
      */
     public function setSystemCategories()
     {
-        $this->app->loadLang('tree', 'sys');
+        $this->app->loadLang('tree');
         foreach($this->lang->upgrade->majorList['3_6'] as $key => $major)
         {
             if($key < 5) continue;

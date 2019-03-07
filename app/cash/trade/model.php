@@ -39,7 +39,7 @@ class tradeModel extends model
     {
         if($bysearch) $date = '';
         if($this->session->tradeQuery === false) $this->session->set('tradeQuery', ' 1 = 1');
-        $tradeQuery = $this->loadModel('search', 'sys')->replaceDynamic($this->session->tradeQuery);
+        $tradeQuery = $this->loadModel('search')->replaceDynamic($this->session->tradeQuery);
 
         if(strpos($orderBy, 'id') === false) $orderBy .= ', id_desc';
 
@@ -1374,7 +1374,7 @@ class tradeModel extends model
     public function countMoney($trades, $mode)
     {
         $totalMoney  = array();
-        $currencyList = $this->loadModel('common', 'sys')->getCurrencyList();
+        $currencyList = $this->loadModel('common')->getCurrencyList();
 
         foreach($currencyList as $key => $currency)
         {

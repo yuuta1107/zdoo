@@ -163,7 +163,7 @@ class user extends control
     public function deny($module, $method, $refererBeforeDeny = '')
     {
         $this->app->loadLang($module);
-        $this->app->loadLang('index', 'sys');
+        $this->app->loadLang('index');
 
         $this->setReferer();
 
@@ -386,7 +386,7 @@ class user extends control
     {
         if($this->post->search) die($this->locate(inlink('colleague', "deptID=$deptID&search={$this->post->search}&orderBy=$orderBy&recTotal=0&recPerPage=$recPerPage&pageID=1")));
 
-        $this->app->loadLang('user', 'sys');
+        $this->app->loadLang('user');
         $this->app->loadClass('pager', $static = true);
         $pager = new pager($recTotal, $recPerPage, $pageID);
 

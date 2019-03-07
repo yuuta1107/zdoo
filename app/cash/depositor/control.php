@@ -45,7 +45,7 @@ class depositor extends control
         $this->view->depositors   = $this->depositor->getList($tag, $status, $orderBy, $pager);
         $this->view->pager        = $pager;
         $this->view->orderBy      = $orderBy;
-        $this->view->currencyList = $this->loadModel('common', 'sys')->getCurrencyList();
+        $this->view->currencyList = $this->loadModel('common')->getCurrencyList();
         $this->view->tags         = $this->depositor->getTags();
         $this->view->currentTag   = $tag;
         $this->view->status       = $status;
@@ -71,7 +71,7 @@ class depositor extends control
         }
 
         $this->view->title        = $this->lang->depositor->create;
-        $this->view->currencyList = $this->loadModel('common', 'sys')->getCurrencyList();
+        $this->view->currencyList = $this->loadModel('common')->getCurrencyList();
         $this->display();
     }
 
@@ -100,7 +100,7 @@ class depositor extends control
 
         $this->view->title        = $this->lang->depositor->edit;
         $this->view->depositor    = $this->depositor->getByID($depositorID);
-        $this->view->currencyList = $this->loadModel('common', 'sys')->getCurrencyList();
+        $this->view->currencyList = $this->loadModel('common')->getCurrencyList();
 
         $this->display();
     }
@@ -186,8 +186,8 @@ class depositor extends control
         $this->view->dateOptions   = (array) $this->loadModel('balance', 'cash')->getDateOptions();
         $this->view->customerList  = $this->loadModel('customer')->getPairs();
         $this->view->categories    = $this->lang->trade->categoryList + $expenseTypes + $incomeTypes;
-        $this->view->currencySign  = $this->loadModel('common', 'sys')->getCurrencySign();
-        $this->view->currencyList  = $this->loadModel('common', 'sys')->getCurrencyList();
+        $this->view->currencySign  = $this->loadModel('common')->getCurrencySign();
+        $this->view->currencyList  = $this->loadModel('common')->getCurrencyList();
         $this->view->users         = $this->loadModel('user')->getPairs();
 
         $this->display();

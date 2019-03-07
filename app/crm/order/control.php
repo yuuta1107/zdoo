@@ -59,7 +59,7 @@ class order extends control
                 }
             }
         }
-        $this->loadModel('search', 'sys');
+        $this->loadModel('search');
         $this->config->order->search['actionURL'] = inlink('browse', 'mode=bysearch');
         $this->config->order->search['params']['o.customer']['values'] = $this->loadModel('customer')->getPairs('client', $emptyOption = true, 'id_desc', $limit = $this->config->customerLimit, $traders);
         $this->config->order->search['params']['o.product']['values']  = array('' => '') + $this->loadModel('product')->getPairs();
@@ -68,11 +68,11 @@ class order extends control
         $this->view->title        = $this->lang->order->browse;
         $this->view->orders       = $orders;
         $this->view->customers    = $this->loadModel('customer')->getList('client');
-        $this->view->users        = $this->loadModel('user', 'sys')->getPairs();
+        $this->view->users        = $this->loadModel('user')->getPairs();
         $this->view->pager        = $pager;
         $this->view->mode         = $mode;
         $this->view->orderBy      = $orderBy;
-        $this->view->currencySign = $this->loadModel('common', 'sys')->getCurrencySign();
+        $this->view->currencySign = $this->loadModel('common')->getCurrencySign();
         $this->view->currencyList = $this->common->getCurrencyList();
         if($orders) $this->view->totalAmount = $this->order->countAmount($orders);
         $this->display();
@@ -97,7 +97,7 @@ class order extends control
         $this->view->products          = array('') + $this->loadModel('product')->getPairs($status = 'normal');
         $this->view->customers         = $this->loadModel('customer')->getPairs('client', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit);
         $this->view->title             = $this->lang->order->create;
-        $this->view->currencyList      = $this->loadModel('common', 'sys')->getCurrencyList();
+        $this->view->currencyList      = $this->loadModel('common')->getCurrencyList();
         $this->view->customer          = $customer;
         $this->view->productCategories = array('') + $this->loadModel('tree')->getOptionMenu('product', 0, true);
 
@@ -115,7 +115,7 @@ class order extends control
     public function edit($orderID, $comment = false)
     {
         $order = $this->order->getByID($orderID);
-        $this->loadModel('common', 'sys')->checkPrivByCustomer(empty($order)? '0' : $order->customer, 'edit');
+        $this->loadModel('common')->checkPrivByCustomer(empty($order)? '0' : $order->customer, 'edit');
 
         if($_POST)
         {
@@ -145,7 +145,7 @@ class order extends control
         $this->view->customer     = $this->loadModel('customer')->getByID($order->customer);
         $this->view->contract     = $this->order->getContract($orderID);
         $this->view->customers    = $this->loadModel('customer')->getPairs('client', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit, $order->customer);
-        $this->view->currencyList = $this->loadModel('common', 'sys')->getCurrencyList();
+        $this->view->currencyList = $this->loadModel('common')->getCurrencyList();
         $this->view->currencySign = $this->common->getCurrencySign();
 
         $this->display();
@@ -161,7 +161,7 @@ class order extends control
     public function view($orderID)
     {
         $order = $this->order->getByID($orderID);
-        $this->loadModel('common', 'sys')->checkPrivByCustomer(empty($order) ? '0' : $order->customer);
+        $this->loadModel('common')->checkPrivByCustomer(empty($order) ? '0' : $order->customer);
 
         /* Set allowed edit order ID list. */
         $this->app->user->canEditOrderIdList = ',' . implode(',', $this->order->getOrdersSawByMe('edit', (array)$orderID)) . ',';
@@ -180,7 +180,7 @@ class order extends control
         $this->view->customer     = $this->loadModel('customer')->getByID($order->customer);
         $this->view->contract     = $this->order->getContract($orderID);
         $this->view->users        = $this->loadModel('user')->getPairs();
-        $this->view->currencyList = $this->loadModel('common', 'sys')->getCurrencyList();
+        $this->view->currencyList = $this->loadModel('common')->getCurrencyList();
         $this->view->currencySign = $this->common->getCurrencySign();
         $this->view->preAndNext   = $this->common->getPreAndNextObject('order', $orderID);
     
@@ -197,7 +197,7 @@ class order extends control
     public function close($orderID) 
     {
         $order = $this->order->getByID($orderID);
-        $this->loadModel('common', 'sys')->checkPrivByCustomer(empty($order)? '0' : $order->customer, 'edit');
+        $this->loadModel('common')->checkPrivByCustomer(empty($order)? '0' : $order->customer, 'edit');
 
         if(!empty($_POST))
         {
@@ -226,7 +226,7 @@ class order extends control
     public function activate($orderID) 
     {
         $order = $this->order->getByID($orderID); 
-        $this->loadModel('common', 'sys')->checkPrivByCustomer(empty($order)? '0' : $order->customer, 'edit');
+        $this->loadModel('common')->checkPrivByCustomer(empty($order)? '0' : $order->customer, 'edit');
 
         if(!empty($_POST))
         {
@@ -283,7 +283,7 @@ class order extends control
     {
         $order   = $this->order->getByID($orderID);
         $members = $this->loadModel('user')->getPairs('noclosed,nodeleted,noforbidden');
-        $this->loadModel('common', 'sys')->checkPrivByCustomer(empty($order)? '0' : $order->customer, 'edit');
+        $this->loadModel('common')->checkPrivByCustomer(empty($order)? '0' : $order->customer, 'edit');
 
         if($_POST)
         {
@@ -504,7 +504,7 @@ class order extends control
         }
         if($type == 'board')
         {
-            die($this->loadModel('todo', 'sys')->buildBoardList($orders, 'order'));
+            die($this->loadModel('todo')->buildBoardList($orders, 'order'));
         }
         die(json_encode($orders));
     }

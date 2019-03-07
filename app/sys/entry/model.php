@@ -87,7 +87,7 @@ class entryModel extends model
 
         if($type == 'mobile')
         {
-            $this->app->loadLang('index', 'sys');
+            $this->app->loadLang('index');
 
             $dashboardEntry = new stdclass();
             $dashboardEntry->id       = 'dashboard';

@@ -69,7 +69,7 @@ class task extends control
 
         $users = $this->loadModel('user')->getPairs('noclosed');
         /* Build search form. */
-        $this->loadModel('search', 'sys');
+        $this->loadModel('search');
         $this->config->task->search['actionURL'] = $this->createLink('task', 'browse', "projectID=$projectID&mode=bysearch");
         if($projectID)
         {
@@ -225,7 +225,7 @@ class task extends control
         $this->checkPriv($task, 'view');
 
         /* Process pre and next button. */
-        $preAndNext = $this->loadModel('common', 'sys')->getPreAndNextObject('task', $taskID);
+        $preAndNext = $this->loadModel('common')->getPreAndNextObject('task', $taskID);
         if(!empty($task->children))
         {
             $this->session->set('childrenTaskIDList', join(',', array_keys($task->children)));
@@ -255,7 +255,7 @@ class task extends control
                 if($next != '') $preAndNext->next = $this->task->getByID($next);
                 if($next == '')
                 {
-                    $parentPRN = $this->loadModel('common', 'sys')->getPreAndNextObject('task', $task->parent);
+                    $parentPRN = $this->loadModel('common')->getPreAndNextObject('task', $task->parent);
                     $preAndNext->next = $parentPRN->next;
                 }
             }
@@ -930,7 +930,7 @@ class task extends control
         }
         if($type == 'board')
         {
-            die($this->loadModel('todo', 'sys')->buildBoardList($tasks, 'task'));
+            die($this->loadModel('todo')->buildBoardList($tasks, 'task'));
         }
         die(json_encode($tasks));
     }

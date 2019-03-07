@@ -184,7 +184,7 @@ class trip extends control
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
             if($result)
             {
-                $actionID = $this->loadModel('action', 'sys')->create($trip->type, $id, 'edited');
+                $actionID = $this->loadModel('action')->create($trip->type, $id, 'edited');
                 $this->action->logHistory($actionID, $result);
             }
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));

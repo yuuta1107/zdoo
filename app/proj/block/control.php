@@ -52,7 +52,7 @@ class block extends control
      */
     public function admin($index = 0, $blockID = '')
     {
-        $this->app->loadLang('block', 'sys');
+        $this->app->loadLang('block');
         $title = $index == 0 ? $this->lang->block->createBlock : $this->lang->block->editBlock;
 
         if(!$index) $index = $this->block->getLastKey('proj') + 1;
@@ -126,7 +126,7 @@ class block extends control
     public function printTaskBlock()
     {
         $this->lang->task = new stdclass();
-        $this->app->loadLang('task', 'sys');
+        $this->app->loadLang('task');
         $this->session->set('taskList', $this->createLink('dashboard', 'index'));
         if($this->get->app == 'sys') $this->session->set('taskList', 'javascript:$.openEntry("home")');
 
@@ -166,7 +166,7 @@ class block extends control
     public function printMyCreatedTaskBlock()
     {
         $this->lang->task = new stdclass();
-        $this->app->loadLang('task', 'sys');
+        $this->app->loadLang('task');
         $this->session->set('taskList', $this->createLink('dashboard', 'index'));
         if($this->get->app == 'sys') $this->session->set('taskList', 'javascript:$.openEntry("home")');
 
@@ -193,7 +193,7 @@ class block extends control
     public function printAssignedMeTaskBlock()
     {
         $this->lang->task = new stdclass();
-        $this->app->loadLang('task', 'sys');
+        $this->app->loadLang('task');
         $this->session->set('taskList', $this->createLink('dashboard', 'index'));
         if($this->get->app == 'sys') $this->session->set('taskList', 'javascript:$.openEntry("home")');
 
@@ -221,7 +221,7 @@ class block extends control
     {
         $this->lang->project = new stdclass();
         $this->app->loadLang('project', 'proj');
-        $this->loadModel('task', 'sys');
+        $this->loadModel('task');
 
         $this->processParams();
 

@@ -64,8 +64,8 @@ class refund extends control
             if(!in_array($id, $contractsSawByMe)) unset($contracts[$id]);
         }
 
-        $this->view->currencyList = $this->loadModel('common', 'sys')->getCurrencyList();
-        $this->view->currencySign = $this->loadModel('common', 'sys')->getCurrencySign();
+        $this->view->currencyList = $this->loadModel('common')->getCurrencyList();
+        $this->view->currencySign = $this->loadModel('common')->getCurrencySign();
         $this->view->categories   = $this->refund->getCategoryPairs();
         $this->view->users        = $this->loadModel('user')->getPairs('noclosed,nodeleted,noforbidden');
         $this->view->deptList     = $this->loadModel('tree')->getOptionMenu('dept');
@@ -130,8 +130,8 @@ class refund extends control
             if(!in_array($id, $contractsSawByMe)) unset($contracts[$id]);
         }
 
-        $this->view->currencyList = $this->loadModel('common', 'sys')->getCurrencyList();
-        $this->view->currencySign = $this->loadModel('common', 'sys')->getCurrencySign();
+        $this->view->currencyList = $this->loadModel('common')->getCurrencyList();
+        $this->view->currencySign = $this->loadModel('common')->getCurrencySign();
         $this->view->categories   = $this->refund->getCategoryPairs();
         $this->view->users        = $this->loadModel('user')->getPairs('noclosed,nodeleted,noforbidden');
         $this->view->deptList     = $this->loadModel('tree')->getOptionMenu('dept');
@@ -207,7 +207,7 @@ class refund extends control
         $categories = $this->refund->getCategoryPairs();
 
         /* Build search form. */
-        $this->loadModel('search', 'sys');
+        $this->loadModel('search');
         $users = $this->loadModel('user')->getPairs('noclosed');
         $this->config->refund->search['actionURL'] = $this->createLink('refund', $mode, "date=&type=bysearch");
         $this->config->refund->search['params']['category']['values']       = array('' => '') + $categories;
@@ -257,7 +257,7 @@ class refund extends control
         $this->view->mode         = $mode;
         $this->view->pager        = $pager;
         $this->view->categories   = $categories;
-        $this->view->currencySign = $this->loadModel('common', 'sys')->getCurrencySign();
+        $this->view->currencySign = $this->loadModel('common')->getCurrencySign();
         $this->view->userPairs    = $users;
         $this->view->deptList     = $deptList;
         $this->view->date         = $date;
@@ -280,10 +280,10 @@ class refund extends control
 
         $this->view->title        = $this->lang->refund->view;
         $this->view->users        = $this->loadModel('user')->getPairs();
-        $this->view->currencySign = $this->loadModel('common', 'sys')->getCurrencySign();
+        $this->view->currencySign = $this->loadModel('common')->getCurrencySign();
         $this->view->categories   = $this->refund->getCategoryPairs();
         $this->view->deptList     = $this->loadModel('tree')->getOptionMenu('dept');
-        $this->view->preAndNext   = $this->loadModel('common', 'sys')->getPreAndNextObject('refund', $refundID);
+        $this->view->preAndNext   = $this->loadModel('common')->getPreAndNextObject('refund', $refundID);
         $this->view->customer     = $this->loadModel('customer')->getById($refund->customer);
         $this->view->order        = $this->loadModel('order', 'crm')->getById($refund->order);
         $this->view->contract     = $this->loadModel('contract', 'crm')->getById($refund->contract);
@@ -333,7 +333,7 @@ class refund extends control
         $categories = $this->refund->getCategoryPairs();
 
         /* Build search form. */
-        $this->loadModel('search', 'sys');
+        $this->loadModel('search');
         $users = $this->loadModel('user')->getPairs('noclosed');
         $this->config->refund->search['actionURL'] = $this->createLink('refund', 'browseReview', "status=$status&date=&type=bysearch");
         $this->config->refund->search['params']['category']['values']       = array('' => '') + $categories;
@@ -410,7 +410,7 @@ class refund extends control
         $this->view->refunds      = $refunds;
         $this->view->deptList     = $allDeptList;
         $this->view->categories   = $categories;
-        $this->view->currencySign = $this->loadModel('common', 'sys')->getCurrencySign();
+        $this->view->currencySign = $this->loadModel('common')->getCurrencySign();
         $this->view->status       = $status;
         $this->view->date         = $date;
         $this->view->orderBy      = $orderBy;
@@ -466,7 +466,7 @@ class refund extends control
         $this->view->refund       = $this->refund->getByID($refundID);
         $this->view->categories   = $this->refund->getCategoryPairs();
         $this->view->deptList     = $this->loadModel('tree')->getOptionMenu('dept');
-        $this->view->currencySign = $this->loadModel('common', 'sys')->getCurrencySign();
+        $this->view->currencySign = $this->loadModel('common')->getCurrencySign();
         $this->display();
     }
 
@@ -826,7 +826,7 @@ class refund extends control
         if($_POST)
         {
             $categories   = $this->refund->getCategoryPairs();
-            $currencySign = $this->loadModel('common', 'sys')->getCurrencySign();
+            $currencySign = $this->loadModel('common')->getCurrencySign();
             $deptList     = $this->loadModel('tree')->getPairs('', 'dept');
             $users        = $this->loadModel('user')->getList();
             $userPairs    = array();

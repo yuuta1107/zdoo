@@ -77,7 +77,7 @@ class threadModel extends model
     public function getBySearch($board, $mode, $orderBy, $pager = null)
     {
         if($this->session->forumQuery == false) $this->session->set('forumQuery', ' 1 = 1');
-        $forumQuery = $this->loadModel('search', 'sys')->replaceDynamic($this->session->forumQuery);
+        $forumQuery = $this->loadModel('search')->replaceDynamic($this->session->forumQuery);
 
         if(!is_array($board))
         {

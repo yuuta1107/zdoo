@@ -147,7 +147,7 @@ class my extends control
         $this->view->type         = $type;
         $this->view->orderBy      = $orderBy;
         $this->view->categories   = $this->refund->getCategoryPairs();
-        $this->view->currencySign = $this->loadModel('common', 'sys')->getCurrencySign();
+        $this->view->currencySign = $this->loadModel('common')->getCurrencySign();
         $this->display();
     }
 
@@ -167,7 +167,7 @@ class my extends control
         $this->app->loadClass('pager', $static = true);
         $pager = new pager($recTotal, $recPerPage, $pageID);
 
-        $this->loadModel('todo', 'sys');
+        $this->loadModel('todo');
 
         /* compute begin and end. */
         if($begin == '')
@@ -305,7 +305,7 @@ class my extends control
      */
     public function order($type = 'past', $orderBy = 'id_desc', $recTotal = 0, $recPerPage = 20, $pageID = 1)
     {
-        $this->loadModel('common', 'sys');
+        $this->loadModel('common');
         if(!commonModel::hasPriv('order', 'browse')) $this->common->deny('my', 'order');
 
         $this->loadModel('order', 'crm');
@@ -328,7 +328,7 @@ class my extends control
         $this->view->pager        = $pager;
         $this->view->type         = $type;
         $this->view->orderBy      = $orderBy;
-        $this->view->currencySign = $this->loadModel('common', 'sys')->getCurrencySign();
+        $this->view->currencySign = $this->loadModel('common')->getCurrencySign();
         $this->view->currencyList = $this->common->getCurrencyList();
         $this->display();
     }
@@ -346,7 +346,7 @@ class my extends control
      */
     public function contract($type = 'unfinished', $orderBy = 'id_desc', $recTotal = 0, $recPerPage = 20, $pageID = 1)
     {
-        $this->loadModel('common', 'sys');
+        $this->loadModel('common');
         if(!commonModel::hasPriv('order', 'browse')) $this->common->deny('my', 'order');
 
         $this->loadModel('contract', 'crm');
@@ -369,7 +369,7 @@ class my extends control
         $this->view->pager        = $pager;
         $this->view->type         = $type;
         $this->view->orderBy      = $orderBy;
-        $this->view->currencySign = $this->loadModel('common', 'sys')->getCurrencySign();
+        $this->view->currencySign = $this->loadModel('common')->getCurrencySign();
         $this->view->currencyList = $this->common->getCurrencyList();
 
         $this->display();
@@ -439,7 +439,7 @@ class my extends control
         $pager = new pager($recTotal, $recPerPage, $pageID);
 
         /* Build search form. */
-        $this->loadModel('search', 'sys');
+        $this->loadModel('search');
         $this->config->dynamic->search['actionURL'] = $this->createLink('my', 'dynamic', 'type=bysearch');
         $this->search->setSearchParams($this->config->dynamic->search);
 
@@ -455,8 +455,8 @@ class my extends control
     public function contact()
     {
         $this->view->title    = $this->lang->my->contact->common;
-        $this->view->contacts = $this->loadModel('usercontact', 'sys')->getList();
-        $this->view->users    = $this->loadModel('user', 'sys')->getPairs();
+        $this->view->contacts = $this->loadModel('usercontact')->getList();
+        $this->view->users    = $this->loadModel('user')->getPairs();
         $this->display();
     }
 }

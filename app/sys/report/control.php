@@ -50,7 +50,7 @@ class report extends control
                 $chartOption->scaleStepWidth = '80px';
 
                 /* add charts for multi currency. */
-                $currencyList = $this->loadModel('common', 'sys')->getCurrencyList();
+                $currencyList = $this->loadModel('common')->getCurrencyList();
                 if(strpos($groupBy, '`real`') !== false or strpos($groupBy, 'amount') !== false or strpos($groupBy, 'money') !== false)
                 {
                     $caption = $chartOption->graph->caption;

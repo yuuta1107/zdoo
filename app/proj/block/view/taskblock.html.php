@@ -17,7 +17,7 @@
   {
       $isParent  = !empty($task->children);
       $isMulti   = !empty($task->team);
-      $startDisabled  = (!$isParent and $this->loadModel('task', 'sys')->isClickable($task, 'start')) ? '' : 'disabled';
+      $startDisabled  = (!$isParent and $this->loadModel('task')->isClickable($task, 'start')) ? '' : 'disabled';
       $finishDisabled = (!$isParent and $this->task->isClickable($task, 'finish')) ? '' : 'disabled';
       $recordEstimateDisabled = (!$isParent and $this->task->isClickable($task, 'recordEstimate')) ? '' : 'disabled';
   }

@@ -137,7 +137,7 @@ class leave extends control
     public function view($leaveID, $type = '')
     {
         $this->view->title = $this->lang->leave->view;
-        $this->view->users = $this->loadModel('user', 'sys')->getPairs();
+        $this->view->users = $this->loadModel('user')->getPairs();
         $this->view->leave = $this->leave->getByID($leaveID);
         $this->view->type  = $type;
         $this->display();
@@ -646,7 +646,7 @@ class leave extends control
         }
 
         $this->view->title      = $this->lang->leave->setReviewer;
-        $this->view->users      = $this->loadModel('user', 'sys')->getPairs('noclosed,noforbidden,nodeleted');
+        $this->view->users      = $this->loadModel('user')->getPairs('noclosed,noforbidden,nodeleted');
         $this->view->reviewedBy = $this->leave->getReviewedBy();
         $this->view->module     = $module;
         $this->display();
@@ -675,7 +675,7 @@ class leave extends control
         }
 
         $this->view->title  = $this->lang->leave->personalAnnual;
-        $this->view->users  = $this->loadModel('user', 'sys')->getPairs('noclosed,nodeleted,noforbidden');
+        $this->view->users  = $this->loadModel('user')->getPairs('noclosed,nodeleted,noforbidden');
         $this->view->module = $module;
         $this->display();
     }

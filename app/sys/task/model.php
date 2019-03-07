@@ -55,7 +55,7 @@ class taskModel extends model
     public function getList($projectID = 0, $mode = 'all', $orderBy = 'id_desc', $pager = null, $groupBy = 'id')
     {
         if($this->session->taskQuery == false) $this->session->set('taskQuery', ' 1 = 1');
-        $taskQuery  = $this->loadModel('search', 'sys')->replaceDynamic($this->session->taskQuery);
+        $taskQuery  = $this->loadModel('search')->replaceDynamic($this->session->taskQuery);
         $project    = $this->loadModel('project', 'proj')->getByID($projectID);
         $canViewAll = $this->viewAllTask($projectID);
 

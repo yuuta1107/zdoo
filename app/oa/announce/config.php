@@ -8,7 +8,7 @@ $config->announce->editor->create = array('id' => 'content', 'tools' => 'full');
 $config->announce->editor->edit   = array('id' => 'content', 'tools' => 'full');
 
 global $lang, $app;
-$app->loadLang('article', 'sys');
+$app->loadLang('article');
 $config->announce->search['module'] = 'announce';
 
 $config->announce->search['fields']['t1.title']   = $lang->article->title;

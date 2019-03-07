@@ -263,8 +263,8 @@ class searchModel extends model
             $users         = $this->loadModel('user')->getPairs('nodeleted,noforbidden');
             $users['$@me'] = $this->lang->search->me;
         }
-        if($hasDept)    $depts    = array('' => '') + $this->loadModel('tree', 'sys')->getOptionMenu('dept');  
-        if($hasProduct) $products = array('' => '') + $this->loadModel('product', 'sys')->getPairs();
+        if($hasDept)    $depts    = array('' => '') + $this->loadModel('tree')->getOptionMenu('dept');
+        if($hasProduct) $products = array('' => '') + $this->loadModel('product')->getPairs();
         if($hasProject) $projects = array('' => '') + $this->loadModel('project', 'proj')->getPairs();
 
         foreach($fields as $fieldName)
