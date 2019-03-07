@@ -29,7 +29,7 @@ $(document).ready(function()
   
     $(document).on('click', '.minus', function()
     {
-        if($(this).parents('table').find('.order-real').not('tbody.hide .order-real').size() == 1)
+        if($(this).parents('table').find('tbody:first').find('.order-real').not('tbody.hide .order-real').size() == 1)
         {
             $(this).parents('tr').html($('#orderGroup tr').html());
             $(this).parents('td').find('select').val('').change();
