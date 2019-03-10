@@ -846,7 +846,7 @@ class trade extends control
 
         $expenseTypes       = array('' => '') + $this->loadModel('tree')->getOptionMenu('out', 0, $removeRoot = true);
         $incomeTypes        = array('' => '') + $this->tree->getOptionMenu('in', 0, $removeRoot = true);
-        $deptList           = $this->loadModel('tree')->getPairs(0, 'dept');
+        $deptList           = $this->loadModel('tree')->getPairs(0, 'dept', 'normal');
         $productList        = $this->loadModel('product')->getPairs();
         $flipTypeList       = array_flip($this->lang->trade->typeList);
         $flipDeptList       = array_flip($deptList);

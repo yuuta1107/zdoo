@@ -621,7 +621,7 @@ class customer extends control
     public function ajaxGetArea($location)
     {
         $areaID    = 0;
-        $areaPairs = $this->loadModel('tree')->getPairs($categories = '', $type = 'area');
+        $areaPairs = $this->loadModel('tree')->getPairs($categories = '', $type = 'area', 'normal');
         foreach($areaPairs as $id => $area)
         {
             if(strpos($location, $area) !== false) $areaID = $id;

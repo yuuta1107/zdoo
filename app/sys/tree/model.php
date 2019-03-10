@@ -82,11 +82,13 @@ class treeModel extends model
      * @access public
      * @return array
      */
-    public function getPairs($categories = '', $type = 'article')
+    public function getPairs($categories = '', $type = 'article', $status = 'all')
     {
         $categories = $this->dao->select('*')->from(TABLE_CATEGORY)
-            ->where('deleted')->eq('0')
+            ->where(1)
             ->beginIF($type)->andWhere('type')->eq($type)->fi()
+            ->beginIF($status == 'normal')->andWhere('deleted')->eq('0')->fi()
+            ->beginIF($status == 'deleted')->andWhere('deleted')->eq('1')->fi()
             ->fetchAll('id');
 
         $categoryPairs = array();
@@ -343,9 +345,11 @@ class treeModel extends model
      */
     public function getOptionMenuByMajor($major = 1)
     {
-        $category = $this->dao->select('*')->from(TABLE_CATEGORY)->where('major')->eq(1)->fetch();
+        $category   = $this->dao->select('*')->from(TABLE_CATEGORY)->where('major')->eq(1)->fetch();
+        $categories = $this->getOptionMenu($category->type, $category->id);
+        unset($categories[$category->id]);
 
-        return $this->getOptionMenu($category->type, $category->id);
+        return $categories;
     }
 
     /**
