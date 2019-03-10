@@ -54,7 +54,7 @@
       <?php endforeach;?>
     </div>
   </div>
-  <div class='calendar main'>
+  <div class='calendar main' id='todoCalendar'>
     <div class='side-handle'>
       <?php $class = $this->cookie->todoCalendarSide == 'hide' ? 'icon-collapse-full' : 'icon-expand-full'?>
       <?php echo html::a('###', "<i class='$class'></i>", "class='btn'")?>
@@ -99,9 +99,9 @@ function finishTodo(id)
             if(response.confirm)
             {
                 if(confirm(response.confirm.note))
-                {   
+                {
                     $.openEntry(response.confirm.entry, response.confirm.url);
-                }   
+                }
             }
         }
         else
