@@ -60,7 +60,7 @@ class action extends control
      */
     public function createRecord($objectType, $objectID, $customer = 0, $history = true)
     {
-        if($customer) $this->loadModel('common', 'sys')->checkPrivByCustomer($customer);
+        if($customer) $this->loadModel('common')->checkPrivByCustomer($customer);
 
         if($_POST)
         {
@@ -217,7 +217,7 @@ class action extends control
     public function editRecord($recordID, $from = '')
     {
         $record = $this->loadModel('action')->getByID($recordID);
-        if($record->customer) $this->loadModel('common', 'sys')->checkPrivByCustomer($record->customer);
+        if($record->customer) $this->loadModel('common')->checkPrivByCustomer($record->customer);
         if($record->action != 'record') exit;
         $object = $this->loadModel($record->objectType)->getByID($record->objectID);
 

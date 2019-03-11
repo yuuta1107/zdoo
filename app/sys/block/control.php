@@ -206,7 +206,7 @@ class block extends control
      */
     public function dashboard($appName)
     {
-        $this->app->loadLang('index', 'sys');
+        $this->app->loadLang('index');
         $blocks = $this->block->getBlockList($appName);
         $inited = empty($this->config->personal->common->blockInited) ? '' : $this->config->personal->common->blockInited;
 

@@ -71,7 +71,7 @@ class projectModel extends model
     public function getList($status = null, $orderBy = 'id_desc', $pager = null)
     {
         if($this->session->projectQuery == false) $this->session->set('projectQuery', ' 1 = 1');
-        $projectQuery = $this->loadModel('search', 'sys')->replaceDynamic($this->session->projectQuery);
+        $projectQuery = $this->loadModel('search')->replaceDynamic($this->session->projectQuery);
 
         if($status == 'involved' or $status == 'bysearch')
         {
@@ -554,7 +554,7 @@ class projectModel extends model
         $methodName = $this->app->getMethodName();
         $moduleName = $this->app->getModuleName();
             
-        $this->app->loadLang('task', 'sys');
+        $this->app->loadLang('task');
 
         $menu  = "<nav id='menu'><ul class='nav'>";
         $menu .= "<li><a id='currentItem' href=\"javascript:showDropMenu('project', '$projectID', '$currentModule', '$currentMethod', '$extra')\"><i class='icon-folder-open-alt'></i> <strong>{$currentProject->name}</strong> <span class='icon-caret-down'></span></a><div id='dropMenu'></div></li>";

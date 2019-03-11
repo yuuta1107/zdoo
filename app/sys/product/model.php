@@ -22,7 +22,7 @@ class productModel extends model
     public function getByID($id = 0, $getFiles = true)
     {
         $product = $this->dao->select('*')->from(TABLE_PRODUCT)->where('id')->eq($id)->fetch();
-        if($product && $getFiles) $product->files = $this->loadModel('file', 'sys')->getByObject('product', $product->id);
+        if($product && $getFiles) $product->files = $this->loadModel('file')->getByObject('product', $product->id);
         return $product;
     }
 
@@ -41,7 +41,7 @@ class productModel extends model
     {
         /* Process search condition. */
         if($this->session->productQuery == false) $this->session->set('productQuery', ' 1 = 1');
-        $productQuery = $this->loadModel('search', 'sys')->replaceDynamic($this->session->productQuery);
+        $productQuery = $this->loadModel('search')->replaceDynamic($this->session->productQuery);
 
         if(strpos($orderBy, 'id') === false) $orderBy .= ', id_desc';
 
@@ -103,7 +103,7 @@ class productModel extends model
             ->exec();
 
         $productID = $this->dao->lastInsertID();
-        $this->loadModel('file', 'sys')->saveUpload('product', $productID);
+        $this->loadModel('file')->saveUpload('product', $productID);
         return $productID;
     }
 

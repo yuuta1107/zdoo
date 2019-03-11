@@ -50,7 +50,7 @@ class trade extends control
         $productList   = $this->loadModel('product')->getPairs();
 
         /* Build search form. */
-        $this->loadModel('search', 'sys');
+        $this->loadModel('search');
         $this->config->trade->search['actionURL'] = $this->createLink('trade', 'browse', "mode={$mode}_bysearch");
         $this->config->trade->search['params']['depositor']['values'] = array('' => '') + $depositorList;
         $this->config->trade->search['params']['product']['values']   = array('' => '') + $productList;
@@ -205,7 +205,7 @@ class trade extends control
         $this->view->customerList  = $this->loadModel('customer')->getPairs();
         $this->view->deptList      = $this->tree->getPairs(0, 'dept');
         $this->view->users         = $this->loadModel('user')->getPairs();
-        $this->view->currencySign  = $this->loadModel('common', 'sys')->getCurrencySign();
+        $this->view->currencySign  = $this->loadModel('common')->getCurrencySign();
         $this->view->currencyList  = $this->common->getCurrencyList();
         $this->view->productList   = $productList;
         $this->view->currentYear   = $currentYear;
@@ -407,7 +407,7 @@ class trade extends control
         $this->view->objectType = $objectType;
 
         $depositorList = $this->loadModel('depositor', 'cash')->getPairs($status = 'all', $markDisable = true);
-        $currencySign  = $this->loadModel('common', 'sys')->getCurrencySign();
+        $currencySign  = $this->loadModel('common')->getCurrencySign();
        
         $this->view->title         = $this->lang->trade->edit;
         $this->view->productList   = $this->loadModel('product')->getPairs();
@@ -515,7 +515,7 @@ class trade extends control
         $this->view->users        = $this->loadModel('user')->getPairs();
         $this->view->dept         = $this->loadModel('tree')->getById($trade->dept);
         $this->view->preAndNext   = $this->loadModel('common')->getPreAndNextObject('trade', $tradeID);
-        $this->view->currencySign = $this->loadModel('common', 'sys')->getCurrencySign();
+        $this->view->currencySign = $this->loadModel('common')->getCurrencySign();
         if($trade->type == 'in' or $trade->type == 'out') $this->view->category = $this->tree->getById($trade->category);
         $this->display();
     }
@@ -559,7 +559,7 @@ class trade extends control
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => inlink('browse', 'mode=invest')));
         }
 
-        $currencySign     = $this->loadModel('common', 'sys')->getCurrencySign();
+        $currencySign     = $this->loadModel('common')->getCurrencySign();
         $allDepositors    = $this->loadModel('depositor', 'cash')->getPairs();
         $depositorList    = array('' => '') + $this->depositor->getPairs($status = 'normal');
         $investCategories = $this->trade->getSystemCategoryPairs('invest');
@@ -602,7 +602,7 @@ class trade extends control
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => inlink('browse', 'mode=loan')));
         }
 
-        $currencySign  = $this->loadModel('common', 'sys')->getCurrencySign();
+        $currencySign  = $this->loadModel('common')->getCurrencySign();
         $allDepositors = $this->loadModel('depositor', 'cash')->getPairs();
         $depositorList = array('' => '') + $this->depositor->getPairs($status = 'normal');
 
@@ -846,7 +846,7 @@ class trade extends control
 
         $expenseTypes       = array('' => '') + $this->loadModel('tree')->getOptionMenu('out', 0, $removeRoot = true);
         $incomeTypes        = array('' => '') + $this->tree->getOptionMenu('in', 0, $removeRoot = true);
-        $deptList           = $this->loadModel('tree')->getPairs(0, 'dept');
+        $deptList           = $this->loadModel('tree')->getPairs(0, 'dept', 'normal');
         $productList        = $this->loadModel('product')->getPairs();
         $flipTypeList       = array_flip($this->lang->trade->typeList);
         $flipDeptList       = array_flip($deptList);
@@ -1311,7 +1311,7 @@ class trade extends control
         $this->view->currentMonth      = $currentMonth;
         $this->view->currentCurrency   = $currency;
         $this->view->currentUnit       = $unit;
-        $this->view->currencyList      = $this->loadModel('common', 'sys')->getCurrencyList();
+        $this->view->currencyList      = $this->loadModel('common')->getCurrencyList();
         $this->display();
     }
 
@@ -1323,7 +1323,7 @@ class trade extends control
      */
     public function compare()
     {
-        $currencyList = $this->loadModel('common', 'sys')->getCurrencyList();
+        $currencyList = $this->loadModel('common')->getCurrencyList();
         $tradeYears   = array();
         $tradeDates   = $this->trade->getDatePairs();
 

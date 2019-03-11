@@ -44,7 +44,7 @@ class forum extends control
         if(!$this->loadModel('tree')->hasRight($board)) die(js::locate('back'));
 
         /* Build search form. */
-        $this->loadModel('search', 'sys');
+        $this->loadModel('search');
         $this->config->forum->search['actionURL'] = $this->createLink('forum', 'board', "boardID={$boardID}&mode=bysearch");
         $this->search->setSearchParams($this->config->forum->search);
  

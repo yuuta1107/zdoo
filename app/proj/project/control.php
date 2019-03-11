@@ -32,7 +32,7 @@ class project extends control
         if(empty($this->projects)) $this->locate(inlink('create'));
 
         /* Build search form. */
-        $this->loadModel('search', 'sys');
+        $this->loadModel('search');
         $users = $this->loadModel('user')->getPairs('noclosed');
         $this->config->project->search['actionURL'] = $this->createLink('project', 'index', "status=bysearch");
         $this->config->project->search['params']['t1.createdBy']['values'] = $users;

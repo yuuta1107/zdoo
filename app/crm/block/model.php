@@ -65,7 +65,7 @@ class crmblockModel extends blockModel
      */
     public function getTaskParams()
     {
-        $this->app->loadLang('task', 'sys');
+        $this->app->loadLang('task');
 
         $params = new stdclass();
         $params->num['name']    = $this->lang->block->num;

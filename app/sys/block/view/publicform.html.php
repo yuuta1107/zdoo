@@ -10,7 +10,7 @@
  * @link        http://www.ranzhi.org
  */
 ?>
-<?php $this->loadModel('block', 'sys');?>
+<?php $this->loadModel('block');?>
 <tr>
   <th class='w-100px'><?php echo $lang->block->name?></th>
   <td><?php echo html::input('title', $block ? $block->title : '', "class='form-control'")?></td>

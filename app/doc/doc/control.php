@@ -145,7 +145,7 @@ class doc extends control
         $moduleTree = $this->tree->getTreeMenu($type = 'doc', $startModuleID = 0, array('treeModel', 'createDocLink'), $libID);
 
         /* Build the search form. */
-        $this->loadModel('search', 'sys');
+        $this->loadModel('search');
         $this->config->doc->search['actionURL'] = $this->createLink('doc', 'browse', "libID=$libID&moduleID=$moduleID&projectID=$projectID&browseType=bySearch");
         $this->config->doc->search['params']['t1.lib']['values']     = array('' => '') + $this->libs;
         $this->config->doc->search['params']['t1.type']['values']    = array('' => '') + $this->config->doc->search['params']['t1.type']['values'];

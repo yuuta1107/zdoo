@@ -22,7 +22,7 @@ class contractModel extends model
     {
         $contract = $this->dao->select('*')->from(TABLE_CONTRACT)->where('id')->eq($contractID)->fetch();
 
-        $this->loadModel('file', 'sys');
+        $this->loadModel('file');
         if($contract)
         {
             $contract->order = array();
@@ -57,7 +57,7 @@ class contractModel extends model
         
         /* process search condition. */
         if($this->session->contractQuery == false) $this->session->set('contractQuery', ' 1 = 1');
-        $contractQuery = $this->loadModel('search', 'sys')->replaceDynamic($this->session->contractQuery);
+        $contractQuery = $this->loadModel('search')->replaceDynamic($this->session->contractQuery);
 
         if(strpos($orderBy, 'id') === false) $orderBy .= ', id_desc';
 
@@ -306,7 +306,7 @@ class contractModel extends model
             $contract->product = empty($products) ? '' : ',' . implode(',', $products) . ',';
         }
 
-        $contract = $this->loadModel('file', 'sys')->processImgURL($contract, $this->config->contract->editor->create['id']);
+        $contract = $this->loadModel('file')->processImgURL($contract, $this->config->contract->editor->create['id']);
         $this->dao->insert(TABLE_CONTRACT)->data($contract, 'order,uid,files,labels,real')
             ->autoCheck()
             ->batchCheck($this->config->contract->require->create, 'notempty')
@@ -336,7 +336,7 @@ class contractModel extends model
                 $this->dao->update(TABLE_ORDER)->data($order)->where('id')->eq($orderID)->exec();
 
                 if(dao::isError()) return false;
-                $this->loadModel('action', 'sys')->create('order', $orderID, 'Signed', '', $contract->real[$key]);
+                $this->loadModel('action')->create('order', $orderID, 'Signed', '', $contract->real[$key]);
             }
         }
 
@@ -346,7 +346,7 @@ class contractModel extends model
         $customer->editedDate = helper::now();
         $this->dao->update(TABLE_CUSTOMER)->data($customer)->where('id')->eq($contract->customer)->exec();
 
-        $this->loadModel('file', 'sys')->saveUpload('contract', $contractID);
+        $this->loadModel('file')->saveUpload('contract', $contractID);
 
         return $contractID;
     }
@@ -402,7 +402,7 @@ class contractModel extends model
             $contract->product = empty($products) ? '' : ',' . implode(',', $products) . ',';
         }
 
-        $contract = $this->loadModel('file', 'sys')->processImgURL($contract, $this->config->contract->editor->edit['id']);
+        $contract = $this->loadModel('file')->processImgURL($contract, $this->config->contract->editor->edit['id']);
         $this->dao->update(TABLE_CONTRACT)->data($contract, 'uid,order,real')
             ->where('id')->eq($contractID)
             ->autoCheck()
@@ -446,7 +446,7 @@ class contractModel extends model
                         if(dao::isError()) return false;
 
                         $changes  = commonModel::createChanges($oldOrder, $order);
-                        $actionID = $this->loadModel('action', 'sys')->create('order', $orderID, 'Edited');
+                        $actionID = $this->loadModel('action')->create('order', $orderID, 'Edited');
                         $this->action->logHistory($actionID, $changes);
                     }
                 }
@@ -505,7 +505,7 @@ class contractModel extends model
             ->stripTags('comment', $this->config->allowedTags)
             ->get();
 
-        $data = $this->loadModel('file', 'sys')->processImgURL($data, $this->config->contract->editor->delivery['id']);
+        $data = $this->loadModel('file')->processImgURL($data, $this->config->contract->editor->delivery['id']);
         $this->dao->insert(TABLE_DELIVERY)->data($data, $skip = 'uid, handlers, finish')->autoCheck()->exec();
 
         if(!dao::isError())
@@ -550,7 +550,7 @@ class contractModel extends model
             ->stripTags('comment', $this->config->allowedTags)
             ->get();
 
-        $data = $this->loadModel('file', 'sys')->processImgURL($data, $this->config->contract->editor->editdelivery['id']);
+        $data = $this->loadModel('file')->processImgURL($data, $this->config->contract->editor->editdelivery['id']);
         $this->dao->update(TABLE_DELIVERY)->data($data, $skip = 'uid, handlers, finish')->where('id')->eq($delivery->id)->autoCheck()->exec();
 
         if(!dao::isError())
@@ -558,7 +558,7 @@ class contractModel extends model
             $changes = commonModel::createChanges($delivery, $data);
             if($changes)
             {
-                $actionID = $this->loadModel('action', 'sys')->create('contract', $contract->id, 'editDelivered');
+                $actionID = $this->loadModel('action')->create('contract', $contract->id, 'editDelivered');
                 $this->action->logHistory($actionID, $changes);
             }
 
@@ -730,7 +730,7 @@ class contractModel extends model
             $changes = commonModel::createChanges($return, $data);
             if($changes or $this->post->comment)
             {
-                $actionID = $this->loadModel('action', 'sys')->create('contract', $contract->id, 'editReturned', $this->post->comment);
+                $actionID = $this->loadModel('action')->create('contract', $contract->id, 'editReturned', $this->post->comment);
                 if($changes) $this->action->logHistory($actionID, $changes);
             }
 
@@ -924,6 +924,7 @@ class contractModel extends model
 
             $member->account      = $account;
             $member->contribution = $contribution;
+            if($account == $this->app->user->account) $member->status = 'accept';
 
             $this->dao->insert(TABLE_TEAM)->data($member)->autoCheck()->exec();
         }
@@ -1073,7 +1074,7 @@ class contractModel extends model
     public function countAmount($contracts)
     {
         $totalAmount  = array();
-        $currencyList = $this->loadModel('common', 'sys')->getCurrencyList();
+        $currencyList = $this->loadModel('common')->getCurrencyList();
         $currencySign = $this->common->getCurrencySign();
         $totalReturn  = $this->dao->select('*')->from(TABLE_PLAN)->fetchGroup('contract');
 

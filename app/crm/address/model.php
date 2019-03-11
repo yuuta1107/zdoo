@@ -96,7 +96,7 @@ class addressModel extends model
         }
 
         /* Join area and location to fullLocation. */
-        $areaList = $this->loadModel('tree', 'sys')->getOptionMenu('area');
+        $areaList = $this->loadModel('tree')->getOptionMenu('area');
         foreach($addresses as $address)
         {
             $address->fullLocation = '';

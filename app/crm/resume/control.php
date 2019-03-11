@@ -76,7 +76,7 @@ class resume extends control
     public function edit($resumeID)
     {
         $resume = $this->resume->getByID($resumeID);
-        $this->loadModel('common', 'sys')->checkPrivByCustomer(empty($resume) ? 0 : $resume->customer, 'edit');
+        $this->loadModel('common')->checkPrivByCustomer(empty($resume) ? 0 : $resume->customer, 'edit');
 
         if($_POST)
         {
@@ -110,7 +110,7 @@ class resume extends control
     public function leave($resumeID)
     {
         $resume = $this->resume->getByID($resumeID);
-        $this->loadModel('common', 'sys')->checkPrivByCustomer(empty($resume) ? 0 : $resume->customer, 'edit');
+        $this->loadModel('common')->checkPrivByCustomer(empty($resume) ? 0 : $resume->customer, 'edit');
 
         $changes = $this->resume->leave($resumeID);
         if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
@@ -133,7 +133,7 @@ class resume extends control
     public function delete($resumeID)
     {
         $resume = $this->resume->getByID($resumeID);
-        $this->loadModel('common', 'sys')->checkPrivByCustomer(empty($resume) ? 0 : $resume->customer, 'edit');
+        $this->loadModel('common')->checkPrivByCustomer(empty($resume) ? 0 : $resume->customer, 'edit');
 
         $customers = $this->loadModel('customer')->getPairs('client');
 

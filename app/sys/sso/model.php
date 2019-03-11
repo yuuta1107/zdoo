@@ -129,7 +129,7 @@ class ssoModel extends model
         /* Init settings. */
         $settingUrl = $this->createZentaoLink($config, $zentaoUrl, 'sso', 'ajaxSetConfig');
         $data = new stdclass();
-        $data->addr = $this->loadModel('common', 'sys')->getSysURL() . helper::createLink('sys.sso', 'check');
+        $data->addr = $this->loadModel('common')->getSysURL() . helper::createLink('sys.sso', 'check');
         $data->code = $code;
         $data->key  = $key;
         $result = $this->fetchZentaoAPI($settingUrl, $data);

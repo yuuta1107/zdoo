@@ -111,7 +111,7 @@ class sso extends control
      */
     public function getTodoList($code = '', $account = '')
     {
-        $this->app->loadLang('todo', 'sys');
+        $this->app->loadLang('todo');
 
         if(!$account) $account = $this->app->user->account;
         $datas = $this->sso->getZentaoTodoList($code, $account);
@@ -135,7 +135,7 @@ class sso extends control
             }
 
             $index = $type == 'bug' ? count($datas['task']) : 0;
-            $boardList .= $this->loadModel('todo', 'sys')->buildBoardList($datas[$type], $code . '_' . $type, $index);
+            $boardList .= $this->loadModel('todo')->buildBoardList($datas[$type], $code . '_' . $type, $index);
         }
         die($boardList);
     }

@@ -46,7 +46,7 @@ class customer extends control
         $this->session->set('contactList',  '');
 
         /* Build search form. */
-        $this->loadModel('search', 'sys');
+        $this->loadModel('search');
         $this->config->customer->search['actionURL'] = $this->createLink('customer', 'browse', 'mode=bysearch');
         $this->config->customer->search['params']['t1.industry']['values'] = array('' => '') + $this->loadModel('tree')->getOptionMenu('industry');
         $this->config->customer->search['params']['t1.area']['values']     = array('' => '') + $this->loadModel('tree')->getOptionMenu('area');
@@ -122,7 +122,7 @@ class customer extends control
     public function edit($customerID, $comment = false)
     {
         $customer = $this->customer->getByID($customerID);
-        $this->loadModel('common', 'sys')->checkPrivByCustomer(empty($customer) ? '0' : $customerID, 'edit');
+        $this->loadModel('common')->checkPrivByCustomer(empty($customer) ? '0' : $customerID, 'edit');
 
         if($_POST)
         {
@@ -164,7 +164,7 @@ class customer extends control
     {
         $this->app->loadLang('trade', 'cash');
         $customer = $this->customer->getByID($customerID);
-        $this->loadModel('common', 'sys')->checkPrivByCustomer(empty($customer) ? '0' : $customerID);
+        $this->loadModel('common')->checkPrivByCustomer(empty($customer) ? '0' : $customerID);
 
         /* Set allowed edit customer ID list. */
         $this->app->user->canEditCustomerIdList = ',' . implode(',', $this->customer->getCustomersSawByMe('edit', (array)$customerID)) . ',';
@@ -215,14 +215,14 @@ class customer extends control
         $this->view->contracts         = $contracts;
         $this->view->addresses         = $this->loadModel('address', 'crm')->getList('customer', $customerID);
         $this->view->actions           = $this->loadModel('action')->getList('customer', $customerID);
-        $this->view->products          = $this->loadModel('product', 'sys')->getPairs();
+        $this->view->products          = $this->loadModel('product')->getPairs();
         $this->view->productList       = $productList;
         $this->view->productCategories = $this->loadModel('tree')->getPairs('product', 0);
         $this->view->users             = $this->loadModel('user')->getPairs();
         $this->view->areaList          = $this->loadModel('tree')->getPairs('', 'area');
         $this->view->industryList      = $this->tree->getPairs('', 'industry');
         $this->view->returnList        = $this->contract->getReturnList(array_keys($contracts), 'returnedDate_desc');
-        $this->view->currencySign      = $this->loadModel('common', 'sys')->getCurrencySign();
+        $this->view->currencySign      = $this->loadModel('common')->getCurrencySign();
         $this->view->preAndNext        = $this->common->getPreAndNextObject('customer', $customerID);
         $this->view->files             = $fileList;
         $this->display();
@@ -238,7 +238,7 @@ class customer extends control
      */
     public function assign($customerID, $table = null)
     {
-        $this->loadModel('common', 'sys')->checkPrivByCustomer($customerID, 'edit');
+        $this->loadModel('common')->checkPrivByCustomer($customerID, 'edit');
 
         if($_POST)
         {
@@ -379,7 +379,7 @@ class customer extends control
     public function delete($customerID)
     {
         $customer = $this->customer->getByID($customerID);
-        if(!$customer) $this->loadModel('common', 'sys')->checkPrivByCustomer('0');
+        if(!$customer) $this->loadModel('common')->checkPrivByCustomer('0');
 
         $this->customer->delete(TABLE_CUSTOMER, $customerID);
         if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
@@ -460,7 +460,7 @@ class customer extends control
             }
 
             if($this->session->customerQuery == false) $this->session->set('customerQuery', ' 1 = 1');
-            $customerQuery = $this->loadModel('search', 'sys')->replaceDynamic($this->session->customerQuery);
+            $customerQuery = $this->loadModel('search')->replaceDynamic($this->session->customerQuery);
 
             if(strpos(',contactedby,past,today,tomorrow,thisweek,thismonth,', ",{$mode},") !== false or ($mode == 'bysearch' && strpos($customerQuery, '`nextDate`') !== false))
             {
@@ -606,7 +606,7 @@ class customer extends control
         }
         if($type == 'board')
         {
-            die($this->loadModel('todo', 'sys')->buildBoardList($customers, 'customer'));
+            die($this->loadModel('todo')->buildBoardList($customers, 'customer'));
         }
         die(json_encode($customers));
     }
@@ -621,7 +621,7 @@ class customer extends control
     public function ajaxGetArea($location)
     {
         $areaID    = 0;
-        $areaPairs = $this->loadModel('tree')->getPairs($categories = '', $type = 'area');
+        $areaPairs = $this->loadModel('tree')->getPairs($categories = '', $type = 'area', 'normal');
         foreach($areaPairs as $id => $area)
         {
             if(strpos($location, $area) !== false) $areaID = $id;

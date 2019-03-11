@@ -53,7 +53,7 @@ class block extends control
      */
     public function admin($index = 0, $blockID = '')
     {
-        $this->app->loadLang('block', 'sys');
+        $this->app->loadLang('block');
         $title = $index == 0 ? $this->lang->block->createBlock : $this->lang->block->editBlock;
 
         if(!$index) $index = $this->block->getLastKey('team') + 1;
@@ -139,7 +139,7 @@ class block extends control
         $blogs = $this->loadModel('article')->process($blogs);
 
         $this->view->blogs = $blogs;
-        $this->view->users = $this->loadModel('user', 'sys')->getPairs();
+        $this->view->users = $this->loadModel('user')->getPairs();
 
         $this->display();
     }

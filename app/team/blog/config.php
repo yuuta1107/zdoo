@@ -8,7 +8,7 @@ $config->blog->editor->create = array('id' => 'content', 'tools' => 'full');
 $config->blog->editor->edit   = array('id' => 'content', 'tools' => 'full');
 
 global $lang, $app;
-$app->loadLang('article', 'sys');
+$app->loadLang('article');
 $config->blog->search['module'] = 'blog';
 
 $config->blog->search['fields']['t1.title']   = $lang->article->title;

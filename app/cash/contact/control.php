@@ -98,7 +98,7 @@ class contact extends control
     public function edit($contactID)
     {
         $contact = $this->contact->getByID($contactID);
-        $this->loadModel('common', 'sys')->checkPrivByCustomer(empty($contact) ? 0 : $contact->customer, 'edit');
+        $this->loadModel('common')->checkPrivByCustomer(empty($contact) ? 0 : $contact->customer, 'edit');
 
         if($_POST)
         {
@@ -132,7 +132,7 @@ class contact extends control
         $this->view->addresses  = $this->address->getList('contact', $contactID);
         $this->view->resumes    = $this->resume->getList($contactID);
         $this->view->customers  = $this->customer->getPairs('provider');
-        $this->view->preAndNext = $this->loadModel('common', 'sys')->getPreAndNextObject('contact', $contactID); 
+        $this->view->preAndNext = $this->loadModel('common')->getPreAndNextObject('contact', $contactID);
 
         $this->display();
     }
@@ -160,7 +160,7 @@ class contact extends control
     public function delete($contactID)
     {
         $contact = $this->contact->getByID($contactID);
-        $this->loadModel('common', 'sys')->checkPrivByCustomer(empty($contact) ? 0 : $contact->customer, 'edit');
+        $this->loadModel('common')->checkPrivByCustomer(empty($contact) ? 0 : $contact->customer, 'edit');
 
         $this->contact->delete(TABLE_CONTACT, $contactID);
         if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));

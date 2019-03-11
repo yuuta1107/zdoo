@@ -146,7 +146,7 @@ class contactModel extends model
         if(strpos($orderBy, 'id') === false) $orderBy .= ', id_desc';
 
         if($this->session->leadsQuery == false) $this->session->set('leadsQuery', ' 1 = 1');
-        $leadsQuery = $this->loadModel('search', 'sys')->replaceDynamic($this->session->leadsQuery);
+        $leadsQuery = $this->loadModel('search')->replaceDynamic($this->session->leadsQuery);
 
         $leads = array();
         if($mode == 'bysearch' && strpos($leadsQuery, '`nextDate`') !== false)
@@ -245,7 +245,7 @@ class contactModel extends model
         if(strpos($orderBy, 'id') === false) $orderBy .= ', id_desc';
 
         if($this->session->contactQuery == false) $this->session->set('contactQuery', ' 1 = 1');
-        $contactQuery = $this->loadModel('search', 'sys')->replaceDynamic($this->session->contactQuery);
+        $contactQuery = $this->loadModel('search')->replaceDynamic($this->session->contactQuery);
 
         $contacts = array();
         if(strpos(',contactedby,past,today,tomorrow,thisweek,thismonth,', ",{$mode},") !== false or ($mode == 'bysearch' && strpos($contactQuery, '`nextDate`') !== false))
@@ -424,7 +424,7 @@ class contactModel extends model
         if(!dao::isError())
         {
             $contactID = $this->dao->lastInsertID();
-            $this->loadModel('action', 'sys')->create('contact', $contactID, 'Created', '');
+            $this->loadModel('action')->create('contact', $contactID, 'Created', '');
 
             if($type != 'leads')
             {
@@ -520,7 +520,7 @@ class contactModel extends model
     {
         if(!$_FILES) return array('result' => true, 'contactID' => $contactID);
 
-        $fileModel = $this->loadModel('file', 'sys');
+        $fileModel = $this->loadModel('file');
 
         if(!$this->file->checkSavePath()) return array('result' => false, 'message' => $this->lang->file->errorUnwritable);
 
@@ -649,7 +649,7 @@ class contactModel extends model
             $this->dao->insert(TABLE_CUSTOMER)->data($customer, $skip = 'uid,contact,email,qq,phone,continue')->autoCheck()->batchCheck('name', 'notempty')->exec();
             if(dao::isError()) return false;
             $customerID = $this->dao->lastInsertID();
-            $this->loadModel('action', 'sys')->create('customer', $customerID, 'Created');
+            $this->loadModel('action')->create('customer', $customerID, 'Created');
 
             $resume = new stdclass();
             $resume->contact  = $contactID;
@@ -700,7 +700,7 @@ class contactModel extends model
         {
             $fields[$field] = $this->lang->contact->$field;
         }
-        $contactList = $this->loadModel('file', 'sys')->parseExcel($fields);
+        $contactList = $this->loadModel('file')->parseExcel($fields);
 
         $errorList   = array();
         $successList = array();
@@ -742,7 +742,7 @@ class contactModel extends model
             }
 
             $contactID = $this->dao->lastInsertID();
-            $this->loadModel('action', 'sys')->create('contact', $contactID, 'imported');
+            $this->loadModel('action')->create('contact', $contactID, 'imported');
         }
         $this->session->set('errorList', $errorList);
 

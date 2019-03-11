@@ -30,7 +30,7 @@ class address extends control
         $this->view->title      = $this->lang->address->common;
         $this->view->modalWidth = 800;
         $this->view->addresses  = $addresses;
-        $this->view->areaList   = $this->loadModel('tree', 'sys')->getOptionMenu('area');
+        $this->view->areaList   = $this->loadModel('tree')->getOptionMenu('area');
         $this->view->objectType = $objectType;
         $this->view->objectID   = $objectID;
 
@@ -60,14 +60,14 @@ class address extends control
                 if(isset($contact->customer)) $this->loadModel('customer')->updateEditedDate($contact->customer);
             }
 
-            $this->loadModel('action', 'sys')->create($objectType, $objectID, "createAddress", '',  $this->post->title);
+            $this->loadModel('action')->create($objectType, $objectID, "createAddress", '',  $this->post->title);
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => inlink('browse', "objectType=$objectType&objectID=$objectID")));
         }
 
         $this->view->title      = $this->lang->address->create;
         $this->view->objectID   = $objectID;
         $this->view->objectType = $objectType;
-        $this->view->areas      = $this->loadModel('tree', 'sys')->getOptionMenu('area');
+        $this->view->areas      = $this->loadModel('tree')->getOptionMenu('area');
         $this->display();
     }
 
@@ -96,14 +96,14 @@ class address extends control
 
             if($changes)
             {
-                $actionID = $this->loadModel('action', 'sys')->create($address->objectType, $address->objectID, 'editAddress');
+                $actionID = $this->loadModel('action')->create($address->objectType, $address->objectID, 'editAddress');
                 $this->action->logHistory($actionID, $changes);
             }
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => inlink('browse', "objectType=$address->objectType&objectID=$address->objectID")));
         }
 
         $this->view->title   = $this->lang->address->edit;
-        $this->view->areas   = $this->loadModel('tree', 'sys')->getOptionMenu('area');
+        $this->view->areas   = $this->loadModel('tree')->getOptionMenu('area');
         $this->view->address = $address;
         $this->display();
     }
@@ -121,7 +121,7 @@ class address extends control
 
         $this->address->delete($addressID);
         if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
-        $this->loadModel('action', 'sys')->create($address->objectType, $address->objectID, "deleteAddress", '',  $address->title);
+        $this->loadModel('action')->create($address->objectType, $address->objectID, "deleteAddress", '',  $address->title);
         $this->send(array('result' => 'success'));
     }
 }

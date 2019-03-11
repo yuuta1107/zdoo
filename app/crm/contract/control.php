@@ -62,7 +62,7 @@ class contract extends control
         $this->session->set('contractList', $this->app->getURI(true));
 
         /* Build search form. */
-        $this->loadModel('search', 'sys');
+        $this->loadModel('search');
         $this->config->contract->search['actionURL'] = $this->createLink('contract', 'browse', 'mode=bysearch');
         $this->config->contract->search['params']['product']['values']  = array('' => '') + $this->loadModel('product')->getPairs();
         $this->search->setSearchParams($this->config->contract->search);
@@ -76,7 +76,7 @@ class contract extends control
         $this->view->pager        = $pager;
         $this->view->mode         = $mode;
         $this->view->orderBy      = $orderBy;
-        $this->view->currencySign = $this->loadModel('common', 'sys')->getCurrencySign();
+        $this->view->currencySign = $this->loadModel('common')->getCurrencySign();
         $this->view->currencyList = $this->common->getCurrencyList();
         if($contracts) $this->view->totalAmount = $this->contract->countAmount($contracts);
 
@@ -98,8 +98,8 @@ class contract extends control
             $contractID = $this->contract->create();
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
 
-            $this->loadModel('action', 'sys')->create('contract', $contractID, 'Created');
-            $this->loadModel('action', 'sys')->create('customer', $this->post->customer, 'createContract', '', html::a($this->createLink('contract', 'view', "contractID=$contractID"), $this->post->name));
+            $this->loadModel('action')->create('contract', $contractID, 'Created');
+            $this->loadModel('action')->create('customer', $this->post->customer, 'createContract', '', html::a($this->createLink('contract', 'view', "contractID=$contractID"), $this->post->name));
 
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => inlink('browse')));
         }
@@ -115,9 +115,9 @@ class contract extends control
         $this->view->title        = $this->lang->contract->create;
         $this->view->orderID      = $orderID;
         $this->view->customers    = $this->loadModel('customer')->getPairs('client', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit, $customerID);
-        $this->view->users        = $this->loadModel('user', 'crm')->getPairs('nodeleted,noclosed');
-        $this->view->currencyList = $this->loadModel('common', 'sys')->getCurrencyList();
-        $this->view->currencySign = $this->loadModel('common', 'sys')->getCurrencySign();
+        $this->view->users        = $this->loadModel('user')->getPairs('nodeleted,noclosed');
+        $this->view->currencyList = $this->loadModel('common')->getCurrencyList();
+        $this->view->currencySign = $this->loadModel('common')->getCurrencySign();
         $this->display();
     }
 
@@ -141,7 +141,7 @@ class contract extends control
                 $changes = $this->contract->update($contractID);
                 if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
             }
-            $files = $this->loadModel('file', 'sys')->saveUpload('contract', $contractID);
+            $files = $this->loadModel('file')->saveUpload('contract', $contractID);
 
             if($this->post->remark or $changes or $files)
             {
@@ -150,17 +150,17 @@ class contract extends control
                 if($files) $fileAction = $this->lang->addFiles . join(',', $files);
 
                 $action           = $this->post->remark == '' ? 'Edited' : 'Commented';
-                $contractActionID = $this->loadModel('action', 'sys')->create('contract', $contractID, $action, $fileAction);
+                $contractActionID = $this->loadModel('action')->create('contract', $contractID, $action, $fileAction);
                 if($changes) $this->action->logHistory($contractActionID, $changes);
 
-                $customerActionID = $this->loadModel('action', 'sys')->create('customer', $contract->customer, 'editContract', $fileAction, html::a($this->createLink('contract', 'view', "contractID=$contractID"), $contract->name));
+                $customerActionID = $this->loadModel('action')->create('customer', $contract->customer, 'editContract', $fileAction, html::a($this->createLink('contract', 'view', "contractID=$contractID"), $contract->name));
                 if($changes) $this->action->logHistory($customerActionID, $changes);
 
                 if($contract->order)
                 {
                     foreach($contract->order as $orderID)
                     {
-                        $orderActionID = $this->loadModel('action', 'sys')->create('order', $orderID, 'editContract', $fileAction, html::a($this->createLink('contract', 'view', "contractID=$contractID"), $contract->name));
+                        $orderActionID = $this->loadModel('action')->create('order', $orderID, 'editContract', $fileAction, html::a($this->createLink('contract', 'view', "contractID=$contractID"), $contract->name));
                         if($changes) $this->action->logHistory($orderActionID, $changes);
                     }
                 }
@@ -175,10 +175,10 @@ class contract extends control
         $this->view->orders         = array('' => '') + $this->order->getList($mode = 'query', "customer={$contract->customer}");
         $this->view->customers      = $this->loadModel('customer')->getPairs('client');
         $this->view->contacts       = $this->loadModel('contact', 'crm')->getPairs($contract->customer);
-        $this->view->users          = $this->loadModel('user', 'sys')->getPairs('nodeleted,noforbidden,noclosed');
+        $this->view->users          = $this->loadModel('user')->getPairs('nodeleted,noforbidden,noclosed');
         $this->view->addresses      = $this->loadModel('address', 'crm')->getPairsByObject('customer', $contract->customer); 
-        $this->view->currencyList   = $this->loadModel('common', 'sys')->getCurrencyList();
-        $this->view->currencySign   = $this->loadModel('common', 'sys')->getCurrencySign();
+        $this->view->currencyList   = $this->loadModel('common')->getCurrencyList();
+        $this->view->currencySign   = $this->loadModel('common')->getCurrencySign();
         $this->display();
     }
 
@@ -199,12 +199,12 @@ class contract extends control
 
             if($this->post->finish)
             {
-                $this->loadModel('action', 'sys')->create('contract', $contractID, 'finishDelivered', $this->post->comment, '', $this->post->deliveredBy);
+                $this->loadModel('action')->create('contract', $contractID, 'finishDelivered', $this->post->comment, '', $this->post->deliveredBy);
                 $this->action->create('customer', $contract->customer, 'finishDeliverContract', $this->post->comment, html::a($this->createLink('contract', 'view', "contractID=$contractID"), $contract->name), $this->post->deliveredBy);
             }
             else
             {
-                $this->loadModel('action', 'sys')->create('contract', $contractID, 'Delivered', $this->post->comment, '', $this->post->deliveredBy);
+                $this->loadModel('action')->create('contract', $contractID, 'Delivered', $this->post->comment, '', $this->post->deliveredBy);
                 $this->action->create('customer', $contract->customer, 'deliverContract', $this->post->comment, html::a($this->createLink('contract', 'view', "contractID=$contractID"), $contract->name), $this->post->deliveredBy);
             }
 
@@ -213,7 +213,7 @@ class contract extends control
 
         $this->view->title    = $this->lang->contract->delivery;
         $this->view->contract = $contract;
-        $this->view->users    = $this->loadModel('user', 'sys')->getPairs('nodeleted,noforbidden,noclosed');
+        $this->view->users    = $this->loadModel('user')->getPairs('nodeleted,noforbidden,noclosed');
         $this->display();
     }
 
@@ -239,7 +239,7 @@ class contract extends control
         $this->view->title    = $this->lang->contract->editDelivery;
         $this->view->delivery = $delivery;
         $this->view->contract = $contract;
-        $this->view->users    = $this->loadModel('user', 'sys')->getPairs('nodeleted,noforbidden,noclosed');
+        $this->view->users    = $this->loadModel('user')->getPairs('nodeleted,noforbidden,noclosed');
         $this->display();
     }
 
@@ -259,10 +259,10 @@ class contract extends control
         if(dao::isError()) $this->send(array('result' => 'fail', 'message' => $this->lang->fail));
 
         $deleteInfo = sprintf($this->lang->contract->deleteDeliveryInfo, $delivery->deliveredDate);
-        $this->loadModel('action', 'sys')->create('contract', $contract->id, 'deletedelivered', '', $deleteInfo);
+        $this->loadModel('action')->create('contract', $contract->id, 'deletedelivered', '', $deleteInfo);
 
         $actionExtra = html::a($this->createLink('contract', 'view', "contractID=$contract->id"), $contract->name) . $deleteInfo; 
-        $this->loadModel('action', 'sys')->create('customer', $contract->customer, 'deletedelivered', $this->post->comment, $actionExtra, $this->post->returnedBy);
+        $this->loadModel('action')->create('customer', $contract->customer, 'deletedelivered', $this->post->comment, $actionExtra, $this->post->returnedBy);
 
         $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess));
     }
@@ -278,7 +278,7 @@ class contract extends control
     {
         $this->loadModel('trade', 'cash');
         $contract     = $this->contract->getByID($contractID);
-        $currencySign = $this->loadModel('common', 'sys')->getCurrencySign();
+        $currencySign = $this->loadModel('common')->getCurrencySign();
         if(!empty($_POST))
         {
             $return = $this->contract->receive($contractID);
@@ -288,18 +288,18 @@ class contract extends control
 
             if($this->post->finish)
             {
-                $this->loadModel('action', 'sys')->create('contract', $contractID, 'finishReturned', $this->post->comment, zget($currencySign, $contract->currency, '') . $this->post->amount, $this->post->returnedBy);
-                $this->loadModel('action', 'sys')->create('customer', $contract->customer, 'finishReceiveContract', $this->post->comment, $actionExtra, $this->post->returnedBy);
+                $this->loadModel('action')->create('contract', $contractID, 'finishReturned', $this->post->comment, zget($currencySign, $contract->currency, '') . $this->post->amount, $this->post->returnedBy);
+                $this->loadModel('action')->create('customer', $contract->customer, 'finishReceiveContract', $this->post->comment, $actionExtra, $this->post->returnedBy);
             }
             else
             {
-                $this->loadModel('action', 'sys')->create('contract', $contractID, 'returned', $this->post->comment, zget($currencySign, $contract->currency, '') . $this->post->amount, $this->post->returnedBy);
-                $this->loadModel('action', 'sys')->create('customer', $contract->customer, 'receiveContract', $this->post->comment, $actionExtra, $this->post->returnedBy);
+                $this->loadModel('action')->create('contract', $contractID, 'returned', $this->post->comment, zget($currencySign, $contract->currency, '') . $this->post->amount, $this->post->returnedBy);
+                $this->loadModel('action')->create('customer', $contract->customer, 'receiveContract', $this->post->comment, $actionExtra, $this->post->returnedBy);
             }
             $this->send($return);
         }
 
-        $user   = $this->loadModel('user', 'sys')->getByAccount($contract->createdBy);
+        $user   = $this->loadModel('user')->getByAccount($contract->createdBy);
         $dept   = $this->loadModel('tree')->getByID($user->dept);
         $orders = $this->dao->select('`order`')->from(TABLE_CONTRACTORDER)->where('contract')->eq($contractID)->andWhere('`order`')->ne('0')->fetchPairs();
 
@@ -339,7 +339,7 @@ class contract extends control
     {
         $return       = $this->contract->getReturnByID($returnID);
         $contract     = $this->contract->getByID($return->contract);
-        $currencySign = $this->loadModel('common', 'sys')->getCurrencySign();
+        $currencySign = $this->loadModel('common')->getCurrencySign();
         if(!empty($_POST))
         {
             $this->contract->editReturn($return, $contract);
@@ -367,7 +367,7 @@ class contract extends control
     {
         $return   = $this->contract->getReturnByID($returnID);
         $contract = $this->contract->getByID($return->contract);
-        $currencySign = $this->loadModel('common', 'sys')->getCurrencySign();
+        $currencySign = $this->loadModel('common')->getCurrencySign();
 
         $this->contract->deleteReturn($returnID);
         if(dao::isError()) $this->send(array('result' => 'fail', 'message' => $this->lang->fail));
@@ -453,7 +453,7 @@ class contract extends control
     {
         $this->loadModel('trade', 'cash');
         $contract = $this->contract->getByID($contractID);
-        $this->loadModel('common', 'sys')->checkPrivByCustomer(empty($contract) ? '0' : $contract->customer);
+        $this->loadModel('common')->checkPrivByCustomer(empty($contract) ? '0' : $contract->customer);
 
         /* Set allowed edit contract ID list. */
         $this->app->user->canEditContractIdList = ',' . implode(',', $this->contract->getContractsSawByMe('edit', (array)$contractID)) . ',';
@@ -493,7 +493,7 @@ class contract extends control
         $this->view->addresses     = $this->loadModel('address', 'crm')->getPairsByObject('customer', $contract->customer); 
         $this->view->contract      = $contract;
         $this->view->actions       = $this->loadModel('action')->getList('contract', $contractID);
-        $this->view->currencySign  = $this->loadModel('common', 'sys')->getCurrencySign();
+        $this->view->currencySign  = $this->loadModel('common')->getCurrencySign();
         $this->view->depositorList = $this->loadModel('depositor', 'cash')->getPairs();
         $this->view->deptList      = $this->loadModel('tree')->getPairs(0, 'dept');
         $this->view->categories    = $expenseTypes + $incomeTypes; 

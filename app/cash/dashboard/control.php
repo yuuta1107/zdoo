@@ -20,7 +20,7 @@ class dashboard extends control
     public function index()
     {
         $appName = $this->app->getAppName();
-        $entry   = $this->loadModel('entry', 'sys')->getByCode($appName);
+        $entry   = $this->loadModel('entry')->getByCode($appName);
 
         $this->view->title   = $entry->name;
         $this->view->appName = $appName;

@@ -53,7 +53,7 @@ class block extends control
      */
     public function admin($index = 0, $blockID = '')
     {
-        $this->app->loadLang('block', 'sys');
+        $this->app->loadLang('block');
         $title = $index == 0 ? $this->lang->block->createBlock : $this->lang->block->editBlock;
 
         if(!$index) $index = $this->block->getLastKey('cash') + 1;
@@ -165,7 +165,7 @@ class block extends control
             ->limit($this->params->num)
             ->fetchAll('id');
 
-        $this->view->currencySign  = $this->loadModel('common', 'sys')->getCurrencySign();
+        $this->view->currencySign  = $this->loadModel('common')->getCurrencySign();
         $this->view->depositorList = $this->loadModel('depositor', 'cash')->getPairs();
         $this->display();
     }
@@ -204,7 +204,7 @@ class block extends control
         }
 
         $this->view->annualChartDatas = $annualChartDatas;
-        $this->view->currencySign     = $this->loadModel('common', 'sys')->getCurrencySign();
+        $this->view->currencySign     = $this->loadModel('common')->getCurrencySign();
         $this->display();
     }
 
@@ -249,7 +249,7 @@ class block extends control
         $currentMonth = date('m');
 
         $datas = $this->loadModel('trade', 'cash')->getChartData($this->params->type, $currentYear, $currentMonth, $this->params->groupBy, $this->params->currency); 
-        $datas = $this->loadModel('report', 'sys')->computePercent($datas);
+        $datas = $this->loadModel('report')->computePercent($datas);
 
         $this->view->datas        = $datas;
         $this->view->type         = $this->params->type;

@@ -86,7 +86,7 @@ class orderModel extends model
 
         /* Process search condition. */
         if($this->session->orderQuery == false) $this->session->set('orderQuery', ' 1 = 1');
-        $orderQuery = $this->loadModel('search', 'sys')->replaceDynamic($this->session->orderQuery);
+        $orderQuery = $this->loadModel('search')->replaceDynamic($this->session->orderQuery);
 
         if(strpos($orderBy, 'status') !== false) $orderBy .= ', o.closedReason';
         if(strpos($orderBy, 'id') === false) $orderBy .= ', o.id_desc';
@@ -403,8 +403,8 @@ class orderModel extends model
         if(dao::isError()) return array('result' => 'fail', 'message' => dao::getError());
 
         $orderID = $this->dao->lastInsertID();
-        $this->loadModel('action', 'sys')->create('order', $orderID, 'Created', '');
-        $this->loadModel('action', 'sys')->create('customer', $this->post->customer, 'createOrder', '', html::a(helper::createLink('order', 'view', "orderID=$orderID"), $orderID));
+        $this->loadModel('action')->create('order', $orderID, 'Created', '');
+        $this->loadModel('action')->create('customer', $this->post->customer, 'createOrder', '', html::a(helper::createLink('order', 'view', "orderID=$orderID"), $orderID));
 
         return array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => helper::createLink('order', 'browse'), 'orderID' => $orderID);
     }
@@ -597,7 +597,7 @@ class orderModel extends model
     public function countAmount($orders)
     {
         $totalAmount  = array();
-        $currencyList = $this->loadModel('common', 'sys')->getCurrencyList();
+        $currencyList = $this->loadModel('common')->getCurrencyList();
         $currencySign = $this->common->getCurrencySign();
 
         foreach($orders as $order)

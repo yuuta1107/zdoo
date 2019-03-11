@@ -60,7 +60,7 @@ class projblockModel extends blockModel
      */
     public function getTaskParams()
     {
-        $this->app->loadLang('task', 'sys');
+        $this->app->loadLang('task');
 
         $params = new stdclass();
 

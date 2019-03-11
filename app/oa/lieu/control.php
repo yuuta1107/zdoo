@@ -247,7 +247,7 @@ class lieu extends control
 
         $this->view->title     = $this->lang->lieu->view;
         $this->view->lieu      = $lieu;
-        $this->view->users     = $this->loadModel('user', 'sys')->getPairs();
+        $this->view->users     = $this->loadModel('user')->getPairs();
         $this->view->type      = $type;
         $this->display();
     }
@@ -510,7 +510,7 @@ class lieu extends control
         }
 
         $this->view->title      = $this->lang->lieu->setReviewer;
-        $this->view->users      = $this->loadModel('user', 'sys')->getPairs('noclosed,noforbidden,nodeleted');
+        $this->view->users      = $this->loadModel('user')->getPairs('noclosed,noforbidden,nodeleted');
         $this->view->reviewedBy = $this->lieu->getReviewedBy();
         $this->display();
     }
