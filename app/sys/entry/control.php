@@ -20,7 +20,7 @@ class entry extends control
     public function admin($category = 0)
     {
         $entries    = $this->entry->getEntries($type = 'custom', $category);
-        $categories = $this->dao->select('id, name')->from(TABLE_CATEGORY)->where('type')->eq('entry')->orderBy('`order`')->fetchPairs();
+        $categories = $this->dao->select('id, name')->from(TABLE_CATEGORY)->where('type')->eq('entry')->andWhere('deleted')->eq(0)->orderBy('`order`')->fetchPairs();
         $tmpEntries = array();
         $maxOrder   = 0;
         foreach($entries as $key => $entry)
