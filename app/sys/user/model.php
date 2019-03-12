@@ -253,7 +253,10 @@ class userModel extends model
             ->checkIF($user->email, 'email', 'unique')
             ->exec();
 
-        $this->loadModel('action')->create('user', $this->dao->lastInsertID(), 'created');
+        $userID = $this->dao->lastInsertID();
+        $this->loadModel('action')->create('user', $userID, 'created');
+
+        return !dao::isError();
     }
 
     /**
