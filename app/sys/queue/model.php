@@ -84,7 +84,7 @@ class queueModel extends model
             $actions = $queueSetting['xuanxuan']['setting'];
             if(isset($actions[$objectType]) && in_array($actionType, $actions[$objectType]))
             {
-                $this->sendNoticeToXuanXuan($toList, $action);
+                $this->sendNoticeToXuanXuan($toList, $action, "", "", $queue);
             }
         }
     }
@@ -96,10 +96,11 @@ class queueModel extends model
      * @param object $action
      * @param string $subject
      * @param string $data
+     * @param object $queue
      * @access public
      * @return void
      */
-    public function sendNoticeToXuanXuan($toList, $action, $subject = '', $data = '')
+    public function sendNoticeToXuanXuan($toList, $action, $subject = '', $data = '', $queue = '')
     {
         if(empty($toList)) return;
         $target = $this->dao->select('id')->from(TABLE_USER)->where('account')->in($toList)->fetchPairs();
@@ -109,7 +110,15 @@ class queueModel extends model
             $this->loadModel($action->objectType);
             $info = $this->{$action->objectType}->getById($action->objectID);
             if(!$info) return;
-
+            if($action->objectType == 'todo')
+            {
+                if($info->date != date(DT_DATE1))
+                {
+                    $this->dao->update(TABLE_QUEUE)->set('status')->eq('wait')->where('id')->eq($queue->id)->exec();
+                    return;
+                }
+            }
+            
             $actionName = isset($this->lang->{$action->objectType}->{$action->action}) ? $this->lang->{$action->objectType}->{$action->action} : '';
             $subject    = $actionName . $this->lang->{$action->objectType}->common;
             $content    = $this->lang->{$action->objectType}->common . "#{$info->id} {$info->name}";
