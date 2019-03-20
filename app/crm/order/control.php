@@ -95,7 +95,7 @@ class order extends control
 
         unset($this->lang->order->menu);
         $this->view->products          = array('') + $this->loadModel('product')->getPairs($status = 'normal');
-        $this->view->customers         = $this->loadModel('customer')->getPairs('client', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit);
+        $this->view->customers         = $this->loadModel('customer')->getPairs('client', $emptyOption = true, $orderBy = 'id_desc', $limit = $this->config->customerLimit, $customer);
         $this->view->title             = $this->lang->order->create;
         $this->view->currencyList      = $this->loadModel('common')->getCurrencyList();
         $this->view->customer          = $customer;
