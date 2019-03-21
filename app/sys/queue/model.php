@@ -92,11 +92,11 @@ class queueModel extends model
     /**
      * Send notice to XuanXuan.
      *
-     * @param string $toList
-     * @param object $action
-     * @param string $subject
-     * @param string $data
-     * @param object $queue
+     * @param  string $toList
+     * @param  object $action
+     * @param  string $subject
+     * @param  string $data
+     * @param  object $queue
      * @access public
      * @return void
      */
