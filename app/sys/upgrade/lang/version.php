@@ -41,3 +41,4 @@ $lang->upgrade->fromVersions['4_7']      = '4.7';
 $lang->upgrade->fromVersions['4_8']      = '4.8';
 $lang->upgrade->fromVersions['4_9']      = '4.9';
 $lang->upgrade->fromVersions['5_0']      = '5.0';
+$lang->upgrade->fromVersions['5_1']      = '5.1';

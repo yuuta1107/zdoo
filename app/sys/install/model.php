@@ -265,7 +265,7 @@ class installModel extends model
      */
     public function connectDB()
     {
-        $dsn = "mysql:dbname={$this->config->db->name}; host={$this->config->db->host}; port={$this->config->db->port};";
+        $dsn = "mysql:host={$this->config->db->host}; port={$this->config->db->port};";
         try 
         {
             $dbh = new PDO($dsn, $this->config->db->user, $this->config->db->password);
