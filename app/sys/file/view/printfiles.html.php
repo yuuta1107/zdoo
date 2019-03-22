@@ -48,7 +48,7 @@ function downloadFile(fileID)
     foreach($files as $file)
     {
         echo "<li><i class='icon-file-text-alt text-muted'></i> ";
-        echo html::a('javascript:;', $file->title .'.' . $file->extension, "onclick='return downloadFile($file->id)' class='file-name text-nowrap' title='{$file->title}'");
+        echo html::a('javascript:;', $file->title . '.' . $file->extension, "onclick='return downloadFile($file->id)' class='file-name text-nowrap' title='{$file->title}'");
         commonModel::printLink('file', 'delete', "fileID=$file->id", "<i class='icon-remove'></i>", "class='deleter link-btn'");
         commonModel::printLink('file', 'edit', "fileID=$file->id", "<i class='icon-pencil'></i>", "data-toggle='modal' class='link-edit link-btn'");
         echo '</li>';
