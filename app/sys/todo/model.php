@@ -640,6 +640,10 @@ class todoModel extends model
         $target = array_diff($users, $todos);
         if(!empty($target))
         {
+            $lang = isset($this->config->xuanxuan->xxbLang) ? $this->config->xuanxuan->xxbLang : 'zh-cn';
+            $this->app->setClientLang($lang);
+            $this->app->loadLang('todo');
+            
             $target = join(',', $target);
             $_SESSION[$sessionKey] = trim($notCreateTodoUsers . ',' . $target, ',');
 
