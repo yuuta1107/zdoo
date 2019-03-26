@@ -924,7 +924,7 @@ class contractModel extends model
 
             $member->account      = $account;
             $member->contribution = $contribution;
-            if($account == $this->app->user->account) $member->status = 'accept';
+            $member->status       = $account == $this->app->user->account ? 'accept' : 'wait';
 
             $this->dao->insert(TABLE_TEAM)->data($member)->autoCheck()->exec();
         }
