@@ -191,7 +191,6 @@ $(document).ready(function()
     });
 });
 
-
 function updateWeekendAndHoliday()
 {
     var dates = $('.calendar .cell-day .day').map(function(){return $(this).data('date').toDateString();}).get();
@@ -204,6 +203,7 @@ function updateWeekendAndHoliday()
                 for(var date in response.dates)
                 {
                     var label = response.dates[date];
+                    $(".cell-day .day[data-date='" + date + "'] .heading").find('.label-rest').remove();
                     $(".cell-day .day[data-date='" + date + "'] .heading").prepend("<div class='label-rest'>" + label + "</div>");
                 }
             }

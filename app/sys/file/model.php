@@ -212,7 +212,7 @@ class fileModel extends model
                 if(empty($filename)) continue;
                 $file['extension'] = $this->getExtension($filename);
                 $file['pathname']  = $this->setPathName($id, $file['extension']);
-                $file['title']     = !empty($_POST['labels'][$id]) ? htmlspecialchars($_POST['labels'][$id]) : str_replace('.' . $file['extension'], '', $filename);
+                $file['title']     = !empty($_POST['labels'][$id]) ? htmlspecialchars($_POST['labels'][$id]) : str_ireplace('.' . $file['extension'], '', $filename);
                 $file['size']      = $size[$id];
                 $file['tmpname']   = $tmp_name[$id];
                 $files[] = $file;
