@@ -786,4 +786,37 @@ class fileModel extends model
         }
         return $data;
     }
+
+    /**
+     * Send the download header to the client.
+     *
+     * @param  string    $fileName
+     * @param  string    $extension
+     * @access public
+     * @return void
+     */
+    public function sendDownHeader($fileName, $fileType, $content, $fileSize = 0)
+    {
+        /* Set the downloading cookie, thus the export form page can use it to judge whether to close the window or not. */
+        setcookie('downloading', 1);
+
+        /* Append the extension name auto. */
+        $extension = '.' . $fileType;
+        if(strpos($fileName, $extension) === false) $fileName .= $extension;
+
+        /* urlencode the filename for ie. */
+        $isIE = (strpos($this->server->http_user_agent, 'Trident') !== false) or (strpos($this->server->http_user_agent, 'MSIE') !== false) ;
+        if($isIE) $fileName = urlencode($fileName);
+
+        /* Judge the content type. */
+        $mimes = $this->config->file->mimes;
+        $contentType = isset($mimes[$fileType]) ? $mimes[$fileType] : $mimes['default'];
+
+        header("Content-type: $contentType");
+        header("Content-Disposition: attachment; filename=\"$fileName\"");
+        header("Pragma: no-cache");
+        header("Expires: 0");
+        if($fileSize) header("Content-length: {$fileSize}");
+        die($content);
+    }
 }

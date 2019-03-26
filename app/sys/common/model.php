@@ -412,7 +412,7 @@ class commonModel extends model
 
                     if(commonModel::hasPriv($moduleName, $methodName))
                     {
-                        $link  = helper::createLink($moduleName, $methodName, $settingVars);
+                        $link    = helper::createLink($moduleName, $methodName, $settingVars);
                         $string .= !$isMobile ? "<li$class><a href='$link'>$label</a></li>\n" : "<a$class href='$link'>$label</a>";
                         break;
                     }
