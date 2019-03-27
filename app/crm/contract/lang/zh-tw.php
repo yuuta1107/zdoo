@@ -78,7 +78,7 @@ $lang->contract->export           = '導出';
 $lang->contract->totalReturn      = '回款合計';
 $lang->contract->tradeList        = '收支記錄';
 $lang->contract->manageTeam       = '維護團隊';
-$lang->contract->confirmTeam      = '確認提成';
+$lang->contract->confirmTeam      = '確認貢獻度';
 
 $lang->contract->deliveryList[]        = '';
 $lang->contract->deliveryList['wait']  = '等待交付';
@@ -107,28 +107,27 @@ $lang->contract->returnInfo         = "<p>%s, 由 <strong>%s</strong> 回款%s�
 $lang->contract->deliveryInfo       = "<p>%s由%s交付。</p>";
 $lang->contract->deleteReturnInfo   = "%s的回款%s";
 $lang->contract->deleteDeliveryInfo = "%s的交付";
-$lang->contract->teamTips           = '<strong>成員為空</strong>或者<strong>提成比例為空</strong>不保存。';
+$lang->contract->teamTips           = '<strong>成員為空</strong>或者<strong>貢獻度為空</strong>不保存。';
 
 $lang->contract->placeholder = new stdclass();
 $lang->contract->placeholder->real = '成交金額';
 
 $lang->contract->team = new stdclass();
-$lang->contract->team->common  = '團隊';
-$lang->contract->team->account = '成員';
-$lang->contract->team->rate    = '提成比例(%)';
-$lang->contract->team->money   = '金額';
-$lang->contract->team->status  = '狀態';
-$lang->contract->team->accept  = '接受';
-$lang->contract->team->reject  = '拒絶';
-$lang->contract->team->total   = '合計';
+$lang->contract->team->common       = '團隊';
+$lang->contract->team->account      = '成員';
+$lang->contract->team->contribution = '貢獻度(%)';
+$lang->contract->team->money        = '銷售額';
+$lang->contract->team->status       = '狀態';
+$lang->contract->team->accept       = '接受';
+$lang->contract->team->reject       = '拒絶';
+$lang->contract->team->total        = '合計';
 
 $lang->contract->team->statusList['wait']   = '待確認';
 $lang->contract->team->statusList['accept'] = '已接受';
 $lang->contract->team->statusList['reject'] = '已拒絶';
 
 $lang->contract->error = new stdclass();
-$lang->contract->error->wrongRate      = '<strong>提成比例</strong>應該是數字';
-$lang->contract->error->wrongTotalRate = '<strong>提成比例總額</strong>應該不大於100%';
+$lang->contract->error->wrong = '<strong>貢獻度</strong>應該是數字';
 
 $lang->plan = new stdclass();
 $lang->plan->amount = $lang->contract->thisAmount;

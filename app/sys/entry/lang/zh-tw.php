@@ -109,3 +109,13 @@ $lang->entry->integrationList[0] = '關閉';
 
 $lang->entry->platformList['ranzhi']   = '然之';
 $lang->entry->platformList['xuanxuan'] = '喧喧';
+
+$lang->entry->errmsg['PARAM_CODE_MISSING']    = '缺少code參數';
+$lang->entry->errmsg['PARAM_TOKEN_MISSING']   = '缺少token參數';
+$lang->entry->errmsg['SESSION_CODE_MISSING']  = '缺少session code';
+$lang->entry->errmsg['EMPTY_KEY']             = '應用未設置密鑰';
+$lang->entry->errmsg['INVALID_TOKEN']         = '無效的token參數';
+$lang->entry->errmsg['SESSION_VERIFY_FAILED'] = 'session驗證失敗';
+$lang->entry->errmsg['IP_DENIED']             = '該IP被限制訪問';
+$lang->entry->errmsg['ACCOUNT_UNBOUND']       = '未綁定用戶';
+$lang->entry->errmsg['EMPTY_ENTRY']           = '應用不存在';

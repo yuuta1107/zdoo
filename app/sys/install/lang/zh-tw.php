@@ -130,6 +130,8 @@ $lang->install->cronList[1] = '監控定時任務';
 $lang->install->cronList[2] = '定時備份任務';
 $lang->install->cronList[3] = '刪除30天前的備份';
 $lang->install->cronList[4] = '每日提醒';
+$lang->install->cronList[5] = '出隊列';
+$lang->install->cronList[6] = '檢查是否添加待辦';
 
 $lang->install->groupList[1]['name'] = '管理員';
 $lang->install->groupList[1]['desc'] = '管理員擁有前台所有權限';
