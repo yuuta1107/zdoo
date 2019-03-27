@@ -21,9 +21,7 @@ class queueModel extends model
     /**
      * Check send.
      *
-     * @param  int    $objectID
-     * @param  int    $actionID
-     * @param  string $toList
+     * @param  object $queue
      * @access public
      * @return void
      */
@@ -37,7 +35,7 @@ class queueModel extends model
 
         if(!$actionID)
         {
-            $this->sendNoticeToXuanXuan($toList, '', $subject, $data);
+            $this->sendNoticeToXuanXuan($toList, '', $subject, $data, $queue->id);
             return;
         }
 
@@ -84,7 +82,7 @@ class queueModel extends model
             $actions = $queueSetting['xuanxuan']['setting'];
             if(isset($actions[$objectType]) && in_array($actionType, $actions[$objectType]))
             {
-                $this->sendNoticeToXuanXuan($toList, $action, "", "", $queue);
+                $this->sendNoticeToXuanXuan($toList, $action, "", "", $queue->id);
             }
         }
     }
@@ -96,11 +94,11 @@ class queueModel extends model
      * @param  object $action
      * @param  string $subject
      * @param  string $data
-     * @param  object $queue
+     * @param  int    $queueID
      * @access public
      * @return void
      */
-    public function sendNoticeToXuanXuan($toList, $action, $subject = '', $data = '', $queue = '')
+    public function sendNoticeToXuanXuan($toList, $action, $subject = '', $data = '', $queueID)
     {
         if(empty($toList)) return;
         $target = $this->dao->select('id')->from(TABLE_USER)->where('account')->in($toList)->fetchPairs();
@@ -112,9 +110,9 @@ class queueModel extends model
             if(!$info) return;
             if($action->objectType == 'todo')
             {
-                if($info->date != date(DT_DATE1))
+                if($info->date != date(DT_DATE2))
                 {
-                    $this->dao->update(TABLE_QUEUE)->set('status')->eq('wait')->where('id')->eq($queue->id)->exec();
+                    $this->dao->update(TABLE_QUEUE)->set('status')->eq('wait')->where('id')->eq($queueID)->exec();
                     return;
                 }
             }
