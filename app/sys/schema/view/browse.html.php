@@ -23,16 +23,16 @@
       <tr class='text-center'>
         <th class='w-70px'><?php  echo $lang->trade->id;?></th>
         <th class='text-left'><?php echo $lang->schema->name;?></th>
-        <th class='w-200px'><?php echo $lang->actions;?></th>
+        <th class='w-140px'><?php echo $lang->actions;?></th>
       </tr>
       <?php foreach($schemas as $schema):?>
       <tr>
         <td><?php echo $schema->id;?></td>
         <td class='text-left'><?php echo $schema->name;?></td>
         <td>
-          <?php echo html::a(inlink('view', "schema={$schema->id}"), $lang->schema->view, "data-toggle='modal'");?>
-          <?php echo html::a(inlink('edit', "schemaID={$schema->id}"), $lang->edit);?>
-          <?php echo html::a(inlink('delete', "schemaID={$schema->id}"), $lang->delete, "class='deleter'");?>
+          <?php commonModel::printLink('schema', 'view', "schema={$schema->id}", $lang->schema->view, "data-toggle='modal'");?>
+          <?php commonModel::printLink('schema', 'edit', "schemaID={$schema->id}", $lang->edit);?>
+          <?php commonModel::printLink('schema', 'delete', "schemaID={$schema->id}", $lang->delete, "class='deleter'");?>
         </td>
       </tr>
       <?php endforeach;?>
