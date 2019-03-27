@@ -14,7 +14,7 @@ $config->dynamic->search['fields']['objectName'] = $lang->action->objectName;
 
 $config->dynamic->search['params']['date']       = array('operator' => '>=',      'control' => 'input',  'values' => '', 'class' => 'date');
 $config->dynamic->search['params']['actor']      = array('operator' => '=',       'control' => 'select', 'values' => 'users');
-$config->dynamic->search['params']['action']     = array('operator' => '=',       'control' => 'select', 'values' => $lang->action->search->label);
-$config->dynamic->search['params']['objectType'] = array('operator' => '=',       'control' => 'select', 'values' => $lang->action->objectTypes);
+$config->dynamic->search['params']['action']     = array('operator' => '=',       'control' => 'select', 'values' => array('' => '') + $lang->action->search->label);
+$config->dynamic->search['params']['objectType'] = array('operator' => '=',       'control' => 'select', 'values' => array('' => '') + $lang->action->objectTypes);
 $config->dynamic->search['params']['objectID']   = array('operator' => 'include', 'control' => 'input',  'values' => '');
 $config->dynamic->search['params']['objectName'] = array('operator' => 'include', 'control' => 'input',  'values' => '');

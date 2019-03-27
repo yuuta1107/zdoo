@@ -256,7 +256,7 @@ class userModel extends model
         $userID = $this->dao->lastInsertID();
         $this->loadModel('action')->create('user', $userID, 'created');
 
-        return !dao::isError();
+        return !dao::isError() ? $userID : false;
     }
 
     /**
