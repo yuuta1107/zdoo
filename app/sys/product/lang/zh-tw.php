@@ -17,6 +17,7 @@ $lang->product->code        = '代號';
 $lang->product->type        = '類型';
 $lang->product->status      = '狀態';
 $lang->product->category    = '產品分類';
+$lang->product->subject     = '科目';
 $lang->product->desc        = '簡介';
 $lang->product->order       = '排序';
 $lang->product->roles       = '角色';

@@ -130,6 +130,8 @@ $lang->install->cronList[1] = 'Monitor cron';
 $lang->install->cronList[2] = 'Back up data & files';
 $lang->install->cronList[3] = 'Auto delete the data 30 days prior to today';
 $lang->install->cronList[4] = 'Daily Reminder';
+$lang->install->cronList[5] = 'Pop Queue';
+$lang->install->cronList[6] = 'Check Todos';
 
 $lang->install->groupList[1]['name'] = 'Administrator';
 $lang->install->groupList[1]['desc'] = 'Administrator has all privileges.';
