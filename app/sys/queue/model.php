@@ -110,7 +110,7 @@ class queueModel extends model
             if(!$info) return;
             if($action->objectType == 'todo')
             {
-                if($info->date != date(DT_DATE1))
+                if($info->date != date(DT_DATE2))
                 {
                     $this->dao->update(TABLE_QUEUE)->set('status')->eq('wait')->where('id')->eq($queueID)->exec();
                     return;
