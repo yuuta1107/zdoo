@@ -30,6 +30,15 @@ function fixScrollWrapper()
     var tbHeight   = $(document).height();
     var wHeight    = $(window).height();
     var wScrollTop = $(window).scrollTop();
-    var marginBtm  = parseInt($('div.datatable').css('margin-bottom'))
-    $('div.datatable > div.scroll-wrapper').css('bottom', tbHeight - wHeight - wScrollTop - marginBtm);
+    var marginBtm  = parseInt($('div.datatable').css('margin-bottom'));
+    var fHeight    = $('div.table-footer').outerHeight();
+
+    if(tbHeight - wScrollTop - wHeight - marginBtm - fHeight > 0)
+    {
+        $('div.datatable > div.scroll-wrapper').css('bottom', tbHeight - wHeight - wScrollTop - marginBtm - fHeight - 8);
+    }
+    else
+    {
+        $('div.datatable > div.scroll-wrapper').css('bottom', 0);
+    }
 }
