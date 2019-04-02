@@ -24,6 +24,6 @@ $lang->block->orderBy = 'Order';
 $lang->block->status  = 'Status';
 $lang->block->asc     = 'ASC';
 $lang->block->desc    = 'DESC';
-$lang->block->actions = 'Options';
+$lang->block->actions = 'Action';
 
 $lang->block->orderByList = new stdclass();
