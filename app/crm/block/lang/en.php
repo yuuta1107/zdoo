@@ -14,10 +14,10 @@ $lang->block->num      = 'Amount';
 $lang->block->type     = 'Type';
 $lang->block->orderBy  = 'Order By';
 $lang->block->status   = 'Status';
-$lang->block->actions  = 'Options';
+$lang->block->actions  = 'Action';
 $lang->block->lblBlock = 'Block';
 
-$lang->block->admin    = 'Manage Blocks';
+$lang->block->admin    = 'Manage Block';
 $lang->block->availableBlocks = new stdclass();
 
 $lang->block->availableBlocks->order    = 'Order List';
