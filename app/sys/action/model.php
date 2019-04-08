@@ -517,6 +517,21 @@ class actionModel extends model
 
         if($this->app->getViewType() == 'mhtml') $action->date = date('m-d H:i', strtotime($action->date));
 
+        if($this->app->getModuleName() == 'customer' && $actionType == 'dating')
+        {
+            if($objectType == 'order')
+            {
+                $desc = $this->lang->customer->action->orderDating;
+                $action->order = html::a(helper::createLink('order', 'view', "orderID=" . $action->objectID), $action->objectID);
+            }
+            if($objectType == 'contract')
+            {
+                $contract = $this->loadModel('contract', 'crm')->getByID($action->objectID);
+                $desc = $this->lang->customer->action->contractDating;
+                $action->contract = html::a(helper::createLink('contract', 'view', "contractID=" . $action->objectID), $contract->name);
+            }
+        }
+
         /* Cycle actions, replace vars. */
         foreach($action as $key => $value)
         {

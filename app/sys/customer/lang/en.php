@@ -122,3 +122,7 @@ $lang->customer->relationList['partner']  = 'Partner';
 $lang->customer->search      = 'Search';
 $lang->customer->searchInput = 'Enter search items.';
 $lang->customer->mergeTip    = 'Merge this customer to the selected customer.';
+
+$lang->customer->action = new stdclass();
+$lang->customer->action->orderDating    = '$date, <strong>$actor</strong> created a dating : <strong>$extra</strong> for order <strong>$order</strong>.' . "\n";
+$lang->customer->action->contractDating = '$date, <strong>$actor</strong> created a dating : <strong>$extra</strong> for contract <strong>$contract</strong>.' . "\n";
