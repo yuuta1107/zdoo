@@ -49,7 +49,7 @@ $lang->action->desc->opened                = '$date, opened by <strong>$actor</s
 $lang->action->desc->created               = '$date, created by <strong>$actor</strong>.';
 $lang->action->desc->edited                = '$date, edited by <strong>$actor</strong>.';
 $lang->action->desc->assigned              = '$date, <strong>$actor</strong> assigned task to <strong>$extra</strong>.' . "\n";
-$lang->action->desc->merged                = '$date, <strong>$actor</strong> merged customer <strong>$extra</strong>。' . "\n";
+$lang->action->desc->merged                = '$date, <strong>$actor</strong> merged customer <strong>$extra</strong>.' . "\n";
 $lang->action->desc->transmit              = '$date, <strong>$actor</strong> transfer task to <strong>$extra</strong>.' . "\n";
 $lang->action->desc->closed                = '$date, closed by <strong>$actor</strong>, close resion:<strong>$extra</strong>.';
 $lang->action->desc->deleted               = '$date, deleted by <strong>$actor</strong>.';
@@ -110,7 +110,7 @@ $lang->action->desc->ignored               = '$date, ignored by <strong>$actor</
 $lang->action->desc->createtrip            = '$date, <strong>$actor</strong> created trip:<strong>$extra</strong>.' . "\n";
 $lang->action->desc->createegress          = '$date, <strong>$actor</strong> created egress:<strong>$extra</strong>.' . "\n";
 $lang->action->desc->imported              = '$date, import by <strong>$actor</strong>.' . "\n";
-$lang->action->desc->dating                = '$date, <strong>$actor</strong> created a dating : <strong>$extra</strong>。' . "\n";
+$lang->action->desc->dating                = '$date, <strong>$actor</strong> created a dating : <strong>$extra</strong>.' . "\n";
 $lang->action->desc->manageteam            = '$date, <strong>$actor</strong> managed commission rate.' . "\n";
 $lang->action->desc->confirmteam           = '$date, <strong>$actor</strong> confirmed commission rate : <strong>$extra</strong>.' . "\n";
 
