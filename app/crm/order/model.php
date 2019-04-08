@@ -404,7 +404,7 @@ class orderModel extends model
 
         $orderID = $this->dao->lastInsertID();
         $this->loadModel('action')->create('order', $orderID, 'Created', '');
-        $this->loadModel('action')->create('customer', $this->post->customer, 'createOrder', '', html::a(helper::createLink('order', 'view', "orderID=$orderID"), $orderID));
+        $this->loadModel('action')->create('customer', $order->customer, 'createOrder', '', html::a(helper::createLink('order', 'view', "orderID=$orderID"), $orderID));
 
         return array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => helper::createLink('order', 'browse'), 'orderID' => $orderID);
     }
