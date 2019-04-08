@@ -98,7 +98,7 @@ class customerModel extends model
 
         $customers = array();
         /* If the query contains the field `nextDate` search from the table crm_dating. */
-        if(strpos(',contactedby,past,today,tomorrow,thisweek,thismonth,', ",{$mode},") !== false or ($mode == 'bysearch' && strpos($customerQuery, '`nextDate`') !== false))
+        if(strpos(',contactedby,past,today,tomorrow,thisweek,thismonth,', ",{$mode},") !== false or ($mode == 'bysearch' && strpos($customerQuery, 't1.nextDate') !== false))
         {
             $customers = $this->dao->select('t1.*')->from(TABLE_CUSTOMER)->alias('t1')
                 ->leftJoin(TABLE_DATING)->alias('t2')->on('t1.id=t2.objectID')
@@ -113,7 +113,7 @@ class customerModel extends model
                 ->beginIF($mode == 'tomorrow')->andWhere('t2.date')->eq(formattime(date::tomorrow(), DT_DATE1))->fi()
                 ->beginIF($mode == 'thisweek')->andWhere('t2.date')->between($thisWeek['begin'], $thisWeek['end'])->fi()
                 ->beginIF($mode == 'thismonth')->andWhere('t2.date')->between($thisMonth['begin'], $thisMonth['end'])->fi()
-                ->beginIF($mode == 'bysearch')->andWhere(str_replace('`nextDate`', 't2.date', $customerQuery))->fi()
+                ->beginIF($mode == 'bysearch')->andWhere(str_replace('t1.nextDate', 't2.date', $customerQuery))->fi()
                 ->andWhere('t2.date')->ne('0000-00-00')
                 ->andWhere('t1.id')->in($customerIdList)
                 ->beginIF(strpos($orderBy, 'date') !== false)->orderBy("t2.$orderBy")->fi()
