@@ -1249,7 +1249,7 @@ class commonModel extends model
     {
         $preAndNextObject = new stdClass();
 
-        if(strpos(',order,contract,customer,contact,task,thread,blog,refund,trade,', ",$type,") === false) return $preAndNextObject;
+        if(strpos($this->config->hasPreAndNextObjects, ",$type,") === false) return $preAndNextObject;
         $table = $this->config->objectTables[$type];
 
         $queryCondition = "{$type}QueryCondition";

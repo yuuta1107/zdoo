@@ -50,6 +50,8 @@ $config->excel->centerFields = array();
 $config->excel->dateFields   = array();
 $config->excel->freeze       = new stdclass();
 
+$config->hasPreAndNextObjects = ',order,contract,customer,contact,task,thread,blog,refund,trade,';
+
 /* Tables for basic system. */
 if(!defined('TABLE_CONFIG'))      define('TABLE_CONFIG',      '`' . $config->db->prefix . 'sys_config`');
 if(!defined('TABLE_PACKAGE'))     define('TABLE_PACKAGE',     '`' . $config->db->prefix . 'sys_package`');
