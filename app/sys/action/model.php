@@ -99,7 +99,6 @@ class actionModel extends model
             $todo->idvalue = $objectID;
             $todo->pri     = '3';
             $todo->status  = 'wait';
-            $todo->date    = $this->post->nextDate;
 
             $this->dao->insert(TABLE_TODO)->data($todo)->autoCheck()->exec();
         }
@@ -260,10 +259,8 @@ class actionModel extends model
         if($objectType == 'contract') $this->dao->update(TABLE_CONTRACT)->data($contactInfo)->where('id')->eq($objectID)->andWhere('contactedDate')->lt($this->post->date)->exec();
 
         $nextDate = $this->post->nextDate ? $this->post->nextDate : '';
-        $this->dao->update(TABLE_CUSTOMER)->set('nextDate')->eq($nextDate)->where('id')->eq($customer)->exec();
-        $this->dao->update(TABLE_CONTACT)->set('nextDate')->eq($nextDate)->where('id')->eq($contact)->exec();
-        if($objectType == 'order') $this->dao->update(TABLE_ORDER)->set('nextDate')->eq($nextDate)->where('id')->eq($objectID)->exec();
-        if($objectType == 'contract') $this->dao->update(TABLE_CONTRACT)->set('nextDate')->eq($nextDate)->where('id')->eq($objectID)->exec();
+        $table    = $this->config->action->datingTables[$objectType];
+        $this->dao->update($table)->set('nextDate')->eq($nextDate)->where('id')->eq($objectID)->exec();
 
         return !dao::isError();
     }
