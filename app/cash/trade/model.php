@@ -1218,8 +1218,10 @@ class tradeModel extends model
 
         if($this->post->fee)
         {
+            $feeCategory = $this->dao->select('id')->from(TABLE_CATEGORY)->where('major')->eq(7)->fetch('id');
+
             $fee->type      = 'out';
-            $fee->category  = 'fee';
+            $fee->category  = $feeCategory;
             $fee->depositor = $this->post->payment;
             $fee->money     = $this->post->fee;
             $fee->desc      = sprintf($this->lang->trade->feeDesc, $fee->date, $paymentDepositor->abbr, $receiptDepositor->abbr);

@@ -163,7 +163,7 @@ class trade extends control
         $this->view->orderBy       = $orderBy;
         $this->view->depositorList = $depositorList;
         $this->view->customerList  = $this->loadModel('customer')->getPairs();
-        $this->view->deptList      = $this->tree->getPairs(0, 'dept');
+        $this->view->deptList      = $this->loadModel('tree')->getPairs(0, 'dept');
         $this->view->users         = $this->loadModel('user')->getPairs();
         $this->view->currencySign  = $this->loadModel('common')->getCurrencySign();
         $this->view->currencyList  = $this->common->getCurrencyList();
