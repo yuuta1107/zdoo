@@ -1,7 +1,12 @@
 .row-table{display:table; width: 100%;} 
-.col-table{padding: 6px; display: table-cell; vertical-align: top; border-right:1px solid #ddd; border-bottom:1px solid #ddd} 
+.col-table{padding: 6px; display: table-cell; vertical-align: top; border-right:1px solid #ddd; border-bottom:1px solid #ddd; overflow: hidden;}
 .col-table.thead{font-weight:bold;} 
 .col-table i.icon-default {border-radius: 0; vertical-align: bottom; overflow: hidden}
+
+.col-table.w-30px {max-width: 30px;}
+.col-table.w-80px {max-width: 80px;}
+.col-table.w-200px {max-width: 200px;}
+.col-table.w-260px {max-width: 260px;}
 
 ul{list-style:none;padding:0px;margin:0px;}
 
