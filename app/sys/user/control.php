@@ -75,7 +75,7 @@ class user extends control
             }
             else
             {
-                if(!$user) $this->send(array('result'=>'fail', 'message' => $this->lang->user->loginFailed));
+                if(!$user) $this->send(array('result'=>'fail', 'message' => $this->lang->user->loginFailed, 'random' => isset($_SESSION['random'])));
             }
 
             /* Goto the referer or to the default module */
