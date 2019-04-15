@@ -20,7 +20,7 @@ class entryModel extends model
      * @access public
      * @return array
      */
-    public function getEntries($type = 'custom', $category = 0, $platform = '')
+    public function getEntries($type = 'custom', $category = 0, $platform = 'ranzhi')
     {
         $entries = $this->dao->select('*')->from(TABLE_ENTRY)
             ->where(1)

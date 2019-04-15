@@ -14,12 +14,14 @@ class entry extends control
     /**
      * Manage all entries.
      *
+     * @param  int    $category
+     * @param  string $platform
      * @access public
      * @return void
      */
-    public function admin($category = 0)
+    public function admin($category = 0, $platform = 'ranzhi')
     {
-        $entries    = $this->entry->getEntries($type = 'custom', $category);
+        $entries    = $this->entry->getEntries($type = 'custom', $category, $platform);
         $categories = $this->dao->select('id, name')->from(TABLE_CATEGORY)->where('type')->eq('entry')->andWhere('deleted')->eq(0)->orderBy('`order`')->fetchPairs();
         $tmpEntries = array();
         $maxOrder   = 0;
@@ -58,8 +60,10 @@ class entry extends control
             $entries[]    = $entry;
         }
 
-        $this->view->title   = $this->lang->entry->common . $this->lang->colon . $this->lang->entry->admin;
-        $this->view->entries = $entries;
+        $this->view->title    = $this->lang->entry->common . $this->lang->colon . $this->lang->entry->admin;
+        $this->view->category = $category;
+        $this->view->platform = $platform;
+        $this->view->entries  = $entries;
         $this->display();
     }
 
