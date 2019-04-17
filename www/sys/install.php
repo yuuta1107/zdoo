@@ -7,7 +7,7 @@
  * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
  * @package     RanZhi
  * @version     $Id: install.php 3138 2015-11-09 07:32:18Z chujilu $
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 error_reporting(E_ALL);
 session_start();

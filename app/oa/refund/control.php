@@ -401,13 +401,11 @@ class refund extends control
             }
         }
 
-        $refunds = array_merge($secondRefunds, $firstRefunds);
-
         $this->session->set('refundList', $this->app->getURI(true));
 
         $this->view->title        = $this->lang->refund->review;
         $this->view->users        = $newUsers;
-        $this->view->refunds      = $refunds;
+        $this->view->refunds      = $secondRefunds + $firstRefunds;
         $this->view->deptList     = $allDeptList;
         $this->view->categories   = $categories;
         $this->view->currencySign = $this->loadModel('common')->getCurrencySign();

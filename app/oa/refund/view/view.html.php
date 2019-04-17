@@ -170,6 +170,10 @@
             <td><?php echo $related;?></td>
           </tr>
           <tr>
+            <th><?php echo $lang->refund->payee;?></th>
+            <td><?php echo zget($users, $refund->payee);?></td>
+          </tr>
+          <tr>
             <th><?php echo $lang->refund->createdBy;?></th>
             <td><?php echo zget($users, $refund->createdBy) . $lang->at . $refund->createdDate;?></td>
           </tr>
