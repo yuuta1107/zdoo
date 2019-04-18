@@ -444,11 +444,12 @@ class tradeModel extends model
      * @access public
      * @return void
      */
-    public function getByYear($year, $currency = '')
+    public function getByYear($year, $type= 'all', $currency = '')
     {
         return $this->dao->select('*, substr(date, 6, 2) as month')->from(TABLE_TRADE)
             ->where('date')->like("$year%")
             ->andWhere('parent')->eq(0)
+            ->beginIf($type != 'all')->andWhere('type')->eq($type)->fi()
             ->beginIf($currency)->andWhere('currency')->eq($currency)->fi()
             ->orderBy('date_desc')
             ->fetchGroup('month');
@@ -1680,7 +1681,7 @@ class tradeModel extends model
     {
         foreach($selectYears as $year)
         {
-            $trades = $this->getByYear($year, $currency);
+            $trades = $this->getByYear($year, $type = 'all', $currency);
             $incomeDatas['all'][$year]  = 0; 
             $expenseDatas['all'][$year] = 0; 
             $profitDatas['all'][$year]  = 0; 

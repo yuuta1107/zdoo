@@ -1248,7 +1248,7 @@ class trade extends control
             if(strlen($date) == 6) $currentMonth = substr($date, 4, 2);
         }
 
-        $trades = $this->trade->getByYear($currentYear, $currency);
+        $trades = $this->trade->getByYear($currentYear, $type = 'all', $currency);
         
         $annualChartDatas = array();
         $annualChartDatas['all']['in']   = 0;

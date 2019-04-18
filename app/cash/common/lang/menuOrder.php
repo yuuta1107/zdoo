@@ -19,6 +19,7 @@ $lang->contact->menuOrder[5] = 'browse';
 $lang->report->menuOrder[5]  = 'annual';
 $lang->report->menuOrder[10] = 'compare';
 $lang->report->menuOrder[15] = 'export';
+$lang->report->menuOrder[20] = 'setting';
 
 $lang->setting->menuOrder[5]  = 'income';
 $lang->setting->menuOrder[10] = 'expend';
