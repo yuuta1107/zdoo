@@ -485,6 +485,100 @@ class tradeModel extends model
     }
 
     /**
+     * Get income categories.
+     *
+     * @access public
+     * @return array
+     */
+    public function getIncomeCategories()
+    {
+        $incomeCategories = $this->loadModel('tree')->getOptionMenu('in', 0, $removeRoot = true);
+        foreach($incomeCategories as $key => $incomeType)
+        {
+            $path = explode('/', trim($incomeType, '/'));
+            if(count($path) > 1) array_shift($path);
+
+            $incomeCategories[$key] = implode('/', $path);
+        }
+
+        return $incomeCategories;
+    }
+
+    /**
+     * Get expense categories.
+     *
+     * @access public
+     * @return array
+     */
+    public function getExpenseCategories()
+    {
+        $expenseCategories = $this->loadModel('tree')->getOptionMenu('out', 0, $removeRoot = true);
+        foreach($expenseCategories as $key => $expenseType)
+        {
+            $path = explode('/', trim($expenseType, '/'));
+            if(count($path) > 1) array_shift($path);
+
+            $expenseCategories[$key] = implode('/', $path);
+        }
+
+        return $expenseCategories;
+    }
+
+    /**
+     * Get search traders.
+     *
+     * @access public
+     * @return array
+     */
+    public function getSearchTraders()
+    {
+        $traders = '';
+        if($this->session->tradeForm)
+        {
+            foreach($this->session->tradeForm as $formKey => $formValue)
+            {
+                if(strpos($formKey, 'field') !== false and $formValue == 'trader')
+                {
+                    $fieldNO  = substr($formKey, 5);
+                    $traderID = $this->session->tradeForm["value{$fieldNO}"];
+                    $traders .= $traderID . ',';
+                }
+            }
+        }
+        $traders = $this->loadModel('customer')->getPairs('', $emptyOption = true, 'id_desc', $limit = $this->config->customerLimit, $traders);
+
+        return $traders;
+    }
+
+    /**
+     * Get search categories.
+     *
+     * @param  string $mode
+     * @param  array  $incomeCategories
+     * @param  array  $expenseCategories
+     * @access public
+     * @return array
+     */
+    public function getSearchCategories($mode, $incomeCategories, $expenseCategories)
+    {
+        $investCategories  = $this->getSystemCategoryPairs('invest');
+        $loanCategories    = $this->getSystemCategoryPairs('interest');
+        $searchCategories  = array('' => '') + $this->lang->trade->categoryList + $incomeCategories + $expenseCategories;
+        if($mode == 'in')       $searchCategories = array('' => '') + $incomeCategories;
+        if($mode == 'out')      $searchCategories = array('' => '') + $expenseCategories;
+        if($mode == 'transfer') $searchCategories = array('' => '') + $this->lang->trade->transferCategoryList;
+        if($mode == 'invest')   $searchCategories = array('' => '') + $this->lang->trade->investTypeList + $investCategories;
+        if($mode == 'loan')     $searchCategories = array('' => '') + $this->lang->trade->loanTypeList + $loanCategories;
+
+        foreach($searchCategories as $key => $category)
+        {
+            if(substr($category, 0, 1) != '/') $searchCategories[$key] = '/' . $category;
+        }
+
+        return $searchCategories;
+    }
+
+    /**
      * get interest for repay.
      * 
      * @param  int    $loanID 
@@ -1125,8 +1219,10 @@ class tradeModel extends model
 
         if($this->post->fee)
         {
+            $feeCategory = $this->dao->select('id')->from(TABLE_CATEGORY)->where('major')->eq(7)->fetch('id');
+
             $fee->type      = 'out';
-            $fee->category  = 'fee';
+            $fee->category  = $feeCategory;
             $fee->depositor = $this->post->payment;
             $fee->money     = $this->post->fee;
             $fee->desc      = sprintf($this->lang->trade->feeDesc, $fee->date, $paymentDepositor->abbr, $receiptDepositor->abbr);

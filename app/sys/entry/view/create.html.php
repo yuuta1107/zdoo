@@ -85,7 +85,7 @@ js::set('zentaoName', $lang->entry->zentao);
           <td>
             <div class='input-group'>
               <?php foreach($groups as $id => $name):?>
-                <span class='checkbox-group'><?php echo html::checkbox('groups', array($id => $name), '');?></span>
+              <div class='w-p25 pull-left'><?php echo html::checkbox('groups', array($id => $name), '');?></div>
               <?php endforeach?>
             </div>
           </td>

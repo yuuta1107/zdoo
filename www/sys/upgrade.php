@@ -7,7 +7,7 @@
  * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
  * @package     RanZhi
  * @version     $Id: upgrade.php 3138 2015-11-09 07:32:18Z chujilu $
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 /* Judge my.php exists or not. */
 define('RUN_MODE', 'upgrade');

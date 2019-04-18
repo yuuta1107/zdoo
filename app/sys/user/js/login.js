@@ -55,8 +55,13 @@ $('#submit').click(function()
         dataType:'json',
         success:function(data)
         {
-            if(data.result == 'fail') return  bootbox.alert(data.message);
-            if(data.result == 'success') return location.href=data.locate;
+            if(data.result == 'fail')
+            {
+                bootbox.alert(data.message);
+                if(!data.random) setTimeout(function(){location.href = location.href;}, 1200);
+                return false;
+            }
+            if(data.result == 'success') return location.href = data.locate;
             if(typeof(data) != 'object') return bootbox.alert(data);
         },
         error:function(data){bootbox.alert(data.responseText)}

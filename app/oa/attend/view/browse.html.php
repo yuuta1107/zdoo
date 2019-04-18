@@ -38,82 +38,80 @@
     </div>
   </div>
   <div class='main'>
-    <div class='panel'>
-      <div class='panel-heading text-center'>
-        <?php $title = $currentYear;?>
-        <?php if($this->app->clientLang != 'en') $title .= $lang->year;?>
-        <?php $title .= $currentMonth;?>
-        <?php if($this->app->clientLang != 'en') $title .= $lang->month;?>
-        <strong><?php echo $title . $lang->attend->report;?></strong>
-      </div>
-      <table class='table table-data table-bordered text-center table-fixed'>
-        <thead>
-          <tr class='text-center'>
-            <th rowspan='2' class='w-80px text-middle'><?php echo $lang->user->dept;?></th>
-            <th rowspan='2' class='w-80px text-middle'><?php echo $lang->user->realname;?></th>
-            <?php for($day = 1; $day <= $dayNum; $day++):?>
-            <th><?php echo $day?></th>
-            <?php endfor;?>
-          </tr>
-          <tr class='text-center'>
-            <?php $weekOffset = date('w', strtotime("$currentYear-$currentMonth-01")) - 1;?>
-            <?php for($day = 1; $day <= $dayNum; $day++):?>
-            <th><?php echo $lang->datepicker->abbrDayNames[($day + $weekOffset) % 7]?></th>
-            <?php endfor;?>
-          </tr>
-        </thead>
-        <?php foreach($attends as $dept => $deptAttends):?>
-          <?php $isFirst = true;?>
-          <?php foreach($deptAttends as $account => $userAttends):?>
-          <tr>
-            <?php if($isFirst):?>
-            <td rowspan='<?php echo count($deptAttends);?>' class='text-middle'>
-              <?php echo isset($users[$account]->dept) ? $deptList[$users[$account]->dept] : ''?>
-            </td>
-            <?php $isFirst = false;?>
-            <?php endif;?>
-            <td class='text-middle'><?php echo isset($users[$account]->realname) ? $users[$account]->realname : '';?></td>
-            <?php for($day = 1; $day <= $dayNum; $day++):?>
-              <?php $currentDate = date("Y-m-d", strtotime("{$currentYear}-{$currentMonth}-{$day}"));?>
-              <?php if(isset($userAttends[$currentDate])):?>
-              <?php 
-              $attend = $userAttends[$currentDate];
-              $status = $attend->status;
-              if($attend->hoursList)
-              {
-                  $title  = '';
-                  $icon   = '';
-                  foreach($attend->hoursList as $status => $hours) 
-                  {
-                      $title .= $lang->attend->statusList[$status] . $hours . 'h ';
-                      $icon  .= $lang->attend->markStatusList[$status];
-                  }
-              }
-              else
-              {
-                  $title = $lang->attend->statusList[$attend->status];
-                  $icon  = $lang->attend->markStatusList[$attend->status];
-              }
-              ?>
-              <td class='attend-status attend-<?php echo $status;?>' title='<?php echo $title;?>'>
-                <span><?php echo $icon;?></span>
-              </td>
-              <?php else:?>
-              <td></td>
-              <?php endif;?>
-            <?php endfor;?>
-          </tr>
-          <?php endforeach;?>
-        <?php endforeach;?>
-      </table>
+    <div class='panel-heading text-center'>
+      <?php $title = $currentYear;?>
+      <?php if($this->app->clientLang != 'en') $title .= $lang->year;?>
+      <?php $title .= $currentMonth;?>
+      <?php if($this->app->clientLang != 'en') $title .= $lang->month;?>
+      <strong><?php echo $title . $lang->attend->report;?></strong>
     </div>
+    <table class='table table-data table-bordered text-center table-fixed'>
+      <thead>
+        <tr class='text-center'>
+          <th rowspan='2' class='w-80px text-middle'><?php echo $lang->user->dept;?></th>
+          <th rowspan='2' class='w-80px text-middle'><?php echo $lang->user->realname;?></th>
+          <?php for($day = 1; $day <= $dayNum; $day++):?>
+          <th><?php echo $day?></th>
+          <?php endfor;?>
+        </tr>
+        <tr class='text-center'>
+          <?php $weekOffset = date('w', strtotime("$currentYear-$currentMonth-01")) - 1;?>
+          <?php for($day = 1; $day <= $dayNum; $day++):?>
+          <th><?php echo $lang->datepicker->abbrDayNames[($day + $weekOffset) % 7]?></th>
+          <?php endfor;?>
+        </tr>
+      </thead>
+      <?php foreach($attends as $dept => $deptAttends):?>
+        <?php $isFirst = true;?>
+        <?php foreach($deptAttends as $account => $userAttends):?>
+        <tr>
+          <?php if($isFirst):?>
+          <td rowspan='<?php echo count($deptAttends);?>' class='text-middle'>
+            <?php echo isset($users[$account]->dept) ? $deptList[$users[$account]->dept] : ''?>
+          </td>
+          <?php $isFirst = false;?>
+          <?php endif;?>
+          <td class='text-middle'><?php echo isset($users[$account]->realname) ? $users[$account]->realname : '';?></td>
+          <?php for($day = 1; $day <= $dayNum; $day++):?>
+            <?php $currentDate = date("Y-m-d", strtotime("{$currentYear}-{$currentMonth}-{$day}"));?>
+            <?php if(isset($userAttends[$currentDate])):?>
+            <?php 
+            $attend = $userAttends[$currentDate];
+            $status = $attend->status;
+            if($attend->hoursList)
+            {
+                $title  = '';
+                $icon   = '';
+                foreach($attend->hoursList as $status => $hours) 
+                {
+                    $title .= $lang->attend->statusList[$status] . $hours . 'h ';
+                    $icon  .= $lang->attend->markStatusList[$status];
+                }
+            }
+            else
+            {
+                $title = $lang->attend->statusList[$attend->status];
+                $icon  = $lang->attend->markStatusList[$attend->status];
+            }
+            ?>
+            <td class='attend-status attend-<?php echo $status;?>' title='<?php echo $title;?>'>
+              <span><?php echo $icon;?></span>
+            </td>
+            <?php else:?>
+            <td></td>
+            <?php endif;?>
+          <?php endfor;?>
+        </tr>
+        <?php endforeach;?>
+      <?php endforeach;?>
+    </table>
     <div class='legend'>
-    <?php foreach($lang->attend->markStatusList as $key => $value):?>
+      <?php foreach($lang->attend->markStatusList as $key => $value):?>
       <span class='legend-item attend-<?php echo $key?>'>
         <i class='legend-i'><?php echo $value?></i>
         <?php echo $lang->attend->statusList[$key]?>
       </span>
-    <?php endforeach;?>
+      <?php endforeach;?>
     </div>
   </div>
 </div>

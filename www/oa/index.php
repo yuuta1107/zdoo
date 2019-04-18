@@ -7,7 +7,7 @@
  * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
  * @package     RanZhi
  * @version     $Id: index.php 3138 2015-11-09 07:32:18Z chujilu $
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 $appName = 'oa'; 
 include '../../framework/loader.php';

@@ -46,59 +46,19 @@ class trade extends control
         $this->session->set('tradeList', $this->app->getURI(true));
         if($date) $this->session->set('date', $date);
 
-        $depositorList = $this->loadModel('depositor', 'cash')->getPairs();
-        $productList   = $this->loadModel('product')->getPairs();
+        $depositorList     = $this->loadModel('depositor', 'cash')->getPairs();
+        $productList       = $this->loadModel('product')->getPairs();
+        $incomeCategories  = $this->trade->getIncomeCategories();
+        $expenseCategories = $this->trade->getExpenseCategories();
 
         /* Build search form. */
         $this->loadModel('search');
         $this->config->trade->search['actionURL'] = $this->createLink('trade', 'browse', "mode={$mode}_bysearch");
         $this->config->trade->search['params']['depositor']['values'] = array('' => '') + $depositorList;
         $this->config->trade->search['params']['product']['values']   = array('' => '') + $productList;
-
-        $traders = '';
-        if($this->session->tradeForm)
-        {
-            foreach($this->session->tradeForm as $formKey => $formValue)
-            {
-                if(strpos($formKey, 'field') !== false and $formValue == 'trader')
-                {
-                    $fieldNO  = substr($formKey, 5);
-                    $traderID = $this->session->tradeForm["value{$fieldNO}"];
-                    $traders .= $traderID . ',';
-                }
-            }
-        }
-        $this->config->trade->search['params']['trader']['values']   = $this->loadModel('customer')->getPairs('', $emptyOption = true, 'id_desc', $limit = $this->config->customerLimit, $traders);
+        $this->config->trade->search['params']['trader']['values']   = $this->trade->getSearchTraders();
         $this->config->trade->search['params']['contract']['values'] = array('') + $this->loadModel('contract', 'crm')->getPairs();
-
-        $expenseCategories = $this->loadModel('tree')->getOptionMenu('out', 0, $removeRoot = true);
-        $incomeCategories  = $this->loadModel('tree')->getOptionMenu('in', 0, $removeRoot = true);
-
-        foreach($expenseCategories as $key => $expenseType)
-        {
-            $path = explode('/', trim($expenseType, '/'));
-            if(count($path) > 1) array_shift($path);
-
-            $expenseCategories[$key] = implode('/', $path);
-        }
-
-        foreach($incomeCategories as $key => $incomeType)
-        {
-            $path = explode('/', trim($incomeType, '/'));
-            if(count($path) > 1) array_shift($path);
-
-            $incomeCategories[$key] = implode('/', $path);
-        }
-
-        $investCategories  = $this->trade->getSystemCategoryPairs('invest');
-        $loanCategories    = $this->trade->getSystemCategoryPairs('interest');
-        $searchCategories  = array('' => '') + $this->lang->trade->categoryList + $incomeCategories + $expenseCategories;
-        if($mode == 'in')       $searchCategories = array('' => '') + $incomeCategories;
-        if($mode == 'out')      $searchCategories = array('' => '') + $expenseCategories;
-        if($mode == 'transfer') $searchCategories = array('' => '') + $this->lang->trade->transferCategoryList;
-        if($mode == 'invest')   $searchCategories = array('' => '') + $this->lang->trade->investTypeList + $investCategories;
-        if($mode == 'loan')     $searchCategories = array('' => '') + $this->lang->trade->loanTypeList + $loanCategories;
-        $this->config->trade->search['params']['category']['values'] = $searchCategories;
+        $this->config->trade->search['params']['category']['values'] = $this->trade->getSearchCategories($mode, $incomeCategories, $expenseCategories);
         $this->search->setSearchParams($this->config->trade->search);
 
         $type = 'all';
@@ -188,7 +148,7 @@ class trade extends control
 
         if(strpos(',in,all,', ",$mode,") !== false)
         {
-            $this->view->categories = $this->lang->trade->categoryList + $this->tree->getPairs(0, 'out') + $this->tree->getPairs(0, 'in');
+            $this->view->categories = $this->lang->trade->categoryList + $this->loadModel('tree')->getPairs(0, 'out') + $this->tree->getPairs(0, 'in');
         }
         else
         {
@@ -203,7 +163,7 @@ class trade extends control
         $this->view->orderBy       = $orderBy;
         $this->view->depositorList = $depositorList;
         $this->view->customerList  = $this->loadModel('customer')->getPairs();
-        $this->view->deptList      = $this->tree->getPairs(0, 'dept');
+        $this->view->deptList      = $this->loadModel('tree')->getPairs(0, 'dept');
         $this->view->users         = $this->loadModel('user')->getPairs();
         $this->view->currencySign  = $this->loadModel('common')->getCurrencySign();
         $this->view->currencyList  = $this->common->getCurrencyList();

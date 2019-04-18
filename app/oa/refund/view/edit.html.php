@@ -19,10 +19,10 @@
       <strong><?php echo $lang->refund->edit;?></strong>
     </div>
     <div class='panel-body'>
-      <table class='table table-form w-p80'>
+      <table class='table table-form w-700px'>
         <tr>
           <th class='w-100px'><?php echo $lang->refund->name?></th>
-          <td class='w-600px'><?php echo html::input('name', $refund->name, "class='form-control'")?></td>
+          <td class='w-450px'><?php echo html::input('name', $refund->name, "class='form-control'")?></td>
           <td></td>
         </tr>
         <tr>
@@ -95,6 +95,10 @@
           <th><?php echo $lang->refund->related?></th>
           <td><?php echo html::select('related[]', $users, $refund->related, "class='form-control chosen' multiple")?></td>
           <td></td>
+        </tr>
+        <tr>
+          <th><?php echo $lang->refund->payee?></th>
+          <td><?php echo html::select('payee', $users, $refund->payee, "class='form-control chosen'");?></td>
         </tr>
         <tr id='refund-detail' class='hidden'>
           <th><?php echo $lang->refund->detail?></th>

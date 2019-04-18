@@ -7,7 +7,7 @@
  * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
  * @package     RanZhi
  * @version     $Id: zfile.class.php 3376 2015-12-18 02:11:46Z daitingting $
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 class zfile
 {

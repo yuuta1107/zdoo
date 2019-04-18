@@ -8,7 +8,7 @@
  * @author      yaozeyuan <yaozeyuan@cnezsoft.com>
  * @package     Excel
  * @version     $Id$
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  *
  * excel - a library to export excel file, depends on phpexcel.
  *

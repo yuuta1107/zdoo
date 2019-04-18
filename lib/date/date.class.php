@@ -7,7 +7,7 @@
  * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
  * @package     RanZhi
  * @version     $Id: date.class.php 3674 2016-03-30 09:43:20Z liugang $
- * @link        http://www.ranzhico.com
+ * @link        http://www.ranzhi.org
  */
 class date 
 {

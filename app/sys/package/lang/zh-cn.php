@@ -38,7 +38,7 @@ $lang->package->name        = '名称';
 $lang->package->code        = '插件代号';
 $lang->package->version     = '版本';
 $lang->package->compatible  = '适用版本';
-$lang->package->latest      = '<small>最新版本<strong><a href="%s" target="_blank" class="package">%s</a></strong>，兼容蝉知<a href="http://api.ranzhico.com/goto.php?item=latest" target="_blank" class="alert-link"><strong>%s</strong></a></small>';
+$lang->package->latest      = '<small>最新版本<strong><a href="%s" target="_blank" class="package">%s</a></strong>，兼容蝉知<a href="http://api.ranzhi.org/goto.php?item=latest" target="_blank" class="alert-link"><strong>%s</strong></a></small>';
 $lang->package->author      = '作者';
 $lang->package->license     = '授权';
 $lang->package->intro       = '详情';

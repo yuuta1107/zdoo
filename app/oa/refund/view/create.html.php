@@ -19,10 +19,10 @@
       <strong><?php echo $lang->refund->create;?></strong>
     </div>
     <div class='panel-body'>
-      <table class='table table-form w-p80'>
+      <table class='table table-form w-700px'>
         <tr>
           <th class='w-70px'><?php echo $lang->refund->name?></th>
-          <td class='w-600px'><?php echo html::input('name', '', "class='form-control'")?></td>
+          <td class='w-450px'><?php echo html::input('name', '', "class='form-control'")?></td>
           <td></td>
         </tr>
         <tr>
@@ -31,14 +31,12 @@
         </tr>
         <tr>
           <th><?php echo $lang->refund->category?></th>
-          <td>
-            <div class='input-group'>
-              <?php echo html::select('category', $categories, '', "class='form-control chosen'");?>
-              <span class='input-group-addon'>
-                <?php echo html::checkbox('objectType', $lang->refund->objectTypeList);?> 
-              </span>
-            </div>
-          </td>
+          <td><?php echo html::select('category', $categories, '', "class='form-control chosen'");?></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th><?php echo $lang->refund->expenseType?></th>
+          <td><?php echo html::checkbox('objectType', $lang->refund->objectTypeList);?></td>
           <td></td>
         </tr>
         <tr class='hide'>
@@ -95,6 +93,10 @@
           <th><?php echo $lang->refund->related?></th>
           <td><?php echo html::select('related[]', $users, $this->app->user->account, "class='form-control chosen' multiple")?></td>
           <td></td>
+        </tr>
+        <tr>
+          <th><?php echo $lang->refund->payee?></th>
+          <td><?php echo html::select('payee', $users, $this->app->user->account, "class='form-control chosen'");?></td>
         </tr>
         <tr id='refund-detail' class='hidden'>
           <th><?php echo $lang->refund->detail?></th>

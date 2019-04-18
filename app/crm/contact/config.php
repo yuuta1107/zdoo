@@ -29,6 +29,7 @@ $config->contact->search['fields']['t1.phone']         = $lang->contact->phone;
 $config->contact->search['fields']['t1.mobile']        = $lang->contact->mobile;
 $config->contact->search['fields']['t1.email']         = $lang->contact->email;
 $config->contact->search['fields']['t1.qq']            = $lang->contact->qq;
+$config->contact->search['fields']['t1.weixin']        = $lang->contact->weixin;
 $config->contact->search['fields']['t1.contactedDate'] = $lang->contact->contactedDate;
 $config->contact->search['fields']['t1.nextDate']      = $lang->customer->nextDate;
 $config->contact->search['fields']['t1.id']            = $lang->contact->id;
@@ -39,6 +40,7 @@ $config->contact->search['params']['t1.phone']         = array('operator' => 'in
 $config->contact->search['params']['t1.mobile']        = array('operator' => 'include', 'control' => 'input',  'values' => '');
 $config->contact->search['params']['t1.email']         = array('operator' => 'include', 'control' => 'input',  'values' => '');
 $config->contact->search['params']['t1.qq']            = array('operator' => 'include', 'control' => 'input',  'values' => '');
+$config->contact->search['params']['t1.weixin']        = array('operator' => 'include', 'control' => 'input',  'values' => '');
 $config->contact->search['params']['t1.contactedDate'] = array('operator' => '>=', 'control' => 'input',  'values' => '', 'class' => 'date');
 $config->contact->search['params']['t1.nextDate']      = array('operator' => '>=', 'control' => 'input',  'values' => '', 'class' => 'date');
 $config->contact->search['params']['t1.id']            = array('operator' => '=', 'control' => 'input',  'values' => '');
