@@ -63,14 +63,14 @@
               <?php if($thread->hidden) echo "<span class='text-warning'>[" . $lang->thread->statusList['hidden'] . "]</span>";?>
             </td>
             <td><strong><?php echo $thread->authorRealname;?></strong></td>
-            <td><?php echo substr($thread->createdDate, 5, -3);?></td>
+            <td><?php echo formatTime($thread->createdDate, DT_MONTHTIME1);?></td>
             <td><?php echo $thread->views;?></td>
             <td><?php echo $thread->replies;?></td>
             <td class='visible-lg'>
               <?php 
               if($thread->replies)
               {
-                  echo substr($thread->repliedDate, 5, -3) . ' ';
+                  echo formatTime($thread->repliedDate, DT_MONTHTIME1) . ' ';
                   commonModel::printLink('thread', 'locate', "threadID={$thread->id}&replyID={$thread->replyID}", $thread->repliedByRealname);
               }
               ?>
@@ -88,14 +88,14 @@
               <?php if($thread->hidden) echo '<span class="text-warning">[' . $lang->thread->statusList['hidden'] .']</span>';?>
             </td>
             <td><strong><?php echo $thread->authorRealname;?></strong></td>
-            <td><?php echo substr($thread->createdDate, 5, -3);?></td>
+            <td><?php echo formatTime($thread->createdDate, DT_MONTHTIME1);?></td>
             <td><?php echo $thread->views;?></td>
             <td><?php echo $thread->replies;?></td>
             <td class='visible-lg'>
               <?php 
               if($thread->replies)
               {
-                  echo substr($thread->repliedDate, 5, -3) . ' ';
+                  echo formatTime($thread->repliedDate, DT_MONTHTIME1) . ' ';
                   commonModel::printLink('thread', 'locate', "threadID={$thread->id}&replyID={$thread->replyID}", $thread->repliedByRealname);
               }
               ?>

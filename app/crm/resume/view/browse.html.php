@@ -26,8 +26,8 @@
   <tr>
     <td>
       <?php
-      if($resume->join) printf($lang->resume->showJoin, $resume->join);
-      if($resume->left) printf($lang->resume->showLeft, $resume->left);
+      if($resume->join) printf($lang->resume->showJoin, formatTime($resume->join, DT_DATE1));
+      if($resume->left) printf($lang->resume->showLeft, formatTime($resume->left, DT_DATE1));
       ?>
     </td>
     <td><?php echo isset($customers[$resume->customer]) ? $customers[$resume->customer] : ''?></td>

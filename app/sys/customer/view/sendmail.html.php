@@ -28,7 +28,7 @@
     <fieldset style='border: 1px solid #e5e5e5'>
       <legend style='color: #114f8e'><?php echo $lang->customer->view;?></legend>
       <div style='padding:5px;'>
-        <p><?php echo $lang->customer->nextDate . ':' . $customer->nextDate?></p>
+        <p><?php echo $lang->customer->nextDate . ':' . formatTime($customer->nextDate, DT_DATE1);?></p>
         <p><?php echo $lang->customer->status . ':' . zget($lang->customer->statusList, $customer->status)?></p>
         <p><?php echo $lang->customer->assignedTo . ':' . zget($users, $customer->assignedTo)?></p>
         <p><?php echo $lang->customer->desc?></p>

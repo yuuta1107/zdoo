@@ -42,7 +42,7 @@
       <?php if(!empty($refund->detail)):?>
       <?php foreach($refund->detail as $detail):?>
       <tr class='text-center'>
-        <td><?php echo $detail->date;?></td>
+        <td><?php echo formatTime($detail->date, DT_DATE1);?></td>
         <td><?php echo zget($deptList, $refund->dept);?></td>
         <td class='text-right'><?php echo zget($currencySign, $detail->currency) . "<span class='detailMoney'>" . $detail->money . "</span>";?></td>
         <td class='text-right'><?php echo zget($currencySign, $detail->currency) . $detail->invoice;?></td>
@@ -54,7 +54,7 @@
       <?php endforeach;?>
       <?php else:?>
       <tr class='text-center'>
-        <td><?php echo $refund->date;?></td>
+        <td><?php echo formatTime($refund->date, DT_DATE1);?></td>
         <td><?php echo zget($deptList, $refund->dept);?></td>
         <td class='text-right'><?php echo zget($currencySign, $refund->currency) . "<span class='detailMoney'>" . $refund->money . "</span>";?></td>
         <td class='text-right'><?php echo zget($currencySign, $refund->currency) . "<span class='detailMoney'>" . $refund->invoice . "</span>";?></td>

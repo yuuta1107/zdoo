@@ -43,7 +43,7 @@
     <?php endif;?>
     <tr>
       <th class='w-70px'><?php echo $lang->action->record->date;?></th>
-      <td><?php echo html::input('date', formatTime($record->date), "class='form-control form-datetime'");?></td>
+      <td><?php echo html::input('date', formatTime($record->date, DT_DATETIME1), "class='form-control form-datetime'");?></td>
     </tr>
     <tr>
       <th><?php echo $lang->action->record->comment;?></th>

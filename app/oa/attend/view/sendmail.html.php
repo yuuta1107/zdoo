@@ -10,7 +10,7 @@
  * @link        http://www.ranzhi.org
  */
 ?>
-<?php $mailTitle = "{$lang->attend->common} - $label#" . zget($users, $attend->account) . " {$attend->date}";?>
+<?php $mailTitle = "{$lang->attend->common} - $label#" . zget($users, $attend->account) . ' ' . formatTime($attend->date, DT_DATE1);?>
 <?php include '../../../sys/common/view/mail.header.html.php';?>
 <tr>
   <td>
@@ -29,7 +29,7 @@
       <legend style='color: #114f8e'><?php echo $lang->attend->common;?></legend>
       <div style='padding:5px;'>
         <p><?php echo $lang->attend->status . ':' . zget($lang->attend->statusList, $attend->status)?></p>
-        <p><?php echo "{$lang->attend->date}: {$attend->date}"?></p>
+        <p><?php echo $lang->attend->date . ':' . formatTime($attend->date, DT_DATE1);?></p>
         <p><?php echo $lang->attend->reason . ':' . zget($lang->attend->reasonList, $attend->reason)?></p>
         <p><?php echo $lang->attend->desc?></p>
         <p><?php echo $attend->desc?></p>

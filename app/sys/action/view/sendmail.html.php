@@ -33,10 +33,10 @@
         <?php if($contact):?>
         <p><?php echo $lang->contact->common . ':' . $contact->realname;?></p>
         <?php endif;?>
-        <p><?php echo $lang->action->date . ':' . $nextDate;?></p>
+        <p><?php echo $lang->action->date . ':' . formatTime($nextDate, DT_DATE1);?></p>
         <p><?php echo $lang->action->record->desc . ':' . $action->comment;?></p>
         <p><?php echo $lang->action->record->createdBy . ':' . zget($users, $action->actor);?></p>
-        <p><?php echo $lang->action->record->createdDate . ':' . $action->date;?></p>
+        <p><?php echo $lang->action->record->createdDate . ':' . formatTime($action->date, DT_DATETIME1);?></p>
       </div>
     </fieldset>
   </td>

@@ -33,8 +33,8 @@
       <td><?php echo $project->id;?></td>
       <td class='text-left'><?php echo html::a("javascript:$.openEntry(\"proj\", \"" . $browseLink . "\")", $project->name);?></td>
       <td><?php foreach($project->members as $member) if($member->role == 'manager') echo zget($users, $member->account);?></td>
-      <td><?php echo $project->begin;?></td>
-      <td><?php echo $project->end;?></td>
+      <td><?php echo formatTime($project->begin, DT_DATE1);?></td>
+      <td><?php echo formatTime($project->end, DT_DATE1);?></td>
       <td><?php echo zget($users, $project->createdBy);?></td>
       <td><?php echo $lang->project->statusList[$project->status];?></td>
       <td title='<?php echo strip_tags($project->desc);?>'><?php echo helper::substr(strip_tags($project->desc), 20, '...');?></td>

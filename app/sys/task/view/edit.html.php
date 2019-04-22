@@ -102,7 +102,7 @@
               </tr>
               <tr>
                 <th><?php echo $lang->task->deadline;?></th>
-                <td><?php echo html::input('deadline', $task->deadline == '0000-00-00' ? '' : $task->deadline, "class='form-control form-date'");?></td>
+                <td><?php echo html::input('deadline', formatTime($task->deadline), "class='form-control form-date'");?></td>
               </tr>
               <tr>
                 <th><?php echo $lang->task->estimate;?></th>
@@ -137,7 +137,7 @@
               </tr>
               <tr>
                 <th><?php echo $lang->task->finishedDate;?></th>
-                <td><?php echo html::input('finishedDate', $task->finishedDate, "class='form-control form-date'");?></td>
+                <td><?php echo html::input('finishedDate', formatTime($task->finishedDate), "class='form-control form-date'");?></td>
               </tr>
               <tr>
                 <th><?php echo $lang->task->canceledBy;?></th>
@@ -145,7 +145,7 @@
               </tr>
               <tr>
                 <th><?php echo $lang->task->canceledDate;?></th>
-                <td><?php echo html::input('canceledDate', $task->canceledDate, "class='form-control form-date'");?></td>
+                <td><?php echo html::input('canceledDate', formatTime($task->canceledDate), "class='form-control form-date'");?></td>
               </tr>
               <tr>
                 <th><?php echo $lang->task->closedBy;?></th>
@@ -153,7 +153,7 @@
               </tr>
               <tr>
                 <th><?php echo $lang->task->closedDate;?></th>
-                <td><?php echo html::input('closedDate', $task->closedDate, "class='form-control form-date'");?></td>
+                <td><?php echo html::input('closedDate', formatTime($task->closedDate), "class='form-control form-date'");?></td>
               </tr>
               <tr>
                 <th><?php echo $lang->task->closedReason;?></th>

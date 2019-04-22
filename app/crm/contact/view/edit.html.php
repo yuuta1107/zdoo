@@ -77,11 +77,11 @@
             </tr>
             <tr>
               <th><?php echo $lang->resume->join;?></th>
-              <td colspan='2'><?php echo html::input('join', $contact->join, "class='form-control form-date'");?></td>
+              <td colspan='2'><?php echo html::input('join', formatTime($contact->join), "class='form-control form-date'");?></td>
             </tr>
             <tr>
               <th><?php echo $lang->contact->birthday;?></th>
-              <td colspan='2'><?php echo html::input('birthday', $contact->birthday != '0000-00-00' ? $contact->birthday : '', "class='form-control form-date'");?></td>
+              <td colspan='2'><?php echo html::input('birthday', formatTime($contact->birthday), "class='form-control form-date'");?></td>
             </tr>
             <tr>
               <th><?php echo $lang->contact->gender;?></th>

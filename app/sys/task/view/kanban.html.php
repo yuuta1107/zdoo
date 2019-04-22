@@ -59,8 +59,8 @@
                     <span class='task-assignedTo text-muted'><i class='icon-hand-right'></i> <small><?php echo $task->assignedTo;?></small></span>
                   <?php endif;?>
                   </div>
-                  <?php if(!empty($task->deadline) and $task->deadline != '0000-00-00'):?>
-                  <div class='task-deadline text-warning pull-right'><i class='icon-time'></i> <small><?php echo $task->deadline;?></small></div>
+                  <?php if(!empty($task->deadline) and formatTime($task->deadline)):?>
+                  <div class='task-deadline text-warning pull-right'><i class='icon-time'></i> <small><?php echo formatTime($task->deadline, DT_DATE1);?></small></div>
                   <?php endif;?>
                 </div>
                 <div class='task-actions'>

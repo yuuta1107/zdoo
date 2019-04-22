@@ -48,9 +48,10 @@
         }
 
         $config->requestType = 'GET';
+        $date = formatTime($message->date, DT_DATETIME1);
         echo <<<EOT
         <i class='icon-user'></i> <strong>$message->from</strong> &nbsp; <i class='icon-envelope green icon'></i> $message->email &nbsp; 
-        <span class='gray'>$message->date</span> &nbsp; {$lang->comment->commentTo}
+        <span class='gray'>{$date}</span> &nbsp; {$lang->comment->commentTo}
         $objectViewLink
 EOT;
         ?>
@@ -58,7 +59,7 @@ EOT;
       <?php else:?>
       <td>
         <?php echo "<i class='icon-user'></i> <strong>{$message->from}</strong> &nbsp;";?>
-        <?php echo "<span class='gray'>$message->date</span><br/>";?>
+        <?php echo "<span class='gray'>" . formatTime($message->date, DT_DATETIME1) . "</span><br/>";?>
         <?php if(!empty($message->phone)) echo "<i class='icon-phone text-info icon'></i> {$message->phone} &nbsp; ";?>
         <?php if(!empty($message->email)) echo "<i class='icon-envelope text-warning icon'></i> {$message->email} &nbsp; ";?>
         <?php if(!empty($message->qq))    echo "<strong class='text-danger'>QQ</strong> {$message->qq} &nbsp; ";?>
@@ -84,7 +85,7 @@ EOT;
             echo "<dl class='alert alert-info'>";
             foreach($replies[$messageID] as $reply)
             {
-                printf($lang->message->replyItem, $reply->from, $reply->date, $reply->content);
+                printf($lang->message->replyItem, $reply->from, formatTime($reply->date, DT_DATETIME1), $reply->content);
             }
             echo '</dl>';
         }

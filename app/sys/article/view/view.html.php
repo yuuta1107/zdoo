@@ -13,7 +13,7 @@ js::set('articleID', $article->id);
       <header>
         <h1><?php echo $article->title;?></h1>
         <dl class="dl-inline">
-            <dd data-toggle="tooltip" data-placement="top" data-original-title="<?php printf($lang->article->lblAddedDate, $article->createdDate);?>"><i class="icon-time icon-large"></i> <?php echo $article->createdDate; ?></dd>
+            <dd data-toggle="tooltip" data-placement="top" data-original-title="<?php printf($lang->article->lblAddedDate, formatTime($article->createdDate, DT_DATETIME1));?>"><i class="icon-time icon-large"></i> <?php echo formatTime($article->createdDate, DT_DATETIME1); ?></dd>
             <dd data-toggle="tooltip" data-placement="top" data-original-title="<?php printf($lang->article->lblAuthor, $article->author);?>"><i class="icon-user icon-large"></i> <?php echo $article->author; ?></dd>
             <?php if(!$article->original):?>
             <dt><?php echo $lang->article->lblSource; ?></dt>

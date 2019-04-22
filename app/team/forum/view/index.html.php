@@ -46,9 +46,8 @@
                     if($childBoard->postedBy)
                     {
                         echo '(' . $lang->forum->threadCount . $lang->colon . $childBoard->threads . ' ' . $lang->forum->postCount . $lang->colon . $childBoard->posts . ') ';
-                        $postedDate = substr($childBoard->postedDate, 5, -3); 
                         $postedBy   =  html::a($this->createLink('thread', 'locate', "threadID={$childBoard->postID}&replyID={$childBoard->replyID}"), zget($users, $childBoard->postedBy));
-                        echo sprintf($lang->forum->lastPost, $postedDate, $postedBy);
+                        echo sprintf($lang->forum->lastPost, formatTime($childBoard->postedDate, DT_MONTHTIME1), $postedBy);
                     }
                     else
                     {

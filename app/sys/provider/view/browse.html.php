@@ -53,7 +53,7 @@
           <td><?php echo $lang->provider->typeList[$provider->type];?></td>
           <td class='text-left'><?php echo zget($areas, $provider->area);?></td>
           <td class='text-left'><?php echo zget($industries, $provider->industry);?></td>
-          <td><?php echo substr($provider->createdDate, 0, 10);?></td>
+          <td><?php echo formatTime($provider->createdDate, DT_DATE1);?></td>
           <td class='actions'>
             <?php commonModel::printLink('action',   'createRecord', "objectType=provider&objectID=$provider->id&customer=$provider->id", $lang->customer->record, "data-toggle='modal' data-width='800'");?>
             <?php commonModel::printLink('provider', 'contact', "providerID=$provider->id", $lang->provider->contact, "data-toggle='modal'");?>

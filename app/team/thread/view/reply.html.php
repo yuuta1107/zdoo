@@ -3,7 +3,7 @@
 <div id = "<?php echo $reply->id;?>" class="panel panel thread reply <?php echo $i%2!=0?'striped':'';?>">
   <div class='panel-heading'>
     <div class='panel-actions'><strong>#<?php echo $i++;?></strong></div>
-    <span class='muted'><i class='icon-comment-alt'></i> <?php echo $reply->createdDate;?></span>
+    <span class='muted'><i class='icon-comment-alt'></i> <?php echo formatTime($reply->createdDate, DT_DATETIME1);?></span>
   </div>
   <div>
     <table class='table'>
@@ -29,7 +29,7 @@
   </div>
   <div class='thread-foot'>
     <?php if($reply->editor): ?>
-    <small class='text-muted'><?php printf($lang->thread->lblEdited, $reply->editorRealname, $reply->editedDate); ?></small>
+    <small class='text-muted'><?php printf($lang->thread->lblEdited, $reply->editorRealname, formatTime($reply->editedDate, DT_DATETIME1)); ?></small>
     <?php endif; ?>
     <div class="pull-right reply-actions thread-actions">
     <?php if($this->app->user->account != 'guest'):?>

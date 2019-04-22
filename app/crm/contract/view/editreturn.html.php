@@ -38,7 +38,7 @@
     </tr>
     <tr>
       <th><?php echo $lang->contract->returnedDate;?></th>
-      <td><?php echo html::input('returnedDate', $return->returnedDate, "class='form-control form-date'");?></td>
+      <td><?php echo html::input('returnedDate', formatTime($return->returnedDate, DT_DATE1), "class='form-control form-date'");?></td>
     </tr>
     <tr>
       <th><?php echo $lang->contract->handlers;?></th>

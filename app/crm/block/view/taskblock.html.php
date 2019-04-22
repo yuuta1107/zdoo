@@ -24,7 +24,7 @@
     <td class='text-center'><?php echo $id;?></td>
     <td class='text-center'><span class='active pri pri-<?php echo $task->pri;?>'><?php echo $lang->task->priList[$task->pri];?></span></td>
     <td><strong><?php echo $task->name;?></strong></td>
-    <td><?php echo $task->deadline;?></td>
+    <td><?php echo formatTime($task->deadline, DT_DATE1);?></td>
     <td><?php echo $lang->task->statusList[$task->status];?></td>
   </tr>
   <?php endforeach;?>

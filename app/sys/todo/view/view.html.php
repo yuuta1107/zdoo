@@ -93,7 +93,7 @@
             </tr>
             <tr>
               <th class='w-80px'><?php echo $lang->todo->date;?></th>
-              <td><?php echo $todo->date == '00000000' ? $lang->todo->periods['future'] : date(DT_DATE1, strtotime($todo->date));?></td>
+              <td><?php echo $todo->date == '00000000' ? $lang->todo->periods['future'] : formatTime($todo->date, DT_DATE1);?></td>
             </tr>
             <tr>
               <th><?php echo $lang->todo->beginAndEnd;?></th>
@@ -109,15 +109,15 @@
             </tr>
             <tr>
               <th class='w-80px'><?php echo $lang->todo->assignedTo;?></th>
-              <td><?php echo !empty($todo->assignedTo) ? sprintf($lang->todo->assignedTip, zget($users, $todo->assignedTo), $todo->assignedDate) : '';?></td>
+              <td><?php echo !empty($todo->assignedTo) ? sprintf($lang->todo->assignedTip, zget($users, $todo->assignedTo), formatTime($todo->assignedDate, DT_DATETIME1)) : '';?></td>
             </tr>
             <tr>
               <th class='w-80px'><?php echo $lang->todo->finishedBy;?></th>
-              <td><?php echo !empty($todo->finishedBy) ? sprintf($lang->todo->finishedTip, zget($users, $todo->finishedBy), $todo->finishedDate) : '';?></td>
+              <td><?php echo !empty($todo->finishedBy) ? sprintf($lang->todo->finishedTip, zget($users, $todo->finishedBy), formatTime($todo->finishedDate, DT_DATETIME1)) : '';?></td>
             </tr>
             <tr>
               <th class='w-80px'><?php echo $lang->todo->closedBy;?></th>
-              <td><?php echo !empty($todo->closedBy) ? sprintf($lang->todo->closedTip, zget($users, $todo->closedBy), $todo->closedDate) : '';?></td>
+              <td><?php echo !empty($todo->closedBy) ? sprintf($lang->todo->closedTip, zget($users, $todo->closedBy), formatTime($todo->closedDate, DT_DATETIME1)) : '';?></td>
             </tr>
           </table>
       </div>

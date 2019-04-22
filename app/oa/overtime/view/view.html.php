@@ -48,9 +48,9 @@
   </tr> 
   <tr>
     <th><?php echo $lang->overtime->createdDate;?></th>
-    <td><?php echo formatTime($overtime->createdDate);?></td>
+    <td><?php echo formatTime($overtime->createdDate, DT_DATETIME1);?></td>
     <th><?php echo $lang->overtime->reviewedDate;?></th>
-    <td><?php echo formatTime($overtime->reviewedDate);?></td>
+    <td><?php echo formatTime($overtime->reviewedDate, DT_DATETIME1);?></td>
   </tr> 
 </table>
 <?php echo $this->fetch('action', 'history', "objectType=overtime&objectID=$overtime->id");?>

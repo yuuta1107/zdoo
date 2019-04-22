@@ -16,7 +16,7 @@
   <tr data-url='<?php echo $this->createLink('team.thread', 'view', "id=$thread->id"); ?>' <?php echo $appid?>>
     <td><?php echo $thread->title;?></td>
     <td class='w-80px'><?php echo $thread->authorRealname;?></td>
-    <td class='w-50px'><?php echo substr($thread->createdDate, 5, 5);?></td>
+    <td class='w-50px'><?php echo formatTime($thread->createdDate, DT_DATE6);?></td>
   </tr>  
   <?php endforeach;?>
 </table>

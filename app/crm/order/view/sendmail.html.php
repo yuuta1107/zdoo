@@ -35,8 +35,8 @@
         <?php endif;?>
         <p><?php printf($lang->order->infoAmount, $order->plan, $order->real)?></p>
         <p>
-          <?php if(formatTime($order->contactedDate)) printf($lang->order->infoContacted, $order->contactedDate)?>
-          <?php if(formatTime($order->nextDate)) printf($lang->order->infoNextDate, $order->nextDate)?>
+          <?php if(formatTime($order->contactedDate)) printf($lang->order->infoContacted, formatTime($order->contactedDate, DT_DATETIME1))?>
+          <?php if(formatTime($order->nextDate)) printf($lang->order->infoNextDate, formatTime($order->nextDate, DT_DATE1))?>
         </p>
       </div>
     </fieldset>

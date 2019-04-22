@@ -72,7 +72,7 @@
     </tr>
     <tr>
       <th><?php echo $lang->webapp->addedDate?></th>
-      <td><?php echo $webapp->addedDate?></td>
+      <td><?php echo formatTime($webapp->addedDate, DT_DATETIME1);?></td>
     </tr>
     <?php endif;?>
     <?php if($type == 'api'):?>

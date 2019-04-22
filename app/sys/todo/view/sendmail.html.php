@@ -28,7 +28,7 @@
       <legend style='color: #114f8e'><?php echo $todo->name;?></legend>
       <div style='padding:5px;'>
         <p><?php echo $lang->todo->status . ':' . zget($lang->todo->statusList, $todo->status)?></p>
-        <p><?php echo "{$lang->todo->date}: {$todo->date}"?></p>
+        <p><?php echo $lang->todo->date . ':' . formatTime($todo->date, DT_DATE1);?></p>
         <p><?php echo $lang->todo->desc?></p>
         <p><?php echo $todo->desc?></p>
       </div>

@@ -33,7 +33,7 @@
       <div class='form-group'>
         <div class='input-group'>
           <span class='input-group-addon'><?php echo $lang->my->company->begin?></span>
-          <?php echo html::input('begin', $begin, "class='form-control form-date'")?>
+          <?php echo html::input('begin', formatTime($begin), "class='form-control form-date'")?>
         </div>
       </div>
       <div class='form-group'>
@@ -54,7 +54,7 @@
           <th data-width='80' data-flex='false' class='text-center'><?php echo $lang->my->company->dept?></th>
           <th data-width='80' data-flex='false' class='text-center'><?php echo $lang->my->company->account?></th>
           <?php foreach($dateList as $currentDate):?>
-          <th data-width='200' data-flex='true' class='text-center'><?php echo date('Y-m-d', $currentDate)?></th>
+          <th data-width='200' data-flex='true' class='text-center'><?php echo formatTime($currentDate, DT_DATE1);?></th>
           <?php endforeach;?>
         </tr>
       </thead>
@@ -65,9 +65,9 @@
         <?php foreach($dateList as $currentDate):?>
         <td>
           <?php foreach($todos as $todo):?>
-            <?php if($todo->date == date('Y-m-d', $currentDate)):?>
+            <?php if($todo->date == formatTime($currentDate, DT_DATE1)):?>
               <div class='text-nowrap text-ellipsis w-180px <?php echo $todo->status?>' title='<?php echo $todo->name?>'>
-                <?php if(!empty($todo->begin)) echo "{$todo->begin}~{$todo->end}"?>
+                <?php if(!empty($todo->begin)) echo formatTime($todo->begin, DT_DATE1) . '~' . formatTime($todo->end, DT_DATE1);?>
                 <?php if($todo->type != 'leave' and $todo->type != 'trip'):?>
                 <?php echo html::a($this->createLink('todo', 'view', "todoID={$todo->id}"), $todo->name, "data-toggle='modal' data-width='80%'")?>
                 <?php elseif($todo->type == 'leave'):?>

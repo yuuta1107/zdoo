@@ -43,8 +43,8 @@
           <?php endif;?>
           <p><?php printf($lang->order->infoAmount, zget($currencySign, $order->currency, '') . formatMoney($order->plan), zget($currencySign, $order->currency, '') . formatMoney($order->real))?></p>
           <p>
-            <?php if(formatTime($order->contactedDate)) printf($lang->order->infoContacted, $order->contactedDate)?>
-            <?php if(formatTime($order->nextDate)) printf($lang->order->infoNextDate, $order->nextDate)?>
+            <?php if(formatTime($order->contactedDate)) printf($lang->order->infoContacted, formatTime($order->contactedDate, DT_DATETIME1))?>
+            <?php if(formatTime($order->nextDate)) printf($lang->order->infoNextDate, formatTime($order->nextDate, DT_DATE1))?>
           </p>
         </div>
       </div>
@@ -109,11 +109,11 @@
             </tr>
             <tr>
               <th><?php echo $lang->order->contactedDate;?></th>
-              <td><?php echo $order->contactedDate;?></td>
+              <td><?php echo formatTime($order->contactedDate, DT_DATETIME1);?></td>
             </tr>
             <tr>
               <th><?php echo $lang->order->nextDate;?></th>
-              <td><?php echo html::input('nextDate', $order->nextDate, "class='form-control form-date'");?></td>
+              <td><?php echo html::input('nextDate', formatTime($order->nextDate), "class='form-control form-date'");?></td>
             </tr>
             <tr>
               <th><?php echo $lang->order->signedBy;?></th>
@@ -121,7 +121,7 @@
             </tr>
             <tr>
               <th><?php echo $lang->order->signedDate;?></th>
-              <td><?php echo html::input('signedDate', $order->signedDate, "class='form-control form-date'");?></td>
+              <td><?php echo html::input('signedDate', formatTime($order->signedDate), "class='form-control form-date'");?></td>
             </tr>
             <tr>
               <th><?php echo $lang->order->closedBy;?></th>

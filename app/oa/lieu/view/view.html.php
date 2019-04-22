@@ -56,9 +56,9 @@
   </tr>
   <tr>
     <th><?php echo $lang->lieu->createdDate;?></th>
-    <td><?php echo formatTime($lieu->createdDate);?></td>
+    <td><?php echo formatTime($lieu->createdDate, DT_DATETIME1);?></td>
     <th><?php echo $lang->lieu->reviewedDate;?></th>
-    <td><?php echo formatTime($lieu->reviewedDate);?></td>
+    <td><?php echo formatTime($lieu->reviewedDate, DT_DATETIME1);?></td>
   </tr>
 </table>
 <?php echo $this->fetch('action', 'history', "objectType=lieu&objectID=$lieu->id");?>

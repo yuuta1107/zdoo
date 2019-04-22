@@ -10,7 +10,7 @@
  * @link        http://www.ranzhi.org
  */
 ?>
-<?php $mailTitle = "{$lang->leave->common}#{$leave->id} " . zget($users, $leave->createdBy) . " {$leave->begin}~{$leave->end}";?>
+<?php $mailTitle = "{$lang->leave->common}#{$leave->id} " . zget($users, $leave->createdBy) . ' ' . formatTime($leave->begin, DT_DATE1) . '~' . formatTime($leave->end, DT_DATE1);?>
 <?php include '../../../sys/common/view/mail.header.html.php';?>
 <tr>
   <td>
@@ -31,7 +31,7 @@
         <p><?php echo $lang->leave->createdBy . ':' . zget($users, $leave->createdBy)?></p>
         <p><?php echo $lang->leave->status . ':' . zget($lang->leave->statusList, $leave->status)?></p>
         <p><?php echo $lang->leave->type . ':' . zget($lang->leave->typeList, $leave->type)?></p>
-        <p><?php echo "{$lang->leave->date}: {$leave->begin} {$leave->start}~{$leave->end} {$leave->finish}"?></p>
+        <p><?php echo $lang->leave->date . ':' . formatTime($leave->begin . ' ' . $leave->start, DT_DATETIME2) . '~' . formatTime($leave->end . ' ' . $leave->finish, DT_DATETIME2);?></p>
         <p><?php echo $lang->leave->desc?></p>
         <p><?php echo $leave->desc?></p>
       </div>

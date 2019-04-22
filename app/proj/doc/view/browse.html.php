@@ -89,7 +89,7 @@
             <td class='text-left' title="<?php echo $doc->title?>"><nobr><?php echo $canView ? html::a($viewLink, $doc->title) : $doc->title;?></nobr></td>
             <td><?php echo $lang->doc->types[$doc->type];?></td>
             <td><?php isset($users[$doc->createdBy]) ? print($users[$doc->createdBy]) : print($doc->createdBy);?></td>
-            <td class='visible-lg'><?php echo date("m-d H:i", strtotime($doc->createdDate));?></td>
+            <td class='visible-lg'><?php echo formatTime($doc->createdDate, DT_MONTHTIME1);?></td>
             <td class='actions'>
               <?php 
               commonMOdel::printLink('doc', 'edit', "doc={$doc->id}", $lang->edit);

@@ -43,7 +43,7 @@
         <?php foreach($holidays as $holiday):?>
         <tr>
           <td><?php echo $holiday->name;?></td>
-          <td><?php echo $holiday->begin . ' ~ ' . $holiday->end;?></td>
+          <td><?php echo formatTime($holiday->begin, DT_DATE1) . ' ~ ' . formatTime($holiday->end, DT_DATE1);?></td>
           <td><?php echo zget($lang->holiday->typeList, $holiday->type);?></td>
           <td><?php echo $holiday->desc;?></td>
           <td>

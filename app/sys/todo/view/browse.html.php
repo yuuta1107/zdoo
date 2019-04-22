@@ -35,13 +35,13 @@
         <?php foreach($todos as $todo):?>
         <tr class='text-center'>
           <td class='text-left'><label class='checkbox-inline'><input type='checkbox' name='todoIDList[]' value='<?php echo $todo->id;?>'/> <?php echo $todo->id;?></td>
-          <td><?php echo $todo->date;?></td>
+          <td><?php echo formatTime($todo->date, DT_DATE1);?></td>
           <td><?php echo zget($lang->todo->typeList, $todo->type);?></td>
           <td><?php echo $lang->todo->priList[$todo->pri];?></td>
           <td class='text-left' title='<?php echo $todo->name?>'><?php echo $todo->name;?></td>
           <td><?php echo zget($users, $todo->assignedTo);?></td>
-          <td><?php echo $todo->begin;?></td>
-          <td><?php echo $todo->end;?></td>
+          <td><?php echo formatTime($todo->begin, DT_DATE1);?></td>
+          <td><?php echo formatTime($todo->end, DT_DATE1);?></td>
           <td><?php echo zget($lang->todo->statusList, $todo->status);?></td>
           <td class='text-left actions'>
             <?php 

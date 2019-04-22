@@ -51,9 +51,9 @@
         <td class='text-left' title='<?php echo $contract->code;?>'><?php echo $contract->code;?></td>
         <td class='text-left' title='<?php echo $contract->name;?>'><?php echo $contract->name;?></td>
         <td class='text-right'><?php echo zget($currencySign, $contract->currency, '') . formatMoney($contract->amount);?></td>
-        <td class='visible-lg'><?php echo substr($contract->createdDate, 0, 10);?></td>
-        <td><?php echo substr($contract->begin, 0, 10);?></td>
-        <td><?php echo substr($contract->end, 0, 10);?></td>
+        <td class='visible-lg'><?php echo formatTime($contract->createdDate, DT_DATETIME1);?></td>
+        <td><?php echo formatTime($contract->begin, DT_DATE1);?></td>
+        <td><?php echo formatTime($contract->end, DT_DATE1);?></td>
         <td><?php echo $lang->contract->returnList[$contract->return];?></td>
         <td><?php echo $lang->contract->deliveryList[$contract->delivery];?></td>
         <td class='<?php echo "contract-{$contract->status}";?>'><?php echo $lang->contract->statusList[$contract->status];?></td>

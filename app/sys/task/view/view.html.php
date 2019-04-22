@@ -53,7 +53,7 @@
             <td><?php echo $child->id;?></td>
             <td><span class='active pri pri-<?php echo $child->pri; ?>'><?php echo $lang->task->priList[$child->pri];?></span></td>
             <td class='text-left'><?php echo $child->name;?></td>
-            <td><?php echo $child->deadline;?></td>
+            <td><?php echo formatTime($child->deadline, DT_DATE1);?></td>
             <td><?php if(isset($users[$child->assignedTo])) echo $users[$child->assignedTo];?></td>
             <td><?php echo zget($lang->task->statusList, $child->status);?></td>
             <td class='visible-lg'><?php echo $child->consumed;?></td>
@@ -109,7 +109,7 @@
             </tr>
             <tr>
               <th><?php echo $lang->task->deadline;?></th>
-              <td><?php echo $task->deadline;?></td>
+              <td><?php echo formatTime($task->deadline, DT_DATE1);?></td>
             </tr>
             <tr>
               <th><?php echo $lang->task->estimate;?></th>
@@ -156,19 +156,19 @@
           <table class='table table-info'>
             <tr>
               <th class='w-80px'><?php echo $lang->task->createdBy;?></th>
-              <td><?php echo zget($users, $task->createdBy, $task->createdBy) . $lang->at . $task->createdDate;?></td>
+              <td><?php echo zget($users, $task->createdBy, $task->createdBy) . $lang->at . formatTime($task->createdDate, DT_DATETIME1);?></td>
             </tr>
             <tr>
               <th><?php echo $lang->task->finishedBy;?></th>
-              <td><?php if($task->finishedBy) echo zget($users, $task->finishedBy, $task->finishedBy) . $lang->at . $task->finishedDate;?></td>
+              <td><?php if($task->finishedBy) echo zget($users, $task->finishedBy, $task->finishedBy) . $lang->at . formatTime($task->finishedDate, DT_DATETIME1);?></td>
             </tr>
             <tr>
               <th><?php echo $lang->task->canceledBy;?></th>
-              <td><?php if($task->canceledBy) echo zget($users, $task->canceledBy, $task->canceledBy) . $lang->at . $task->canceledDate;?></td>
+              <td><?php if($task->canceledBy) echo zget($users, $task->canceledBy, $task->canceledBy) . $lang->at . formatTime($task->canceledDate, DT_DATETIME1);?></td>
             </tr>
             <tr>
               <th><?php echo $lang->task->closedBy;?></th>
-              <td><?php if($task->closedBy) echo zget($users, $task->closedBy, $task->closedBy) . $lang->at . $task->closedDate;?></td>
+              <td><?php if($task->closedBy) echo zget($users, $task->closedBy, $task->closedBy) . $lang->at . formatTime($task->closedDate, DT_DATETIME1);?></td>
             </tr>
             <tr>
               <th><?php echo $lang->task->closedReason;?></th>
@@ -176,7 +176,7 @@
             </tr>
             <tr>
               <th><?php echo $lang->task->lastEditedBy;?></th>
-              <td><?php if($task->editedBy) echo zget($users, $task->editedBy, $task->editedBy) . $lang->at . $task->editedDate;?></td>
+              <td><?php if($task->editedBy) echo zget($users, $task->editedBy, $task->editedBy) . $lang->at . formatTime($task->editedDate, DT_DATETIME1);?></td>
             </tr>
           </table>
         </div>

@@ -102,30 +102,30 @@
         </tr>
         <tr>
           <th><?php echo $lang->refund->createdBy;?></th>
-          <td><?php echo zget($users, $refund->createdBy) . $lang->at . $refund->createdDate;?></td>
+          <td><?php echo zget($users, $refund->createdBy) . $lang->at . formatTime($refund->createdDate, DT_DATETIME1);?></td>
         </tr>
         <?php if($refund->editedBy):?>
         <tr>
           <th><?php echo $lang->refund->editedBy;?></th>
-          <td><?php if($refund->editedBy) echo zget($users, $refund->editedBy) . $lang->at . $refund->editedDate;?></td>
+          <td><?php if($refund->editedBy) echo zget($users, $refund->editedBy) . $lang->at . formatTime($refund->editedDate, DT_DATETIME1);?></td>
         </tr>
         <?php endif;?>
         <?php if($refund->firstReviewer):?>
         <tr id='firstReviewer'>
           <th><?php echo $lang->refund->firstReviewer;?></th>
-          <td><?php if($refund->firstReviewer) echo zget($users, $refund->firstReviewer) . $lang->at . $refund->firstReviewDate;?></td>
+          <td><?php if($refund->firstReviewer) echo zget($users, $refund->firstReviewer) . $lang->at . formatTime($refund->firstReviewDate, DT_DATETIME1);?></td>
         </tr>
         <?php endif;?>
         <?php if($refund->secondReviewer):?>
         <tr id='secondReviewer'>
           <th><?php echo $lang->refund->secondReviewer;?></th>
-          <td><?php if($refund->secondReviewer) echo zget($users, $refund->secondReviewer) . $lang->at . $refund->secondReviewDate;?></td>
+          <td><?php if($refund->secondReviewer) echo zget($users, $refund->secondReviewer) . $lang->at . formatTime($refund->secondReviewDate, DT_DATETIME1);?></td>
         </tr>
         <?php endif;?>
         <?php if($refund->refundBy):?>
         <tr>
           <th><?php echo $lang->refund->refundBy;?></th>
-          <td><?php if($refund->refundBy) echo zget($users, $refund->refundBy) . $lang->at . $refund->refundDate;?></td>
+          <td><?php if($refund->refundBy) echo zget($users, $refund->refundBy) . $lang->at . formatTime($refund->refundDate, DT_DATETIME1);?></td>
         </tr>
         <?php endif;?>
       </table>

@@ -81,7 +81,7 @@
               <?php $date   = date('Ymd', $startDate);?>
               <?php $reviewStatus = isset($attend->reviewStatus) ? $attend->reviewStatus : '';?>
               <tr class="text-middle attend-<?php echo $status?> <?php echo (date('m', $startDate) == $currentMonth) ? '' : 'otherMonth'?>" title='<?php echo $lang->attend->statusList[$status]?>'>
-                <td><?php echo $currentDate;?></td>
+                <td><?php echo formatTime($currentDate, DT_DATE1);?></td>
                 <td><?php echo $lang->datepicker->abbrDayNames[$dayIndex]?></td>
                 <td class='attend-signin'>
                   <?php $signIn = substr($attend->signIn, 0, 5);?>
@@ -153,7 +153,7 @@
               </tr>
               <?php else:?>
               <tr class="<?php echo (date('m', $startDate) == $currentMonth) ? '' : 'otherMonth'?>">
-                <td><?php echo $currentDate;?></td>
+                <td><?php echo formatTime($currentDate, DT_DATE1);?></td>
                 <td><?php echo $lang->datepicker->abbrDayNames[$dayIndex]?></td>
                 <td></td>
                 <td></td>

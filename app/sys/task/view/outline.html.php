@@ -77,9 +77,9 @@
                 <?php echo $task->name;?>
                 <?php if(!empty($task->children)) echo "<span class='task-toggle'>&nbsp;&nbsp;<i class='icon icon-minus'></i>&nbsp;&nbsp;</span>"?>
               </td>
-              <td><?php echo $task->deadline;?></td>
+              <td><?php echo formatTime($task->deadline, DT_DATE1);?></td>
               <td><?php if(isset($users[$task->assignedTo])) echo $users[$task->assignedTo];?></td>
-              <td class='visible-lg'><?php echo substr($task->createdDate, 0, 10);?></td>
+              <td class='visible-lg'><?php echo formatTime($task->createdDate, DT_DATE1);?></td>
               <td class='visible-lg'><?php echo $task->consumed;?></td>
               <td class='visible-lg'><?php echo $task->left;?></td>
               <td class='text-left'><?php $this->task->buildOperateMenu($task);?></td>
@@ -96,9 +96,9 @@
                       <span class='label'><?php echo $lang->task->childrenAB?></span>
                       <?php echo $child->name;?>
                     </td>
-                    <td class='w-100px'>  <?php echo $child->deadline;?></td>
+                    <td class='w-100px'>  <?php echo formatTime($child->deadline, DT_DATE1);?></td>
                     <td class='w-80px'>   <?php if(isset($users[$child->assignedTo])) echo $users[$child->assignedTo];?></td>
-                    <td class='w-100px visible-lg'><?php echo substr($child->createdDate, 0, 10);?></td>
+                    <td class='w-100px visible-lg'><?php echo formatTime($child->createdDate, DT_DATE1);?></td>
                     <td class='w-90px visible-lg'> <?php echo $child->consumed;?></td>
                     <td class='w-110px visible-lg'><?php echo $child->left;?></td>
                     <td class='w-240px text-left'><?php $this->task->buildOperateMenu($child);?></td>

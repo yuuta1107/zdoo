@@ -50,7 +50,7 @@
           <?php if($order->status == 'closed') echo $lang->order->closedReasonList[$order->closedReason];?>
         </td>
         <td class='visible-lg'><?php echo formatTime($order->contactedDate, DT_DATE1);?></td>
-        <td><?php echo $order->nextDate;?></td>
+        <td><?php echo formatTime($order->nextDate, DT_DATE1);?></td>
         <td class='actions'>
           <?php echo $this->order->buildOperateMenu($order); ?>
         </td>

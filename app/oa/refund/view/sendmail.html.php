@@ -51,7 +51,7 @@
           </tr>
           <tr>
             <th><?php echo $lang->refund->date?></th>
-            <td><?php echo $refund->date?></td>
+            <td><?php echo formatTime($refund->date, DT_DATE1);?></td>
             <th><?php echo $lang->refund->status?></th>
             <td>
               <span style='color: red'>
@@ -96,19 +96,19 @@
             <th><?php echo $lang->refund->firstReviewer?></th>
             <td><?php echo $refund->firstReviewerLabel?></td>
             <th><?php echo $lang->refund->firstReviewDate?></th>
-            <td><?php echo formatTime($refund->firstReviewDate)?></td>
+            <td><?php echo formatTime($refund->firstReviewDate, DT_DATETIME1)?></td>
           </tr>
           <tr>
             <th><?php echo $lang->refund->secondReviewer?></th>
             <td><?php echo $refund->secondReviewerLabel?></td>
             <th><?php echo $lang->refund->secondReviewDate?></th>
-            <td><?php echo formatTime($refund->secondReviewDate)?></td>
+            <td><?php echo formatTime($refund->secondReviewDate, DT_DATETIME1)?></td>
           </tr>
           <tr>
             <th><?php echo $lang->refund->refundBy?></th>
             <td><?php echo zget($users, $refund->refundBy)?></td>
             <th><?php echo $lang->refund->refundDate?></th>
-            <td><?php echo formatTime($refund->refundDate)?></td>
+            <td><?php echo formatTime($refund->refundDate, DT_DATETIME1)?></td>
           </tr>
           <tr>
             <th><?php echo $lang->refund->reason?></th>
@@ -128,7 +128,7 @@
           </tr>
           <?php foreach($refund->detail as $detail):?>
           <tr>
-            <td><?php echo $detail->date?></td>
+            <td><?php echo formatTime($detail->date, DT_DATE1);?></td>
             <?php $category = zget($categories, $detail->category, ' ')?>
             <td title='<?php echo $category;?>'><div style='width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;'><?php echo $category?></div></td>
             <td><?php echo $detail->money?></td>

@@ -17,7 +17,7 @@
     <table class='table table-form table-condensed'>
       <tr>
         <th class='w-80px'><?php echo $lang->leave->backDate;?></th>
-        <td><?php echo html::input('backDate', $leave->backDate, "class='form-control form-datetime'")?></td>
+        <td><?php echo html::input('backDate', formatTime($leave->backDate), "class='form-control form-datetime'")?></td>
       </tr>
       <tr>
         <th></th>

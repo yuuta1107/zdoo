@@ -43,10 +43,10 @@
             <?php echo html::a("javascript:$.openEntry(\"proj\", \"" . $this->createLink('proj.task', 'view', "taskID=$task->id") . "\")", $task->name, "title='$task->name'");?>
             <?php if(!empty($task->children)) echo "<span class='task-toggle'>&nbsp;&nbsp;<i class='icon icon-remove'></i>&nbsp;&nbsp;</span>"?>
           </td>
-          <td><?php echo $task->deadline;?></td>
+          <td><?php echo formatTime($task->deadline, DT_DATE1);?></td>
           <td><?php echo zget($users, $task->assignedTo);?></td>
           <td><?php echo zget($lang->task->statusList, $task->status);?></td>
-          <td class='visible-lg'><?php echo substr($task->createdDate, 0, 10);?></td>
+          <td class='visible-lg'><?php echo formatTime($task->createdDate, DT_DATE1);?></td>
           <td class='visible-lg'><?php echo $task->consumed;?></td>
           <td class='visible-lg'><?php echo $task->left;?></td>
           <td class='text-left actions'><?php $this->task->buildOperateMenu($task);?></td>
@@ -63,10 +63,10 @@
                   <span class='label'><?php echo $lang->task->childrenAB?></span>
                   <?php echo html::a("javascript:$.openEntry(\"proj\", \"" . $this->createLink('proj.task', 'view', "taskID=$child->id") . "\")", $child->name, "title='$child->name'");?>
                 </td>
-                <td class='w-100px'>  <?php echo $child->deadline;?></td>
+                <td class='w-100px'>  <?php echo formatTime($child->deadline, DT_DATE1);?></td>
                 <td class='w-80px'>   <?php if(isset($users[$child->assignedTo])) echo $users[$child->assignedTo];?></td>
                 <td class='w-90px'>   <?php echo zget($lang->task->statusList, $child->status);?></td>
-                <td class='w-100px visible-lg'><?php echo substr($child->createdDate, 0, 10);?></td>
+                <td class='w-100px visible-lg'><?php echo formatTime($child->createdDate, DT_DATE1);?></td>
                 <td class='w-90px visible-lg'> <?php echo $child->consumed;?></td>
                 <td class='w-110px visible-lg'><?php echo $child->left;?></td>
                 <td class='w-240px text-left actions'><?php $this->task->buildOperateMenu($child);?></td>

@@ -55,7 +55,7 @@
         <?php $contract = $contracts[$return->contract];?>
         <tr>
           <td><?php echo $contract->name;?></td>
-          <td><?php echo $return->returnedDate;?></td>
+          <td><?php echo formatTime($return->returnedDate, DT_DATE1);?></td>
           <td><?php echo zget($users, $return->returnedBy, $return->returnedBy);?></td>
           <td><?php echo zget($currencySign, $contract->currency, '') . formatMoney($return->amount);?></td>
           <td><?php echo $return->depositor;?></td>
@@ -152,7 +152,7 @@
           </tr>
           <tr>
             <th><?php echo $lang->customer->nextDate;?></th>
-            <td><?php echo formatTime($customer->nextDate);?></td>
+            <td><?php echo formatTime($customer->nextDate, DT_DATE1);?></td>
           </tr>
         </table>
       </div>

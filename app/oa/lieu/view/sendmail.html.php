@@ -10,7 +10,7 @@
  * @link        http://www.ranzhi.org
  */
 ?>
-<?php $mailTitle = "{$lang->lieu->common}#{$lieu->id} " . zget($users, $lieu->createdBy) . " {$lieu->begin}~{$lieu->end}";?>
+<?php $mailTitle = "{$lang->lieu->common}#{$lieu->id} " . zget($users, $lieu->createdBy) . ' ' . formatTime($lieu->begin, DT_DATE1) . '~' . formatTime($lieu->end, DT_DATE1);?>
 <?php include '../../../sys/common/view/mail.header.html.php';?>
 <tr>
   <td>
@@ -30,7 +30,7 @@
       <div style='padding:5px;'>
         <p><?php echo $lang->lieu->createdBy . ':' . zget($users, $lieu->createdBy)?></p>
         <p><?php echo $lang->lieu->status . ':' . zget($lang->lieu->statusList, $lieu->status)?></p>
-        <p><?php echo "{$lang->lieu->date}: {$lieu->begin} {$lieu->start}~{$lieu->end} {$lieu->finish}"?></p>
+        <p><?php echo $lang->lieu->date . ':' . formatTime($lieu->begin . ' ' . $lieu->start, DT_DATETIME2) . '~' . formatTime($lieu->end . ' ' . $lieu->finish, DT_DATETIME2);?></p>
         <p><?php echo $lang->lieu->desc;?></p>
         <p><?php echo $lieu->desc;?></p>
       </div>

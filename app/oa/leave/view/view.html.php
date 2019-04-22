@@ -42,9 +42,9 @@
   </tr>
   <tr>
     <th><?php echo $lang->leave->createdDate;?></th>
-    <td><?php echo formatTime($leave->createdDate);?></td>
+    <td><?php echo formatTime($leave->createdDate, DT_DATETIME1);?></td>
     <th><?php echo $lang->leave->reviewedDate;?></th>
-    <td><?php echo formatTime($leave->reviewedDate);?></td>
+    <td><?php echo formatTime($leave->reviewedDate, DT_DATETIME1);?></td>
   </tr>
 </table>
 <?php echo $this->fetch('action', 'history', "objectType=leave&objectID=$leave->id");?>

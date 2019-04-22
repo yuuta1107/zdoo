@@ -28,7 +28,7 @@
     <?php $user = $users[$attend->account];?>
     <tr>
       <td><?php echo $user->realname;?></td>
-      <td><?php echo $attend->date?></td>
+      <td><?php echo formatTime($attend->date, DT_DATE1)?></td>
       <td><?php echo substr($attend->manualIn, 0, 5)?></td>
       <td class='text-left' title='<?php echo $attend->desc;?>'><?php echo $attend->desc?></td>
       <td>

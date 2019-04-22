@@ -146,11 +146,11 @@
           </tr>
           <tr>
             <th><?php echo $lang->contract->begin;?></th>
-            <td><?php echo $contract->begin;?></td>
+            <td><?php echo formatTime($contract->begin, DT_DATE1);?></td>
           </tr>
           <tr>
             <th><?php echo $lang->contract->end;?></th>
-            <td><?php echo $contract->end;?></td>
+            <td><?php echo formatTime($contract->end, DT_DATE1);?></td>
           </tr>
           <tr>
             <th><?php echo $lang->contract->handlers;?></th>
@@ -213,7 +213,7 @@
         </tr>
         <?php foreach($contract->returnList as $return):?>
         <tr>
-          <td><?php echo $return->returnedDate;?></td>
+          <td><?php echo formatTime($return->returnedDate, DT_DATE1);?></td>
           <td><?php echo zget($users, $return->returnedBy, $return->returnedBy);?></td>
           <td><?php echo zget($currencySign, $contract->currency, '') . formatMoney($return->amount);?></td>
           <td class='text-center'>
@@ -236,7 +236,7 @@
         </tr>
         <?php foreach($contract->deliveryList as $delivery):?>
         <tr>
-          <td><?php echo $delivery->deliveredDate;?></td>
+          <td><?php echo formatTime($delivery->deliveredDate, DT_DATE1);?></td>
           <td><?php echo zget($users, $delivery->deliveredBy, $delivery->deliveredBy);?></td>
           <td title='<?php echo $delivery->comment;?>'><?php echo $delivery->comment;?></td>
           <td class='text-center'>
@@ -256,31 +256,31 @@
         <table class='table table-info' id='contractLife'>
           <tr>
             <th class='w-70px'><?php echo $lang->contract->createdBy;?></th>
-            <td><?php echo zget($users, $contract->createdBy, $contract->createdBy) . $lang->at . $contract->createdDate;?></td>
+            <td><?php echo zget($users, $contract->createdBy, $contract->createdBy) . $lang->at . formatTime($contract->createdDate, DT_DATETIME1);?></td>
           </tr>
           <tr>
             <th><?php echo $lang->contract->signedBy;?></th>
-            <td><?php if($contract->signedBy) echo zget($users, $contract->signedBy, $contract->signedBy) . $lang->at . $contract->signedDate;?></td>
+            <td><?php if($contract->signedBy) echo zget($users, $contract->signedBy, $contract->signedBy) . $lang->at . formatTime($contract->signedDate, DT_DATE1);?></td>
           </tr>
           <tr>
             <th><?php echo $lang->contract->deliveredBy;?></th>
-            <td><?php if($contract->deliveredBy) echo zget($users, $contract->deliveredBy, $contract->deliveredBy) . $lang->at . $contract->deliveredDate;?></td>
+            <td><?php if($contract->deliveredBy) echo zget($users, $contract->deliveredBy, $contract->deliveredBy) . $lang->at . formatTime($contract->deliveredDate, DT_DATE1);?></td>
           </tr>
           <tr>
             <th><?php echo $lang->contract->returnedBy;?></th>
-            <td><?php if($contract->returnedBy) echo zget($users, $contract->returnedBy, $contract->returnedBy) . $lang->at . $contract->returnedDate;?></td>
+            <td><?php if($contract->returnedBy) echo zget($users, $contract->returnedBy, $contract->returnedBy) . $lang->at . formatTime($contract->returnedDate, DT_DATE1);?></td>
           </tr>
           <tr>
             <th><?php echo $lang->contract->finishedBy;?></th>
-            <td><?php if($contract->finishedBy) echo zget($users, $contract->finishedBy, $contract->finishedBy) . $lang->at . $contract->finishedDate;?></td>
+            <td><?php if($contract->finishedBy) echo zget($users, $contract->finishedBy, $contract->finishedBy) . $lang->at . formatTime($contract->finishedDate, DT_DATE1);?></td>
           </tr>
           <tr>
             <th><?php echo $lang->contract->canceledBy;?></th>
-            <td><?php if($contract->canceledBy) echo zget($users, $contract->canceledBy, $contract->canceledBy) . $lang->at . $contract->canceledDate;?></td>
+            <td><?php if($contract->canceledBy) echo zget($users, $contract->canceledBy, $contract->canceledBy) . $lang->at . formatTime($contract->canceledDate, DT_DATE1);?></td>
           </tr>
           <tr>
             <th><?php echo $lang->contract->editedBy;?></th>
-            <td><?php if($contract->editedBy) echo zget($users, $contract->editedBy, $contract->editedBy) . $lang->at . $contract->editedDate;?></td>
+            <td><?php if($contract->editedBy) echo zget($users, $contract->editedBy, $contract->editedBy) . $lang->at . formatTime($contract->editedDate, DT_DATETIME1);?></td>
           </tr>
         </table>
       </div>

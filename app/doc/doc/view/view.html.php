@@ -134,7 +134,7 @@
           </tr>
           <tr>
             <th><?php echo $lang->doc->createdDate;?></th>
-            <td><?php echo $doc->createdDate;?></td>
+            <td><?php echo formatTime($doc->createdDate, DT_DATETIME1);?></td>
           </tr>
           <tr>
             <th><?php echo $lang->doc->editedBy;?></th>
@@ -142,7 +142,7 @@
           </tr>
           <tr>
             <th><?php echo $lang->doc->editedDate;?></th>
-            <td><?php echo $doc->editedDate;?></td>
+            <td><?php echo formatTime($doc->editedDate, DT_DATETIME1);?></td>
           </tr>
         </table>
       </div>

@@ -51,10 +51,10 @@
               <?php echo html::a($this->createLink('task', 'view', "taskID=$task->id"), $task->name);?>
               <?php if(!empty($task->children)) echo "<span class='task-toggle'>&nbsp;&nbsp;<i class='icon icon-minus'></i>&nbsp;&nbsp;</span>"?>
             </td>
-            <td><?php echo $task->deadline;?></td>
+            <td><?php echo formatTime($task->deadline, DT_DATE1);?></td>
             <td><?php if(isset($users[$task->assignedTo])) echo $users[$task->assignedTo];?></td>
             <td class="<?php echo $task->status;?>"><?php echo zget($lang->task->statusList, $task->status);?></td>
-            <td><?php echo substr($task->createdDate, 0, 10);?></td>
+            <td><?php echo formatTime($task->createdDate, DT_DATE1);?></td>
             <td><?php echo $task->consumed;?></td>
             <td><?php echo $task->left;?></td>
             <td class='text-left'><?php $this->task->buildOperateMenu($task);?></td>
@@ -71,10 +71,10 @@
                     <span class='label label-info'><?php echo $lang->task->childrenAB?></span>
                     <?php echo html::a($this->createLink('task', 'view', "taskID=$child->id"), $child->name);?>
                   </td>
-                  <td class='w-100px'>  <?php echo $child->deadline;?></td>
+                  <td class='w-100px'>  <?php echo formatTime($child->deadline, DT_DATE1);?></td>
                   <td class='w-80px'>   <?php if(isset($users[$child->assignedTo])) echo $users[$child->assignedTo];?></td>
                   <td class="w-90px <?php echo $child->status;?>">   <?php echo zget($lang->task->statusList, $child->status);?></td>
-                  <td class='w-90px'><?php echo substr($child->createdDate, 0, 10);?></td>
+                  <td class='w-90px'><?php echo formatTime($child->createdDate, DT_DATE1);?></td>
                   <td class='w-80px'> <?php echo $child->consumed;?></td>
                   <td class='w-100px'><?php echo $child->left;?></td>
                   <td class='w-240px text-left'><?php $this->task->buildOperateMenu($child);?></td>

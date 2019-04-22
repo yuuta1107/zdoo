@@ -45,7 +45,7 @@
         <div class='info'><?php echo $project->desc;?></div>
         <div class='footerbar text-important'>
           <span><?php echo "<i class='icon icon-user'> </i>" . zget($users, $project->PM);?></span>
-          <span class=''><i class='icon icon-time'> </i><?php echo formatTime($project->begin, 'm-d') . ' ~ ' .  formatTime($project->end, 'm-d');?></span>
+          <span class=''><i class='icon icon-time'> </i><?php echo formatTime($project->begin, DT_DATE6) . ' ~ ' .  formatTime($project->end, DT_DATE6);?></span>
           <?php $browseLink = helper::createLink('task', $this->cookie->taskListType == false ? 'browse' : $this->cookie->taskListType, "projectID=$project->id");?>
           <?php echo html::a($browseLink, $lang->project->enter, "class='btn btn-primary entry'");?>
         </div>
@@ -77,8 +77,8 @@
       <td><?php echo $project->id;?></td>
       <td class='text-left'><?php echo $project->name;?></td>
       <td><?php foreach($project->members as $member) if($member->role == 'manager') echo zget($users, $member->account);?></td>
-      <td><?php echo $project->begin;?></td>
-      <td><?php echo $project->end;?></td>
+      <td><?php echo formatTime($project->begin, DT_DATE1);?></td>
+      <td><?php echo formatTime($project->end, DT_DATE1);?></td>
       <td><?php echo zget($users, $project->createdBy);?></td>
       <td><?php echo $lang->project->statusList[$project->status];?></td>
       <td title='<?php echo strip_tags($project->desc);?>'><?php echo helper::substr(strip_tags($project->desc), 20, '...');?></td>

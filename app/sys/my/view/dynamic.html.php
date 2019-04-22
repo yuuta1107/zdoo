@@ -32,7 +32,7 @@
   <?php if($action->appName == 'sys') $action->appName = 'superadmin';?>
   <?php if($action->objectType == 'todo') $action->appName = 'dashboard';?>
   <tr class='text-center'>
-    <td class='text-left'><?php echo $action->date;?></td>
+    <td class='text-left'><?php echo formatTime($action->date, DT_DATETIME1);?></td>
     <td><?php echo zget($users, $action->actor, $action->actor);?></td>
     <td><?php echo $action->actionLabel;?></td>
     <td><?php echo zget($lang->action->objectTypes, $action->objectType);?></td>

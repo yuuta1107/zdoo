@@ -10,7 +10,7 @@
  * @link        http://www.ranzhi.org
  */
 ?>
-<?php $mailTitle = "{$lang->overtime->common}#{$overtime->id} " . zget($users, $overtime->createdBy) . " {$overtime->begin}~{$overtime->end}";?>
+<?php $mailTitle = "{$lang->overtime->common}#{$overtime->id} " . zget($users, $overtime->createdBy) . ' ' .  formatTime($overtime->begin, DT_DATE1) . '~' . formatTime($overtime->end, DT_DATE1);?>
 <?php include '../../../sys/common/view/mail.header.html.php';?>
 <tr>
   <td>
@@ -31,7 +31,7 @@
         <p><?php echo $lang->overtime->createdBy . ':' . zget($users, $overtime->createdBy)?></p>
         <p><?php echo $lang->overtime->status . ':' . zget($lang->overtime->statusList, $overtime->status)?></p>
         <p><?php echo $lang->overtime->type . ':' . zget($lang->overtime->typeList, $overtime->type)?></p>
-        <p><?php echo "{$lang->overtime->date}: {$overtime->begin} {$overtime->start}~{$overtime->end} {$overtime->finish}"?></p>
+        <p><?php echo $lang->overtime->date . ':' . formatTime($overtime->begin . ' ' . $overtime->start, DT_DATETIME2) . '~' . formatTime($overtime->end . ' ' . $overtime->finish, DT_DATETIME2);?></p>
         <p><?php echo $lang->overtime->desc?></p>
         <p><?php echo $overtime->desc?></p>
       </div>

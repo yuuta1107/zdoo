@@ -31,10 +31,10 @@
             <?php foreach($threads as $thread):?>
             <tr class='text-center'>
               <td class='text-left'><?php echo html::a($this->createLink('thread', 'view', "id=$thread->id"), $thread->title, "target='_blank'");?></td>
-              <td style='width: 120px'><?php echo substr($thread->createdDate, 2, -3);?></td>
+              <td style='width: 120px'><?php echo formatTime($thread->createdDate, DT_DATETIME3);?></td>
               <td style='width: 50px'><?php echo $thread->views;?></td>
               <td style='width: 50px'><?php echo $thread->replies;?></td>
-              <td style='width: 200px' class='text-left'><?php if($thread->replies) echo substr($thread->repliedDate, 2, -3) . ' ' . $thread->repliedBy;?></td>  
+              <td style='width: 200px' class='text-left'><?php if($thread->replies) echo formatTime($thread->repliedDate, DT_DATETIME3) . ' ' . $thread->repliedBy;?></td>  
             </tr>  
             <?php endforeach;?>
           </tbody>

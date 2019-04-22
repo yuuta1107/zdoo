@@ -65,7 +65,7 @@ js::set('from', 'admin');
               <td><?php echo $depts[$user->dept];?></td>
               <td class='visible-lg'><?php echo formatTime($user->join, DT_DATE1);?></td>
               <td class='visible-lg'><?php echo $user->visits;?></td>
-              <td><?php echo $user->last;?></td>
+              <td><?php echo formatTime($user->last, DT_DATETIME1);?></td>
               <td><?php echo $user->ip;?></td>
               <td>
                 <?php

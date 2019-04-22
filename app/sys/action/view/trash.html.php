@@ -39,7 +39,7 @@
         <td><?php echo $action->objectID;?></td>
         <td class='text-left'><?php echo html::a("javascript:$.openEntry(\"{$appname}\", \"{$link}\")", $action->objectName);?></td>
         <td><?php echo zget($users, $action->actor, $action->actor);?></td>
-        <td><?php echo $action->date;?></td>
+        <td><?php echo formatTime($action->date, DT_DATETIME1);?></td>
         <td>
           <?php
           commonModel::printLink('action', 'undelete', "actionid=$action->id", $lang->action->undelete, "class='ajax'");
