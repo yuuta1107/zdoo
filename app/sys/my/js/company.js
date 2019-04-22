@@ -35,7 +35,7 @@ function fixScrollWrapper()
 
     if(tbHeight - wScrollTop - wHeight - marginBtm - fHeight > 0)
     {
-        $('div.datatable > div.scroll-wrapper').css('bottom', tbHeight - wHeight - wScrollTop - marginBtm - fHeight - 8);
+        $('div.datatable > div.scroll-wrapper').css('bottom', tbHeight - wHeight - wScrollTop - marginBtm - fHeight);
     }
     else
     {
