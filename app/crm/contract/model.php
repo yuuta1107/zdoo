@@ -630,7 +630,7 @@ class contractModel extends model
             ->add('contract', $contractID)
             ->setDefault('returnedBy', $this->app->user->account)
             ->setDefault('returnedDate', $now)
-            ->remove('finish,handlers,createTrade,depositor,category,dept,product,continue')
+            ->remove($this->config->contract->receiveNoneedFields)
             ->get();
 
         if(!$this->post->continue and $this->post->createTrade)
