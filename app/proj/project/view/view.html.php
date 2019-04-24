@@ -18,11 +18,11 @@
   </tr>
   <tr>
     <th><?php echo $lang->project->begin;?></th>
-    <td><?php echo $project->begin;?></td>
+    <td><?php echo formatTime($project->begin, DT_DATE1);?></td>
   </tr>
   <tr>
     <th><?php echo $lang->project->end;?></th>
-    <td><?php echo $project->end;?></td>
+    <td><?php echo formatTime($project->end, DT_DATE1);?></td>
   </tr>
   <tr>
     <th><?php echo $lang->project->manager;?></th>

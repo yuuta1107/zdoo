@@ -33,7 +33,7 @@
           ?>
         </td>
         <td><?php echo $reply->authorRealname;?></td>
-        <td><?php echo substr($reply->createdDate, 5, -3);?></td>
+        <td><?php echo formatTime($reply->createdDate, DT_MONTHTIME1);?></td>
         <td>
           <?php echo html::a($this->createLink('reply', 'delete', "replyID=$reply->id"), $lang->delete, "class='reloadDeleter'"); ?>
         </td>

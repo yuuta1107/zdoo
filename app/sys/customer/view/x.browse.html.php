@@ -39,7 +39,7 @@
           <td class='text-left' title='<?php echo $customer->name;?>'><?php if(!commonModel::printLink('customer', 'view', "customerID={$customer->id}", $customer->name)) echo $customer->name;?></td>
           <td><?php if(isset($users[$customer->assignedTo])) echo $users[$customer->assignedTo];?></td>
           <td class='<?php echo "customer-{$customer->status}";?>'><?php if($customer->status) echo $lang->customer->statusList[$customer->status];?></td>
-          <td><?php echo $customer->nextDate;?></td>
+          <td><?php echo formatTime($customer->nextDate, DT_DATE1);?></td>
         </tr>
         <?php endforeach;?>
       </tbody>

@@ -24,7 +24,7 @@
             <div class='avatar'><div class='avatar-empty icon-user'></div></div>
             <div class='content'>
               <div class='text'><span class='author'><strong><?php echo $message->from . $lang->colon;?></strong></span> &nbsp;<?php echo nl2br($message->content);?></div>
-              <div class='actions text-muted small'><?php echo $lang->comment->commentAt . ' ' . $message->date;?></div>
+              <div class='actions text-muted small'><?php echo $lang->comment->commentAt . ' ' . formatTime($message->date, DT_DATETIME1);?></div>
             </div>
             <?php if(!empty($replies[$message->id])):?>
               <div class='comments-list'>
@@ -33,7 +33,7 @@
                   <div class='avatar'><div class='avatar-empty icon-user'></div></div>
                   <div class='content'>
                     <div class='text'><span class='author'><strong><?php echo $reply->from . $lang->colon;?></strong></span> &nbsp;<?php echo nl2br($reply->content);?></div>
-                    <div class='actions text-muted small'><?php echo $lang->comment->replyAt . ' ' . $reply->date;?></div>
+                    <div class='actions text-muted small'><?php echo $lang->comment->replyAt . ' ' . formatTime($reply->date, DT_DATETIME1);?></div>
                   </div>
                 </div>
                 <?php endforeach; ?>

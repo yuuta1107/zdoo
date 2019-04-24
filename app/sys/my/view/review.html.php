@@ -42,9 +42,9 @@
         <td><?php echo $attend->id;?></td>
       <?php endif;?>
       <td><?php echo zget($users, $attend->account);?></td>
-      <td><?php echo $attend->date?></td>
-      <td><?php echo substr($attend->manualIn, 0, 5)?></td>
-      <td><?php echo substr($attend->manualOut, 0, 5)?></td>
+      <td><?php echo formatTime($attend->date, DT_DATE1);?></td>
+      <td><?php echo formatTime($attend->manualIn, DT_TIME2)?></td>
+      <td><?php echo formatTime($attend->manualOut, DT_TIME2)?></td>
       <td><?php echo zget($lang->attend->reasonList, $attend->reason)?></td>
       <td><?php echo $attend->desc?></td>
       <td><?php echo zget($lang->attend->statusList, $attend->status)?></td>
@@ -87,9 +87,9 @@
       <td><?php echo zget($users, $leave->createdBy);?></td>
       <td><?php echo zget($deptList, $leave->dept);?></td>
       <td><?php echo zget($this->lang->leave->typeList, $leave->type);?></td>
-      <td><?php echo $leave->begin . ' ' . substr($leave->start, 0, 5);?></td>
-      <td><?php echo $leave->end . ' ' . substr($leave->finish, 0, 5);?></td>
-      <td><?php echo formatTime($leave->backDate);?></td>
+      <td><?php echo formatTime($leave->begin . ' ' . $leave->start, DT_DATETIME2);?></td>
+      <td><?php echo formatTime($leave->end . ' ' . $leave->finish, DT_DATETIME2);?></td>
+      <td><?php echo formatTime($leave->backDate, DT_DATE1);?></td>
       <td title='<?php echo $leave->desc?>'><?php echo $leave->desc;?></td>
       <td class='leave-<?php echo $leave->status?>' title='<?php echo $leave->statusLabel;?>'><?php echo $leave->statusLabel;?></td>
       <td>
@@ -130,8 +130,8 @@
       <td><?php echo zget($users, $makeup->createdBy);?></td>
       <td><?php echo zget($deptList, $makeup->dept);?></td>
       <td><?php echo zget($this->lang->makeup->typeList, $makeup->type);?></td>
-      <td><?php echo $makeup->begin . ' ' . substr($makeup->start, 0, 5);?></td>
-      <td><?php echo $makeup->end . ' ' . substr($makeup->finish, 0, 5);?></td>
+      <td><?php echo formatTime($makeup->begin . ' ' . $makeup->start, DT_DATETIME2);?></td>
+      <td><?php echo formatTime($makeup->end . ' ' . $makeup->finish, DT_DATETIME2);?></td>
       <td title='<?php echo $makeup->desc?>'><?php echo $makeup->desc;?></td>
       <td>
         <?php commonModel::printLink('oa.makeup', 'review', "id={$makeup->id}&status=pass",   $lang->makeup->statusList['pass'],   "data-status='pass' data-toggle='ajax'");?>
@@ -171,8 +171,8 @@
       <td><?php echo zget($users, $overtime->createdBy);?></td>
       <td><?php echo zget($deptList, $overtime->dept);?></td>
       <td><?php echo zget($this->lang->overtime->typeList, $overtime->type);?></td>
-      <td><?php echo $overtime->begin . ' ' . substr($overtime->start, 0, 5);?></td>
-      <td><?php echo $overtime->end . ' ' . substr($overtime->finish, 0, 5);?></td>
+      <td><?php echo formatTime($overtime->begin . ' ' . $overtime->start, DT_DATETIME2);?></td>
+      <td><?php echo formatTime($overtime->end . ' ' . $overtime->finish, DT_DATETIME2);?></td>
       <td title='<?php echo $overtime->desc?>'><?php echo $overtime->desc;?></td>
       <td class='overtime-<?php echo $overtime->status?>' title='<?php echo $overtime->statusLabel;?>'><?php echo $overtime->statusLabel;?></td>
       <td>
@@ -211,8 +211,8 @@
       <td><?php echo $lieu->id;?></td>
       <td><?php echo zget($users, $lieu->createdBy);?></td>
       <td><?php echo zget($deptList, $lieu->dept);?></td>
-      <td><?php echo $lieu->begin . ' ' . substr($lieu->start, 0, 5);?></td>
-      <td><?php echo $lieu->end . ' ' . substr($lieu->finish, 0, 5);?></td>
+      <td><?php echo formatTime($lieu->begin . ' ' . $lieu->start, DT_DATETIME2);?></td>
+      <td><?php echo formatTime($lieu->end . ' ' . $lieu->finish, DT_DATETIME2);?></td>
       <td title='<?php echo $lieu->desc?>'><?php echo $lieu->desc;?></td>
       <td class='lieu-<?php echo $lieu->status;?>' title='<?php echo $lieu->statusLabel;?>'><?php echo $lieu->statusLabel;?></td>
       <td>
@@ -261,7 +261,7 @@
       <td class='text-left' title='<?php echo $refund->name;?>'><?php echo $refund->name;?></td>
       <td class='text-left' title='<?php echo zget($categories, $refund->category, '');?>'><?php echo zget($categories, $refund->category, '');?></td>
       <td class='text-right'><?php echo zget($currencySign, $refund->currency) . $refund->money;?></td>
-      <td><?php echo $refund->date;?></td>
+      <td><?php echo foramtTime($refund->date, DT_DATE1);?></td>
       <td class='text-left' title='<?php echo $refund->desc;?>'><?php echo $refund->desc;?></td>
       <td><?php echo zget($lang->refund->statusList, $refund->status);?></td>
       <td><?php commonModel::printLink('oa.refund', 'review', "refundID={$refund->id}", $lang->refund->review, "data-toggle='modal' data-width=800")?></td>
@@ -299,8 +299,8 @@
       <td><?php echo zget($users, $leave->createdBy);?></td>
       <td><?php echo zget($deptList, $leave->dept);?></td>
       <td><?php echo zget($this->lang->leave->typeList, $leave->type);?></td>
-      <td><?php echo $leave->begin . ' ' . substr($leave->start, 0, 5);?></td>
-      <td><?php echo $leave->end . ' ' . substr($leave->finish, 0, 5);?></td>
+      <td><?php echo formatTime($leave->begin . ' ' . $leave->start, DT_DATETIME2);?></td>
+      <td><?php echo formatTime($leave->end . ' ' . $leave->finish, DT_DATETIME2);?></td>
       <td><?php echo $leave->hours;?></td>
       <td title='<?php echo $leave->desc?>'>
       <?php echo $leave->desc;?>
@@ -320,8 +320,8 @@
       <td><?php echo zget($users, $makeup->createdBy);?></td>
       <td><?php echo zget($deptList, $makeup->dept);?></td>
       <td><?php echo zget($this->lang->makeup->typeList, $makeup->type);?></td>
-      <td><?php echo $makeup->begin . ' ' . substr($makeup->start, 0, 5);?></td>
-      <td><?php echo $makeup->end . ' ' . substr($makeup->finish, 0, 5);?></td>
+      <td><?php echo formatTime($makeup->begin . ' ' . $makeup->start, DT_DATETIME2);?></td>
+      <td><?php echo formatTime($makeup->end . ' ' . $makeup->finish, DT_DATETIME2);?></td>
       <td><?php echo $makeup->hours;?></td>
       <td title='<?php echo $makeup->desc?>'><?php echo $makeup->desc;?></td>
       <td class='leave-<?php echo $makeup->status?>'><?php echo zget($this->lang->leave->statusList, $makeup->status);?></td>
@@ -338,8 +338,8 @@
       <td><?php echo zget($users, $overtime->createdBy);?></td>
       <td><?php echo zget($deptList, $overtime->dept);?></td>
       <td><?php echo zget($this->lang->overtime->typeList, $overtime->type);?></td>
-      <td><?php echo $overtime->begin . ' ' . substr($overtime->start, 0, 5);?></td>
-      <td><?php echo $overtime->end . ' ' . substr($overtime->finish, 0, 5);?></td>
+      <td><?php echo formatTime($overtime->begin . ' ' . $overtime->start, DT_DATETIME2);?></td>
+      <td><?php echo formatTime($overtime->end . ' ' . $overtime->finish, DT_DATETIME2);?></td>
       <td><?php echo $overtime->hours;?></td>
       <td title='<?php echo $overtime->desc?>'><?php echo $overtime->desc;?></td>
       <td class='overtime-<?php echo $overtime->status?>'><?php echo zget($this->lang->overtime->statusList, $overtime->status);?></td>
@@ -356,8 +356,8 @@
       <td><?php echo zget($users, $lieu->createdBy);?></td>
       <td><?php echo zget($deptList, $lieu->dept);?></td>
       <td><?php echo $lang->leave->typeList['lieu'];?></td>
-      <td><?php echo $lieu->begin . ' ' . substr($lieu->start, 0, 5);?></td>
-      <td><?php echo $lieu->end . ' ' . substr($lieu->finish, 0, 5);?></td>
+      <td><?php echo formatTime($lieu->begin . ' ' . $lieu->start, DT_DATETIME2);?></td>
+      <td><?php echo formatTime($lieu->end . ' ' . $lieu->finish, DT_DATETIME2);?></td>
       <td><?php echo $lieu->hours;?></td>
       <td title='<?php echo $lieu->desc?>'><?php echo $lieu->desc;?></td>
       <td class='lieu-<?php echo $lieu->status?>'><?php echo zget($this->lang->lieu->statusList, $lieu->status);?></td>

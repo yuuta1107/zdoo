@@ -30,7 +30,7 @@
     </tr>
     <tr>
       <th><?php echo $lang->contract->deliveredDate;?></th>
-      <td><?php echo html::input('deliveredDate', $delivery->deliveredDate, "class='form-control form-date'");?></td>
+      <td><?php echo html::input('deliveredDate', formatTime($delivery->deliveredDate, DT_DATE1), "class='form-control form-date'");?></td>
     </tr>
     <tr>
       <th><?php echo $lang->contract->handlers;?></th>

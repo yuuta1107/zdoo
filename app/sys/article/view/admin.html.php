@@ -33,7 +33,7 @@
         <td><?php echo $article->status == 'draft' ? '<span class="text-info"><i class="icon-pencil"></i> ' . $lang->article->statusList[$article->status] .'</span>' : '<span class="text-success"><i class="icon-ok-sign"></i> ' . $lang->article->statusList[$article->status] . '</span>';?></td>
         <td><?php echo $article->title;?></td>
         <td class='text-center'><?php foreach($article->categories as $category) echo $category->name . ' ';?></td>
-        <td class='text-center'><?php echo $article->createdDate;?></td>
+        <td class='text-center'><?php echo formatTime($article->createdDate, DT_DATETIME1);?></td>
         <td class='text-center'><?php echo $article->views;?></td>
         <td class='text-center'>
           <?php

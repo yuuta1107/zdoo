@@ -123,7 +123,7 @@
           <td><?php echo zget($deptList, $trade->dept, '');?></td>
           <td><?php foreach(explode(',', trim($trade->handlers, ',')) as $handler) echo zget($users, $handler, '') . ' ';?></td>
           <td><?php echo zget($productList, $trade->product, '');?></td>
-          <td><?php echo formatTime($trade->date . ' ' . $trade->time);?></td>
+          <td><?php echo formatTime($trade->date . ' ' . $trade->time, DT_DATETIME1);?></td>
           <td><?php echo $trade->desc;?></td>
         </tr>
         <?php endforeach;?>

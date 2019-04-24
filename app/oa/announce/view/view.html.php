@@ -16,7 +16,7 @@
     <h3><?php echo $announce->title;?></h3>
     <dl class='dl-inline'>
       <dd data-toggle='tooltip' data-placement='top' data-original-title='<?php printf($lang->article->lblAuthor, $author->realname);?>'><i class='icon-user icon-large'></i> <?php echo $author->realname;?></dd>
-      <dd data-toggle='tooltip' data-placement='top' data-original-title='<?php printf($lang->article->lblAddedDate, $announce->createdDate);?>'><i class='icon-time icon-large'></i> <?php echo $announce->createdDate;?></dd>
+      <dd data-toggle='tooltip' data-placement='top' data-original-title='<?php printf($lang->article->lblAddedDate, formatTime($announce->createdDate, DT_DATETIME1));?>'><i class='icon-time icon-large'></i> <?php echo formatTime($announce->createdDate, DT_DATETIME1);?></dd>
       <dd><span data-toggle='tooltip' data-placement='top' data-original-title='<?php printf($lang->article->lblViews, $announce->views);?>'><i class='icon-eye-open icon-large'></i> <?php echo $announce->views;?></span></dd>
     </dl>
   </header>

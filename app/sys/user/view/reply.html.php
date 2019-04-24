@@ -28,7 +28,7 @@
             <?php foreach($replies as $reply):?>
             <tr>
               <td><?php echo html::a($this->createLink('thread', 'view', "id=$reply->thread") . "#$reply->id", $reply->title . " <i>(#$reply->id)</i>", "target='_blank'");?></td>
-              <td class='text-center'><?php echo substr($reply->createdDate, 2, -3);?></td>
+              <td class='text-center'><?php echo formatTime($reply->createdDate, DT_DATE3);?></td>
             </tr>  
             <?php endforeach;?>
           </tbody>

@@ -31,14 +31,14 @@
       <th><?php echo $lang->project->begin;?></th>
       <td>
         <div class='required required-wrapper'></div>
-        <?php echo html::input('begin', $project->begin, "class='form-control form-date'");?>
+        <?php echo html::input('begin', formatTime($project->begin), "class='form-control form-date'");?>
       </td><td></td>
     </tr>
     <tr>
       <th><?php echo $lang->project->end;?></th>
       <td>
         <div class='required required-wrapper'></div>
-        <?php echo html::input('end', $project->end, "class='form-control form-date'");?>
+        <?php echo html::input('end', formatTime($project->end), "class='form-control form-date'");?>
       </td><td></td>
     </tr>
     <tr>

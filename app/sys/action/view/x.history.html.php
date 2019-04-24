@@ -34,7 +34,7 @@
     <?php $account = $this->app->user->account;?>
     <?php foreach($datingList as $dating):?>
     <tr class='text-center'>
-      <td><?php echo $dating->date;?></td>
+      <td><?php echo formatTime($dating->date, DT_DATE1);?></td>
       <?php if($objectType != 'contact' && $objectType != 'leads'):?>
       <td><?php echo zget($contacts, $dating->contact, '');?></td>
       <?php endif;?>

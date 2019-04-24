@@ -33,8 +33,8 @@
       <?php endif;?>
       <p><?php printf($lang->order->infoAmount, zget($currencySign, $order->currency, '') . formatMoney($order->plan), zget($currencySign, $order->currency, '') . formatMoney($order->real))?></p>
       <p>
-        <?php if(formatTime($order->contactedDate)) printf($lang->order->infoContacted, $order->contactedDate)?>
-        <?php if(formatTime($order->nextDate)) printf($lang->order->infoNextDate, $order->nextDate)?>
+        <?php if(formatTime($order->contactedDate)) printf($lang->order->infoContacted, formatTime($order->contactedDate, DT_DATETIME1))?>
+        <?php if(formatTime($order->nextDate)) printf($lang->order->infoNextDate, formatTime($order->nextDate, DT_DATE1))?>
       </p>
     </div>
   </div> 
@@ -45,16 +45,16 @@
       <table class='table table-info'>
         <tr>
           <th class='w-80px'><?php echo $lang->lifetime->createdBy;?></th>
-          <td><?php echo zget($users, $order->createdBy) . $lang->at . $order->createdDate;?></td>
+          <td><?php echo zget($users, $order->createdBy) . $lang->at . formatTime($order->createdDate, DT_DATETIME1);?></td>
         </tr>
         <tr>
           <th><?php echo $lang->lifetime->assignedTo;?></th>
-          <td><?php if($order->assignedTo) echo zget($users, $order->assignedTo) . $lang->at . $order->assignedDate;?></td>
+          <td><?php if($order->assignedTo) echo zget($users, $order->assignedTo) . $lang->at . formatTime($order->assignedDate, DT_DATETIME1);?></td>
         </tr>
         <?php if($order->closedBy):?>
         <tr>
           <th><?php echo $lang->lifetime->closedBy;?></th>
-          <td><?php if($order->closedBy) echo zget($users, $order->closedBy) . $lang->at . $order->closedDate;?></td>
+          <td><?php if($order->closedBy) echo zget($users, $order->closedBy) . $lang->at . formatTime($order->closedDate, DT_DATETIME1);?></td>
         </tr>
         <?php endif;?>
         <?php if($order->closedReason):?>
@@ -67,14 +67,14 @@
         <tr>
           <th><?php echo $lang->lifetime->signedBy;?></th>
           <td>
-            <?php if($contract and $contract->signedBy and $contract->status != 'canceled') echo zget($users, $contract->signedBy) . $lang->at . $contract->signedDate;?>
+            <?php if($contract and $contract->signedBy and $contract->status != 'canceled') echo zget($users, $contract->signedBy) . $lang->at . formatTime($contract->signedDate, DT_DATE1);?>
           </td>
         </tr>
         <?php endif;?>
         <?php if($order->editedBy):?>
         <tr>
           <th><?php echo $lang->order->editedBy;?></th>
-          <td><?php if($order->editedBy) echo zget($users, $order->editedBy) . $lang->at . $order->editedDate;?></td>
+          <td><?php if($order->editedBy) echo zget($users, $order->editedBy) . $lang->at . formatTime($order->editedDate, DT_DATETIME1);?></td>
           <td>
           </td>
         </tr>

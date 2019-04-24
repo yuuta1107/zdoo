@@ -175,11 +175,11 @@
           </tr>
           <tr>
             <th><?php echo $lang->refund->createdBy;?></th>
-            <td><?php echo zget($users, $refund->createdBy) . $lang->at . $refund->createdDate;?></td>
+            <td><?php echo zget($users, $refund->createdBy) . $lang->at . formatTime($refund->createdDate, DT_DATETIME1);?></td>
           </tr>
           <tr>
             <th><?php echo $lang->refund->editedBy;?></th>
-            <td><?php if($refund->editedBy) echo zget($users, $refund->editedBy) . $lang->at . $refund->editedDate;?></td>
+            <td><?php if($refund->editedBy) echo zget($users, $refund->editedBy) . $lang->at . formatTime($refund->editedDate, DT_DATETIME1);?></td>
           </tr>
           <tr id='firstReviewer'>
             <th><?php echo $lang->refund->firstReviewer;?></th>
@@ -191,7 +191,7 @@
           </tr>
           <tr>
             <th><?php echo $lang->refund->refundBy;?></th>
-            <td><?php if($refund->refundBy) echo zget($users, $refund->refundBy) . $lang->at . $refund->refundDate;?></td>
+            <td><?php if($refund->refundBy) echo zget($users, $refund->refundBy) . $lang->at . formatTime($refund->refundDate, DT_DATETIME1);?></td>
           </tr>
         </table>
       </div>

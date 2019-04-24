@@ -75,11 +75,11 @@
           </tr>
           <tr>
             <th><?php echo $lang->resume->join;?></th>
-            <td><?php echo  $contact->join;?></td>
+            <td><?php echo  formatTime($contact->join, DT_DATE1);?></td>
           </tr>
           <tr>
             <th class='w-70px'><?php echo $lang->contact->birthday;?></th>
-            <td><?php echo $contact->birthday;?></td>
+            <td><?php echo formatTime($contact->birthday, DT_DATE1);?></td>
           </tr>
           <tr>
             <th><?php echo $lang->contact->gender;?></th>
@@ -87,7 +87,7 @@
           </tr>
           <tr>
             <th><?php echo $lang->contact->createdDate;?></th>
-            <td><?php echo $contact->createdDate;?></td>
+            <td><?php echo formatTime($contact->createdDate, DT_DATETIME1);?></td>
           </tr>
         </table>
       </div>
@@ -134,7 +134,7 @@
       <table class='table table-data'>
         <?php foreach($resumes as $resume):?>
         <tr class='text-center'>
-          <td class='w-p25'><?php echo $resume->join . $lang->minus . $resume->left;?></td>
+          <td class='w-p25'><?php echo formatTime($resume->join, DT_DATE1) . $lang->minus . formatTime($resume->left, DT_DATE1);?></td>
           <td class='w-p30'><?php if(isset($customers[$resume->customer])) commonModel::printLink('customer', 'view', "id={$resume->customer}", $customers[$resume->customer]);?></td>
           <td class='w-p20'><?php echo $resume->dept?></td>
           <td class='w-p25'><?php echo $resume->title?></td>

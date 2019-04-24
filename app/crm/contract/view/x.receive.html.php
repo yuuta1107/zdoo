@@ -80,7 +80,7 @@
   <div class='panel-heading'><strong><?php echo $lang->contract->returnRecords;?></strong></div>
   <div class='panel-body'>
     <?php foreach($contract->returnList as $return):?>
-    <?php printf($lang->contract->returnInfo, $return->returnedDate, zget($users, $return->returnedBy, $return->returnedBy), zget($currencySign, $contract->currency, '') . $return->amount);?>
+    <?php printf($lang->contract->returnInfo, formatTime($return->returnedDate, DT_DATE1), zget($users, $return->returnedBy, $return->returnedBy), zget($currencySign, $contract->currency, '') . $return->amount);?>
     <?php endforeach;?>
   </div>
 </div>

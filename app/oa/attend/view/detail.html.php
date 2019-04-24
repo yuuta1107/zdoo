@@ -83,7 +83,7 @@
         <tr>
           <td><?php echo $attend->dept;?></td>
           <td><?php echo $attend->realname;?></td>
-          <td><?php echo $attend->date;?></td>
+          <td><?php echo formatTime($attend->date, DT_DATE1);?></td>
           <td><?php echo $attend->dayName;?>
           <td><?php echo empty($attend->desc) ? $attend->status : $attend->desc;?></td>
           <td><?php echo $attend->signIn;?></td>

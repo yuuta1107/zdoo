@@ -24,7 +24,7 @@
         <div class='item-heading'>
           <div class='text-muted pull-right'>
             <span title="<?php echo zget($users, $announce->author);?>"><i class='icon-user'></i> <?php echo $users[$announce->author];?></span> &nbsp; 
-            <span title="<?php echo $lang->announce->createdDate;?>"><i class='icon-time'></i> <?php echo substr($announce->createdDate, 0, 10);?></span>&nbsp; 
+            <span title="<?php echo $lang->announce->createdDate;?>"><i class='icon-time'></i> <?php echo formatTime($announce->createdDate, DT_DATE1);?></span>&nbsp; 
             <span data-toggle='tooltip' data-placement='top' data-original-title='<?php printf($lang->article->lblViews, $announce->views);?>'><i class='icon-eye-open icon-large'></i> <?php echo $announce->views;?></span>
           </div>
           <h4><span class='label label-primary'><?php echo $categories[$announce->category];?></span> <?php echo html::a(inlink('view', "announceID={$announce->id}"), $announce->title, "class='nounderline' data-toggle='modal'");?></h4>

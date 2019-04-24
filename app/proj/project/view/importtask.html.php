@@ -51,7 +51,7 @@
             <td <?php echo $class;?>><?php if(isset($users[$task->assignedTo])) echo $users[$task->assignedTo];?></td>
             <td class='visible-lg'><?php echo $task->consumed;?></td>
             <td class='visible-lg'><?php echo $task->left;?></td>
-            <td><?php echo $task->deadline;?></td>
+            <td><?php echo formatTime($task->deadline, DT_DATE1);?></td>
             <td><?php echo zget($lang->task->statusList, $task->status);?></td>
           </tr>
           <?php endforeach;?>

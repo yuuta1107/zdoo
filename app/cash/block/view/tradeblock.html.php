@@ -17,7 +17,7 @@
     <td class='nobr'><?php echo zget($depositorList, $trade->depositor);?></td>
     <td class='w-80px text-center'><?php echo zget($lang->trade->typeList, $trade->type);?></td>
     <td class='w-120px text-center'><?php echo zget($currencySign, $trade->currency) . $trade->money?></td>
-    <td class='w-80px text-center'><?php echo $trade->date;?></td>
+    <td class='w-80px text-center'><?php echo formatTime($trade->date, DT_DATE1);?></td>
   </tr>
   <?php endforeach;?>
 </table>

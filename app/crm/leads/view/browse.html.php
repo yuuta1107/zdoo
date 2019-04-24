@@ -55,7 +55,7 @@
       <td><?php echo $contact->id;?></td>
       <td class='text-left' title='<?php echo $contact->realname;?>'><?php echo html::a(inlink('view', "contactID={$contact->id}&mode={$mode}&status={$status}"), $contact->realname);?></td>
       <?php if($mode == 'next'):?>
-      <td title='<?php echo $contact->nextDate;?>'><?php echo $contact->nextDate;?></td>
+      <td title='<?php echo formatTime($contact->nextDate);?>'><?php echo formatTime($contact->nextDate, DT_DATE1);?></td>
       <?php endif;?>
       <td class='text-left' title='<?php echo $contact->company;?>'><?php echo $contact->company;?></td>
       <td><?php echo isset($lang->genderList->{$contact->gender}) ? $lang->genderList->{$contact->gender} : '';?></td>

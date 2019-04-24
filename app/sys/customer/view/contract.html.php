@@ -29,7 +29,7 @@
       <td><?php echo $contract->id;?></td>
       <td><?php if(!commonModel::printLink('crm.contract', 'view', "id={$contract->id}", $contract->name)) echo $contract->name;?></td>
       <td><?php echo $contract->amount;?></td>
-      <td><?php echo substr($contract->createdDate, 0, 10);?></td>
+      <td><?php echo formatTime($contract->createdDate, DT_DATE1);?></td>
       <td><?php echo $lang->contract->returnList[$contract->return];?></td>
       <td><?php echo $lang->contract->deliveryList[$contract->delivery];?></td>
       <td><?php echo $lang->contract->statusList[$contract->status];?></td>

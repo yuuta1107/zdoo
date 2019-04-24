@@ -512,7 +512,7 @@ class actionModel extends model
             $desc = $action->extra ? $this->lang->action->desc->extra : $this->lang->action->desc->common;
         }
 
-        if($this->app->getViewType() == 'mhtml') $action->date = date('m-d H:i', strtotime($action->date));
+        if($this->app->getViewType() == 'mhtml') $action->date = formatTime($action->date, DT_MONTHTIME1);
 
         if($this->app->getModuleName() == 'customer' && $actionType == 'dating')
         {
@@ -687,7 +687,7 @@ class actionModel extends model
 
             $actionType = strtolower($action->action);
             $objectType = strtolower($action->objectType);
-            $action->date        = date(DT_MONTHTIME2, strtotime($action->date));
+            $action->date        = formatTime($action->date, DT_MONTHTIME2);
             $action->actionLabel = isset($this->lang->action->label->$actionType) ? $this->lang->action->label->$actionType : $action->action;
             $action->objectLabel = $objectType;
             if(isset($this->lang->action->label->$objectType))

@@ -50,7 +50,7 @@
           </tr>
           <tr>
             <th><?php echo $lang->contact->birthday;?></th>
-            <td><?php echo $contact->birthday;?></td>
+            <td><?php echo formatTime($contact->birthday, DT_DATE1);?></td>
           </tr>
           <tr>
             <th><?php echo $lang->contact->gender;?></th>
@@ -58,7 +58,7 @@
           </tr>
           <tr>
             <th><?php echo $lang->contact->createdDate;?></th>
-            <td><?php echo $contact->createdDate;?></td>
+            <td><?php echo formatTime($contact->createdDate, DT_DATETIME1);?></td>
           </tr>
         </table>
       </div>

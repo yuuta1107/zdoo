@@ -5,7 +5,7 @@
       <?php if($thread->readonly) echo "<span class='label'><i class='icon-lock'></i> " . $lang->thread->readonly . "</span> &nbsp;"; ?>
     </div>
     <strong><?php $common->printForum($board, $thread);?></strong>
-    <div class='text-muted'><?php echo $thread->createdDate;?></div>
+    <div class='text-muted'><?php echo formatTime($thread->createdDate, DT_DATETIME1);?></div>
   </div>
   <div>
     <table class='table'>
@@ -31,7 +31,7 @@
   </div>
   <div class='thread-foot'>
     <?php if($thread->editor): ?>
-    <small class='text-muted'><?php printf($lang->thread->lblEdited, $thread->editorRealname, $thread->editedDate); ?></small>
+    <small class='text-muted'><?php printf($lang->thread->lblEdited, $thread->editorRealname, formatTime($thread->editedDate, DT_DATETIME1)); ?></small>
     <?php endif; ?>
     <div class='pull-right thread-actions'>
       <?php if($this->app->user->account != 'guest'): ?>

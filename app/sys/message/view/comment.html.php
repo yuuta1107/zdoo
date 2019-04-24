@@ -17,7 +17,7 @@ css::internal($pageCSS);
           <div class='text'><span class='author'><strong><?php echo $comment->from . $lang->colon;?></strong></span> &nbsp;<?php echo nl2br($comment->content);?></div>
           <div class='actions text-muted small'>
             <div class='pull-right'></div>
-            <?php echo $lang->comment->commentAt . ' ' . $comment->date;?>
+            <?php echo $lang->comment->commentAt . ' ' . formatTime($comment->date, DT_DATETIME1);?>
           </div>
         </div>
         <?php if(!empty($replies[$comment->id])):?>
@@ -26,7 +26,7 @@ css::internal($pageCSS);
             <div class='comment'>
               <div class='content'>
                 <div class='text'><span class='author'><strong><?php echo $reply->from . $lang->colon;?></strong></span> &nbsp;<?php echo nl2br($reply->content);?></div>
-                <div class='actions text-muted small'><?php echo $lang->comment->replyAt . ' ' . $reply->date;?></div>
+                <div class='actions text-muted small'><?php echo $lang->comment->replyAt . ' ' . formatTime($reply->date, DT_DATETIME1);?></div>
               </div>
             </div>
             <?php endforeach; ?>

@@ -31,7 +31,7 @@ include '../../../sys/common/view/treeview.html.php';
           </div>
           <div class='item-footer text-muted'>
             <span><i class='icon-eye-open'></i> <?php echo $article->views;?></span> &nbsp; 
-            <span><i class='icon-time'></i> <?php echo substr($article->createdDate, 0, 10);?></span>
+            <span><i class='icon-time'></i> <?php echo formatTime($article->createdDate, DT_DATE1);?></span>
           </div>
         </div>
         <?php endforeach;?>

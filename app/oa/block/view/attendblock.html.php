@@ -87,7 +87,7 @@
       <td class='day <?php echo $class?>' data-date='<?php echo $dStr?>'>
         <?php if(!isset($todos[$dStr]['AM'])) continue;?>
         <?php foreach($todos[$dStr]['AM'] as $todo):?>
-        <div class='event <?php echo $todo->status?>' data-id="<?php echo $todo->id?>" title='<?php echo $todo->begin . ' ' . $todo->name?>'>
+        <div class='event <?php echo $todo->status?>' data-id="<?php echo $todo->id?>" title='<?php echo formatTime($todo->begin, DT_DATE1) . ' ' . $todo->name?>'>
           <?php echo $todo->name;?>
         </div>
         <?php endforeach;?>
@@ -102,7 +102,7 @@
       <td class='day <?php echo $class?>' data-date='<?php echo $dStr?>'>
         <?php if(!isset($todos[$dStr]['PM'])) continue;?>
         <?php foreach($todos[$dStr]['PM'] as $todo):?>
-        <div class='event <?php echo $todo->status?>' data-id="<?php echo $todo->id?>" title='<?php echo $todo->begin . ' ' . $todo->name?>'>
+        <div class='event <?php echo $todo->status?>' data-id="<?php echo $todo->id?>" title='<?php echo formatTime($todo->begin, DT_DATE1) . ' ' . $todo->name?>'>
           <?php echo $todo->name;?>
         </div>
         <?php endforeach;?>

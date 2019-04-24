@@ -16,7 +16,7 @@
   <tr data-url='<?php echo $this->createLink('team.blog', 'view', "blogID=$id"); ?>' <?php echo $appID?>>
     <td><?php echo $blog->title;?></td>
     <td class='w-80px'><?php echo zget($users, $blog->author);?></td>
-    <td class='w-50px'><?php echo substr($blog->createdDate, 5, 5)?></td>
+    <td class='w-50px'><?php echo formatTime($blog->createdDate, DT_DATE6)?></td>
   </tr>
   <?php endforeach;?>
 </table>

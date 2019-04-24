@@ -54,9 +54,9 @@
   </tr> 
   <tr>
     <th><?php echo $lang->makeup->createdDate;?></th>
-    <td><?php echo formatTime($makeup->createdDate);?></td>
+    <td><?php echo formatTime($makeup->createdDate, DT_DATETIME1);?></td>
     <th><?php echo $lang->makeup->reviewedDate;?></th>
-    <td><?php echo formatTime($makeup->reviewedDate);?></td>
+    <td><?php echo formatTime($makeup->reviewedDate, DT_DATETIME1);?></td>
   </tr> 
 </table>
 <?php echo $this->fetch('action', 'history', "objectType=makeup&objectID=$makeup->id");?>

@@ -60,10 +60,10 @@
           <td><?php echo zget($lang->genderList, $contact->gender, '');?></td>
         </tr>
         <?php endif;?>
-        <?php if(formatTime($contact->createdDate, DT_DATE1)):?>
+        <?php if(formatTime($contact->createdDate)):?>
         <tr>
           <th><?php echo $lang->contact->createdDate;?></th>
-          <td><?php echo formatTime($contact->createdDate, DT_DATE1);?></td>
+          <td><?php echo formatTime($contact->createdDate, DT_DATETIME1);?></td>
         </tr>
         <?php endif;?>
       </table>
@@ -112,7 +112,7 @@
     <table class='table table-data'>
       <?php foreach($resumes as $resume):?>
       <tr class='text-center'>
-        <td class='w-p25'><?php echo $resume->join . $lang->minus . $resume->left;?></td>
+        <td class='w-p25'><?php echo formatTime($resume->join, DT_DATE1) . $lang->minus . formatTime($resume->left, DT_DATE1);?></td>
         <td class='w-p30'><?php if(isset($customers[$resume->customer])) echo $customers[$resume->customer]?></td>
         <td class='w-p20'><?php echo $resume->dept?></td>
         <td class='w-p25'><?php echo $resume->title?></td>

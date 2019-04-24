@@ -50,7 +50,7 @@
             <td><?php echo $file->extension;?></td>
             <td><?php echo $file->size;?></td>
             <td><?php echo $file->createdBy;?></td>
-            <td><?php echo $file->createdDate;?></td>
+            <td><?php echo formatTime($file->createdDate, DT_DATETIME1);?></td>
             <td><?php echo $file->downloads;?></td>
             <td>
             <?php

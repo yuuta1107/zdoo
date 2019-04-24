@@ -55,7 +55,7 @@
           <td><?php echo zget($subjects, $product->subject, '');?></td>
           <td><?php echo zget($categories, $product->category, '');?></td>
           <td><?php echo $product->code;?></td>
-          <td class='visible-lg'><?php echo $product->createdDate;?></td>
+          <td class='visible-lg'><?php echo formatTime($product->createdDate, DT_DATETIME1);?></td>
           <td><?php echo $lang->product->typeList[$product->type];?></td>
           <td><?php echo $lang->product->statusList[$product->status];?></td>
           <td>
