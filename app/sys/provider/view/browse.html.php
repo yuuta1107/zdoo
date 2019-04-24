@@ -38,8 +38,7 @@
           <th class='w-160px text-left'><?php commonModel::printOrderLink('area',     $orderBy, $vars, $lang->provider->area);?></th>
           <th class='w-150px text-left'><?php commonModel::printOrderLink('industry', $orderBy, $vars, $lang->provider->industry);?></th>
           <th class='w-110px'><?php commonModel::printOrderLink('createdDate', $orderBy, $vars, $lang->provider->createdDate);?></th>
-          <?php $class = $this->app->clientLang == 'en' ? 'w-180px' : 'w-150px';?>
-          <th class='<?php echo $class;?>'><?php echo $lang->actions;?></th>
+          <th class='w-<?php echo $lang->provider->actionWidth;?>px'><?php echo $lang->actions;?></th>
         </tr>
       </thead>
       <tbody>

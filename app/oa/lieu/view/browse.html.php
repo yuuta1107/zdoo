@@ -50,8 +50,8 @@
           <tr class='text-center'>
             <?php $vars = "&date={$date}&orderBy=%s";?>
             <th class='w-50px'><?php commonModel::printOrderLink('id', $orderBy, $vars, $lang->lieu->id);?></th>
-            <th class='w-70px'><?php commonModel::printOrderLink('createdBy', $orderBy, $vars, $lang->lieu->createdBy);?></th>
-            <th class='w-70px visible-lg'><?php echo $lang->user->dept;?></th>
+            <th class='w-100px'><?php commonModel::printOrderLink('createdBy', $orderBy, $vars, $lang->lieu->createdBy);?></th>
+            <th class='w-100px visible-lg'><?php echo $lang->user->dept;?></th>
             <th class='w-130px'><?php commonModel::printOrderLink('begin', $orderBy, $vars, $lang->lieu->begin);?></th>
             <th class='w-130px'><?php commonModel::printOrderLink('end', $orderBy, $vars, $lang->lieu->end);?></th>
             <th class='w-70px'><?php commonModel::printOrderLink('hours', $orderBy, $vars, $lang->lieu->hours);?></th>

@@ -35,7 +35,7 @@
             <tr class='text-center'>
               <th class='w-120px'><?php echo $lang->leave->account;?></th>
               <th class='w-300px'><?php echo $lang->leave->dateRange;?></th>
-              <th class='w-100px'><?php echo $lang->day;?></th>
+              <th class='w-120px'><?php echo $lang->day;?></th>
               <th></th>
             </tr>
             <?php if(!empty($this->config->leave->annualSetting)):?>

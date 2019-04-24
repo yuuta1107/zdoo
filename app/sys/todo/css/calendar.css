@@ -1,6 +1,5 @@
 .with-side {position: relative;}
-.with-side .main{padding-right: 300px;}
-.with-side .side {position: fixed; right: 15px; top: 100px; width: 280px;}
+.with-side .side {position: fixed; right: 15px; top: 100px;}
 .with-side .nav > li > a {padding: 10px 6px;}
 
 .hide-side .main{padding-right: 0;}
@@ -9,7 +8,7 @@
 .hide-side .tab-content {display: none;}
 .with-side .side, .with-side .main {transition: all 0.3s ease 0s;}
 
-.side-handle {width: 20px; z-index: 99; position: absolute; right: 320px; top: 0; transition: all 0.3s ease 0s;}
+.side-handle {width: 20px; z-index: 99; position: absolute; top: 0; transition: all 0.3s ease 0s;}
 .hide-side .side-handle{right: 20px;}
 
 [data-toggle="droppable"] {cursor: move;}
@@ -27,18 +26,18 @@
 .calendar .table .day{opacity: 1;}
 .calendar .cell-day.past .event{opacity: 1;}
 
-.trash {position: absolute; top: 0; right: 350px; padding: 3px 8px 3px 180px; transition: all 0.3s ease 0s;}
+.trash {position: absolute; top: 0; padding: 3px 8px 3px 180px; transition: all 0.3s ease 0s;}
 .hide-side .trash {right: 50px;}
-.trash .tip{position: absolute; left: 60px; top:10px; display: none;}
-.event-dragging .tip{display: block;}
+.trash .tip {position: absolute; left: 60px; top: 10px; display: none;}
+.event-dragging .tip {display: block;}
 .event-dragging .trash {background: #f0f0f0;}
-.trash .icon{font-size: 30px;}
+.trash .icon {font-size: 30px;}
 
-.calendar-views{padding-top: 43px;}
-.calendar header{position: fixed; top: 100px;}
-.calendar header.fixed-date{top: 82px; background: #f1f1f1; border: 1px solid #f1f1f1; z-index:10;}
+.calendar-views {padding-top: 43px;}
+.calendar header {position: fixed; top: 100px;}
+.calendar header.fixed-date {top: 82px; background: #f1f1f1; border: 1px solid #f1f1f1; z-index:10;}
 #fixedHeader {top: 116px !important;}
 
-.assign{position:relative;padding:5px 5px;left:-5px;top:0;background-color:rgba(0, 0, 0, 0.25)}
+.assign {position: relative; padding: 5px 5px; left: -5px; top: 0; background-color: rgba(0, 0, 0, 0.25)}
 
 .calendar .label-rest {float: left; margin-top: 2px; display: inline-block; width: 16px; height: 16px; border-radius: 8px; background-color: #EA644A; color: #FFF; font-size: 13px ; text-align: center;}

@@ -17,8 +17,8 @@
 <form method='post' id='receiveForm' class='form-table' action='<?php echo $this->createLink('contract', 'receive', "contractID={$contract->id}")?>'>
   <table class='table table-form table-condensed'>
     <tr>
-      <th class='w-60px'><?php echo $lang->contract->all;?></th>
-      <td class='w-p40'><?php echo zget($currencySign, $contract->currency, $contract->currency) . $contract->amount;?></td>
+      <th class='w-100px'><?php echo $lang->contract->all;?></th>
+      <td class='w-p50'><?php echo zget($currencySign, $contract->currency, $contract->currency) . $contract->amount;?></td>
       <td></td>
     </tr>
     <tr>

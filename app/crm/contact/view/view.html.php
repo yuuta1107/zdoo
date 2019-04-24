@@ -125,7 +125,7 @@
     <div class='panel'>
       <div class='panel-heading'>
         <div class='row'>
-        <div class='col-sm-3'><strong><?php echo $lang->contact->resume;?></strong></div>
+        <div class='col-sm-3'><strong><?php echo $lang->resume->time;?></strong></div>
         <div class='col-sm-4 text-center'><strong><?php echo $lang->resume->customer;?></strong></div>
         <div class='col-sm-2'><strong><?php echo $lang->resume->dept;?></strong></div>
         <div class='col-sm-3 text-center'><strong><?php echo $lang->resume->title;?></strong></div>

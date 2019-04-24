@@ -15,7 +15,7 @@
 <form method='post' id='estimateForm' action='<?php echo $this->createLink('task', 'recordEstimate', "taskID=$task->id")?>'>
   <table class='table table-form'>
     <tr>
-      <th class='w-60px'><?php echo $lang->task->myConsumption;?></th>
+      <th class='w-100px'><?php echo $lang->task->myConsumption;?></th>
       <td class='w-p45'><?php echo html::input('consumed', $task->consumed, "class='form-control' placeholder='{$lang->task->hour}'");?></td>
       <td></td>
     </tr>

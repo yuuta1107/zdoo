@@ -323,9 +323,9 @@ $lang->my->order->menu = new stdclass();
 $lang->my->order->menu->past       = 'Urgent|my|order|type=past';
 $lang->my->order->menu->today      = 'Today|my|order|type=today';
 $lang->my->order->menu->tomorrow   = 'Tomorrow|my|order|type=tomorrow';
-$lang->my->order->menu->assignedTo = 'AssignToMe|my|order|type=assignedTo';
-$lang->my->order->menu->createdBy  = 'CreateByMe|my|order|type=createdBy';
-$lang->my->order->menu->signedBy   = 'SignByMe|my|order|type=signedBy';
+$lang->my->order->menu->assignedTo = 'AssignedToMe|my|order|type=assignedTo';
+$lang->my->order->menu->createdBy  = 'CreatedByMe|my|order|type=createdBy';
+$lang->my->order->menu->signedBy   = 'SignedByMe|my|order|type=signedBy';
 $lang->my->order->menu->all        = 'All|my|order|type=all';
 
 $lang->my->contract = new stdclass();
@@ -338,11 +338,11 @@ $lang->my->contract->menu->deliveredBy = 'Delivered|my|contract|type=deliveredBy
 
 $lang->my->task = new stdclass();
 $lang->my->task->menu = new stdclass();
-$lang->my->task->menu->assignedToMe = 'AssignToMe|my|task|type=assignedTo';
-$lang->my->task->menu->createdByMe  = 'CreateByMe|my|task|type=createdBy';
-$lang->my->task->menu->finishedByMe = 'FinishByMe|my|task|type=finishedBy';
-$lang->my->task->menu->closedByMe   = 'CloseByMe|my|task|type=closedBy';
-$lang->my->task->menu->canceledByMe = 'Cancelled By Me|my|task|type=canceledBy';
+$lang->my->task->menu->assignedToMe = 'AssignedToMe|my|task|type=assignedTo';
+$lang->my->task->menu->createdByMe  = 'CreatedByMe|my|task|type=createdBy';
+$lang->my->task->menu->finishedByMe = 'FinishedByMe|my|task|type=finishedBy';
+$lang->my->task->menu->closedByMe   = 'ClosedByMe|my|task|type=closedBy';
+$lang->my->task->menu->canceledByMe = 'CancelledByMe|my|task|type=canceledBy';
 $lang->my->task->menu->unclosed     = 'Unclosed|my|task|type=unclosed';
 
 $lang->my->dynamic = new stdclass();
@@ -476,23 +476,23 @@ $lang->datepicker->abbrDayNames = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'
 $lang->datepicker->monthNames   = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
 
 /* Set currency items. */
-$lang->currencyList['rmb']  = 'RMB Yuan';
-$lang->currencyList['usd']  = 'US Dollar';
-$lang->currencyList['hkd']  = 'HongKong Dollar';
-$lang->currencyList['twd']  = 'New Taiwan Dollar';
+$lang->currencyList['rmb']  = 'RMB ￥';
+$lang->currencyList['usd']  = 'US $';
+$lang->currencyList['hkd']  = 'HongKong $';
+$lang->currencyList['twd']  = 'New Taiwan $';
 $lang->currencyList['euro'] = 'Euro';
 $lang->currencyList['dem']  = 'Deutsche Mark';
 $lang->currencyList['chf']  = 'Swiss Franc';
 $lang->currencyList['frf']  = 'French Franc';
 $lang->currencyList['gbp']  = 'Pound';
 $lang->currencyList['nlg']  = 'Florin';
-$lang->currencyList['cad']  = 'Canadian Dollar';
+$lang->currencyList['cad']  = 'Canadian $';
 $lang->currencyList['sur']  = 'Rouble';
 $lang->currencyList['inr']  = 'Indian Rupee';
-$lang->currencyList['aud']  = 'Australian Dollar';
-$lang->currencyList['nzd']  = 'New Zealand Dollar';
+$lang->currencyList['aud']  = 'Australian $';
+$lang->currencyList['nzd']  = 'New Zealand $';
 $lang->currencyList['thb']  = 'Thai Baht';
-$lang->currencyList['sgd']  = 'Singapore Dollar';
+$lang->currencyList['sgd']  = 'Singapore $';
 
 /* Currency symbols setting. */
 $lang->currencySymbols['rmb']  = '￥';

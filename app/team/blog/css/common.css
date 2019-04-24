@@ -6,3 +6,5 @@ li.active{font-weight:bold;}
 
 label.checkbox{float: left; margin-right: 10px; width: 100px;}
 input[type=checkbox]{margin-top: 1px;}
+
+#groupTR .checkbox-inline {width: 100px; margin-left: 0px;}

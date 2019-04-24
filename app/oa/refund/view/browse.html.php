@@ -58,15 +58,15 @@
           <tr class='text-center'>
             <?php $vars = "date=$date&type=&orderBy=%s&recTotal={$pager->recTotal}&recPerPage={$pager->recPerPage}&pageID={$pager->pageID}";?>
             <th class='w-50px'><?php commonModel::printOrderLink('id', $orderBy, $vars, $lang->refund->id);?></th>
-            <th class='w-80px text-left visible-lg'><?php commonModel::printOrderLink('dept', $orderBy, $vars, $lang->refund->dept);?></th>
+            <th class='w-100px text-left visible-lg'><?php commonModel::printOrderLink('dept', $orderBy, $vars, $lang->refund->dept);?></th>
             <th><?php commonModel::printOrderLink('name', $orderBy, $vars, $lang->refund->name);?></th>
             <th class='w-120px'><?php commonModel::printOrderLink('category', $orderBy, $vars, $lang->refund->category);?></th>
             <th class='w-100px text-right'><?php commonModel::printOrderLink('money', $orderBy, $vars, $lang->refund->money);?></th>
             <th class='w-100px'><?php commonModel::printOrderLink('status', $orderBy, $vars, $lang->refund->status);?></th>
-            <th class='w-80px'><?php commonModel::printOrderLink('createdBy', $orderBy, $vars, $lang->refund->createdBy);?></th>
+            <th class='w-100px'><?php commonModel::printOrderLink('createdBy', $orderBy, $vars, $lang->refund->createdBy);?></th>
             <th class='w-80px'><?php commonModel::printOrderLink('createdDate', $orderBy, $vars, $lang->refund->createdDate);?></th>
-            <th class='w-80px'><?php commonModel::printOrderLink('refundBy', $orderBy, $vars, $lang->refund->refundBy);?></th>
-            <th class='w-80px'><?php commonModel::printOrderLink('refundDate', $orderBy, $vars, $lang->refund->refundDate);?></th>
+            <th class='w-120px'><?php commonModel::printOrderLink('refundBy', $orderBy, $vars, $lang->refund->refundBy);?></th>
+            <th class='w-100px'><?php commonModel::printOrderLink('refundDate', $orderBy, $vars, $lang->refund->refundDate);?></th>
             <?php if($mode == 'personal'):?>
             <?php $class = $this->app->clientLang == 'en' ? 'w-180px' : 'w-130px';?>
             <th class='<?php echo $class;?>'><?php echo $lang->actions;?></th>

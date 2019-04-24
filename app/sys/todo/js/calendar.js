@@ -157,12 +157,12 @@ $(document).ready(function()
     addPager('#tab_undone');
     updateBoard('all');
 
-    var gap  = $('.calendar header').offset().top - $('#mainNavbar').outerHeight();
+    var gap = $('.calendar header').offset().top - $('#mainNavbar').outerHeight();
     $(window).scroll(function()
     {
         if($(window).scrollTop() > gap)
         {
-            $('.calendar header').addClass('fixed-date').css('width', $('#fixedHeader').width());
+            $('.calendar header').addClass('fixed-date').css('width', $('.with-side').width() - v.mainPaddingRight);
         }
         else
         {

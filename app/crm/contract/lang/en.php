@@ -131,3 +131,6 @@ $lang->contract->error->wrongContribution = '<strong>Contribution</strong> shoul
 
 $lang->plan = new stdclass();
 $lang->plan->amount = $lang->contract->thisAmount;
+
+/* Width settings for different languages, in pixels. */
+$lang->contract->actionWidth   = 320;

@@ -16,7 +16,7 @@
     <th class='w-20px text-center'><?php echo $lang->task->lblPri?></th>
     <th><?php echo $lang->task->name?></th>
     <th><?php echo $lang->task->deadline?></th>
-    <th><?php echo $lang->task->status?></th>
+    <th class='w-70px'><?php echo $lang->task->status?></th>
   </tr>
   <?php foreach($tasks as $id => $task):?>
   <?php $appid = ($this->get->app == 'sys' and isset($_GET['entry'])) ? "class='app-btn' data-id={$this->get->entry}" : ''?>
@@ -25,7 +25,7 @@
     <td class='text-center'><span class='active pri pri-<?php echo $task->pri;?>'><?php echo $lang->task->priList[$task->pri];?></span></td>
     <td><strong><?php echo $task->name;?></strong></td>
     <td><?php echo $task->deadline;?></td>
-    <td><?php echo $lang->task->statusList[$task->status];?></td>
+    <td><?php echo zget($lang->task->statusList, $task->status, '');?></td>
   </tr>
   <?php endforeach;?>
 </table>

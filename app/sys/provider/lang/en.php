@@ -63,3 +63,6 @@ $lang->provider->sizeList[1] = 'Large(>100 employees)';
 $lang->provider->sizeList[2] = 'Medium(50-100 employees)';
 $lang->provider->sizeList[3] = 'Small(10-50 employees)';
 $lang->provider->sizeList[4] = 'Mini(<10 employees)';
+
+/* Width settings for different languages, in pixels. */
+$lang->provider->actionWidth = 180;

@@ -90,7 +90,7 @@
         <?php $payed = $order->status == 'payed';?>
         <table class='table table-info'>
           <tr>
-            <th class='w-80px'><?php echo $lang->lifetime->createdBy;?></th>
+            <th class='w-100px'><?php echo $lang->lifetime->createdBy;?></th>
             <td><?php echo zget($users, $order->createdBy) . $lang->at . $order->createdDate;?></td>
           </tr>
           <tr>

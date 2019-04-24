@@ -61,7 +61,7 @@
         <div class='panel-body'>
           <table class='table table-info'>
             <tr>
-              <th class='w-70px'><?php echo $lang->order->customer;?></th>
+              <th class='w-100px'><?php echo $lang->order->customer;?></th>
               <td><?php echo html::select('customer', $customers, $order->customer, "class='form-control chosen' data-no_results_text='" . $lang->searchMore . "'");?></td>
             </tr>
             <tr>
@@ -104,7 +104,7 @@
         <div class='panel-body'>
           <table class='table table-info'>
             <tr>
-              <th class='w-70px'><?php echo $lang->order->createdBy;?></th>
+              <th class='w-100px'><?php echo $lang->order->createdBy;?></th>
               <td><?php echo zget($users, $order->createdBy);?></td>
             </tr>
             <tr>

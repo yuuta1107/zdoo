@@ -1,7 +1,7 @@
 $(document).ready(function()
 {
-    $("#menu .nav a[href*=" + config.currentMethod + "]").parent().addClass('active');
-    $('#menu .nav a[href*=export2Excel]').addClass('iframe');
+    $("#mainNavbar .navbar-nav a[href*=trade][href*=report]").parent().addClass('active');
+    $('#menu .nav a[href*=export2Excel]').addClass('iframe').attr('data-width', '700px');
 
     var labels   = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
     var datasets = [];

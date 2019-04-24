@@ -186,7 +186,7 @@
       <div class='panel-body'>
         <table class='table table-form table-data' id='contractLife'>
           <tr>
-            <th class='w-70px'><?php echo $lang->contract->createdBy;?></th>
+            <th class='w-100px'><?php echo $lang->contract->createdBy;?></th>
             <td><?php echo zget($users, $contract->createdBy);?></td>
           </tr>
           <tr>

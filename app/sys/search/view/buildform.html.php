@@ -596,7 +596,7 @@ foreach($fieldParams as $fieldName => $param)
       echo html::hidden('module',     $module);
       echo html::hidden('actionURL',  $actionURL);
       echo html::hidden('groupItems', $groupItems);
-      echo "<div class='btn-group'>";
+      echo "<div class='btn-group w-200px'>";
       echo html::submitButton($lang->search->common, 'btn-primary btn', '');
       echo html::commonButton($lang->search->reset, 'btn', 'onclick=resetForm();');
       echo html::commonButton($lang->save, 'btn', 'onclick=saveQuery()');

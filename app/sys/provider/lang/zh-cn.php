@@ -63,3 +63,6 @@ $lang->provider->sizeList[1] = '大型(100人以上)';
 $lang->provider->sizeList[2] = '中型(50-100人)';
 $lang->provider->sizeList[3] = '小型(10人-50人)';
 $lang->provider->sizeList[4] = '微型(10人以下)';
+
+/* Width settings for different languages, in pixels. */
+$lang->provider->actionWidth = 150;

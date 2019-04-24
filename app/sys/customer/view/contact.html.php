@@ -12,9 +12,9 @@
 ?>
 <?php include '../../common/view/header.modal.html.php';?>
 <table class='table table-bordered table-data'>
-  <tr class='text-center'>
+  <tr class='text-center text-middle'>
     <th class='w-50px'><?php echo $lang->contact->id;?></th>
-    <th class='w-80px'><?php echo $lang->contact->realname;?></th>
+    <th class='w-100px'><?php echo $lang->contact->realname;?></th>
     <th class='w-100px'><?php echo $lang->resume->dept;?></th>
     <th><?php echo $lang->resume->title;?></th>
     <th class='w-160px'><?php echo $lang->contact->email;?></th>

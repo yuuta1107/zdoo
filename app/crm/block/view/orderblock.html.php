@@ -16,7 +16,7 @@
   <tr data-url='<?php echo $this->createLink('crm.order', 'view', "orderID=$id"); ?>' <?php echo $appid?>>
     <td><?php if(isset($customers[$order->customer])) echo $customers[$order->customer]?></td>
     <td class='text-center w-90px'><?php echo $order->real == '0.00' ? $order->plan : $order->real;?></td>
-    <td class='w-50px'><?php echo $lang->order->statusList[$order->status]?></td>
+    <td class='w-70px'><?php echo zget($lang->order->statusList, $order->status, '');?></td>
   </tr>
   <?php endforeach;?>
 </table>

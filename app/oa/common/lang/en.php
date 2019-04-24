@@ -88,7 +88,7 @@ $lang->egress->menu->company    = 'Company|egress|company|';
 
 if(!isset($lang->refund)) $lang->refund = new stdclass();
 $lang->refund->menu = new stdclass();
-$lang->refund->menu->personal   = array('link' => 'My reimbursement|refund|personal|', 'alias' => 'create, edit');
+$lang->refund->menu->personal   = array('link' => 'My Reimbursement|refund|personal|', 'alias' => 'create, edit');
 $lang->refund->menu->review     = 'Review Wait|refund|browsereview|status=unreviewed';
 $lang->refund->menu->reviewedBy = 'My Review|refund|browsereview|status=reviewed';
 $lang->refund->menu->todo       = 'Reimburse Wait|refund|todo|';

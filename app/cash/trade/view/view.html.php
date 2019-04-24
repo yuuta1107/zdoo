@@ -45,7 +45,7 @@
       <div class='panel-body'>
         <table class='table table-info'>
           <tr>
-            <th class='w-70px'><?php echo $lang->trade->date;?></th>
+            <th class='w-100px'><?php echo $lang->trade->date;?></th>
             <td><?php echo formatTime($trade->date, DT_DATE1);?></td>
           </tr>
           <?php if($trade->type == 'invest' or $trade->type == 'loan'):?>

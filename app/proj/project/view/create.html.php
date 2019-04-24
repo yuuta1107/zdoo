@@ -51,7 +51,7 @@
     </tr>
     <tr>
       <th><?php echo $lang->project->whitelist . ' ' . html::a('javascript:void(0)', "<i class='icon-question-sign'></i>", "data-original-title='{$lang->project->whitelistTip}' data-toggle='tooltip'");?></th>
-      <td colspan='2'><?php echo html::checkbox('whitelist', $groups, '');?></td>
+      <td class='whitelistTD' colspan='2'><?php echo html::checkbox('whitelist', $groups, '');?></td>
     </tr>
     <tr><th></th><td><?php echo html::submitButton();?></td></tr>
   </table>

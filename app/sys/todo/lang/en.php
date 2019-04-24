@@ -24,11 +24,11 @@ $lang->todo->batchFinish  = "Batch Finish";
 $lang->todo->export       = "Export";
 $lang->todo->delete       = "Delete";
 $lang->todo->browse       = "Browse";
-$lang->todo->import       = "Import to";
+$lang->todo->import       = "Move to";
 $lang->todo->changeStatus = "Change";
 $lang->todo->legendBasic  = "Basic Info";
 $lang->todo->calendar     = "Calendar";
-$lang->todo->assignTo     = "Assign";
+$lang->todo->assignTo     = "Assignee";
 
 $lang->todo->id           = 'ID';
 $lang->todo->account      = 'Owner';
@@ -45,7 +45,7 @@ $lang->todo->status       = 'Status';
 $lang->todo->desc         = 'Description';
 $lang->todo->private      = 'Private';
 $lang->todo->idvalue      = 'Task/Order';
-$lang->todo->assignedTo   = 'Assign To';
+$lang->todo->assignedTo   = 'Assignee';
 $lang->todo->assignedBy   = 'Assigned By';
 $lang->todo->assignedDate = 'Assigned';
 $lang->todo->finishedBy   = 'Finished By';
@@ -100,3 +100,11 @@ $lang->todo->batchedittips = 'The editing item is not selected';
 $lang->todo->action = new stdclass();
 $lang->todo->action->finished = array('main' => '$date, finished by <strong>$actor</strong>');
 $lang->todo->action->marked   = array('main' => '$date, change status to <stong>$extra</strong> by <strong>$actor</strong>。', 'extra' => 'statusList');
+
+/* Width settings for different languages, in pixels. */
+$lang->todo->mainPaddingRight  = 360;
+$lang->todo->sideWidth         = 340;
+$lang->todo->sideHandleRight   = 380;
+$lang->todo->trashRight        = 410;
+$lang->todo->actionWidth       = 280;
+$lang->todo->importActionWidth = 240;
