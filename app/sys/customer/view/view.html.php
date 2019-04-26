@@ -103,7 +103,7 @@
       <div class='panel-body'>
         <table class='table table-info'>
           <tr>
-            <th class='w-70px'><?php echo $lang->customer->source;?></th>
+            <th class='w-100px'><?php echo $lang->customer->source;?></th>
             <td><?php echo zget($lang->customer->sourceList, $customer->source);?></td>
           </tr>
           <tr>
@@ -212,7 +212,7 @@
         <?php foreach($productList as $product):?>
         <tr data-url='<?php echo $this->createLink('crm.product', 'view', "productID=$product->id"); ?>'>
           <td class='w-p50'><?php echo $product->name;?></td>
-          <td class='w-p20'><?php echo zget($productCategories, $product->category);?></td>
+          <td class='w-p20'><?php echo zget($productCategories, $product->category, '');?></td>
           <td class='w-p15'><?php echo zget($lang->product->typeList, $product->type);?></td>
           <td class='w-p15'><?php echo zget($lang->product->statusList, $product->status);?></td>
         </tr>

@@ -83,3 +83,6 @@ $lang->contact->template     = '联系人模板';
 $lang->contact->genderList['m'] = '男';
 $lang->contact->genderList['f'] = '女';
 $lang->contact->genderList['u'] = '';
+
+/* Width settings for different languages, in pixels. */
+$lang->contact->actionWidth = 200;

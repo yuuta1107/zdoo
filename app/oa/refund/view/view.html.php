@@ -95,7 +95,7 @@
       <div class='panel-body'>
         <table class='table table-info'>
           <tr>
-            <th class='w-80px'><?php echo $lang->refund->dept;?></th>
+            <th class='w-100px'><?php echo $lang->refund->dept;?></th>
             <td><?php echo zget($deptList, $refund->dept, '')?></td>
           </tr>
           <tr>

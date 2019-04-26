@@ -29,14 +29,14 @@
           <th class='w-100px visible-lg'><?php commonModel::printOrderLink('createdDate', $orderBy, $vars, $lang->task->createdDate);?></th>
           <th class='w-90px visible-lg'> <?php commonModel::printOrderLink('consumed',    $orderBy, $vars, $lang->task->consumedAB . $lang->task->lblHour);?></th>
           <th class='w-110px visible-lg'> <?php commonModel::printOrderLink('left',       $orderBy, $vars, $lang->task->left . $lang->task->lblHour);?></th>
-          <th class='w-240px'><?php echo $lang->actions;?></th>
+          <th class='w-<?php echo $lang->my->taskActionWidth;?>px'><?php echo $lang->actions;?></th>
         </tr>
       </thead>
       <tbody>
         <?php foreach($tasks as $task):?>
         <tr class='text-center'>
           <td class='text-left'><label class='checkbox-inline'><input type='checkbox' name='taskIDList[]' value='<?php echo $task->id;?>'/> <?php echo $task->id;?></td>
-          <td><span class='active pri pri-<?php echo $task->pri; ?>'><?php echo $lang->task->priList[$task->pri];?></span></td>
+          <td><span class='active pri pri-<?php echo $task->pri; ?>'><?php echo zget($lang->task->priList, $task->pri, '');?></span></td>
           <td class='text-left'>
             <?php if($task->parent != 0) echo "<span class='label'>{$lang->task->childrenAB}</span>"?>
             <?php if(!empty($task->team)) echo "<span class='label'>{$lang->task->multipleAB}</span>"?>

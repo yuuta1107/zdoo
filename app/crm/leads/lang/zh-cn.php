@@ -24,3 +24,6 @@ $lang->leads->ignoreReason = '原因';
 $lang->leads->tips = new stdclass();
 $lang->leads->tips->apply       = '请先处理现有的名单联系人。';
 $lang->leads->tips->applyRemain = '未处理的名单数低于此值才可以再次申请';
+
+/* Width settings for different languages, in pixels. */
+$lang->leads->actionWidth = 200;

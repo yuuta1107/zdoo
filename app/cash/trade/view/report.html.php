@@ -16,15 +16,28 @@
 <div class='panel panel-sm'>
   <div class='panel-heading'>
     <div class='date dropdown'>
-      <?php $currentMonthTip = $currentMonth == '00' ? '' : $currentMonth . $lang->month;?>
-      <button type='button' class='btn btn-sm btn-default dropdown-toggle' data-toggle='dropdown'><?php echo $currentYear . $lang->year . $currentMonthTip;?> <span class="caret"></span></button>
+      <?php
+      $yearLabel = $currentYear;
+      if($this->app->getClientLang() == 'zh-cn' or $this->app->getClientLang() == 'zh-tw')
+      {
+          $monthLabel = $currentMonth == '00' ? '' : (int)$currentMonth . $lang->month;
+          if($monthLabel) $yearLabel .= $lang->year . $monthLabel;
+      }
+      else
+      {
+          $monthLabel = zget($lang->trade->monthList, $currentMonth, '');
+          if($monthLabel) $yearLabel = $monthLabel . ', ' . $yearLabel;
+      }
+      ?>
+      <button type='button' class='btn btn-sm btn-default dropdown-toggle' data-toggle='dropdown'><?php echo $yearLabel;?> <span class="caret"></span></button>
       <ul class='dropdown-menu'>
         <?php foreach($tradeYears as $tradeYear):?>
         <li class='dropdown-submenu'>
           <?php echo html::a(helper::createLink('trade', 'report', "date=$tradeYear&currency=$currentCurrency&unit=$currentUnit"), $tradeYear);?>
           <ul class='dropdown-menu'>
             <?php foreach($tradeMonths[$tradeYear] as $tradeMonth):?>
-            <li><?php echo html::a(helper::createLink('trade', 'report', "date=$tradeYear$tradeMonth&currency=$currentCurrency&unit=$currentUnit"), $tradeMonth . $lang->month);?></li>
+            <?php $monthLabel = (($this->app->getClientLang() == 'zh-cn' or $this->app->getClientLang() == 'zh-tw') ? $tradeMonth . $lang->month : zget($lang->trade->monthList, $tradeMonth, ''));?>
+            <li><?php echo html::a(helper::createLink('trade', 'report', "date=$tradeYear$tradeMonth&currency=$currentCurrency&unit=$currentUnit"), $monthLabel);?></li>
             <?php endforeach;?>
             <li><?php echo html::a(helper::createLink('trade', 'report', "date={$tradeYear}00&currency=$currentCurrency&unit=$currentUnit"), $lang->trade->fullYear);?></li>
           </ul>

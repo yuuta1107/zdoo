@@ -91,6 +91,7 @@ class orderModel extends model
         if(strpos($orderBy, 'status') !== false) $orderBy .= ', o.closedReason';
         if(strpos($orderBy, 'id') === false) $orderBy .= ', o.id_desc';
 
+        $orders = array();
         if(strpos(',contactedby,past,today,tomorrow,thisweek,thismonth,', ",{$mode},") !== false or ($mode == 'bysearch' && strpos($orderQuery, '`nextDate`') !== false))
         {
             $orders = $this->dao->select('o.*, c.name AS customerName, c.level AS level')->from(TABLE_ORDER)->alias('o')
@@ -142,7 +143,7 @@ class orderModel extends model
                 ->orWhere('o.signedBy')->eq($this->app->user->account)
                 ->markRight(1)
                 ->fi()
-                ->beginIF($mode == 'public')->andWhere('public')->eq('1')->fi()
+                ->beginIF($mode == 'public')->andWhere('c.public')->eq('1')->fi()
                 ->beginIF($mode == 'assignedTo')->andWhere('o.assignedTo')->eq($this->app->user->account)->fi()
                 ->beginIF($mode == 'createdBy')->andWhere('o.createdBy')->eq($this->app->user->account)->fi()
                 ->beginIF($mode == 'signedBy')->andWhere('o.signedBy')->eq($this->app->user->account)->fi()

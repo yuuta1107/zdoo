@@ -110,7 +110,8 @@ class trade extends control
         }
         if($currentDate == 'all') $currentDate = '';
 
-        $trades = $this->trade->getList($mode, $currentDate, $orderBy, $pager, $bysearch == 'bysearch');
+        $trades    = $this->trade->getList($mode, $currentDate, $orderBy, $pager, $bysearch == 'bysearch');
+        $yearLabel = (($this->app->getClientLang() == 'zh-cn' or $this->app->getClientLang() == 'zh-tw') ? $this->lang->year : '');
 
         $moduleMenu = "<nav id='menu'><ul class='nav'>";
         if(!empty($tradeYears))
@@ -122,11 +123,11 @@ class trade extends control
             $moduleMenu .= "<li class='$class'>" . commonModel::printLink('trade', 'browse', "mode=$mode&date=all", $this->lang->trade->all, '', false) . '</li>';
             $class = $currentDate ? 'active' : '';
             $moduleMenu .= "<li class='$class dropdown'>";
-            $moduleMenu .= html::a('#', $selectYear . $this->lang->year . "<span class='caret'></span>", "class='dropdown-toggle' data-toggle='dropdown'");
+            $moduleMenu .= html::a('#', $selectYear . $yearLabel . "<span class='caret'></span>", "class='dropdown-toggle' data-toggle='dropdown'");
             $moduleMenu .= "<ul role='menu' class='dropdown-menu'>";
             foreach($tradeYears as $year)
             {
-                $moduleMenu .= commonModel::printLink('trade', 'browse', "mode=$mode&date=$year", $year . $this->lang->year, '', false, '', 'li');
+                $moduleMenu .= commonModel::printLink('trade', 'browse', "mode=$mode&date=$year", $year . $yearLabel, '', false, '', 'li');
             }
             $moduleMenu .= "</ul></li>";
 

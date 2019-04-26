@@ -155,7 +155,7 @@
         <div class='panel-body'>
           <table class='table table-info'>
             <tr>
-              <th class='w-80px'><?php echo $lang->task->createdBy;?></th>
+              <th class='w-100px'><?php echo $lang->task->createdBy;?></th>
               <td><?php echo zget($users, $task->createdBy, $task->createdBy) . $lang->at . formatTime($task->createdDate, DT_DATETIME1);?></td>
             </tr>
             <tr>

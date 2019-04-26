@@ -12,7 +12,7 @@
 ?>
 <?php include '../../../sys/common/view/header.modal.html.php';?>
 <table class='table table-bordered table-data'>
-  <tr class='text-center'>
+  <tr class='text-center text-middle'>
     <th class='w-150px'><?php echo $lang->address->title;?></th>
     <th><?php echo $lang->address->location;?></th>
     <th class='w-100px'><?php echo $lang->actions;?></th>

@@ -12,7 +12,8 @@
 ?>
 <?php include $app->getModuleRoot() . '../sys/my/view/header.html.php';?>
 <?php include '../../../sys/common/view/datepicker.html.php';?>
-<?php js::set('mode', $mode)?>
+<?php js::set('mode', $mode);?>
+<?php echo "<style>.import-action {width: {$lang->todo->importActionWidth}px;}</style>";?>
 <div class='panel'>
   <form id='jaxForm' method='post'>
     <table class='table table-hover table-striped table-bordered tablesorter table-data table-fixed' id='todoList'>
@@ -28,7 +29,7 @@
           <th class='w-100px'><?php commonModel::printOrderLink('begin',  $orderBy, $vars, $lang->todo->begin);?></th>
           <th class='w-100px'><?php commonModel::printOrderLink('end',    $orderBy, $vars, $lang->todo->end);?></th>
           <th class='w-100px'><?php commonModel::printOrderLink('status', $orderBy, $vars, $lang->todo->status);?></th>
-          <th class='w-240px'><?php echo $lang->actions;?></th>
+          <th class='w-<?php echo $lang->todo->actionWidth;?>px'><?php echo $lang->actions;?></th>
         </tr>
       </thead>
       <tbody>
@@ -36,8 +37,8 @@
         <tr class='text-center'>
           <td class='text-left'><label class='checkbox-inline'><input type='checkbox' name='todoIDList[]' value='<?php echo $todo->id;?>'/> <?php echo $todo->id;?></td>
           <td><?php echo formatTime($todo->date, DT_DATE1);?></td>
-          <td><?php echo zget($lang->todo->typeList, $todo->type);?></td>
-          <td><?php echo $lang->todo->priList[$todo->pri];?></td>
+          <td><?php echo zget($lang->todo->typeList, $todo->type, '');?></td>
+          <td><?php echo zget($lang->todo->priList, $todo->pri, '');?></td>
           <td class='text-left' title='<?php echo $todo->name?>'><?php echo $todo->name;?></td>
           <td><?php echo zget($users, $todo->assignedTo);?></td>
           <td><?php echo formatTime($todo->begin, DT_DATE1);?></td>

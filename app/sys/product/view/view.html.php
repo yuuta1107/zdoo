@@ -41,7 +41,7 @@
       <div class='panel-body'>
         <table class='table table-info'>
           <tr>
-            <th class='w-70px'><?php echo $lang->product->name;?></th>
+            <th class='w-<?php echo $lang->product->subjectWidth;?>px'><?php echo $lang->product->name;?></th>
             <td><?php echo $product->name;?></td>
           </tr>
           <tr>

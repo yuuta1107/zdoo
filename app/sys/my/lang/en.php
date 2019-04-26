@@ -24,11 +24,11 @@ $lang->my->company->end     = 'End';
 $lang->my->company->view    = 'View';
 
 $lang->my->task->common     = 'My Task';
-$lang->my->task->assignedTo = 'AssignToMe';
-$lang->my->task->createdBy  = 'CreateByMe';
-$lang->my->task->finishedBy = 'FinishByMe';
-$lang->my->task->closedBy   = 'CloseByMe';
-$lang->my->task->canceledBy = 'CancelByMe';
+$lang->my->task->assignedTo = 'AssignedToMe';
+$lang->my->task->createdBy  = 'CreatedByMe';
+$lang->my->task->finishedBy = 'FinishedByMe';
+$lang->my->task->closedBy   = 'ClosedByMe';
+$lang->my->task->canceledBy = 'CanceledByMe';
 $lang->my->task->unclosed   = 'Unclosed';
 
 $lang->my->project = new stdclass();
@@ -40,3 +40,9 @@ $lang->my->review->module = 'Module';
 
 $lang->my->contact = new stdclass();
 $lang->my->contact->common = 'contact';
+
+/* Width settings for different languages, in pixels. */
+$lang->my->contractActionWidth = 320;
+$lang->my->orderActionWidth    = 240;
+$lang->my->projectActionWidth  = 210;
+$lang->my->taskActionWidth     = 280;

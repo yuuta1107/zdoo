@@ -44,7 +44,7 @@
           <tr class='text-center'>
             <?php $vars = "date=$date&orderBy=%s";?>
             <th class='w-50px'> <?php commonModel::printOrderLink('id', $orderBy, $vars, $lang->$type->id);?></th>
-            <th class='w-80px'> <?php commonModel::printOrderLink('createdBy', $orderBy, $vars, $lang->$type->createdBy);?></th>
+            <th class='w-100px'><?php commonModel::printOrderLink('createdBy', $orderBy, $vars, $lang->$type->createdBy);?></th>
             <th class='w-180px'><?php commonModel::printOrderLink('name', $orderBy, $vars, $lang->$type->name);?></th>
             <th class='w-180px'><?php commonModel::printOrderLink('customer', $orderBy, $vars, $lang->$type->customer);?></th>
             <th class='w-150px'><?php commonModel::printOrderLink('begin', $orderBy, $vars, $lang->$type->begin);?></th>

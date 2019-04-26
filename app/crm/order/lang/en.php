@@ -80,3 +80,6 @@ $lang->order->infoAmount    = 'Budget is %s, Actual is %s.';
 $lang->order->infoContacted = 'Contacted on %s. ';
 $lang->order->infoNextDate  = 'Next Contact on %s.';
 $lang->order->deny          = 'You has no Privilege to create %s.';
+
+/* Width settings for different languages, in pixels. */
+$lang->order->actionWidth = 240;

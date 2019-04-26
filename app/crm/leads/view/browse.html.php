@@ -40,14 +40,13 @@
         <th class="w-90px"><?php commonModel::printOrderLink('nextDate', $orderBy, $vars, $lang->contact->nextDate);?></th>
         <?php endif;?>
         <th><?php commonModel::printOrderLink('company', $orderBy, $vars, $lang->contact->company);?></th>
-        <th class='w-70px'> <?php commonModel::printOrderLink('gender', $orderBy, $vars, $lang->contact->gender);?></th>
+        <th class='w-80px'> <?php commonModel::printOrderLink('gender', $orderBy, $vars, $lang->contact->gender);?></th>
         <th class='w-160px'><?php commonModel::printOrderLink('phone', $orderBy, $vars, $lang->contact->phone . $lang->slash . $lang->contact->mobile);?></th>
         <th class='w-160px'><?php commonModel::printOrderLink('email', $orderBy, $vars, $lang->contact->email);?></th>
         <th class='w-100px visible-lg'><?php commonModel::printOrderLink('qq', $orderBy, $vars, $lang->contact->qq);?></th>
         <th class='w-100px visible-lg'><?php commonModel::printOrderLink('weixin', $orderBy, $vars, $lang->contact->weixin);?></th>
         <th class='w-100px'><?php commonModel::printOrderLink('origin', $orderBy, $vars, $lang->contact->origin);?></th>
-        <?php $class = $this->app->clientLang == 'en' ? 'w-240px' : 'w-200px';?>
-        <th class='<?php echo $class;?>'><?php echo $lang->actions;?></th>
+        <th class='w-<?php echo $lang->leads->actionWidth;?>px'><?php echo $lang->actions;?></th>
       </tr>
     </thead>
     <tbody>

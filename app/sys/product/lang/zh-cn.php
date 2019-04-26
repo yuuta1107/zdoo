@@ -17,7 +17,7 @@ $lang->product->code        = '代号';
 $lang->product->type        = '类型';
 $lang->product->status      = '状态';
 $lang->product->category    = '产品分类';
-$lang->product->subject     = '科目';
+$lang->product->subject     = '收入科目';
 $lang->product->desc        = '简介';
 $lang->product->order       = '排序';
 $lang->product->roles       = '角色';
@@ -48,3 +48,7 @@ $lang->product->lineList[''] = '';
 
 $lang->product->placeholder = new stdclass();
 $lang->product->placeholder->code = '产品代号必须为英文或数字的组合';
+
+/* Width settings for different languages, in pixels. */
+$lang->product->actionWidth  = 280;
+$lang->product->subjectWidth = 70;

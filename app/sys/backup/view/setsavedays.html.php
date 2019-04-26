@@ -14,7 +14,7 @@
 <form method='post' id='ajaxForm' action="<?php echo helper::createLink('backup', 'setSaveDays');?>">
   <table class='table table-borderless'>
     <tr>
-      <th class='w-70px text-middle'><?php echo $lang->backup->saveDays;?></th>
+      <th class='w-100px text-middle'><?php echo $lang->backup->saveDays;?></th>
       <td class='w-200px'>
         <div class='input-group'>
           <?php echo html::input('saveDays', isset($config->backup->saveDays) ? $config->backup->saveDays : '30', "class='form-control'")?>

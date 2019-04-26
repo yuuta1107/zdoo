@@ -27,7 +27,7 @@
       <?php if($objectType != 'contact'):?>
       <tr>
         <th class='w-80px'><?php echo $lang->action->record->contact;?></th>
-        <td class='w-300px'>
+        <td class='w-400px'>
           <div class='required required-wrapper'></div>
           <div class='input-group'>
             <select id='contact' name='contact' class='form-control chosen'>
@@ -106,15 +106,15 @@
         <?php if($objectType != 'contact' && $objectType != 'leads'):?>
         <?php $colspan = '';?>
         <th class='w-80px'><?php echo $lang->action->record->contact;?></th>
-        <td class='w-240px'><?php echo html::select('nextContact', array('ditto' => $lang->action->record->sameContact) + $contactPairs, '', "class='form-control chosen'");?></td>
+        <td class='w-150px'><?php echo html::select('nextContact', array('ditto' => $lang->action->record->sameContact) + $contactPairs, '', "class='form-control chosen'");?></td>
         <?php endif;?>
-        <th class='w-80px'><?php echo $lang->action->record->contactedBy;?></th>
+        <th class='w-100px'><?php echo $lang->action->record->contactedBy;?></th>
         <td <?php echo $colspan;?>><?php echo html::select('contactedBy', $users, $this->app->user->account, "class='form-control chosen'");?></td>
         <th class='w-20px'></th>
       </tr>
       <tr>
         <th class='w-80px'><?php echo $lang->action->date;?></th>
-        <td class='w-240px'><?php echo html::input('nextDate', '', "class='form-control form-date'");?></td>
+        <td class='w-150px'><?php echo html::input('nextDate', '', "class='form-control form-date'");?></td>
         <th colspan='2'><?php echo html::radio('delta', $lang->action->nextContactList , '', "onclick='computeNextDate(this.value)'");?></th>
       </tr>
       <tr>

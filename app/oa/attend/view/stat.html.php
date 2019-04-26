@@ -41,7 +41,7 @@
     <?php if($waitReviews):?>
     <table class='table table-borderless'>
       <?php foreach($waitReviews as $module):?>
-      <?php $reviewedBy = $module == 'attend' ? $config->attend->reviewedBy : $this->loadModel($module, 'oa')->getReviewedBy();?>
+      <?php $reviewedBy = $module == 'attend' ? zget($config->attend, 'reviewedBy', '') : $this->loadModel($module, 'oa')->getReviewedBy();?>
       <tr>
         <td>
           <?php printf($lang->attend->waitReviews, $lang->$module->common);?>

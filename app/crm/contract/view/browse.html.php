@@ -39,9 +39,8 @@
         <th class='w-100px'><?php commonModel::printOrderLink('end',         $orderBy, $vars, $lang->contract->end);?></th>
         <th class='w-80px'> <?php commonModel::printOrderLink('return',      $orderBy, $vars, $lang->contract->return);?></th>
         <th class='w-80px'> <?php commonModel::printOrderLink('delivery',    $orderBy, $vars, $lang->contract->delivery);?></th>
-        <th class='w-60px'> <?php commonModel::printOrderLink('status',      $orderBy, $vars, $lang->contract->status);?></th>
-        <?php $class = $this->app->clientLang == 'en' ? 'w-320px' : 'w-240px';?>
-        <th class='<?php echo $class;?>'><?php echo $lang->actions;?></th>
+        <th class='w-70px'> <?php commonModel::printOrderLink('status',      $orderBy, $vars, $lang->contract->status);?></th>
+        <th class='w-<?php echo $lang->contract->actionWidth;?>px'><?php echo $lang->actions;?></th>
       </tr>
     </thead>
     <tbody>

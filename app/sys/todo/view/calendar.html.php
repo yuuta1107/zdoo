@@ -19,6 +19,15 @@
 <?php js::set('settings.data', $data);?>
 <?php js::set('users', $users);?>
 <?php js::set('zentaoEntryList', array_keys($zentaoEntryList));?>
+<?php js::set('mainPaddingRight', $lang->todo->mainPaddingRight);?>
+<?php echo
+"<style>
+.with-side .main {padding-right: {$lang->todo->mainPaddingRight}px;}
+.with-side .side {width: {$lang->todo->sideWidth}px;}
+.side-handle {right: {$lang->todo->sideHandleRight}px;}
+.trash {right: {$lang->todo->trashRight}px;}
+</style>";
+?>
 <div class='with-side <?php echo $this->cookie->todoCalendarSide == 'hide' ? 'hide-side' : ''?>'>
   <div class='side'>
     <ul id='myTab' class='nav nav-tabs'>

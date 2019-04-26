@@ -22,7 +22,7 @@ $lang->task->start     = 'Start';
 $lang->task->activate  = 'Activate';
 $lang->task->cancel    = 'Cancel';
 $lang->task->close     = 'Close';
-$lang->task->assignTo  = 'Assign to';
+$lang->task->assignTo  = 'Assignee';
 $lang->task->delete    = 'Delete';
 $lang->task->export    = 'Export';
 
@@ -59,7 +59,7 @@ $lang->task->createdDate    = 'Created';
 $lang->task->createdDateAB  = 'Create';
 $lang->task->editedBy       = 'Edited By';
 $lang->task->editedDate     = 'Edited';
-$lang->task->assignedTo     = 'Assign';
+$lang->task->assignedTo     = 'Assignee';
 $lang->task->assignedDate   = 'Assigned';
 $lang->task->estStarted     = 'Planned Start';
 $lang->task->realStarted    = 'Actual Start';
@@ -154,3 +154,7 @@ $lang->task->notAllowed  = 'Not allowed.';
 $lang->task->skipClose   = 'The status of Tasks : %s are unfinished or cancelled. Not allowed to close.';
 
 $lang->task->groupinfo = "<div class='text-muted'>Total <strong>%s</strong>, Wait <strong>%s</strong>, Doing <strong>%s</strong>, Finished <strong>%s</strong>, Closed <strong>%s</strong></div>";
+
+/* Width settings for different languages, in pixels. */
+$lang->task->actionWidth       = 300;
+$lang->task->dropdownMenuWidth = 120;

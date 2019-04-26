@@ -16,7 +16,7 @@
 <form method='post' id='startForm' action='<?php echo $this->createLink('task', 'start', "taskID=$taskID")?>'>
   <table class='table table-form'>
     <tr>
-      <th class='w-60px'><?php echo $lang->task->realStarted;?></th>
+      <th class='w-80px'><?php echo $lang->task->realStarted;?></th>
       <td class='w-p45'><?php echo html::input('realStarted', helper::today(), "class='form-control form-date'");?></td>
       <td></td>
     </tr>

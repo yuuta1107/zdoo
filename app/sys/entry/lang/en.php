@@ -119,3 +119,6 @@ $lang->entry->errmsg['SESSION_VERIFY_FAILED'] = 'Session verification failed.';
 $lang->entry->errmsg['IP_DENIED']             = 'IP is denied.';
 $lang->entry->errmsg['ACCOUNT_UNBOUND']       = 'Account unbound.';
 $lang->entry->errmsg['EMPTY_ENTRY']           = 'Key of entry is missing.';
+
+/* Width settings for different languages, in pixels. */
+$lang->entry->actionWidth = 320;

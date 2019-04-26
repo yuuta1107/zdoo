@@ -65,7 +65,7 @@
           <?php
           if($disabled) echo html::hidden('status', $task->status);
           $browseLink = $this->session->taskList ? $this->session->taskList : inlink('browse', "project=$task->project");
-          echo html::submitButton() . html::a($browseLink, $lang->goback, "class='btn btn-default'");
+          echo html::submitButton() . ' ' . html::a($browseLink, $lang->goback, "class='btn btn-default'");
           ?>
         </div>
       </div>
@@ -128,7 +128,7 @@
           <div class='panel-body'>
             <table class='table table-info'>
               <tr>
-                <th class='w-80px'><?php echo $lang->task->createdBy;?></th>
+                <th class='w-100px'><?php echo $lang->task->createdBy;?></th>
                 <td><?php echo zget($users, $task->createdBy, $task->createdBy)?></td>
               </tr>
               <tr>

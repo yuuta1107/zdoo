@@ -57,7 +57,7 @@ $lang->contact->edit           = 'Edit';
 $lang->contact->view           = 'View';
 $lang->contact->resume         = 'Company';
 $lang->contact->address        = 'Address';
-$lang->contact->record         = 'History';
+$lang->contact->record         = 'Record';
 $lang->contact->qrcode         = 'QR Code';
 $lang->contact->vcard          = 'Vcard';
 $lang->contact->import         = 'Import';
@@ -83,3 +83,6 @@ $lang->contact->template     = 'Contact Template';
 $lang->contact->genderList['m'] = 'Male';
 $lang->contact->genderList['f'] = 'Female';
 $lang->contact->genderList['u'] = '';
+
+/* Width settings for different languages, in pixels. */
+$lang->contact->actionWidth = 240;

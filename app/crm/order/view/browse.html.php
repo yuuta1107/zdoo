@@ -36,15 +36,15 @@
         <th class='w-130px'><?php commonModel::printOrderLink('o.product', $orderBy, $vars, $lang->order->product);?></th>
         <th class='w-90px'><?php commonModel::printOrderLink('o.plan', $orderBy, $vars, $lang->order->plan);?></th>
         <th class='w-90px'><?php commonModel::printOrderLink('o.real', $orderBy, $vars, $lang->order->real);?></th>
-        <th class='w-80px'><?php commonModel::printOrderLink('o.assignedTo', $orderBy, $vars, $lang->order->assignedTo);?></th>
-        <th class='w-60px'><?php commonModel::printOrderLink('o.status', $orderBy, $vars, $lang->order->status);?></th>
+        <th class='w-90px'><?php commonModel::printOrderLink('o.assignedTo', $orderBy, $vars, $lang->order->assignedTo);?></th>
+        <th class='w-70px'><?php commonModel::printOrderLink('o.status', $orderBy, $vars, $lang->order->status);?></th>
         <th class='w-90px visible-lg'><?php commonModel::printOrderLink('o.contactedDate', $orderBy, $vars, $lang->order->contactedDate);?></th>
         <?php
         /* The next date is searched from the table crm_dating, so use date instead of nextDate to avoid occur errors when order by this field. */
         $date = strpos(',past,today,tomorrow,thisweek,thismonth,', ",{$mode},") != false ? 'd.date' : 'o.nextDate';
         ?>
-        <th class='w-90px'><?php commonModel::printOrderLink($date, $orderBy, $vars, $lang->order->nextDate);?></th>
-        <th class='w-220px text-center'><?php echo $lang->actions;?></th>
+        <th class='w-110px'><?php commonModel::printOrderLink($date, $orderBy, $vars, $lang->order->nextDate);?></th>
+        <th class='w-<?php echo $lang->order->actionWidth;?>px text-center'><?php echo $lang->actions;?></th>
       </tr>
     </thead>
     <tbody>

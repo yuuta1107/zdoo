@@ -48,3 +48,7 @@ $lang->product->lineList[''] = '';
 
 $lang->product->placeholder = new stdclass();
 $lang->product->placeholder->code = 'Product alias should be letters or digits.';
+
+/* Width settings for different languages, in pixels. */
+$lang->product->actionWidth  = 280;
+$lang->product->subjectWidth = 120;

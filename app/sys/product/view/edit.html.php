@@ -14,7 +14,7 @@
 <form method='post' action='<?php echo inlink('edit', "productID=$product->id");?>' id='ajaxForm'>
   <table class='table table-form'>
     <tr>
-      <th class='w-70px'><?php echo $lang->product->name;?></th>
+      <th class='w-<?php echo $lang->product->subjectWidth;?>px'><?php echo $lang->product->name;?></th>
       <td>
         <div class="input-group">
           <?php echo html::input('name', $product->name, "class='form-control col-sm-8'");?>

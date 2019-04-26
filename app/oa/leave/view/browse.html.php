@@ -51,8 +51,8 @@
           <tr class='text-center'>
             <?php $vars = "&date={$date}&orderBy=%s";?>
             <th class='w-50px'><?php commonModel::printOrderLink('id', $orderBy, $vars, $lang->leave->id);?></th>
-            <th class='w-70px'><?php commonModel::printOrderLink('createdBy', $orderBy, $vars, $lang->leave->createdBy);?></th>
-            <th class='w-70px visible-lg'><?php echo $lang->user->dept;?></th>
+            <th class='w-100px'><?php commonModel::printOrderLink('createdBy', $orderBy, $vars, $lang->leave->createdBy);?></th>
+            <th class='w-100px visible-lg'><?php echo $lang->user->dept;?></th>
             <th class='w-60px'><?php commonModel::printOrderLink('type', $orderBy, $vars, $lang->leave->type);?></th>
             <th class='w-140px'><?php commonModel::printOrderLink('begin', $orderBy, $vars, $lang->leave->start);?></th>
             <th class='w-140px'><?php commonModel::printOrderLink('end', $orderBy, $vars, $lang->leave->finish);?></th>

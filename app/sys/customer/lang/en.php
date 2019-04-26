@@ -38,7 +38,7 @@ $lang->customer->createdBy     = 'Created By';
 $lang->customer->createdDate   = 'Created';
 $lang->customer->editedBy      = 'Edited By';
 $lang->customer->editedDate    = 'Edited';
-$lang->customer->assignedTo    = 'Assigned To';
+$lang->customer->assignedTo    = 'Assignee';
 $lang->customer->assignedBy    = 'Assigned By';
 $lang->customer->assignedDate  = 'Assigned';
 $lang->customer->contactedBy   = 'Contact By';
@@ -126,3 +126,6 @@ $lang->customer->mergeTip    = 'Merge this customer to the selected customer.';
 $lang->customer->action = new stdclass();
 $lang->customer->action->orderDating    = '$date, <strong>$actor</strong> created a dating : <strong>$extra</strong> for order <strong>$order</strong>.' . "\n";
 $lang->customer->action->contractDating = '$date, <strong>$actor</strong> created a dating : <strong>$extra</strong> for contract <strong>$contract</strong>.' . "\n";
+
+/* Width settings for different languages, in pixels. */
+$lang->customer->actionWidth = 280;
