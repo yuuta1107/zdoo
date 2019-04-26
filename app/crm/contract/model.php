@@ -219,7 +219,7 @@ class contractModel extends model
      */
     public function getTradeList($contractID = 0, $orderBy = '`type`_desc')
     {
-        return $this->dao->select('*')->from(TABLE_TRADE)->where('contract')->eq($contractID)->orderBy($orderBy)->fetchAll();
+        return $this->dao->select('*')->from(TABLE_TRADE)->where('contract')->eq($contractID)->andWhere('parent')->eq(0)->orderBy($orderBy)->fetchAll();
     }
 
     /**
