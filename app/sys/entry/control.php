@@ -532,7 +532,7 @@ class entry extends control
         $this->get->set('blockid', $block->block);
         $this->get->set('hash', $entry->key);
         $this->get->set('entry', $entry->id);
-        $this->get->set('app');
+        $this->get->set('app', $block->app);
         $this->get->set('lang', $this->app->getClientLang());
         $this->get->set('sso', base64_encode(commonModel::getSysURL() . helper::createLink('entry', 'visit', "entry=$entry->id")));
         $this->get->set('param', $params);
