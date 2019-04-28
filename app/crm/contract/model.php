@@ -63,7 +63,7 @@ class contractModel extends model
 
         if($mode == 'contactedby')
         {
-            return $this->dao->select('t1.*')->from(TABLE_CONTRACT)->alias('t1')
+            $contracts = $this->dao->select('t1.*')->from(TABLE_CONTRACT)->alias('t1')
                 ->leftJoin(TABLE_DATING)->alias('t2')->on('t1.id=t2.objectID')
                 ->where('t1.deleted')->eq(0)
                 ->andWhere('t2.status')->eq('wait')
@@ -74,41 +74,51 @@ class contractModel extends model
                 ->orderBy("t1.{$orderBy}")
                 ->page($pager, 't1.id')
                 ->fetchAll('id');
+
+            $this->session->set('contractOnlyCondition', false);
+            $this->session->set('contractQueryCondition', $this->dao->get());
+        }
+        else
+        {
+            $contracts = $this->dao->select('*')->from(TABLE_CONTRACT)
+                ->where('deleted')->eq(0)
+                ->beginIF($owner == 'my' and strpos('returnedBy,deliveredBy', $mode) === false)
+                ->andWhere('createdBy', true)->eq($this->app->user->account)
+                ->orWhere('editedBy')->eq($this->app->user->account)
+                ->orWhere('signedBy')->eq($this->app->user->account)
+                ->orWhere('returnedBy')->eq($this->app->user->account)
+                ->orWhere('deliveredBy')->eq($this->app->user->account)
+                ->orWhere('finishedBy')->eq($this->app->user->account)
+                ->orWhere('canceledBy')->eq($this->app->user->account)
+                ->orWhere('contactedBy')->eq($this->app->user->account)
+                ->orWhere('handlers')->like("%{$this->app->user->account}%")
+                ->markRight(1)
+                ->fi()
+                ->beginIF($customer)->andWhere('customer')->eq($customer)->fi()
+                ->andWhere('customer')->in($customerIdList)
+                ->beginIF($mode == 'unfinished')->andWhere('`status`')->eq('normal')->fi()
+                ->beginIF($mode == 'unreceived')->andWhere('`return`')->ne('done')->andWhere('`status`')->ne('canceled')->fi()
+                ->beginIF($mode == 'undeliveried')->andWhere('`delivery`')->ne('done')->andWhere('`status`')->ne('canceled')->fi()
+                ->beginIF($mode == 'canceled')->andWhere('`status`')->eq('canceled')->fi()
+                ->beginIF($mode == 'finished')->andWhere('`status`')->eq('closed')->fi()
+                ->beginIF($mode == 'expired')->andWhere('`end`')->lt(date(DT_DATE1))->andWhere('`status`')->ne('canceled')->fi()
+                ->beginIF($mode == 'returnedBy')->andWhere('returnedBy')->eq($this->app->user->account)->fi()
+                ->beginIF($mode == 'deliveredBy')->andWhere('deliveredBy')->eq($this->app->user->account)->fi()
+                ->beginIF($mode == 'expire')
+                ->andWhere('`end`')->ge(date(DT_DATE1))
+                ->andWhere('`end`')->lt(date(DT_DATE1, strtotime('+1 month')))
+                ->andWhere('`status`')->ne('canceled')
+                ->fi()
+                ->beginIF($mode == 'bysearch')->andWhere($contractQuery)->fi()
+                ->orderBy($orderBy)
+                ->page($pager)
+                ->fetchAll('id');
+
+            $this->session->set('contractOnlyCondition', true);
+            $this->session->set('contractQueryCondition', $this->dao->get());
         }
 
-        return $this->dao->select('*')->from(TABLE_CONTRACT)
-            ->where('deleted')->eq(0)
-            ->beginIF($owner == 'my' and strpos('returnedBy,deliveredBy', $mode) === false)
-            ->andWhere('createdBy', true)->eq($this->app->user->account)
-            ->orWhere('editedBy')->eq($this->app->user->account)
-            ->orWhere('signedBy')->eq($this->app->user->account)
-            ->orWhere('returnedBy')->eq($this->app->user->account)
-            ->orWhere('deliveredBy')->eq($this->app->user->account)
-            ->orWhere('finishedBy')->eq($this->app->user->account)
-            ->orWhere('canceledBy')->eq($this->app->user->account)
-            ->orWhere('contactedBy')->eq($this->app->user->account)
-            ->orWhere('handlers')->like("%{$this->app->user->account}%")
-            ->markRight(1)
-            ->fi()
-            ->beginIF($customer)->andWhere('customer')->eq($customer)->fi()
-            ->andWhere('customer')->in($customerIdList)
-            ->beginIF($mode == 'unfinished')->andWhere('`status`')->eq('normal')->fi()
-            ->beginIF($mode == 'unreceived')->andWhere('`return`')->ne('done')->andWhere('`status`')->ne('canceled')->fi()
-            ->beginIF($mode == 'undeliveried')->andWhere('`delivery`')->ne('done')->andWhere('`status`')->ne('canceled')->fi()
-            ->beginIF($mode == 'canceled')->andWhere('`status`')->eq('canceled')->fi()
-            ->beginIF($mode == 'finished')->andWhere('`status`')->eq('closed')->fi()
-            ->beginIF($mode == 'expired')->andWhere('`end`')->lt(date(DT_DATE1))->andWhere('`status`')->ne('canceled')->fi()
-            ->beginIF($mode == 'returnedBy')->andWhere('returnedBy')->eq($this->app->user->account)->fi()
-            ->beginIF($mode == 'deliveredBy')->andWhere('deliveredBy')->eq($this->app->user->account)->fi()
-            ->beginIF($mode == 'expire')
-            ->andWhere('`end`')->ge(date(DT_DATE1))
-            ->andWhere('`end`')->lt(date(DT_DATE1, strtotime('+1 month')))
-            ->andWhere('`status`')->ne('canceled')
-            ->fi()
-            ->beginIF($mode == 'bysearch')->andWhere($contractQuery)->fi()
-            ->orderBy($orderBy)
-            ->page($pager)
-            ->fetchAll('id');
+        return $contracts;
     }
 
     /**

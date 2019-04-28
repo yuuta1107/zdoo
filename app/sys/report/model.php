@@ -131,14 +131,23 @@ class reportModel extends model
         }
         
         $conditionName = $module . 'QueryCondition';
+        $onlyCondition = $module . 'OnlyCondition';
         $conditionSql  = $this->session->$conditionName;
-
-        $queryCondition = explode('WHERE', $conditionSql);
-        $queryCondition = isset($queryCondition[1]) ? $queryCondition[1] : '';
-        if($queryCondition)
-        {    
-            $queryCondition = explode('ORDER', $queryCondition);
-            $queryCondition = str_replace(array('t1.', 'o.'), '', $queryCondition[0]);
+        if(!isset($_SESSION[$onlyCondition]) or $this->session->{$onlyCondition})
+        {
+            $queryCondition = explode('WHERE', $conditionSql);
+            $queryCondition = isset($queryCondition[1]) ? $queryCondition[1] : '';
+            if($queryCondition)
+            {    
+                $queryCondition = explode('ORDER', $queryCondition);
+                $queryCondition = str_replace(array('t1.', 'o.'), '', $queryCondition[0]);
+            }
+        }
+        else
+        {
+            $queryCondition = explode('ORDER', $conditionSql);
+            $queryCondition = isset($queryCondition[0]) ? $queryCondition[0] : '';
+            $queryCondition = 'id in (' . preg_replace('/SELECT .* FROM/', 'SELECT ' . $this->config->report->queryConditions[$module] . ' FROM', $queryCondition) . ')';
         }
 
         if(strpos($groupBy, '_multi') !== false and isset($list))

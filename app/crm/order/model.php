@@ -112,7 +112,11 @@ class orderModel extends model
                 ->page($pager, 'o.id')
                 ->fetchAll('id');
 
-            if($needQueryCondition) $this->session->set('orderQueryCondition', $this->dao->get());
+            if($needQueryCondition)
+            {
+                $this->session->set('orderOnlyCondition', false);
+                $this->session->set('orderQueryCondition', $this->dao->get());
+            }
 
             $datingList = $this->dao->select('objectID, MIN(date) AS date')->from(TABLE_DATING)
                 ->where('status')->eq('wait')
@@ -154,7 +158,11 @@ class orderModel extends model
                 ->page($pager)
                 ->fetchAll('id');
 
-            if($needQueryCondition) $this->session->set('orderQueryCondition', $this->dao->get());
+            if($needQueryCondition)
+            {
+                $this->session->set('orderOnlyCondition', false);
+                $this->session->set('orderQueryCondition', $this->dao->get());
+            }
         }
 
         $products = $this->loadModel('product')->getPairs();

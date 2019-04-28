@@ -55,9 +55,6 @@ class contract extends control
 
         $contracts = $this->contract->getList(0, $mode, '', $orderBy, $pager);
 
-        /* Set preAndNext condition. */
-        $this->session->set('contractQueryCondition', $this->dao->get());
-
         /* Save session for return link. */
         $this->session->set('contractList', $this->app->getURI(true));
 

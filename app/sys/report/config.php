@@ -100,3 +100,7 @@ $config->report->dailyreminder->todo     = true;
 $config->report->dailyreminder->order    = true;
 $config->report->dailyreminder->customer = true;
 $config->report->dailyreminder->task     = true;
+
+$config->report->queryConditions['order']    = 'o.id';
+$config->report->queryConditions['contract'] = 't1.id';
+$config->report->queryConditions['customer'] = 't1.id';

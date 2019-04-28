@@ -121,6 +121,7 @@ class customerModel extends model
                 ->page($pager, 't1.id')
                 ->fetchAll('id');
 
+            $this->session->set('customerOnlyCondition', false);
             $this->session->set('customerQueryCondition', $this->dao->get());
 
             $datingList = $this->dao->select('objectID, MIN(date) AS date')->from(TABLE_DATING)
@@ -160,6 +161,7 @@ class customerModel extends model
                 ->page($pager)
                 ->fetchAll('id');
 
+            $this->session->set('customerOnlyCondition', true);
             $this->session->set('customerQueryCondition', $this->dao->get());
         }
 
