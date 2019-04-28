@@ -446,7 +446,7 @@ class entry extends control
      */
     public function blocks($entryID, $index = 0)
     {
-        $entry  = $this->entry->getByCode($entryID);
+        $entry = $this->entry->getByCode($entryID);
         if($entry->buildin)
         {
             $this->get->set('mode', 'getblocklist');

@@ -32,6 +32,7 @@ class block extends control
         $allEntries[''] = '';
         foreach($entries as $id => $entry)
         {
+            if($entry->code == 'doc') continue;
             if(!commonModel::hasAppPriv($entry->code)) continue;
             $allEntries[$entry->code] = $entry->name;
         }
