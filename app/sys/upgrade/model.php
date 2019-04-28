@@ -169,6 +169,7 @@ class upgradeModel extends model
                 $this->execSQL($this->getUpgradeFile('5.1'));
                 $this->processTeam();
                 $this->processContractHandlers();
+                $this->processCustomerNextdate();
 
             default: if(!$this->isError()) $this->loadModel('setting')->updateVersion($this->config->version);
         }
@@ -1699,6 +1700,28 @@ class upgradeModel extends model
 
                 $this->dao->insert(TABLE_TEAM)->data($member)->autoCheck()->exec();
             }
+        }
+
+        return !dao::isError();
+    }
+
+    /**
+     * Process customer's nextdate.
+     * 
+     * @access public
+     * @return bool
+     */
+    public function processCustomerNextdate()
+    {
+        $customerMindateList = $this->dao->select('objectID, MIN(date) AS date')->from(TABLE_DATING)
+            ->where('status')->eq('wait')
+            ->andWhere('objectType')->eq('customer')
+            ->groupBy('objectID')
+            ->fetchPairs();
+
+        foreach($customerMindateList as $customerID => $nextDate)
+        {
+            $this->dao->update(TABLE_CUSTOMER)->set('nextDate')->eq($nextDate)->where('id')->eq($customerID)->exec();
         }
 
         return !dao::isError();
