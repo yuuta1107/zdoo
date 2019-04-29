@@ -69,8 +69,6 @@ class install extends control
         $this->view->dataRootInfo      = $this->install->getDataRoot();
         $this->view->dataRootResult    = $this->install->checkDataRoot();
         $this->view->iniInfo           = $this->install->getIniInfo();
-        $this->view->sessionRoot       = session_save_path();
-        $this->view->sessionRootResult = $this->install->checkSessionRoot();
         $this->view->tmpRootInfo       = $this->install->getTmpRoot();
         $this->view->tmpFailPaths      = $this->install->checkTmpRoot();
 
@@ -81,6 +79,16 @@ class install extends control
         {
             $this->view->tmpRootResult  = 'ok';
             $this->view->tmpRootInfo['writable'] = true;
+        }
+
+        $checkSession = ini_get('session.save_handler') == 'files';
+        $this->view->checkSession  = $checkSession;
+        $this->view->sessionResult = 'ok';
+        if($checkSession)
+        {
+            $this->view->sessionRoot       = preg_replace("/\d;/", '', session_save_path());
+            $this->view->sessionRootResult = $this->install->checkSessionRoot();
+
         }
 
         $this->display();

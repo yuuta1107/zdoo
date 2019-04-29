@@ -131,9 +131,19 @@ class installModel extends model
      */
     public function checkSessionRoot()
     {
-        return 'ok';
-        //$sessionRoot = session_save_path();
-        //return $result = is_writable($sessionRoot) ? 'ok' : 'fail';
+        $sessionRoot = preg_replace("/\d;/", '', session_save_path());
+        $result = (is_dir($sessionRoot) and is_writable($sessionRoot)) ? 'ok' : 'fail'; 
+        if($result == 'fail') return $result;
+
+        /* Test session path again. */
+        file_put_contents($sessionRoot . '/zdootest', 'zdoo');
+        $sessionContent = file_get_contents($sessionRoot . '/zdootest');
+        if($sessionContent == 'zdoo')
+        {
+            unlink($sessionRoot . '/zdootest');
+            return 'ok';
+        }
+        return 'fail';
     }
 
     /**
