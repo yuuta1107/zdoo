@@ -203,7 +203,7 @@ function updateWeekendAndHoliday()
                 for(var date in response.dates)
                 {
                     var label = response.dates[date];
-                    $(".cell-day .day[data-date='" + date + "'] .heading").find('.label-rest').remove();
+                    if($(".cell-day .day[data-date='" + date + "'] .heading").find('.label-rest').length) $(".cell-day .day[data-date='" + date + "'] .heading").find('.label-rest').remove();
                     $(".cell-day .day[data-date='" + date + "'] .heading").prepend("<div class='label-rest'>" + label + "</div>");
                 }
             }

@@ -77,12 +77,14 @@ js::set('wholeResult', $wholeResult);
               ?>
             </td>
           </tr>
+          <?php if($checkSession):?>
           <tr>
             <th><?php echo $lang->install->sessionRoot;?></th>
             <td><?php $sessionRootResult == 'ok' ? print($lang->install->writable) : print($lang->install->notWritable);?></td>
             <td class='<?php echo $sessionRootResult;?>'><?php echo $lang->install->$sessionRootResult;?></td>
             <td class='f-12px'><?php if($sessionRootResult == 'fail') printf($lang->install->sessionChmod, $sessionRoot, $sessionRoot);?></td>
           </tr>
+          <?php endif;?>
         </table>
         <?php if($pdoResult == 'fail' or $pdoMySQLResult == 'fail'):?>
         <div class='alert'><?php echo "<p class='small text-left'>" . '<strong>' . $lang->install->phpINI . '</strong><br />' . nl2br($this->install->getIniInfo()) . '</p>';?></div>
