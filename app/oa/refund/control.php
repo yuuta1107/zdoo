@@ -204,11 +204,11 @@ class refund extends control
         $this->app->loadClass('pager', $static = true);
         $pager = new pager($recTotal, $recPerPage, $pageID);
 
+        $users      = $this->loadModel('user')->getPairs('noclosed');
         $categories = $this->refund->getCategoryPairs();
 
         /* Build search form. */
         $this->loadModel('search');
-        $users = $this->loadModel('user')->getPairs('noclosed');
         $this->config->refund->search['actionURL'] = $this->createLink('refund', $mode, "date=&type=bysearch");
         $this->config->refund->search['params']['category']['values']       = array('' => '') + $categories;
         $this->config->refund->search['params']['createdBy']['values']      = $users;
@@ -245,8 +245,7 @@ class refund extends control
         $refunds = array();
         if($mode == 'personal') $refunds = $this->refund->getList($mode, $type, $currentDate, '', '', $this->app->user->account, $orderBy, $pager);
         if($mode == 'company')  $refunds = $this->refund->getList($mode, $type, $currentDate, '', '', '', $orderBy, $pager);
-        if($mode == 'todo' and empty($this->config->refund->refundBy)) $refunds = $this->refund->getList($mode, $type, $currentDate, '', 'pass', '', $orderBy, $pager);
-        if($mode == 'todo' and !empty($this->config->refund->refundBy) and $this->config->refund->refundBy == $this->app->user->account) $refunds = $this->refund->getList($mode, $type, $currentDate, '', 'pass', '', $orderBy, $pager);
+        if($mode == 'todo' and (empty($this->config->refund->refundBy) or $this->config->refund->refundBy == $this->app->user->account)) $refunds = $this->refund->getTodoList($type, $currentDate, $orderBy, $pager);
 
         /* Set return url. */
         $this->session->set('refundList', $this->app->getURI(true));
@@ -470,12 +469,15 @@ class refund extends control
 
     /**
      * Refund a reimbursement.
-     * 
-     * @param  int    $refundID 
+     *
+     * @param  string $type
+     * @param  mixed  $refundID     int | string
+     * @param  string $currency
+     * @param  float  $money
      * @access public
      * @return void
      */
-    public function reimburse($refundID)
+    public function reimburse($type = 'single', $refundID, $currency = '', $money = 0.00)
     {
         if($_POST)
         {
@@ -486,22 +488,33 @@ class refund extends control
             $actionID = $this->loadModel('action')->create('refund', $refundID, 'reimburse');
             $this->sendmail($refundID, $actionID);
 
-            $this->send(array('result' => 'success', 'refundID' => $refundID, 'trade' => $this->post->trade, 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
+            $this->send(array('result' => 'success', 'type' => $type, 'refundID' => $refundID, 'trade' => $this->post->trade, 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
         }
 
-        $this->view->title  = $this->lang->refund->common;
-        $this->view->refund = $this->refund->getByID($refundID);
+        if($type == 'single')
+        {
+            $refund   = $this->refund->getByID($refundID);
+            $currency = $refund->currency;
+            $money    = $refund->money;
+        }
+
+        $this->view->title    = $this->lang->refund->common;
+        $this->view->type     = $type;
+        $this->view->refundID = $refundID;
+        $this->view->currency = $currency;
+        $this->view->money    = $money;
         $this->display();
     }
 
     /**
      * Create trade of refund.
      * 
+     * @param  string $type
      * @param  int    $refundID 
      * @access public
      * @return void
      */
-    public function createTrade($refundID)
+    public function createTrade($type = 'single', $refundID)
     {
         if(!commonModel::hasPriv('refund', 'reimburse')) $this->deny('refund', 'reimburse');
 
@@ -509,23 +522,29 @@ class refund extends control
 
         if($_POST)
         {
-            $tradeID = $this->refund->createTrade($refundID);
+            $this->refund->createTrade($type, $refundID);
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
-            $extra = html::a($this->createLink('cash.trade', 'view', "tradeID=$tradeID"), $this->lang->trade->out . $tradeID);
-            $this->loadModel('action')->create('refund', $refundID, 'createTrade', '', $extra);
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
         }
 
         $this->view->title         = $this->lang->trade->common;
+        $this->view->type          = $type;
         $this->view->refundID      = $refundID;
-        $this->view->refund        = $this->refund->getById($refundID);
         $this->view->depositorList = array('') + $this->loadModel('depositor', 'cash')->getPairs($status = 'normal');
         $this->view->categoryList  = $this->refund->getCategoryPairs();
-        $this->view->orderList     = $this->loadModel('order', 'crm')->getPairs($customerID = 0);
-        $this->view->contractList  = $this->loadModel('contract', 'crm')->getList($customerID = 0);
+        $this->view->orderList     = $this->loadModel('order', 'crm')->getPairs();
+        $this->view->contractList  = $this->loadModel('contract', 'crm')->getList();
         $this->view->customerList  = $this->loadModel('customer')->getPairs('client');
         $this->view->deptList      = $this->loadModel('tree')->getOptionMenu('dept');
         $this->view->userList      = $this->loadModel('user')->getPairs('noclosed,nodeleted,noempty,noforbidden');
+
+        if($type == 'single') $this->view->refund = $this->refund->getById($refundID);
+        if($type == 'total')
+        {
+            $idList = json_decode(helper::safe64Decode($refundID));
+            $this->view->refundList = $this->refund->getListByIDList($idList);
+            $this->view->modalWidth = 1100;
+        }
 
         $this->display();
     }

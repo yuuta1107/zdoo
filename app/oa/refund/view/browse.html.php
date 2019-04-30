@@ -28,7 +28,9 @@
   <?php endif;?>
   <?php commonModel::printLink('refund', 'create', '', '<i class="icon-plus"></i> ' . $lang->refund->create, 'class="btn btn-primary"');?>
 </div>
-<?php if($mode != 'todo'):?>
+<?php if($mode == 'todo'):?>
+<?php include 'todo.html.php';?>
+<?php else:?>
 <div class='with-side'>
   <div class='side'>
     <div class='panel panel-sm'>
@@ -51,7 +53,6 @@
     </div>
   </div>
   <div class='main'>
-<?php endif;?>
     <div class='panel'>
       <table class='table table-hover table-striped tablesorter table-data table-fixed text-center' id='refundTable'>
         <thead>
@@ -68,14 +69,9 @@
             <th class='w-120px'><?php commonModel::printOrderLink('refundBy', $orderBy, $vars, $lang->refund->refundBy);?></th>
             <th class='w-100px'><?php commonModel::printOrderLink('refundDate', $orderBy, $vars, $lang->refund->refundDate);?></th>
             <?php if($mode == 'personal'):?>
-            <?php $class = $this->app->clientLang == 'en' ? 'w-180px' : 'w-130px';?>
-            <th class='<?php echo $class;?>'><?php echo $lang->actions;?></th>
-            <?php elseif($mode == 'todo'):?>
-            <?php $class = $this->app->clientLang == 'en' ? 'w-160px' : 'w-80px';?>
-            <th class='<?php echo $class;?>'><?php echo $lang->actions;?></th>
+            <th class='w-<?php echo $lang->refund->personalActionWidth;?>px'><?php echo $lang->actions;?></th>
             <?php else:?>
-            <?php $class = $this->app->clientLang == 'en' ? 'w-60px' : 'w-40px';?>
-            <th class='<?php echo $class;?>'><?php echo $lang->actions;?></th>
+            <th class='w-<?php echo $lang->refund->actionWidth;?>px'><?php echo $lang->actions;?></th>
             <?php endif;?>
           </tr>
         </thead>
@@ -139,7 +135,6 @@
         <?php $pager->show();?>
       </div>
     </div>
-<?php if($mode != 'todo'):?>
   </div>
 </div>
 <?php endif;?>

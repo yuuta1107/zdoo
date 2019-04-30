@@ -126,3 +126,6 @@ $lang->customer->mergeTip    = '將該客戶合併到選擇的客戶。';
 $lang->customer->action = new stdclass();
 $lang->customer->action->orderDating    = '$date, 由 <strong>$actor</strong> 創建訂單 <strong>$order</strong> 的下次聯繫：<strong>$extra</strong>。' . "\n";
 $lang->customer->action->contractDating = '$date, 由 <strong>$actor</strong> 創建合同 <strong>$contract</strong> 的下次聯繫：<strong>$extra</strong>。' . "\n";
+
+/* Width settings for different languages, in pixels. */
+$lang->customer->actionWidth = 200;

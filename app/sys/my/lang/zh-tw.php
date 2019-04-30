@@ -40,3 +40,9 @@ $lang->my->review->module = '模組';
 
 $lang->my->contact = new stdclass();
 $lang->my->contact->common = '聯繫人';
+
+/* Width settings for different languages, in pixels. */
+$lang->my->contractActionWidth = 240;
+$lang->my->orderActionWidth    = 210;
+$lang->my->projectActionWidth  = 160;
+$lang->my->taskActionWidth     = 240;

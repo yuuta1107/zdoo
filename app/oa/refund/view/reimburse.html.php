@@ -11,14 +11,14 @@
  */
 ?>
 <?php include '../../../sys/common/view/header.modal.html.php';?>
-<form method='post' id='ajaxForm' action='<?php echo inlink('reimburse', "refundID={$refund->id}")?>'>
+<form method='post' id='ajaxForm' action='<?php echo inlink('reimburse', "type={$type}&refundID={$refundID}&currency={$currency}&money={$money}")?>'>
   <table class='table table-form'>
     <tr>
       <th class='w-100px'><?php echo $lang->refund->reviewMoney;?></th>
       <td>
         <div class='input-group'>
-          <?php echo html::input('money', $refund->money, "class='form-control' readonly");?>
-          <span class='input-group-addon'><?php echo zget($lang->currencyList, $refund->currency, $refund->currency);?></span>
+          <?php echo html::input('money', $money, "class='form-control' readonly");?>
+          <span class='input-group-addon'><?php echo zget($lang->currencyList, $currency, $currency);?></span>
         </div>
       </td>
       <td class='w-40px'></td>

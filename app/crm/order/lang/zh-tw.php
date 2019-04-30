@@ -80,3 +80,6 @@ $lang->order->infoAmount    = '計劃金額：%s，成交金額：%s。';
 $lang->order->infoContacted = '最後聯繫：%s。';
 $lang->order->infoNextDate  = '下次聯繫：%s。';
 $lang->order->deny          = '您沒有創建%s的權限。';
+
+/* Width settings for different languages, in pixels. */
+$lang->order->actionWidth = 220;

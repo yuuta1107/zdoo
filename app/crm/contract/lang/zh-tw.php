@@ -131,3 +131,6 @@ $lang->contract->error->wrong = '<strong>貢獻度</strong>應該是數字';
 
 $lang->plan = new stdclass();
 $lang->plan->amount = $lang->contract->thisAmount;
+
+/* Width settings for different languages, in pixels. */
+$lang->contract->actionWidth   = 240;

@@ -154,3 +154,7 @@ $lang->task->notAllowed  = '不允許這樣操作。';
 $lang->task->skipClose   = '任務：%s 不是“已完成”或“已取消”狀態，不能關閉！';
 
 $lang->task->groupinfo = "<div class='text-muted'>總計 <strong>%s</strong> 項，未開始 <strong>%s</strong>，進行中 <strong>%s</strong>，已完成 <strong>%s</strong>，已關閉 <strong>%s</strong></div>";
+
+/* Width settings for different languages, in pixels. */
+$lang->task->actionWidth       = 240;
+$lang->task->dropdownMenuWidth = 80;

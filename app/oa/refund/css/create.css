@@ -2,6 +2,7 @@ i.btn {font-family: ZenIcon;}
 #detailBox .row {margin-top: 5px; margin-bottom: 5px;}
 #detailBox .form-group .input-group {margin-bottom: 2px;}
 #detailBox .table-detail td, #detailBox .table-detail th {padding-left: 5px;}
+#detailBox .table-detail tr td:nth-child(1) {padding-left: 0px;}
 #category_chosen + .input-group-addon {padding-right: 30px;}
 
 #customer_chosen .chosen-results > li.no-results {cursor: pointer;}
