@@ -54,7 +54,8 @@ $(document).ready(function()
 
     $('.batchPass').on('click', function()
     {
-        $('#ajaxForm').submit();
+        $.setAjaxForm('#batchReviewForm');
+        $('#batchReviewForm').submit();
     });
 
     /* expand active tree. */
