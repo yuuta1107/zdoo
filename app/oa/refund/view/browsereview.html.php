@@ -52,8 +52,7 @@
             <th class='w-100px'><?php commonModel::printOrderLink('createdBy', $orderBy, $vars, $lang->refund->createdBy);?></th>
             <th class='w-80px'><?php commonModel::printOrderLink('createdDate', $orderBy, $vars, $lang->refund->createdDate);?></th>
             <th class='w-240px'><?php echo $lang->refund->desc;?></th>
-            <?php $class = $this->app->clientLang == 'en' ? 'w-100px' : 'w-80px';?>
-            <th class='<?php echo $class;?>'><?php echo $lang->actions;?></th>
+            <th class='w-<?php echo $lang->refund->reviewActionWidth;?>px'><?php echo $lang->actions;?></th>
           </tr>
         </thead>
         <?php foreach($refunds as $refund):?>

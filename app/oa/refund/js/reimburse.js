@@ -15,7 +15,7 @@ $(document).ready(function()
                 if(response.result == 'fail') return bootbox.alert(response.message);
                 if(response.result == 'success' && response.trade == 'yes')
                 {
-                    $('.modal').load(createLink('refund', 'createTrade', 'refundID=' + response.refundID), '', function()
+                    $('.modal').load(createLink('refund', 'createTrade', 'type=' + response.type + '&refundID=' + response.refundID), '', function()
                     {
                         $('.modal').modal('ajustPosition', 'fit');
                     });

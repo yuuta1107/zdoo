@@ -97,3 +97,9 @@ $lang->refund->settings->setReviewer  = "Reviewer|refund|setreviewer";
 $lang->refund->settings->setCategory  = "Category|refund|setcategory";
 $lang->refund->settings->setDepositor = "Account|refund|setdepositor";
 $lang->refund->settings->setRefundBy  = "ReimburseBy|refund|setrefundby";
+
+/* Width settings for different languages, in pixels. */
+$lang->refund->ActionWidth         = 60;
+$lang->refund->todoActionWidth     = 160;
+$lang->refund->personalActionWidth = 180;
+$lang->refund->reviewActionWidth   = 100;

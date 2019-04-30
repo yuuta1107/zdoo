@@ -72,15 +72,16 @@ class refundModel extends model
     }
 
     /**
-     * Get refund list. 
-     * 
-     * @param  string $mode 
+     * Get refund list.
+     *
+     * @param  string $mode
+     * @param  string $type
      * @param  string $date
-     * @param  string $deptID 
-     * @param  string $status 
-     * @param  string $createdBy 
-     * @param  string $orderBy 
-     * @param  object $pager 
+     * @param  string $deptID
+     * @param  string $status
+     * @param  string $createdBy
+     * @param  string $orderBy
+     * @param  object $pager
      * @access public
      * @return array
      */
@@ -114,6 +115,55 @@ class refundModel extends model
         foreach($refunds as $key => $refund) $refund->detail = isset($details[$key]) ? $details[$key] : array();
 
         return $this->processStatus($refunds, $users);
+    }
+
+    /**
+     * Get refund list by id list.
+     *
+     * @param  array $idList
+     * @access public
+     * @return array
+     */
+    public function getListByIDList($idList)
+    {
+        if(!$idList) return array();
+
+        return $this->dao->select('*')->from(TABLE_REFUND)->where('id')->in($idList)->fetchAll('id');
+    }
+
+    /**
+     * Get refund list wait to reimburse.
+     *
+     * @param  string $type
+     * @param  string $date
+     * @param  string $orderBy
+     * @param  object $pager
+     * @access public
+     * @return array
+     */
+    public function getTodoList($type = '', $date = '', $orderBy = 'id_desc', $pager = null)
+    {
+        $userDepts = $this->dao->select('account', 'dept')->from(TABLE_USER)->fetchPairs();
+        $refunds   = $this->getList('todo', $type, $date, '', 'pass', '', $orderBy, $pager);
+        foreach($refunds as $key => $refund)
+        {
+            $account = $refund->payee ? $refund->payee : $refund->createdBy;
+
+            if(isset($refunds[$account][$refund->currency]))
+            {
+                $refunds[$account][$refund->currency]['total'] += $refund->money;
+            }
+            else
+            {
+                $refunds[$account][$refund->currency]['total'] = $refund->money;
+            }
+            $refunds[$account][$refund->currency]['dept']     = zget($userDepts, $account, 0);
+            $refunds[$account][$refund->currency]['idList'][] = $refund->id;
+            $refunds[$account][$refund->currency]['detail'][] = $refund;
+
+            unset($refunds[$key]);
+        }
+        return $refunds;
     }
 
     /**
@@ -529,62 +579,71 @@ class refundModel extends model
 
     /**
      * Create a trade for a reimbursement.
-     * 
-     * @param  int    $refundID 
+     *
+     * @param  string $type
+     * @param  int    $refundID
      * @access public
-     * @return void
+     * @return bool
      */
-    public function createTrade($refundID)
+    public function createTrade($type = 'single', $refundID)
     {
-        $refund = $this->getByID($refundID);
+        $refundIDList = array();
+        if($type == 'single') $refundIDList = array($refundID);
+        if($type == 'total')  $refundIDList = json_decode(helper::safe64Decode($refundID));
 
-        $trade = new stdclass();
-        $trade->type        = 'out';
-        $trade->depositor   = $this->post->depositor;
-        $trade->trader      = $refund->customer;
-        $trade->order       = $refund->order;
-        $trade->contract    = $refund->contract;
-        $trade->project     = $refund->project;
-        $trade->money       = $refund->money;
-        $trade->currency    = $refund->currency;
-        $trade->date        = date('Y-m-d');
-        $trade->handlers    = $this->post->handlers ? trim(implode(',', $this->post->handlers), ',') : '';
-        $trade->category    = $this->post->category;
-        $trade->dept        = $this->post->dept;
-        $trade->desc        = $this->post->desc;
-        $trade->createdBy   = $this->app->user->account;
-        $trade->createdDate = helper::now();
-
-        $this->dao->insert(TABLE_TRADE)->data($trade)->batchCheck($this->config->refund->require->createTrade, 'notempty')->autoCheck()->exec();
-        if(dao::isError()) return false;
-
-        $tradeID = $this->dao->lastInsertID();
-        $extra   = html::a(helper::createLink('oa.refund', 'view', "refundID=$refundID"), $refund->name);
-        $this->loadModel('action')->create('trade', $tradeID, 'reimburse', '', $extra);
-
-        if(!empty($refund->detail))
+        foreach($refundIDList as $refundID)
         {
-            foreach($refund->detail as $detail)
+            $refund = $this->getByID($refundID);
+
+            $trade = new stdclass();
+            $trade->type        = 'out';
+            $trade->depositor   = $this->post->depositor[$refundID];
+            $trade->trader      = $refund->customer;
+            $trade->order       = $refund->order;
+            $trade->contract    = $refund->contract;
+            $trade->project     = $refund->project;
+            $trade->money       = $refund->money;
+            $trade->currency    = $refund->currency;
+            $trade->date        = date('Y-m-d');
+            $trade->handlers    = $this->post->handlers[$refundID] ? trim(implode(',', $this->post->handlers[$refundID]), ',') : '';
+            $trade->category    = $this->post->category[$refundID];
+            $trade->dept        = $this->post->dept[$refundID];
+            $trade->desc        = $this->post->desc[$refundID];
+            $trade->createdBy   = $this->app->user->account;
+            $trade->createdDate = helper::now();
+
+            $this->dao->insert(TABLE_TRADE)->data($trade)->batchCheck($this->config->refund->require->createTrade, 'notempty')->autoCheck()->exec();
+            if(dao::isError()) return false;
+
+            $tradeID = $this->dao->lastInsertID();
+            $extra   = html::a(helper::createLink('oa.refund', 'view', "refundID=$refundID"), $refund->name);
+            $this->loadModel('action')->create('trade', $tradeID, 'reimburse', '', $extra);
+            $extra = html::a(helper::createLink('cash.trade', 'view', "tradeID=$tradeID"), $this->lang->trade->out . $tradeID);
+            $this->action->create('refund', $refundID, 'createTrade', '', $extra);
+
+            if(!empty($refund->detail))
             {
-                if($detail->status != 'finish') continue;
-                if($detail->money <= 0) continue;
+                foreach($refund->detail as $detail)
+                {
+                    if($detail->status != 'finish') continue;
+                    if($detail->money <= 0) continue;
 
-                $tradeDetail = new stdclass();
-                $tradeDetail->type        = 'out';
-                $tradeDetail->parent      = $tradeID;
-                $tradeDetail->money       = $detail->money;
-                $tradeDetail->date        = $detail->date;
-                $tradeDetail->handlers    = $detail->related;
-                $tradeDetail->category    = $detail->category;
-                $tradeDetail->desc        = $detail->desc;
-                $tradeDetail->createdBy   = $this->app->user->account;
-                $tradeDetail->createdDate = helper::now();
+                    $tradeDetail = new stdclass();
+                    $tradeDetail->type        = 'out';
+                    $tradeDetail->parent      = $tradeID;
+                    $tradeDetail->money       = $detail->money;
+                    $tradeDetail->date        = $detail->date;
+                    $tradeDetail->handlers    = $detail->related;
+                    $tradeDetail->category    = $detail->category;
+                    $tradeDetail->desc        = $detail->desc;
+                    $tradeDetail->createdBy   = $this->app->user->account;
+                    $tradeDetail->createdDate = helper::now();
 
-                $this->dao->insert(TABLE_TRADE)->data($tradeDetail)->exec();
+                    $this->dao->insert(TABLE_TRADE)->data($tradeDetail)->exec();
+                }
             }
         }
-
-        return $tradeID;
+        return !dao::isError();
     }
 
     /**

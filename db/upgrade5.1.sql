@@ -7,3 +7,5 @@ ALTER TABLE `oa_leave` CHANGE `hours` `hours` float unsigned NOT NULL;
 ALTER TABLE `oa_lieu` CHANGE `hours` `hours` float unsigned NOT NULL;
 ALTER TABLE `oa_refund` CHANGE `name` `name` char(150) NOT NULL AFTER `dept`;
 ALTER TABLE `sys_team` CHANGE `hours` `hours` float unsigned NOT NULL;
+
+UPDATE `oa_refund` SET `payee` = `createdBy` WHERE `payee` = '';

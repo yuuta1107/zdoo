@@ -19,10 +19,10 @@
       <strong><?php echo $lang->refund->edit;?></strong>
     </div>
     <div class='panel-body'>
-      <table class='table table-form w-700px'>
+      <table class='table table-form w-1000px'>
         <tr>
           <th class='w-100px'><?php echo $lang->refund->name?></th>
-          <td class='w-450px'><?php echo html::input('name', $refund->name, "class='form-control'")?></td>
+          <td class='w-400px'><?php echo html::input('name', $refund->name, "class='form-control'")?></td>
           <td></td>
         </tr>
         <tr>
@@ -116,7 +116,7 @@
                 <td class='w-90px'><?php echo html::input("invoiceList[$key]", $d->invoice, "class='form-control' placeholder='{$lang->refund->invoice}'")?></td>
                 <td class='w-200px'><?php echo html::select("relatedList[$key][]", $users, $d->related, "class='form-control chosen' multiple data-placeholder='{$lang->refund->related}'")?></td>
                 <td><?php echo html::textarea("descList[$key]", $d->desc, "class='form-control' style='height:32px;' placeholder='{$lang->refund->desc}'")?></td>
-                <td class='w-70px'><i class='btn btn-mini icon-plus plus'></i>&nbsp;&nbsp;<i class='btn btn-mini icon-remove minus'></i></td>
+                <td class='w-70px text-right'><i class='btn btn-mini icon-plus plus'></i>&nbsp;&nbsp;<i class='btn btn-mini icon-remove minus'></i></td>
               </tr>
               <?php $key++;?>
               <?php endforeach;?>
@@ -130,7 +130,7 @@
                 <td class='w-90px'><?php echo html::input("invoiceList[$key]", '', "class='form-control' placeholder='{$lang->refund->invoice}'")?></td>
                 <td class='w-200px'><?php echo html::select("relatedList[$key][]", $users, '', "class='form-control chosen' multiple data-placeholder='{$lang->refund->related}'")?></td>
                 <td><?php echo html::textarea("descList[$key]", '', "class='form-control' style='height:32px;' placeholder='{$lang->refund->desc}'")?></td>
-                <td class='w-70px'><i class='btn btn-mini icon-plus plus'></i>&nbsp;&nbsp;<i class='btn btn-mini icon-remove minus'></i></td>
+                <td class='w-70px text-right'><i class='btn btn-mini icon-plus plus'></i>&nbsp;&nbsp;<i class='btn btn-mini icon-remove minus'></i></td>
               </tr>
               <?php $key++;?>
               <?php endif;?>
@@ -162,7 +162,7 @@
   <td class='w-90px'><?php echo html::input('invoiceList[key]', '', "class='form-control' placeholder='{$lang->refund->invoice}'")?></td>
   <td class='w-200px'><?php echo html::select('relatedList[key][]', $users, '', "class='form-control chosen' multiple data-placeholder='{$lang->refund->related}'")?></td>
   <td><?php echo html::textarea('descList[key]', '', "class='form-control' style='height:32px;' placeholder='{$lang->refund->desc}'")?></td>
-  <td class='w-70px'><i class='btn btn-mini icon-plus plus'></i>&nbsp;&nbsp;<i class='btn btn-mini icon-remove minus'></i></td>
+  <td class='w-70px text-right'><i class='btn btn-mini icon-plus plus'></i>&nbsp;&nbsp;<i class='btn btn-mini icon-remove minus'></i></td>
 </tr>
 </script>
 <?php js::set('key', $key)?>

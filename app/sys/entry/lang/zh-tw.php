@@ -119,3 +119,6 @@ $lang->entry->errmsg['SESSION_VERIFY_FAILED'] = 'session驗證失敗';
 $lang->entry->errmsg['IP_DENIED']             = '該IP被限制訪問';
 $lang->entry->errmsg['ACCOUNT_UNBOUND']       = '未綁定用戶';
 $lang->entry->errmsg['EMPTY_ENTRY']           = '應用不存在';
+
+/* Width settings for different languages, in pixels. */
+$lang->entry->actionWidth = 260;

@@ -100,3 +100,11 @@ $lang->todo->batchedittips = '未選擇編輯項目';
 $lang->todo->action = new stdclass();
 $lang->todo->action->finished  = array('main' => '$date, 由 <strong>$actor</strong>完成');
 $lang->todo->action->marked    = array('main' => '$date, 由 <strong>$actor</strong> 標記為<strong>$extra</strong>。', 'extra' => 'statusList');
+
+/* Width settings for different languages, in pixels. */
+$lang->todo->mainPaddingRight  = 300;
+$lang->todo->sideWidth         = 280;
+$lang->todo->sideHandleRight   = 320;
+$lang->todo->trashRight        = 350;
+$lang->todo->actionWidth       = 220;
+$lang->todo->importActionWidth = 200;

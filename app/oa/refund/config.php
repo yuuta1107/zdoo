@@ -1,8 +1,8 @@
 <?php
 if(!isset($config->refund)) $config->refund = new stdclass();
 $config->refund->require = new stdclass();
-$config->refund->require->create      = 'name,dept,money,category';
-$config->refund->require->edit        = 'name,dept,money,category';
+$config->refund->require->create      = 'name,dept,money,category,payee';
+$config->refund->require->edit        = 'name,dept,money,category,payee';
 $config->refund->require->createTrade = 'depositor,category,dept,handlers';
 
 $config->refund->list = new stdclass();

@@ -97,3 +97,9 @@ $lang->refund->settings->setReviewer  = "審批人|refund|setreviewer";
 $lang->refund->settings->setCategory  = "報銷科目|refund|setcategory";
 $lang->refund->settings->setDepositor = "報銷賬戶|refund|setdepositor";
 $lang->refund->settings->setRefundBy  = "由誰報銷|refund|setrefundby";
+
+/* Width settings for different languages, in pixels. */
+$lang->refund->ActionWidth         = 40;
+$lang->refund->todoActionWidth     = 80;
+$lang->refund->personalActionWidth = 130;
+$lang->refund->reviewActionWidth   = 80;
