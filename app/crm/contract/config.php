@@ -14,7 +14,7 @@ $config->contract->memberCount = 5;
 $config->contract->require = new stdclass();
 $config->contract->require->create  = 'customer, name';
 $config->contract->require->edit    = 'customer, name';
-$config->contract->require->receive = 'amount, depositor';
+$config->contract->require->receive = 'amount, depositor, returnedDate';
 
 $config->contract->editor = new stdclass();
 $config->contract->editor->create       = array('id' => 'items',   'tools' => 'simple');

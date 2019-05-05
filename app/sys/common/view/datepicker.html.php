@@ -56,10 +56,13 @@ $(function()
 {
     $.fn.fixedDate = function()
     {
+        var bodyHeight  = $(document.body).height();
+        var panelHeight = 226;  // The height of date picker panel.
         return $(this).each(function()
         {
             var $this = $(this);
-            if($this.hasClass('date-picker-up') || (!$this.hasClass('date-picker-down') && $this.offset().top + 200 > $(document.body).height()))
+            var top   = $this.offset().top;
+            if($this.hasClass('date-picker-up') || (!$this.hasClass('date-picker-down') && top > panelHeight && top + 200 > bodyHeight))
             {
                 $this.attr('data-picker-position', 'top-right');
             }

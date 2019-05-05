@@ -641,6 +641,7 @@ class contractModel extends model
             ->add('contract', $contractID)
             ->setDefault('returnedBy', $this->app->user->account)
             ->setDefault('returnedDate', $now)
+            ->setIF($this->post->returnedDate == '0000-00-00', 'returnedDate', $now)
             ->remove($this->config->contract->receiveNoneedFields)
             ->get();
 
@@ -727,6 +728,7 @@ class contractModel extends model
             ->add('contract', $contract->id)
             ->setDefault('returnedBy', $this->app->user->account)
             ->setDefault('returnedDate', $now)
+            ->setIF($this->post->returnedDate == '0000-00-00', 'returnedDate', $now)
             ->remove('finish,handlers')
             ->get();
 
