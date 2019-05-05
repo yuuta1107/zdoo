@@ -170,6 +170,7 @@ class upgradeModel extends model
                 $this->processTeam();
                 $this->processContractHandlers();
                 $this->processCustomerNextdate();
+                $this->processTradeNoCurrency();
 
             default: if(!$this->isError()) $this->loadModel('setting')->updateVersion($this->config->version);
         }
@@ -1722,6 +1723,25 @@ class upgradeModel extends model
         foreach($customerMindateList as $customerID => $nextDate)
         {
             $this->dao->update(TABLE_CUSTOMER)->set('nextDate')->eq($nextDate)->where('id')->eq($customerID)->exec();
+        }
+
+        return !dao::isError();
+    }
+
+    /**
+     * Process the trades without currency.
+     * 
+     * @access public
+     * @return bool
+     */
+    public function processTradesNoCurrency()
+    {
+        $tradeDepositorPairs    = $this->dao->select('id,depositor')->from(TABLE_TRADE)->where('currency')->eq('')->andWhere('parent')->eq(0)->fetchPairs();
+        $depositorCurrencyPairs = $this->dao->select('id,currency')->from(TABLE_DEPOSITOR)->fetchPairs();
+
+        foreach($tradeDepositorPairs as $tradeID => $tradeDepositor)
+        {
+            $this->dao->update(TABLE_TRADE)->set('currency')->eq($depositorCurrencyPairs[$tradeDepositor])->where('id')->eq($tradeID)->exec();
         }
 
         return !dao::isError();
