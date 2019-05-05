@@ -62,7 +62,7 @@ js::set('from', 'admin');
               <td><?php echo $user->realname;?></td>
               <td><?php echo $user->account;?></td>
               <td><?php $gender = $user->gender; echo $lang->user->genderList->$gender;?></td>
-              <td><?php echo $depts[$user->dept];?></td>
+              <td><?php echo zget($depts, $user->dept, '');?></td>
               <td class='visible-lg'><?php echo formatTime($user->join, DT_DATE1);?></td>
               <td class='visible-lg'><?php echo $user->visits;?></td>
               <td><?php echo formatTime($user->last, DT_DATETIME1);?></td>

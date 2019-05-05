@@ -143,11 +143,11 @@ class refundModel extends model
      */
     public function getTodoList($type = '', $date = '', $orderBy = 'id_desc', $pager = null)
     {
-        $userDepts = $this->dao->select('account', 'dept')->from(TABLE_USER)->fetchPairs();
+        $userDepts = $this->dao->select('account, dept')->from(TABLE_USER)->fetchPairs();
         $refunds   = $this->getList('todo', $type, $date, '', 'pass', '', $orderBy, $pager);
         foreach($refunds as $key => $refund)
         {
-            $account = $refund->payee ? $refund->payee : $refund->createdBy;
+            $account = $refund->payee;
 
             if(isset($refunds[$account][$refund->currency]))
             {
@@ -555,26 +555,38 @@ class refundModel extends model
 
     /**
      * Refund a reimbursement.
-     * 
-     * @param  int    $refundID 
+     *
+     * @param  string $type
+     * @param  int    $refundID
      * @access public
-     * @return void
+     * @return bool
      */
-    public function reimburse($refundID)
+    public function reimburse($type, $refundID)
     {
-        $refund = $this->getByID($refundID);
+        $refundIDList = array();
+        if($type == 'single') $refundIDList = array($refundID);
+        if($type == 'total')  $refundIDList = json_decode(helper::safe64Decode($refundID));
 
-        $data = new stdclass();
-        $data->status     = 'finish';
-        $data->refundBy   = $this->app->user->account;
-        $data->refundDate = helper::now(); 
-
-        $this->dao->update(TABLE_REFUND)->data($data)->where('id')->eq($refundID)->exec();
-        foreach($refund->detail as $detail)
+        foreach($refundIDList as $refundID)
         {
-            if($detail->status != 'reject') $this->dao->update(TABLE_REFUND)->data($data)->where('id')->eq($detail->id)->exec();
+            $refund = $this->getByID($refundID);
+
+            $data = new stdclass();
+            $data->status     = 'finish';
+            $data->refundBy   = $this->app->user->account;
+            $data->refundDate = helper::now(); 
+
+            $this->dao->update(TABLE_REFUND)->data($data)->where('id')->eq($refundID)->exec();
+
+            foreach($refund->detail as $detail)
+            {
+                if($detail->status != 'reject') $this->dao->update(TABLE_REFUND)->data($data)->where('id')->eq($detail->id)->exec();
+            }
         }
-        return !dao::isError();
+
+        if(dao::isError()) return false;
+
+        return $refundIDList;
     }
 
     /**
