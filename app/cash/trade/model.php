@@ -652,6 +652,7 @@ class tradeModel extends model
             ->setIf(!$this->post->objectType or !in_array('order', $this->post->objectType), 'order', 0)
             ->setIf(!$this->post->objectType or !in_array('contract', $this->post->objectType), 'contract', 0)
             ->setIF($this->post->currency && $this->post->currency == $this->config->setting->mainCurrency, 'exchangeRate', 1)
+            ->setIF($this->post->date == '0000-00-00', 'date', $now)
             ->remove('objectType,customer,productCategory,allCustomer,currencyLabel')
             ->striptags('desc')
             ->get();
@@ -907,6 +908,7 @@ class tradeModel extends model
             ->setIf(!$this->post->objectType or !in_array('order', $this->post->objectType), 'order', 0)
             ->setIf(!$this->post->objectType or !in_array('contract', $this->post->objectType), 'contract', 0)
             ->setIF($this->post->currency && $this->post->currency == $this->config->setting->mainCurrency, 'exchangeRate', 1)
+            ->setIF($this->post->date == '0000-00-00', 'date', $now)
             ->remove('objectType,customer,allCustomer,currencyLabel')
             ->striptags('desc')
             ->get();
