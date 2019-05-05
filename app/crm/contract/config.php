@@ -29,7 +29,7 @@ $config->contract->editor->view         = array('id' => 'remark,lastComment', 't
 
 $config->contract->codeFormat = array('Y', 'm', 'd', 'input');
 
-$config->contract->receiveNoneedFields = 'finish,handlers,createTrade,depositor,category,dept,product,continue';
+$config->contract->receiveNoneedFields = 'finish,handlers,createTrade,depositor,category,dept,product,continue,currency,currencyLabel,exchangeRate';
 
 global $lang, $app;
 $config->contract->search['module'] = 'contract';

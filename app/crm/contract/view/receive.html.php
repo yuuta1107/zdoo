@@ -14,6 +14,7 @@
 <?php include '../../../sys/common/view/kindeditor.html.php';?>
 <?php include '../../../sys/common/view/chosen.html.php';?>
 <?php include '../../common/view/datepicker.html.php';?>
+<?php js::set('mainCurrency', $config->setting->mainCurrency);?>
 <form method='post' id='receiveForm' class='form-table' action='<?php echo $this->createLink('contract', 'receive', "contractID={$contract->id}")?>'>
   <table class='table table-form table-condensed'>
     <tr>
@@ -44,6 +45,18 @@
         <?php unset($depositorList['']);?>
         <?php if(!$depositorList) commonModel::printLink('cash.depositor', 'browse', '', $lang->depositor->create, "class='btn createDepositor'");?>
       </td>
+    </tr>
+    <tr class='tradeTR currencyTR'>
+      <th><?php echo $lang->trade->currency;?></th>
+      <td>
+        <div class='input-group'>
+          <?php echo html::select('currencyLabel', $lang->currencyList, $config->setting->mainCurrency, "class='form-control' readonly");?>
+          <?php echo html::hidden('currency');?>
+          <span class='input-group-addon fix-border exchangeRate'><?php echo $lang->trade->exchangeRate;?></span>
+          <?php echo html::input('exchangeRate', '', "class='form-control exchangeRate'");?> 
+        </div>
+      </td>
+      <td></td>
     </tr>
     <tr class='tradeTR'>
       <th><?php echo $lang->trade->category;?></th>
