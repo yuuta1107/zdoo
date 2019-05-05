@@ -215,7 +215,7 @@
         <tr>
           <td><?php echo formatTime($return->returnedDate, DT_DATE1);?></td>
           <td><?php echo zget($users, $return->returnedBy, $return->returnedBy);?></td>
-          <td><?php echo zget($currencySign, $contract->currency, '') . formatMoney($return->amount);?></td>
+          <td><?php echo zget($currencySign, $return->currency, '') . formatMoney($return->amount);?></td>
           <td class='text-center'>
             <?php commonModel::printLink('contract', 'editReturn', "id=$return->id", "<i class='icon-pencil'></i>", "data-toggle='modal' title='{$lang->edit}'");?>
             <?php commonModel::printLink('contract', 'deleteReturn', "id=$return->id", "<i class='icon-remove'></i>", "class='deleter' title='{$lang->delete}'");?>

@@ -70,5 +70,21 @@ $(document).ready(function()
         }
     });
 
+    $('#depositor').change(function()
+    {
+        $.get(createLink('cash.trade', 'ajaxGetCurrency', 'depositorID=' + $(this).val()), function(currency)
+        {
+            if(!currency) return false;
+
+            if(currency != v.mainCurrency) $('.currencyTR').show();
+            if(currency == v.mainCurrency) $('.currencyTR').hide();
+
+            $('#currency').val(currency);
+            $('#currencyLabel').val(currency);
+            $('.exchangeRate').toggle(currency != v.mainCurrency);
+        });
+    });
+
     $('#product').change();
+    $('.currencyTR').hide();
 })

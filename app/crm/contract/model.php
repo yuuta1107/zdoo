@@ -198,12 +198,13 @@ class contractModel extends model
         if(empty($tradeIdList)) return $returnList;
 
         $tradeDepositorList = array();
-        $tradeList     = $this->dao->select('id,depositor')->from(TABLE_TRADE)->where('id')->in($tradeIdList)->fetchPairs();
+        $tradeList     = $this->dao->select('id,depositor,currency')->from(TABLE_TRADE)->where('id')->in($tradeIdList)->fetchAll('id');
         $depositorList = $this->loadModel('depositor', 'cash')->getPairs();
-        foreach($tradeList as $trade => $depositor) $tradeDepositorList[$trade] = zget($depositorList, $depositor);
+        foreach($tradeList as $trade) $tradeDepositorList[$trade->id] = zget($depositorList, $trade->depositor);
         foreach($returnList as $return)
         {
             $return->depositor = zget($tradeDepositorList, $return->trade, '');
+            $return->currency  = $tradeList[$return->trade]->currency;
         }
         return $returnList;
     }
@@ -643,10 +644,14 @@ class contractModel extends model
             ->remove($this->config->contract->receiveNoneedFields)
             ->get();
 
-        if(!$this->post->continue and $this->post->createTrade)
+        if($this->post->createTrade)
         {
             if(!$this->post->depositor) return array('result' => 'fail', 'message' => array('depositor' => sprintf($this->lang->error->notempty, $this->lang->trade->depositor)));
+            if($this->post->currency != $this->config->setting->mainCurrency && !$this->post->exchangeRate) return array('result' => 'fail', 'message' => array('depositor' => sprintf($this->lang->error->notempty, $this->lang->trade->exchangeRate)));
+        }
 
+        if(!$this->post->continue and $this->post->createTrade)
+        {
             $existTrades = $this->dao->select('*')->from(TABLE_TRADE)
                 ->where('money')->eq($data->amount)
                 ->andWhere('date')->eq(substr($data->returnedDate, 0, 10))
@@ -690,12 +695,9 @@ class contractModel extends model
                     ->add('desc', strip_tags($this->post->comment))
                     ->add('createdBy', $this->app->user->account)
                     ->add('createdDate', $now)
-                    ->remove('finish,amount,returnedBy,returnedDate,createTrade,continue')
+                    ->remove('finish,amount,returnedBy,returnedDate,createTrade,continue,currencyLabel')
                     ->get();
 
-                $depositor = $this->loadModel('depositor', 'cash')->getByID($trade->depositor);
-                $trade->currency = $depositor->currency;
-                
                 $this->dao->insert(TABLE_TRADE)->data($trade, $skip = 'uid,comment')->autoCheck()->exec();
                 $tradeID = $this->dao->lastInsertId();
                 $this->dao->update(TABLE_PLAN)->set('trade')->eq($tradeID)->where('id')->eq($planID)->exec();

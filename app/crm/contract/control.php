@@ -281,16 +281,16 @@ class contract extends control
             $return = $this->contract->receive($contractID);
             if(!empty($return['result']) && $return['result'] == 'fail') $this->send($return);
 
-            $actionExtra = html::a($this->createLink('contract', 'view', "contractID=$contractID"), $contract->name) . $this->lang->contract->return . zget($currencySign, $contract->currency, '') . $this->post->amount;
+            $actionExtra = html::a($this->createLink('contract', 'view', "contractID=$contractID"), $contract->name) . $this->lang->contract->return . zget($currencySign, $this->post->currency, '') . $this->post->amount;
 
             if($this->post->finish)
             {
-                $this->loadModel('action')->create('contract', $contractID, 'finishReturned', $this->post->comment, zget($currencySign, $contract->currency, '') . $this->post->amount, $this->post->returnedBy);
+                $this->loadModel('action')->create('contract', $contractID, 'finishReturned', $this->post->comment, zget($currencySign, $this->post->currency, '') . $this->post->amount, $this->post->returnedBy);
                 $this->loadModel('action')->create('customer', $contract->customer, 'finishReceiveContract', $this->post->comment, $actionExtra, $this->post->returnedBy);
             }
             else
             {
-                $this->loadModel('action')->create('contract', $contractID, 'returned', $this->post->comment, zget($currencySign, $contract->currency, '') . $this->post->amount, $this->post->returnedBy);
+                $this->loadModel('action')->create('contract', $contractID, 'returned', $this->post->comment, zget($currencySign, $this->post->currency, '') . $this->post->amount, $this->post->returnedBy);
                 $this->loadModel('action')->create('customer', $contract->customer, 'receiveContract', $this->post->comment, $actionExtra, $this->post->returnedBy);
             }
             $this->send($return);
