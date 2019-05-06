@@ -189,6 +189,35 @@ class refund extends control
     }
 
     /**
+     * Print refund list to reimburse.
+     *
+     * @param  string $mode
+     * @param  string $date
+     * @param  array  $refunds
+     * @param  string $orderBy
+     * @param  object $pager
+     * @param  array  $categories
+     * @param  string $currencySign
+     * @param  array  $userPairs
+     * @param  array  $deptList
+     * @access public
+     * @return void
+     */
+    public function printTodoes($mode, $date, $refunds, $orderBy, $pager, $categories, $currencySign, $userPairs, $deptList)
+    {
+        $this->view->mode         = $mode;
+        $this->view->date         = $date;
+        $this->view->refunds      = $refunds;
+        $this->view->orderBy      = $orderBy;
+        $this->view->pager        = $pager;
+        $this->view->categories   = $categories;
+        $this->view->currencySign = $currencySign;
+        $this->view->userPairs    = $userPairs;
+        $this->view->deptList     = $deptList;
+        $this->display();
+    }
+
+    /**
      * browse refund.
      * 
      * @param  string $mode 
@@ -481,12 +510,16 @@ class refund extends control
     {
         if($_POST)
         {
-            $this->refund->reimburse($refundID);
+            $refundIDList = $this->refund->reimburse($type, $refundID);
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
 
             /* send email. */
-            $actionID = $this->loadModel('action')->create('refund', $refundID, 'reimburse');
-            $this->sendmail($refundID, $actionID);
+            $this->loadModel('action');
+            foreach($refundIDList as $refund)
+            {
+                $actionID = $this->action->create('refund', $refund, 'reimburse');
+                $this->sendmail($refund, $actionID);
+            }
 
             $this->send(array('result' => 'success', 'type' => $type, 'refundID' => $refundID, 'trade' => $this->post->trade, 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
         }

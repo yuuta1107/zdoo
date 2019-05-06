@@ -9,8 +9,8 @@
         <?php $vars = "date=$date&type=&orderBy=%s&recTotal={$pager->recTotal}&recPerPage={$pager->recPerPage}&pageID={$pager->pageID}";?>
         <th class='w-50px'><?php commonModel::printOrderLink('id', $orderBy, $vars, $lang->refund->id);?></th>
         <th class='w-100px text-left visible-lg'><?php commonModel::printOrderLink('dept', $orderBy, $vars, $lang->refund->dept);?></th>
-        <th><?php commonModel::printOrderLink('name', $orderBy, $vars, $lang->refund->name);?></th>
-        <th class='w-120px'><?php commonModel::printOrderLink('category', $orderBy, $vars, $lang->refund->category);?></th>
+        <th class='text-left'><?php commonModel::printOrderLink('name', $orderBy, $vars, $lang->refund->name);?></th>
+        <th class='w-120px text-left'><?php commonModel::printOrderLink('category', $orderBy, $vars, $lang->refund->category);?></th>
         <th class='w-100px text-right'><?php commonModel::printOrderLink('money', $orderBy, $vars, $lang->refund->money);?></th>
         <th class='w-100px'><?php commonModel::printOrderLink('status', $orderBy, $vars, $lang->refund->status);?></th>
         <th class='w-100px'><?php commonModel::printOrderLink('payee', $orderBy, $vars, $lang->refund->payee);?></th>
@@ -24,7 +24,7 @@
     <?php foreach($accountRefunds as $currency => $currencyRefunds):?>
     <tr>
       <td><span class="task-toggle"><i class="icon icon-plus"></i></span></td>
-      <td><?php echo zget($deptList, $currencyRefunds['dept'], '');?></td>
+      <td class='text-left'><?php echo zget($deptList, $currencyRefunds['dept'], '');?></td>
       <td></td>
       <td></td>
       <td class='text-right'><?php echo zget($currencySign, $currency) . number_format($currencyRefunds['total'], 2, '.', '');?></td>
@@ -45,7 +45,7 @@
           <?php foreach($currencyRefunds['detail'] as $refund):?>
           <tr id='refund<?php echo $refund->id;?>' data-url='<?php echo $this->createLink('refund', 'view', "refundID={$refund->id}&mode={$mode}");?>'>
             <td class='w-50px'><?php echo $refund->id;?></td>
-            <td class='w-100px text-left visible-lg'><?php echo zget($deptList, $refund->dept);?></td>
+            <td class='w-100px text-left visible-lg'><?php echo zget($deptList, $refund->dept, '');?></td>
             <td class='text-left' title='<?php echo $refund->name;?>'><?php echo $refund->name;?></td>
             <td class='w-120px text-left' title='<?php echo zget($categories, $refund->category);?>'><?php echo zget($categories, $refund->category, ' ');?></td>
             <td class='w-100px text-right'><?php echo zget($currencySign, $refund->currency) . $refund->money;?></td>

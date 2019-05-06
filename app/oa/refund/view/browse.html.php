@@ -29,7 +29,7 @@
   <?php commonModel::printLink('refund', 'create', '', '<i class="icon-plus"></i> ' . $lang->refund->create, 'class="btn btn-primary"');?>
 </div>
 <?php if($mode == 'todo'):?>
-<?php include 'todo.html.php';?>
+<?php echo $this->fetch('refund', 'printTodoes', array('mode' => $mode, 'date' => $date, 'refunds' => $refunds, 'orderBy' => $orderBy, 'pager' => $pager, 'categories' => $categories, 'currencySign' => $currencySign, 'userPairs' => $userPairs, 'deptList' => $deptList));?>
 <?php else:?>
 <div class='with-side'>
   <div class='side'>
@@ -78,7 +78,7 @@
         <?php foreach($refunds as $refund):?>
         <tr id='refund<?php echo $refund->id;?>' data-url='<?php echo $this->createLink('refund', 'view', "refundID={$refund->id}&mode={$mode}");?>'>
           <td><?php echo $refund->id;?></td>
-          <td class='text-left visible-lg'><?php echo zget($deptList, $refund->dept);?></td>
+          <td class='text-left visible-lg'><?php echo zget($deptList, $refund->dept, '');?></td>
           <td class='text-left' title='<?php echo $refund->name;?>'><?php echo $refund->name;?></td>
           <td class='text-left' title='<?php echo zget($categories, $refund->category);?>'><?php echo zget($categories, $refund->category, ' ');?></td>
           <td class='text-right'><?php echo zget($currencySign, $refund->currency) . $refund->money;?></td>
