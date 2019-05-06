@@ -110,43 +110,6 @@ class trade extends control
         }
         if($currentDate == 'all') $currentDate = '';
 
-        $trades    = $this->trade->getList($mode, $currentDate, $orderBy, $pager, $bysearch == 'bysearch');
-        $yearLabel = (($this->app->getClientLang() == 'zh-cn' or $this->app->getClientLang() == 'zh-tw') ? $this->lang->year : '');
-
-        $moduleMenu = "<nav id='menu'><ul class='nav'>";
-        if(!empty($tradeYears))
-        {
-            $selectYear  = $currentDate ? substr($currentDate, 0, 4) : $currentYear;
-            $selectMonth = substr($currentDate, 4, 2);
-
-            $class = $currentDate ? '' : 'active';
-            $moduleMenu .= "<li class='$class'>" . commonModel::printLink('trade', 'browse', "mode=$mode&date=all", $this->lang->trade->all, '', false) . '</li>';
-            $class = $currentDate ? 'active' : '';
-            $moduleMenu .= "<li class='$class dropdown'>";
-            $moduleMenu .= html::a('#', $selectYear . $yearLabel . "<span class='caret'></span>", "class='dropdown-toggle' data-toggle='dropdown'");
-            $moduleMenu .= "<ul role='menu' class='dropdown-menu'>";
-            foreach($tradeYears as $year)
-            {
-                $moduleMenu .= commonModel::printLink('trade', 'browse', "mode=$mode&date=$year", $year . $yearLabel, '', false, '', 'li');
-            }
-            $moduleMenu .= "</ul></li>";
-
-            $class = $selectMonth ? 'active' : '';
-            $moduleMenu .= "<li class='$class dropdown'>";
-            $moduleMenu .= html::a('#', zget($this->lang->trade->quarterList, $selectMonth, zget($this->lang->trade->monthList, $selectMonth, $this->lang->trade->month)) . "<span class='caret'></span>", "class='dropdown-toggle' data-toggle='dropdown'");
-            $moduleMenu .= "<ul role='menu' class='dropdown-menu'>";
-            foreach($tradeQuarters[$selectYear] as $quarter)
-            {
-                $moduleMenu .= commonModel::printLink('trade', 'browse', "mode=$mode&date=$selectYear$quarter", $this->lang->trade->quarterList[$quarter], '', false, '', 'li');
-                foreach($tradeMonths[$selectYear][$quarter] as $month)
-                {
-                    $moduleMenu .= commonModel::printLink('trade', 'browse', "mode=$mode&date=$selectYear$month", $this->lang->trade->monthList[$month], '', false, '', 'li');
-                }
-            }
-            $moduleMenu .= "</ul></li>";
-        }
-        $moduleMenu .= "</ul></nav>";
-
         if(strpos(',in,all,', ",$mode,") !== false)
         {
             $this->view->categories = $this->lang->trade->categoryList + $this->loadModel('tree')->getPairs(0, 'out') + $this->tree->getPairs(0, 'in');
@@ -157,20 +120,20 @@ class trade extends control
         }
 
         $this->view->title         = $this->lang->trade->browse;
-        $this->view->trades        = $trades;
-        $this->view->mode          = $mode;
-        $this->view->date          = $currentDate;
-        $this->view->pager         = $pager;
-        $this->view->orderBy       = $orderBy;
-        $this->view->depositorList = $depositorList;
+        $this->view->trades        = $this->trade->getList($mode, $currentDate, $orderBy, $pager, $bysearch == 'bysearch');
+        $this->view->moduleMenu    = $this->trade->createModuleMenu($mode, $currentYear, $currentDate, $tradeYears, $tradeQuarters, $tradeMonths);
         $this->view->customerList  = $this->loadModel('customer')->getPairs();
         $this->view->deptList      = $this->loadModel('tree')->getPairs(0, 'dept');
         $this->view->users         = $this->loadModel('user')->getPairs();
         $this->view->currencySign  = $this->loadModel('common')->getCurrencySign();
         $this->view->currencyList  = $this->common->getCurrencyList();
+        $this->view->mode          = $mode;
+        $this->view->pager         = $pager;
+        $this->view->orderBy       = $orderBy;
+        $this->view->depositorList = $depositorList;
         $this->view->productList   = $productList;
         $this->view->currentYear   = $currentYear;
-        $this->view->moduleMenu    = $moduleMenu; 
+        $this->view->date          = $currentDate;
         $this->view->bysearch      = $bysearch; 
 
         $this->display();

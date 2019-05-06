@@ -728,6 +728,7 @@ class tradeModel extends model
             $dept      = $this->post->dept[$key]         == 'ditto' ? $dept      : $this->post->dept[$key];
             $trader    = $this->post->{$traderkey}[$key] == 'ditto' ? $trader    : ($this->post->{$traderkey}[$key] ? $this->post->{$traderkey}[$key] : 0);
             $product   = $this->post->product[$key]      == 'ditto' ? $product   : $this->post->product[$key];
+            $date      = $this->post->date[$key];
 
             if(empty($this->post->depositor[$key])) continue;
             if(!$this->post->money[$key]) continue;
@@ -749,7 +750,7 @@ class tradeModel extends model
             $trade->traderName     = isset($this->post->traderName[$key]) ? $this->post->traderName[$key] : '';
             $trade->handlers       = !empty($this->post->handlers[$key]) ? join(',', $this->post->handlers[$key]) : '';
             $trade->product        = $product;
-            $trade->date           = $this->post->date[$key];
+            $trade->date           = ($date && $date != '0000-00-00') ? $date : $now;
             $trade->desc           = strip_tags(nl2br($this->post->desc[$key]), $this->config->allowedTags);
             $trade->currency       = isset($depositorList[$trade->depositor]) ? $depositorList[$trade->depositor]->currency : '';
             $trade->createdBy      = $this->app->user->account;
@@ -801,6 +802,7 @@ class tradeModel extends model
             {
                 $category = !empty($this->post->categoryDitto[$key]) ? $category : $this->post->category[$key];
             }
+            $date = $this->post->date[$key];
 
             if(!$money) continue;
             if($this->post->categoryDisabled[$key] != 'disabled' && empty($category) && $this->config->trade->settings->category) continue;
@@ -815,7 +817,7 @@ class tradeModel extends model
             $trade->dept           = $dept;
             $trade->handlers       = !empty($this->post->handlers[$key]) ? join(',', $this->post->handlers[$key]) : '';
             $trade->product        = $this->post->product[$key];
-            $trade->date           = $this->post->date[$key];
+            $trade->date           = ($date && $date != '0000-00-00') ? $date : $now;
             $trade->desc           = strip_tags(nl2br($this->post->desc[$key]));
             $trade->createTrader   = false;
             $trade->createCustomer = false;
@@ -1808,5 +1810,46 @@ class tradeModel extends model
         foreach($incomeDatas as $month => $data)  foreach($data as $year => $money) $incomeDatas[$month][$year]  = round($money / $unit, 2);
         foreach($expenseDatas as $month => $data) foreach($data as $year => $money) $expenseDatas[$month][$year] = round($money / $unit, 2);
         foreach($profitDatas as $month => $data)  foreach($data as $year => $money) $profitDatas[$month][$year]  = round($money / $unit, 2);
+    }
+
+    public function createModuleMenu($mode, $currentYear, $currentDate, $tradeYears, $tradeQuarters, $tradeMonths)
+    {
+        $yearLabel = (($this->app->getClientLang() == 'zh-cn' or $this->app->getClientLang() == 'zh-tw') ? $this->lang->year : '');
+
+        $moduleMenu = "<nav id='menu'><ul class='nav'>";
+        if(!empty($tradeYears))
+        {
+            $selectYear  = $currentDate ? substr($currentDate, 0, 4) : $currentYear;
+            $selectMonth = substr($currentDate, 4, 2);
+
+            $class = $currentDate ? '' : 'active';
+            $moduleMenu .= "<li class='$class'>" . commonModel::printLink('trade', 'browse', "mode=$mode&date=all", $this->lang->trade->all, '', false) . '</li>';
+            $class = $currentDate ? 'active' : '';
+            $moduleMenu .= "<li class='$class dropdown'>";
+            $moduleMenu .= html::a('#', $selectYear . $yearLabel . "<span class='caret'></span>", "class='dropdown-toggle' data-toggle='dropdown'");
+            $moduleMenu .= "<ul role='menu' class='dropdown-menu'>";
+            foreach($tradeYears as $year)
+            {
+                $moduleMenu .= commonModel::printLink('trade', 'browse', "mode=$mode&date=$year", $year . $yearLabel, '', false, '', 'li');
+            }
+            $moduleMenu .= "</ul></li>";
+
+            $class = $selectMonth ? 'active' : '';
+            $moduleMenu .= "<li class='$class dropdown'>";
+            $moduleMenu .= html::a('#', zget($this->lang->trade->quarterList, $selectMonth, zget($this->lang->trade->monthList, $selectMonth, $this->lang->trade->month)) . "<span class='caret'></span>", "class='dropdown-toggle' data-toggle='dropdown'");
+            $moduleMenu .= "<ul role='menu' class='dropdown-menu'>";
+            foreach($tradeQuarters[$selectYear] as $quarter)
+            {
+                $moduleMenu .= commonModel::printLink('trade', 'browse', "mode=$mode&date=$selectYear$quarter", $this->lang->trade->quarterList[$quarter], '', false, '', 'li');
+                foreach($tradeMonths[$selectYear][$quarter] as $month)
+                {
+                    $moduleMenu .= commonModel::printLink('trade', 'browse', "mode=$mode&date=$selectYear$month", $this->lang->trade->monthList[$month], '', false, '', 'li');
+                }
+            }
+            $moduleMenu .= "</ul></li>";
+        }
+        $moduleMenu .= "</ul></nav>";
+
+        return $moduleMenu;
     }
 }
