@@ -29,7 +29,7 @@ $lang->trade->category    = 'Category';
 $lang->trade->date        = 'Date';
 $lang->trade->deadline    = 'Deadline';
 $lang->trade->handlers    = 'Handler';
-$lang->trade->dept        = 'Dept';
+$lang->trade->dept        = 'Department';
 $lang->trade->receipt     = 'From';
 $lang->trade->payment     = 'To';
 $lang->trade->fee         = 'Fee';
@@ -86,7 +86,7 @@ $lang->trade->settings       = 'Settings';
 $lang->trade->manageCategory = 'Manage Category';
 
 $lang->trade->settingList['trader']       = 'Trader required';
-$lang->trade->settingList['product']      = 'Productrequired';
+$lang->trade->settingList['product']      = 'Product required';
 $lang->trade->settingList['dept']         = 'Department required';
 $lang->trade->settingList['category']     = 'Category required';
 $lang->trade->settingList['lastCategory'] = 'Last-level Category required';
@@ -95,11 +95,11 @@ $lang->trade->report = new stdclass();
 $lang->trade->report->common      = 'Report'; 
 $lang->trade->report->annual      = ' Annual Report'; 
 $lang->trade->report->month       = ' Month Report'; 
-$lang->trade->report->compare     = ' Annual Compare';
+$lang->trade->report->compare     = ' Annual Comparison';
 $lang->trade->report->create      = 'Create Report';
-$lang->trade->report->selectYears = 'Select Years';
+$lang->trade->report->selectYears = 'Select Year';
 $lang->trade->report->undefined   = 'Undefined';
-$lang->trade->report->compareTip  = 'Select two years to compare.';
+$lang->trade->report->compareTip  = 'Select two years to compare';
 $lang->trade->report->unit        = 'Unit';
 
 $lang->trade->report->unitList[1]       = '$';
@@ -107,8 +107,8 @@ $lang->trade->report->unitList[1000]    = 'K$';
 $lang->trade->report->unitList[10000]   = '10K$';
 $lang->trade->report->unitList[1000000] = 'M$';
 
-$lang->trade->report->typeList['annual']  = 'Annual balance sheet'; 
-$lang->trade->report->typeList['compare'] = 'Annual comparison sheet'; 
+$lang->trade->report->typeList['annual']  = 'Annual Balance Sheet'; 
+$lang->trade->report->typeList['compare'] = 'Annual Comparison Sheet'; 
 
 $lang->trade->typeList['in']          = 'Income';
 $lang->trade->typeList['out']         = 'Expense';
@@ -189,31 +189,31 @@ $lang->trade->importedFields['handlers'] = 'Handler';
 $lang->trade->statusList['returned']   = 'Returned';
 $lang->trade->statusList['returning']  = 'Returning';
 $lang->trade->statusList['unReturned'] = 'Unreturned';
-$lang->trade->statusList['repaied']    = 'Repaied';
+$lang->trade->statusList['repaied']    = 'Repaid';
 $lang->trade->statusList['repaying']   = 'Repaying';
-$lang->trade->statusList['unRepaied']  = 'Unrepaied';
+$lang->trade->statusList['unRepaied']  = 'Unrepaid';
 
-$lang->trade->progressList['invest'] = 'Redemption progress';
-$lang->trade->progressList['loan']   = 'Repayment progress';
+$lang->trade->progressList['invest'] = 'Redemption';
+$lang->trade->progressList['loan']   = 'Repayment';
 
 $lang->trade->totalIn       = '%s: income %s;';
 $lang->trade->totalOut      = '%s: expense %s;';
 $lang->trade->totalAmount   = '%s: income %s, expense %s, %s;';
-$lang->trade->totalInvest   = '%s: invest %s, redeem %s,unredeem %s, %s;';
+$lang->trade->totalInvest   = '%s: invest %s, redeem %s, unredeem %s, %s;';
 $lang->trade->selectItem    = 'Seleted';
 $lang->trade->profit        = 'profit';
 $lang->trade->loss          = 'loss';
 $lang->trade->balance       = 'Income is equal to Expense';
 $lang->trade->total         = 'Total';
 
-$lang->trade->noTraderMatch  = 'No matched trader，click to create';
-$lang->trade->unique         = 'There has been same record';
-$lang->trade->showExistTrade = 'Show same record';
-$lang->trade->hideExistTrade = 'Hide same record';
+$lang->trade->noTraderMatch  = 'No match found. Click to create.';
+$lang->trade->unique         = 'There is a record existed.';
+$lang->trade->showExistTrade = 'Show existing record';
+$lang->trade->hideExistTrade = 'Hide existing record';
 $lang->trade->ignore         = 'Ignore';
-$lang->trade->denied         = 'You have no permission to browse the list, please ask admin to set privilege.';
+$lang->trade->denied         = 'You have no permission to browse the list. Please ask you Admin to set permissions.';
 $lang->trade->emptyData      = 'The fields with * cannot be empty.';
-$lang->trade->detailTip      = 'The total detail money is different of trade, confirm save current detail trades?';
+$lang->trade->detailTip      = 'The total amount is different from the trade amount. Do you want to save the current amount?';
 
 $lang->trade->chartList['productLine'] = 'by product line';
 $lang->trade->chartList['category']    = 'by category';
@@ -227,4 +227,4 @@ $lang->trade->excel->title = new stdclass();
 $lang->trade->excel->title->depositor = ' Profit and Loss Statement';
 
 $lang->trade->excel->help = new stdclass();
-$lang->trade->excel->help->depositor = "This report don't differentiate currencies.";
+$lang->trade->excel->help->depositor = "This report will not list currencies in different columns.";

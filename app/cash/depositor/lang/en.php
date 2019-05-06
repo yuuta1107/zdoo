@@ -39,8 +39,8 @@ $lang->depositor->activate       = 'Activate';
 $lang->depositor->export         = 'Export';
 $lang->depositor->balance        = 'Balance';
 $lang->depositor->saveBalance    = 'Save';
-$lang->depositor->detail         = 'Detail';
-$lang->depositor->normalBrowse   = 'Normal Account';
+$lang->depositor->detail         = 'Details';
+$lang->depositor->normalBrowse   = 'Active Account';
 $lang->depositor->disabledBrowse = 'Disabled Account';
 
 $lang->depositor->check         = 'Check';
@@ -54,7 +54,7 @@ $lang->depositor->success       = "<span class='text-success'>Ok</span>";
 $lang->depositor->more          = "<span class='text-danger'>%s</span>";
 $lang->depositor->less          = "<span class='text-danger'>%s</span>";
 
-$lang->depositor->createBalance = 'Please add balance first.';
+$lang->depositor->createBalance = 'Please Add Balance first.';
 
 $lang->depositor->typeList['cash']   = 'Cash';
 $lang->depositor->typeList['bank']   = 'Debit';
@@ -69,9 +69,9 @@ $lang->depositor->providerList['paypal'] = 'Paypal';
 $lang->depositor->providerList['tenpay'] = 'Tenpay';
 $lang->depositor->providerList['wechat'] = 'Wechat Pay';
 
-$lang->depositor->statusList['normal']  = 'Normal';
+$lang->depositor->statusList['normal']  = 'Active';
 $lang->depositor->statusList['disable'] = 'Disable';
 
 $lang->depositor->placeholder = new stdclass();
-$lang->depositor->placeholder->tags     = 'Please separate tags with commas';
+$lang->depositor->placeholder->tags     = 'Please separate tags with comma.';
 $lang->depositor->placeholder->noBccomp = 'Please install bccmom extension first.';

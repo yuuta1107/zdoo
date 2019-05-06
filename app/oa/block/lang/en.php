@@ -9,10 +9,10 @@
  * @version     $Id$
  * @link        http://www.zdoo.org
  */
-$lang->block->common   = 'Blocks';
+$lang->block->common   = 'Block';
 $lang->block->announce = 'Announce';
 $lang->block->lblBlock = 'Block';
-$lang->block->admin    = 'Manage Blocks';
+$lang->block->admin    = 'Manage Block';
 $lang->block->type     = 'Type';
 $lang->block->waitTask = 'Wait';
 $lang->block->doneTask = 'Done';
@@ -27,6 +27,6 @@ $lang->block->orderBy = 'Order';
 $lang->block->status  = 'Status';
 $lang->block->asc     = 'ASC';
 $lang->block->desc    = 'DESC';
-$lang->block->actions = 'Options';
+$lang->block->actions = 'Action';
 
 $lang->block->orderByList = new stdclass();

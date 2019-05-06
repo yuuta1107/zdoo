@@ -54,6 +54,6 @@ $lang->setting->menu->income       = 'Income|tree|browse|type=in|';
 $lang->setting->menu->expend       = 'Expense|tree|browse|type=out|';
 $lang->setting->menu->currency     = 'Currency|setting|lang|module=common&field=currencyList';
 $lang->setting->menu->schema       = 'Template|schema|browse|';
-$lang->setting->menu->tradePriv    = 'Privilege|group|managetradepriv|';
+$lang->setting->menu->tradePriv    = 'Permission|group|managetradepriv|';
 $lang->setting->menu->tradeSetting = 'Settings|trade|tradeSetting|';
 include(dirname(__FILE__) . '/menuOrder.php');
