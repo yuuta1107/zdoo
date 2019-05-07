@@ -78,16 +78,7 @@ class actionModel extends model
         /* Create todo for user who contact the contacts. */
         if($objectType == 'order' or $objectType == 'customer')
         {
-            if($objectType == 'order')
-            {
-                $customerID = $this->dao->findById($objectID)->from(TABLE_ORDER)->fetch('customer');
-            }
-            else
-            {
-                $customerID = $objectID;
-            }
-
-            $customerName = $this->dao->findById($customerID)->from(TABLE_CUSTOMER)->fetch('name');
+            $customerName = $this->dao->findById($customer)->from(TABLE_CUSTOMER)->fetch('name');
 
             $todo = new stdclass();
             $todo->account = $this->post->contactedBy;
@@ -110,19 +101,20 @@ class actionModel extends model
         {
             $originType = 'customer';
             $originID   = $customer;
-            $sendmail   = $this->updateDating($originType, $originID, $customer, $contact, $actionID);
+            $this->updateDating($originType, $originID, $customer, $contact, $actionID);
             /* Set the min next date as the post value. */
             if($this->post->nextDate) $nextDate = $this->getMinDatingDate($originType, $originID);
+
+            $this->post->nextDate = $nextDate;
+            $this->syncContactInfo($originType, $originID, $customer, $contact);
         }
-        else
-        {
-            $nextDate   = $this->post->nextDate;
-            $originType = $objectType;
-            $originID   = $objectID;
-            $sendmail   = $this->updateDating($objectType, $objectID, $customer, $contact, $actionID);
-            /* Set the min next date as the post value. */
-            if($this->post->nextDate) $nextDate = $this->getMinDatingDate($objectType, $objectID);
-        }
+
+        $nextDate   = $this->post->nextDate;
+        $originType = $objectType;
+        $originID   = $objectID;
+        $sendmail   = $this->updateDating($objectType, $objectID, $customer, $contact, $actionID);
+        /* Set the min next date as the post value. */
+        if($this->post->nextDate) $nextDate = $this->getMinDatingDate($objectType, $objectID);
 
         $this->post->nextDate = $nextDate;
         $this->syncContactInfo($objectType, $objectID, $customer, $contact);
@@ -252,8 +244,11 @@ class actionModel extends model
         $contactInfo['contactedBy']   = $this->app->user->account;
         $contactInfo['editedDate']    = helper::now();
 
-        $this->dao->update(TABLE_CUSTOMER)->data($contactInfo)->where('id')->eq($customer)->andWhere('contactedDate')->lt($this->post->date)->exec();
-        $this->dao->update(TABLE_CONTACT)->data($contactInfo)->where('id')->eq($contact)->andWhere('contactedDate')->lt($this->post->date)->exec();
+        if(!$this->post->contract && !$this->post->order)
+        {
+            $this->dao->update(TABLE_CUSTOMER)->data($contactInfo)->where('id')->eq($customer)->andWhere('contactedDate')->lt($this->post->date)->exec();
+            $this->dao->update(TABLE_CONTACT)->data($contactInfo)->where('id')->eq($contact)->andWhere('contactedDate')->lt($this->post->date)->exec();
+        }
 
         if($objectType == 'order')    $this->dao->update(TABLE_ORDER)->data($contactInfo)->where('id')->eq($objectID)->andWhere('contactedDate')->lt($this->post->date)->exec();
         if($objectType == 'contract') $this->dao->update(TABLE_CONTRACT)->data($contactInfo)->where('id')->eq($objectID)->andWhere('contactedDate')->lt($this->post->date)->exec();
