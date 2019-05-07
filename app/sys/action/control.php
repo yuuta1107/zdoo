@@ -64,10 +64,19 @@ class action extends control
 
         if($_POST)
         {
-            if($this->post->nextDate && !$this->action->checkDatingPrivilege($objectType, $objectID))
+            if($this->post->nextDate)
             {
-                $user = $this->loadModel('user')->getByAccount($this->post->contactedBy);
-                $this->send(array('result' => 'fail', 'message' => sprintf($this->lang->action->record->noPrivilege, $user->realname)));;
+                if(!$this->action->checkDatingPrivilege($objectType, $objectID))
+                {
+                    $user = $this->loadModel('user')->getByAccount($this->post->contactedBy);
+                    $this->send(array('result' => 'fail', 'message' => sprintf($this->lang->action->record->noPrivilege, $user->realname)));;
+                }
+
+                $today = helper::today();
+                if($this->post->nextDate <= $today)
+                {
+                    $this->send(array('result' => 'fail', 'message' => sprintf($this->lang->error->gt, $this->lang->action->nextDate, $today)));;
+                }
             }
 
             /* Can create contact when objectType is customer. */
@@ -102,17 +111,14 @@ class action extends control
 
             if($this->post->customer) $customer = $this->post->customer;
 
-            $result = $this->action->createRecord($objectType, $objectID, $customer, $this->post->contact);
+            $actionID = $this->action->createRecord($objectType, $objectID, $customer, $this->post->contact);
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
 
-            if(isset($result['sendmail']) && $result['sendmail'] == true && isset($result['action']))
+            /* If set the date of next dating and assign anyone else to contact, send notice. */
+            if($this->post->contactedBy != $this->app->user->account && $this->post->nextDate)
             {
-                /* If set the date of next dating and assign anyone else to contact, send notice. */
-                if($this->post->contactedBy != $this->app->user->account && $this->post->nextDate)
-                {
-                    $nextContact = $this->post->nextContact == 'ditto' ? $this->post->contact : $this->post->nextContact;
-                    $this->sendmail($result['action'], $nextContact, $this->post->nextDate);
-                }
+                $nextContact = $this->post->nextContact == 'ditto' ? $this->post->contact : $this->post->nextContact;
+                $this->sendmail($actionID, $nextContact, $this->post->nextDate);
             }
 
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => $this->server->http_referer));
