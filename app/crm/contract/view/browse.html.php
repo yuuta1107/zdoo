@@ -50,7 +50,7 @@
         <td class='text-left' title='<?php echo $contract->code;?>'><?php echo $contract->code;?></td>
         <td class='text-left' title='<?php echo $contract->name;?>'><?php echo $contract->name;?></td>
         <td class='text-right'><?php echo zget($currencySign, $contract->currency, '') . formatMoney($contract->amount);?></td>
-        <td class='visible-lg'><?php echo formatTime($contract->createdDate, DT_DATETIME1);?></td>
+        <td class='visible-lg'><?php echo formatTime($contract->createdDate, DT_DATE1);?></td>
         <td><?php echo formatTime($contract->begin, DT_DATE1);?></td>
         <td><?php echo formatTime($contract->end, DT_DATE1);?></td>
         <td><?php echo $lang->contract->returnList[$contract->return];?></td>
