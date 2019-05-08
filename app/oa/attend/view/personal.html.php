@@ -67,8 +67,8 @@
                 <tr class='text-center'>
                   <th class='w-80px'><?php echo $lang->attend->weeks[$weekIndex];?></th>
                   <th class='w-40px'><?php echo $lang->attend->dayName;?></th>
-                  <th><?php echo $lang->attend->signIn;?></th>
-                  <th><?php echo $lang->attend->signOut;?></th>
+                  <th title='<?php echo $lang->attend->signIn;?>'><?php echo $lang->attend->signIn;?></th>
+                  <th title='<?php echo $lang->attend->signOut;?>'><?php echo $lang->attend->signOut;?></th>
                   <th class='w-100px'><?php echo $lang->actions . '/' . $lang->attend->status;?></th>
                 </tr>
               </thead>
