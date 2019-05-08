@@ -1,17 +1,17 @@
 <?php
 if(!isset($lang->leave)) $lang->leave = new stdclass();
 $lang->leave->common     = 'Leave';
-$lang->leave->browse     = 'Browse leave';
+$lang->leave->browse     = 'Leave';
 $lang->leave->view       = 'View';
 $lang->leave->create     = 'Create';
 $lang->leave->edit       = 'Edit';
 $lang->leave->delete     = 'Delete';
 $lang->leave->review     = 'Review';
 $lang->leave->cancel     = 'Cancel';
-$lang->leave->commit     = 'Commit';
+$lang->leave->commit     = 'Submit';
 $lang->leave->back       = 'Back';
 $lang->leave->export     = 'Export';
-$lang->leave->reviewBack = 'Review back date';
+$lang->leave->reviewBack = 'Review return date';
 
 $lang->leave->personal       = 'My Leave';
 $lang->leave->browseReview   = 'Review List';
@@ -28,7 +28,7 @@ $lang->leave->end          = 'End';
 $lang->leave->start        = 'Begin';
 $lang->leave->finish       = 'End';
 $lang->leave->hours        = 'Hours';
-$lang->leave->backDate     = 'Back';
+$lang->leave->backDate     = 'Return';
 $lang->leave->type         = 'Type';
 $lang->leave->desc         = 'Description';
 $lang->leave->status       = 'Status';
@@ -40,7 +40,7 @@ $lang->leave->date         = 'Date';
 $lang->leave->time         = 'Time';
 $lang->leave->rejectReason = 'Reject Reason';
 $lang->leave->account      = 'Account';
-$lang->leave->dateRange    = 'Date Range';
+$lang->leave->dateRange    = 'Timeframe';
 $lang->leave->totalAnnual  = 'Annual Leave Settings';
 
 $lang->leave->typeList['affairs']   = 'Private';
@@ -61,20 +61,20 @@ $lang->leave->statusList['pass']   = 'Pass';
 $lang->leave->statusList['reject'] = 'Reject';
 $lang->leave->statusList['back']   = 'Back';
 
-$lang->leave->notExist      = 'The record not exist';
-$lang->leave->denied        = 'Access denied.';
-$lang->leave->unique        = 'There was a record of Leave in %s.';
-$lang->leave->sameMonth     = 'Leave must be in the same month.';
-$lang->leave->wrongEnd      = 'End time should be greater than begin time.';
-$lang->leave->wrongBackDate = 'Back time should be greater than begin time.';
-$lang->leave->nodata        = 'No data selected.';
+$lang->leave->notExist      = 'The record does not exist';
+$lang->leave->denied        = 'Access is denied.';
+$lang->leave->unique        = 'There was a Leave in %s.';
+$lang->leave->sameMonth     = 'Leaves must be in the same month.';
+$lang->leave->wrongEnd      = 'End time should be > begin time.';
+$lang->leave->wrongBackDate = 'Back time should be > begin time.';
+$lang->leave->nodata        = 'No data is selected.';
 $lang->leave->reviewSuccess = 'Reviewed';
 
 $lang->leave->confirmReview['pass']   = 'Do you want to pass it?';
 $lang->leave->confirmReview['reject'] = 'Do you want to reject it?';
 
 $lang->leave->hoursTip  = 'Hours';
-$lang->leave->annualTip = 'The remaining %s days of annual leaves';
+$lang->leave->annualTip = 'You have %s days Annual Leave left.';
 
 $lang->leave->reviewStatusList['pass']   = 'Pass';
 $lang->leave->reviewStatusList['reject'] = 'Reject';

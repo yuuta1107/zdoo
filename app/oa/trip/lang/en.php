@@ -24,7 +24,7 @@ $lang->trip->createdDate = 'Created';
 $lang->trip->date        = 'Date';
 $lang->trip->time        = 'Time';
 
-$lang->trip->denied    = 'Access denied';
-$lang->trip->unique    = 'There was a record of trip in %s.';
-$lang->trip->wrongEnd  = 'End time should be greater than begin time.';
-$lang->trip->sameMonth = 'Trip must be in the same month.';
+$lang->trip->denied    = 'Access is denied';
+$lang->trip->unique    = 'There was a Trip in %s.';
+$lang->trip->wrongEnd  = 'End time should be > begin time.';
+$lang->trip->sameMonth = 'Trips must be in the same month.';

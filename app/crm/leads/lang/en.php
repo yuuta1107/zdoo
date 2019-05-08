@@ -23,7 +23,7 @@ $lang->leads->ignoreReason = 'Reasons';
 
 $lang->leads->tips = new stdclass();
 $lang->leads->tips->apply       = 'Please take care of the existing contacts.';
-$lang->leads->tips->applyRemain = 'You can apply when the number of records on hold is lower than it.';
+$lang->leads->tips->applyRemain = 'You can apply again when the number of records is lower than it.';
 
 /* Width settings for different languages, in pixels. */
 $lang->leads->actionWidth = 280;

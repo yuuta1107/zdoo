@@ -44,7 +44,7 @@ $lang->doc->sort           = 'Sort';
 
 $lang->doc->libName        = 'Name';
 $lang->doc->libType        = 'Type';
-$lang->doc->allLibs        = 'All Library';
+$lang->doc->allLibs        = 'All';
 $lang->doc->projectLibs    = 'Project Library';
 $lang->doc->customLibs     = 'Custom Library';
 $lang->doc->projectMainLib = 'Main Library';
@@ -59,7 +59,7 @@ $lang->doc->removedMenu    = 'Remove from NavNar';
 $lang->doc->editCategory   = 'Edit Category';
 $lang->doc->deleteCategory = 'Delete Category';
 
-$lang->doc->allProject     = 'All projects';
+$lang->doc->allProject     = 'All Projects';
 
 $lang->doc->private        = 'Private';
 $lang->doc->users          = 'Users';

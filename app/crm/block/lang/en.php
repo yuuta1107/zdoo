@@ -9,7 +9,7 @@
  * @version     $Id$
  * @link        http://www.zdoo.org
  */
-$lang->block->common   = 'Blocks';
+$lang->block->common   = 'Block';
 $lang->block->num      = 'Amount';
 $lang->block->type     = 'Type';
 $lang->block->orderBy  = 'Order By';
@@ -53,7 +53,7 @@ $lang->block->orderByList->customer['id_desc']      = 'ID DESC';
 
 $lang->block->typeList = new stdclass();
 
-$lang->block->typeList->order['assignedTo']   = 'AssignToMe';
+$lang->block->typeList->order['assignedTo']   = 'AssignedToMe';
 $lang->block->typeList->order['createdBy']    = 'CreatedByMe';
 $lang->block->typeList->order['signedBy']     = 'SignedByMe';
 $lang->block->typeList->order['closedBy']     = 'ClosedByMe';

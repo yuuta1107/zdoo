@@ -14,5 +14,5 @@ $lang->egress->view     = 'Details';
 $lang->egress->from = 'Departure';
 $lang->egress->to   = 'Destination';
 
-$lang->egress->unique    = 'There was a record of egress in %s.';
-$lang->egress->sameMonth = 'Egress must be in the same month.';
+$lang->egress->unique    = 'There was an Egress in %s.';
+$lang->egress->sameMonth = 'Egresses must be in the same month.';
