@@ -38,12 +38,12 @@ $lang->message->passPre        = 'Pass previous';
 $lang->message->deletePre      = 'Delete previous';
 $lang->message->commentAt      = 'Comment ';
 $lang->message->deletedObject  = 'Deleted';
-$lang->message->contactHidden  = "Your phone, email, etc. will only be sent to your administrator.";
+$lang->message->contactHidden  = "Your contact information will only be sent to the administrator.";
 
 $lang->message->confirmDeleteSingle = 'Do you want to delete this comment?';
-$lang->message->confirmDeletePre    = 'Do you want to delete comments previous?';
+$lang->message->confirmDeletePre    = 'Do you want to delete last comment?';
 $lang->message->confirmPassSingle   = 'Do you want to pass this comment?';
-$lang->message->confirmPassPre      = 'Do you want to pass comment previous?';
+$lang->message->confirmPassPre      = 'Do you want to pass last comment?';
 
 $lang->message->statusList[0] = 'Unreviewed';
 $lang->message->statusList[1] = 'Reviewed';
@@ -79,9 +79,9 @@ $lang->comment->commentAt     = 'Commented ';
 $lang->comment->deletedObject = 'Deleted';
 
 $lang->comment->confirmDeleteSingle = 'Do you want to delete this comment?';
-$lang->comment->confirmDeletePre    = 'Do you want to delete previous comments?';
+$lang->comment->confirmDeletePre    = 'Do you want to delete last comment?';
 $lang->comment->confirmPassSingle   = 'Do you want to pass this comment?';
-$lang->comment->confirmPassPre      = 'Do you want to pass previous comment?';
+$lang->comment->confirmPassPre      = 'Do you want to pass last comment?';
 
 $lang->comment->statusList[0] = 'Unreviewed';
 $lang->comment->statusList[1] = 'Reviewed';
@@ -89,4 +89,4 @@ $lang->comment->statusList[1] = 'Reviewed';
 $lang->message->replyItem = "<dd><strong>%s</strong> reply <em>%s</em>：%s</dd>";
 $lang->comment->replyItem = "<dd><strong>%s</strong> reply <em>%s</em>：%s</dd>";
 
-$lang->message->replySubject = 'Reply from administrator of %s';
+$lang->message->replySubject = 'Reply from the Administrator on %s';

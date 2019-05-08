@@ -60,7 +60,7 @@ $lang->todo->confirmTip  = 'This Todo is linked to %s #%s. Do you want to change
 $lang->todo->assignedTip = '%s at %s';
 $lang->todo->finishedTip = '%s at %s';
 $lang->todo->closedTip   = '%s at %s';
-$lang->todo->deleteTip   = 'Drag here to delete.';
+$lang->todo->deleteTip   = 'Drag here to delete';
 
 $lang->todo->statusList['wait']     = 'Wait';
 $lang->todo->statusList['doing']    = 'Doing';
@@ -99,7 +99,7 @@ $lang->todo->batchedittips = 'The editing item is not selected';
 
 $lang->todo->action = new stdclass();
 $lang->todo->action->finished = array('main' => '$date, finished by <strong>$actor</strong>');
-$lang->todo->action->marked   = array('main' => '$date, change status to <stong>$extra</strong> by <strong>$actor</strong>。', 'extra' => 'statusList');
+$lang->todo->action->marked   = array('main' => '$date, the status is changed to <stong>$extra</strong> by <strong>$actor</strong>。', 'extra' => 'statusList');
 
 /* Width settings for different languages, in pixels. */
 $lang->todo->mainPaddingRight  = 360;
