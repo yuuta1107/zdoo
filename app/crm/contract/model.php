@@ -204,7 +204,7 @@ class contractModel extends model
         foreach($returnList as $return)
         {
             $return->depositor = zget($tradeDepositorList, $return->trade, '');
-            $return->currency  = $tradeList[$return->trade]->currency;
+            $return->currency  = isset($tradeList[$return->trade]->currency) ? $tradeList[$return->trade]->currency : zget($this->config->setting, 'mainCurrency', 'rmb');
         }
         return $returnList;
     }
