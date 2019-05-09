@@ -42,7 +42,7 @@ $lang->user->ip        = 'Last IP';
 $lang->user->last      = 'Last login';
 $lang->user->allowTime = 'Allow time';
 $lang->user->status    = 'Status';
-$lang->user->alert     = 'Your account has been disabled';
+$lang->user->alert     = 'Your account is disabled';
 $lang->user->keepLogin = 'Keep Login';
 $lang->user->ignore    = 'Ignore';
 
@@ -68,13 +68,13 @@ $lang->user->allUsers        = 'All';
 $lang->user->submit          = "Submit";
 $lang->user->forbid          = 'Disable';
 $lang->user->forbidList      = 'Disabled Users';
-$lang->user->normalList      = 'Normal Users';
+$lang->user->normalList      = 'Active Users';
 $lang->user->active          = 'Active';
 $lang->user->setReferer      = 'Set Referrer';
 $lang->user->vcard           = 'Vcard';
-$lang->user->uploadAvatar    = 'Upload avatar';
-$lang->user->cropAvatar      = 'Crop avatar';
-$lang->user->cropAvatarTip   = 'Drag to crop avatar';
+$lang->user->uploadAvatar    = 'Upload Avatar';
+$lang->user->cropAvatar      = 'Crop Avatar';
+$lang->user->cropAvatarTip   = 'Drag to crop your avatar';
 $lang->user->adminUser       = 'User';
 
 $lang->user->profile     = 'Profile';
@@ -88,14 +88,14 @@ $lang->user->inputColleague = "Please enter a colleauge name";
 $lang->user->inputPassword  = 'Please enter password';
 $lang->user->searchUser     = 'Search';
 
-$lang->user->errorDeny     = "Sorry, you don't have the permission to visit <b>%s</b>'s <b>%s</b>. Please contact the administrator.<br/> This page will jump to homepage after 5 seconds";
+$lang->user->errorDeny     = "Sorry, you don't have the permission to visit <b>%s</b> <b>%s</b>. Please contact the administrator.<br/> This page will jump to the homepage after 5 seconds";
 $lang->user->loginFailed   = "Login failed. Check you account and password.";
-$lang->user->locked        = "Failed too many times. Please login ten minutes later.";
-$lang->user->lockedForEver = "User has been disabled permanently.";
+$lang->user->locked        = "Failed too many times. Please log in again in 10 minutes.";
+$lang->user->lockedForEver = "The user is disabled permanently.";
 $lang->user->forbidSuccess = 'Forbidden.';
 $lang->user->actionFail    = 'Failed.';
 $lang->user->uploadSuccess = 'Uploaded.';
-$lang->user->actionError   = 'Error, there are records created by this user.';
+$lang->user->actionError   = 'Error. There are records created by this user.';
 $lang->user->retainAccount = 'You cannot set <strong>%s</strong> as an account.';
 
 $lang->user->reviewProcess['attend']   = 'Attend';
@@ -119,12 +119,12 @@ $lang->user->statusList->forbidden = "<label class='label label-danger'>Forbidde
 $lang->user->statusList->normal    = "<label class='label label-success'>Normal</label>";
 
 $lang->user->notice = new stdclass();
-$lang->user->notice->password = 'Numbers and letters, at least 6 characters.';
+$lang->user->notice->password = '>= 6 numbers/letters';
 
 $lang->user->login  = new stdclass();
 $lang->user->login->common  = "Login";
 $lang->user->login->welcome = 'Welcome';
-$lang->user->login->why     = 'Login to enjoy more features.';
+$lang->user->login->why     = 'Login to enjoy more features';
 
 $lang->user->control = new stdclass();
 $lang->user->control->common      = 'Dashboard';
@@ -134,8 +134,8 @@ $lang->user->control->lblPassword = "Leave it blank and nothing will be changed.
 $lang->user->control->menus[10] = '<i class="icon-large icon-user"></i> Profile <i class="icon-chevron-right"></i>|user|profile';
 $lang->user->control->menus[20] = '<i class="icon-large icon-edit"></i> Edit <i class="icon-chevron-right"></i>|user|edit';
 //$lang->user->control->menus[28] = '<i class="icon-large icon-comments-alt"></i> Messages <i class="icon-chevron-right"></i>|user|message';
-$lang->user->control->menus[30] = '<i class="icon-large icon-share"></i> Threads <i class="icon-chevron-right"></i>|user|thread';
-$lang->user->control->menus[40] = '<i class="icon-large icon-mail-reply-all"></i> Replies <i class="icon-chevron-right"></i>|user|reply';
+$lang->user->control->menus[30] = '<i class="icon-large icon-share"></i> Thread <i class="icon-chevron-right"></i>|user|thread';
+$lang->user->control->menus[40] = '<i class="icon-large icon-mail-reply-all"></i> Reply <i class="icon-chevron-right"></i>|user|reply';
 
 $lang->user->colleagueMenu = 'Colleague';
 
@@ -143,12 +143,12 @@ $lang->dept = new stdclass();
 $lang->dept->common     = 'Department';
 $lang->dept->name       = 'Name';
 $lang->dept->alias      = 'Alias';
-$lang->dept->edit       = 'Manage Dept';
+$lang->dept->edit       = 'Manage Department';
 $lang->dept->parent     = 'Parent';
 $lang->dept->children   = 'Child';
 $lang->dept->desc       = 'Description';
 $lang->dept->keywords   = 'Tags';
-$lang->dept->moderators = 'Dept Manager';
+$lang->dept->moderators = 'Department Manager';
   
 $lang->user->roleList['']           = ''; 
 $lang->user->roleList['dev']        = 'Developer';
@@ -166,7 +166,7 @@ $lang->user->roleList['adminmgr']   = 'Office Manager';
 $lang->user->roleList['servicemgr'] = 'Service Manager';
 $lang->user->roleList['supportmgr'] = 'Support Manager';
 $lang->user->roleList['top']        = 'Senior Manager';
-$lang->user->roleList['others']     = 'Others';
+$lang->user->roleList['others']     = 'Other';
 
 $lang->user->mailContent = <<<EOT
 <html>

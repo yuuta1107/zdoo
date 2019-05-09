@@ -15,7 +15,7 @@ $lang->project->browse     = 'Project';
 $lang->project->index      = 'Project';
 $lang->project->create     = "Create Project";
 $lang->project->edit       = 'Edit';
-$lang->project->view       = 'Project Detail';
+$lang->project->view       = 'Project Details';
 $lang->project->finish     = 'Finish';
 $lang->project->delete     = 'Delete';
 $lang->project->enter      = 'Enter';
@@ -26,7 +26,7 @@ $lang->project->other      = 'Other : ';
 $lang->project->deleted    = 'Deleted';
 $lang->project->finished   = 'Finished';
 $lang->project->suspended  = 'Suspended';
-$lang->project->noMatched  = 'No matched project including "%s"';
+$lang->project->noMatched  = 'No project including "%s" found.';
 $lang->project->search     = 'Search';
 $lang->project->import     = 'Import';
 $lang->project->importTask = 'Import task';
@@ -49,11 +49,11 @@ $lang->project->whitelist   = 'Whitelist';
 $lang->project->doc         = 'Document';
 
 $lang->project->confirm = new stdclass();
-$lang->project->confirm->activate = 'Do you want to activate this projcet?';
+$lang->project->confirm->activate = 'Do you want to activate this project?';
 $lang->project->confirm->suspend  = 'Do you want to suspend this projcet?';
 
-$lang->project->activateSuccess = 'Successfully activtated';
-$lang->project->suspendSuccess  = 'Successfully suspended';
+$lang->project->activateSuccess = 'Activtated!';
+$lang->project->suspendSuccess  = 'Suspended!';
 $lang->project->selectProject   = 'Select Project';
 
 $lang->project->note = new stdclass();
@@ -68,8 +68,8 @@ $lang->project->roleList['member']  = 'Default';
 $lang->project->roleList['senior']  = 'Manager';
 $lang->project->roleList['limited'] = 'Limited';
 
-$lang->project->whitelistTip        = 'Whitelist members have access to projects and tasks.';
-$lang->project->roleTip             = "Managers have all privilages; Default members can not delete the unreleted tasks; Limited members can only edit their own tasks.";
+$lang->project->whitelistTip        = 'Whitelist members can access projects and tasks.';
+$lang->project->roleTip             = "Managers have all permissions; Default users cannot delete the unlinked tasks; Limited users can only edit their own tasks.";
 $lang->project->roleTips['senior']  = "Managers can view, edit and delete all task.";
 $lang->project->roleTips['member']  = "Default: view and edit all tasks and delete their own tasks.";
 $lang->project->roleTips['limited'] = "Limited: view and edit their own tasks.";

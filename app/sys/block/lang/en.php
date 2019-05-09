@@ -27,11 +27,11 @@ $lang->block->params->value = 'Value';
 
 $lang->block->createBlock        = 'Create';
 $lang->block->editBlock          = 'Edit';
-$lang->block->ordersSaved        = 'Order has been saved.';
+$lang->block->ordersSaved        = 'Order is saved.';
 $lang->block->confirmRemoveBlock = 'Do you want to remove Block [{0}] ?';
 
 $lang->block->allEntries  = 'All';
-$lang->block->dynamic     = 'Dynamic';
+$lang->block->dynamic     = 'Dynamics';
 $lang->block->dynamicInfo = "%s, %s <em>%s</em> %s <a href='%s' %s>%s</a>。";
 
 $lang->block->default['oa']['1']['title'] = 'Calendar';
@@ -113,7 +113,7 @@ $lang->block->default['team']['1']['grid']  = 4;
 
 $lang->block->default['team']['1']['params']['num'] = 15;
 
-$lang->block->default['team']['2']['title'] = 'Latest Thread';
+$lang->block->default['team']['2']['title'] = 'Latest Threads';
 $lang->block->default['team']['2']['block'] = 'thread';
 $lang->block->default['team']['2']['grid']  = 4;
 
@@ -129,7 +129,7 @@ $lang->block->default['team']['3']['params']['type'] = 'stick';
 
 $lang->block->default['sys']['1'] = $lang->block->default['oa']['1'];
 $lang->block->default['sys']['1']['source'] = 'oa';
-$lang->block->default['sys']['2']['title']  = 'Dynamic';
+$lang->block->default['sys']['2']['title']  = 'Dynamics';
 $lang->block->default['sys']['2']['block']  = 'dynamic';
 $lang->block->default['sys']['2']['grid']   = 6;
 $lang->block->default['sys']['2']['source'] = '';
@@ -147,15 +147,15 @@ $lang->block->default['sys']['8'] = $lang->block->default['team']['2'];
 $lang->block->default['sys']['8']['source'] = 'team';
 
 $lang->block->moreLinkList = new stdclass();
-$lang->block->moreLinkList->order['assinedTo']    = 'AssignToMe|sys|my|order|type=assinedTo';
-$lang->block->moreLinkList->order['createdBy']    = 'CreateByMe|sys|my|order|type=createdBy';
-$lang->block->moreLinkList->order['signedBy']     = 'SignByMe|sys|my|order|type=signedBy';
+$lang->block->moreLinkList->order['assinedTo']    = 'AssignedToMe|sys|my|order|type=assinedTo';
+$lang->block->moreLinkList->order['createdBy']    = 'CreatedByMe|sys|my|order|type=createdBy';
+$lang->block->moreLinkList->order['signedBy']     = 'SignedByMe|sys|my|order|type=signedBy';
 $lang->block->moreLinkList->order['normalstatus'] = 'All|crm|order|browse|mode=all';
 $lang->block->moreLinkList->order['signedstatus'] = 'All|crm|order|browse|mode=all';
 $lang->block->moreLinkList->order['closedstatus'] = 'All|crm|order|browse|mode=all';
 
-$lang->block->moreLinkList->contract['returnedBy']     = 'ReturnByMe|sys|my|contract|type=returnedBy';
-$lang->block->moreLinkList->contract['deliveredBy']    = 'DeliverByMe|sys|my|contract|type=deliveredBy';
+$lang->block->moreLinkList->contract['returnedBy']     = 'ReturnedByMe|sys|my|contract|type=returnedBy';
+$lang->block->moreLinkList->contract['deliveredBy']    = 'DeliveredByMe|sys|my|contract|type=deliveredBy';
 $lang->block->moreLinkList->contract['normalstatus']   = 'Unfinished|crm|contract|browse|mode=unfinished';
 $lang->block->moreLinkList->contract['closedstatus']   = 'Finished|crm|contract|browse|mode=finished';
 $lang->block->moreLinkList->contract['canceledstatus'] = 'Cancelled|crm|contract|browse|mode=canceled';
@@ -170,15 +170,15 @@ $lang->block->moreLinkList->provider  = 'Supplier|cash|provider|browse|';
 $lang->block->moreLinkList->announce = 'Announce|oa|announce|browse|';
 $lang->block->moreLinkList->attend   = 'Attend|sys|todo|calendar|';
 
-$lang->block->moreLinkList->task['assignedTo'] = 'AssignToMe|sys|my|task|type=assignedTo';
-$lang->block->moreLinkList->task['createdBy']  = 'CreateByMe|sys|my|task|type=createdBy';
-$lang->block->moreLinkList->task['finishedBy'] = 'FinishByMe|sys|my|task|type=finishedBy';
-$lang->block->moreLinkList->task['closedBy']   = 'CloseByMe|sys|my|task|type=closedBy';
-$lang->block->moreLinkList->task['canceledBy'] = 'CancelByMe|sys|my|task|type=canceledBy';
+$lang->block->moreLinkList->task['assignedTo'] = 'AssignedToMe|sys|my|task|type=assignedTo';
+$lang->block->moreLinkList->task['createdBy']  = 'CreatedByMe|sys|my|task|type=createdBy';
+$lang->block->moreLinkList->task['finishedBy'] = 'FinishedByMe|sys|my|task|type=finishedBy';
+$lang->block->moreLinkList->task['closedBy']   = 'ClosedByMe|sys|my|task|type=closedBy';
+$lang->block->moreLinkList->task['canceledBy'] = 'CancelledByMe|sys|my|task|type=canceledBy';
 
 $lang->block->moreLinkList->project['doing']    = 'Doing|proj|project|index|status=doing';
 $lang->block->moreLinkList->project['finished'] = 'Finished|proj|project|index|status=finished';
-$lang->block->moreLinkList->project['suspend']  = 'Suspend|proj|project|index|status=suspend';
+$lang->block->moreLinkList->project['suspend']  = 'Suspended|proj|project|index|status=suspend';
 
 $lang->block->moreLinkList->blog = 'Latest Blog|team|blog|index|';
 $lang->block->moreLinkList->thread['new']   = 'Latest Thread|team|forum|index|';

@@ -6,7 +6,7 @@ $lang->cron->list    = 'List';
 $lang->cron->create  = 'Create';
 $lang->cron->edit    = 'Edit';
 $lang->cron->delete  = 'Delete';
-$lang->cron->toggle  = 'Activate/Disable';
+$lang->cron->toggle  = 'Enable/Disable';
 $lang->cron->turnon  = 'Open/Close';
 
 $lang->cron->m        = 'Minute';
@@ -18,7 +18,7 @@ $lang->cron->command  = 'Command';
 $lang->cron->status   = 'Status';
 $lang->cron->type     = 'Type';
 $lang->cron->remark   = 'Remark';
-$lang->cron->lastTime = 'Last run time';
+$lang->cron->lastTime = 'Last run';
 
 $lang->cron->turnonList['1'] = 'Open';
 $lang->cron->turnonList['0'] = 'Close';
@@ -30,21 +30,21 @@ $lang->cron->statusList['stop']    = 'Stop';
 $lang->cron->typeList['ranzhi'] = 'Self call';
 $lang->cron->typeList['system'] = 'System command';
 
-$lang->cron->toggleList['start'] = 'Activate';
+$lang->cron->toggleList['start'] = 'Enable';
 $lang->cron->toggleList['stop']  = 'Disable';
 
 $lang->cron->confirmDelete = 'Do you want to delete the task?';
-$lang->cron->confirmTurnon = 'Do you want to trun off cron?';
+$lang->cron->confirmTurnon = 'Do you want to trun off the cron?';
 $lang->cron->introduction  = <<<EOD
-<p>Timing tasks such as compute burn , backup. Absolve themselves of layout timing task.</p>
-<p>This function has yet to be perfect, so the function is turned off by default</p>
+<p>Cron such as compute burn and backup.</p>
+<p>Cron features is in optimization, so this feature is not ON by default</p>
 EOD;
 $lang->cron->confirmOpen = <<<EOD
-<p>Whether to open the function? <a href="%s">Open timing task</a></p>
+<p>Do you want to set this feature ON? <a href="%s">Open timing task</a></p>
 EOD;
 
 $lang->cron->notice = new stdclass();
-$lang->cron->notice->m   = 'Range : 0-59，"*" means the range of numbers, "/" means "Every", "-" means digital range.';
+$lang->cron->notice->m   = 'Range : 0-59，"*" means the range of numbers, "/" means "Every", "-" means digit range.';
 $lang->cron->notice->h   = 'Range : 0-23';
 $lang->cron->notice->dom = 'Range : 1-31';
 $lang->cron->notice->mon = 'Range : 1-12';

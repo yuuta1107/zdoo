@@ -11,7 +11,7 @@
  */
 if(!isset($lang->webapp)) $lang->webapp = new stdclass();
 $lang->webapp->common = 'App';
-$lang->webapp->index  = 'Added App';
+$lang->webapp->index  = 'View App';
 $lang->webapp->obtain = 'Get App';
 
 $lang->webapp->install    = 'Install';
@@ -31,12 +31,12 @@ $lang->webapp->icon        = 'Icon';
 $lang->webapp->module      = 'Category';
 $lang->webapp->author      = 'Author';
 $lang->webapp->abstract    = 'Abstract';
-$lang->webapp->desc        = 'Desc';
+$lang->webapp->desc        = 'Description';
 $lang->webapp->target      = 'Open with';
 $lang->webapp->size        = 'Size';
 $lang->webapp->height      = 'Height';
-$lang->webapp->addedTime   = 'Add Time';
-$lang->webapp->updatedTime = 'Update Time';
+$lang->webapp->addedTime   = 'Added';
+$lang->webapp->updatedTime = 'Updated';
 $lang->webapp->downloads   = 'Downloads';
 $lang->webapp->grade       = 'Ratings';
 $lang->webapp->addType     = 'Add Type';

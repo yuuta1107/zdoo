@@ -18,8 +18,8 @@ $lang->file->primary    = 'Cover';
 $lang->file->setPrimary = 'Set as Cover';
 $lang->file->toggle     = 'Toggle';
 $lang->file->label      = 'Label';
-$lang->file->lblInfo    = '<i>(Type:%s, Size:%s, Added at: %s，Downloads: %s)</i>';
-$lang->file->limit      = "(<span class='text-danger'>Less than 2M</span>)";
+$lang->file->lblInfo    = '<i>(Type: %s Size: %s Added: %sDownloads: %s)</i>';
+$lang->file->limit      = "(<span class='text-danger'> < 2M</span>)";
 $lang->file->attachFile = 'Attach another file';
 
 $lang->file->id          = 'ID';
@@ -34,10 +34,10 @@ $lang->file->downloads   = 'Downloads';
 
 $lang->file->edit          = 'Edit';
 $lang->file->editFile      = 'Change file';
-$lang->file->sizeLimit     = "<p class='text-danger'>File must be less than %sM.</p>";
+$lang->file->sizeLimit     = "<p class='text-danger'>File must be < %sM.</p>";
 $lang->file->maxUploadSize = "<span class='red'>%s</span>";
 $lang->file->delete        = 'Delete';
 
 $lang->file->errorUnwritable = 'Upload directory is not writable.';
 $lang->file->errorNoFile     = 'No file is selected.';
-$lang->file->errorFileSize   = 'The file size exceeds the limit. It might not be uploaded!';
+$lang->file->errorFileSize   = 'The file size exceeds the limit. It  cannot be uploaded!';

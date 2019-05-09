@@ -9,7 +9,7 @@
  * @version     $Id$
  * @link        http://www.zdoo.org
  */
-$lang->announce->common = 'Notice';
+$lang->announce->common = 'Announcement';
 $lang->announce->browse = 'Browse';
 $lang->announce->create = 'Create';
 $lang->announce->edit   = 'Edit';

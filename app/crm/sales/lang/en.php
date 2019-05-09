@@ -1,7 +1,7 @@
 <?php
 if(!isset($lang->sales)) $lang->sales = new stdclass();
 $lang->sales->common = 'Sales';
-$lang->sales->admin  = 'Privilege';
+$lang->sales->admin  = 'Permission';
 $lang->sales->browse = 'Manage Group';
 $lang->sales->list   = 'Sales Team';
 $lang->sales->create = 'Create';
@@ -14,9 +14,9 @@ $lang->sales->desc   = 'Desciption';
 $lang->sales->user   = 'Users';
 
 $lang->sales->group  = 'Groups';
-$lang->sales->priv   = 'Privileges';
+$lang->sales->priv   = 'Permissions';
 
-$lang->sales->viewTip      = 'view';
-$lang->sales->editTip      = 'edit';
-$lang->sales->currentGroup = 'this group';
+$lang->sales->viewTip      = 'View';
+$lang->sales->editTip      = 'Edit';
+$lang->sales->currentGroup = 'Current Group';
 $lang->sales->member       = 'Member';

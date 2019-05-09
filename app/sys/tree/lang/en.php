@@ -23,14 +23,14 @@ $lang->tree->noCategories  = 'No category yet. Add one first.';
 $lang->tree->noBoards      = 'No board yet. Add one first.';
 $lang->tree->timeCountDown = "Jump to %s to manage the page in <strong id='countDown'>3</strong> seconds.";
 $lang->tree->redirect      = 'Create now';
-$lang->tree->aliasRepeat   = 'Alias: %s already exists。';
-$lang->tree->aliasConflict = 'Alias: %s  conflicts with system modules';
-$lang->tree->hasChildren   = "This category has children, so it can't be deleted.";
-$lang->tree->hasThreads    = "This board has threads, so it can't be deleted.";
-$lang->tree->hasProducts   = "This category has products, so it can't be deleted.";
+$lang->tree->aliasRepeat   = 'Alias: %s exists。';
+$lang->tree->aliasConflict = 'Alias: %s conflicts with system modules';
+$lang->tree->hasChildren   = "This category has children, so it cannot be deleted.";
+$lang->tree->hasThreads    = "This board has threads, so it cannot be deleted.";
+$lang->tree->hasProducts   = "This category has products, so it cannot be deleted.";
 $lang->tree->confirmDelete = "Do you want to delete it?";
 $lang->tree->successFixed  = "Fixed.";
-$lang->tree->asParent      = "[%s] has children, so it can't be merged.";
+$lang->tree->asParent      = "[%s] has child, so it cannot be merged.";
 
 /* Lang items for article, products. */
 $lang->category = new stdclass();
@@ -41,7 +41,7 @@ $lang->category->parent   = 'Parent';
 $lang->category->desc     = 'Description';
 $lang->category->keywords = 'Tag';
 $lang->category->children = "Child";
-$lang->category->rights   = 'Privilege';
+$lang->category->rights   = 'Permission';
 $lang->category->users    = 'Users';
 $lang->category->groups   = 'Groups';
 $lang->category->origin   = 'Origin Category';
@@ -87,7 +87,7 @@ $lang->out->parent   = 'Parent';
 $lang->out->desc     = 'Description';
 $lang->out->keywords = 'Tags';
 $lang->out->children = "Child";
-$lang->out->rights   = 'Privilege';
+$lang->out->rights   = 'Permission';
 $lang->out->refund   = 'Reimbursement';
 $lang->out->merge    = 'Merge Category';
 
@@ -112,5 +112,5 @@ $lang->board->readonlyList[0] = 'Pulic';
 $lang->board->readonlyList[1] = 'Read Only';
 
 $lang->board->placeholder = new stdclass();
-$lang->board->placeholder->moderators  = "BM accounts. Separated with" . '","';
+$lang->board->placeholder->moderators  = "Board Moderator accounts. Separated with" . '","';
 $lang->board->placeholder->setChildren = 'Only forums with two-level boards can be seen.';

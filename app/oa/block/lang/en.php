@@ -10,7 +10,7 @@
  * @link        http://www.zdoo.org
  */
 $lang->block->common   = 'Block';
-$lang->block->announce = 'Announce';
+$lang->block->announce = 'Announcement';
 $lang->block->lblBlock = 'Block';
 $lang->block->admin    = 'Manage Block';
 $lang->block->type     = 'Type';
@@ -19,7 +19,7 @@ $lang->block->doneTask = 'Done';
 $lang->block->rate     = 'Rate';
 
 $lang->block->availableBlocks = new stdclass();
-$lang->block->availableBlocks->announce = 'Announce';
+$lang->block->availableBlocks->announce = 'Announcement';
 $lang->block->availableBlocks->attend   = 'Calendar';
 
 $lang->block->num     = 'Number';

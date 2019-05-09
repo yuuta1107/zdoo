@@ -11,14 +11,14 @@
  */
 $lang->mail->common = 'Email Settings';
 $lang->mail->index  = 'Home';
-$lang->mail->detect = 'Detect';
+$lang->mail->detect = 'Test';
 $lang->mail->edit   = 'Configure';
 $lang->mail->save   = 'Saved.';
 $lang->mail->test   = 'Testing';
 $lang->mail->reset  = 'Reset';
 
 $lang->mail->turnon      = 'Switch';
-$lang->mail->fromAddress = 'From email';
+$lang->mail->fromAddress = 'From Email';
 $lang->mail->fromName    = 'From';
 $lang->mail->mta         = 'MTA';
 $lang->mail->host        = 'SMTP host';
@@ -36,8 +36,8 @@ $lang->mail->debugList[0] = 'off';
 $lang->mail->debugList[1] = 'normal';
 $lang->mail->debugList[2] = 'high';
 
-$lang->mail->authList[1]  = 'necessary';
-$lang->mail->authList[0]  = 'unnecessary';
+$lang->mail->authList[1]  = 'required';
+$lang->mail->authList[0]  = 'not required';
 
 $lang->mail->secureList['']    = 'plain';
 $lang->mail->secureList['ssl'] = 'ssl';
@@ -47,7 +47,7 @@ $lang->mail->inputFromEmail = 'Please enter Email address';
 $lang->mail->nextStep       = 'Next';
 $lang->mail->successSaved   = 'The configuration is saved.';
 $lang->mail->subject        = "This is a testing Email from Zdoo.";
-$lang->mail->content        = 'If you see this notice, it means that the Email notification feature has been enabled!';
+$lang->mail->content        = 'If you see this notice, it means that the Email notification feature is enabled!';
 $lang->mail->sendSuccess    = 'Sent!';
 $lang->mail->needConfigure  = "Configuration is not found. Configure it first.";
 
