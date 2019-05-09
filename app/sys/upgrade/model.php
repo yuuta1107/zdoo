@@ -170,7 +170,7 @@ class upgradeModel extends model
                 $this->processTeam();
                 $this->processContractHandlers();
                 $this->processCustomerNextdate();
-                $this->processTradeNoCurrency();
+                $this->processTradesNoCurrency();
 
             default: if(!$this->isError()) $this->loadModel('setting')->updateVersion($this->config->version);
         }
