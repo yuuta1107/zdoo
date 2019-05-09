@@ -95,7 +95,7 @@
                   <?php if($status == 'both') $signOut = $lang->attend->statusList['early'];?>
                   <?php echo $signOut;?>
                 </td>
-                <td>
+                <td class='attend-actions'>
                   <?php
                   $edit     = $reviewStatus == 'wait' ? $lang->attend->edited    : $lang->attend->edit;
                   $leave    = $reason == 'leave'      ? $lang->attend->leaved    : $lang->attend->leave;
