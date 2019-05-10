@@ -30,7 +30,7 @@
         <td><?php echo $schema->id;?></td>
         <td class='text-left'><?php echo $schema->name;?></td>
         <td>
-          <?php commonModel::printLink('schema', 'view', "schema={$schema->id}", $lang->schema->view, "data-toggle='modal'");?>
+          <?php commonModel::printLink('schema', 'view', "schema={$schema->id}", $lang->view, "data-toggle='modal'");?>
           <?php commonModel::printLink('schema', 'edit', "schemaID={$schema->id}", $lang->edit);?>
           <?php commonModel::printLink('schema', 'delete', "schemaID={$schema->id}", $lang->delete, "class='deleter'");?>
         </td>
