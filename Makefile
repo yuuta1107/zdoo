@@ -32,7 +32,7 @@ ranzhi:
 	find ranzhi -name tests | xargs rm -fr
 	# Add ext directory to config and each module.
 	test -d ranzhi/config/ext || mkdir ranzhi/config/ext
-	for app in `ls ranzhi/app/`; do for module in `ls ranzhi/app/$$app/`; do mkdir ranzhi/app/$$app/$$module/ext; done; done
+	for app in `ls ranzhi/app/`; do for module in `ls ranzhi/app/$$app/`; do test -d ranzhi/app/$$app/$$module/ext || mkdir ranzhi/app/$$app/$$module/ext; done; done
 	find ranzhi/ -name ext | xargs chmod -R 777
 	# Add index.html to each directory.
 	for path in `find ranzhi/ -type d`; do touch "$$path/index.html"; done	
