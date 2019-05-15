@@ -170,9 +170,9 @@ class customerModel extends model
 
     /** 
      * Get customer pairs.
-     * 
+     *
      * @param  string  $relation
-     * @param  bool    $emptyOption 
+     * @param  bool    $emptyOption
      * @param  string  $orderBy
      * @param  int     $limit
      * @param  string  $customerID
@@ -192,7 +192,7 @@ class customerModel extends model
                 ->beginIF($relation == 'provider')->andWhere('relation')->ne('client')->fi()
                 ->orderBy($orderBy)
                 ->fetchPairs();
-            if(!$limit) 
+            if(!$limit)
             {
                 if($emptyOption) return array('' => '') + $customers;
                 return $customers;

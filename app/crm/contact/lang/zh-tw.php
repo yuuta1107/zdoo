@@ -47,6 +47,8 @@ $lang->contact->newCustomer    = '新建';
 $lang->contact->uploadAvatar   = '上傳頭像';
 $lang->contact->changeAvatar   = '更換頭像';
 $lang->contact->selectCustomer = '選擇已有客戶';
+$lang->contact->search         = '搜索';
+$lang->contact->searchInput    = '輸入搜索內容';
 
 $lang->contact->browse         = '瀏覽聯繫人';
 $lang->contact->block          = '聯繫人區塊';

@@ -281,7 +281,7 @@ class actionModel extends model
             ->fetchAll('id');
 
         $histories = $this->getHistory(array_keys($actions));
-        $contacts  = $this->loadModel('contact', 'crm')->getPairs(0, false, '');
+        $contacts  = $this->loadModel('contact', 'crm')->getPairs(0, '', false);
         $this->loadModel('file');
 
         foreach($actions as $actionID => $action)

@@ -286,7 +286,7 @@ class tradeModel extends model
     public function getCurrentYearAndMonth($years, $date)
     {
         $currentYear  = current($years);
-        $currentMonth = '00';
+        $currentMonth = '';
         if(!empty($date))
         {
             $currentYear = substr($date, 0, 4);

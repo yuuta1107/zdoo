@@ -306,18 +306,22 @@ class contactModel extends model
     }
 
     /**
-     * Get common selecter of contact.
-     * 
-     * @param  int    $customer 
-     * @param  bool   $emptyOption 
-     * @param  string $status 
+     * Get contact pairs.
+     *
+     * @param  int    $customer
+     * @param  bool   $emptyOption
+     * @param  string $status
+     * @param  string $orderBy
+     * @param  int    $limit
+     * @param  string $contactID
      * @access public
-     * @return void
+     * @return array
      */
-    public function getPairs($customer = 0, $emptyOption = true, $status = 'normal')
+    public function getPairs($customer = 0, $status = 'normal', $emptyOption = true, $orderBy = 'id_desc', $limit = 0, $contactID = '')
     {
+        $contactList    = array();
         $customerIdList = $this->loadModel('customer')->getCustomersSawByMe();
-        if(empty($customerIdList)) return array();
+        if(!$customerIdList) return array();
 
         $contacts = $this->dao->select('t1.id, t1.realname')->from(TABLE_CONTACT)->alias('t1')
             ->leftJoin(TABLE_RESUME)->alias('t2')->on('t1.id = t2.contact')
@@ -325,11 +329,34 @@ class contactModel extends model
             ->beginIF($status)->andWhere('t1.status')->eq($status)->fi()
             ->beginIF($customer)->andWhere('t2.customer')->eq($customer)->fi()
             ->beginIF($status == 'normal')->andWhere('t2.customer')->in($customerIdList)->fi()
+            ->orderBy($orderBy)
             ->fetchPairs();
+        if(!$limit)
+        {
+            if($emptyOption) return array('' => '') + $contacts;
+            return $contacts;
+        }
 
-        if($emptyOption) $contacts = array(0 => '') + $contacts;
+        if($contactID)
+        {
+            $idList = explode(',', trim($contactID, ','));
+            foreach($idList as $id) if(isset($contacts[$id])) $contactList[$id] = $contacts[$id];
+        }
 
-        return $contacts;
+        $i = 1;
+        foreach($contacts as $id => $name)
+        {
+            $contactList[$id] = $name;
+            if($limit > 0 && ++$i > $limit)
+            {
+                $contactList['showmore'] = $this->lang->more . $this->lang->ellipsis;
+                break;
+            }
+        }
+        krsort($contactList);
+
+        if($emptyOption) $contactList = array('' => '') + $contactList;
+        return $contactList;
     }
 
     /**

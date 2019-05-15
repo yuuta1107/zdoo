@@ -52,6 +52,8 @@ $lang->contract->product       = 'Product';
 $lang->contract->productLine   = 'Product Line';
 $lang->contract->files         = 'Files';
 $lang->contract->createAddress = 'Create Address';
+$lang->contract->search        = 'Search';
+$lang->contract->searchInput   = 'Enter search items.';
 
 $lang->contract->browse           = 'Contract';
 $lang->contract->receive          = 'Receive';
