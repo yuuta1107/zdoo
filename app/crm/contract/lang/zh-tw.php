@@ -129,7 +129,7 @@ $lang->contract->team->statusList['accept'] = '已接受';
 $lang->contract->team->statusList['reject'] = '已拒絶';
 
 $lang->contract->error = new stdclass();
-$lang->contract->error->wrong = '<strong>貢獻度</strong>應該是數字';
+$lang->contract->error->wrongContribution = '<strong>貢獻度</strong>應該是數字';
 
 $lang->plan = new stdclass();
 $lang->plan->amount = $lang->contract->thisAmount;
