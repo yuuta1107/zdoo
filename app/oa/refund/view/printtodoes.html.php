@@ -23,7 +23,7 @@
     <?php foreach($refunds as $account => $accountRefunds):?>
     <?php foreach($accountRefunds as $currency => $currencyRefunds):?>
     <tr>
-      <td><span class="task-toggle"><i class="icon icon-plus"></i></span></td>
+      <td><span class="refund-toggle refund-toggle-<?php echo $account . '-' . $currency;?>"><i class="icon icon-plus"></i></span></td>
       <td class='text-left'><?php echo zget($deptList, $currencyRefunds['dept'], '');?></td>
       <td></td>
       <td></td>
@@ -34,7 +34,7 @@
       <td></td>
       <td></td>
       <td class='text-left'>
-        <?php echo html::a('javascript:$(".task-toggle").click()', $lang->detail);?>
+        <?php echo html::a('javascript:$(".refund-toggle-' . $account . '-' . $currency . '").click()', $lang->detail);?>
         <?php $idList = helper::safe64Encode(helper::jsonEncode($currencyRefunds['idList']));?>
         <?php echo html::a($this->createLink('refund', 'reimburse', "type=total&refundID={$idList}&currency={$currency}&money={$currencyRefunds['total']}"), $lang->refund->common, "data-toggle='modal' data-width='540'");?>
       </td>
@@ -75,18 +75,18 @@
   </div>
 </div>
 <script>
-$('.task-toggle').click(function()
+$('.refund-toggle').click(function()
 {
-    var obj = $(this).find('i');
-    if(obj.hasClass('icon-plus'))
+    var $obj = $(this).find('i');
+    if($obj.hasClass('icon-plus'))
     {
-       obj.parents('tr').next('tr').show();
-       obj.removeClass('icon-plus').addClass('icon-minus');
+       $obj.parents('tr').next('tr').show();
+       $obj.removeClass('icon-plus').addClass('icon-minus');
     }
-    else if(obj.hasClass('icon-minus'))
+    else if($obj.hasClass('icon-minus'))
     {
-       obj.parents('tr').next('tr').hide();
-       obj.removeClass('icon-minus').addClass('icon-plus');
+       $obj.parents('tr').next('tr').hide();
+       $obj.removeClass('icon-minus').addClass('icon-plus');
     }
     return false;
 });

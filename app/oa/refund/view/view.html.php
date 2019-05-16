@@ -82,7 +82,7 @@
       }
       if($refund->status == 'pass')
       {
-          commonModel::printLink('refund', 'reimburse', "refundID={$refund->id}", $lang->refund->common, "class='btn btn-default' data-toggle='modal' data-width='540'");
+          commonModel::printLink('refund', 'reimburse', "type=single&refundID={$refund->id}", $lang->refund->common, "class='btn btn-default' data-toggle='modal' data-width='540'");
       }
       $browseLink = $this->session->refundList ? $this->session->refundList : inlink('personal');
       commonModel::printRPN($browseLink, $preAndNext);

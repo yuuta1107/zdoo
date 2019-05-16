@@ -250,6 +250,7 @@ class refundModel extends model
             ->add('createdDate', helper::now()) 
             ->join('related', ',')
             ->setDefault('date', helper::today())
+            ->setDefault('payee', $this->app->user->account)
             ->remove('customer,order,contract,project,objectType,dateList,moneyList,invoiceList,categoryList,descList,relatedList,files,labels')
             ->get();
 
@@ -309,6 +310,7 @@ class refundModel extends model
             ->add('secondReviewDate', '0000-00-00 00:00:00')
             ->join('related', ',')
             ->setDefault('date', helper::today())
+            ->setDefault('payee', $oldRefund->createdBy)
             ->remove('customer,order,contract,project,objectType,dateList,moneyList,invoiceList,categoryList,descList,relatedList,files,labels')
             ->get();
 
@@ -570,6 +572,7 @@ class refundModel extends model
         foreach($refundIDList as $refundID)
         {
             $refund = $this->getByID($refundID);
+            if($refund->status != 'pass') continue;
 
             $data = new stdclass();
             $data->status     = 'finish';
@@ -602,6 +605,18 @@ class refundModel extends model
         $refundIDList = array();
         if($type == 'single') $refundIDList = array($refundID);
         if($type == 'total')  $refundIDList = json_decode(helper::safe64Decode($refundID));
+
+        $this->app->loadLang('trade', 'cash');
+
+        $errors = array();
+        foreach($refundIDList as $key => $refundID)
+        {
+            if(!$this->post->depositor[$refundID]) $errors["depositor{$refundID}"] = sprintf($this->lang->error->notempty, $this->lang->trade->depositor);
+            if(!$this->post->category[$refundID])  $errors["category{$refundID}"]  = sprintf($this->lang->error->notempty, $this->lang->trade->category);
+            if(!$this->post->dept[$refundID])      $errors["dept{$refundID}"]      = sprintf($this->lang->error->notempty, $this->lang->trade->dept);
+            if(!$this->post->handlers[$refundID])  $errors["handlers{$refundID}"]  = sprintf($this->lang->error->notempty, $this->lang->trade->handlers);
+        }
+        if($errors) return array('result' => 'fail', 'message' => $errors);
 
         foreach($refundIDList as $refundID)
         {

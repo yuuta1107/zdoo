@@ -1,4 +1,5 @@
 i.btn {font-family: ZenIcon;}
+#currency {border-right: none;}
 #detailBox .row {margin-top: 5px; margin-bottom: 5px;}
 #detailBox .form-group .input-group {margin-bottom: 2px;}
 #detailBox .table-detail td, #detailBox .table-detail th {padding-left: 5px;}

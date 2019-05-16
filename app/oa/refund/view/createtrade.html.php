@@ -20,7 +20,7 @@
       <th class='w-60px'><?php echo $lang->trade->depositor;?></th>
       <td>
         <div class='required required-wrapper'></div>
-        <?php echo html::select("depositor[$refund->id]", $depositorList, isset($this->config->refund->depositor) ? $this->config->refund->depositor : '', "class='form-control chosen'");?>
+        <?php echo html::select("depositor[$refund->id]", $depositorList, zget($this->config->refund, 'depositor', ''), "class='form-control chosen'");?>
       </td>
       <td class='w-20px'></td>
     </tr>
@@ -43,7 +43,7 @@
       <td>
         <div class='input-group'>
           <?php echo html::input("money[$refund->id]", $refund->money, "class='form-control' readonly");?>
-          <span class='input-group-addon'><?php echo zget($lang->currencyList, $refund->currency, $refund->currency);?></span>
+          <span class='input-group-addon'><?php echo zget($lang->currencyList, $refund->currency);?></span>
         </div>
       </td>
     </tr>

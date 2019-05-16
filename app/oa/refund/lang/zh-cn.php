@@ -99,7 +99,7 @@ $lang->refund->settings->setDepositor = "报销账户|refund|setdepositor";
 $lang->refund->settings->setRefundBy  = "由谁报销|refund|setrefundby";
 
 /* Width settings for different languages, in pixels. */
-$lang->refund->ActionWidth         = 40;
+$lang->refund->actionWidth         = 40;
 $lang->refund->todoActionWidth     = 80;
 $lang->refund->personalActionWidth = 130;
 $lang->refund->reviewActionWidth   = 80;

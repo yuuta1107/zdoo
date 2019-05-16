@@ -18,7 +18,7 @@
       <td>
         <div class='input-group'>
           <?php echo html::input('money', $money, "class='form-control' readonly");?>
-          <span class='input-group-addon'><?php echo zget($lang->currencyList, $currency, $currency);?></span>
+          <span class='input-group-addon'><?php echo zget($lang->currencyList, $currency);?></span>
         </div>
       </td>
       <td class='w-40px'></td>

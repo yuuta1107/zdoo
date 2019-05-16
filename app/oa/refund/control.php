@@ -555,7 +555,8 @@ class refund extends control
 
         if($_POST)
         {
-            $this->refund->createTrade($type, $refundID);
+            $result = $this->refund->createTrade($type, $refundID);
+            if(isset($result['result']) && ($result['result'] == 'fail')) $this->send($result);
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => 'reload'));
         }
