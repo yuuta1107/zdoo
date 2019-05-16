@@ -58,6 +58,14 @@ include '../../common/view/chosen.html.php';
 .trader_chosen .chosen-results > li.no-results {cursor: pointer;}
 .trader_chosen .chosen-results > li.no-results:hover {color: #1a4f85; background-color: #ddd;}
 .trader_chosen .chosen-results > li.no-results > span {font-weight: bold;}
+
+.contract_chosen .chosen-results > li.no-results {cursor: pointer;}
+.contract_chosen .chosen-results > li.no-results:hover {color: #1a4f85; background-color: #ddd;}
+.contract_chosen .chosen-results > li.no-results > span {font-weight: bold;}
+
+.contact_chosen .chosen-results > li.no-results {cursor: pointer;}
+.contact_chosen .chosen-results > li.no-results:hover {color: #1a4f85; background-color: #ddd;}
+.contact_chosen .chosen-results > li.no-results > span {font-weight: bold;}
 </style>
 <script language='Javascript'>
 var $selectedItem;
@@ -67,8 +75,11 @@ var selectItem = function(item)
     $('#triggerModal').modal('hide');
 };
 
+var selector = '';
 var relation = '';
 var trader   = 'customer';
+var contract = 'contract';
+var contact  = 'contact';
 
 $(document).ready(function()
 {
@@ -84,7 +95,9 @@ $(document).ready(function()
             break;
         case 'invoice':
             relation = 'client';
-            trade    = 'customer';
+            trader   = 'customer';
+            contract = 'contract';
+            contact  = 'contact';
             break;
         case 'order':
             relation = 'client';
@@ -98,7 +111,9 @@ $(document).ready(function()
 
     var showSearchModal = function(e)
     {
-        $('#searchform .trader.selected').removeClass('selected');
+        $('#searchform .' + selector + '.selected').removeClass('selected');
+        $('#searchform .contract.selected').removeClass('selected');
+        $('#searchform .contact.selected').removeClass('selected');
         if(e.hasClass('no-results'))
         {
             var key = e.parents('.chosen-container').find('.chosen-results > li.no-results > span').text();
@@ -109,7 +124,10 @@ $(document).ready(function()
             var key = e.next('.chosen-container').find('.chosen-results > li.no-results > span').text();
             e.addClass('selected');
         }
-        var link = createLink('customer', 'ajaxSearchCustomer', 'key=' + key + '&relation=' + relation);
+        var link = '';
+        if(selector == 'trader')   link = createLink('customer', 'ajaxSearchCustomer', 'key=' + key + '&relation=' + relation);
+        if(selector == 'contract') link = createLink('contract', 'ajaxSearchContract', 'key=' + key);
+        if(selector == 'contact')  link = createLink('contact', 'ajaxSearchContact', 'key=' + key);
         $.zui.modalTrigger.show({url: link, backdrop: 'static'});
     };
 
@@ -117,28 +135,69 @@ $(document).ready(function()
     {
         if($(this).val() === 'showmore')
         {
+            selector = 'trader';
+            showSearchModal($(this));
+        }
+    });
+
+    $(document).on('change', '#searchform .contract', function()
+    {
+        if($(this).val() === 'showmore')
+        {
+            selector = 'contract';
+            showSearchModal($(this));
+        }
+    });
+
+    $(document).on('change', '#searchform .contact', function()
+    {
+        if($(this).val() === 'showmore')
+        {
+            selector = 'contact';
             showSearchModal($(this));
         }
     });
 
     $(document).on('click', '#searchform .trader_chosen .chosen-results > li.no-results', function()
     {
-        if($(this).closest('tr').find('select[id^=field]').val() == trader) showSearchModal($(this));
+        if($(this).closest('tr').find('select[id^=field]').val() == trader)
+        {
+            selector = 'trader';
+            showSearchModal($(this));
+        }
+    });
+
+    $(document).on('click', '#searchform .contract_chosen .chosen-results > li.no-results', function()
+    {
+        if($(this).closest('tr').find('select[id^=field]').val() == contract)
+        {
+            selector = 'contract';
+            showSearchModal($(this));
+        }
+    });
+
+    $(document).on('click', '#searchform .contact_chosen .chosen-results > li.no-results', function()
+    {
+        if($(this).closest('tr').find('select[id^=field]').val() == contact)
+        {
+            selector = 'contact';
+            showSearchModal($(this));
+        }
     });
 
     $(document).on('hide.zui.modal', '#triggerModal', function()
     {
-        var key     = '';
-        var $trader = $('#searchform .trader.selected');
+        var key       = '';
+        var $selector = $('#searchform .' + selector + '.selected');
         if($selectedItem && $selectedItem.length)
         {
             key = $selectedItem.data('key');
-            if(!$trader.children('option[value="' + key + '"]').length)
+            if(!$selector.children('option[value="' + key + '"]').length)
             {
-                $trader.prepend('<option value="' + key + '">' + $selectedItem.text() + '</option>');
+                $selector.prepend('<option value="' + key + '">' + $selectedItem.text() + '</option>');
             }
 
-            $('#searchform .trader').each(function()
+            $('#searchform .' + selector).each(function()
             {
                 if(!$(this).children('option[value="' + key + '"]').length)
                 {
@@ -147,12 +206,12 @@ $(document).ready(function()
                 }
             });
 
-                if(!$('#querybox [id^=box] .trader').children('option[value="' + key + '"]').length)
+                if(!$('#querybox [id^=box] .' + selector).children('option[value="' + key + '"]').length)
                 {
-                    $('#querybox [id^=box] .trader').prepend('<option value="' + key + '">' + $selectedItem.text() + '</option>');
+                    $('#querybox [id^=box] .' + selector).prepend('<option value="' + key + '">' + $selectedItem.text() + '</option>');
                 }
         }
-        $trader.val(key).trigger('chosen:updated');
+        $selector.val(key).trigger('chosen:updated');
         $selectedItem = null;
     });
 });
@@ -326,12 +385,16 @@ function setField(fieldName, fieldNO)
         }
     }
 
-    if(fieldName == trader) $('#valueBox' + fieldNO).children().addClass('trader').attr('data-no_results_text', '<?php echo $lang->searchMore;?>');
+    if(fieldName == trader)   $('#valueBox' + fieldNO).children().addClass('trader').attr('data-no_results_text', '<?php echo $lang->searchMore;?>');
+    if(fieldName == contract) $('#valueBox' + fieldNO).children().addClass('contract').attr('data-no_results_text', '<?php echo $lang->searchMore;?>');
+    if(fieldName == contact)  $('#valueBox' + fieldNO).children().addClass('contact').attr('data-no_results_text', '<?php echo $lang->searchMore;?>');
 
     if(params[fieldName]['control'] == 'select' && (typeof(params[fieldName]['class']) == 'undefined' || params[fieldName]['class'] == 'chosen'))
     {
         $("#value" + fieldNO).addClass('chosen').chosen(chosenDefaultOptions);
-        if(fieldName == trader) $('#value' + fieldNO).next('.chosen-container').addClass('trader_chosen');
+        if(fieldName == trader)   $('#value' + fieldNO).next('.chosen-container').addClass('trader_chosen');
+        if(fieldName == contract) $('#value' + fieldNO).next('.chosen-container').addClass('contract_chosen');
+        if(fieldName == contact)  $('#value' + fieldNO).next('.chosen-container').addClass('contact_chosen');
     }
 }
 
@@ -439,7 +502,9 @@ function deleteQuery()
 
 <div class='hidden'>
 <?php
-$trader = '';
+$trader   = '';
+$contract = '';
+$contact  = '';
 switch($module)
 {
 case 'contact' :
@@ -449,7 +514,9 @@ case 'feedback' :
     $trader = 'customer';
     break;
 case 'invoice' :
-    $trader = 'customer';
+    $trader   = 'customer';
+    $contract = 'contract';
+    $contact  = 'contact';
     break;
 case 'order' :
     $trader = 'o.customer';
@@ -462,6 +529,9 @@ case 'trade' :
 foreach($fieldParams as $fieldName => $param)
 {
     $class = $fieldName == $trader ? 'trader' : '';
+    $class = (!$class && $fieldName == $contract) ? 'contract' : $class;
+    $class = (!$class && $fieldName == $contact) ? 'contact' : $class;
+
     echo "<span id='box$fieldName'>";
     if($param['control'] == 'select') echo html::select($fieldName, $param['values'], '', "class='form-control searchSelect $class'");
     if($param['control'] == 'input')  echo html::input($fieldName, '', "class='form-control searchInput'");
@@ -504,10 +574,17 @@ foreach($fieldParams as $fieldName => $param)
           echo "<td id='valueBox$fieldNO'>";
           if($param['control'] == 'select')
           {
-              $extraClass  = isset($param['class']) ? $param['class'] : 'chosen';
-              $traderClass = $currentField == $trader ? 'trader' : '';
-              $noResults   = $currentField == $trader ? "data-no_results_text='{$lang->searchMore}'" : '';
-              echo html::select("value$fieldNO", $param['values'], $formSession["value$fieldNO"], "class='form-control searchSelect $extraClass $traderClass' $noResults");
+              $extraClass    = isset($param['class']) ? $param['class'] : 'chosen';
+
+              $selectorClass = $currentField == $trader ? 'trader' : '';
+              $selectorClass = (!$selectorClass && $currentField == $contract) ? 'contract' : $selectorClass;
+              $selectorClass = (!$selectorClass && $currentField == $contact) ? 'contact' : $selectorClass;
+
+              $noResults     = $currentField == $trader ? "data-no_results_text='{$lang->searchMore}'" : '';
+              $noResults     = (!$noResults && $currentField == $contract) ? "data-no_results_text='{$lang->searchMore}'" : $noResults;
+              $noResults     = (!$noResults && $currentField == $contact) ? "data-no_results_text='{$lang->searchMore}'" : $noResults;
+
+              echo html::select("value$fieldNO", $param['values'], $formSession["value$fieldNO"], "class='form-control searchSelect $extraClass $selectorClass' $noResults");
           }
           if($param['control'] == 'input') 
           {
@@ -562,10 +639,17 @@ foreach($fieldParams as $fieldName => $param)
           echo "<td id='valueBox$fieldNO'>";
           if($param['control'] == 'select')
           {
-              $extraClass  = isset($param['class']) ? $param['class'] : 'chosen';
-              $traderClass = $currentField == $trader ? 'trader' : '';
-              $noResults   = $currentField == $trader ? "data-no_results_text='{$lang->searchMore}'" : '';
-              echo html::select("value$fieldNO", $param['values'], $formSession["value$fieldNO"], "class='form-control searchSelect $extraClass $traderClass' $noResults");
+              $extraClass    = isset($param['class']) ? $param['class'] : 'chosen';
+
+              $selectorClass = $currentField == $trader ? 'trader' : '';
+              $selectorClass = (!$selectorClass && $currentField == $contract) ? 'contract' : $selectorClass;
+              $selectorClass = (!$selectorClass && $currentField == $contact) ? 'contact' : $selectorClass;
+
+              $noResults     = $currentField == $trader ? "data-no_results_text='{$lang->searchMore}'" : '';
+              $noResults     = (!$noResults && $currentField == $contract) ? "data-no_results_text='{$lang->searchMore}'" : $noResults;
+              $noResults     = (!$noResults && $currentField == $contact) ? "data-no_results_text='{$lang->searchMore}'" : $noResults;
+
+              echo html::select("value$fieldNO", $param['values'], $formSession["value$fieldNO"], "class='form-control searchSelect $extraClass $selectorClass' $noResults");
           }
 
           if($param['control'] == 'input')
@@ -624,6 +708,14 @@ foreach($fieldParams as $fieldName => $param)
 $('#searchform .trader').each(function()
 {
     $(this).next('.chosen-container').addClass('trader_chosen');
+});
+$('#searchform .contract').each(function()
+{
+    $(this).next('.chosen-container').addClass('contract_chosen');
+});
+$('#searchform .contact').each(function()
+{
+    $(this).next('.chosen-container').addClass('contact_chosen');
 });
 </script>
 <iframe id='hiddenwin' name='hiddenwin' class='hidden'></iframe>

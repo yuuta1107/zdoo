@@ -874,4 +874,51 @@ class contract extends control
         }
         echo $html;
     }
+
+    /**
+     * Search contract by ajax.
+     *
+     * @param  string $key
+     * @param  string $contracts
+     * @access public
+     * @return void
+     */
+    public function ajaxSearchContract($key = '', $contracts = '')
+    {
+        $this->view->title     = $this->lang->contract->search;
+        $this->view->contracts = $contracts;
+        $this->view->key       = $key;
+        $this->display();
+    }
+
+    /**
+     * Ajax get contract pairs.
+     *
+     * @param  string $key
+     * @param  int    $limit
+     * @access public
+     * @return void
+     */
+    public function ajaxGetPairs($key = '', $limit = 0)
+    {
+        $i      = 0;
+        $result = array();
+        if(!$limit) $limit = $this->config->searchLimit;
+        $contracts = $this->contract->getPairs();
+        foreach($contracts as $id => $contract)
+        {
+            if($limit > 0 && $i > $limit) break;
+            if(stripos($contract,  $key) !== false)
+            {
+                $result[$id] = $contract;
+                $i++;
+            }
+        }
+        if($i < 1)
+        {
+            $result['info'] = $this->lang->noResultsMatch;
+        }
+
+        die(json_encode($result));
+    }
 }

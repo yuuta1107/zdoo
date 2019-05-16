@@ -47,6 +47,8 @@ $lang->contact->newCustomer    = 'Create Customer';
 $lang->contact->uploadAvatar   = 'Upload Photo';
 $lang->contact->changeAvatar   = 'Change Photo';
 $lang->contact->selectCustomer = 'Select Customer';
+$lang->contact->search         = 'Search';
+$lang->contact->searchInput    = 'Enter search items.';
 
 $lang->contact->browse         = 'View Contact';
 $lang->contact->block          = 'Contact Block';

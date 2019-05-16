@@ -20,7 +20,7 @@
       $yearLabel = $currentYear;
       if($this->app->getClientLang() == 'zh-cn' or $this->app->getClientLang() == 'zh-tw')
       {
-          $monthLabel = $currentMonth == '00' ? '' : (int)$currentMonth . $lang->month;
+          $monthLabel = $currentMonth ? ((int)$currentMonth . $lang->month) : '';
           if($monthLabel) $yearLabel .= $lang->year . $monthLabel;
       }
       else
@@ -63,7 +63,7 @@
     </div>
   </div>
   <div class='panel-body'>
-    <?php if($currentMonth == '00'):?>
+    <?php if(!$currentMonth):?>
     <table class='table active-disabled'>
       <tr>
         <td colspan='3' class='annual'>

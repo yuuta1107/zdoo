@@ -52,6 +52,8 @@ $lang->contract->product       = '產品';
 $lang->contract->productLine   = '產品綫';
 $lang->contract->files         = '附件';
 $lang->contract->createAddress = '新建';
+$lang->contract->search        = '搜索';
+$lang->contract->searchInput   = '輸入搜索內容';
 
 $lang->contract->browse           = '瀏覽合同';
 $lang->contract->receive          = '回款';
