@@ -878,7 +878,6 @@ class contractModel extends model
      */
     public function checkTeam()
     {
-        $total  = 0;
         $errors = array();
         foreach($this->post->account as $key => $account)
         {
@@ -887,10 +886,7 @@ class contractModel extends model
             if(!$account or !$contribution) continue;
 
             if(!is_numeric($contribution)) $errors["contribution{$key}"] = $this->lang->contract->error->wrongContribution;
-
-            $total += (float)$contribution;
         }
-        if($total > 100) $errors['totalContribution'] = $this->lang->contract->error->wrongTotalContribution;
 
         if($errors) return array('result' => 'fail', 'message' => $errors);
 
