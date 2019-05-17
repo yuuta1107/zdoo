@@ -43,6 +43,6 @@ $lang->my->contact->common = '聯繫人';
 
 /* Width settings for different languages, in pixels. */
 $lang->my->contractActionWidth = 240;
-$lang->my->orderActionWidth    = 210;
+$lang->my->orderActionWidth    = 180;
 $lang->my->projectActionWidth  = 160;
 $lang->my->taskActionWidth     = 240;

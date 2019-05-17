@@ -293,6 +293,9 @@ class tradeModel extends model
             if(strlen($date) == 6) $currentMonth = substr($date, 4, 2);
         }
 
+        if(!$currentYear)  $currentYear  = date('Y');
+        if(!$currentMonth) $currentMonth = date('m');
+
         return array($currentYear, $currentMonth);
     }
 

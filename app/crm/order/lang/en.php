@@ -82,4 +82,4 @@ $lang->order->infoNextDate  = 'Next Contact on %s';
 $lang->order->deny          = 'You has no permission to create %s.';
 
 /* Width settings for different languages, in pixels. */
-$lang->order->actionWidth = 240;
+$lang->order->actionWidth = 200;
