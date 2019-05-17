@@ -1134,7 +1134,7 @@
             }
             catch(e){}
 
-            if(this.isShowAndActive())
+            if(win.isShowAndActive())
             {
                 win.updateEntryUrl(win.firstLoad);
             }
