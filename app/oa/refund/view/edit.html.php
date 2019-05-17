@@ -21,7 +21,7 @@
     <div class='panel-body'>
       <table class='table table-form w-1000px'>
         <tr>
-          <th class='w-100px'><?php echo $lang->refund->name?></th>
+          <th class='w-70px'><?php echo $lang->refund->name?></th>
           <td class='w-400px'><?php echo html::input('name', $refund->name, "class='form-control'")?></td>
           <td></td>
         </tr>
@@ -31,14 +31,12 @@
         </tr>
         <tr>
           <th><?php echo $lang->refund->category?></th>
-          <td>
-            <div class='input-group'>
-              <?php echo html::select('category', $categories, $refund->category, "class='form-control chosen'");?>
-              <span class='input-group-addon'>
-                <?php echo html::checkbox('objectType', $lang->refund->objectTypeList, $refund->objectType);?> 
-              </span>
-            </div>
-          </td>
+          <td><?php echo html::select('category', $categories, $refund->category, "class='form-control chosen'");?></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th><?php echo $lang->refund->expenseType?></th>
+          <td><?php echo html::checkbox('objectType', $lang->refund->objectTypeList, $refund->objectType);?></td>
           <td></td>
         </tr>
         <tr>

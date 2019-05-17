@@ -15,6 +15,6 @@ $lang->tag->rank   = 'Rank';
 $lang->tag->link   = 'link';
 $lang->tag->search = 'Search';
 
-$lang->tag->admin     = 'Manage tags';
+$lang->tag->admin     = 'Manage Tag';
 $lang->tag->editLink  = 'Edit Link';
 $lang->tag->inputLink = 'Please enter a link';

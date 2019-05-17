@@ -631,8 +631,8 @@ class customer extends control
 
     /**
      * Search customer by ajax.
-     * 
-     * @param  string $key 
+     *
+     * @param  string $key
      * @param  string $relation
      * @param  string $customers
      * @access public

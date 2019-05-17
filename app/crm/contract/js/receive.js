@@ -5,10 +5,12 @@ $(document).ready(function()
         if($(this).prop('checked'))
         {
             $('.tradeTR').show();
+            $('#depositor').change();
         }
         else
         {
             $('.tradeTR').hide();
+            $('.currencyTR').hide();
         }
     });
 

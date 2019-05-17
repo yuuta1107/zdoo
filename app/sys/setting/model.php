@@ -265,7 +265,7 @@ class settingModel extends model
         {
             foreach($customLang as $id => $lang)
             {
-                if($lang->lang != $lang and $lang->lang != 'all') continue;
+                if($lang->lang != $currentLang and $lang->lang != 'all') continue;
                 $processedLang[$app][$lang->module][$lang->section][$lang->key] = $lang->value;
             }
         }

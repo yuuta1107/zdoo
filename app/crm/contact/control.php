@@ -470,4 +470,51 @@ END:VCARD";
         $this->view->status      = 'wait';
         $this->display();
     }
+
+    /**
+     * Search contact by ajax.
+     *
+     * @param  string $key
+     * @param  string $contacts
+     * @access public
+     * @return void
+     */
+    public function ajaxSearchContact($key = '', $contacts = '')
+    {
+        $this->view->title    = $this->lang->contact->search;
+        $this->view->contacts = $contacts;
+        $this->view->key      = $key;
+        $this->display();
+    }
+
+    /**
+     * Ajax get contact pairs.
+     *
+     * @param  string $key
+     * @param  int    $limit
+     * @access public
+     * @return void
+     */
+    public function ajaxGetPairs($key = '', $limit = 0)
+    {
+        $i      = 0;
+        $result = array();
+        if(!$limit) $limit = $this->config->searchLimit;
+        $contacts = $this->contact->getPairs();
+        foreach($contacts as $id => $contact)
+        {
+            if($limit > 0 && $i > $limit) break;
+            if(stripos($contact,  $key) !== false)
+            {
+                $result[$id] = $contact;
+                $i++;
+            }
+        }
+        if($i < 1)
+        {
+            $result['info'] = $this->lang->noResultsMatch;
+        }
+
+        die(json_encode($result));
+    }
 }

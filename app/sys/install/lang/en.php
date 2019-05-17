@@ -17,15 +17,15 @@ $lang->install->reload  = 'Reload';
 $lang->install->error   = 'Error ';
 
 $lang->install->start            = 'Start';
-$lang->install->keepInstalling   = 'Keep installing this version';
+$lang->install->keepInstalling   = 'Continue  installing this version';
 $lang->install->seeLatestRelease = 'See the latest release.';
 $lang->install->welcome          = 'Welcome to Zdoo community.';
 $lang->install->license          = 'Zdoo is under license of Z PUBLIC LICENSE(ZPL) 1.2. ';
 $lang->install->desc             = <<<EOT
 <blockquote>
   <strong>{$lang->ranzhi}</strong> is developed by <strong><a href='http://en.easysoft.com' target='_blank' class='red'>QingDao Nature Easy Soft Network Technology Co.,Ltd.</a></strong>
-  <!--With projects, customers, cash flow, office automation and communication, the five core functions.-->
-  Tailored specifically for small and medium sized teams!
+  <!--With project management, CRM, cashflow management, office automation and communication management and more features.-->
+  Especifically for small and medium sized teams!
 
   Website:<a href='http://www.zdoo.org' target='_blank'>http://www.zdoo.org</a>
   Suport: <a href='http://www.zdoo.org/forum/' target='_blank'>http://www.zdoo.org/forum/</a>
@@ -40,7 +40,7 @@ $lang->install->fail       = 'Failed(×)';
 $lang->install->loaded     = 'Loaded';
 $lang->install->unloaded   = 'Not loaded';
 $lang->install->exists     = 'Exist ';
-$lang->install->notExists  = 'Not exists';
+$lang->install->notExists  = 'No exist';
 $lang->install->writable   = 'Writable ';
 $lang->install->notWritable= 'Not writable ';
 $lang->install->phpINI     = 'PHP ini file';
@@ -57,35 +57,35 @@ $lang->install->pdoFail      = 'Edit the php.ini file to load PDO extsion.';
 $lang->install->pdoMySQL     = 'PDO_MySQL extension';
 $lang->install->pdoMySQLFail = 'Edit the php.ini file to load PDO_MySQL extsion.';
 $lang->install->tmpRoot      = 'Temporary directory';
-$lang->install->dataRoot     = 'Upload directory.';
+$lang->install->dataRoot     = 'Upload directory';
 $lang->install->sessionRoot  = 'session directory';
-$lang->install->mkdir        = '<p>You have to creat the directory %s. <br /> In Linux, try<br /> mkdir -p %s</p>';
+$lang->install->mkdir        = '<p>You have to create the directory %s. <br /> In Linux, try<br /> mkdir -p %s</p>';
 $lang->install->chmod        = 'You have to change the permission of "%s".<br /> In Linux, try<br />chmod o=rwx -R %s';
 $lang->install->sessionChmod = 'You have to change the permission of "%s".<br /> In Linux, try<br />sudo chmod o=wtx %s';
 
 $lang->install->settingDB    = 'Set Database';
 $lang->install->dbHost     = 'Database Host';
-$lang->install->dbHostNote = 'If 127.0.0.1 cannot be connected, try localhost';
+$lang->install->dbHostNote = 'If 127.0.0.1 cannot be connected. Try localhost';
 $lang->install->dbPort     = 'Host Port';
-$lang->install->dbUser     = 'Database User';
+$lang->install->dbUser     = 'Database Username';
 $lang->install->dbPassword = 'Database Password';
 $lang->install->dbName     = 'Database Name';
 $lang->install->dbPrefix   = 'Table Prefix';
 $lang->install->createDB   = 'Auto Create Database';
 $lang->install->clearDB    = 'Clear data if the database exists.';
 
-$lang->install->errorDBName        = "'.' are not allowed in database name";
+$lang->install->errorDBName        = "'.' is not allowed in database name";
 $lang->install->errorConnectDB     = 'Failed to connect to the database.';
 $lang->install->errorCreateDB      = 'Failed to create the database.';
 $lang->install->errorDBExists      = 'Database exists. If continue installing, check the Clear Database box.';
 $lang->install->errorCreateTable   = 'Failed to create the table.';
 
-$lang->install->setConfig  = 'Create config';
+$lang->install->setConfig  = 'Create config file';
 $lang->install->key        = 'Item';
 $lang->install->value      = 'Value';
-$lang->install->saveConfig = 'Save config';
-$lang->install->save2File  = '<div>Failed to save the config automaticlly.</span></div>Copy the text of the textarea and save to "<strong> %s </strong>".';
-$lang->install->saved2File = 'The config file has saved to "<strong>%s</strong> ".';
+$lang->install->saveConfig = 'Save config file';
+$lang->install->save2File  = '<div>Failed to save the configuration automaticlly.</span></div>Copy the text and save it to "<strong> %s </strong>".';
+$lang->install->saved2File = 'The config file is saved to "<strong>%s</strong> ".';
 $lang->install->errorNotSaveConfig = 'Do not save the config file.';
 
 $lang->install->success  = "Installed!";
@@ -134,12 +134,12 @@ $lang->install->cronList[5] = 'Pop Queue';
 $lang->install->cronList[6] = 'Check Todos';
 
 $lang->install->groupList[1]['name'] = 'Administrator';
-$lang->install->groupList[1]['desc'] = 'Administrator has all privileges.';
+$lang->install->groupList[1]['desc'] = 'Administrator has all permissions.';
 $lang->install->groupList[2]['name'] = 'Finance Specialist';
-$lang->install->groupList[2]['desc'] = 'has all privileges of CASH.';
+$lang->install->groupList[2]['desc'] = 'has all permissions of CASH.';
 $lang->install->groupList[3]['name'] = 'Sales Manager';
-$lang->install->groupList[3]['desc'] = 'Sales Manager has all privileges of CRM.';
+$lang->install->groupList[3]['desc'] = 'Sales Manager has all permissons of CRM.';
 $lang->install->groupList[4]['name'] = 'Sales';
-$lang->install->groupList[4]['desc'] = 'Default privileges for sales.';
+$lang->install->groupList[4]['desc'] = 'Default permissions for sales.';
 $lang->install->groupList[5]['name'] = 'Common';
-$lang->install->groupList[5]['desc'] = 'Default privileges for all users.';
+$lang->install->groupList[5]['desc'] = 'Default permissions for all users.';

@@ -1,7 +1,7 @@
 i.btn {font-family: ZenIcon;}
+#currency {border-right: none;}
 #detailBox .row {margin-top: 5px; margin-bottom: 5px;}
 #detailBox .form-group .input-group {margin-bottom: 2px;}
-#currency {border-top-left-radius: 4px; border-bottom-left-radius: 4px;}
 #detailBox .table-detail td, #detailBox .table-detail th {padding-left: 5px;}
 #detailBox .table-detail tr td:nth-child(1) {padding-left: 0px;}
 #category_chosen + .input-group-addon {padding-right: 30px;}

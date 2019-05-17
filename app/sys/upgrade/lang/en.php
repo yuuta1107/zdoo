@@ -14,7 +14,7 @@ $lang->upgrade->common  = 'Upgrade';
 
 $lang->upgrade->result  = 'Result';
 $lang->upgrade->fail    = 'Failed';
-$lang->upgrade->success = 'Success';
+$lang->upgrade->success = 'Upgraded';
 $lang->upgrade->tohome  = 'Back';
 
 $lang->upgrade->index         = 'Upgrad Zdoo';
@@ -23,10 +23,10 @@ $lang->upgrade->selectVersion = 'Select version to upgrade';
 $lang->upgrade->confirm       = 'Confirm the SQL to be excuted.';
 $lang->upgrade->execute       = 'Execute';
 $lang->upgrade->next          = 'Next';
-$lang->upgrade->redeploy      = 'Please redeploy the App directory before upgrade.';
-$lang->upgrade->redeployDesc  = "<h5>For code changes, the App directory has to be deployed.</h5><div class='text-important'>operating steps : delete app directory before copy new package.</div>";
+$lang->upgrade->redeploy      = 'Please re-deploy the App directory before upgrade.';
+$lang->upgrade->redeployDesc  = "<h5>If any code changes, the App directory has to be deployed.</h5><div class='text-important'>operating steps: delete app directory before copy new package.</div>";
 $lang->upgrade->removeTodo    = 'Please remove %s directory before upgrading.';
-$lang->upgrade->removeTodoTip = "<h5>For code changes, %s directory has to be removed.</h5><div class='text-important'>operating steps : delete directory of %s.</div>";
+$lang->upgrade->removeTodoTip = "<h5>If any code changes, %s directory has to be removed.</h5><div class='text-important'>operating steps: delete directory of %s.</div>";
 $lang->upgrade->updateLicense = 'The Zdoo license has changed to Z PUBLIC LICENSE(ZPL) 1.1.';
 
 $lang->upgrade->majorList['3_5'] = array();

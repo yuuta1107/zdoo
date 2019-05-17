@@ -44,7 +44,6 @@ class actionModel extends model
         $action->date       = helper::now();
         $action->comment    = trim(strip_tags($comment, "<img>")) ? trim(strip_tags($comment, $this->config->allowedTags)) : '';
         $action->extra      = $extra;
-        $action->nextDate   = $this->post->nextDate;
 
         /* Process action. */
         $action = $this->loadModel('file')->processImgURL($action, 'comment', $this->post->uid);
@@ -54,9 +53,8 @@ class actionModel extends model
         if($objectType == 'contact')  $action->contact  = $objectID;
 
         $this->dao->insert(TABLE_ACTION)
-            ->data($action, $skip = 'nextDate,files,labels')
+            ->data($action, $skip = 'files,labels')
             ->batchCheckIF($actionType == 'record', 'contact, comment', 'notempty')
-            ->checkIF($this->post->nextDate, 'nextDate', 'ge', helper::today())
             ->exec();
 
         return $this->dbh->lastInsertID();
@@ -78,16 +76,7 @@ class actionModel extends model
         /* Create todo for user who contact the contacts. */
         if($objectType == 'order' or $objectType == 'customer')
         {
-            if($objectType == 'order')
-            {
-                $customerID = $this->dao->findById($objectID)->from(TABLE_ORDER)->fetch('customer');
-            }
-            else
-            {
-                $customerID = $objectID;
-            }
-
-            $customerName = $this->dao->findById($customerID)->from(TABLE_CUSTOMER)->fetch('name');
+            $customerName = $this->dao->findById($customer)->from(TABLE_CUSTOMER)->fetch('name');
 
             $todo = new stdclass();
             $todo->account = $this->post->contactedBy;
@@ -105,29 +94,26 @@ class actionModel extends model
 
         $this->loadModel('file')->saveUpload('action', $actionID);
 
+        $nextDate = $this->post->nextDate;
+        $this->updateDating($objectType, $objectID, $customer, $contact, $actionID);
+
+        /* Set the min next date as the post value. */
+        if($this->post->nextDate) $nextDate = $this->getMinDatingDate($objectType, $objectID);
+        $this->syncContactInfo($objectType, $objectID, $customer, $contact, $nextDate);
+
         /* Create record for customer and check the checkbox of contract or order. */
         if($this->post->contract or $this->post->order)
         {
-            $originType = 'customer';
-            $originID   = $customer;
-            $sendmail   = $this->updateDating($originType, $originID, $customer, $contact, $actionID);
-            /* Set the min next date as the post value. */
-            if($this->post->nextDate) $nextDate = $this->getMinDatingDate($originType, $originID);
-        }
-        else
-        {
-            $nextDate   = $this->post->nextDate;
-            $originType = $objectType;
-            $originID   = $objectID;
-            $sendmail   = $this->updateDating($objectType, $objectID, $customer, $contact, $actionID);
+            $objectType = 'customer';
+            $objectID   = $customer;
+            $this->updateDating($objectType, $objectID, $customer, $contact, $actionID);
+
             /* Set the min next date as the post value. */
             if($this->post->nextDate) $nextDate = $this->getMinDatingDate($objectType, $objectID);
+            $this->syncContactInfo($objectType, $objectID, $customer, $contact, $nextDate);
         }
 
-        $this->post->nextDate = $nextDate;
-        $this->syncContactInfo($objectType, $objectID, $customer, $contact);
-
-        return array('sendmail' => $sendmail, 'action' => $actionID);
+        return $actionID;
     }
 
     /**
@@ -239,27 +225,30 @@ class actionModel extends model
     /**
      * Sync contact info.
      *
-     * @param  int    $objectType
+     * @param  string $objectType
      * @param  int    $objectID
      * @param  int    $customer
      * @param  int    $contact
+     * @param  string $nextDate
      * @access public
-     * @return void
+     * @return bool
      */
-    public function syncContactInfo($objectType, $objectID, $customer, $contact)
+    public function syncContactInfo($objectType, $objectID, $customer, $contact, $nextDate)
     {
         $contactInfo['contactedDate'] = $this->post->date;
         $contactInfo['contactedBy']   = $this->app->user->account;
         $contactInfo['editedDate']    = helper::now();
 
-        $this->dao->update(TABLE_CUSTOMER)->data($contactInfo)->where('id')->eq($customer)->andWhere('contactedDate')->lt($this->post->date)->exec();
-        $this->dao->update(TABLE_CONTACT)->data($contactInfo)->where('id')->eq($contact)->andWhere('contactedDate')->lt($this->post->date)->exec();
+        if(!$this->post->contract && !$this->post->order)
+        {
+            $this->dao->update(TABLE_CUSTOMER)->data($contactInfo)->where('id')->eq($customer)->andWhere('contactedDate')->lt($this->post->date)->exec();
+            $this->dao->update(TABLE_CONTACT)->data($contactInfo)->where('id')->eq($contact)->andWhere('contactedDate')->lt($this->post->date)->exec();
+        }
 
         if($objectType == 'order')    $this->dao->update(TABLE_ORDER)->data($contactInfo)->where('id')->eq($objectID)->andWhere('contactedDate')->lt($this->post->date)->exec();
         if($objectType == 'contract') $this->dao->update(TABLE_CONTRACT)->data($contactInfo)->where('id')->eq($objectID)->andWhere('contactedDate')->lt($this->post->date)->exec();
 
-        $nextDate = $this->post->nextDate ? $this->post->nextDate : '';
-        $table    = $this->config->action->datingTables[$objectType];
+        $table = $this->config->action->datingTables[$objectType];
         $this->dao->update($table)->set('nextDate')->eq($nextDate)->where('id')->eq($objectID)->exec();
 
         return !dao::isError();
@@ -292,7 +281,7 @@ class actionModel extends model
             ->fetchAll('id');
 
         $histories = $this->getHistory(array_keys($actions));
-        $contacts  = $this->loadModel('contact', 'crm')->getPairs(0, false, '');
+        $contacts  = $this->loadModel('contact', 'crm')->getPairs(0, '', false);
         $this->loadModel('file');
 
         foreach($actions as $actionID => $action)

@@ -25,10 +25,10 @@ $lang->doc->keywords       = 'Tags';
 $lang->doc->url            = 'URL';
 $lang->doc->files          = 'File';
 $lang->doc->views          = 'Views';
-$lang->doc->createdBy      = 'Create by';
-$lang->doc->createdDate    = 'Create';
-$lang->doc->editedBy       = 'Edite by';
-$lang->doc->editedDate     = 'Edite';
+$lang->doc->createdBy      = 'Created by';
+$lang->doc->createdDate    = 'Created';
+$lang->doc->editedBy       = 'Edited by';
+$lang->doc->editedDate     = 'Edited';
 $lang->doc->basicInfo      = 'Basic Info';
 $lang->doc->deleted        = 'Deleted';
 
@@ -53,8 +53,8 @@ $lang->doc->fileLib        = 'File Library';
 $lang->doc->createLib      = 'Create Library';
 $lang->doc->editLib        = 'Edit';
 $lang->doc->deleteLib      = 'Delete';
-$lang->doc->fixedMenu      = 'Fixed Menu';
-$lang->doc->removedMenu    = 'Remove Menu';
+$lang->doc->fixedMenu      = 'Fixed to Menu';
+$lang->doc->removedMenu    = 'Remove from Menu';
 
 $lang->doc->editCategory   = 'Edit Category';
 $lang->doc->deleteCategory = 'Delete Category';
@@ -86,4 +86,4 @@ $lang->doc->placeholder->url = 'url';
 
 $lang->doc->notFound     = 'The document does not exist';
 $lang->doc->libNotFound  = 'The document library does not exist';
-$lang->doc->errorMainLib = 'The main library can not be deleted.';
+$lang->doc->errorMainLib = 'The main library cannot be deleted.';

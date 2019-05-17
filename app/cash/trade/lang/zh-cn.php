@@ -103,7 +103,6 @@ $lang->trade->report->compareTip  = '必须选择两个年份进行比较';
 $lang->trade->report->unit        = '单位';
 
 $lang->trade->report->unitList[1]       = '元';
-$lang->trade->report->unitList[1000]    = '千元';
 $lang->trade->report->unitList[10000]   = '万元';
 $lang->trade->report->unitList[1000000] = '百万';
 

@@ -9,7 +9,7 @@
  * @version     $Id$
  * @link        http://www.zdoo.org
  */
-$lang->setting->common = 'Setting';
+$lang->setting->common = 'Settings';
 $lang->setting->reset  = 'Reset';
 $lang->setting->key    = 'Key';
 $lang->setting->value  = 'Value';
@@ -43,10 +43,10 @@ $lang->setting->customer->fields['levelNameList'] = 'Customer Level';
 $lang->setting->customer->fields['statusList']    = 'Customer Status';
 
 $lang->setting->system = new stdclass();
-$lang->setting->system->mainCurrency           = 'Main currency';
-$lang->setting->system->fields['currencyList'] = 'Currency list';
+$lang->setting->system->mainCurrency           = 'Main Currency';
+$lang->setting->system->fields['currencyList'] = 'Currency List';
 
-$lang->setting->allLang     = 'For all language';
+$lang->setting->allLang     = 'For all languages';
 $lang->setting->currentLang = 'For current language';
 
 $lang->setting->placeholder = new stdclass();
@@ -55,10 +55,10 @@ $lang->setting->placeholder->value = 'Define the value';
 $lang->setting->placeholder->info  = 'Description';
 
 $lang->setting->placeholder->typeList = new stdclass();
-$lang->setting->placeholder->typeList->key = 'Key should be 1~30 letters.';
+$lang->setting->placeholder->typeList->key = 'Key should be 1~30 letters';
 
 $lang->setting->placeholder->sizeNameList = new stdclass();
-$lang->setting->placeholder->sizeNameList->key   = 'Key should be intergers or letters.';
+$lang->setting->placeholder->sizeNameList->key   = 'Key should be intergers or letters';
 $lang->setting->placeholder->sizeNameList->value = 'Brief description';
 $lang->setting->placeholder->sizeNameList->info  = 'Detailed description';
 
@@ -68,7 +68,7 @@ $lang->setting->placeholder->levelNameList->value = 'Brief description';
 $lang->setting->placeholder->levelNameList->info  = 'Detailed description';
 
 $lang->setting->placeholder->lineList = new stdclass();
-$lang->setting->placeholder->lineList->key   = 'Key should be intergers or letters.';
+$lang->setting->placeholder->lineList->key   = 'Key should be intergers or letters';
 $lang->setting->placeholder->lineList->value = 'Brief description';
 
 $lang->setting->reserveDays    = 'Hold Days';

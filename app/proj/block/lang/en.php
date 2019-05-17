@@ -40,16 +40,16 @@ $lang->block->orderByList->task['deadline_desc'] = 'Deadline DESC';
 $lang->block->orderByList->project = array();
 $lang->block->orderByList->project['createdDate_asc']  = 'Created Date ASC';
 $lang->block->orderByList->project['createdDate_desc'] = 'Created Date DESC';
-$lang->block->orderByList->project['begin_asc']        = 'Begin ASC';
-$lang->block->orderByList->project['begin_desc']       = 'Begin DESC';
-$lang->block->orderByList->project['end_asc']          = 'End ASC';
-$lang->block->orderByList->project['end_desc']         = 'End DESC';
+$lang->block->orderByList->project['begin_asc']        = 'Begin Date ASC';
+$lang->block->orderByList->project['begin_desc']       = 'Begin Date DESC';
+$lang->block->orderByList->project['end_asc']          = 'End Date ASC';
+$lang->block->orderByList->project['end_desc']         = 'End Date DESC';
 
 $lang->block->typeList->task['assignedTo'] = 'AssignedToMe';
 $lang->block->typeList->task['createdBy']  = 'CreatedByMe';
 $lang->block->typeList->task['finishedBy'] = 'FinishedByMe';
 $lang->block->typeList->task['closedBy']   = 'ClosedByMe';
-$lang->block->typeList->task['canceledBy'] = 'CancelLedByMe';
+$lang->block->typeList->task['canceledBy'] = 'CancelledByMe';
 
 $lang->block->statusList->project['involved'] = 'Involved';
 $lang->block->statusList->project['doing']    = 'Doing';

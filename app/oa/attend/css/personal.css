@@ -20,3 +20,5 @@ table tr:last-child th ,table tr:last-child td{border-bottom: none;}
 
 td > .dropdown{height: 100%; line-height: 100%;}
 a, a:hover {text-decoration: none !important;}
+
+td.attend-actions{overflow: visible !important;}

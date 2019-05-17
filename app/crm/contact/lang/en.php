@@ -47,6 +47,8 @@ $lang->contact->newCustomer    = 'Create Customer';
 $lang->contact->uploadAvatar   = 'Upload Photo';
 $lang->contact->changeAvatar   = 'Change Photo';
 $lang->contact->selectCustomer = 'Select Customer';
+$lang->contact->search         = 'Search';
+$lang->contact->searchInput    = 'Enter search items.';
 
 $lang->contact->browse         = 'View Contact';
 $lang->contact->block          = 'Contact Block';
@@ -70,12 +72,12 @@ $lang->contact->assign         = 'Assign';
 $lang->contact->basicInfo   = 'Basic Info';
 $lang->contact->contactInfo = 'Contact Info';
 
-$lang->contact->leftAt       = 'Left at %s';
+$lang->contact->leftAt       = 'Resigned on %s';
 $lang->contact->failedAvatar = 'Failed!';
-$lang->contact->emailTip     = 'Please separate email addresses with commas or space';
+$lang->contact->emailTip     = 'Please separate email addresses with comma or space';
 
 $lang->contact->noFile       = 'No File';
-$lang->contact->importResult = '%s imported successfully, %s failed, details are as the following';
+$lang->contact->importResult = '%s imported. %s failed. Details are as follows';
 $lang->contact->failReason   = 'Reason';
 $lang->contact->showImport   = 'Imported Contacts';
 $lang->contact->template     = 'Contact Template';

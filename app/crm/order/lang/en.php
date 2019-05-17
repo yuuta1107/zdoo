@@ -32,7 +32,7 @@ $lang->order->assignedBy     = 'Assigned By';
 $lang->order->assignedDate   = 'Assigned';
 $lang->order->signedBy       = 'Signed By';
 $lang->order->signedDate     = 'Signed';
-$lang->order->payedDate      = 'Paid On';
+$lang->order->payedDate      = 'Paid';
 $lang->order->closedBy       = 'Closed By';
 $lang->order->closedDate     = 'Closed';
 $lang->order->closedReason   = 'Closed Reason';
@@ -69,17 +69,17 @@ $lang->order->closedReasonList['payed']     = 'Paid';
 $lang->order->closedReasonList['failed']    = 'Failed';
 $lang->order->closedReasonList['postponed'] = 'Postponed';
 
-$lang->order->titleLBL  = "%s purchases %s (%s)";
+$lang->order->titleLBL  = "%s purchased %s (%s)";
 $lang->order->basicInfo = "Basic";
 $lang->order->lifetime  = "Order Life";
 
-$lang->order->totalAmount   = 'The Budget is %s, the Actual is %s on this page;';
-$lang->order->infoBuy       = "%s purchases %s.";
+$lang->order->totalAmount   = 'Budget: %s  Actual: %s on this page;';
+$lang->order->infoBuy       = "%s purchased %s.";
 $lang->order->infoContract  = 'Signed Contract: %s.';
-$lang->order->infoAmount    = 'Budget is %s, Actual is %s.';
-$lang->order->infoContacted = 'Contacted on %s. ';
-$lang->order->infoNextDate  = 'Next Contact on %s.';
-$lang->order->deny          = 'You has no Privilege to create %s.';
+$lang->order->infoAmount    = 'Budget: %s  Actual: %s';
+$lang->order->infoContacted = 'Contacted on %s ';
+$lang->order->infoNextDate  = 'Next Contact on %s';
+$lang->order->deny          = 'You has no permission to create %s.';
 
 /* Width settings for different languages, in pixels. */
 $lang->order->actionWidth = 240;

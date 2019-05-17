@@ -15,7 +15,7 @@ $lang->app->name = 'OA';
 $lang->menu->oa = new stdclass();
 $lang->menu->oa->dashboard = 'Home|dashboard|index|';
 $lang->menu->oa->my        = 'Review|my|review|';
-$lang->menu->oa->announce  = 'Notice|announce|index|';
+$lang->menu->oa->announce  = 'Announcement|announce|index|';
 $lang->menu->oa->attend    = 'Attendance|attend|personal|';
 $lang->menu->oa->leave     = 'Leave|leave|personal|';
 $lang->menu->oa->makeup    = 'Makeup|makeup|personal|';
@@ -23,7 +23,7 @@ $lang->menu->oa->overtime  = 'Overtime|overtime|personal|';
 $lang->menu->oa->lieu      = 'Leave In Lieu|lieu|personal|';
 $lang->menu->oa->trip      = 'Trip|trip|personal|';
 $lang->menu->oa->egress    = 'Egress|egress|personal|';
-$lang->menu->oa->refund    = 'Reimburse|refund|personal|';
+$lang->menu->oa->refund    = 'Reimbursement|refund|personal|';
 $lang->menu->oa->holiday   = 'Holiday|holiday|browse|';
 $lang->menu->oa->setting   = 'Settings|setting|modules|app=oa';
 
@@ -33,7 +33,7 @@ $lang->dashboard = new stdclass();
 
 if(!isset($lang->announce)) $lang->announce = new stdclass();
 $lang->announce->menu = new stdclass();
-$lang->announce->menu->browse   = array('link' => 'Notice|announce|browse|', 'alias' => 'create,edit,view');
+$lang->announce->menu->browse   = array('link' => 'Announcement|announce|browse|', 'alias' => 'create,edit,view');
 $lang->announce->menu->category = 'Category|tree|browse|type=announce|';
 
 if(!isset($lang->attend)) $lang->attend = new stdclass();

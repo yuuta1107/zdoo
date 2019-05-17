@@ -2,6 +2,7 @@
 $lang->usercontact->common = 'Contact';
 $lang->usercontact->create = 'Create';
 $lang->usercontact->edit   = 'Edit';
+$lang->usercontact->view   = 'View';
 $lang->usercontact->delete = 'Delete';
 
 $lang->usercontact->id     = 'ID';

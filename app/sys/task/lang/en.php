@@ -14,7 +14,7 @@ $lang->task->list   = 'Tasks';
 
 $lang->task->browse    = 'Browse';
 $lang->task->view      = 'Info';
-$lang->task->viewChild = 'Child Info';
+$lang->task->viewChild = 'Child Task';
 $lang->task->create    = 'Create';
 $lang->task->edit      = 'Update';
 $lang->task->finish    = 'Finish';
@@ -67,8 +67,8 @@ $lang->task->finishedBy     = 'Finished By';
 $lang->task->finishedByAB   = 'Finish';
 $lang->task->finishedDate   = 'Finished';
 $lang->task->finishedDateAB = 'Date';
-$lang->task->canceledBy     = 'CancelLed By';
-$lang->task->canceledDate   = 'CancelLed';
+$lang->task->canceledBy     = 'Cancelled By';
+$lang->task->canceledDate   = 'Cancelled';
 $lang->task->closedBy       = 'Closed By';
 $lang->task->closedDate     = 'Closed';
 $lang->task->closedReason   = 'Closed Reason';
@@ -76,9 +76,9 @@ $lang->task->lastEditedBy   = 'Last Edited By';
 $lang->task->lastEditedDate = 'Last Edited';
 $lang->task->lastEdited     = 'Last Edited';
 $lang->task->hour           = 'Hour';
-$lang->task->leftThisTime   = 'Remained';
+$lang->task->leftThisTime   = 'Left';
 $lang->task->date           = 'Date';
-$lang->task->multiple       = 'Multiple Tasks';
+$lang->task->multiple       = 'Multiple User Task';
 $lang->task->multipleAB     = 'Multiple';
 $lang->task->team           = 'Team';
 $lang->task->transmit       = 'Transfer';
@@ -91,9 +91,9 @@ $lang->task->end            = 'End';
 $lang->task->myConsumption  = 'Man-Hour Cost';
 $lang->task->recordEstimate = 'Man-Hour';
 
-$lang->task->confirmFinish     = '"Left" man-hour is 0, so this task status will be "done". Do you want to finish it?';
-$lang->task->consumedBefore    = 'cost before';
-$lang->task->mailtoPlaceholder = 'Choose users to email...';
+$lang->task->confirmFinish     = '"Left" man-hour is 0, so this task status will be "Done". Do you want to finish it?';
+$lang->task->consumedBefore    = 'cost man-hour before';
+$lang->task->mailtoPlaceholder = 'Choose users to email to...';
 
 $lang->task->lblPri  = 'P';
 $lang->task->lblHour = '(h)';
@@ -121,7 +121,7 @@ $lang->task->reasonList['done']   = 'Done';
 $lang->task->reasonList['cancel'] = 'Cancelled';
 
 $lang->task->createdByMe  = 'CreatedByMe';
-$lang->task->assignedToMe = 'AssignToMe';
+$lang->task->assignedToMe = 'AssignedToMe';
 $lang->task->finishedByMe = 'FinishedByMe';
 $lang->task->untilToday   = 'Till Today';
 $lang->task->expired      = 'Expired';
@@ -137,7 +137,7 @@ $lang->task->outline = 'Outline';
 
 $lang->task->kanbanGroup['']           = 'Groups';
 $lang->task->kanbanGroup['status']     = 'By Status';
-$lang->task->kanbanGroup['assignedTo'] = 'By Assigned';
+$lang->task->kanbanGroup['assignedTo'] = 'By Assignee';
 
 $lang->task->groups['']           = 'Choose group';
 $lang->task->groups['status']     = 'by Status';
@@ -151,9 +151,9 @@ $lang->task->unAssigned = 'Unassigned';
 
 $lang->task->mindMoveTip = 'You should move a task to a sub node.';
 $lang->task->notAllowed  = 'Not allowed.';
-$lang->task->skipClose   = 'The status of Tasks : %s are unfinished or cancelled. Not allowed to close.';
+$lang->task->skipClose   = 'The status of Tasks : %s are unfinished or cancelled. You are not allowed to close it.';
 
-$lang->task->groupinfo = "<div class='text-muted'>Total <strong>%s</strong>, Wait <strong>%s</strong>, Doing <strong>%s</strong>, Finished <strong>%s</strong>, Closed <strong>%s</strong></div>";
+$lang->task->groupinfo = "<div class='text-muted'>Total: <strong>%s</strong> Wait: <strong>%s</strong> Doing: <strong>%s</strong> Finished: <strong>%s</strong> Closed: <strong>%s</strong></div>";
 
 /* Width settings for different languages, in pixels. */
 $lang->task->actionWidth       = 300;

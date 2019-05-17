@@ -61,41 +61,7 @@ class trade extends control
         $this->config->trade->search['params']['category']['values'] = $this->trade->getSearchCategories($mode, $incomeCategories, $expenseCategories);
         $this->search->setSearchParams($this->config->trade->search);
 
-        $type = 'all';
-        if($mode == 'in')       $type = 'in';
-        if($mode == 'out')      $type = 'out';
-        if($mode == 'transfer') $type = 'transferin,transferout';
-        if($mode == 'invest')   $type = 'invest,redeem';
-        if($mode == 'loan')     $type = 'loan,repay';
-        $tradeDates = $this->trade->getDatePairs($type);
-
-        $tradeYears    = array();
-        $tradeQuarters = array();
-        $tradeMonths   = array();
-        foreach($tradeDates as $tradeDate)
-        {
-            $year  = substr($tradeDate, 0, 4);
-            $month = substr($tradeDate, 5, 2);
-
-            if(!in_array($year, $tradeYears)) $tradeYears[] = $year;
-
-            if(!isset($tradeQuarters[$year])) $tradeQuarters[$year] = array();
-            foreach($this->lang->trade->quarters as $key => $quarterMonth)
-            {
-                if(strpos($quarterMonth, $month) !== false)    
-                {
-                    $quarter = $key;
-                    if(!in_array($key, $tradeQuarters[$year])) $tradeQuarters[$year][] = $key;
-                }
-            }
-
-            if(!isset($tradeMonths[$year][$quarter])) $tradeMonths[$year][$quarter] = array();
-
-            if(!in_array($month, $tradeMonths[$year][$quarter]))
-            {
-                $tradeMonths[$year][$quarter][] = $month;
-            }
-        }
+        list($tradeYears, $tradeQuarters, $tradeMonths) = $this->trade->getTradePeriods($mode);
 
         $currentYear = current($tradeYears);
         if($mode != 'invest' and $mode != 'loan' and !empty($tradeDates))
@@ -1147,33 +1113,11 @@ class trade extends control
      */
     public function report($date = '', $currency = 'rmb', $unit = '')
     {
-        $tradeYears  = array();
-        $tradeMonths = array();
-        $tradeDates  = $this->trade->getDatePairs();
-        foreach($tradeDates as $tradeDate)
-        {
-            $year  = substr($tradeDate, 0, 4);
-            $month = substr($tradeDate, 5, 2);
-
-            if(!in_array($year, $tradeYears)) $tradeYears[] = $year;
-
-            if(!isset($tradeMonths[$year])) $tradeMonths[$year] = array();
-            if(!in_array($month, $tradeMonths[$year])) $tradeMonths[$year][] = $month;
-
-            sort($tradeMonths[$year]);
-        }
-        rsort($tradeYears);
-
-        $currentYear  = current($tradeYears);
-        $currentMonth = '00';
-        if(!empty($date))
-        {
-            $currentYear = substr($date, 0, 4);
-            if(strlen($date) == 6) $currentMonth = substr($date, 4, 2);
-        }
-
-        $trades = $this->trade->getByYear($currentYear, $type = 'all', $currency);
+        list($tradeYears, $tradeMonths)   = $this->trade->getTradeYearsAndMonths();
+        list($currentYear, $currentMonth) = $this->trade->getCurrentYearAndMonth($tradeYears, $date);
         
+        $trades = $this->trade->getByYear($currentYear, $type = 'all', $currency);
+
         $annualChartDatas = array();
         $annualChartDatas['all']['in']   = 0;
         $annualChartDatas['all']['out']  = 0;
@@ -1205,7 +1149,8 @@ class trade extends control
             $monthlyChartDatas[$groupBy]['out'] = $this->report->computePercent($monthlyChartDatas[$groupBy]['out']);
         }
 
-        $unit = $unit ? $unit : (empty($this->config->trade->report->unit) ? 1 : $this->config->trade->report->unit);
+        $unit = $unit ? $unit : zget($this->config->trade->report, 'unit', 1);
+        $unit = zget($this->lang->trade->report->unitList, $unit, 1, $unit);
         foreach($annualChartDatas as $month => $datas) 
         {
             foreach($datas as $key => $money) 
@@ -1259,7 +1204,8 @@ class trade extends control
 
         $selectYears = $this->post->years ? $this->post->years : array_slice($tradeYears, 0, 2);
         $currency    = $this->post->currency ? $this->post->currency : current(array_flip($currencyList));
-        $unit        = $this->post->unit ? $this->post->unit : (empty($this->config->trade->report->unit) ? 1 : $this->config->trade->report->unit);
+        $unit        = $this->post->unit ? $this->post->unit : zget($this->config->trade->report, 'unit', 1);
+        $unit        = zget($this->lang->trade->report->unitList, $unit, 1, $unit);
 
         asort($selectYears);
         $selectYears  = array_values($selectYears);

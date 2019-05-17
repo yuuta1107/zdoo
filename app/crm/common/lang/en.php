@@ -40,7 +40,7 @@ $lang->order->menu->report      = 'Report|report|browse|module=order';
 /* Menu of contact module. */
 if(!isset($lang->contact)) $lang->contact = new stdclass();
 $lang->contact->menu = new stdclass();
-$lang->contact->menu->browse      = 'All Contacts|contact|browse|mode=all';
+$lang->contact->menu->browse      = 'All|contact|browse|mode=all';
 $lang->contact->menu->contactedBy = 'ContactedByMe|contact|browse|mode=contactedby';
 $lang->contact->menu->past        = 'Urgent|contact|browse|mode=past';
 $lang->contact->menu->today       = 'Today|contact|browse|mode=today';

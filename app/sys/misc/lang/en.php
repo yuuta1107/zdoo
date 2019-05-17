@@ -13,7 +13,7 @@
 if(!isset($lang->misc)) $lang->misc = new stdclass();
 $lang->misc->version = 'Version %s';
 
-$lang->misc->offcialSite['label'] = 'Offical';
+$lang->misc->offcialSite['label'] = 'Website';
 $lang->misc->offcialSite['url']   = 'http://www.zdoo.org';
 
 $lang->misc->support['label'] = 'Support';

@@ -52,6 +52,8 @@ $lang->contract->product       = '產品';
 $lang->contract->productLine   = '產品綫';
 $lang->contract->files         = '附件';
 $lang->contract->createAddress = '新建';
+$lang->contract->search        = '搜索';
+$lang->contract->searchInput   = '輸入搜索內容';
 
 $lang->contract->browse           = '瀏覽合同';
 $lang->contract->receive          = '回款';
@@ -127,7 +129,7 @@ $lang->contract->team->statusList['accept'] = '已接受';
 $lang->contract->team->statusList['reject'] = '已拒絶';
 
 $lang->contract->error = new stdclass();
-$lang->contract->error->wrong = '<strong>貢獻度</strong>應該是數字';
+$lang->contract->error->wrongContribution = '<strong>貢獻度</strong>應該是數字';
 
 $lang->plan = new stdclass();
 $lang->plan->amount = $lang->contract->thisAmount;

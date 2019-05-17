@@ -197,6 +197,106 @@ class tradeModel extends model
     }
 
     /**
+     * Get trade years, quarters and months.
+     *
+     * @param  string $mode
+     * @access public
+     * @return array
+     */
+    public function getTradePeriods($mode)
+    {
+        $type = 'all';
+        if($mode == 'in')       $type = 'in';
+        if($mode == 'out')      $type = 'out';
+        if($mode == 'transfer') $type = 'transferin,transferout';
+        if($mode == 'invest')   $type = 'invest,redeem';
+        if($mode == 'loan')     $type = 'loan,repay';
+        $tradeDates = $this->getDatePairs($type);
+
+        $tradeYears    = array();
+        $tradeQuarters = array();
+        $tradeMonths   = array();
+        foreach($tradeDates as $tradeDate)
+        {
+            $year    = substr($tradeDate, 0, 4);
+            $month   = substr($tradeDate, 5, 2);
+            $quarter = '';
+
+            if(!in_array($year, $tradeYears)) $tradeYears[] = $year;
+
+            if(!isset($tradeQuarters[$year])) $tradeQuarters[$year] = array();
+            foreach($this->lang->trade->quarters as $key => $quarterMonth)
+            {
+                if(strpos($quarterMonth, $month) !== false)
+                {
+                    $quarter = $key;
+                    if(!in_array($key, $tradeQuarters[$year])) $tradeQuarters[$year][] = $key;
+                }
+            }
+            if(!$quarter) continue;
+
+            if(!isset($tradeMonths[$year][$quarter])) $tradeMonths[$year][$quarter] = array();
+
+            if(!in_array($month, $tradeMonths[$year][$quarter]))
+            {
+                $tradeMonths[$year][$quarter][] = $month;
+            }
+        }
+
+        return array($tradeYears, $tradeQuarters, $tradeMonths);
+    }
+
+    /**
+     * Get trade years and months.
+     *
+     * @param  string $type
+     * @access public
+     * @return array
+     */
+    public function getTradeYearsAndMonths($type = 'all')
+    {
+        $tradeYears  = array();
+        $tradeMonths = array();
+        $tradeDates  = $this->getDatePairs($type);
+        foreach($tradeDates as $tradeDate)
+        {
+            $year  = substr($tradeDate, 0, 4);
+            $month = substr($tradeDate, 5, 2);
+
+            if(!in_array($year, $tradeYears)) $tradeYears[] = $year;
+
+            if(!isset($tradeMonths[$year])) $tradeMonths[$year] = array();
+            if(!in_array($month, $tradeMonths[$year])) $tradeMonths[$year][] = $month;
+
+            sort($tradeMonths[$year]);
+        }
+        rsort($tradeYears);
+
+        return array($tradeYears, $tradeMonths);
+    }
+
+    /**
+     * Get current year and month.
+     *
+     * @param  array  $years 
+     * @param  string $date 
+     * @access public
+     * @return array
+     */
+    public function getCurrentYearAndMonth($years, $date)
+    {
+        $currentYear  = current($years);
+        $currentMonth = '';
+        if(!empty($date))
+        {
+            $currentYear = substr($date, 0, 4);
+            if(strlen($date) == 6) $currentMonth = substr($date, 4, 2);
+        }
+
+        return array($currentYear, $currentMonth);
+    }
+
+    /**
      * Get monthly chart data.
      * 
      * @param  string    $type 

@@ -46,7 +46,7 @@
         <?php if(!$depositorList) commonModel::printLink('cash.depositor', 'browse', '', $lang->depositor->create, "class='btn createDepositor'");?>
       </td>
     </tr>
-    <tr class='tradeTR currencyTR'>
+    <tr class='currencyTR'>
       <th><?php echo $lang->trade->currency;?></th>
       <td>
         <div class='input-group'>

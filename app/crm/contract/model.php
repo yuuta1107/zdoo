@@ -123,19 +123,51 @@ class contractModel extends model
 
     /**
      * Get contract pairs.
-     * 
+     *
      * @param  int    $customerID
+     * @param  bool   $emptyOption
+     * @param  string $orderBy
+     * @param  int    $limit
+     * @param  string $contractID
      * @access public
      * @return array
      */
-    public function getPairs($customerID = 0, $orderBy = 'id_desc')
+    public function getPairs($customerID = 0, $emptyOption = true, $orderBy = 'id_desc', $limit = 0, $contractID = '')
     {
-        return $this->dao->select('id, name')->from(TABLE_CONTRACT)
+        $contractList = array();
+
+        $contracts = $this->dao->select('id, name')->from(TABLE_CONTRACT)
             ->where(1)
             ->beginIF($customerID)->andWhere('customer')->eq($customerID)->fi()
             ->andWhere('deleted')->eq(0)
             ->orderBy($orderBy)
-            ->fetchPairs('id', 'name');
+            ->fetchPairs();
+        if(!$limit)
+        {
+            if($emptyOption) return array('' => '') + $contracts;
+            return $contracts;
+        }
+
+        if($contractID)
+        {
+            $idList = explode(',', trim($contractID, ','));
+            foreach($idList as $id) if(isset($contracts[$id])) $contractList[$id] = $contracts[$id];
+        }
+
+        $i = 1;
+        foreach($contracts as $id => $name)
+        {
+            $contractList[$id] = $name;
+            if($limit > 0 && ++$i > $limit)
+            {
+                $contractList['showmore'] = $this->lang->more . $this->lang->ellipsis;
+                break;
+            }
+        }
+        krsort($contractList);
+
+        if($emptyOption) return array('' => '') + $contractList;
+        return $contractList;
     }
 
     /**
@@ -204,7 +236,7 @@ class contractModel extends model
         foreach($returnList as $return)
         {
             $return->depositor = zget($tradeDepositorList, $return->trade, '');
-            $return->currency  = $tradeList[$return->trade]->currency;
+            $return->currency  = isset($tradeList[$return->trade]->currency) ? $tradeList[$return->trade]->currency : zget($this->config->setting, 'mainCurrency', 'rmb');
         }
         return $returnList;
     }
@@ -878,7 +910,6 @@ class contractModel extends model
      */
     public function checkTeam()
     {
-        $total  = 0;
         $errors = array();
         foreach($this->post->account as $key => $account)
         {
@@ -887,10 +918,7 @@ class contractModel extends model
             if(!$account or !$contribution) continue;
 
             if(!is_numeric($contribution)) $errors["contribution{$key}"] = $this->lang->contract->error->wrongContribution;
-
-            $total += (float)$contribution;
         }
-        if($total > 100) $errors['totalContribution'] = $this->lang->contract->error->wrongTotalContribution;
 
         if($errors) return array('result' => 'fail', 'message' => $errors);
 
