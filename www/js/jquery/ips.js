@@ -5,7 +5,6 @@
 
     /* Global variables */
     var desktopPos       = {x: 40, y: 0},
-        fullscreenMode   = false,
         windowIdSeed     = 0,
         windowIdTeamplate= 'wid-{0}',
         windowZIndexSeed = 100,
@@ -578,6 +577,7 @@
         else
         {
             win.active();
+            this.activedWindow = win;
         }
     };
 
@@ -587,12 +587,16 @@
         if(toUnActive) this.unActiveWindow(toUnActive);
         if(this.shows.length)
         {
-            this.query(this.shows[this.shows.length - 1]).active();
+            var win = this.query(this.shows[this.shows.length - 1]);
+            if(win)
+            {
+                win.active();
+                this.activedWindow = win;
+                return;
+            }
         }
-        else
-        {
-            desktop.fullScreenApps.toggle('home');
-        }
+        desktop.fullScreenApps.toggle('home');
+        this.activedWindow = null;
     };
 
     /* Close a window */
@@ -625,7 +629,8 @@
         }
         else if(et.display == 'fullscreen' && desktop.fullScreenApps)
         {
-            desktop.fullScreenApps.show(et.id);
+            this.activedWindow = null;
+            desktop.fullScreenApps.toggle(et.id);
             return;
         }
 
@@ -653,6 +658,7 @@
         }
 
         win.show();
+        this.activedWindow = win;
 
         if(et.display != 'modal') desktop.cancelFullscreenMode();
         else desktop.turnOnModalMode();
@@ -697,6 +703,7 @@
         this.unActiveWindow(win);
         win.$.css('z-index', windowZIndexSeed++).addClass('window-active');
         this.shows.push(win.id);
+        this.activedWindow = win;
     };
 
     /* Bind events */
@@ -714,14 +721,14 @@
 
             var mwPos = win.position();
             win.data('mouseOffset', {x: e.pageX - mwPos.left, y: e.pageY - mwPos.top}).addClass('window-moving');
-            $(document).bind('mousemove',mouseMove).bind('mouseup',mouseUp)
+            $(document).bind('mousemove',mouseMove).bind('mouseup',mouseUp);
             e.preventDefault();
 
             function mouseUp()
             {
                 $('.window.window-moving').removeClass('window-moving');
                 windows.movingWindow = null;
-                $(document).unbind('mousemove', mouseMove).unbind('mouseup', mouseUp)
+                $(document).unbind('mousemove', mouseMove).unbind('mouseup', mouseUp);
             }
 
             function mouseMove(event)
@@ -731,8 +738,8 @@
                     var offset = windows.movingWindow.$.data('mouseOffset');
                     windows.movingWindow.$.css(
                     {
-                        left : event.pageX-offset.x,
-                        top : event.pageY-offset.y
+                        left: event.pageX - offset.x,
+                        top:  event.pageY - offset.y
                     });
                 }
             }
@@ -944,6 +951,12 @@
         return this.hasClass('window-active');
     };
 
+    /* Determine whether the window is showed and actived */
+    windowx.prototype.isShowAndActive = function()
+    {
+        return desktop.isFullscreenMode && this.isActive();
+    };
+
     /* Get the current content url */
     windowx.prototype.getUrl = function()
     {
@@ -1121,7 +1134,10 @@
             }
             catch(e){}
 
-            win.updateEntryUrl(win.firstLoad);
+            if(this.isShowAndActive())
+            {
+                win.updateEntryUrl(win.firstLoad);
+            }
             win.firstLoad = false;
         }
     };
@@ -1243,12 +1259,9 @@
             {
                 this.show();
             }
-            this.updateEntryUrl();
-            return;
         }
 
         this.updateEntryUrl();
-        debugger;
     };
 
     /**
@@ -1591,7 +1604,7 @@
                         {
                             $.refreshDesktop();
                         }
-                   });
+                    });
                 }});
             }
             else
@@ -1681,8 +1694,7 @@
                 var et = getEntry($this.attr('data-id'));
                 if(et)
                 {
-                    if(et.display == 'fullscreen' && desktop.fullScreenApps) desktop.fullScreenApps.toggle(et.id);
-                    else windows.openEntry(et, $this.data('url') || $this.attr('href'));
+                    windows.openEntry(et, $this.data('url') || $this.attr('href'));
                 }
                 else
                 {
@@ -1892,7 +1904,7 @@
                 setTimeout(function(){$menu.removeClass('show');}, 200);
                 if(desktop.toggleDropmenuMode) desktop.toggleDropmenuMode('more-option', false);
             }
-       };
+        };
 
         this.init();
     };
