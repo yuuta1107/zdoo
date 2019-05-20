@@ -126,8 +126,8 @@ $(document).ready(function()
         }
         var link = '';
         if(selector == 'trader')   link = createLink('customer', 'ajaxSearchCustomer', 'key=' + key + '&relation=' + relation);
-        if(selector == 'contract') link = createLink('contract', 'ajaxSearchContract', 'key=' + key);
-        if(selector == 'contact')  link = createLink('contact', 'ajaxSearchContact', 'key=' + key);
+        if(selector == 'contract') link = createLink('crm.contract', 'ajaxSearchContract', 'key=' + key);
+        if(selector == 'contact')  link = createLink('crm.contact', 'ajaxSearchContact', 'key=' + key);
         $.zui.modalTrigger.show({url: link, backdrop: 'static'});
     };
 
