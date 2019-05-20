@@ -56,7 +56,7 @@ $searchInput.on('paste change keyup', function()
             $searchResult.empty().append('<li class="loading"><i class="icon-spin icon-spinner icon-2x"></i></li>');
             var branch = $('#branch').val();
             if(typeof(branch) == 'undefined') branch = 0;
-            var link = createLink('contract', 'ajaxGetPairs', 'key=' + key);
+            var link = createLink('crm.contract', 'ajaxGetPairs', 'key=' + key);
             $.getJSON(link, function(result)
             {
                 $searchResult.empty();
