@@ -261,7 +261,7 @@
       <td class='text-left' title='<?php echo $refund->name;?>'><?php echo $refund->name;?></td>
       <td class='text-left' title='<?php echo zget($categories, $refund->category, '');?>'><?php echo zget($categories, $refund->category, '');?></td>
       <td class='text-right'><?php echo zget($currencySign, $refund->currency) . $refund->money;?></td>
-      <td><?php echo foramtTime($refund->date, DT_DATE1);?></td>
+      <td><?php echo formatTime($refund->date, DT_DATE1);?></td>
       <td class='text-left' title='<?php echo $refund->desc;?>'><?php echo $refund->desc;?></td>
       <td><?php echo zget($lang->refund->statusList, $refund->status);?></td>
       <td><?php commonModel::printLink('oa.refund', 'review', "refundID={$refund->id}", $lang->refund->review, "data-toggle='modal' data-width=800")?></td>
