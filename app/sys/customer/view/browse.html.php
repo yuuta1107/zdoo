@@ -64,7 +64,7 @@
           <td class='visible-lg'><?php echo $lang->customer->sizeNameList[$customer->size];?></td>
           <td><?php echo $lang->customer->typeList[$customer->type];?></td>
           <td class='visible-lg'><?php echo formatTime($customer->createdDate, DT_DATE1);?></td>
-          <td class='visible-lg'><?php echo formatTime($customer->contactedDate, DT_DATETIME1);?></td>
+          <td class='visible-lg'><?php echo formatTime($customer->contactedDate, DT_DATE1);?></td>
           <td><?php echo formatTime($customer->nextDate, DT_DATE1);?></td>
           <td class='actions'>
             <?php
