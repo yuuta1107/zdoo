@@ -55,7 +55,7 @@
         <?php foreach($todos as $id => $todo):?>
         <?php if($type == 'custom' or $type == 'undone'):?>
         <?php $index++;?>
-        <div class='board-item text-nowrap text-ellipsis' title='<?php echo $todo->name;?>' data-id='<?php echo $todo->id?>' data-index='<?php echo $index?>' data-name='<?php echo $todo->name?>' data-type='<?php echo $todo->type?>' data-begin='<?php echo formatTime($todo->begin, DT_DATE1)?>' data-end='<?php echo formatTime($todo->end, DT_DATE1)?>' data-action='edit' data-toggle="droppable" data-target=".day">
+        <div class='board-item text-nowrap text-ellipsis' title='<?php echo $todo->name;?>' data-id='<?php echo $todo->id?>' data-index='<?php echo $index?>' data-name='<?php echo $todo->name?>' data-type='<?php echo $todo->type?>' data-begin='<?php echo $todo->begin;?>' data-end='<?php echo $todo->end;?>' data-action='edit' data-toggle="droppable" data-target=".day">
           <?php echo html::a("javascript:void(0)", $todo->name, "onclick=\"viewTodo(this)\" data-remote='" . $this->createLink('todo', 'view', "id=$todo->id") . "' data-title='{$todo->name}' data-width='70%'")?>
         </div>
         <?php endif;?>

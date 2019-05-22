@@ -676,7 +676,6 @@ class actionModel extends model
 
             $actionType = strtolower($action->action);
             $objectType = strtolower($action->objectType);
-            $action->date        = formatTime($action->date, DT_MONTHTIME2);
             $action->actionLabel = isset($this->lang->action->label->$actionType) ? $this->lang->action->label->$actionType : $action->action;
             $action->objectLabel = $objectType;
             if(isset($this->lang->action->label->$objectType))
@@ -1108,6 +1107,8 @@ class actionModel extends model
 
         if($period == 'thismonth')  return date::getThisMonth();
         if($period == 'lastmonth')  return date::getLastMonth();
+
+        return array('begin' => '', 'end' => '');
     }
 
     /**
