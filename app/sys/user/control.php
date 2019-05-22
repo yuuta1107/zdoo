@@ -163,7 +163,7 @@ class user extends control
     public function deny($module, $method, $refererBeforeDeny = '')
     {
         $this->app->loadLang($module);
-        $this->app->loadLang('index');
+        $this->app->loadLang('index', 'sys');
 
         $this->setReferer();
 
