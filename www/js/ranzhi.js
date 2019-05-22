@@ -187,12 +187,17 @@ $.extend(
                         {
                             $errorOBJ.parent().append(errorMSG);
                         }
-                        $errorOBJ.css('margin-bottom', 0);
-                        $errorOBJ.css('border-color','#953B39')
+                        var $noticeOBJ = $errorOBJ;
+                        if($errorOBJ.hasClass('chosen') && $errorOBJ.css('display') == 'none' && $(formID).find(errorOBJ + '_chosen .chosen-single.chosen-default').length > 0)
+                        {
+                            $noticeOBJ = $(formID).find(errorOBJ + '_chosen .chosen-single.chosen-default');
+                        }
+                        $noticeOBJ.css('margin-bottom', 0);
+                        $noticeOBJ.css('border-color','#953B39')
                         $errorOBJ.change(function()
                         {
-                            $errorOBJ.css('margin-bottom', 0);
-                            $errorOBJ.css('border-color','')
+                            $noticeOBJ.css('margin-bottom', 0);
+                            $noticeOBJ.css('border-color','')
                             $('#' + errorLabel).remove();
                         });
                     })
