@@ -20,14 +20,15 @@
 <?php js::set('users', $users);?>
 <?php js::set('zentaoEntryList', array_keys($zentaoEntryList));?>
 <?php js::set('mainPaddingRight', $lang->todo->mainPaddingRight);?>
-<?php echo
-"<style>
-.with-side .main {padding-right: {$lang->todo->mainPaddingRight}px;}
-.with-side .side {width: {$lang->todo->sideWidth}px;}
-.side-handle {right: {$lang->todo->sideHandleRight}px;}
-.trash {right: {$lang->todo->trashRight}px;}
-</style>";
-?>
+<style>
+.with-side .main {padding-right: <?php echo $lang->todo->mainPaddingRight;?>px;}
+.with-side .side {width: <?php echo $lang->todo->sideWidth;?>px;}
+.side-handle {right: <?php echo $lang->todo->sideHandleRight;?>px;}
+.trash {right: <?php echo $lang->todo->trashRight;?>px;}
+.hide-side .main {padding-right: 0;}
+.hide-side .side {width: 0;}
+.with-side .side, .with-side .main {transition: all 0.3s ease 0s;}
+</style>
 <div class='with-side <?php echo $this->cookie->todoCalendarSide == 'hide' ? 'hide-side' : ''?>'>
   <div class='side'>
     <ul id='myTab' class='nav nav-tabs'>

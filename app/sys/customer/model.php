@@ -194,7 +194,7 @@ class customerModel extends model
                 ->fetchPairs();
             if(!$limit)
             {
-                if($emptyOption) return array('' => '') + $customers;
+                if($emptyOption) return array('') + $customers;
                 return $customers;
             }
 
@@ -219,7 +219,7 @@ class customerModel extends model
             krsort($customerList);
         }
 
-        if($emptyOption) $customerList = array('' => '') + $customerList;
+        if($emptyOption) $customerList = array('') + $customerList;
         return $customerList;
     }
 

@@ -333,7 +333,7 @@ class contactModel extends model
             ->fetchPairs();
         if(!$limit)
         {
-            if($emptyOption) return array('' => '') + $contacts;
+            if($emptyOption) return array('') + $contacts;
             return $contacts;
         }
 
@@ -355,7 +355,7 @@ class contactModel extends model
         }
         krsort($contactList);
 
-        if($emptyOption) $contactList = array('' => '') + $contactList;
+        if($emptyOption) $contactList = array('') + $contactList;
         return $contactList;
     }
 

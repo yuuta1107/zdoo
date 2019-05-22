@@ -2,11 +2,8 @@
 .with-side .side {position: fixed; right: 15px; top: 100px;}
 .with-side .nav > li > a {padding: 10px 6px;}
 
-.hide-side .main{padding-right: 0;}
-.hide-side .side {width: 0;}
 .hide-side #myTab {display: none;}
 .hide-side .tab-content {display: none;}
-.with-side .side, .with-side .main {transition: all 0.3s ease 0s;}
 
 .side-handle {width: 20px; z-index: 99; position: absolute; top: 0; transition: all 0.3s ease 0s;}
 .hide-side .side-handle{right: 20px;}
