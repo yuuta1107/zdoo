@@ -1,6 +1,6 @@
 $(document).ready(function()
 {
-    $('#account').focus();
+    setTimeout(function(){$('#account').focus();}, 300);
 
     setInterval('ping()', 1000 * config.pingInterval);
 
