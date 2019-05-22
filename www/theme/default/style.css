@@ -597,11 +597,11 @@ td #aliasLabel {display: table-row;}
 #searchResult > ul {display: block; position: relative; padding: 0; min-width: 218px}
 #defaultMenu > div {padding-top: 6px;}
 
-#fixedHeader thead th, #fixedHeader thead td{background: #145ccd; color: #ddd; font-weight: normal;}
+#fixedHeader thead th, #fixedHeader thead td{background: #2975e8; color: #ddd; font-weight: normal;}
 #fixedHeader thead th a, #fixedHeader thead td a{color: #ddd; font-weight: normal;}
 #fixedHeader thead tr .headerSortUp:after,#fixedHeader thead tr .headerSortDown:after{color: #fff!important;}
 
-.navbar-main {border: none; background: #145ccd; color: #fff;}
+.navbar-main {border: none; background: #2975e8; color: #fff;}
 .navbar-main:before {content: ' '; display: block; z-index: 0; background: none; top: 0; right: 0; bottom: 0; left: 0; position: absolute;}
 .navbar-main > .navbar-header,
 .navbar-main > .nav {z-index: 1; position: relative;}
