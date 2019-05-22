@@ -144,7 +144,7 @@ class contractModel extends model
             ->fetchPairs();
         if(!$limit)
         {
-            if($emptyOption) return array('' => '') + $contracts;
+            if($emptyOption) return array('') + $contracts;
             return $contracts;
         }
 
@@ -166,7 +166,7 @@ class contractModel extends model
         }
         krsort($contractList);
 
-        if($emptyOption) return array('' => '') + $contractList;
+        if($emptyOption) return array('') + $contractList;
         return $contractList;
     }
 
