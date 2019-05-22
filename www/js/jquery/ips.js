@@ -954,7 +954,7 @@
     /* Determine whether the window is showed and actived */
     windowx.prototype.isShowAndActive = function()
     {
-        return desktop.isFullscreenMode && this.isActive();
+        return !desktop.isFullscreenMode && this.isActive();
     };
 
     /* Get the current content url */
@@ -1097,7 +1097,23 @@
 
         frame.onload = frame.onreadystatechange = function()
         {
-            if (this.readyState && this.readyState != 'complete') return;
+            var readyState = this.readyState;
+            if (!readyState)
+            {
+                try
+                {
+                    readyState = this.contentWindow && this.contentWindow.document.readyState
+                }
+                catch(e) {}
+            }
+            if (readyState && readyState != 'complete')
+            {
+                if(win.isShowAndActive())
+                {
+                    win.updateEntryUrl(win.firstLoad);
+                }
+                return;
+            }
 
             win.$.removeClass('window-loading').removeClass('window-first').find('.reload-win i').removeClass('icon-spin');
 
