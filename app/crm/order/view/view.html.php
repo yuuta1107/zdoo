@@ -40,7 +40,7 @@
         <?php endif;?>
         <p><?php printf($lang->order->infoAmount, zget($currencySign, $order->currency, '') . formatMoney($order->plan), zget($currencySign, $order->currency, '') . formatMoney($order->real))?></p>
         <p>
-          <?php if(formatTime($order->contactedDate)) printf($lang->order->infoContacted, formatTime($order->contactedDate, DT_DATETIME1))?>
+          <?php if(formatTime($order->contactedDate)) printf($lang->order->infoContacted, formatTime($order->contactedDate, DT_DATE1))?>
           <?php if(formatTime($order->nextDate)) printf($lang->order->infoNextDate, formatTime($order->nextDate, DT_DATE1))?>
         </p>
       </div>
