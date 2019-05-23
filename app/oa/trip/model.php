@@ -187,7 +187,7 @@ class tripModel extends model
             ->add('createdBy', $this->app->user->account)
             ->add('createdDate', helper::now())
             ->get();
-        $trip->customers = trim($trip->customers, ',');
+        $trip->customers = empty($trip->customers) ? '' : trim($trip->customers, ',');
         if(isset($trip->begin) and $trip->begin != '') $trip->year = substr($trip->begin, 0, 4);
 
         $result = $this->checkDate($trip);
