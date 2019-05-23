@@ -53,7 +53,8 @@ class block extends control
      */
     public function admin($index = 0, $blockID = '')
     {
-        $this->app->loadLang('block');
+        $this->app->loadLang('block', 'sys');
+        $this->app->loadModuleConfig('block', 'sys');
         $title = $index == 0 ? $this->lang->block->createBlock : $this->lang->block->editBlock;
 
         if(!$index) $index = $this->block->getLastKey('team') + 1;
