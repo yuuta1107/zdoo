@@ -12,7 +12,6 @@
 ?>
 <?php if($extView = $this->getExtViewFile(__FILE__)){include $extView; return helper::cd();}?>
 <?php include 'header.lite.html.php';?>
-<style>body {padding-top: 58px}</style>
 <div id='mainNavbar'>
   <div class='container'>
     <div class='heading'>
@@ -30,12 +29,16 @@
     <nav>
       <?php echo commonModel::createMainMenu($this->moduleName);?>
     </nav>
+
+    <?php /*Below is an example for buttons on main navbar on right side */ ?>
     <div class='actions'>
       <button type='button' class='btn'>Blocks <span class='caret'></span></button>
     </div>
+    <?php /*Above is an example for buttons on main navbar on right side */ ?>
   </div>
 </div>
-<?php
-if(!isset($moduleMenu)) $moduleMenu = commonModel::createModuleMenu($this->moduleName);
-if($moduleMenu) echo "$moduleMenu\n<div class='row page-content with-menu'>\n"; else echo "<div class='row page-content'>";
-?>
+<div class='container' id='main'><?php /* '#main' closed in 'footer.html.php'. */ ?>
+  <?php
+  if(!isset($moduleMenu)) echo commonModel::createModuleMenu($this->moduleName);
+  ?>
+  <div id='mainContent'><?php /* '#mainContent' closed in 'footer.html.php'. */ ?>

@@ -22,6 +22,7 @@ $extHookFiles = glob($extHookRule);
 if($extHookFiles) foreach($extHookFiles as $extHookFile) include $extHookFile;
 if($this->loadModel('cron')->runable()) js::execute('startCron()');
 ?>
-</div>
+  </div><?php /* end '#mainContent' in 'header.html.php'. */ ?>
+</div><?php /* end '#main' in 'header.html.php'. */ ?>
 </body>
 </html>

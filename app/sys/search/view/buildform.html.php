@@ -16,14 +16,9 @@ include '../../common/view/datepicker.html.php';
 include '../../common/view/chosen.html.php';
 ?>
 <style>
-#bysearchTab {transition: all .3s cubic-bezier(.175, .885, .32, 1); position: relative;}
-#bysearchTab.active > a {background: #fff; border: 1px solid #ddd; border-bottom: 0px; padding: 7px 10px!important; margin-bottom: -6px;}
-#bysearchTab.active > a:after {font-size: 14px; font-family: ZenIcon; content: ' \e6e2'; color: #808080}
 #featurebar .nav {z-index: 999; position: relative;}
-#querybox {position: relative; margin-top: 40px; margin: 25px auto -40px}
+#querybox {position: relative; margin: 0 auto; background: #FFFFFF; box-shadow: 0 0 8px 2px rgba(225,225,225,0.50); border-radius: 4px; margin: 0 10px 10px;}
 #querybox form{padding: 10px; padding-right: 40px;}
-#querybox .form-control {padding: 2px; padding: 6px 2px\0;}
-@-moz-document url-prefix() {#querybox .form-control {padding: 6px 2px;}}
 #querybox .table {border: none; table-layout: fixed;}
 #querybox .table-form td {border: none}
 #querybox .btn {padding: 5px 8px;}
@@ -52,7 +47,7 @@ include '../../common/view/chosen.html.php';
 .outer > #querybox {margin: -20px -20px 20px; border-top: none; border-bottom: 1px solid #ddd}
 .table-form td + td, .table-form th + th {padding-left: 0;}
 .search-field input.date::-webkit-input-placeholder{color: #000000; opacity: 1;}
-.search-field input.date::-moz-placeholder{color: #000000; opacity: 1;} 
+.search-field input.date::-moz-placeholder{color: #000000; opacity: 1;}
 .search-field input.date:-ms-input-placeholder{color: #000000; opacity: 1;}
 
 .trader_chosen .chosen-results > li.no-results {cursor: pointer;}
@@ -216,7 +211,7 @@ $(document).ready(function()
     });
 });
 
-var dtOptions = 
+var dtOptions =
 {
     language: '<?php echo $this->app->getClientLang();?>',
     weekStart: 1,
@@ -229,7 +224,7 @@ var dtOptions =
     format: 'yyyy-mm-dd'
 };
 
-var datetimeOptions = 
+var datetimeOptions =
 {
     language: '<?php echo $this->app->getClientLang();?>',
     weekStart: 1,
@@ -285,8 +280,8 @@ var actionURL     = '<?php echo $actionURL;?>';
 
 /**
  * Set date field
- * 
- * @param  string $query 
+ *
+ * @param  string $query
  * @return void
  */
 function setDateField(query, fieldNO, type)
@@ -353,9 +348,9 @@ function setDateField(query, fieldNO, type)
 
 /**
  * When the value of the fields select changed, set the operator and value of the new field.
- * 
- * @param  string $fieldName 
- * @param  int    $fieldNO 
+ *
+ * @param  string $fieldName
+ * @param  int    $fieldNO
  * @access public
  * @return void
  */
@@ -369,7 +364,7 @@ function setField(fieldName, fieldNO)
     {
         var type = params[fieldName]['class'];
         setDateField("#value" + fieldNO, fieldNO, type);
-        $("#value" + fieldNO).addClass(type);   // Shortcut the width of the datepicker to make sure align with others. 
+        $("#value" + fieldNO).addClass(type);   // Shortcut the width of the datepicker to make sure align with others.
         var groupItems = <?php echo $config->search->groupItems?>;
         var maxNO      = 2 * groupItems;
         var nextNO     = fieldNO > groupItems ? fieldNO - groupItems + 1 : fieldNO + groupItems;
@@ -400,7 +395,7 @@ function setField(fieldName, fieldNO)
 
 /**
  * Reset forms.
- * 
+ *
  * @access public
  * @return void
  */
@@ -416,7 +411,7 @@ function resetForm()
 
 /**
  * Show more fields.
- * 
+ *
  * @access public
  * @return void
  */
@@ -436,7 +431,7 @@ function showmore()
 
 /**
  * Show lite search form.
- * 
+ *
  * @access public
  * @return void
  */
@@ -456,7 +451,7 @@ function showlite()
 
 /**
  * Save the query.
- * 
+ *
  * @access public
  * @return void
  */
@@ -475,8 +470,8 @@ function saveQuery()
 
 /**
  * Execute a query.
- * 
- * @param  int    $queryID 
+ *
+ * @param  int    $queryID
  * @access public
  * @return void
  */
@@ -488,7 +483,7 @@ function executeQuery(queryID)
 
 /**
  * Delete a query.
- * 
+ *
  * @access public
  * @return void
  */
@@ -539,7 +534,7 @@ foreach($fieldParams as $fieldName => $param)
 }
 ?>
 </div>
-<form method='post' action='<?php echo $this->createLink('search', 'buildQuery');?>' target='hiddenwin' id='searchform' class='form-condensed'>
+<form method='post' action='<?php echo $this->createLink('search', 'buildQuery');?>' target='hiddenwin' id='searchform'>
 <table class='table table-condensed table-form' style='max-width: 1200px; margin: 0 auto'>
   <tr>
     <td class='w-400px'>
@@ -586,7 +581,7 @@ foreach($fieldParams as $fieldName => $param)
 
               echo html::select("value$fieldNO", $param['values'], $formSession["value$fieldNO"], "class='form-control searchSelect $extraClass $selectorClass' $noResults");
           }
-          if($param['control'] == 'input') 
+          if($param['control'] == 'input')
           {
               $fieldName  = $formSession["field$fieldNO"];
               $fieldValue = $formSession["value$fieldNO"];
@@ -675,7 +670,7 @@ foreach($fieldParams as $fieldName => $param)
       ?>
       </table>
     </td>
-    <td class='w-150px'> 
+    <td class='w-150px'>
       <?php
       echo html::hidden('module',     $module);
       echo html::hidden('actionURL',  $actionURL);
@@ -703,7 +698,8 @@ foreach($fieldParams as $fieldName => $param)
   <?php echo html::hidden('formType', 'lite');?>
 </div>
 </form>
-<script language='Javascript'>
+<script>
+$('#searchform .chosen').chosen();
 <?php if(isset($formSession['formType'])) echo "show{$formSession['formType']}();";?>
 $('#searchform .trader').each(function()
 {

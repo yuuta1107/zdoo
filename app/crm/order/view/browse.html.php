@@ -1,11 +1,11 @@
-<?php 
+<?php
 /**
  * The browse view file of order module of RanZhi.
  *
  * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Tingting Dai <daitingting@xirangit.com>
- * @package     order 
+ * @package     order
  * @version     $Id$
  * @link        http://www.ranzhi.org
  */
@@ -23,7 +23,7 @@
     </ul>
   </div>
   <?php endif;?>
-  <?php commonModel::printLink('order', 'create', '', '<i class="icon-plus"></i> ' . $lang->order->create, 'class="btn btn-primary"');?>
+  <?php commonModel::printLink('order', 'create', '', '<i class="icon-plus"></i> ' . $lang->order->create, 'class="btn btn-secondary"');?>
 </div>
 <div class='panel'>
   <table class='table table-hover table-striped table-bordered tablesorter table-data table-fixed'>

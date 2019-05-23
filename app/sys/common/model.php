@@ -13,7 +13,7 @@ class commonModel extends model
 {
     /**
      * Do some init functions.
-     * 
+     *
      * @access public
      * @return void
      */
@@ -30,7 +30,7 @@ class commonModel extends model
 
     /**
      * Load configs from database and save it to config->system and config->personal.
-     * 
+     *
      * @access public
      * @return void
      */
@@ -62,22 +62,22 @@ class commonModel extends model
 
     /**
      * Load custom lang from DB.
-     * 
+     *
      * @access public
      * @return void
      */
     public function loadLangFromDB()
-    {   
+    {
         if(!$this->config->db->name) return;
         $records = $this->loadModel('setting')->getAllLang();
         if(!$records) return;
         $this->lang->db = new stdclass();
         $this->lang->db->custom = $records;
-    }   
+    }
 
     /**
      * Start the session.
-     * 
+     *
      * @access public
      * @return void
      */
@@ -95,7 +95,7 @@ class commonModel extends model
 
     /**
      * Check the Privilege.
-     * 
+     *
      * @access public
      * @return void
      */
@@ -134,7 +134,7 @@ class commonModel extends model
 
     /**
      * Check current user has Privilege to the module's method or not.
-     * 
+     *
      * @param mixed $module     the module
      * @param mixed $method     the method
      * @static
@@ -168,14 +168,14 @@ class commonModel extends model
 
     /**
      * Check current user has Privilege to the app or not.
-     * 
-     * @param  string $appname 
+     *
+     * @param  string $appname
      * @static
      * @access public
      * @return bool
      */
     public static function hasAppPriv($appname = '')
-    { 
+    {
         global $app;
         if(empty($appname)) $appname = $app->getAppName();
 
@@ -236,9 +236,9 @@ class commonModel extends model
     }
 
     /**
-     * Judge a module is available. 
-     * 
-     * @param  string $module 
+     * Judge a module is available.
+     *
+     * @param  string $module
      * @static
      * @access public
      * @return bool
@@ -248,7 +248,7 @@ class commonModel extends model
         global $config, $lang;
         if(isset($lang->setting->moduleList[$module]) and strpos($config->setting->modules, $module) === false) return false;
         if($module == 'my' and $method == 'review')
-        { 
+        {
             if(empty($config->setting->modules)) return false;
             if($config->setting->modules == trim('trip,egress')) return false;
         }
@@ -257,9 +257,9 @@ class commonModel extends model
 
     /**
      * Check Privilege by customer.
-     * 
-     * @param  int    $customerID 
-     * @param  string $type 
+     *
+     * @param  int    $customerID
+     * @param  string $type
      * @access public
      * @return bool
      */
@@ -276,7 +276,7 @@ class commonModel extends model
 
     /**
      * Show the deny info.
-     * 
+     *
      * @param mixed $module     the module
      * @param mixed $method     the method
      * @access public
@@ -311,16 +311,16 @@ class commonModel extends model
         die(js::locate($denyLink));
     }
 
-    /** 
+    /**
      * Judge a method of one module is open or not?
-     * 
-     * @param  string $module 
-     * @param  string $method 
+     *
+     * @param  string $module
+     * @param  string $method
      * @access public
      * @return bool
      */
     public function isOpenMethod($module, $method)
-    {   
+    {
         if($module == 'user' and strpos(',login|logout|deny|control', $method)) return true;
         if($module == 'api'  and $method == 'getsessionid') return true;
         if($module == 'misc' and $method == 'ping') return true;
@@ -337,12 +337,12 @@ class commonModel extends model
         if($this->loadModel('user')->isLogon() and stripos($method, 'ajax') !== false) return true;
 
         return false;
-    }   
+    }
 
     /**
      * Create the main menu.
-     * 
-     * @param  string $currentModule 
+     *
+     * @param  string $currentModule
      * @static
      * @access public
      * @return string
@@ -357,8 +357,8 @@ class commonModel extends model
         $isMobile = $app->viewType === 'mhtml';
         $string   = !$isMobile ? "<ul class='nav navbar-nav'>\n" : '';
 
-        $menuOrder = isset($lang->{$app->appName}->menuOrder) ? $lang->{$app->appName}->menuOrder : array();  
-        $allMenus  = new stdclass(); 
+        $menuOrder = isset($lang->{$app->appName}->menuOrder) ? $lang->{$app->appName}->menuOrder : array();
+        $allMenus  = new stdclass();
         if(!empty($menuOrder))
         {
             ksort($menuOrder);
@@ -402,7 +402,7 @@ class commonModel extends model
 
             if(!commonModel::isAvailable($module, $method)) continue;
 
-            if(strpos(',tree,setting,schema,sales,', ',' . $module . ',') != false and isset($lang->setting->menu)) 
+            if(strpos(',tree,setting,schema,sales,', ',' . $module . ',') != false and isset($lang->setting->menu))
             {
                 foreach($lang->setting->menu as $settingMenu)
                 {
@@ -443,8 +443,8 @@ class commonModel extends model
 
     /**
      * Create the module menu.
-     * 
-     * @param  string $currentModule 
+     *
+     * @param  string $currentModule
      * @static
      * @access public
      * @return void
@@ -463,8 +463,8 @@ class commonModel extends model
         }
 
         $isMobile = $app->viewType === 'mhtml';
-        $string   = !$isMobile ? "<nav id='menu'><ul class='nav'>\n" : '';
-        if(!$isMobile && strpos(',setting,tree,schema,sales,group,', ",$currentModule,") !== false) 
+        $string   = !$isMobile ? "<nav id='menu'><ul class='nav nav-default'>\n" : '';
+        if(!$isMobile && strpos(',setting,tree,schema,sales,group,', ",$currentModule,") !== false)
         {
             $string = "<nav class='menu leftmenu affix'><ul class='nav nav-primary'>\n";
             if($currentModule == 'setting' && strpos(',ameba,flow,psi,xuanxuan,modules,xxcversion,', ",$currentMethod,") !== false)
@@ -478,10 +478,10 @@ class commonModel extends model
             $string = "<nav class='menu leftmenu affix'><ul class='nav nav-primary'>\n";
         }
 
-        $menuOrder = isset($lang->{$currentModule}->menuOrder) ? $lang->{$currentModule}->menuOrder : array();  
+        $menuOrder = isset($lang->{$currentModule}->menuOrder) ? $lang->{$currentModule}->menuOrder : array();
 
         /* Get menus of current module. */
-        $moduleMenus = new stdclass(); 
+        $moduleMenus = new stdclass();
         if(!empty($menuOrder))
         {
             ksort($menuOrder);
@@ -497,13 +497,13 @@ class commonModel extends model
         }
         else
         {
-            $moduleMenus = $lang->$currentModule->menu;  
+            $moduleMenus = $lang->$currentModule->menu;
         }
 
         /* Cycling to print every menus of current module. */
         foreach($moduleMenus as $methodName => $methodMenu)
         {
-            if(is_array($methodMenu)) 
+            if(is_array($methodMenu))
             {
                 $methodAlias = isset($methodMenu['alias']) ? $methodMenu['alias'] : '';
                 $methodLink  = $methodMenu['link'];
@@ -561,7 +561,7 @@ class commonModel extends model
 
     /**
      * Create menu of dashboard.
-     * 
+     *
      * @static
      * @access public
      * @return string
@@ -573,8 +573,8 @@ class commonModel extends model
         $isMobile = $app->viewType === 'mhtml';
         $string   = !$isMobile ? "<ul class='nav navbar-nav'>\n" : '';
 
-        $menuOrder = isset($lang->sys->dashboard->menuOrder) ? $lang->sys->dashboard->menuOrder : array();  
-        $allMenus  = new stdclass(); 
+        $menuOrder = isset($lang->sys->dashboard->menuOrder) ? $lang->sys->dashboard->menuOrder : array();
+        $allMenus  = new stdclass();
         if(!empty($menuOrder))
         {
             ksort($menuOrder);
@@ -643,7 +643,7 @@ class commonModel extends model
 
     /**
      * Create menu for managers.
-     * 
+     *
      * @access public
      * @return string
      */
@@ -662,8 +662,8 @@ class commonModel extends model
 
     /**
      * Get Link From Submenu.
-     * 
-     * @param  string    $menuGroup 
+     *
+     * @param  string    $menuGroup
      * @access public
      * @return string
      */
@@ -685,11 +685,11 @@ class commonModel extends model
     }
 
     /**
-     * Print position bar 
+     * Print position bar
      *
-     * @param   object $module 
-     * @param   object $object 
-     * @param   mixed  $misc    other params. 
+     * @param   object $module
+     * @param   object $object
+     * @param   mixed  $misc    other params.
      * @access  public
      * @return  void
      */
@@ -765,10 +765,10 @@ class commonModel extends model
 
         echo$html;
     }
- 
+
     /**
      * Set the user info.
-     * 
+     *
      * @access public
      * @return void
      */
@@ -791,7 +791,7 @@ class commonModel extends model
 
     /**
      * Set the entry info.
-     * 
+     *
      * @access public
      * @return void
      */
@@ -804,7 +804,7 @@ class commonModel extends model
 
     /**
      * Get the run info.
-     * 
+     *
      * @param mixed $startTime  the start time of this execution
      * @access public
      * @return array    the run info array.
@@ -819,7 +819,7 @@ class commonModel extends model
 
     /**
      * Print top bar.
-     * 
+     *
      * @static
      * @access public
      * @return void
@@ -848,8 +848,8 @@ class commonModel extends model
 
     /**
      * Print the main menu.
-     * 
-     * @param  string $moduleName 
+     *
+     * @param  string $moduleName
      * @static
      * @access public
      * @return void
@@ -858,7 +858,7 @@ class commonModel extends model
     {
         global $app, $lang;
         echo "<ul>\n";
- 
+
         /* Set the main main menu. */
         $mainMenu = $moduleName;
         if(isset($lang->menuGroups->$moduleName)) $mainMenu = $lang->menuGroups->$moduleName;
@@ -884,8 +884,8 @@ class commonModel extends model
 
     /**
      * Print the module menu.
-     * 
-     * @param  string $moduleName 
+     *
+     * @param  string $moduleName
      * @static
      * @access public
      * @return void
@@ -897,7 +897,7 @@ class commonModel extends model
         if(!isset($lang->$moduleName->menu)) {echo "<ul></ul>"; return;}
 
         /* Get the sub menus of the module, and get current module and method. */
-        $submenus      = $lang->$moduleName->menu;  
+        $submenus      = $lang->$moduleName->menu;
         $currentModule = $app->getModuleName();
         $currentMethod = $app->getMethodName();
 
@@ -908,12 +908,12 @@ class commonModel extends model
             $submenus = new stdclass();
 
             ksort($lang->$moduleName->menuOrder, SORT_ASC);
-            if(isset($menus->list)) 
+            if(isset($menus->list))
             {
-                $submenus->list = $menus->list; 
+                $submenus->list = $menus->list;
                 unset($menus->list);
             }
-            foreach($lang->$moduleName->menuOrder as $order)  
+            foreach($lang->$moduleName->menuOrder as $order)
             {
                 if(($order != 'list') && isset($menus->$order))
                 {
@@ -924,7 +924,7 @@ class commonModel extends model
             }
             foreach($menus as $key => $menu)
             {
-                $submenus->$key = $menu; 
+                $submenus->$key = $menu;
             }
         }
 
@@ -969,9 +969,9 @@ class commonModel extends model
 
     /**
      * Print the bread menu.
-     * 
-     * @param  string $moduleName 
-     * @param  string $position 
+     *
+     * @param  string $moduleName
+     * @param  string $position
      * @static
      * @access public
      * @return void
@@ -1003,7 +1003,7 @@ class commonModel extends model
 
     /**
      * Print the link for notify file.
-     * 
+     *
      * @static
      * @access public
      * @return void
@@ -1022,7 +1022,7 @@ class commonModel extends model
 
     /**
      * Get the full url of the system.
-     * 
+     *
      * @static
      * @access public
      * @return string
@@ -1036,7 +1036,7 @@ class commonModel extends model
 
     /**
      * Get client IP.
-     * 
+     *
      * @access public
      * @return void
      */
@@ -1064,9 +1064,9 @@ class commonModel extends model
 
     /**
      * Print the position bar of thread module.
-     * 
-     * @param   object $board 
-     * @param   object $thread 
+     *
+     * @param   object $board
+     * @param   object $thread
      * @access  public
      * @return  void
      */
@@ -1094,7 +1094,7 @@ class commonModel extends model
      * @param string       $method
      * @param string|array $vars
      * @param string|array $alias
-     * return string 
+     * return string
      */
     public static function createFrontLink($module, $method, $vars = '', $alias = '')
     {
@@ -1109,10 +1109,10 @@ class commonModel extends model
 
         return $link;
     }
- 
+
     /**
      * Verify administrator through ok file.
-     * 
+     *
      * @access public
      * @return array
      */
@@ -1129,7 +1129,7 @@ class commonModel extends model
 
     /**
      * Create changes of one object.
-     * 
+     *
      * @param mixed $old    the old object
      * @param mixed $new    the new object
      * @static
@@ -1137,12 +1137,12 @@ class commonModel extends model
      * @return array
      */
     public static function createChanges($old, $new)
-    {   
+    {
         global $config;
         $changes    = array();
         $magicQuote = get_magic_quotes_gpc();
         foreach($new as $key => $value)
-        {   
+        {
             if(!isset($old->$key))                   continue;
             if(strtolower($key) == 'lastediteddate') continue;
             if(strtolower($key) == 'lasteditedby')   continue;
@@ -1153,12 +1153,12 @@ class commonModel extends model
             if(is_array($value))
             {
                 if(is_string(reset($value))) $value = join(',', $value);
-                else $value = join(',', array_keys($value)); 
+                else $value = join(',', array_keys($value));
             }
-            if(is_array($old->$key)) 
+            if(is_array($old->$key))
             {
                 if(is_string(reset($old->$key))) $old->$key = join(',', $old->$key);
-                else $old->$key = join(',', array_keys($old->$key)); 
+                else $old->$key = join(',', array_keys($old->$key));
             }
 
             if($magicQuote) $value = stripslashes($value);
@@ -1179,9 +1179,9 @@ class commonModel extends model
 
     /**
      * Diff two string. (see phpt)
-     * 
-     * @param string $text1 
-     * @param string $text2 
+     *
+     * @param string $text1
+     * @param string $text2
      * @static
      * @access public
      * @return string
@@ -1205,9 +1205,9 @@ class commonModel extends model
 
     /**
      * Print backLink and preLink and nextLink.
-     * 
-     * @param  string $backLink 
-     * @param  object $preAndNext 
+     *
+     * @param  string $backLink
+     * @param  object $preAndNext
      * @access public
      * @return void
      */
@@ -1218,7 +1218,7 @@ class commonModel extends model
 
         echo html::a($backLink, $lang->goback, "class='btn btn-default' id='backButton'");
 
-        if(isset($preAndNext->pre) and $preAndNext->pre) 
+        if(isset($preAndNext->pre) and $preAndNext->pre)
         {
             $id = 'id';
             $title = isset($preAndNext->pre->title) ? $preAndNext->pre->title : (isset($preAndNext->pre->name) ? $preAndNext->pre->name : '');
@@ -1226,7 +1226,7 @@ class commonModel extends model
             $link  = $linkTemplate ? sprintf($linkTemplate, $preAndNext->pre->$id) : inlink('view', "ID={$preAndNext->pre->$id}");
             echo html::a($link, '<i class="icon-pre icon-chevron-left"></i>', "id='pre' class='btn' title='{$title}'");
         }
-        if(isset($preAndNext->next) and $preAndNext->next) 
+        if(isset($preAndNext->next) and $preAndNext->next)
         {
             $id = 'id';
             $title = isset($preAndNext->next->title) ? $preAndNext->next->title : (isset($preAndNext->next->name) ? $preAndNext->next->name : '');
@@ -1238,10 +1238,10 @@ class commonModel extends model
 
     /**
      * Get the previous and next object.
-     * 
+     *
      * @param  string $type story|task|bug|case
-     * @param  string $objectIDs 
-     * @param  string $objectID 
+     * @param  string $objectIDs
+     * @param  string $objectID
      * @access public
      * @return void
      */
@@ -1290,14 +1290,14 @@ class commonModel extends model
      * Print link to an modules' methd.
      *
      * Before printing, check the privilege first. If no privilege, return fasle. Else, print the link, return true.
-     * 
+     *
      * @param  string $module   the module name
      * @param  string $method   the method
      * @param  string $vars     vars to be passed
      * @param  string $label    the label of the link
      * @param  string $misc     others
-     * @param  bool   $print 
-     * @param  bool   $onlyBody 
+     * @param  bool   $print
+     * @param  bool   $onlyBody
      * @param  string $type     li
      * @static
      * @access public
@@ -1326,11 +1326,11 @@ class commonModel extends model
     }
 
     /**
-     * Check privilege by vars. 
-     * 
-     * @param  string $module 
-     * @param  string $method 
-     * @param  string|array $vars 
+     * Check privilege by vars.
+     *
+     * @param  string $module
+     * @param  string $method
+     * @param  string|array $vars
      * @static
      * @access public
      * @return void
@@ -1473,7 +1473,7 @@ class commonModel extends model
 
     /**
      * Get currency list.
-     * 
+     *
      * @access public
      * @return array
      */
@@ -1490,7 +1490,7 @@ class commonModel extends model
 
     /**
      * Get currency sign.
-     * 
+     *
      * @access public
      * @return array
      */
@@ -1503,13 +1503,13 @@ class commonModel extends model
             $currencySign[$key] = $sign;
         }
         return $currencySign;
-    }  
+    }
 
     /**
-     * Sort entry by order. 
-     * 
-     * @param  object $a 
-     * @param  object $b 
+     * Sort entry by order.
+     *
+     * @param  object $a
+     * @param  object $b
      * @access private
      * @return bool
      */
@@ -1524,8 +1524,8 @@ class commonModel extends model
 
     /**
      * Format money.
-     * 
-     * @param  float $money 
+     *
+     * @param  float $money
      * @static
      * @access public
      * @return string
@@ -1554,13 +1554,13 @@ class commonModel extends model
         {
             return formatMoney($money);
         }
-    } 
+    }
 
     /**
      * Http.
-     * 
-     * @param  string    $url 
-     * @param  string    $data 
+     *
+     * @param  string    $url
+     * @param  string    $data
      * @static
      * @access public
      * @return string
@@ -1584,7 +1584,7 @@ class commonModel extends model
         curl_setopt($ci, CURLOPT_URL, $url);
         curl_setopt($ci, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ci, CURLINFO_HEADER_OUT, true);
-        if(!empty($data)) 
+        if(!empty($data))
         {
             curl_setopt($ci, CURLOPT_POST, true);
             curl_setopt($ci, CURLOPT_POSTFIELDS, $data);
@@ -1600,8 +1600,8 @@ class commonModel extends model
 
     /**
      * Convert items to Pinyin.
-     * 
-     * @param  array    $items 
+     *
+     * @param  array    $items
      * @static
      * @access public
      * @return array
@@ -1643,10 +1643,10 @@ class commonModel extends model
 
     /**
      * Log.
-     * 
-     * @param  string $url 
+     *
+     * @param  string $url
      * @param  mixed  $data     string | array
-     * @param  string $results 
+     * @param  string $results
      * @param  string $errors
      * @param  string $logFile
      * @static
