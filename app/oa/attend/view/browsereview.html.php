@@ -46,8 +46,8 @@
         <td><?php echo zget($deptList, $user->dept, '');?></td>
         <td><?php echo $user->realname;?></td>
         <td><?php echo formatTime($attend->date, DT_DATE1)?></td>
-        <td><?php echo substr($attend->manualIn, 0, 5)?></td>
-        <td><?php echo substr($attend->manualOut, 0, 5)?></td>
+        <td><?php echo formatTime($attend->manualIn, DT_TIME2)?></td>
+        <td><?php echo formatTime($attend->manualOut, DT_TIME2)?></td>
         <td><?php echo zget($lang->attend->reasonList, $attend->reason)?></td>
         <td><?php echo $attend->desc?></td>
         <td><?php echo zget($lang->attend->statusList, $attend->status)?></td>
