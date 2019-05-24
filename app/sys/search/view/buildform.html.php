@@ -700,7 +700,7 @@ foreach($fieldParams as $fieldName => $param)
 </form>
 <script>
 $('#searchform .chosen').chosen();
-$('#searchform .input-group').fixInputGroup();
+$('#searchform .input-group,#searchform .btn-group').fixInputGroup();
 <?php if(isset($formSession['formType'])) echo "show{$formSession['formType']}();";?>
 $('#searchform .trader').each(function()
 {
