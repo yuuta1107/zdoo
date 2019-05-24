@@ -741,12 +741,12 @@ class commonModel extends model
             if(stripos($orderBy, 'desc') !== false)
             {
                 $orderBy   = str_ireplace('desc', 'asc', $orderBy);
-                $className = 'SortDown';
+                $className = 'sort-down';
             }
             elseif(stripos($orderBy, 'asc')  !== false)
             {
                 $orderBy = str_ireplace('asc', 'desc', $orderBy);
-                $className = 'SortUp';
+                $className = 'sort-up';
             }
         }
         else
@@ -757,9 +757,7 @@ class commonModel extends model
 
         $link = helper::createLink($module, $method, sprintf($vars, $orderBy));
 
-        $html = '';
-        if(!$isMobile) $html = "<div class='header$className'>" . html::a($link, $label) . '</div>';
-        else $html = html::a($link, $label, "class='$className'");
+        $html = html::a($link, $label, "class='$className'");
 
         if(!$print) return $html;
 

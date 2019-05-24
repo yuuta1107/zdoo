@@ -1,24 +1,3 @@
-/* Fix zui $.fn.callComEvent not defined */
-if(!$.fn.callComEvent)
-{
-    $.fn.callComEvent = function(component, eventName, params)
-    {
-        if(params !== undefined && !$.isArray(params)) params = [params];
-        var $this  = this;
-        var result = $this.triggerHandler(eventName, params);
-
-        var eventCallback = component.options[eventName];
-        if(eventCallback) result = eventCallback.apply(component, params);
-        return result;
-    };
-}
-
-/* Set trigger modal default name to 'ajaxModal'. */
-(function(){$.ModalTriggerDefaults = {name: 'ajaxModal', backdrop: 'static'}})();
-
-/* Make table rows clickable */
-(function(a,b){"use strict";var e=function(b,c){this.$=a(b),this.options=this.getOptions(c),this.init()};e.DEFAULTS={},e.prototype.getOptions=function(b){return b=a.extend({},e.DEFAULTS,this.$.data(),b)},e.prototype.init=function(){this.handleRowClickable()},e.prototype.handleRowClickable=function(){this.$,this.$.find('tr[data-url]:not(".app-btn") td:not(".actions")').click(function(c){if(!a(c.target).is("a, .caret")){var d=a(this).closest("tr").data("url");d&&(b.location=d)}})},a.fn.dataTable=function(b){return this.each(function(){var c=a(this),d=c.data("zui.dataTable"),f="object"==typeof b&&b;d||c.data("zui.dataTable",d=new e(this,f)),"string"==typeof b&&d[b]()})},a.fn.dataTable.Constructor=e,a(function(){a("table.table-data").dataTable()})}(jQuery,window,document,Math));
-
 /**
  * force load entry content with iframe when view entry
  *

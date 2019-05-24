@@ -273,8 +273,6 @@ body.body-modal {padding-top: 10px;}
 .text-top,.text-top td {vertical-align: top !important;}
 .text-middle,.text-middle th,.text-middle td {vertical-align: middle !important;}
 tr.text-center > td, tr.text-center > th {text-align: center;}
-tr.text-center > td.text-left, tr.text-center > th.text-left {text-align: left;}
-tr.text-center > td.text-right, tr.text-center > th.text-right {text-align: right;}
 
 /* form */
 body > form {margin-top: 20px;} /* form behind body */
@@ -298,12 +296,6 @@ fieldset {margin-bottom: 15px; border: 1px solid #e5e5e5; padding: 10px 15px 15p
 fieldset.fieldset-pure {background: none; padding: 0; border: none; padding-top: 5px;}
 fieldset > legend {width: auto; margin: 0 0 0 -5px; font-size: 13px; font-weight: bold; border-bottom: none; padding: 0 5px}
 fieldset > .form-group {margin-bottom: 0;}
-
-.input-group-addon{border-radius:0}
-.input-group .input-group-btn .btn{border-radius: 0}
-.input-group .input-group-btn lable{border-radius: 0}
-.form-condensed .input-group>.form-control, .form-condensed .input-group>.input-group-addon, .form-condensed .input-group>.input-group-btn>.btn {border-radius:0}
-.form-condensed .btn-mini {padding: 1px 5px;}
 
 td #aliasLabel {display: table-row;}
 
@@ -487,17 +479,6 @@ td #aliasLabel {display: table-row;}
 .task-done   {color:#229f24;}
 .task-cancel {color:#808080;}
 .task-closed {color:#808080;}
-
-/* Pager. */
-.pager {margin:0;line-height: 20px; color: #999}
-.pager .dropdown {display: inline-block;}
-.pager a {color: #444}
-.pager a:hover {color: #141414}
-.pager > .dropdown > a, .pager > i, .pager > a {display: inline-block; position: relative; padding: 5px; min-width: 25px; text-align: center; margin-left: -5px;}
-.pager .dropdown > a:hover, .pager > a:hover {background: #e5e5e5;}
-.pager .dropdown-menu {margin-top: 0; width: 212px; margin-left: -5px; padding: 0;}
-.pager .dropdown-menu > li {display: block; float: left; width: 70px; border-right: 1px dotted #ddd; border-bottom: 1px dotted #ddd}
-#_pageID, #goto {height: 20px; line-height: 20px; padding-top: 0; padding-bottom: 0;}
 
 /* Drop menu. */
 #dropMenu {background: #fff; position:absolute; display:none; font-size:12px; z-index:9999; -moz-box-shadow: 0 6px 12px rgba(0,0,0,0.175); -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175); box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);border: 1px solid #CBCBCB; border: 1px solid rgba(0, 0, 0, 0.15); top: 34px; min-width: 250px; min-width: 218px\0; padding: 10px 15px; z-index: 999; border-top: 1px solid #ddd}

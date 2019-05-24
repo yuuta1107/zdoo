@@ -73,21 +73,10 @@ table.tablesorter thead tr .headerSortDown > a:after{font-family: ZenIcon; font-
   #navbarSwitcher a {padding: 15px 5px;}
 }
 
-/* fixed table */
-.with-fixed-table {overflow: hidden;}
-#fixedHeader {top: 82px !important; position: fixed; z-index: 10; box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2); display: none; background-color: #fff}
-.with-fixed-table #fixedHeader {display: block;}
-.with-fixed-table-footer .table-fixed-footer {position: fixed; z-index: 10; box-shadow: 0 -1px 10px rgba(0, 0, 0, 0.2); background-color: #fff;}
-
 .row-table {display: table; width: 100%;}
 .col-side, .col-main { padding: 0; display: table-cell; vertical-align: top;}
 .col-side {width: 350px; padding-left: 10px;}
 .col-main {padding-right: 10px;}
-
-.table-footer {padding: 5px; line-height: 30px}
-.table-footer:before, .table-footer:after {content: ' '; display: table}
-.table-footer:after {clear: both}
-.table-footer .page {padding: 0 3px; width: auto;}
 
 .datatable.head-fixed>.datatable-head {z-index:1001}
 

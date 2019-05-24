@@ -25,8 +25,8 @@
   <?php endif;?>
   <?php commonModel::printLink('order', 'create', '', '<i class="icon-plus"></i> ' . $lang->order->create, 'class="btn btn-secondary"');?>
 </div>
-<div class='panel'>
-  <table class='table table-hover table-striped table-bordered tablesorter table-data table-fixed'>
+<div class='panel main-table' data-ride='table'>
+  <table class='table has-sort-head'>
     <thead>
       <tr class='text-center'>
         <?php $vars = "mode={$mode}&orderBy=%s&recTotal={$pager->recTotal}&recPerPage={$pager->recPerPage}&pageID={$pager->pageID}";?>
@@ -54,7 +54,7 @@
         <?php $products = ''; foreach($order->products as $product) $products .= $product . ' ';?>
         <td><?php echo $order->id;?></td>
         <td class='visible-lg'><?php echo zget($lang->customer->levelNameList, $order->level, $order->level);?></td>
-        <td class='text-left' title='<?php echo $order->customerName;?>'><?php echo $order->customerName;?></td>
+        <td class='text-left' title='<?php echo $order->customerName;?>'><?php commonModel::printLink('customer', 'view', "customerID={$order->customer}", $order->customerName);?></td>
         <td title='<?php echo $products;?>'><?php echo $products;?></td>
         <td class='text-right'><?php echo zget($currencySign, $order->currency, '') . formatMoney($order->plan);?></td>
         <td class='text-right'><?php echo zget($currencySign, $order->currency, '') . formatMoney($order->real);?></td>
@@ -72,8 +72,8 @@
   </table>
   <div class='table-footer'>
     <?php if(isset($totalAmount)):?>
-    <div class='pull-left text-danger'>
-      <?php if(!empty($totalAmount)) printf($lang->order->totalAmount, implode('，', $totalAmount['plan']), implode('，', $totalAmount['real']));?>
+    <div class='table-statistic'>
+      <span class='text-danger'><?php if(!empty($totalAmount)) printf($lang->order->totalAmount, implode('，', $totalAmount['plan']), implode('，', $totalAmount['real']));?></span>
     </div>
     <?php endif;?>
     <?php $pager->show();?>

@@ -20,8 +20,8 @@ include '../../common/view/chosen.html.php';
 #querybox {position: relative; margin: 0 auto; background: #FFFFFF; box-shadow: 0 0 8px 2px rgba(225,225,225,0.50); border-radius: 4px; margin: 0 10px 10px;}
 #querybox form{padding: 10px; padding-right: 40px;}
 #querybox .table {border: none; table-layout: fixed;}
-#querybox .table-form td {border: none}
-#querybox .btn {padding: 5px 8px;}
+#querybox .table-form td {border: none; vertical-align: middle;}
+#querybox .btn {padding: 4px 8px;}
 #querybox .table-form td td {padding: 2px;}
 #querybox .table .table {margin: 0;}
 .outer #querybox .table tr > th:first-child, .outer #querybox .table tr > td:first-child,
@@ -700,6 +700,7 @@ foreach($fieldParams as $fieldName => $param)
 </form>
 <script>
 $('#searchform .chosen').chosen();
+$('#searchform .input-group').fixInputGroup();
 <?php if(isset($formSession['formType'])) echo "show{$formSession['formType']}();";?>
 $('#searchform .trader').each(function()
 {

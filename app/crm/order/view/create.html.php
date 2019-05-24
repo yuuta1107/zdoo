@@ -26,7 +26,7 @@
               <div class='input-group'>
                 <?php echo html::select('customer', $customers, $customer, "class='form-control chosen' data-no_results_text='" . $lang->searchMore . "'");?>
                 <?php if(commonModel::hasPriv('customer', 'create')):?>
-                <?php echo html::input('name', '', "class='form-control' style='display:none'");?>
+                <?php echo html::input('name', '', "class='form-control rounded-left' style='display:none'");?>
                 <span class='input-group-addon'>
                   <label class='checkbox-inline'>
                     <input type='checkbox' name='createCustomer' id='createCustomer' value='1' /> <?php echo $lang->order->createCustomer?>
@@ -61,7 +61,7 @@
               <div class='input-group'>
                 <?php echo html::select('product[]', $products, '', "class='form-control chosen' multiple");?>
                 <?php if(commonModel::hasPriv('product', 'create')):?>
-                <?php echo html::input('productName', '', "class='form-control' style='display:none'");?>
+                <?php echo html::input('productName', '', "class='form-control rounded-left' style='display:none'");?>
                 <span class='input-group-addon'>
                   <label class='checkbox-inline'>
                     <input type='checkbox' name='createProduct' id='createProduct' value='1' /> <?php echo $lang->order->createProduct?>

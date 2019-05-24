@@ -82,4 +82,4 @@ $lang->order->infoNextDate  = '下次联系：%s。';
 $lang->order->deny          = '您没有创建%s的权限。';
 
 /* Width settings for different languages, in pixels. */
-$lang->order->actionWidth = 180;
+$lang->order->actionWidth = 220;
