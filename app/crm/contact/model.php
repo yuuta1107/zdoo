@@ -323,6 +323,8 @@ class contactModel extends model
         $customerIdList = $this->loadModel('customer')->getCustomersSawByMe();
         if(!$customerIdList) return array();
 
+        if($this->app->clientDevice == 'mobile') $limit = 0;
+
         $contacts = $this->dao->select('t1.id, t1.realname')->from(TABLE_CONTACT)->alias('t1')
             ->leftJoin(TABLE_RESUME)->alias('t2')->on('t1.id = t2.contact')
             ->where('t1.deleted')->eq(0)

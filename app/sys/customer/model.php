@@ -186,6 +186,8 @@ class customerModel extends model
 
         if($customerIdList)
         {
+            if($this->app->clientDevice == 'mobile') $limit = 0;
+         
             $customers = $this->dao->select('id, name')->from(TABLE_CUSTOMER)
                 ->where('deleted')->eq(0)
                 ->beginIF($relation == 'client')->andWhere('relation')->ne('provider')->fi()

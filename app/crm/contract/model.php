@@ -136,6 +136,8 @@ class contractModel extends model
     {
         $contractList = array();
 
+        if($this->app->clientDevice == 'mobile') $limit = 0;
+
         $contracts = $this->dao->select('id, name')->from(TABLE_CONTRACT)
             ->where(1)
             ->beginIF($customerID)->andWhere('customer')->eq($customerID)->fi()
