@@ -134,6 +134,8 @@ class contractModel extends model
      */
     public function getPairs($customerID = 0, $emptyOption = true, $orderBy = 'id_desc', $limit = 0, $contractID = '')
     {
+        if($this->app->clientDevice == 'mobile') $limit = 0;
+
         $contractList = array();
 
         $contracts = $this->dao->select('id, name')->from(TABLE_CONTRACT)
