@@ -64,7 +64,7 @@ class trade extends control
         list($tradeYears, $tradeQuarters, $tradeMonths) = $this->trade->getTradePeriods($mode);
 
         $currentYear = current($tradeYears);
-        if($mode != 'invest' and $mode != 'loan' and !empty($tradeDates))
+        if($mode != 'invest' and $mode != 'loan' and !empty($tradeQuarters[$currentYear]) and !empty($tradeMonths[$currentYear]))
         {
             $currentQuarter = current($tradeQuarters[$currentYear]);
             $currentMonth   = current($tradeMonths[$currentYear][$currentQuarter]);
