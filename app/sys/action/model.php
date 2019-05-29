@@ -74,7 +74,7 @@ class actionModel extends model
         if(!$actionID) return false;
 
         /* Create todo for user who contact the contacts. */
-        if($objectType == 'order' or $objectType == 'customer')
+        if($this->post->nextDate && ($objectType == 'order' or $objectType == 'customer'))
         {
             $customerName = $this->dao->findById($customer)->from(TABLE_CUSTOMER)->fetch('name');
 
@@ -102,7 +102,7 @@ class actionModel extends model
         $this->syncContactInfo($objectType, $objectID, $customer, $contact, $nextDate);
 
         /* Create record for customer and check the checkbox of contract or order. */
-        if($this->post->contract or $this->post->order)
+        if(($objectType == 'contract' && $this->post->contract) or ($objectType == 'order' && $this->post->order))
         {
             $objectType = 'customer';
             $objectID   = $customer;
@@ -146,15 +146,6 @@ class actionModel extends model
             ->exec();
 
         if(!$this->post->nextDate) return false;
-
-        $this->dao->delete()->from(TABLE_DATING)
-            ->where('status')->eq('wait')
-            ->andWhere('objectType')->eq($objectType)
-            ->andWhere('objectID')->eq($objectID)
-            ->andWhere('date')->gt($this->post->nextDate)
-            ->andWhere('account')->eq($this->app->user->account)
-            ->andWhere('contact')->eq($this->post->contact)
-            ->exec();
 
         $dating = new stdclass();
         $dating->objectType  = $objectType;
@@ -239,7 +230,7 @@ class actionModel extends model
         $contactInfo['contactedBy']   = $this->app->user->account;
         $contactInfo['editedDate']    = helper::now();
 
-        if(!$this->post->contract && !$this->post->order)
+        if($objectType != 'customer' or (!$this->post->contract && !$this->post->order))
         {
             $this->dao->update(TABLE_CUSTOMER)->data($contactInfo)->where('id')->eq($customer)->andWhere('contactedDate')->lt($this->post->date)->exec();
             $this->dao->update(TABLE_CONTACT)->data($contactInfo)->where('id')->eq($contact)->andWhere('contactedDate')->lt($this->post->date)->exec();
@@ -248,8 +239,11 @@ class actionModel extends model
         if($objectType == 'order')    $this->dao->update(TABLE_ORDER)->data($contactInfo)->where('id')->eq($objectID)->andWhere('contactedDate')->lt($this->post->date)->exec();
         if($objectType == 'contract') $this->dao->update(TABLE_CONTRACT)->data($contactInfo)->where('id')->eq($objectID)->andWhere('contactedDate')->lt($this->post->date)->exec();
 
-        $table = $this->config->action->datingTables[$objectType];
-        $this->dao->update($table)->set('nextDate')->eq($nextDate)->where('id')->eq($objectID)->exec();
+        if($nextDate)
+        {
+            $table = $this->config->action->datingTables[$objectType];
+            $this->dao->update($table)->set('nextDate')->eq($nextDate)->where('id')->eq($objectID)->exec();
+        }
 
         return !dao::isError();
     }
