@@ -14,6 +14,7 @@
 .contact-list-item + .contact-list-item {border-top: 1px solid #E7EAF2; margin-top: 5px; padding-top: 6px;}
 .contact-list-item > .heading {height: 30px; position: relative; margin-right: 30px;}
 .contact-list-item > .heading > .btn-expand {position: absolute; right: -30px; top: 0;}
+.contact-list-item > .heading > .btn-expand.collapsed > .icon-angle-up:before {content: '\e6e3'}
 .contact-list-item .contact-name,
 .contact-list-item .contact-title,
 .contact-list-item .contact-mobile {float: left; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; line-height: 28px; padding-left: 5px; height: 28px;}
@@ -54,7 +55,7 @@
         </div>
         <div class='contact-title text-md'><?php echo  $contact->title;?></div>
         <div class='contact-mobile text-md'><?php echo  $contact->mobile;?></div>
-        <a href='#contact-info-<?php echo $contact->id?>' data-toggle='collapse' data-parent='#contactsList' class='btn btn-link btn-expand<?php if(!$isFirstContact) echo ' collapsed';?>'><i class='icon icon-angle-down icon-lg'></i></a>
+        <a href='#contact-info-<?php echo $contact->id?>' data-toggle='collapse' data-parent='#contactsList' class='btn btn-link btn-expand<?php if(!$isFirstContact) echo ' collapsed';?>'><i class='icon icon-angle-up icon-lg'></i></a>
       </div>
       <div class='content collapse<?php if($isFirstContact) echo ' in';?>' id='contact-info-<?php echo $contact->id?>'>
         <?php echo html::image(helper::createLink('crm.contact', 'vcard', "contactID={$contact->id}"), "class='contact-vcard'");?>
