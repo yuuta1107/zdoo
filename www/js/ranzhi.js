@@ -19,11 +19,11 @@
         }
     };
 
-    // if(config.defaultView != 'xhtml')
-    // {
-    //     redirect();
-    //     $(redirect);
-    // }
+    if(config.defaultView != 'xhtml')
+    {
+        redirect();
+        $(redirect);
+    }
 }());
 
 $.extend(
