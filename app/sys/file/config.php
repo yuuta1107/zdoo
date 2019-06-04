@@ -13,6 +13,14 @@ $config->file->imageExtensions = array('jpeg', 'jpg', 'gif', 'png');
 $config->file->image2Compress  = array('.jpg', '.bmp', '.jpeg');
 
 $config->file->mimes['default'] = 'application/octet-stream';
+$config->file->mimes['txt']     = "text/plain; charset='utf-8'";
+$config->file->mimes['jpg']     = 'image/jpeg';
+$config->file->mimes['jpeg']    = 'image/jpeg';
+$config->file->mimes['gif']     = 'image/gif';
+$config->file->mimes['png']     = 'image/png';
+$config->file->mimes['bmp']     = 'image/x-ms-bmp';
+$config->file->mimes['xml']     = 'application/xml';
+$config->file->mimes['html']    = 'text/html';
 
 $config->file->ueditor["imageActionName"]     = "uploadimage";
 $config->file->ueditor["imageFieldName"]      = "upfile";

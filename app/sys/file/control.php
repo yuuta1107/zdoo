@@ -233,8 +233,9 @@ class file extends control
         if($mode == 'open')
         {
             /* If the web server is nginx, it will download the file because the extension of file is empty. Use php to output file to avoid this situation. */
-            $mime = in_array($file->extension, $this->config->file->imageExtensions) ? "image/{$file->extension}" : $this->config->file->mimes['default'];
+            $mime = zget($this->config->file->mimes, $file->extension, 'default');
             header("content-type: $mime");
+
             die(file_get_contents($file->realPath));
         }
         else
