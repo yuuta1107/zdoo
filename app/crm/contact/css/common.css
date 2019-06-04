@@ -11,20 +11,3 @@ dl.contact-info{margin:0;}
 #duplicateError {display: inline-block;}
 #duplicateError .alert{padding: 3px 10px; margin-bottom: 0; text-align: left;}
 #duplicateError .close{right: 0; top: 5px; margin-left: 20px;}
-
-/* Style for contact/view/block */
-.contact-list-item + .contact-list-item {border-top: 1px solid #E7EAF2; margin-top: 5px; padding-top: 6px;}
-.contact-list-item > .heading {height: 30px; position: relative; margin-right: 30px;}
-.contact-list-item > .heading > .btn-expand {position: absolute; right: -30px; top: 0;}
-.contact-list-item .contact-name,
-.contact-list-item .contact-title,
-.contact-list-item .contact-mobile {float: left; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; line-height: 28px; padding-left: 5px; height: 28px;}
-.contact-list-item .contact-name {width: 40%;}
-.contact-list-item .contact-name .label {position: relative; top: -2px;}
-.contact-list-item .contact-title {width: 22%; padding-left: 10px;}
-.contact-list-item .contact-mobile {width: 38%;}
-.contact-list-item > .content {position: relative; margin-top: 4px; padding-left: 40%;}
-.contact-list-item .contact-vcard {width: 75px; height: 75px; position: absolute; left: 0; top: 0;}
-.contact-list-item .contact-infos {min-height: 75px;}
-.contact-info-item {position: relative; padding-left: 31%; line-height: 24px;}
-.contact-info-item > .info-title {position: absolute; left: 0; top: 0; width: 36%; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;}
