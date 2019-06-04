@@ -1,43 +1,76 @@
-<?php 
+<?php
 /**
  * The contact List block file of contact module of RanZhi.
  *
  * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Xiying Guan <guanxiying@xirangit.com>
- * @package     common 
+ * @package     common
  * @version     $Id$
  * @link        http://www.ranzhi.org
  */
 ?>
-<?php foreach($contacts as $contact):?>
-<div class='panel' <?php if($contact->left) echo "title='" . sprintf($lang->contact->leftAt, $contact->left) . "'";?>>
-  <table class='table table-bordered table-contact'>
-    <tr>
-      <th class='w-120px text-center alert v-middle'>
-        <?php $class = $contact->maker ? "class='text-red'" : "";?>
-        <?php $class = $contact->left ? "class='text-strike'" : "";?>
-        <span class='lead'><?php echo html::a($this->createLink('crm.contact', 'view', "contactID=$contact->id"), $contact->realname, $class);?></span>
-        <div><?php echo $contact->dept . ' ' . $contact->title;?></div>
-      </th>
-      <td>
-        <div class='row'>
-        <div class='col-sm-10'>
-        <div class='contact-info'>
-          <?php $companyName = isset($config->company->name) ? $config->company->name : '';?>
-          <?php if($contact->phone or $contact->mobile) echo "<div><i class='icon-phone-sign'></i> $contact->phone $contact->mobile</div>";?>
-          <?php if($contact->qq) echo "<div class='f-14'><i class='icon-qq'></i> " . html::a("http://wpa.qq.com/msgrd?v=3&uin={$contact->qq}&site={$companyName}&menu=yes", $contact->qq, "target='_blank'") . "</div>";?>
-          <?php if($contact->email) echo "<div class='f-14'><i class='icon-envelope-alt'></i> " . html::mailto($contact->email, $contact->email) . "</div>";?>
+<div class='panel panel-block'>
+  <div class='panel-heading'>
+    <strong class='title'><?php echo $lang->contact->common;?></strong>
+  </div>
+  <?php if(isset($customer)):?>
+  <div class='panel-actions'>
+    <?php echo html::a($this->createLink('crm.customer', 'linkContact', "customerID=$customer->id"), '<i class="icon icon-plus"></i> ' . $lang->contact->create, "class='btn btn-primary'");?>
+  </div>
+  <?php endif;?>
+  <div class='panel-body contact-list' id='contactsList'>
+    <?php $isFirstContact = true;?>
+    <?php foreach($contacts as $contact):?>
+    <div class='contact-list-item'>
+      <div class='heading'>
+        <div class='contact-name'>
+          <?php echo html::a($this->createLink('crm.contact', 'view', "contactID=$contact->id"), $contact->realname, "class='text-fore text-md'");?>
+          <?php if($contact->gender == 'f'):?>
+          &nbsp; <small class='text-red'><?php echo $lang->contact->lady;?></small>
+          <?php elseif($contact->gender == 'm'):?>
+          &nbsp; <small class='text-primary'><?php echo $lang->contact->gentleman;?></small>
+          <?php endif;?>
+          <?php if($contact->maker):?>
+          &nbsp; <span class='label label-pale label-lg'><?php echo $lang->resume->maker?></span>
+          <?php endif;?>
         </div>
-        <p class='vcard text-center'><?php echo html::image(helper::createLink('crm.contact', 'vcard', "contactID={$contact->id}"), "style='height:120px'");?></p>
+        <div class='contact-title text-md'><?php echo  $contact->title;?></div>
+        <div class='contact-mobile text-md'><?php echo  $contact->mobile;?></div>
+        <a href='#contact-info-<?php echo $contact->id?>' data-toggle='collapse' data-parent='#contactsList' class='btn btn-link btn-expand<?php if(!$isFirstContact) echo ' collapsed';?>'><i class='icon icon-angle-down icon-lg'></i></a>
+      </div>
+      <div class='content collapse<?php if($isFirstContact) echo ' in';?>' id='contact-info-<?php echo $contact->id?>'>
+        <?php echo html::image(helper::createLink('crm.contact', 'vcard', "contactID={$contact->id}"), "class='contact-vcard'");?>
+        <div class='contact-infos'>
+          <?php foreach($config->contact->contactWayList as $item):?>
+          <?php if($item != 'mobile' && !empty($contact->{$item})):?>
+            <div class='contact-info-item'>
+              <div class='info-title text-gray'><?php echo $lang->contact->{$item};?></div>
+              <div class='info-content'>
+                <?php
+                  if($item == 'qq')
+                  {
+                      $site = isset($config->company->name) ? $config->company->name : '';
+                      echo html::a("http://wpa.qq.com/msgrd?v=3&uin={$contact->$item}&site={$site}&menu=yes", $contact->$item, "target='_blank'");
+                  }
+                  else if($item == 'email')
+                  {
+                      echo html::mailto($contact->{$item}, $contact->{$item});
+                  }
+                  else if($item != 'qq' and $item != 'email')
+                  {
+                      echo '<span class="text-gray">' . $contact->{$item} . '</span>';
+                  }
+                ?>
+              </div>
+            </div>
+          <?php endif;?>
+          <?php endforeach;?>
         </div>
-        <div class='col-sm-2'>
-        <div class='text-right'><i class='btn-vcard icon icon-qrcode icon-large'> </i></div>
-        </div>
-        </div>
-      </td>
-    </tr>
-  </table>
+      </div>
+    </div>
+    <?php $isFirstContact = false;?>
+    <?php endforeach;?>
+  </div>
 </div>
-<?php endforeach;?>
 <?php if(isset($pageJS)) js::execute($pageJS);?>

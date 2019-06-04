@@ -1,4 +1,4 @@
-$(document).ready(function() 
+$(document).ready(function()
 {
     fixNavbar();
     setRequiredFields();
@@ -12,7 +12,7 @@ $(document).ready(function()
     $.setAjaxJSONER('.jsoner')
 
     /* run code if desktop. */
-    if(typeof $.ipsStart != 'undefined') 
+    if(typeof $.ipsStart != 'undefined')
     {
         /* Set ping keep online. */
         setInterval('ping()', 1000 * config.pingInterval);
@@ -66,7 +66,7 @@ $(document).ready(function()
         e.preventDefault();
     });
 
-    setMenu();
+    // setMenu();
     initSearch();
 
     $(document).on('click', '#noticeAttend .close', function()
@@ -96,8 +96,8 @@ $(document).on('keyup', function(e)
 });
 
 /**
- * Show or hide more items. 
- * 
+ * Show or hide more items.
+ *
  * @access public
  * @return void
  */
@@ -109,8 +109,8 @@ function switchMore()
 }
 
 /**
- * Init search form 
- * 
+ * Init search form
+ *
  * @access public
  * @return void
  */
@@ -166,10 +166,10 @@ function initSearch()
 }
 
 /**
- * Ajax get search form 
- * 
- * @param  string   $queryBox 
- * @param  callback $callback 
+ * Ajax get search form
+ *
+ * @param  string   $queryBox
+ * @param  callback $callback
  * @access public
  * @return void
  */
@@ -186,37 +186,37 @@ function ajaxGetSearchForm($queryBox, callback)
     }
 }
 
-/**
- * Set menu
- * 
- * @access public
- * @return void
- */
-function setMenu()
-{
-    $menuTitle = $('#menuTitle');
-    $menu = $('#menu');
-    if($menu.length && $menuTitle.length)
-    {
-        $menu.children('ul.nav:not(.pull-right)').hide();
-        $menu.prepend($menuTitle.addClass('nav'));
-    }
-}
+// /**
+//  * Set menu
+//  *
+//  * @access public
+//  * @return void
+//  */
+// function setMenu()
+// {
+//     $menuTitle = $('#menuTitle');
+//     $menu = $('#menu');
+//     if($menu.length && $menuTitle.length)
+//     {
+//         $menu.children('ul.nav:not(.pull-right)').hide();
+//         $menu.prepend($menuTitle.addClass('nav'));
+//     }
+// }
 
 /* Remove 'ditto' in first row when batch create or edit. */
 function removeDitto()
 {
     $firstTr = $('.table').find('tbody tr:first');
     $firstTr.find('td select').each(function()
-    {    
+    {
         $(this).find("option[value='ditto']").remove();
         $(this).trigger("chosen:updated");
-    });  
+    });
 }
 
 /**
  * Start cron.
- * 
+ *
  * @access public
  * @return void
  */

@@ -5,7 +5,7 @@
  * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
- * @package     common 
+ * @package     common
  * @version     $Id: kindeditor.html.php 4029 2016-08-26 06:50:41Z liugang $
  * @link        http://www.ranzhi.org
  */
@@ -44,19 +44,19 @@ js::set('uid', $uid);
 ?>
 
 <script>
-var simple = 
-['formatblock', 'fontsize', '|', 'bold', 'italic','underline', '|', 
+var simple =
+['formatblock', 'fontsize', '|', 'bold', 'italic','underline', '|',
 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist', 'insertunorderedlist', '|',
 'emoticons', 'image', 'link', '|', 'removeformat','undo', 'redo', 'source'];
 
-var full = 
+var full =
 [ 'formatblock', 'fontsize', 'lineheight', '|', 'forecolor', 'hilitecolor', '|', 'bold', 'italic','underline', 'strikethrough', '|',
 'justifyleft', 'justifycenter', 'justifyright', 'justifyfull', '|',
 'insertorderedlist', 'insertunorderedlist', '|',
 'emoticons', 'image', 'insertfile', 'hr', '|', 'link', 'unlink', '/',
 'undo', 'redo', '|', 'cut', 'copy', 'paste', '|', 'plainpaste', 'wordpaste', '|', 'removeformat', 'clearhtml','quickformat', '|',
 'indent', 'outdent', 'subscript', 'superscript', '|',
-'table', 'code', '|', 'pagebreak', 'anchor', '|', 
+'table', 'code', '|', 'pagebreak', 'anchor', '|',
 'fullscreen', 'source', 'about'];
 
 $(document).ready(initKindeditor);
@@ -70,14 +70,15 @@ function initKindeditor(afterInit)
         if(typeof(v.editors.filterMode) == 'undefined') v.editors.filterMode = true;
         editorTool = eval(v.editors.tools);
         var K = KindEditor, $editor = $('#' + editorID);
-        var options = 
+        var options =
         {
             cssPath:[v.themeRoot + 'zui/css/min.css'],
             width:'100%',
             items:editorTool,
-            filterMode:true, 
+            filterMode:true,
             bodyClass:'article-content',
-            urlType:'absolute', 
+            cssData: 'html,body {background: none}.article-content, .article-content table td, .article-content table th {line-height: 1.3846153846; font-size: 13px;}.article-content .table-auto {width: auto!important; max-width: 100%;}',
+            urlType:'absolute',
             uploadJson: createLink('file', 'ajaxUpload', 'uid=' + v.uid),
             fileManagerJson : createLink('file', 'fileManager'),
             imageTabIndex:1,
@@ -88,8 +89,8 @@ function initKindeditor(afterInit)
             afterChange: function(){$editor.change().hide();},
             afterCreate: function()
             {
-                var doc = this.edit.doc; 
-                var cmd = this.edit.cmd; 
+                var doc = this.edit.doc;
+                var cmd = this.edit.cmd;
                 if(!K.WEBKIT && !K.GECKO)
                 {
                     var pasted = false;
@@ -123,9 +124,9 @@ function initKindeditor(afterInit)
                         if(file)
                         {
                             var reader = new FileReader();
-                            reader.onload = function (evt) 
+                            reader.onload = function (evt)
                             {
-                                var result = evt.target.result; 
+                                var result = evt.target.result;
                                 var result = evt.target.result;
                                 var arr    = result.split(",");
                                 var data   = arr[1]; // raw base64

@@ -1,11 +1,11 @@
-<?php 
+<?php
 /**
  * The view of view function of contact module of RanZhi.
  *
  * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Yidong Wang <yidong@cnezsoft.com>
- * @package     contact 
+ * @package     contact
  * @version     $Id$
  * @link        http://www.ranzhi.org
  */
@@ -49,7 +49,7 @@
         <div class='form-group'><?php echo html::textarea('comment', '',"rows='5' class='w-p100'");?></div>
         <?php echo html::submitButton();?>
       </form>
-    </fieldset>      
+    </fieldset>
   </div>
   <div class='col-side'>
     <div class='panel'>
@@ -138,7 +138,7 @@
           <td class='w-p30'><?php if(isset($customers[$resume->customer])) commonModel::printLink('customer', 'view', "id={$resume->customer}", $customers[$resume->customer]);?></td>
           <td class='w-p20'><?php echo $resume->dept?></td>
           <td class='w-p25'><?php echo $resume->title?></td>
-       </tr>
+        </tr>
         <?php endforeach;?>
       </table>
     </div>

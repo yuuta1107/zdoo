@@ -73,13 +73,15 @@ $lang->order->titleLBL  = "%s purchased %s (%s)";
 $lang->order->basicInfo = "Basic";
 $lang->order->lifetime  = "Order Life";
 
-$lang->order->totalAmount   = 'Budget: %s  Actual: %s on this page;';
-$lang->order->infoBuy       = "%s purchased %s.";
-$lang->order->infoContract  = 'Signed Contract: %s.';
-$lang->order->infoAmount    = 'Budget: %s  Actual: %s';
-$lang->order->infoContacted = 'Contacted on %s ';
-$lang->order->infoNextDate  = 'Next Contact on %s';
-$lang->order->deny          = 'You has no permission to create %s.';
+$lang->order->totalAmount    = 'Budget: %s  Actual: %s on this page;';
+$lang->order->infoBuy        = "%s purchased %s";
+$lang->order->infoContract   = 'Signed Contract';
+$lang->order->infoAmount     = 'Budget: %s  Actual: %s';
+$lang->order->infoPlanAmount = 'Budget';
+$lang->order->infoRealAmount = 'Actual';
+$lang->order->infoContacted  = 'Contacted on';
+$lang->order->infoNextDate   = 'Next Contact on';
+$lang->order->deny           = 'You has no permission to create %s.';
 
 /* Width settings for different languages, in pixels. */
 $lang->order->actionWidth = 200;

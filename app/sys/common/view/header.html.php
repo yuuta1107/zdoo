@@ -39,6 +39,15 @@
 </div>
 <div class='container' id='main'><?php /* '#main' closed in 'footer.html.php'. */ ?>
   <?php
-  if(!isset($moduleMenu)) echo commonModel::createModuleMenu($this->moduleName);
+  if(!isset($moduleMenu) || $moduleMenu === true)
+  {
+      // if $moduleMenu is true or not set then output default module menu
+      echo commonModel::createModuleMenu($this->moduleName);
+  }
+  else if(is_string($moduleMenu))
+  {
+      // if $moduleMenu is custom by control method in string then output it
+      echo $moduleMenu;
+  }
   ?>
   <div id='mainContent'><?php /* '#mainContent' closed in 'footer.html.php'. */ ?>

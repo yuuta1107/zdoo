@@ -18,13 +18,6 @@ html {-webkit-overflow-scrolling: touch;}
 .page-content {margin-right: 0; margin-left: 0;}
 .page-content.with-menu {margin-top: 41px;}
 
-/* panel */
-.panel .table-bordered {border:none; margin-bottom: 0;}
-.panel .table-bordered > thead > tr:first-child th,.panel .table-bordered > tbody > tr:first-child th,.panel .table-bordered > tr:first-child th {border-top: 0;}
-.panel .table-bordered tr > td:first-child,.panel .table-bordered tr > th:first-child {border-left: 0;}
-.panel .table-bordered tr > td:last-child,.panel .table-bordered tr > th:last-child {border-right: 0;}
-.ie-8 .panel .table-bordered {border-top: 1px solid #ddd}
-
 /* image */
 .image-small{max-height:100px; max-width:100px;}
 
