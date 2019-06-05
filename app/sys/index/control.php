@@ -5,7 +5,7 @@
  * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
- * @package     index 
+ * @package     index
  * @version     $Id: control.php 4205 2016-10-24 08:19:13Z liugang $
  * @link        http://www.ranzhi.org
  */
@@ -13,7 +13,7 @@ class index extends control
 {
     /**
      * The construct method.
-     * 
+     *
      * @access public
      * @return void
      */
@@ -24,7 +24,7 @@ class index extends control
 
     /**
      * Index page.
-     * 
+     *
      * @access public
      * @return void
      */
@@ -40,11 +40,11 @@ class index extends control
             $size    = !empty($entry->size) ? ($entry->size != 'max' ? $entry->size : "'$entry->size'") : "'max'";
             $display = $entry->buildin ? 'fixed' : 'sizeable';
             $menu    = $entry->visible ? 'all' : 'list';
-            
+
             /* add web root if logo not start with /  */
             if($logo != '' && substr($logo, 0, 1) != '/') $logo = $this->config->webRoot . $logo;
             if($logo == '' && $entry->zentao) $logo = $this->config->webRoot . 'theme/default/images/ips/app-zentao.png';
-            
+
             if(!isset($entry->control))  $entry->control = '';
             if(!isset($entry->position)) $entry->position = '';
             $allEntries .= "entries.push(
@@ -53,7 +53,7 @@ class index extends control
                 code:     '$entry->code',
                 name:     '$entry->name',
                 url:      '$sso',
-                open:     '$entry->open', 
+                open:     '$entry->open',
                 desc:     '$entry->name',
                 size:      $size,
                 icon:     '$logo',
@@ -123,11 +123,11 @@ class index extends control
         $this->loadModel('attend', 'oa');
         if(time() < strtotime(date("Y-m-d") . " " . $this->config->attend->signInLimit . "+4 hour"))
         {
-            $signButtons .= "<li>" . html::a('javascript:void(0)', $this->lang->signIn, "class='sign signin'") . "</li>";
+            $signButtons .= "<li><button type='button' class='sign signin icon-pencil' data-toggle='tooltip' data-placement='bottom' title='{$this->lang->signIn}'></button></li>";
         }
-        if($this->config->attend->mustSignOut == 'yes' or time() > strtotime(date("Y-m-d") . " " . $this->config->attend->signOutLimit . "-4 hour")) 
+        if($this->config->attend->mustSignOut == 'yes' or time() > strtotime(date("Y-m-d") . " " . $this->config->attend->signOutLimit . "-4 hour"))
         {
-            $signButtons .= "<li>" . html::a('javascript:void(0)', $this->lang->signOut, "class='sign signout'") . "</li>";
+            $signButtons .= "<li><button type='button' class='sign signout icon-pencil' data-toggle='tooltip' data-placement='bottom' title='{$this->lang->signOut}'></button></li>";
         }
 
         $this->view->allEntries  = $allEntries;

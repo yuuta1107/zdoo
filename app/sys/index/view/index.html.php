@@ -5,7 +5,7 @@
  * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Yidong Wang <yidong@cnezsoft.com>
- * @package     index 
+ * @package     index
  * @version     $Id: index.html.php 4205 2016-10-24 08:19:13Z liugang $
  * @link        http://www.ranzhi.org
  */
@@ -16,6 +16,21 @@ js::set('attend', commonModel::isAvailable('attend') ? 1 : 0);
 ?>
 <!-- Desktop -->
 <div id='desktop' class='fullscreen-mode'>
+  <div id='topBar' class='dock-top unselectable'>
+  <div id='topLeftBar' class='dock-left'>
+    <ul class='bar-menu'>
+      <li><button type='button' data-toggle='tooltip' data-placement='bottom' title='Expand/Collapse' class='btn-toggle-taskbar' id='toggleTaskBarBtn'><i class="icon icon-dashboard"></i><i class="icon icon-angle-right"></i></button></li>
+    </ul>
+  </div>
+    <div id='taskbar'><ul class='bar-menu'></ul></div>
+    <div id='topRightBar' class='dock-right'>
+      <ul class='bar-menu'>
+        <?php echo isset($signButtons) ? $signButtons : ''?>
+        <li><button id='showNotifications' type='button' class='fullscreen-btn icon-bell' data-id='home' data-toggle='tooltip' data-placement='bottom' title='Notifications'></button></li>
+        <li><button id='showDesk' type='button' class='fullscreen-btn icon-desktop' data-id='home' data-toggle='tooltip' data-placement='bottom' title='<?php echo $lang->index->showDesk; ?>'></button></li>
+      </ul>
+    </div>
+  </div>
   <div id='leftBar' class='dock-left unselectable'>
     <button id='start' class='dock-bottom' type='button' title="<?php echo $app->user->realname;?>">
       <div class='avatar avatar-md'><?php if(!empty($app->user->avatar)) echo html::image($app->user->avatar);?></div>
@@ -39,16 +54,6 @@ js::set('attend', commonModel::isAvailable('attend') ? 1 : 0);
       <button id='moreOptionBtn' data-toggle='tooltip' data-tip-class='s-menu-tooltip' data-placement='right' data-btn-type='menu' class='btn-more' data-original-title='...'><i class='icon icon-ellipsis-h'></i></button>
       <ul id='moreOptionMenu' class='bar-menu dropdown-menu fade'>
       </ul>
-    </div>
-  </div>
-  <div id='bottomBar' class='dock-bottom unselectable'>
-    <div id='taskbar'><ul class='bar-menu'></ul></div>
-    <div id='bottomRightBar' class='dock-right'>
-      <ul class='bar-menu'>
-        <?php echo isset($signButtons) ? $signButtons : ''?>
-        <li><button id='showDesk' type='button' class='fullscreen-btn icon-desktop' data-id='home' data-toggle='tooltip' title='<?php echo $lang->index->showDesk; ?>'></button></li>
-      </ul>
-      <div class='copyright'><?php printf($lang->poweredBy, $this->config->version, ' ' . $this->config->version)?></div>
     </div>
   </div>
   <div id='home' class='fullscreen fullscreen-active unselectable'>
@@ -149,7 +154,7 @@ var entries = [
     sys       : true,
     icon      : 'icon-home',
     url       : '<?php echo $this->createLink('todo', 'calendar')?>',
-    order     : 0, 
+    order     : 0,
 },
 {
     id        : 'allapps',

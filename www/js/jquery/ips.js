@@ -4,7 +4,7 @@
     "use strict";
 
     /* Global variables */
-    var desktopPos       = {x: 40, y: 0},
+    var desktopPos       = {x: 50, y: 36},
         windowIdSeed     = 0,
         windowIdTeamplate= 'wid-{0}',
         windowZIndexSeed = 100,
@@ -28,14 +28,14 @@
         animateSpeed          : 200,
         entryIconRoot         : config.webRoot + 'theme/default/images/ips/',
         windowHeadheight      : 30, // the height of window head bar
-        bottomBarHeight       : 36, // the height of desk bottom bar
+        topBarHeight          : 36, // the height of desk top bar
         defaultWinPosOffset   : 30,
         defaultWindowSize     : {width:700,height:538},
         windowidstrTemplate   : 'win-{0}',
         windowTplt            : "<div id='{idstr}' class='window{cssclass}' style='width:{width}px;height:{height}px;left:{left}px;top:{top}px;z-index:{zindex};' data-id='{id}' data-url='{url}'><div class='window-head'>{iconhtml}<strong title='{desc}'>{name}</strong><ul><li><button class='reload-win'><i class='icon-repeat'></i></button></li><li><button class='min-win'><i class='icon-minus'></i></button></li><li><button class='max-win'><i class='icon-resize-full'></i></button></li><li><button class='close-win'><i class='icon-remove'></i></button></li></ul></div><div class='window-cover'></div><div class='window-content'></div></div>",
         frameTplt             : "<iframe id='iframe-{id}' name='iframe-{id}' src='{url}' frameborder='no' allowtransparency='true' scrolling='auto' hidefocus='' style='width: 100%; height: 100%; left: 0px;'></iframe>",
         leftBarShortcutTplt   : "<li id='s-menu-{id}'><button data-toggle='tooltip' data-tip-class='s-menu-tooltip' data-placement='right' data-btn-type='menu' class='app-btn s-menu-btn' title='{name}' data-id='{id}'>{iconhtml}</button></li>",
-        taskBarShortcutTplt   : "<li id='s-task-{id}'><button class='app-btn s-task-btn' title='{desc}' data-btn-type='task' data-id='{id}'>{iconhtml}{name}</button></li>",
+        taskBarShortcutTplt   : "<li id='s-task-{id}'><button class='app-btn s-task-btn' data-toggle='tooltip' data-placement='bottom' title='{name}' data-btn-type='task' data-id='{id}'>{iconhtml}</button></li>",
         taskBarMenuTplt       : "<ul class='dropdown-menu fade' id='taskMenu'><li><a href='javascript:;' class='open-win'><i class='icon-bolt icon'></i> &nbsp;{openText}</a></li><li><a href='javascript:;' class='reload-win'><i class='icon-repeat icon'></i> &nbsp;{reloadText}</a></li><li><a href='javascript:;' class='fix-entry'><i class='icon-pushpin icon'></i> &nbsp;{fixToMenuText}</a></li><li><a href='javascript:;' class='remove-entry'><i class='icon-pushpin icon-rotate-90 icon'></i> &nbsp;<span>{removeFromMenuText}</span></a></li><li><a href='javascript:;' class='close-win'><i class='icon-remove icon'></i> &nbsp;{closeText}</a></li><li><a href='javascript:;' class='delete-entry'><i class='icon-trash icon'></i> &nbsp;{deleteEntryText}</a></li></ul>",
         entryListShortcutTplt : "<li id='s-applist-{id}'><a href='javascript:;' class='app-btn menu-{hasMenu} s-list-btn' data-menu={hasMenu} data-btn-type='list' data-id='{id}' data-code={code}>{iconhtml}{name}</a></li>",
 
@@ -417,7 +417,7 @@
     {
         this.$                = $('#desktop');
         this.$menu            = $('#apps-menu');
-        this.$bottombar       = $('#bottomBar');
+        this.$topBar          = $('#topBar');
         this.isFullscreenMode = this.$.hasClass('fullscreen-mode');
 
         this.menu      = new menu();
@@ -445,7 +445,7 @@
         $(window).resize($.proxy(function() // handle varables when window size changed
         {
             /* refresh desktop size */
-            this.size   = {width: this.$.width() - this.x, height: this.$.height() - this.y - settings.bottomBarHeight};
+            this.size   = {width: this.$.width() - this.x, height: this.$.height() - this.y};
             this.width  = this.size.width;
             this.height = this.size.height;
 
@@ -1542,7 +1542,7 @@
         /* Handle status after browser size changed */
         this.afterBrowserResized = function()
         {
-            this.$fullscreens.width(desktop.width).css({left: desktop.x, top: desktop.y, bottom: settings.bottomBarHeight});;
+            this.$fullscreens.width(desktop.width).css({left: desktop.x, top: desktop.y, bottom: settings.topBarHeight});;
         };
 
         this.init();
@@ -1622,6 +1622,8 @@
                         }
                     });
                 }});
+
+                this.toggleTaskBar(!$.zui.store.get('taskbarCollapsed'));
             }
             else
             {
@@ -1688,6 +1690,16 @@
             }
         };
 
+        /* Show or hide taskbar */
+        this.toggleTaskBar = function(toggle)
+        {
+            if(toggle === undefined || toggle === null) toggle = this.$taskBar.hasClass('collapsed');
+            this.$taskBar.toggleClass('collapsed', !toggle);
+            $.zui.store.set('taskbarCollapsed', !toggle);
+            $('#toggleTaskBarBtn').find('.icon-angle-right,.icon-angle-left').toggleClass('icon-angle-left', !!toggle).toggleClass('icon-angle-right', !toggle);
+            return toggle;
+        };
+
         /* Bind events */
         this.bindEvents = function()
         {
@@ -1724,7 +1736,7 @@
                     event.stopPropagation();
                     return false;
                 }
-            });
+            }).on('click', '.btn-toggle-taskbar', this.toggleTaskBar.bind(this, null));
 
             this.$leftBar.bind('contextmenu', nocontextmenu);
             this.$taskBar.bind('contextmenu', nocontextmenu);
@@ -1766,7 +1778,7 @@
                     }
                     else if(btnType == 'task')
                     {
-                        menu.css({left: offset.left, top: 'inherit', bottom: settings.bottomBarHeight + 2});
+                        menu.css({left: offset.left, top: 'inherit', bottom: settings.topBarHeight + 2});
                         desktop.menu.hideMoreMenu();
                     }
 

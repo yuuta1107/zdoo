@@ -1,5 +1,5 @@
 /* globe. */
-body {padding-top: 0; background-color: #145ccd; background-position: center center; background-repeat: repeat; background-attachment: fixed;  background-size: auto; transition: background-color 0.5s;}
+body {padding-top: 0; background-position: center center; background-repeat: repeat; background-attachment: fixed;  background-size: auto; transition: background-color 0.5s;}
 
 a, a:hover,button,button:hover {transition: all .3s;-o-transition: all .3s;-moz-transition: all .3s;-webkit-transition: all .3s;}
 button {outline: none; border: none; background-color: transparent;}
@@ -44,7 +44,7 @@ body[class*='dropdown-mode-'] .s-menu-tooltip, body.mute-tooltip .s-menu-tooltip
 .bar-menu {margin: 0; padding: 0;}
 .bar-menu > li {display: inline-block;}
 .bar-menu > li > a,.bar-menu > li > button {display: block; padding: 4px 10px; color: #ccc; color: rgba(255,255,255,0.5);}
-.bar-menu > li.active > a,.bar-menu > li.active > button,.bar-menu > li > a.active,.bar-menu > li > button.active {color: #a1a1a1; color: rgba(255,255,255,0.85); background-color: #555; background-color: rgba(255,255,255,0.20)}
+.bar-menu > li.active > a,.bar-menu > li.active > button,.bar-menu > li > a.active,.bar-menu > li > button.active {color: #a1a1a1; color: rgba(255,255,255,0.85); background-color: rgba(255,255,255,0.05)}
 
 .bar-menu > li > a:hover,.bar-menu > li > button:hover,
 .bar-menu > li > a.open:hover,.bar-menu > li > a.active:hover {text-decoration: none; color: #fff; color: rgba(255,255,255,0.9);background-color: #666; background-color: rgba(255,255,255,0.20);}
@@ -52,7 +52,7 @@ body[class*='dropdown-mode-'] .s-menu-tooltip, body.mute-tooltip .s-menu-tooltip
 .bar-menu > li > a > .icon.icon-default, .bar-menu > li > button > .icon.icon-default {font-size: 12px; display: inline-block; min-width: 28px; box-shadow: 0 1px 1px rgba(0,0,0,0.35); border-radius: 5px; background-color: #145CCD; font-weight: normal; text-shadow: 0 1px 1px rgba(0,0,0,0.15);}
 
 /* left bar. */
-#leftBar {width: 40px; height: 100%; background-color: #0a2e66; background-color: rgba(0,0,0,0.3); z-index: 40010; transition: left .3s;-o-transition: left .3s;-moz-transition: left .3s;-webkit-transition: left .3s;}
+#leftBar {width: 50px; top: 36px; bottom: 0; background-color: #0a2e66; background-color: rgba(0,0,0,0.3); z-index: 40010; transition: left .3s;-o-transition: left .3s;-moz-transition: left .3s;-webkit-transition: left .3s;}
 #desktop.menu-auto #leftBar.menu-hide {left: -38px;}
 
 #apps-menu {position: absolute; bottom: 36px; top: 0; overflow: no-display; transition: height .3s;-o-transition: height .3s;-moz-transition: height .3s;-webkit-transition: height .3s;}
@@ -77,31 +77,40 @@ body[class*='dropdown-mode-'] .s-menu-tooltip, body.mute-tooltip .s-menu-tooltip
 #moreOptionMenu > li {display: block; float: left; position: relative; z-index: 1;}
 
 /* bottom bar. */
-#bottomBar {height: 36px; background-color: #0a2e66; background-color: rgba(0,0,0,0.2); z-index: 50000; left: 40px; right: 0}
-#desktop.menu-auto #bottomBar {left: 2px}
-#bottomBar .bar-menu li {min-width: 50px; text-align: center; font-size: 16px; height: 36px; margin-right:4px; overflow: hidden; white-space: nowrap; background-color: #444; background-color: rgba(0,0,0,0.20); -o-transition: width 1s;-moz-transition: width 1s;-webkit-transition: width 1s;transition: width 1s;}
-#bottomBar .bar-menu li > button {float:left; line-height: 28px; font-size: 12px; font-weight: normal; margin-right: 0; width: 100%;}
-#taskbar {padding-right: 220px;}
-#taskbar .bar-menu li {text-align: left; min-width: 90px; max-width: 300px; position: relative;}
+#topBar {height: 36px; background-color: #3B3A3F; z-index: 50000; left: 0; right: 0}
+#desktop.menu-auto #topBar {left: 2px}
+#topBar .bar-menu {height: 36px;}
+#topBar .bar-menu li {min-width: 36px; text-align: center; font-size: 16px; height: 36px; overflow: hidden; white-space: nowrap; -o-transition: width 1s;-moz-transition: width 1s;-webkit-transition: width 1s;transition: width 1s;}
+#topBar .bar-menu li > button {float:left; line-height: 28px; font-size: 12px; font-weight: normal; margin-right: 0; width: 100%; padding: 4px 8px;}
+#taskbar {padding-right: 220px; padding-left: 50px;}
+#taskbar .bar-menu {float: left; opacity: 1; transform: scale(1) translateX(0); visibility: visible; transition: .2s; transition-property: opacity, visibility, transform;}
+#taskbar .bar-menu li {text-align: left; min-width: 36px; max-width: 300px; position: relative;}
 #taskbar .bar-menu li .actions {position: absolute; right: 0; top: 0;}
-#taskbar .bar-menu li button { text-align: left; text-transform: uppercase}
+#taskbar .bar-menu li button {text-align: left; text-transform: uppercase; opacity: .8;}
+#taskbar .bar-menu li button.active {opacity: 1;}
 #taskbar .bar-menu li .actions button {line-height: 36px; color: #f1f1f1; font-size: 14px; padding: 0 10px; filter:alpha(opacity=0); -moz-opacity:0; opacity: 0;}
 #taskbar .bar-menu li:hover button {filter:alpha(opacity=100); -moz-opacity:1; opacity: 1;}
 #taskbar .bar-menu li .actions button:hover {content: #fff; background-color: rgba(0,0,0,0.2);}
 #taskbar .bar-menu li .actions button.close-win:hover{background-color: #dd1111;}
-#bottomBar .bar-menu > li > button > img {width: 20px; height: 20px; margin-right: 5px; margin-top: -2px;}
-#bottomBar .bar-menu > li > button[class*=' icon-'] {font-size: 20px;}
-#bottomBar .bar-menu > li > button > .icon {width: 20px; line-height: 20px; text-align: center; margin-right: 5px; min-width: 20px; font-size: 14px; border-radius: 4px; font-weight: normal;}
-#bottomBar .bar-menu > li > button > .icon.icon-default {width: 20px; line-height: 20px; text-align: center; margin-right: 5px; min-width: 20px; font-size: 12px; border-radius: 4px}
-#bottomBar .bar-menu > li > button > .icon.icon-default .text-extra {display: none}
+#taskbar.collapsed .bar-menu {opacity: 0; transform: scale(0.5) translateX(-50%); visibility: hidden;}
+#topBar .bar-menu > li > button > img {width: 20px; height: 20px; margin-top: -2px; border-radius: 2px;}
+#topBar .bar-menu > li > button[class*=' icon-'] {font-size: 18px;}
+#topBar .bar-menu > li > button > .icon {width: 20px; line-height: 20px; text-align: center; min-width: 20px; font-size: 14px; border-radius: 4px; font-weight: normal;}
+#topBar .bar-menu > li > button > .icon.icon-default {width: 20px; line-height: 20px; text-align: center; min-width: 20px; font-size: 12px; border-radius: 4px}
+#topBar .bar-menu > li > button > .icon.icon-default .text-extra {display: none}
+#topLeftBar {width: 50px;}
+#topLeftBar .bar-menu > li {background: none}
+#toggleTaskBarBtn {display: block; padding: 4px 5px; text-align: center; color: #0091FF;}
+#toggleTaskBarBtn > .icon {margin-right: 0!important;}
+#toggleTaskBarBtn > .icon + .icon {margin-left: 5px;}
 
-#bottomRightBar {position: absolute; right: 0; top: 0; background: none;}
-#bottomRightBar .bar-menu {float: right; border-left: 1px solid rgba(255,255,255,0.10);}
-#bottomRightBar .bar-menu li {background: none; margin-right: 0;}
-#bottomRightBar .bar-menu li a{float:left; width: 100%; height: 100%; line-height: 28px; font-size: 15px;}
-#bottomRightBar .bar-menu li .sign {font-size: 12px; color: #f1f1f1;}
-#bottomRightBar .copyright {float: right; line-height: 40px; padding-right: 10px;}
-#bottomRightBar .copyright a{text-decoration: none; color: rgba(255,255,255,0.5)}
+#topRightBar {position: absolute; right: 0; top: 0;}
+#topRightBar .bar-menu {float: right;}
+#topRightBar .bar-menu li {background: none; margin-right: 0;}
+#topRightBar .bar-menu li a{float:left; width: 100%; height: 100%; line-height: 28px; font-size: 15px;}
+#topRightBar .bar-menu li .sign {font-size: 12px; color: #f1f1f1;}
+#topRightBar .copyright {float: right; line-height: 40px; padding-right: 10px;}
+#topRightBar .copyright a{text-decoration: none; color: rgba(255,255,255,0.5)}
 
 /* start menu */
 #start {width: 40px; height: 36px; text-align: center; padding: 0; background: none}
