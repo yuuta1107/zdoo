@@ -94,6 +94,7 @@ body.mute-tooltip .s-task-tooltip {display: none!important}
 #leftBar.collapsed > div > .bar-menu > li > button > .text {transform: scale(0) translateX(-100%); opacity: 0; visibility: hidden}
 #leftBar.collapsed > div > .bar-menu > li > button > .icon.anchor-right {top: 11px; right: -2px; font-size: 12px;}
 #leftBar.collapsed .dropdown-menu .dropdown-header {display: block}
+#leftBar.collapsed #moreOptionMenu > li > .dropdown-menu,
 #leftBar.collapsed > div > .bar-menu.apps-main-menu > li > .dropdown-menu {top: -30px;}
 
 #moreOptionBtn,
