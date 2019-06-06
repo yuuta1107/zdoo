@@ -12,6 +12,22 @@
 class my extends control
 {
     /**
+     * Index page.
+     *
+     * @access public
+     * @return void
+     */
+    public function index()
+    {
+        $appName = $this->app->getAppName();
+        $entry   = $this->loadModel('entry')->getByCode($appName);
+
+        $this->view->title   = $entry->name;
+        $this->view->appName = $appName;
+        $this->display();
+    }
+
+    /**
      * review
      *
      * @param  string $type
@@ -98,7 +114,7 @@ class my extends control
 
         /* Get lieu list. */
         $lieus = array();
-        if($type == 'all' || $type == 'lieu') 
+        if($type == 'all' || $type == 'lieu')
         {
             $reviewedBy = $this->lieu->getReviewedBy();
             if($isAdmin or ($reviewedBy && $reviewedBy == $account))
@@ -153,12 +169,12 @@ class my extends control
 
     /**
      * company's todo list.
-     * 
-     * @param  string $type 
-     * @param  string $dept 
-     * @param  string $account 
-     * @param  string $begin 
-     * @param  string $end 
+     *
+     * @param  string $type
+     * @param  string $dept
+     * @param  string $account
+     * @param  string $begin
+     * @param  string $end
      * @access public
      * @return void
      */
@@ -178,7 +194,7 @@ class my extends control
             $begin = date('Y-m-d', strtotime("$today -1 days"));
             while($this->loadModel('attend', 'oa')->isWeekend($begin) or $this->loadModel('holiday', 'oa')->isHoliday($begin))
             {
-                $begin = date('Y-m-d', strtotime("$begin -1 days")); 
+                $begin = date('Y-m-d', strtotime("$begin -1 days"));
             }
 
             array_unshift($dateList, strtotime($begin));
@@ -197,7 +213,7 @@ class my extends control
         $acountList = array();
         if($account == '')
         {
-            if($dept == '') 
+            if($dept == '')
             {
                 $users = $this->dao->select('account, realname')->from(TABLE_USER)
                     ->where('deleted')->eq(0)
@@ -208,7 +224,7 @@ class my extends control
                     ->page($pager)
                     ->fetchPairs();
             }
-            else 
+            else
             {
                 $users = $this->loadModel('user')->getPairs('nodeleted,noforbidden,noclosed,noempty', $dept, $pager);
             }
@@ -294,12 +310,12 @@ class my extends control
 
     /**
      * order list.
-     * 
-     * @param  string $type 
-     * @param  string $orderBy 
-     * @param  int    $recTotal 
-     * @param  int    $recPerPage 
-     * @param  int    $pageID 
+     *
+     * @param  string $type
+     * @param  string $orderBy
+     * @param  int    $recTotal
+     * @param  int    $recPerPage
+     * @param  int    $pageID
      * @access public
      * @return void
      */
@@ -335,12 +351,12 @@ class my extends control
 
     /**
      * contract list.
-     * 
-     * @param  string $type 
-     * @param  string $orderBy 
-     * @param  int    $recTotal 
-     * @param  int    $recPerPage 
-     * @param  int    $pageID 
+     *
+     * @param  string $type
+     * @param  string $orderBy
+     * @param  int    $recTotal
+     * @param  int    $recPerPage
+     * @param  int    $pageID
      * @access public
      * @return void
      */
@@ -377,12 +393,12 @@ class my extends control
 
     /**
      * Browse task list.
-     * 
-     * @param  string  $type 
-     * @param  string  $orderBy 
-     * @param  int     $recTotal 
-     * @param  int     $recPerPage 
-     * @param  int     $pageID 
+     *
+     * @param  string  $type
+     * @param  string  $orderBy
+     * @param  int     $recTotal
+     * @param  int     $recPerPage
+     * @param  int     $pageID
      * @access public
      * @return void
      */
@@ -404,7 +420,7 @@ class my extends control
 
     /**
      *  Involved projects list.
-     * 
+     *
      * @access public
      * @return void
      */
@@ -423,13 +439,13 @@ class my extends control
     }
 
     /**
-     * My dynamic. 
-     * 
-     * @param  string   $type 
-     * @param  string   $orderBy 
-     * @param  int      $recTotal 
-     * @param  int      $recPerPage 
-     * @param  int      $pageID 
+     * My dynamic.
+     *
+     * @param  string   $type
+     * @param  string   $orderBy
+     * @param  int      $recTotal
+     * @param  int      $recPerPage
+     * @param  int      $pageID
      * @access public
      * @return void
      */

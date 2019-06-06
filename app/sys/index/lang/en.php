@@ -5,7 +5,7 @@
  * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
- * @package     index 
+ * @package     index
  * @version     $Id: en.php 4029 2016-08-26 06:50:41Z liugang $
  * @link        http://www.zdoo.org
  */
@@ -27,6 +27,7 @@ $lang->index->customBlocks  = 'Custom block';
 $lang->index->addBlock      = 'Add Block';
 $lang->index->refresh       = 'Refresh';
 $lang->index->hidden        = 'Hidden';
+$lang->index->more          = 'More';
 
 $lang->index->ips['confirmClose']        = 'Do you want to delete [{0}]?';
 $lang->index->ips['entryNotFindTip']     = 'Entry is not found!';

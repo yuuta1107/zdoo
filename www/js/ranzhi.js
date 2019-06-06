@@ -113,7 +113,7 @@ $.extend(
                         {
                             $target.load(document.location.href + ' ' + response.ajaxReload, function()
                             {
-                                $target.dataTable();
+                                // $target.dataTable();
                                 $target.find('[data-toggle="modal"]').modalTrigger();
                             });
                         }
@@ -415,7 +415,7 @@ $.extend(
                             $target.find('[data-toggle="modal"]').modalTrigger();
                             if($target.hasClass('table-data'))
                             {
-                                $target.dataTable();
+                                // $target.dataTable();
                             }
                             if(typeof sortTable == 'function')
                             {

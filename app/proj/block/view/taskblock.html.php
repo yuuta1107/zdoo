@@ -40,4 +40,3 @@
   </tr>
   <?php endforeach;?>
 </table>
-<script>$('.block-task').dataTable();</script>

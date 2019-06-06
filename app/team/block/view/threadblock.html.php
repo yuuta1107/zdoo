@@ -17,7 +17,6 @@
     <td><?php echo $thread->title;?></td>
     <td class='w-80px'><?php echo $thread->authorRealname;?></td>
     <td class='w-50px'><?php echo formatTime($thread->createdDate, DT_DATE6);?></td>
-  </tr>  
+  </tr>
   <?php endforeach;?>
 </table>
-<script>$('.block-thread').dataTable();</script>

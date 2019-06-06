@@ -20,4 +20,3 @@
   </tr>
   <?php endforeach;?>
 </table>
-<script>$('.block-order').dataTable();</script>

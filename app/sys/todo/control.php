@@ -56,6 +56,9 @@ class todo extends control
             $todoList[$code] = array();
         }
 
+        // Load lang of my module for navbar
+        $this->app->loadLang('my');
+
         $this->view->title           = $this->lang->todo->calendar;
         $this->view->date            = $date;
         $this->view->data            = $this->todo->getCalendarData($date);

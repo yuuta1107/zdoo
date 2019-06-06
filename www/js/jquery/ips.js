@@ -4,7 +4,7 @@
     "use strict";
 
     /* Global variables */
-    var desktopPos       = {x: 50, y: 36},
+    var desktopPos       = {x: 120, y: 36, collapsedX: 50},
         windowIdSeed     = 0,
         windowIdTeamplate= 'wid-{0}',
         windowZIndexSeed = 100,
@@ -34,8 +34,8 @@
         windowidstrTemplate   : 'win-{0}',
         windowTplt            : "<div id='{idstr}' class='window{cssclass}' style='width:{width}px;height:{height}px;left:{left}px;top:{top}px;z-index:{zindex};' data-id='{id}' data-url='{url}'><div class='window-head'>{iconhtml}<strong title='{desc}'>{name}</strong><ul><li><button class='reload-win'><i class='icon-repeat'></i></button></li><li><button class='min-win'><i class='icon-minus'></i></button></li><li><button class='max-win'><i class='icon-resize-full'></i></button></li><li><button class='close-win'><i class='icon-remove'></i></button></li></ul></div><div class='window-cover'></div><div class='window-content'></div></div>",
         frameTplt             : "<iframe id='iframe-{id}' name='iframe-{id}' src='{url}' frameborder='no' allowtransparency='true' scrolling='auto' hidefocus='' style='width: 100%; height: 100%; left: 0px;'></iframe>",
-        leftBarShortcutTplt   : "<li id='s-menu-{id}'><button data-toggle='tooltip' data-tip-class='s-menu-tooltip' data-placement='right' data-btn-type='menu' class='app-btn s-menu-btn' title='{name}' data-id='{id}'>{iconhtml}</button></li>",
-        taskBarShortcutTplt   : "<li id='s-task-{id}'><button class='app-btn s-task-btn' data-toggle='tooltip' data-placement='bottom' title='{name}' data-btn-type='task' data-id='{id}'>{iconhtml}</button></li>",
+        leftBarShortcutTplt   : "<li id='s-menu-{id}'><button data-toggle='tooltip' data-tip-class='s-menu-tooltip' data-placement='right' data-btn-type='menu' class='app-btn s-menu-btn' title='{name}' data-id='{id}'>{iconhtml}<span class='text'>{name}</span></button></li>",
+        taskBarShortcutTplt   : "<li id='s-task-{id}'><button class='app-btn s-task-btn' data-toggle='tooltip' data-tip-class='s-task-tooltip' data-placement='bottom' title='{name}' data-btn-type='task' data-id='{id}'>{iconhtml}</button></li>",
         taskBarMenuTplt       : "<ul class='dropdown-menu fade' id='taskMenu'><li><a href='javascript:;' class='open-win'><i class='icon-bolt icon'></i> &nbsp;{openText}</a></li><li><a href='javascript:;' class='reload-win'><i class='icon-repeat icon'></i> &nbsp;{reloadText}</a></li><li><a href='javascript:;' class='fix-entry'><i class='icon-pushpin icon'></i> &nbsp;{fixToMenuText}</a></li><li><a href='javascript:;' class='remove-entry'><i class='icon-pushpin icon-rotate-90 icon'></i> &nbsp;<span>{removeFromMenuText}</span></a></li><li><a href='javascript:;' class='close-win'><i class='icon-remove icon'></i> &nbsp;{closeText}</a></li><li><a href='javascript:;' class='delete-entry'><i class='icon-trash icon'></i> &nbsp;{deleteEntryText}</a></li></ul>",
         entryListShortcutTplt : "<li id='s-applist-{id}'><a href='javascript:;' class='app-btn menu-{hasMenu} s-list-btn' data-menu={hasMenu} data-btn-type='list' data-id='{id}' data-code={code}>{iconhtml}{name}</a></li>",
 
@@ -60,6 +60,31 @@
         settings.init();
     }
 
+    /* Initialize the entries data
+     *
+     * @retrun void
+     */
+    function initEntriesData()
+    {
+        entries.sort(function(a, b){return a.order - b.order;});
+
+        var entriesMap    = {};
+        var childEntries  = [];
+        $.each(entries, function(idx, et)
+        {
+            entriesMap[et.id] = et;
+            if(et.isChild) childEntries.push(et);
+            else if(et.isCategory) et.children = [];
+        });
+
+        $.each(childEntries, function(idx, et)
+        {
+            var parentEt = entriesMap[et.category];
+            et.parent = parentEt;
+            parentEt.children.push(et);
+        });
+    }
+
     /*
      * Initialize the entries options
      *
@@ -68,14 +93,15 @@
      */
     function initEntries(entriesOptions)
     {
-        entries = [];
+        entries    = [];
+
         $.each(entriesOptions, function(idx, option)
         {
             entries.push(new entry(option));
             if(!superadmin && option.id == 'superadmin') superadmin = true;
         });
 
-        entries.sort(function(a, b){return a.order - b.order;});
+        initEntriesData();
     }
 
     /**
@@ -114,7 +140,8 @@
             }
             else
             {
-                entries.push(new entry(option));
+                et = new entry(option);
+                entries.push(et);
             }
         });
 
@@ -122,14 +149,15 @@
         {
             for(var i = entries.length - 1; i >= 0; --i)
             {
-                if(entries[i][DEL])
+                et = entries[i];
+                if(et[DEL])
                 {
                     entries.splice(i, 1);
                 }
             }
         }
 
-        entries.sort(function(a, b){return a.order - b.order;});
+        initEntriesData();
     }
 
     /**
@@ -255,7 +283,7 @@
             this.height    = desktop.height;
             this.left      = desktop.x;
             this.top       = desktop.y;
-            this.position  = desktop.position;
+            this.position  = {x: desktop.x, y: desktop.y, width: desktop.y, height: desktop.height};
         }
 
         if(this.position == 'center')
@@ -305,19 +333,19 @@
     /* Initialize */
     entry.prototype.init = function(options, ignoreDefault)
     {
-        if(!desktop)
-        {
-            var w = $(window);
-            desktop = {x: desktopPos.x, y: desktopPos.y, width: w.width() - desktopPos.x, height: w.height() - desktopPos.y};
-        }
-
         /* extend options from params */
         $.extend(this, ignoreDefault ? null : this.getDefaults(options.id), this, options);
 
         this.sys        = this.sys && this.sys !== '0';
-        this.hasMenu    = this.menu == 'menu' || this.menu == 'all';
+        this.hasMenu    = this.menu == 'menu' || this.menu == 'menu-extra' || this.menu == 'all';
+        this.isCategory = !this.code;
+        this.isChild    = this.category && this.category !== '0';
         this.idstr      = settings.windowidstrTemplate.format(this.id);
         this.cssclass   = '';
+        if(this.isCategory)
+        {
+            this.code = 'category-' + this.id;
+        }
 
         /* you can use icon font name or an image url */
         if(this.icon.indexOf('icon-') == 0) this.iconhtml = '<i class="icon ' + this.icon + '"></i>';
@@ -373,8 +401,18 @@
      */
     var desktopManager = function()
     {
-        this.init();
-        this.bindEvents();
+        this.$                = $('#desktop');
+        this.$menu            = $('#appsMenu');
+        this.$topBar          = $('#topBar');
+        this.isFullscreenMode = this.$.hasClass('fullscreen-mode');
+
+        this.menu      = new menu();
+        this.x         = desktopPos.x;
+        this.y         = desktopPos.y;
+
+        this.size   = {width: this.$.width() - this.x, height: this.$.height() - this.y};
+        this.width  = this.size.width;
+        this.height = this.size.height;
     }
 
     /* Turn off the fullscreen mode */
@@ -415,22 +453,14 @@
     /* Initialize */
     desktopManager.prototype.init = function()
     {
-        this.$                = $('#desktop');
-        this.$menu            = $('#apps-menu');
-        this.$topBar          = $('#topBar');
-        this.isFullscreenMode = this.$.hasClass('fullscreen-mode');
-
-        this.menu      = new menu();
-        this.position  = desktopPos;
-        this.x         = desktopPos.x;
-        this.y         = desktopPos.y;
-
         this.shortcuts      = new shortcuts();
         this.startMenu      = new startMenu();
         this.fullScreenApps = new fullScreenApps();
         windows             = new windowsManager();
 
         this.updateBrowserUrl(indexUrl, true, 'index', {tag: 'index'});
+
+        this.bindEvents();
     }
 
     /* Refresh the desktop */
@@ -470,7 +500,7 @@
     desktopManager.prototype.refreshMenuSize = function()
     {
         var $menu      = this.$menu;
-        var $icons     = $menu.children('.bar-menu:not(#moreOptionMenu)').find('li:not(#s-menu-allapps)');
+        var $icons     = $menu.children('.apps-main-menu').find('li:not(#s-menu-allapps)');
         var iconHeight = $icons.height();
         var iconsCount = $icons.length;
         var maxHeight  = $menu.height();
@@ -1220,8 +1250,8 @@
                 height : win.css('height')
             }).addClass('window-max').css(
             {
-                left   : desktop.position.x,
-                top    : desktop.position.y,
+                left   : desktop.x,
+                top    : desktop.y,
                 width  : dSize.width,
                 height : dSize.height
             }).find('.icon-resize-full').removeClass('icon-resize-full').addClass('icon-resize-small');
@@ -1331,7 +1361,7 @@
             this.$search = $('#search');
 
             this.handleAllApps();
-            this.handleHomeBlocks();
+            // this.handleHomeBlocks();
         };
 
         /* Bind events */
@@ -1343,16 +1373,16 @@
                 desktop.fullScreenApps.toggle($(this).attr('data-id'));
             });
 
-            /* toggle desktop and others entry. */
-            $('#s-menu-dashboard button').click(function()
-            {
-                //var et = getEntry('dashboard');
-                //if(!et.opened)
-                //{
-                    desktop.fullScreenApps.toggle('home');
-                    return false;
-                //}
-            });
+            // /* toggle desktop and others entry. */
+            // $('#s-menu-dashboard button').click(function()
+            // {
+            //     var et = getEntry('dashboard');
+            //     if(!et.opened)
+            //     {
+            //         desktop.fullScreenApps.toggle('home');
+            //         return false;
+            //     }
+            // });
         };
 
         /* Handle the app: all app list */
@@ -1453,60 +1483,60 @@
         };
 
         /* Handle the app: home blocks, usex  dashboard control in zui */
-        this.handleHomeBlocks = function()
-        {
-            $('#home .dashboard').dashboard(
-            {
-                height            : 240,
-                draggable         : true,
-                afterOrdered      : afterOrdered,
-                shadowType        : false,
-                sensitive         : true,
-                onResize          : onResize,
-                panelRemovingTip  : settings.confirmRemoveBlock,
-                afterPanelRemoved : afterPanelRemoved
-            });
-            $('#home .refresh-all-panel').click(function()
-            {
-                var $icon = $(this).find('.icon-repeat').addClass('icon-spin');
-                $('#home .dashboard .refresh-panel').click();
-                setTimeout(checkDone, 500);
+        // this.handleHomeBlocks = function()
+        // {
+        //     $('#home .dashboard').dashboard(
+        //     {
+        //         height            : 240,
+        //         draggable         : true,
+        //         afterOrdered      : afterOrdered,
+        //         shadowType        : false,
+        //         sensitive         : true,
+        //         onResize          : onResize,
+        //         panelRemovingTip  : settings.confirmRemoveBlock,
+        //         afterPanelRemoved : afterPanelRemoved
+        //     });
+        //     $('#home .refresh-all-panel').click(function()
+        //     {
+        //         var $icon = $(this).find('.icon-repeat').addClass('icon-spin');
+        //         $('#home .dashboard .refresh-panel').click();
+        //         setTimeout(checkDone, 500);
 
-                function checkDone()
-                {
-                    if($('#home .dashboard .panel-loading').length) setTimeout(checkDone, 500);
-                    else $icon.removeClass('icon-spin');
-                }
-            });
+        //         function checkDone()
+        //         {
+        //             if($('#home .dashboard .panel-loading').length) setTimeout(checkDone, 500);
+        //             else $icon.removeClass('icon-spin');
+        //         }
+        //     });
 
-            function afterPanelRemoved(index)
-            {
-                if(settings.onDeleteBlock && $.isFunction(settings.onDeleteBlock))
-                {
-                    settings.onDeleteBlock(index);
-                    $.zui.messager.info(settings.removedBlock);
-                }
-            }
+        //     function afterPanelRemoved(index)
+        //     {
+        //         if(settings.onDeleteBlock && $.isFunction(settings.onDeleteBlock))
+        //         {
+        //             settings.onDeleteBlock(index);
+        //             $.zui.messager.info(settings.removedBlock);
+        //         }
+        //     }
 
-            function afterOrdered(newOrders)
-            {
-                if(settings.onBlocksOrdered && $.isFunction(settings.onBlocksOrdered))
-                {
-                    settings.onBlocksOrdered(newOrders);
-                }
+        //     function afterOrdered(newOrders)
+        //     {
+        //         if(settings.onBlocksOrdered && $.isFunction(settings.onBlocksOrdered))
+        //         {
+        //             settings.onBlocksOrdered(newOrders);
+        //         }
 
-                $.zui.messager.success(settings.orderdBlocksSaved);
-            }
+        //         $.zui.messager.success(settings.orderdBlocksSaved);
+        //     }
 
-            function onResize(event)
-            {
-                if(settings.onResize && $.isFunction(settings.onResize))
-                {
-                    settings.onResize(event);
-                }
+        //     function onResize(event)
+        //     {
+        //         if(settings.onResize && $.isFunction(settings.onResize))
+        //         {
+        //             settings.onResize(event);
+        //         }
 
-            }
-        };
+        //     }
+        // };
 
         /* Show a fullscreen app window */
         this.show = function(id)
@@ -1542,7 +1572,7 @@
         /* Handle status after browser size changed */
         this.afterBrowserResized = function()
         {
-            this.$fullscreens.width(desktop.width).css({left: desktop.x, top: desktop.y, bottom: settings.topBarHeight});;
+            this.$fullscreens.width(desktop.width).css({left: desktop.x, top: desktop.y, bottom: 0});;
         };
 
         this.init();
@@ -1557,12 +1587,13 @@
         /* Initialize */
         this.init = function()
         {
-            this.$leftBar      = $('#leftBar');
-            this.$taskBar      = $('#taskbar');
-            this.$appsMenu     = $('#apps-menu .bar-menu');
-            this.$allAppsList  = $("#allAppsList .bar-menu");
-            this.$categoryMenu = $('.categoryMenu');
-            this.firstRender   = true;
+            this.$leftBar       = $('#leftBar');
+            this.$taskBar       = $('#taskbar');
+            this.$appsMenu      = $('#leftBar .apps-main-menu');
+            this.$appsMenuExtra = $('#leftBar .apps-extra-menu');
+            this.$allAppsList   = $("#allAppsList .bar-menu");
+            this.$categoryMenu  = $('.categoryMenu');
+            this.firstRender    = true;
 
             this.render();
             this.bindEvents();
@@ -1572,6 +1603,7 @@
         this.render = function()
         {
             this.$appsMenu.empty();
+            this.$appsMenuExtra.empty();
             this.$allAppsList.empty();
             this.$categoryMenu.empty();
             $('.categoryMenu').empty();
@@ -1624,6 +1656,7 @@
                 }});
 
                 this.toggleTaskBar(!$.zui.store.get('taskbarCollapsed'));
+                this.toggleLeftBar(!$.zui.store.get('leftbarCollapsed'));
             }
             else
             {
@@ -1651,37 +1684,31 @@
         /* show a shortcut */
         this.show = function(et)
         {
-            var $shortcut;
-            var activedId = (windows && windows.shows.length) ? windows.shows[windows.shows.length - 1] : null;
             if(et.hasMenu)
             {
-                $shortcut = $(et.toLeftBarShortcutHtml());
-                if(et.code == '')
+                if (et.isChild) return;
+                var $shortcut = $(et.toLeftBarShortcutHtml());
+                var activedId = (windows && windows.shows.length) ? windows.shows[windows.shows.length - 1] : null;
+                var $btn = $shortcut.find('.app-btn').toggleClass('active', !!activedId && et.id === activedId);
+                if(et.isCategory)
                 {
-                    $shortcut.find('button').attr('id', 'category' + et.id).addClass('categoryButton');
-                    $shortcut.find('button').removeAttr('title');
-                }
-                if(et.category !== undefined && et.category != 0)
-                {
-                    if($('#categoryMenu' + et.category).length == 0)
+                    $shortcut.addClass('dropdown dropdown-hover');
+                    $btn.removeClass('app-btn').attr('data-toggle', null).addClass('is-category').append('<i class="icon icon-angle-right anchor-right"></i>');
+                    var $dropdownMenu = $('<ul class="dropdown-menu bar-menu"></ul>');
+                    $.each(et.children, function(idx, childEt)
                     {
-                        $('#leftBar #apps-menu .bar-menu:first').after($('#categoryTpl').html().replace(/categoryid/g, et.category));
-                    }
-                    $shortcut.find('.app-btn').removeAttr('title');
-                    $('#categoryMenu' + et.category).append($shortcut);
+                        var $childShortcut = $(childEt.toLeftBarShortcutHtml());
+                        $childShortcut.find('.app-btn').attr('data-toggle', null).toggleClass('active', !!activedId && childEt.id === activedId);
+                        $dropdownMenu.append($childShortcut);
+                    });
+                    $shortcut.append($dropdownMenu);
                 }
-                else
-                {
-                    if(activedId && et.id === activedId)
-                    {
-                        $shortcut.find('.app-btn').addClass('active');
-                    }
-                    this.$appsMenu.append($shortcut);
-                }
+
+                (et.menu === 'menu-extra' ? this.$appsMenuExtra: this.$appsMenu).append($shortcut);
             }
             if(et.menu == 'all' || et.menu == 'list')
             {
-                $shortcut = $(et.toEntryListShortcutHtml());
+                var $shortcut = $(et.toEntryListShortcutHtml());
                 if(et.opened)
                 {
                     $shortcut.find('.app-btn').addClass('open');
@@ -1697,6 +1724,20 @@
             this.$taskBar.toggleClass('collapsed', !toggle);
             $.zui.store.set('taskbarCollapsed', !toggle);
             $('#toggleTaskBarBtn').find('.icon-angle-right,.icon-angle-left').toggleClass('icon-angle-left', !!toggle).toggleClass('icon-angle-right', !toggle);
+            return toggle;
+        };
+
+        /* Expand or collapse leftbar */
+        this.toggleLeftBar = function(toggle)
+        {
+            if(toggle === undefined || toggle === null) toggle = this.$leftBar.hasClass('collapsed');
+            this.$leftBar.toggleClass('collapsed', !toggle);
+            $.zui.store.set('leftbarCollapsed', !toggle);
+            $('body').toggleClass('is-leftbar-expand', !!toggle);
+            $('#toggleLeftBarBtn').find('.icon-double-angle-right,.icon-double-angle-left').toggleClass('icon-double-angle-left', !!toggle).toggleClass('icon-double-angle-right', !toggle);
+            var lastDesktopX = desktop.x;
+            desktop.x = toggle ? desktopPos.x : desktopPos.collapsedX;
+            if(lastDesktopX !== desktop.x) $(window).resize();
             return toggle;
         };
 
@@ -1736,7 +1777,7 @@
                     event.stopPropagation();
                     return false;
                 }
-            }).on('click', '.btn-toggle-taskbar', this.toggleTaskBar.bind(this, null));
+            }).on('click', '.btn-toggle-taskbar', this.toggleTaskBar.bind(this, null)).on('click', '.btn-toggle-leftbar', this.toggleLeftBar.bind(this, null));
 
             this.$leftBar.bind('contextmenu', nocontextmenu);
             this.$taskBar.bind('contextmenu', nocontextmenu);
@@ -1746,53 +1787,53 @@
             {
                 if(e.which == 3)
                 {
-                    var btn = $(this),
-                        menu = $('#taskMenu');
-                    if(!menu.length) menu = $(settings.taskBarMenuTplt).appendTo('#desktop');
-                    if(menu.hasClass('show') && menu.data('id') == btn.data('id'))
+                    var $btn = $(this),
+                        $menu = $('#taskMenu');
+                    if(!$menu.length) $menu = $(settings.taskBarMenuTplt).appendTo('#desktop');
+                    if($menu.hasClass('show') && $menu.data('id') == $btn.data('id'))
                     {
-                        menu.removeClass('in');
-                        setTimeout(function(){menu.removeClass('show');}, 100);
+                        $menu.removeClass('in');
+                        setTimeout(function(){$menu.removeClass('show');}, 100);
                         return;
                     }
-                    var et = getEntry(btn.data('id'));
-                    var btnType = btn.data('btnType');
-                    var offset = btn.offset();
+                    var et = getEntry($btn.data('id'));
+                    var btnType = $btn.data('btnType');
+                    var offset = $btn.offset();
                     var isListBtn = btnType === 'list',
                         isTaskBtn = btnType === 'task';
 
-                    menu.find('.reload-win').toggle(!isListBtn && et.opened);
-                    menu.find('.fix-entry').toggle(!isTaskBtn && !et.hasMenu);
-                    menu.find('.remove-entry').toggle(!isTaskBtn && et.hasMenu && !et.forceMenu).find('span').text(settings[isListBtn ? 'removeFromMenuText' : 'removeText']);
-                    menu.find('.close-win').toggle(!isListBtn && et.opened);
-                    menu.find('.delete-entry').toggle(superadmin && !et.sys && isListBtn);
+                    $menu.find('.reload-win').toggle(!isListBtn && et.opened);
+                    $menu.find('.fix-entry').toggle(!isTaskBtn && !et.hasMenu);
+                    $menu.find('.remove-entry').toggle(!isTaskBtn && et.hasMenu && !et.forceMenu).find('span').text(settings[isListBtn ? 'removeFromMenuText' : 'removeText']);
+                    $menu.find('.close-win').toggle(!isListBtn && et.opened);
+                    $menu.find('.delete-entry').toggle(superadmin && !et.sys && isListBtn);
 
                     if(btnType == 'menu')
                     {
-                        menu.css({left: desktopPos.x + 2, top: offset.top, bottom: 'inherit'});
+                        $menu.css({left: desktopPos.x + 2, top: offset.top, bottom: 'inherit'});
                     }
                     else if(isListBtn)
                     {
-                        var menuHeight = menu.outerHeight();
-                        menu.css({left: e.clientX - 2, top: (menuHeight + e.clientY > desktop.height) ? (e.clientY - menuHeight - 2) : e.clientY, bottom: 'inherit'});
+                        var menuHeight = $menu.outerHeight();
+                        $menu.css({left: e.clientX - 2, top: (menuHeight + e.clientY > desktop.height) ? (e.clientY - menuHeight - 2) : e.clientY, bottom: 'inherit'});
                     }
                     else if(btnType == 'task')
                     {
-                        menu.css({left: offset.left, top: 'inherit', bottom: settings.topBarHeight + 2});
+                        $menu.css({left: offset.left, top: settings.topBarHeight, bottom: 'auto'});
                         desktop.menu.hideMoreMenu();
                     }
 
                     desktop.toggleDropmenuMode('taskmenu', true);
-                    menu.addClass('show in').data('id', et.id);
+                    $menu.addClass('show in').data('id', et.id);
                 }
             });
 
             $(document).click(function(e)
             {
                 if($(e.target).hasClass('app-btn')) return false;
-                var menu = $('#taskMenu');
-                menu.removeClass('in');
-                setTimeout(function(){menu.removeClass('show');}, 100);
+                var $menu = $('#taskMenu');
+                $menu.removeClass('in');
+                setTimeout(function(){$menu.removeClass('show');}, 100);
                 desktop.toggleDropmenuMode('taskmenu', false);
             });
 
@@ -1857,7 +1898,7 @@
                 if(!$leftBar.hasClass('menu-show'))
                 {
                     $leftBar.addClass('menu-hide');
-                    $('#apps-menu .app-btn[data-toggle="tooltip"]').removeAttr('data-toggle');
+                    $('#appsMenu .app-btn[data-toggle="tooltip"]').removeAttr('data-toggle');
                 }
             }, 1000);
         };
@@ -1866,7 +1907,7 @@
         this.show = function()
         {
             desktop.menu.$leftBar.removeClass('menu-hide').addClass('menu-show');
-            setTimeout(function(){$('#apps-menu .app-btn').attr('data-toggle', 'tooltip');}, 500);
+            setTimeout(function(){$('#appsMenu .app-btn').attr('data-toggle', 'tooltip');}, 500);
         };
 
         /* Bind events */
@@ -1962,15 +2003,15 @@
     function start(entriesOptions, options)
     {
         initSettings(options);
-        initEntries(entriesOptions);
 
         desktop = new desktopManager();
 
-        var entryId = getQueryString('entryId');
-        if(entryId)
-        {
-            openEntry(entryId, getQueryString('entryUrl'));
-        }
+        initEntries(entriesOptions);
+
+        desktop.init();
+
+        var entryId = getQueryString('entryId') || 'dashboard';
+        openEntry(entryId, getQueryString('entryUrl'));
     }
 
     /**

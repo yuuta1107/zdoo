@@ -12,9 +12,9 @@
 class block extends control
 {
     /**
-     * Admin all blocks. 
-     * 
-     * @param  int    $index 
+     * Admin all blocks.
+     *
+     * @param  int    $index
      * @access public
      * @return void
      */
@@ -54,11 +54,11 @@ class block extends control
     }
 
     /**
-     * Set params when type is rss or html. 
-     * 
-     * @param  int    $index 
-     * @param  string $type 
-     * @param  int    $blockID 
+     * Set params when type is rss or html.
+     *
+     * @param  int    $index
+     * @param  string $type
+     * @param  int    $blockID
      * @access public
      * @return void
      */
@@ -82,9 +82,9 @@ class block extends control
     }
 
     /**
-     * Print block. 
-     * 
-     * @param  int    $index 
+     * Print block.
+     *
+     * @param  int    $index
      * @access public
      * @return void
      */
@@ -115,16 +115,16 @@ class block extends control
         {
             $html = $this->fetch('block', 'dynamic');
         }
-        
+
         die($html);
     }
 
     /**
      * Sort block.
-     * 
-     * @param  string    $oldOrder 
-     * @param  string    $newOrder 
-     * @param  string    $app 
+     *
+     * @param  string    $oldOrder
+     * @param  string    $newOrder
+     * @param  string    $app
      * @access public
      * @return void
      */
@@ -176,11 +176,11 @@ class block extends control
 
 
     /**
-     * Delete block 
-     * 
-     * @param  int    $index 
-     * @param  string $sys 
-     * @param  string $type 
+     * Delete block
+     *
+     * @param  int    $index
+     * @param  string $sys
+     * @param  string $type
      * @access public
      * @return void
      */
@@ -200,8 +200,8 @@ class block extends control
 
     /**
      * Display dashboard for app.
-     * 
-     * @param  string    $appName 
+     *
+     * @param  string    $appName
      * @access public
      * @return void
      */
@@ -237,8 +237,15 @@ class block extends control
             $query = http_build_query($query);
             $sign  = $this->config->requestType == 'PATH_INFO' ? '?' : '&';
 
-            $block->blockLink = $this->createLink($appName . '.block', 'index') . $sign . $query;
-            
+            if($appName == 'sys')
+            {
+                $block->blockLink = $this->createLink('entry', 'printBlock', 'index=' . $key);
+            }
+            else
+            {
+                $block->blockLink = $this->createLink($appName . '.block', 'index') . $sign . $query;
+            }
+
             $moduleName = $block->block;
             if((isset($block->params->type) or isset($block->params->status)) and is_array($this->lang->block->moreLinkList->{$moduleName}))
             {
@@ -267,7 +274,7 @@ class block extends control
 
     /**
      * Entries block
-     * 
+     *
      * @access public
      * @return void
      */
@@ -280,7 +287,7 @@ class block extends control
 
     /**
      * latest dynamic.
-     * 
+     *
      * @access public
      * @return void
      */

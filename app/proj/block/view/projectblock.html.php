@@ -31,4 +31,3 @@
   </tr>
   <?php endforeach;?>
 </table>
-<script>$('.block-project').dataTable();</script>

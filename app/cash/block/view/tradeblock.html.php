@@ -21,4 +21,3 @@
   </tr>
   <?php endforeach;?>
 </table>
-<script>if(!$.ipsStart) $('.block-contract').dataTable();</script>

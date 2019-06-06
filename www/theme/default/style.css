@@ -156,19 +156,6 @@ body.page-actions-fixed {padding-bottom: 70px}
 .page a {color: #666;}
 .page:hover a {color: #506EAF;}
 
-/* dropdown */
-.dropdown-menu {min-width: 80px; padding: 4px 0}
-.dropdown-menu > li > a, .dropdown-header {font-size: 12px; padding: 5px 25px 5px 15px}
-.dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:active {background: #f1f1f1!important; font-weight: bold; color: #333!important}
-.dropdown-menu > .active {position: relative;}
-.dropdown-menu > .active > a {padding-right: 50px;}
-.dropdown-menu > .active > a:before {content: '\e60d'; font-family: ZenIcon; font-size: 14px; position: absolute; right: 8px; top: 4px; display: block; color: #808080; font-weight: normal;}
-.dropdown-menu .divider {margin: 4px 0}
-.dropdown-submenu.left > .dropdown-menu{left: -100%;}
-.dropdown-menu .divider {margin: 5px 0;}
-
-.dropdown-menu > li > a > .icon {display: inline-block; width: 18px; text-align: center; opacity: .9}
-
 /* unorder list */
 .ul-list {margin: 0; padding: 0; display: block;}
 
@@ -370,16 +357,6 @@ td #aliasLabel {display: table-row;}
 .article > footer .pager {margin-bottom: 0;}
 .article-content {padding: 10px 0}
 .article-content img {box-shadow: none}
-
-/* avatar */
-.avatar {display: inline-block; width: 48px; height: 48px; max-width: 100%; max-height: 100%; border-radius: 4px; position: relative; overflow: hidden;}
-.avatar:before {content: '\e608'; font-family: ZenIcon; color: #fff; position: absolute; z-index: 1; font-size: 36px; width: 100%; height: 100%; left: 0; top: 0; line-height: 48px; text-align: center; background: #777; display: block;}
-.avatar:not(:empty):before {display: none}
-.avatar > img {border-radius: 4px; width: 100%; height: 100%; z-index: 2; position: absolute; left: 0; top: 0;}
-.avatar.avatar-lg {border-radius: 6px; width: 128px; height: 128px;}
-.avatar.avatar-md {border-radius: 4px; width: 28px; height: 28px;}
-.avatar.avatar-md:before {font-size: 28px; line-height: 32px}
-.avatar.avatar-lg:before {font-size: 98px; line-height: 128px}
 
 /* status */
 .contract-normal    {color:inherit;}
