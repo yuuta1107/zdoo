@@ -406,7 +406,6 @@
         this.$topBar          = $('#topBar');
         this.isFullscreenMode = this.$.hasClass('fullscreen-mode');
 
-        this.menu      = new menu();
         this.x         = desktopPos.x;
         this.y         = desktopPos.y;
 
@@ -499,55 +498,25 @@
 
     desktopManager.prototype.refreshMenuSize = function()
     {
-        var $menu      = this.$menu;
-        var $icons     = $menu.children('.apps-main-menu').find('li:not(#s-menu-allapps)');
-        var iconHeight = $icons.height();
-        var iconsCount = $icons.length;
-        var maxHeight  = $menu.height();
-        var moreOption = (iconsCount + 1) * iconHeight > maxHeight;
-        var $btn       = $('#moreOptionBtn');
+        var $mainMenu    = this.$menu.find('.apps-main-menu');
+        var $menuItems   = $mainMenu.children('li');
+        var itemHeight   = $menuItems.height();
+        var itemsCount   = $menuItems.length;
+        var maxHeight    = this.$menu.height();
+        var showMoreMenu = (itemsCount + 1) * itemHeight > maxHeight;
 
-        $menu.toggleClass('more-option', moreOption);
-        if(moreOption)
-        {
-            var start = Math.floor((maxHeight - (2 * iconHeight)) / iconHeight);
-            if($btn.data('icons-count') != (iconsCount - start))
-            {
-                var $moreIcons = $icons.removeClass('option').slice(start).addClass('option');
+        this.$menu.toggleClass('show-more-apps', !!showMoreMenu);
 
-                /* display the real apps instead of category button. */
-                var newIcons = new Array();
-                $moreIcons.each(function()
-                {
-                    if($(this).find('button').hasClass('categoryButton'))
-                    {
-                        var dataid = $(this).find('button').attr('data-id');
-                        $('#categoryMenu' + dataid).find('li').each(function()
-                        {
-                            newIcons.push($(this)[0]);
-                        });
-                    }
-                    else
-                    {
-                        newIcons.push($(this)[0]);
-                    }
-                });
-                var $newIcons = $(newIcons);
+        if(!showMoreMenu) return;
 
-                $moreIcons = $newIcons.clone().removeClass('option');
-                $moreIcons.children('.app-btn').attr('data-btn-type', 'list').attr('data-placement', 'bottom').attr('data-tip-class', '');
+        var start = Math.floor((maxHeight - itemHeight) / itemHeight);
+        if(this.lastMoreMenuStart === start) return;
+        this.lastMoreMenuStart = start;
 
-                $btn.addClass('active').data('icons-count', $moreIcons.length)
-                    .data('icons', $moreIcons)
-                    .attr('data-original-title', settings.moreOptionTip.format($moreIcons.length));
-                setTimeout(function(){$btn.removeClass('active')}, 200);
-                this.menu.tryLayoutMenu();
-            }
-        }
-        else
-        {
-            this.menu.hideMoreMenu();
-        }
+        var $moreItems = $menuItems.removeClass('option').slice(start);
+        var $moreOptionMenu = $('#moreOptionMenu');
+        $moreOptionMenu.empty().append($moreItems.clone());
+        $moreItems.addClass('option');
     }
 
     /* Update browser url in address bar by change browser history */
@@ -1337,7 +1306,6 @@
                 }
                 else
                 {
-                    desktop.menu.hideMoreMenu();
                     menu.addClass('show');
                     setTimeout(function(){menu.addClass('in')}, 0);
                 }
@@ -1482,62 +1450,6 @@
             if(focus) this.$search.focus();
         };
 
-        /* Handle the app: home blocks, usex  dashboard control in zui */
-        // this.handleHomeBlocks = function()
-        // {
-        //     $('#home .dashboard').dashboard(
-        //     {
-        //         height            : 240,
-        //         draggable         : true,
-        //         afterOrdered      : afterOrdered,
-        //         shadowType        : false,
-        //         sensitive         : true,
-        //         onResize          : onResize,
-        //         panelRemovingTip  : settings.confirmRemoveBlock,
-        //         afterPanelRemoved : afterPanelRemoved
-        //     });
-        //     $('#home .refresh-all-panel').click(function()
-        //     {
-        //         var $icon = $(this).find('.icon-repeat').addClass('icon-spin');
-        //         $('#home .dashboard .refresh-panel').click();
-        //         setTimeout(checkDone, 500);
-
-        //         function checkDone()
-        //         {
-        //             if($('#home .dashboard .panel-loading').length) setTimeout(checkDone, 500);
-        //             else $icon.removeClass('icon-spin');
-        //         }
-        //     });
-
-        //     function afterPanelRemoved(index)
-        //     {
-        //         if(settings.onDeleteBlock && $.isFunction(settings.onDeleteBlock))
-        //         {
-        //             settings.onDeleteBlock(index);
-        //             $.zui.messager.info(settings.removedBlock);
-        //         }
-        //     }
-
-        //     function afterOrdered(newOrders)
-        //     {
-        //         if(settings.onBlocksOrdered && $.isFunction(settings.onBlocksOrdered))
-        //         {
-        //             settings.onBlocksOrdered(newOrders);
-        //         }
-
-        //         $.zui.messager.success(settings.orderdBlocksSaved);
-        //     }
-
-        //     function onResize(event)
-        //     {
-        //         if(settings.onResize && $.isFunction(settings.onResize))
-        //         {
-        //             settings.onResize(event);
-        //         }
-
-        //     }
-        // };
-
         /* Show a fullscreen app window */
         this.show = function(id)
         {
@@ -1662,6 +1574,7 @@
             {
                 this.$appsMenu.sortable('reset');
             }
+            $('#appsMenu').css('bottom', $('#leftBottomBar').height());
         };
 
         /* Show all shortcuts */
@@ -1693,8 +1606,8 @@
                 if(et.isCategory)
                 {
                     $shortcut.addClass('dropdown dropdown-hover');
-                    $btn.removeClass('app-btn').attr('data-toggle', null).addClass('is-category').append('<i class="icon icon-angle-right anchor-right"></i>');
-                    var $dropdownMenu = $('<ul class="dropdown-menu bar-menu"></ul>');
+                    $btn.removeClass('app-btn').attr('data-toggle', 'dropdown').addClass('is-category').append('<i class="icon icon-angle-right anchor-right"></i>');
+                    var $dropdownMenu = $('<ul class="dropdown-menu bar-menu"><li class="dropdown-header">' + et.name + '</li></ul>');
                     $.each(et.children, function(idx, childEt)
                     {
                         var $childShortcut = $(childEt.toLeftBarShortcutHtml());
@@ -1770,7 +1683,6 @@
                     bootbox.alert(settings.entryNotFindTip);
                 }
 
-                desktop.menu.hideMoreMenu();
                 event.preventDefault();
                 if(et && et.id != 'superadmin')
                 {
@@ -1820,7 +1732,6 @@
                     else if(btnType == 'task')
                     {
                         $menu.css({left: offset.left, top: settings.topBarHeight, bottom: 'auto'});
-                        desktop.menu.hideMoreMenu();
                     }
 
                     desktop.toggleDropmenuMode('taskmenu', true);
@@ -1835,6 +1746,50 @@
                 $menu.removeClass('in');
                 setTimeout(function(){$menu.removeClass('show');}, 100);
                 desktop.toggleDropmenuMode('taskmenu', false);
+            });
+
+            this.$leftBar.on('mouseenter', '.dropdown-hover', function(e)
+            {
+                var $dropdown = $(this);
+                var $menu = $dropdown.children('.dropdown-menu').removeClass('is-multi-cols').attr('style', null);
+                var $menuItems = $menu.children('li').css({width: null, float: 'none'});
+                var windowHeight = $(window).height();
+                var menuStyle = {maxHeight: windowHeight};
+                var menuHeight = $menu.outerHeight();
+                var menuBound = $menu[0].getBoundingClientRect();
+                if(menuHeight >= windowHeight)
+                {
+                    menuStyle.top = 0 - menuBound.top;
+                    if($menu.children('li.dropdown,li.dropdown-submenu').length)
+                    {
+                        $menu.addClass('is-multi-cols clearfix');
+                        var colsCount = Math.ceil(menuHeight / windowHeight);
+                        $menuItems.css({width: Math.floor(100 / colsCount) + '%', float: 'left'});
+                        $menuItems.filter('.divider').css('width', '100%');
+                        menuStyle.width = 120 * colsCount;
+
+                        delete menuStyle.top;
+                        $menu.css(menuStyle);
+                        menuHeight = $menu.outerHeight();
+                        if((menuBound.top + menuHeight) > windowHeight)
+                        {
+                            menuStyle.top = windowHeight - menuBound.top - menuHeight;
+                        }
+                    }
+                    else
+                    {
+                        menuStyle.overflowY = 'auto';
+                    }
+                }
+                else if((menuBound.top + menuHeight) > windowHeight)
+                {
+                    menuStyle.top = windowHeight - menuBound.top - menuHeight;
+                }
+
+                $menu.css(menuStyle);
+
+                e.preventDefault();
+                e.stopPropagation();
             });
 
             function nocontextmenu(event)
@@ -1857,121 +1812,6 @@
                     event.returnValue  = false;
                     return false;
                 }
-            }
-        };
-
-        this.init();
-    };
-
-    /**
-     * The menu object
-     */
-    function menu()
-    {
-        /* Initialize */
-        this.init = function()
-        {
-            this.$leftBar = $('#leftBar');
-            this.$menu = $('#moreOptionMenu');
-            this.$btn = $('#moreOptionBtn');
-
-            if(settings.autoHideMenu)
-            {
-                var $desktop = $('#desktop');
-                $desktop.addClass('menu-auto');
-                desktopPos.x = 2;
-                setTimeout(this.hide, 2000);
-
-                this.$leftBar.mouseover(this.show).mouseout(this.hide);;
-            }
-
-            this.bindEvents();
-        };
-
-        /* Hide the menu */
-        this.hide = function()
-        {
-            var $leftBar = desktop.menu.$leftBar;
-            $leftBar.removeClass('menu-show');
-            setTimeout(function()
-            {
-                if(!$leftBar.hasClass('menu-show'))
-                {
-                    $leftBar.addClass('menu-hide');
-                    $('#appsMenu .app-btn[data-toggle="tooltip"]').removeAttr('data-toggle');
-                }
-            }, 1000);
-        };
-
-        /* Show the menu */
-        this.show = function()
-        {
-            desktop.menu.$leftBar.removeClass('menu-hide').addClass('menu-show');
-            setTimeout(function(){$('#appsMenu .app-btn').attr('data-toggle', 'tooltip');}, 500);
-        };
-
-        /* Bind events */
-        this.bindEvents = function()
-        {
-            // Handle more option btn
-            var that = this;
-            that.$btn.on('click', function(e)
-            {
-                that.toggleMoreMenu();
-                e.stopPropagation();
-            });
-
-            $(document).click(function(e)
-            {
-                if($(e.target).is(that.$btn)) return;
-                that.hideMoreMenu();
-            });
-        };
-
-        this.toggleMoreMenu = function()
-        {
-            if(this.$menu.hasClass('show')) this.hideMoreMenu();
-            else this.showMoreMenu();
-        };
-
-        this.layoutMenu = function()
-        {
-            var $btn = this.$btn, $menu = this.$menu;
-            var data = $btn.data('icons');
-            if(data)
-            {
-                $menu.children().remove();
-                $menu.append(data);
-                $btn.data('icons', false);
-                $menu.width(Math.ceil(Math.sqrt(data.length)) * 40);
-            }
-        };
-
-        this.tryLayoutMenu = function()
-        {
-            if(this.$menu.hasClass('show')) this.layoutMenu();
-        };
-
-        this.showMoreMenu = function()
-        {
-            var $menu = this.$menu;
-            this.layoutMenu();
-            this.$btn.addClass('hover');
-            $menu.css('background-color', $('body').css('background-color'));
-            $menu.addClass('show');
-            setTimeout(function(){$menu.addClass('in');}, 10);
-            if(desktop.toggleDropmenuMode) desktop.toggleDropmenuMode('more-option', true);
-        };
-
-        this.hideMoreMenu = function()
-        {
-            var $menu = this.$menu;
-            if($menu.hasClass('show'))
-            {
-                this.$btn.removeClass('hover');
-                $menu.removeClass('in');
-                setTimeout(function(){$menu.removeClass('show');}, 200);
-                if(desktop.toggleDropmenuMode) desktop.toggleDropmenuMode('more-option', false);
             }
         };
 

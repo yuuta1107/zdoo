@@ -35,8 +35,8 @@ js::set('attend', commonModel::isAvailable('attend') ? 1 : 0);
     <div id='appsMenu'>
       <ul class='bar-menu apps-menu apps-main-menu'></ul>
       <ul class='bar-menu'>
-        <li>
-          <button id='moreOptionBtn' data-toggle='tooltip' data-tip-class='s-menu-tooltip' data-placement='right' data-btn-type='menu' class='btn-more' title='<?php echo $lang->index->more;?>'><i class='icon icon-ellipsis-h'></i><span class='text'><?php echo $lang->index->more;?></span></button>
+        <li class='dropdown dropdown-hover'>
+          <button id='moreOptionBtn' data-toggle='dropdown' data-tip-class='s-menu-tooltip' data-btn-type='menu' class='btn-more' title='<?php echo $lang->index->more;?>'><i class='icon icon-ellipsis-h'></i><span class='text'><?php echo $lang->index->more;?></span><i class='icon icon-angle-right anchor-right'></i></button>
           <ul id='moreOptionMenu' class='bar-menu dropdown-menu fade'>
           </ul>
         </li>
@@ -66,7 +66,7 @@ js::set('attend', commonModel::isAvailable('attend') ? 1 : 0);
             <li><?php echo html::a($this->createLink('user', 'logout'), "<i class='icon icon-signout'></i> {$lang->logout}")?></li>
           </ul>
         </li>
-        <li><button type='button' data-toggle='tooltip' data-placement='right' title='Expand/Collapse' class='btn-toggle-leftbar' id='toggleLeftBarBtn'><i class="icon icon-double-angle-right"></i></button></li>
+        <li><button type='button' class='btn-toggle-leftbar' id='toggleLeftBarBtn'><i class="icon icon-double-angle-right"></i></button></li>
       </ul>
     </div>
   </div>

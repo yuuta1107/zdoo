@@ -57,14 +57,14 @@ body.mute-tooltip .s-task-tooltip {display: none!important}
 .bar-menu > li .icon.icon-default > .text-extra {display: none}
 
 /* left bar. */
-#leftBar {width: 120px; top: 36px; bottom: 0; background-color: #232A32; z-index: 40010; transition: .3s; transition-property: left, width; box-shadow: 0 0 4px 2px rgba(0,0,0,0.1);}
+#leftBar {width: 120px; top: 36px; bottom: 0; background-color: #232A32; z-index: 50010; transition: .2s; transition-property: left, width; box-shadow: 0 0 4px 2px rgba(0,0,0,0.1);}
 #leftBar .bar-menu > li {display: block;}
 #leftBar .bar-menu > li button {padding: 6px; height: 42px; text-align: left; width: 100%; white-space: nowrap;}
 #leftBar .bar-menu > li button > .icon.anchor-right {position: absolute; margin: 0; top: 9px; right: 0; opacity: .7}
 #leftBar .bar-menu > li button > img,
 #leftBar .bar-menu > li button > .avatar {width: 20px; height: 20px; margin: 5px; box-shadow: 0 1px 1px rgba(0,0,0,0.35); border-radius: 5px;}
 #leftBar .bar-menu > li button > .avatar-circle {border-radius: 50%}
-#leftBar .bar-menu > li > button > .text {margin-left: 7px; line-height: 30px; display: inline-block; vertical-align: top; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 68px; transition: .3s; transition-property: transform,opacity,visibility;}
+#leftBar .bar-menu > li > button > .text {margin-left: 7px; line-height: 30px; display: inline-block; vertical-align: top; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 68px; transition: .2s; transition-property: transform,opacity,visibility;}
 #leftBar .bar-menu > li > button > .icon {text-shadow: 0 1px 1px rgba(0,0,0,0.35); color: #f1f1f1; color: rgba(255,255,255,0.8); width: 20px; line-height: 20px; margin: 5px; text-align: center; display: inline-block;}
 #leftBar .bar-menu > li > button:hover > .icon {color: #fff; text-shadow: 0 1px 1px rgba(0,0,0,0.15);}
 #leftBar .bar-menu > li.drag-from > button {opacity: 0.3; background: #000}
@@ -72,7 +72,7 @@ body.mute-tooltip .s-task-tooltip {display: none!important}
 #leftBar .bar-menu .dropdown-menu {left: 100%; background: #424F5E; border-radius: 0px 4px 4px 0px; top: 0; min-width: 120px;}
 #leftBar .bar-menu .dropdown-menu > li > button > .text {max-width: 200px; padding-right: 5px;}
 #leftBar .bar-menu .dropdown-menu > li.divider {background: #48464E; margin: 0;}
-#appsMenu {position: absolute; bottom: 36px; right: 0; left: 0; top: 0; overflow: no-display; transition: height .3s;-o-transition: height .3s; -moz-transition: height .3s; -webkit-transition: height .3s;}
+#appsMenu {position: absolute; bottom: 168px; right: 0; left: 0; top: 0; transition: height .3s;-o-transition: height .3s; -moz-transition: height .3s; -webkit-transition: height .3s;}
 #leftBar .bar-menu .dropdown-menu > li > a {color: #A6AAB8; line-height: 30px; padding: 6px 20px 6px 6px;}
 #leftBar .bar-menu .dropdown-menu > li > a:hover,
 #leftBar .bar-menu .dropdown-menu > li > a:active,
@@ -84,6 +84,7 @@ body.mute-tooltip .s-task-tooltip {display: none!important}
 #leftBar .bar-menu .dropdown-menu > li > a > .avatar {margin: 5px; vertical-align: bottom}
 #leftBar .bar-menu .dropdown-menu > li.dropdown-submenu > a:after {margin-top: 9px; margin-right: -12px;}
 #leftBar .bar-menu .dropdown-menu > li.dropdown-submenu > .dropdown-menu > li > a {padding: 6px 12px;}
+#leftBar .bar-menu .dropdown-menu .dropdown-header {display: none; color: #A6AAB8; border-bottom: 1px solid #48464E; padding: 6px; text-align: center; background: rgba(0,0,0,.15)}
 #desktop.menu-auto #leftBar.menu-hide {left: -38px;}
 #leftBottomBar {right: 0; left: 0; border-top: 1px solid #48464E;}
 #leftBottomBar .bar-menu > li > button.btn-toggle-leftbar {text-align: center}
@@ -92,20 +93,12 @@ body.mute-tooltip .s-task-tooltip {display: none!important}
 #leftBar.collapsed > div > .bar-menu > li > button {padding: 6px 10px;}
 #leftBar.collapsed > div > .bar-menu > li > button > .text {transform: scale(0) translateX(-100%); opacity: 0; visibility: hidden}
 #leftBar.collapsed > div > .bar-menu > li > button > .icon.anchor-right {top: 11px; right: -2px; font-size: 12px;}
+#leftBar.collapsed .dropdown-menu .dropdown-header {display: block}
+#leftBar.collapsed > div > .bar-menu.apps-main-menu > li > .dropdown-menu {top: -30px;}
 
-
-#moreOptionBtn {display: none;}
-#moreOptionBtn:hover, #moreOptionBtn.hover {text-decoration: none; color: #fff; background-color: #666; background-color: rgba(255,255,255,0.20);}
-#moreOptionBtn > .icon {transition: all 0.2s; background: #666; background: rgba(255,255,255, 0.45); display: block; border-radius: 50%}
-#appsMenu.more-option #moreOptionBtn {display: block; position: absolute; left: 0; bottom: 0}
-#appsMenu.more-option .bar-menu > li.option {display: none}
-#moreOptionBtn.active > .icon {transform: scale(1.2); background: #555; background: rgba(255,255,255, .2); }
-#moreOptionBtn.hover > .icon:before {content: '\e6e0'; position: relative; top: -2px; left: -1px}
-#moreOptionMenu {left: 39px; bottom: -1px; top: auto; padding: 10px}
-.categoryMenu:before,
-#moreOptionMenu:before {background: rgba(0,0,0,.1); content: ' '; position: absolute; top: 0; right: 0; bottom: 0; left: 0; z-index: 0}
-.categoryMenu > li,
-#moreOptionMenu > li {display: block; float: left; position: relative; z-index: 1;}
+#moreOptionBtn,
+#appsMenu.show-more-apps .bar-menu > li.option {display: none;}
+#appsMenu.show-more-apps #moreOptionBtn {display: block;}
 
 /* bottom bar. */
 #topBar {height: 36px; background-color: #3B3A3F; z-index: 50000; left: 0; right: 0}
