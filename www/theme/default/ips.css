@@ -93,9 +93,9 @@ body.mute-tooltip .s-task-tooltip {display: none!important}
 #leftBar.collapsed > div > .bar-menu > li > button {padding: 6px 10px;}
 #leftBar.collapsed > div > .bar-menu > li > button > .text {transform: scale(0) translateX(-100%); opacity: 0; visibility: hidden}
 #leftBar.collapsed > div > .bar-menu > li > button > .icon.anchor-right {top: 11px; right: -2px; font-size: 12px;}
-#leftBar.collapsed .dropdown-menu .dropdown-header {display: block}
-#leftBar.collapsed #moreOptionMenu > li > .dropdown-menu,
-#leftBar.collapsed > div > .bar-menu.apps-main-menu > li > .dropdown-menu {top: -30px;}
+#leftBar.collapsed .bar-menu.apps-main-menu > li > .dropdown-menu .dropdown-header {display: block}
+#leftBar.collapsed .bar-menu.apps-main-menu > li > .dropdown-menu {top: -30px;}
+@media (max-height: 250px) {#appsMenu {display: none}}
 
 #moreOptionBtn,
 #appsMenu.show-more-apps .bar-menu > li.option {display: none;}
