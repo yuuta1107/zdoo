@@ -64,7 +64,7 @@ body.mute-tooltip .s-task-tooltip {display: none!important}
 #leftBar .bar-menu > li button > img,
 #leftBar .bar-menu > li button > .avatar {width: 20px; height: 20px; margin: 5px; box-shadow: 0 1px 1px rgba(0,0,0,0.35); border-radius: 5px;}
 #leftBar .bar-menu > li button > .avatar-circle {border-radius: 50%}
-#leftBar .bar-menu > li > button > .text {margin-left: 7px; line-height: 30px; display: inline-block; vertical-align: top; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 68px;}
+#leftBar .bar-menu > li > button > .text {margin-left: 7px; line-height: 30px; display: inline-block; vertical-align: top; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 68px; transition: .3s; transition-property: transform,opacity,visibility;}
 #leftBar .bar-menu > li > button > .icon {text-shadow: 0 1px 1px rgba(0,0,0,0.35); color: #f1f1f1; color: rgba(255,255,255,0.8); width: 20px; line-height: 20px; margin: 5px; text-align: center; display: inline-block;}
 #leftBar .bar-menu > li > button:hover > .icon {color: #fff; text-shadow: 0 1px 1px rgba(0,0,0,0.15);}
 #leftBar .bar-menu > li.drag-from > button {opacity: 0.3; background: #000}
@@ -77,10 +77,11 @@ body.mute-tooltip .s-task-tooltip {display: none!important}
 #leftBar .bar-menu .dropdown-menu > li > a:hover,
 #leftBar .bar-menu .dropdown-menu > li > a:active,
 #leftBar .bar-menu .dropdown-menu > li > a:focus,
+#leftBar .bar-menu .dropdown-menu > li.active > a,
 #leftBar .bar-menu .dropdown-menu > li.dropdown-submenu:hover > a {background-color: #1E73AD; color: #fff}
 #leftBar .bar-menu .dropdown-menu > li > a[data-id="profile"] {color: #fff}
 #leftBar .bar-menu .dropdown-menu > li > a > .icon {text-shadow: 0 1px 1px rgba(0,0,0,0.35); color: #f1f1f1; color: rgba(255,255,255,0.8); width: 20px; line-height: 20px; margin: 5px; text-align: center; display: inline-block; font-size: 18px; vertical-align: bottom;}
-#leftBar .bar-menu .dropdown-menu > li > a > .avatar {margin: 5px;}
+#leftBar .bar-menu .dropdown-menu > li > a > .avatar {margin: 5px; vertical-align: bottom}
 #leftBar .bar-menu .dropdown-menu > li.dropdown-submenu > a:after {margin-top: 9px; margin-right: -12px;}
 #leftBar .bar-menu .dropdown-menu > li.dropdown-submenu > .dropdown-menu > li > a {padding: 6px 12px;}
 #desktop.menu-auto #leftBar.menu-hide {left: -38px;}
@@ -89,7 +90,7 @@ body.mute-tooltip .s-task-tooltip {display: none!important}
 #startMenu {bottom: -42px; top: auto!important;}
 #leftBar.collapsed {width: 50px;}
 #leftBar.collapsed > div > .bar-menu > li > button {padding: 6px 10px;}
-#leftBar.collapsed > div > .bar-menu > li > button > .text {display: none}
+#leftBar.collapsed > div > .bar-menu > li > button > .text {transform: scale(0) translateX(-100%); opacity: 0; visibility: hidden}
 #leftBar.collapsed > div > .bar-menu > li > button > .icon.anchor-right {top: 11px; right: -2px; font-size: 12px;}
 
 
@@ -148,7 +149,7 @@ body.mute-tooltip .s-task-tooltip {display: none!important}
 #taskMenu > li > a {padding-left: 10px;}
 
 /* window. */
-.window {position: absolute; background-color: #fff; border:1px solid #e5e6e7; border-radius:2px; box-shadow:0px 1px 7px rgba(0,0,0,0.3);}
+.window {position: absolute; background-color: #fff; border:1px solid #e5e6e7; border-radius:2px; box-shadow:0px 1px 7px rgba(0,0,0,0.3); transition: left .3s;}
 .window-head {color: #777; -moz-user-select:none; -webkit-user-select:none;}
 .window-head img {height: 18px; width: 18px; margin-right: 5px;}
 .window-head .icon.icon-default {background-color: #888; width: 18px; height: 18px; display: inline-block; text-align: center; font-size: 12px; line-height: 18px;position: relative; top: -1px; color: #fff; border-radius: 3px; font-weight: normal;}
@@ -175,7 +176,7 @@ body.mute-tooltip .s-task-tooltip {display: none!important}
 
 .window-control-none .window-head {display: none}
 
-.window-active {border-color: #999; border-radius:2px; box-shadow:0px 1px 11px rgba(0,0,0,0.7); -o-transition: box-shadow,border-color .3s;-moz-transition: box-shadow,border-color .3s;-webkit-transition: box-shadow,border-color .3s;transition: box-shadow,border-color .3s;}
+.window-active {border-color: #999; border-radius:2px; box-shadow:0px 1px 11px rgba(0,0,0,0.7);}
 .window-active .window-head {background-color: #e5e6e7; color: #333; -o-transition: all .3s;-moz-transition: all .3s;-webkit-transition: all .3s;transition: all .3s;}
 
 .window-max {border:none; -moz-border-radius:0; -webkit-border-radius:0; border-radius:0; -moz-box-shadow:none; -webkit-box-shadow:none; box-shadow:none;}
@@ -194,7 +195,7 @@ body.mute-tooltip .s-task-tooltip {display: none!important}
 body[class*='dropdown-mode-'] .window-active .window-cover {display: block;}
 
 /* fullscreen */
-.fullscreen {position: absolute; top: 0; left: 60px; right: 0; bottom: 36px; z-index: 10; overflow: auto; display: none;}
+.fullscreen {position: absolute; top: 0; left: 60px; right: 0; bottom: 36px; z-index: 10; overflow: auto; display: none; transition: left .3s;}
 .fullscreen .page-header {margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.5)}
 .fullscreen > .actions {position: fixed; right: 40px;top: 20px;}
 .fullscreen-mode .fullscreen.fullscreen-active {display: block;}

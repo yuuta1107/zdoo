@@ -15,7 +15,7 @@ $isSuperAdmin = $this->app->user->admin == 'super';
 js::set('attend', commonModel::isAvailable('attend') ? 1 : 0);
 ?>
 <!-- Desktop -->
-<div id='desktop' class='fullscreen-mode'>
+<div id='desktop' class='fullscreen-mode auto-fade-in fade'>
   <div id='topBar' class='dock-top unselectable'>
   <div id='topLeftBar' class='dock-left'>
     <ul class='bar-menu'>
