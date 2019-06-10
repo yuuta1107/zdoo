@@ -516,6 +516,7 @@
         var $moreItems = $menuItems.removeClass('option').slice(start);
         var $moreOptionMenu = $('#moreOptionMenu');
         $moreOptionMenu.empty().append($moreItems.clone());
+        $moreOptionMenu.find('[data-toggle="tooltip"]').attr('data-toggle', null);
         $moreItems.addClass('option');
     }
 
