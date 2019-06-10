@@ -391,7 +391,7 @@ END:VCARD";
             $data = new stdclass();
             $data->fields      = $fields;
             $data->kind        = 'contact';
-            $data->rows        = $rows;
+            $data->rows        = array();
             $data->title       = $this->lang->contact->template;
             $data->customWidth = $this->config->contact->excelCustomWidth;
             $data->genderList  = array_values($this->lang->contact->genderList);
