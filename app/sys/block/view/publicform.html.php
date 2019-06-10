@@ -12,7 +12,7 @@
 ?>
 <?php $this->loadModel('block');?>
 <tr>
-  <th class='w-100px'><?php echo $lang->block->name?></th>
+  <th class='w-60px'><?php echo $lang->block->name?></th>
   <td><?php echo html::input('title', $block ? $block->title : '', "class='form-control'")?></td>
 </tr>
 <tr>

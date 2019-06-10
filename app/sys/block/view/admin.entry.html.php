@@ -14,8 +14,12 @@
 <?php include "../../../sys/common/view/chosen.html.php";?>
 <?php js::set('index', $index);?>
 <table class='table table-form'>
-  <th class='w-100px'><?php echo $lang->block->lblBlock?></th>
-  <td><?php echo html::select('blocks', $blocks, $blockID, "class='form-control'")?></td>
+  <tbody>
+    <tr>
+      <th class='w-60px'><?php echo $lang->block->lblBlock?></th>
+      <td><?php echo html::select('blocks', $blocks, $blockID, "class='form-control'")?></td>
+    </tr>
+  </tbody>
 </table>
 <?php if($blockID or $params):?>
 <form method='post' id='ajaxForm' action='<?php echo inlink('admin', "index=$index&blockID=$blockID")?>'>

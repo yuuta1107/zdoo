@@ -15,27 +15,27 @@ $(function()
 
 /**
  * Delete block.
- * 
- * @param  int    $index 
+ *
+ * @param  int    $index
  * @access public
  * @return void
  */
 function deleteBlock(index)
 {
     $.getJSON(createLink('block', 'delete', 'index=' + index), function(data)
-    {   
+    {
         if(data.result != 'success')
-        {   
+        {
             alert(data.message);
             return false;
-        }   
-    })  
+        }
+    })
 }
 
 /**
  * Sort blocks.
- * 
- * @param  object $orders  format is {'block2' : 1, 'block1' : 2, oldOrder : newOrder} 
+ *
+ * @param  object $orders  format is {'block2' : 1, 'block1' : 2, oldOrder : newOrder}
  * @access public
  * @return void
  */
@@ -44,7 +44,7 @@ function sortBlocks(orders)
     var oldOrder = new Array();
     var newOrder = new Array();
     for(i in orders)
-    {   
+    {
         oldOrder.push(i.replace('block', ''));
         newOrder.push(orders[i]);
     }
@@ -74,10 +74,10 @@ function sortBlocks(orders)
  */
 function resizeBlock(event)
 {
-  var blockID = event.element.find('.panel').data('blockid');
-  var data = event.type == 'vertical' ? event.height : event.grid;
-  $.getJSON(createLink('block', 'resize', 'id=' + blockID + '&type=' + event.type + '&data=' + data), function(data)
-  {
+    var blockID = event.element.find('.panel').data('blockid');
+    var data = event.type == 'vertical' ? event.height : event.grid;
+    $.getJSON(createLink('block', 'resize', 'id=' + blockID + '&type=' + event.type + '&data=' + data), function  (data)
+    {
         if(data.result !== 'success') event.revert();
-  });
+    });
 }

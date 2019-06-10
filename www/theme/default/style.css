@@ -8,111 +8,6 @@
 * @version     $Id: style.css 4069 2016-09-29 05:25:19Z daitingting $
 * @link        http://www.ranzhi.org
 */
-/*-----------------------WIDTH SETTING--------------------------*/
-.w-p5  {width: 5%}
-.w-p10 {width: 10%}
-.w-p15 {width: 15%}
-.w-p20 {width: 20%}
-.w-p25 {width: 25%}
-.w-p30 {width: 30%}
-.w-p35 {width: 35%}
-.w-p40 {width: 40%}
-.w-p45 {width: 45%}
-.w-p50 {width: 50%}
-.w-p55 {width: 55%}
-.w-p60 {width: 60%}
-.w-p65 {width: 65%}
-.w-p70 {width: 70%}
-.w-p75 {width: 75%}
-.w-p80 {width: 80%}
-.w-p85 {width: 85%}
-.w-p90 {width: 90%}
-.w-p94 {width: 94%}
-.w-p95 {width: 95%}
-.w-p98 {width: 98%}
-.w-p99 {width: 99%}
-.w-p100{width: 100%}
-
-.w-10px {width:10px}
-.w-20px {width:20px}
-.w-30px {width:30px}
-.w-35px {width:35px}
-.w-40px {width:40px}
-.w-45px {width:45px}
-.w-50px {width:50px}
-.w-60px {width:60px}
-.w-70px {width:70px}
-.w-80px {width:80px}
-.w-90px {width:90px}
-.w-100px {width:100px}
-.w-110px {width:110px}
-.w-120px {width:120px}
-.w-130px {width:130px}
-.w-140px {width:140px}
-.w-150px {width:150px}
-.w-160px {width:160px}
-.w-170px {width:160px}
-.w-180px {width:180px}
-.w-200px {width:200px}
-.w-210px {width:210px}
-.w-220px {width:220px}
-.w-230px {width:230px}
-.w-240px {width:240px}
-.w-260px {width:260px}
-.w-280px {width:280px}
-.w-300px {width:300px}
-.w-320px {width:320px}
-.w-350px {width:350px}
-.w-400px {width:400px}
-.w-450px {width:450px}
-.w-500px {width:500px}
-.w-600px {width:600px}
-.w-700px {width:700px}
-.w-800px {width:800px}
-.w-900px {width:900px}
-.w-1000px {width:1000px}
-
-.w-id        {width:55px;}
-.w-pri       {width:30px;}
-.w-severity  {width:40px;}
-.w-hour      {width:40px;}
-.w-date      {width:80px;}
-.w-user      {width:60px;}
-.w-status    {width:50px;}
-.w-type      {width:80px;}
-.w-resolution{width:60px;}
-
-/* margins */
-.mgb-20 {margin-bottom: 20px;}
-.mgb-10 {margin-bottom: 10px;}
-.mg-0 {margin: 0 !important;}
-
-.pd-0{padding: 0 !important;}
-
-/*-----------------------FORM SETTING----------------------------*/
-.text-1 {width: 90%}
-td>.text-1,td>.area-1{padding-left:2px;padding-right: 2px}
-.text-2 {width: 120px}
-.text-3 {width: 240px}
-.text-4 {width: 360px}
-.text-5 {width: 480px}
-
-.select-1 {width: 90%}
-.select-2 {width: 125px}
-.select-3 {width: 250px;}
-.select-4 {width: 360px}
-.select-5 {width: 480px}
-td>select{padding-left: 0;padding-right: 0}
-
-.area-1{width: 90%;}
-.area-2{width: 120px}
-.area-3{width: 240px}
-.area-4{width: 360px}
-.area-5{width: 480px}
-
-/* display helpers */
-.show {display: block!important;}
-.overflow-visible {overflow: visible!important;}
 
 /* --- LAYOUT SETTING --- */
 /* page-header */
@@ -178,22 +73,6 @@ body.page-actions-fixed {padding-bottom: 70px}
 .block.input-group-btn .btn-info:hover    {border-color: #aaa}
 .block.input-group-btn .btn-danger:hover  {border-color: #aaa}
 .block.input-group-btn .btn-primary .caret, .block.input-group-btn .btn-success .caret, .block.input-group-btn .btn-warning .caret, .block.input-group-btn .btn-danger .caret, .block.input-group-btn .btn-info .caret {border-top-color: #333}
-
-/* modal */
-.modal .modal-dialog {max-width: 100%; border: 8px solid #666; border-color: rgba(0,0,0,.25)}
-.modal .modal-header {padding: 10px 15px}
-h4.modal-title, .modal-title {font-size: 14px}
-
-/* modal with iframe */
-.modal-iframe .modal-body {padding: 0;}
-.body-modal {padding-bottom: 0; overflow: hidden;}
-.modal-dialog.fullscreen {width: 100% !important; height: 100% !important; margin: 0; border: none !important;}
-.modal-dialog.fullscreen .modal-body iframe {height: 100%}
-.modal-loading .modal-dialog {margin-top: -100%!important;}
-.modal-body > .table:last-child {margin: 0}
-@media (max-width: 991px) {.modal-dialog{padding: 0;}}
-body.body-modal {padding-top: 10px;}
-.body-modal #mainNavbar {display: none}
 
 /* style of text */
 .text-latin {font-family: Arial;}

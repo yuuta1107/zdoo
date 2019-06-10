@@ -2,7 +2,7 @@ $(function()
 {
     $('#blocks').change(function()
     {
-        $('#ajaxModal').load(createLink('block', 'admin', "index=" + v.index + "&blockID=" + $(this).val()), function(){$.zui.ajustModalPosition()});
+        $.zui.reloadModal(createLink('block', 'admin', "index=" + v.index + "&blockID=" + $(this).val()));
     });
 
     $(document).on('click', '.dropdown-menu.buttons .btn', function()
