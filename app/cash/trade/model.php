@@ -1000,10 +1000,11 @@ class tradeModel extends model
 
         if($oldTrade->type == 'in') $_POST['objectType'] = array('contract');
 
+        $now = helper::now();
         $trade = fixer::input('post')
             ->add('type', $oldTrade->type)
             ->add('editedBy', $this->app->user->account)
-            ->add('editedDate', helper::now())
+            ->add('editedDate', $now)
             ->add('handlers', trim(join(',', $this->post->handlers), ','))
             ->setDefault('contract', 0)
             ->setIf($this->post->trader == '', 'trader', 0)
