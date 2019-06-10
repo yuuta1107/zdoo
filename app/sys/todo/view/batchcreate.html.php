@@ -25,7 +25,7 @@
     <table class='table table-form table-fixed'>
       <thead>
         <tr class='text-center'>
-          <th class='w-30px'><?php echo $lang->todo->id;?></th> 
+          <th class='w-30px'><?php echo $lang->todo->id;?></th>
           <th class='w-120px'><?php echo $lang->todo->type;?></th>
           <th class='w-80px'><?php echo $lang->todo->pri;?></th>
           <th class='w-100px'><?php echo $lang->todo->assignedTo;?></th>
@@ -54,7 +54,7 @@
             <span class='input-group-addon'><label class='checkbox-inline'><input type='checkbox' name="switchDate[<?php echo $i?>]" id="switchDate<?php echo $i?>" data-key="<?php echo $i;?>" onclick='switchDateList(<?php echo $i?>);'> <?php echo $lang->todo->periods['future'];?></label></span>
           </div>
         </td>
-      </tr>  
+      </tr>
       <?php endfor;?>
       <tfoot>
         <tr>
@@ -66,7 +66,7 @@
   </div>
 </form>
 <?php js::set('account', $app->user->account)?>
-<script language='Javascript'>
+<script>
 var batchCreateNum = '<?php echo $config->todo->batchCreate;?>';
 $(document).ready(function(){setBeginsAndEnds();});
 function setBeginsAndEnds(i, beginOrEnd)

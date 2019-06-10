@@ -15,7 +15,7 @@
 <?php include '../../../sys/common/view/kindeditor.html.php';?>
 <div class='container mw-1400px'>
   <form class='form-condensed' method='post' id='ajaxForm'>
-    <table class='table table-form'> 
+    <table class='table table-form'>
       <tr>
         <th class='w-80px'><?php echo $lang->todo->date;?></th>
         <td class='w-p25-f'>
@@ -27,26 +27,26 @@
       <tr>
         <th><?php echo $lang->todo->type;?></th>
         <td><?php echo html::select('type', $lang->todo->typeList, '', 'onchange=loadList(this.value); class=form-control');?></td>
-      </tr>  
+      </tr>
       <tr>
         <th><?php echo $lang->todo->pri;?></th>
         <td><?php echo html::select('pri', $lang->todo->priList, '', "class='form-control'");?></td>
-      </tr>  
+      </tr>
       <tr>
         <th><?php echo $lang->todo->name;?></th>
         <td colspan='2'>
           <div id='nameBox' class='hidden'><?php echo html::input('name', '', 'class=form-control');?></div>
           <div class='nameBox'><?php echo html::input('name', '', 'class=form-control');?></div>
           </td>
-      </tr>  
+      </tr>
       <tr>
         <th><?php echo $lang->todo->desc;?></th>
         <td colspan='2'><?php echo html::textarea('desc', '', "rows='8' class='form-control'");?></td>
-      </tr>  
+      </tr>
       <tr>
         <th><?php echo $lang->todo->status;?></th>
         <td><?php echo html::select('status', $lang->todo->statusList, '', "class='form-control'");?></td>
-      </tr>  
+      </tr>
       <tr>
         <th><?php echo $lang->todo->beginAndEnd;?></th>
         <td>
@@ -55,11 +55,11 @@
           </div>
         </td>
         <td><label class='checkbox-inline'><input type='checkbox' id='switchDate' onclick='switchDateFeature(this);'> <?php echo $lang->todo->lblDisableDate;?></label></td>
-      </tr>  
+      </tr>
       <tr>
         <th><?php echo $lang->todo->private;?></th>
         <td><input type='checkbox' name='private' id='private' value='1'></td>
-      </tr>  
+      </tr>
       <tr>
         <td></td>
         <td colspan='2' class='text-center'>
@@ -70,7 +70,7 @@
   </form>
 </div>
 
-<script language='Javascript'>
+<script>
 var nowTime = '<?php echo $time?>';
 var today   = '<?php echo date('Y-m-d')?>';
 var start   = '<?php echo key($times)?>';

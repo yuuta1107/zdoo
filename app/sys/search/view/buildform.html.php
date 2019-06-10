@@ -62,7 +62,7 @@ include '../../common/view/chosen.html.php';
 .contact_chosen .chosen-results > li.no-results:hover {color: #1a4f85; background-color: #ddd;}
 .contact_chosen .chosen-results > li.no-results > span {font-weight: bold;}
 </style>
-<script language='Javascript'>
+<script>
 var $selectedItem;
 var selectItem = function(item)
 {
