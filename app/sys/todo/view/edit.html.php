@@ -19,7 +19,7 @@
 <?php include '../../../sys/common/view/kindeditor.html.php';?>
 <div class='container mw-700px'>
   <form class='form-condensed' method='post' id='ajaxForm' action='<?php echo $this->createLink('todo', 'edit', "id=$todo->id")?>'>
-    <table class='table table-form'> 
+    <table class='table table-form'>
       <tr>
         <th class='w-80px'><?php echo $lang->todo->date;?></th>
         <td class='w-p50'>
@@ -33,11 +33,11 @@
       <tr>
         <th><?php echo $lang->todo->type;?></th>
         <td><input type='hidden' name='type' value='<?php echo $todo->type;?>' /><?php echo $lang->todo->typeList[$todo->type];?></td>
-      </tr>  
+      </tr>
       <tr>
         <th><?php echo $lang->todo->pri;?></th>
         <td><?php echo html::select('pri', $lang->todo->priList, $todo->pri, "class='form-control'");?></td>
-      </tr>  
+      </tr>
       <tr>
         <th><?php echo $lang->todo->name;?></th>
         <td>
@@ -46,7 +46,7 @@
           echo html::input('name', $todo->name, "$readType class=form-control");
           ?>
         </td>
-      </tr>  
+      </tr>
       <tr>
         <th><?php echo $lang->todo->desc;?></th>
         <td colspan='2'><?php echo html::textarea('desc', htmlspecialchars($todo->desc), "rows=4 class='form-control'");?></td>
@@ -58,7 +58,7 @@
       <tr>
         <th><?php echo $lang->todo->status;?></th>
         <td><?php echo html::select('status', $lang->todo->statusList, $todo->status, "class='form-control'");?></td>
-      </tr>  
+      </tr>
       <tr>
         <th><?php echo $lang->todo->beginAndEnd;?></th>
         <td>
@@ -69,11 +69,11 @@
         <td>
           <label class='checkbox-inline'><input type='checkbox' id='dateSwitcher' onclick='switchDateFeature(this);' <?php if($todo->begin == 2400) echo 'checked';?> > <?php echo $lang->todo->lblDisableDate;?></label>
         </td>
-      </tr>  
+      </tr>
       <tr>
         <th><?php echo $lang->todo->private;?></th>
         <td><input type='checkbox' name='private' id='private' value='1' <?php if($todo->private) echo 'checked';?>></td>
-      </tr>  
+      </tr>
       <tr>
         <th></th>
         <td>
@@ -84,7 +84,7 @@
   </form>
 </div>
 <?php js::set('account', $app->user->account)?>
-<script language='Javascript'>
+<script>
 $(document).ready(function(){switchDateFeature(document.getElementById('dateSwitcher'))});
 </script>
 <?php if(helper::isAjaxRequest()):?>

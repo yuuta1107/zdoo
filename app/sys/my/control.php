@@ -20,9 +20,8 @@ class my extends control
     public function index()
     {
         $appName = $this->app->getAppName();
-        $entry   = $this->loadModel('entry')->getByCode($appName);
 
-        $this->view->title   = $entry->name;
+        $this->view->title   = $this->lang->my->common;
         $this->view->appName = $appName;
         $this->display();
     }

@@ -5,7 +5,7 @@
  * @copyright   Copyright 2009-2018 青岛易软天创网络科技有限公司(QingDao Nature Easy Soft Network Technology Co,LTD, www.cnezsoft.com)
  * @license     ZPL (http://zpl.pub/page/zplv12.html)
  * @author      Yidong Wang <yidong@cnezsoft.com>
- * @package     file 
+ * @package     file
  * @version     $Id: buildform.html.php 7417 2013-12-23 07:51:50Z wwccss $
  * @link        http://www.ranzhi.org
  */
@@ -21,7 +21,7 @@ $sessionString .= session_name() . '=' . session_id();
   .files-list > li > a:hover {text-decoration: none}
 
 </style>
-<script language='Javascript'>
+<script>
 /* Delete a file. */
 function deleteFile(fileID)
 {

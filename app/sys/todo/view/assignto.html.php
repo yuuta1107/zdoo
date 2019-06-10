@@ -45,7 +45,7 @@
     </tr>
   </table>
 </form>
-<script language='Javascript'>
+<script>
 $(document).ready(function(){switchDateFeature(document.getElementById('dateSwitcher'))});
 </script>
 <?php include '../../../sys/common/view/footer.modal.html.php';?>
