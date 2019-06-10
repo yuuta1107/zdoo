@@ -61,27 +61,28 @@ class block extends control
         if($_POST)
         {
             $this->block->save($index, 'system', 'crm');
-            if(dao::isError())  $this->send(array('result' => 'fail', 'message' => dao::geterror())); 
+            if(dao::isError())  $this->send(array('result' => 'fail', 'message' => dao::geterror()));
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => $this->server->http_referer));
         }
 
         $block   = $this->block->getBlock($index, 'crm');
         $blockID = $blockID ? $blockID : ($block ? $block->block : '');
 
-        $this->view->title   = $title;
-        $this->view->blocks  = array_merge(array(''), json_decode($this->block->getAvailableBlocks(), true));
-        $this->view->params  = $blockID ? json_decode($this->block->{'get' . ucfirst($blockID) . 'Params'}(), true) : array();
-        $this->view->blockID = $blockID;
-        $this->view->block   = $block;
-        $this->view->index   = $index;
+        $this->view->title      = $title;
+        $this->view->blocks     = array_merge(array(''), json_decode($this->block->getAvailableBlocks(), true));
+        $this->view->params     = $blockID ? json_decode($this->block->{'get' . ucfirst($blockID) . 'Params'}(), true) : array();
+        $this->view->blockID    = $blockID;
+        $this->view->block      = $block;
+        $this->view->index      = $index;
+        $this->view->modalWidth = 384;
         $this->display();
     }
 
     /**
-     * Sort block. 
-     * 
-     * @param  string    $oldOrder 
-     * @param  string    $newOrder 
+     * Sort block.
+     *
+     * @param  string    $oldOrder
+     * @param  string    $newOrder
      * @access public
      * @return void
      */
