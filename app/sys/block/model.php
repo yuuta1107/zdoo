@@ -280,7 +280,7 @@ class blockModel extends model
      */
     public function initBlock($appName = 'sys')
     {
-        $this->app->loadLang('block');
+        $this->app->loadLang('block', 'sys');
         $blocks  = $this->lang->block->default[$appName];
         $account = $this->app->user->account;
 
