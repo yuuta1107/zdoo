@@ -138,16 +138,6 @@ td #aliasLabel {display: table-row;}
 .table-fixed tfoot > tr > th, .table-fixed tfoot > tr > td, .table-fixed .nofixed{overflow: visible;}
 .table-fixed td.operate, .table-fixed th.operate, .table-fixed td.actions, .table-fixed th.actions {overflow: visible;}
 
-/* nav */
-.nav > li > a {padding: 10px 15px; line-height: 20px}
-.nav li .icon-chevron-right {float: right; margin-top: 2px; margin-right: -6px; opacity: .25;}
-.nav li.active i.icon-chevron-right,.nav li:hover i.icon-chevron-right{opacity: .9;}
-
-/* navbar */
-.navbar {font-size: 14px; min-height: 36px}
-.navbar-fixed-bottom{border-top: 1px solid #e1e1e1; background: #eef4fe;}
-.navbar-fixed-bottom .navbar-text{font-size: 13px; margin: 9px 0;}
-
 /* file Form */
 .form-group .file-form .form-group:last-child {margin-bottom: 0;}
 

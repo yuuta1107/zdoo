@@ -29,12 +29,6 @@
     <nav>
       <?php echo commonModel::createMainMenu($this->moduleName);?>
     </nav>
-
-    <?php /*Below is an example for buttons on main navbar on right side */ ?>
-    <div class='actions'>
-      <button type='button' class='btn'>Blocks <span class='caret'></span></button>
-    </div>
-    <?php /*Above is an example for buttons on main navbar on right side */ ?>
   </div>
 </div>
 <div class='container' id='main'><?php /* '#main' closed in 'footer.html.php'. */ ?>

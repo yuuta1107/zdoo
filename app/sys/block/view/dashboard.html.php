@@ -15,42 +15,46 @@ $jsRoot    = $webRoot . "js/";
 $themeRoot = $webRoot . "theme/";
 if(isset($pageCSS)) css::internal($pageCSS);
 ?>
-<div class='dashboard dashboard-draggable' id='dashboard' data-confirm-remove-block='<?php  echo $lang->block->confirmRemoveBlock;?>'>
+<div id='navbarActions' class='actions'><a class='btn btn-primary' href='<?php echo $this->createLink("block", "admin"); ?>' data-toggle='modal'><i class='icon-plus'></i> <?php echo $lang->block->createBlock?></a></div>
+
+<div class='dashboard auto-fade-in fade' id='dashboard' data-confirm-remove-block='<?php  echo $lang->block->confirmRemoveBlock;?>'>
   <div class='row'>
-    <?php $index = 0;?>
-    <?php foreach($blocks as $key => $block):?>
-    <?php
-    $index = $key;
-    ?>  
-    <div class='col-sm-6 col-md-<?php echo $block->grid;?>'>
-      <div class='panel <?php if(isset($block->params->color)) echo 'panel-' . $block->params->color;?>' id='block<?php echo $index?>' data-id='<?php echo $index?>' data-blockid='<?php echo $block->id?>' data-name='<?php echo $block->title?>' data-url='<?php echo $block->blockLink?>' <?php if(!empty($block->height)) echo "data-height='$block->height'";?>>
-        <div class='panel-heading'>
-          <div class='panel-actions'>
-            <?php if(isset($block->moreLink)) echo html::a($block->moreLink, $lang->more . "<i class='icon-double-angle-right'></i>", "class='app-btn' data-id='{$block->appid}'");?>
-            <button class='btn btn-mini refresh-panel'><i class='icon-repeat'></i></button>
-            <div class='dropdown'>
-              <button class='btn btn-mini' data-toggle='dropdown'><span class='caret'></span></button>
+    <div class='col-main'>
+      <?php $index = 0;?>
+      <?php foreach($blocks as $key => $block):?>
+      <?php
+      $index = $key;
+      ?>
+        <div class='panel panel-block <?php if(isset($block->params->color)) echo 'panel-' . $block->params->color;?>' id='block<?php echo $index?>' data-id='<?php echo $index?>' data-blockid='<?php echo $block->id?>' data-name='<?php echo $block->title?>' data-url='<?php echo $block->blockLink?>' <?php if(!empty($block->height)) echo "data-height='$block->height'";?>>
+          <div class='panel-heading'>
+            <strong class='title'><?php echo $block->title;?></strong>
+          </div>
+          <ul class='panel-actions nav nav-default'>
+            <?php if(!empty($block->moreLink)) echo '<li>' . html::a($block->moreLink, '<small>MORE</small>', '', "title='{$lang->more}'") . '</li>';?>
+            <li class='dropdown'>
+              <a href='javascript:;' data-toggle='dropdown' class='panel-action'><i class='icon icon-ellipsis-v'></i></a>
               <ul class='dropdown-menu pull-right'>
+                <li><a href='javascript:;' class='refresh-panel'><i class='icon-repeat'></i> <?php echo $lang->refresh;?></a></li>
                 <li><a data-toggle='modal' href="<?php echo $this->createLink("block", "admin", "index=$index"); ?>" class='edit-block' data-title='<?php echo $block->title; ?>' data-icon='icon-pencil'><i class='icon-pencil'></i> <?php echo $lang->edit; ?></a></li>
                 <li><a href='javascript:;' class='remove-panel'><i class='icon-remove'></i> <?php echo $lang->delete; ?></a></li>
               </ul>
-            </div>
+            </li>
+          </ul>
+          <div class='panel-body'>
           </div>
-          <?php echo $block->title;?>
         </div>
-        <div class='panel-body no-padding'></div>
-      </div>
+      <?php endforeach;?>
     </div>
-    <?php endforeach;?>
+    <div class='col-side'>
+    </div>
   </div>
-  <div class='dashboard-actions'><a class='btn btn-primary' href='<?php echo $this->createLink("block", "admin"); ?>' data-toggle='modal'><i class='icon-plus'></i> <?php echo $lang->block->createBlock?></a></div>
 </div>
 <script>
 config.ordersSaved = '<?php echo $lang->block->ordersSaved; ?>';
 config.confirmRemoveBlock = '<?php echo $lang->block->confirmRemoveBlock; ?>';
 </script>
 <?php if($extView = $this->getExtViewFile(__FILE__)){include $extView; return helper::cd();}?>
-<?php 
+<?php
 if(isset($pageJS)) js::execute($pageJS);
 
 /* Load hook files for current page. */
