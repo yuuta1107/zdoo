@@ -1275,7 +1275,7 @@ class trade extends control
             }
         }
 
-        $output = html::select('category', array('') + (array) $categories, '', "class='form-control'");
+        $output = html::select('category', array('') + (array)$categories, '', "class='form-control'");
 
         die($output);
     }

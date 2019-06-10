@@ -575,10 +575,11 @@ class fileModel extends model
      * parse excel file into array.
      *
      * @param  array  $fields
+     * @param  int    $sheetIndex
      * @access public
      * @return array
      */
-    public function parseExcel($fields = array())
+    public function parseExcel($fields = array(), $sheetIndex = 0)
     {
         $file = $this->session->importFile;
 
@@ -587,7 +588,7 @@ class fileModel extends model
         if(!$phpReader->canRead($file)) $phpReader = new PHPExcel_Reader_Excel5();
 
         $phpExcel     = $phpReader->load($file);
-        $currentSheet = $phpExcel->getSheet(0);
+        $currentSheet = $phpExcel->getSheet($sheetIndex);
         $allRows      = $currentSheet->getHighestRow();
         $allColumns   = $currentSheet->getHighestColumn();
         /* In php, 'A'++  === 'B', 'Z'++ === 'AA', 'a'++ === 'b', 'z'++ === 'aa'. */
