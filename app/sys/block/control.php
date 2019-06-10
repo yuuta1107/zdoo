@@ -50,6 +50,7 @@ class block extends control
         $this->view->allEntries = $allEntries;
         $this->view->index      = $index;
         $this->view->title      = $title;
+        $this->view->modalWidth = 384;
         $this->display();
     }
 

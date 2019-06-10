@@ -13,7 +13,7 @@
 <?php include '../../common/view/header.modal.html.php';?>
 <table class='table table-form'>
   <tr>
-    <th class='w-100px'><?php echo $lang->block->lblEntry; ?></th>
+    <th class='w-60px'><?php echo $lang->block->lblEntry; ?></th>
     <?php
     $entryID = '';
     if($block) $entryID = $block->source != '' ? $block->source : $block->block;

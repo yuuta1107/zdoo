@@ -34,7 +34,7 @@ if($type == 'html')
       </tr>
       <?php elseif($type == 'html'):?>
       <tr>
-        <th class='w-100px'><?php echo $lang->block->lblHtml;?></th>
+        <th class='w-60px'><?php echo $lang->block->lblHtml;?></th>
         <td><?php echo html::textarea('html', $block ? $block->params->html : '', "class='form-control' rows='10'")?></td>
       </tr>
       <?php endif;?>
