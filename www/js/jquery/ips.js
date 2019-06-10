@@ -1175,8 +1175,8 @@
         /* save the last position and size */
         if(this.entry)
         {
-            this.entry.left   = Math.max(desktopPos.x, win.position().left);
-            this.entry.top    = Math.max(desktopPos.y, win.position().top);
+            this.entry.left   = Math.max(desktop.x, win.position().left);
+            this.entry.top    = Math.max(desktop.y, win.position().top);
             this.entry.width  = win.width();
             this.entry.height = win.height();
             this.entry.opened = false;
@@ -1723,7 +1723,7 @@
 
                     if(btnType == 'menu')
                     {
-                        $menu.css({left: desktopPos.x + 2, top: offset.top, bottom: 'inherit'});
+                        $menu.css({left: desktop.x + 2, top: offset.top, bottom: 'inherit'});
                     }
                     else if(isListBtn)
                     {
