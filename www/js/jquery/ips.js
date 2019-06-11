@@ -1672,8 +1672,18 @@
                 return false;
             }).on('click', '.app-btn', function(event)
             {
-                if($(this).hasClass('categoryButton')) return false;
                 var $this = $(this);
+
+                // hide dropdown menu
+                if($this.closest('.dropdown-hover').length)
+                {
+                    var $body = $('body').addClass('hide-dropdown-menu');
+                    setTimeout(function()
+                    {
+                        $body.removeClass('hide-dropdown-menu');
+                    }, 500);
+                }
+
                 var et = getEntry($this.attr('data-id'));
                 if(et)
                 {

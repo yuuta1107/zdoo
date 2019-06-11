@@ -36,6 +36,7 @@ body.mute-tooltip .s-task-tooltip {display: none!important}
 
 /* Dropdown menu */
 #desktop .dropdown-menu {border-radius: 0}
+.hide-dropdown-menu .dropdown-menu {display: none!important; transition: none!important}
 
 /* dock position. */
 .dock-left,.dock-right,.dock-top,.dock-bottom {position: absolute;}
