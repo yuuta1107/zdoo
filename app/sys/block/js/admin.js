@@ -1,14 +1,14 @@
 /**
  * Get all blocks.
- * 
- * @param  string|int $entryID 
+ *
+ * @param string entryID
  * @access public
  * @return void
  */
 function getBlocks(entryID)
 {
-    var entryBlock = $('#allEntries').parent().parent().next();
-    $(entryBlock).hide();
+    entryID = entryID || $('#allEntries').val();
+    var $blockList = $('#blockList').hide();
 
     $('#blockParam').empty();
     if(entryID == '') return false;
@@ -26,64 +26,66 @@ function getBlocks(entryID)
 
     $.get(createLink('entry', 'blocks', 'entryID=' + entryID + '&index=' + v.index), function(data)
     {
-        $(entryBlock).html(data);
-        $(entryBlock).show();
+        $blockList.html(data).show();
+        $.zui.initPage($blockList);
         $.zui.ajustModalPosition();
     })
 }
 
 /**
  * Get rss and html params.
- * 
- * @param  string $type 
- * @param  int    $blockID 
+ *
+ * @param  string $type
+ * @param  int    $blockID
  * @access public
  * @return void
  */
 function getRssAndHtmlParams(type, blockID)
 {
-    blockID = typeof(blockID) == 'undefined' ? 0 : blockID;
+    blockID = blockID === undefined ? 0 : blockID;
     $.get(createLink('block', 'set', 'index=' + v.index + '&type=' + type + '&blockID=' + blockID), function(data)
     {
-        $('#blockParam').html(data);
+        var $blockParam = $('#blockParam').html(data);
         $.setAjaxForm('#ajaxForm', function(){parent.location.href=config.webRoot + config.appName;});
+        $.zui.initPage($blockParam);
         $.zui.ajustModalPosition();
     });
 }
 
 /**
  * Get block params.
- * 
- * @param  string $blockID 
- * @param  int    $entryID 
+ *
+ * @param  string $blockID
+ * @param  int    $entryID
  * @access public
  * @return void
  */
 function getBlockParams(blockID, entryID)
 {
-    $('#blockParam').empty();
+    var $blockParam = $('#blockParam').empty();
     if(blockID == '') return false;
 
     $.get(createLink('entry', 'setBlock', 'index=' + v.index + '&entryID=' + entryID + '&blockID=' + blockID), function(data)
     {
-        $('#blockParam').html(data);
+        $blockParam.html(data);
         $.setAjaxForm('#ajaxForm', function(){parent.location.href=config.webRoot + config.appName;});
+        $.zui.initPage($blockParam);
         $.zui.ajustModalPosition();
     });
 }
 
 $(function()
 {
-    $('#allEntries').change(function(){getBlocks($(this).val())});
-    getBlocks($('#allEntries').val());
+    $('#allEntries').on('change', function(){getBlocks()});
+    getBlocks();
 
     $.setAjaxForm('#blockForm', reloadHome);
 
     $(document).on('click', '.dropdown-menu.buttons .btn', function()
     {
         var $this = $(this);
-        var group = $this.closest('.input-group-btn');
-        group.find('.dropdown-toggle').removeClass().addClass('btn dropdown-toggle btn-' + $this.data('id'));
-        group.find('input[name^="params[color]"]').val($this.data('id'));
+        var $group = $this.closest('.input-group-btn');
+        $group.find('.dropdown-toggle').removeClass().addClass('btn dropdown-toggle btn-' + $this.data('id'));
+        $group.find('input[name^="params[color]"]').val($this.data('id'));
     });
 })

@@ -20,7 +20,7 @@
     ?>
     <td><?php echo html::select('allEntries', $allEntries, $entryID, "class='form-control'")?></td>
   </tr>
-  <tr></tr>
+  <tr id='blockList'></tr>
 </table>
 <div id='blockParam'></div>
 <?php js::set('index', $index)?>
