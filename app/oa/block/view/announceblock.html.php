@@ -10,11 +10,13 @@
  * @link        http://www.ranzhi.org
  */
 ?>
-<table class='table table-data table-hover table-fixed' id='oaBlockAnnounce'>
-  <?php foreach($announces as $id => $announce):?>
-  <tr>
-    <td><?php echo html::a($this->createLink('oa.announce', 'view', "announceID=$id"), $announce->title, "data-toggle='modal'")?></td>
-    <td class='w-50px'><?php echo formatTime($announce->createdDate, DT_DATE6)?></td>
-  </tr>
-  <?php endforeach;?>
-</table>
+<div class='panel-body has-table'>
+  <table class='table table-hover table-data table-fixed' id='oaBlockAnnounce'>
+    <?php foreach($announces as $id => $announce):?>
+    <tr>
+      <td class='w-80px'><?php echo formatTime($announce->createdDate, DT_DATE4)?></td>
+      <td><?php echo html::a($this->createLink('oa.announce', 'view', "announceID=$id"), $announce->title, "data-toggle='modal'")?></td>
+    </tr>
+    <?php endforeach;?>
+  </table>
+</div>
