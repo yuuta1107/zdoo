@@ -1699,7 +1699,7 @@ class upgradeModel extends model
             {
                 $member->account = $account;
 
-                $this->dao->insert(TABLE_TEAM)->data($member)->autoCheck()->exec();
+                $this->dao->replace(TABLE_TEAM)->data($member)->autoCheck()->exec();
             }
         }
 
