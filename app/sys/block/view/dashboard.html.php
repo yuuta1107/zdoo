@@ -25,7 +25,7 @@ if(isset($pageCSS)) css::internal($pageCSS);
       <?php
       $index = $key;
       ?>
-        <div class='panel panel-block <?php if(isset($block->params->color)) echo 'panel-' . $block->params->color;?>' id='block<?php echo $index?>' data-id='<?php echo $index?>' data-blockid='<?php echo $block->id?>' data-name='<?php echo $block->title?>' data-url='<?php echo $block->blockLink?>' <?php if(!empty($block->height)) echo "data-height='$block->height'";?>>
+        <div class='panel panel-block block-<?php echo $block->block;?> <?php if(isset($block->params->color)) echo 'panel-' . $block->params->color;?>' id='block<?php echo $index?>' data-id='<?php echo $index?>' data-blockid='<?php echo $block->id?>' data-name='<?php echo $block->title?>' data-url='<?php echo $block->blockLink?>' <?php if(!empty($block->height)) echo "data-height='$block->height'";?>>
           <div class='panel-heading'>
             <strong class='title'><?php echo $block->title;?></strong>
             <ul class='panel-actions nav nav-default'>

@@ -83,3 +83,9 @@ $config->action->datingTables['order']    = TABLE_ORDER;
 $config->action->datingTables['contract'] = TABLE_CONTRACT;
 $config->action->datingTables['customer'] = TABLE_CUSTOMER;
 $config->action->datingTables['contact']  = TABLE_CONTACT;
+
+$config->action->majorList = array();
+$config->action->majorList['order']    = array('created', 'signed', 'activated'); 
+$config->action->majorList['contract'] = array('created', 'delivered', 'returned'); 
+$config->action->majorList['customer'] = array('created', 'assigned', 'createorder'); 
+$config->action->majorList['action']   = array('createrecord'); 

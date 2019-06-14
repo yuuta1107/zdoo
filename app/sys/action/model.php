@@ -599,6 +599,11 @@ class actionModel extends model
             if(!isset($actionIDList[$action->id])) unset($actions[$key]);
         }
 
+        foreach($actions as $action)
+        {
+            $action->major = (isset($this->config->action->majorList[$action->objectType]) && in_array($action->action, $this->config->action->majorList[$action->objectType])) ? 1 : 0;
+        }
+
         return $actions;
     }
 
