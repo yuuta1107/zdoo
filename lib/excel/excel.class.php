@@ -111,7 +111,7 @@ class excel extends model
      * @access public
      * @return void
      */
-    public function export($excelData, $fileType = 'xls', $savePath = '')
+    public function export($excelData, $fileType = 'xls', $savePath = '', $sheet = '', $sheetIndex = null)
     {
         $index = 0;
         /* Create sheets. */
@@ -238,6 +238,8 @@ class excel extends model
         /* If hasn't sys data remove the last sheet. */
         if(!$this->hasSysData) $this->phpExcel->removeSheetByIndex($this->phpExcel->getSheetCount() - 1);
         $this->phpExcel->setActiveSheetIndex(0);
+
+        if($sheet) $this->phpExcel->addSheet($sheet, $sheetIndex);
 
         /* urlencode the filename for ie. */
         $fileName = $excelData->fileName;
