@@ -137,7 +137,6 @@ class tradeModel extends model
                         $trade->return = round($trade->return / $trade->money * 100, 4) . '%';
                     }
                 }
-
             }
         }
 
@@ -175,7 +174,6 @@ class tradeModel extends model
                 }
             }
         }
-
 
         return $trades;
     }
