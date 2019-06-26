@@ -12,7 +12,7 @@
 $lang->block->common = '区块';
 $lang->block->name   = '区块名称';
 $lang->block->style  = '外观';
-$lang->block->grid   = '宽度';
+$lang->block->grid   = '位置';
 $lang->block->color  = '颜色';
 
 $lang->block->lblEntry = '应用';
@@ -33,6 +33,9 @@ $lang->block->confirmRemoveBlock = '确定移除区块【{0}】吗？';
 $lang->block->allEntries  = '所有应用';
 $lang->block->dynamic     = '最新动态';
 $lang->block->dynamicInfo = "<span class='timeline-tag'>%s</span> <span class='timeline-text'>%s <em>%s</em> %s <a href='%s' title='%s' %s>%s</a></span>";
+
+$lang->block->gridOptions[8] = '左侧';
+$lang->block->gridOptions[4] = '右侧';
 
 $lang->block->default['oa']['1']['title'] = '日历';
 $lang->block->default['oa']['1']['block'] = 'attend';
