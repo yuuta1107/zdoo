@@ -39,7 +39,7 @@ js::set('moduleID', $moduleID);
 <?php endif;?>
 <?php if(strpos($treeMenu, '<li>') !== false):?>
 <div class='row'>
-  <?php if($moduleMenu):?>
+  <?php if(!empty($moduleMenu)):?>
   <div class='col-md-4'>
   <?php else:?>
   <div class='col-md-3'>
