@@ -218,6 +218,7 @@ class block extends control
             if($this->block->initBlock($appName)) die(js::reload());
         }
 
+        $shortBlocks = $longBlocks = array();
         foreach($blocks as $key => $block)
         {
             $block->params = json_decode($block->params);
@@ -267,9 +268,19 @@ class block extends control
                     $block->appid    = $app == 'sys' ? 'dashboard' : $app;
                 }
             }
+
+            if($this->block->isLongBlock($block))
+            {    
+                $longBlocks[$key] = $block;
+            }    
+            else 
+            {    
+                $shortBlocks[$key] = $block;
+            }    
         }
 
-        $this->view->blocks = $blocks;
+        $this->view->longBlocks  = $longBlocks;
+        $this->view->shortBlocks = $shortBlocks;
         $this->display();
     }
 

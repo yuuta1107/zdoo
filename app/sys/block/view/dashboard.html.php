@@ -21,7 +21,7 @@ if(isset($pageCSS)) css::internal($pageCSS);
   <div class='row'>
     <div class='col-main'>
       <?php $index = 0;?>
-      <?php foreach($blocks as $key => $block):?>
+      <?php foreach($longBlocks as $key => $block):?>
       <?php
       $index = $key;
       ?>
@@ -46,6 +46,30 @@ if(isset($pageCSS)) css::internal($pageCSS);
       <?php endforeach;?>
     </div>
     <div class='col-side'>
+      <?php $index = 0;?>
+      <?php foreach($shortBlocks as $key => $block):?>
+      <?php
+      $index = $key;
+      ?>
+        <div class='panel panel-block block-<?php echo $block->block;?> <?php if(isset($block->params->color)) echo 'panel-' . $block->params->color;?>' id='block<?php echo $index?>' data-id='<?php echo $index?>' data-blockid='<?php echo $block->id?>' data-name='<?php echo $block->title?>' data-url='<?php echo $block->blockLink?>' <?php if(!empty($block->height)) echo "data-height='$block->height'";?>>
+          <div class='panel-heading'>
+            <strong class='title'><?php echo $block->title;?></strong>
+            <ul class='panel-actions nav nav-default'>
+              <?php if(!empty($block->moreLink)) echo '<li>' . html::a($block->moreLink, '<small>MORE</small>', '', "title='{$lang->more}'") . '</li>';?>
+              <li class='dropdown'>
+                <a href='javascript:;' data-toggle='dropdown' class='panel-action'><i class='icon icon-ellipsis-v'></i></a>
+                <ul class='dropdown-menu pull-right'>
+                  <li><a href='javascript:;' class='refresh-panel'><i class='icon-repeat'></i> <?php echo $lang->refresh;?></a></li>
+                  <li><a data-toggle='modal' href="<?php echo $this->createLink("block", "admin", "index=$index"); ?>" class='edit-block' data-title='<?php echo $block->title; ?>' data-icon='icon-pencil'><i class='icon-pencil'></i> <?php echo $lang->edit; ?></a></li>
+                  <li><a href='javascript:;' class='remove-panel'><i class='icon-remove'></i> <?php echo $lang->delete; ?></a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <div class='panel-body'>
+          </div>
+        </div>
+      <?php endforeach;?>
     </div>
   </div>
 </div>

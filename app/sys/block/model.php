@@ -299,4 +299,17 @@ class blockModel extends model
 
         return !dao::isError();
     }
+
+    /**
+     * Check block is long block or not.
+     * 
+     * @param  int    $block 
+     * @access public
+     * @return void
+     */
+    public function isLongBlock($block)
+    {   
+        if(empty($block)) return true;
+        return $block->grid >= 6;
+    }   
 }
