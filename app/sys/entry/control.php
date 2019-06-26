@@ -484,7 +484,7 @@ class entry extends control
     {
         $block = $this->loadModel('block')->getBlock($index);
 
-        $entry  = $this->entry->getByCode($entryID);
+        $entry = $this->entry->getByCode($entryID);
         if($entry->buildin)
         {
             $this->get->set('mode', 'getblockform');
