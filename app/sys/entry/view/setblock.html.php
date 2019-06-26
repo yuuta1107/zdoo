@@ -16,10 +16,6 @@ $jsRoot    = $webRoot . "js/";
 $themeRoot = $webRoot . "theme/";
 include "../../common/view/chosen.html.php";
 ?>
-<style>
-.input-group > .input-group-addon:first-child{border-left-width: 1px;}
-.input-group > .input-group-btn:last-child > button{border-left-width: 0;}
-</style>
 <form method='post' id='blockForm' class='form form-horizontal' action='<?php echo $this->createLink('block', 'set', "index=$index&type=system")?>'>
   <table class='table table-form'>
     <tbody>
@@ -98,8 +94,21 @@ include "../../common/view/chosen.html.php";
 <script>
 $(function()
 {
+    var blockTitle = ''; 
+
     options = $('#entryBlock').find("option").text();
-    if(options.indexOf($('#title').val()) >= 0) $('#title').val($('#entryBlock').find("option:selected").text());
+    blockTitle = $('#entryBlock').find("option:selected").text();
+    if(options.indexOf($('#title').val()) >= 0)
+    {
+        $('#title').val(blockTitle);
+        if($('#paramstype').length > 0) $('#title').val(blockTitle + ' - ' + $('#paramstype').find('option:selected').html());
+    }
+
+    $(document).on('change', '#paramstype', function()
+    {   
+        $('#title').val(blockTitle + ' - ' + $(this).find('option:selected').html());
+    }); 
+
 })
 </script>
 <?php endif;?>
