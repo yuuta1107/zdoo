@@ -71,11 +71,12 @@ class block extends control
         $blocks = json_decode($this->block->getAvailableBlocks(), true);
         $this->view->blocks  = array_merge(array(''), $blocks);
 
-        $this->view->title   = $title;
-        $this->view->params  = $blockID ? json_decode($this->block->{'get' . ucfirst($blockID) . 'Params'}(), true) : array();
-        $this->view->blockID = $blockID;
-        $this->view->block   = $block;
-        $this->view->index   = $index;
+        $this->view->title      = $title;
+        $this->view->params     = $blockID ? json_decode($this->block->{'get' . ucfirst($blockID) . 'Params'}(), true) : array();
+        $this->view->blockID    = $blockID;
+        $this->view->block      = $block;
+        $this->view->index      = $index;
+        $this->view->modalWidth = 384;
         $this->display();
     }
 
