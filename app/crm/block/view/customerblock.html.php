@@ -10,13 +10,30 @@
  * @link        http://www.ranzhi.org
  */
 ?>
-<table class='table table-data table-hover block-contract table-fixed'>
-  <?php foreach($customers as $id => $customer):?>
-  <?php $appid = ($this->get->app == 'sys' and isset($_GET['entry'])) ? "class='app-btn' data-id='{$this->get->entry}'" : ''?>
-  <tr data-url='<?php echo $this->createLink('crm.customer', 'view', "id=$id");?>' <?php echo $appid;?>>
-    <td class='nobr'><?php echo $customer->name;?></td>
-    <td class='w-80px text-center'><?php echo formatTime($customer->nextDate, DT_DATE1);?></td>
-    <td class='w-80px text-center'><?php echo zget($lang->customer->statusList, $customer->status);?></td>
-  </tr>
-  <?php endforeach;?>
-</table>
+<div class='panel-body has-table'>
+  <table class='table table-borderless table-fixed table-fixed-head table-hover tablesorter block-customer'>
+    <thead>
+      <tr>
+        <th><?php echo $lang->customer->name;?></th>
+        <?php if($longBlock):?>
+        <th class='w-70px text-center'><?php echo $lang->customer->level;?></th>
+        <?php endif;?>
+        <th class='w-70px text-center'><?php echo $lang->customer->status;?></th>
+        <th class='w-100px'><?php echo $lang->customer->nextDate;?></th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php foreach($customers as $id => $customer):?>
+      <?php $appid = ($this->get->app == 'sys' and isset($_GET['entry'])) ? "class='app-btn' data-id='{$this->get->entry}'" : ''?>
+      <tr data-url='<?php echo $this->createLink('crm.customer', 'view', "id=$id");?>' <?php echo $appid;?>>
+        <td class='nobr'><?php echo $customer->name;?></td>
+        <?php if($longBlock):?>
+        <td class='text-center'><?php echo zget($lang->customer->levelNameList, $customer->level);?></td>
+        <?php endif;?>
+        <td class='text-center'><?php echo zget($lang->customer->statusList, $customer->status);?></td>
+        <td><?php echo formatTime($customer->nextDate, DT_DATE1);?></td>
+      </tr>
+      <?php endforeach;?>
+    </tbody>
+  </table>
+</div>

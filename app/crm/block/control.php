@@ -163,6 +163,7 @@ class block extends control
         $this->view->products     = $products;
         $this->view->currencySign = $this->loadModel('common')->getCurrencySign();
         $this->view->orders       = $orders;
+        $this->view->longBlock    = $this->get->longBlock;
 
         $this->display();
     }
@@ -213,8 +214,9 @@ class block extends control
         $this->session->set('contractList', $this->createLink('crm.dashboard', 'index'));
         if($this->get->app == 'sys') $this->session->set('contractList', 'javascript:$.openEntry("home")');
 
-        $this->view->sso    = base64_decode($this->get->sso);
-        $this->view->code   = $this->get->blockid;
+        $this->view->sso          = base64_decode($this->get->sso);
+        $this->view->code         = $this->get->blockid;
+        $this->view->currencySign = $this->loadModel('common')->getCurrencySign();
 
         $this->view->contracts = $this->dao->select('*')->from(TABLE_CONTRACT)
             ->where('deleted')->eq(0)
@@ -251,19 +253,33 @@ class block extends control
         }
         else
         {
-            $customers = $this->dao->select('*')->from(TABLE_CUSTOMER)
-                ->where('deleted')->eq(0)
-                ->andWhere('id')->in($customerIdList)
-                ->beginIF($params->type and $params->type == 'today')->andWhere('nextDate')->eq(helper::today())->fi()
-                ->beginIF($params->type and $params->type == 'thisweek')->andWhere('nextDate')->between($thisWeek['begin'], $thisWeek['end'])->fi()
+            $customers = $this->dao->select('t1.*')->from(TABLE_CUSTOMER)->alias('t1')
+                ->leftJoin(TABLE_DATING)->alias('t2')->on('t1.id=t2.objectID')
+                ->where('t1.deleted')->eq(0)
+                ->andWhere('t1.id')->in($customerIdList)
+                ->beginIF($params->type and $params->type == 'today')->andWhere('t2.date')->eq(helper::today())->fi()
+                ->beginIF($params->type and $params->type == 'thisweek')->andWhere('t2.date')->between($thisWeek['begin'], $thisWeek['end'])->fi()
                 ->orderBy($params->orderBy)
                 ->limit($params->num)
                 ->fetchAll('id');
+
+            $datingList = $this->dao->select('objectID, MIN(date) AS date')->from(TABLE_DATING)
+                ->where('status')->eq('wait')
+                ->andWhere('objectType')->eq('customer')
+                ->andWhere('objectID')->in(array_keys($customers))
+                ->beginIF($params->type and $params->type == 'today')->andWhere('date')->eq(helper::today())->fi()
+                ->beginIF($params->type and $params->type == 'thisweek')->andWhere('date')->between($thisWeek['begin'], $thisWeek['end'])->fi()
+                ->andWhere('date')->ne('0000-00-00')
+                ->groupBy('objectID')
+                ->fetchPairs();
+
+            foreach($customers as $id => $customer) $customer->nextDate = zget($datingList, $id, $customer->nextDate);
         }
 
         $this->view->sso       = base64_decode($this->get->sso);
         $this->view->code      = $this->get->blockid;
         $this->view->customers = $customers;
+        $this->view->longBlock = $this->get->longBlock;
 
         $this->display();
     }
