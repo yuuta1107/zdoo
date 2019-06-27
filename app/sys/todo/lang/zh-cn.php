@@ -82,6 +82,7 @@ $lang->todo->successMarked  = "成功切换状态！";
 $lang->todo->thisIsPrivate  = '这是一条私人事务。:)';
 $lang->todo->lblDisableDate = '暂时不设定时间';
 $lang->todo->emptyTodo      = '您今天还没有添加待办。';
+$lang->todo->lblClickCreate = '点击添加待办';
 
 $lang->todo->periods['today']      = '今日';
 $lang->todo->periods['yesterday']  = '昨日';
