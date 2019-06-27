@@ -536,6 +536,7 @@ class entry extends control
         $this->get->set('lang', $this->app->getClientLang());
         $this->get->set('sso', base64_encode(commonModel::getSysURL() . helper::createLink('entry', 'visit', "entry=$entry->id")));
         $this->get->set('param', $params);
+        $this->get->set('longBlock', $this->block->isLongBlock($block));
         $html = $this->fetch('block', 'index', array(), $entry->code);
 
         die($html);
