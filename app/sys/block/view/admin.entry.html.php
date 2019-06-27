@@ -58,11 +58,57 @@
         </td>
       </tr>
       <?php endforeach;?>
+      <tr>
+        <th><?php echo $lang->block->style;?></th>
+        <td>
+          <div class='input-group'>
+            <span class='input-group-addon'><?php echo $lang->block->grid;?></span>
+            <?php echo html::select('grid', $lang->block->gridOptions, $block ? $block->grid : 8, "class='form-control'")?>
+            <div class='input-group-btn block'>
+              <?php $btn = isset($block->params->color) ? 'btn-' . $block->params->color : 'btn-default'?>
+              <button type='button' class="btn <?php echo $btn;?> dropdown-toggle" data-toggle='dropdown'>
+                <?php echo $lang->block->color;?> <span class='caret'></span>
+              </button>
+              <?php echo html::hidden('params[color]', isset($block->params->color) ? $block->params->color : 'default');?>
+              <div class='dropdown-menu buttons'>
+                <li><button type='button' data-id='default' class='btn btn-block btn-default'>&nbsp;</li>
+                <li><button type='button' data-id='primary' class='btn btn-block btn-primary'>&nbsp;</li>
+                <li><button type='button' data-id='warning' class='btn btn-block btn-warning'>&nbsp;</li>
+                <li><button type='button' data-id='danger' class='btn btn-block btn-danger'>&nbsp;</li>
+                <li><button type='button' data-id='success' class='btn btn-block btn-success'>&nbsp;</li>
+                <li><button type='button' data-id='info' class='btn btn-block btn-info'>&nbsp;</li>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
     </tbody>
     <tfoot>
       <tr><th></th><td><?php echo html::submitButton() . html::hidden('block', $blockID);?></td></tr>
     </tfoot>
   </table>
 </form>
+<?php endif;?>
+<?php if(!isset($block->name)):?>
+<script>
+$(function()
+{
+    var blockTitle = ''; 
+
+    options = $('#blocks').find("option").text();
+    blockTitle = $('#blocks').find("option:selected").text();
+    if(options.indexOf($('#title').val()) >= 0)
+    {
+        $('#title').val(blockTitle);
+        if($('#paramstype').length > 0) $('#title').val(blockTitle + ' - ' + $('#paramstype').find('option:selected').html());
+    }
+
+    $(document).on('change', '#paramstype', function()
+    {   
+        $('#title').val(blockTitle + ' - ' + $(this).find('option:selected').html());
+    }); 
+
+})
+</script>
 <?php endif;?>
 <?php include "../../../sys/common/view/footer.modal.html.php";?>

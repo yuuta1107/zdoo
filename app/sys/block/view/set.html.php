@@ -38,7 +38,53 @@ if($type == 'html')
         <td><?php echo html::textarea('html', $block ? $block->params->html : '', "class='form-control' rows='10'")?></td>
       </tr>
       <?php endif;?>
+      <tr>
+        <th><?php echo $lang->block->style;?></th>
+        <td>
+          <div class='input-group'>
+            <span class='input-group-addon'><?php echo $lang->block->grid;?></span>
+            <?php echo html::select('grid', $lang->block->gridOptions, $block ? $block->grid : 8, "class='form-control'")?>
+            <div class='input-group-btn block'>
+              <?php $btn = isset($block->params->color) ? 'btn-' . $block->params->color : 'btn-default'?>
+              <button type='button' class="btn <?php echo $btn;?> dropdown-toggle" data-toggle='dropdown'>
+                <?php echo $lang->block->color;?> <span class='caret'></span>
+              </button>
+              <?php echo html::hidden('params[color]', isset($block->params->color) ? $block->params->color : 'default');?>
+              <div class='dropdown-menu buttons'>
+                <li><button type='button' data-id='default' class='btn btn-block btn-default'>&nbsp;</li>
+                <li><button type='button' data-id='primary' class='btn btn-block btn-primary'>&nbsp;</li>
+                <li><button type='button' data-id='warning' class='btn btn-block btn-warning'>&nbsp;</li>
+                <li><button type='button' data-id='danger' class='btn btn-block btn-danger'>&nbsp;</li>
+                <li><button type='button' data-id='success' class='btn btn-block btn-success'>&nbsp;</li>
+                <li><button type='button' data-id='info' class='btn btn-block btn-info'>&nbsp;</li>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
     </tbody>
     <tfoot><tr><td colspan='2' class='text-center'><?php echo html::submitButton()?></td></tr></tfoot>
   </table>
 </form>
+<?php if(!isset($block->name)):?>
+<script>
+$(function()
+{
+    var blockTitle = ''; 
+
+    options = $('#allEntries ').find("option").text();
+    blockTitle = $('#allEntries').find("option:selected").text();
+    if(options.indexOf($('#title').val()) >= 0)
+    {
+        $('#title').val(blockTitle);
+        if($('#paramstype').length > 0) $('#title').val(blockTitle + ' - ' + $('#paramstype').find('option:selected').html());
+    }
+
+    $(document).on('change', '#paramstype', function()
+    {   
+        $('#title').val(blockTitle + ' - ' + $(this).find('option:selected').html());
+    }); 
+
+})
+</script>
+<?php endif;?>
