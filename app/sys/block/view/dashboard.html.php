@@ -15,6 +15,7 @@ $jsRoot    = $webRoot . "js/";
 $themeRoot = $webRoot . "theme/";
 if(isset($pageCSS)) css::internal($pageCSS);
 ?>
+<?php include '../../common/view/tablesorter.html.php';?>
 <div id='navbarActions' class='actions'><a class='btn btn-primary' href='<?php echo $this->createLink("block", "admin"); ?>' data-toggle='modal'><i class='icon-plus'></i> <?php echo $lang->block->createBlock?></a></div>
 
 <div class='dashboard auto-fade-in fade' id='dashboard' data-confirm-remove-block='<?php  echo $lang->block->confirmRemoveBlock;?>'>
