@@ -134,14 +134,8 @@ class block extends control
         $this->session->set('orderList', $this->createLink('crm.dashboard', 'index'));
         if($this->get->app == 'sys') $this->session->set('orderList', 'javascript:$.openEntry("home")');
 
-        $this->view->sso       = base64_decode($this->get->sso);
-        $this->view->code      = $this->get->blockid;
-        $this->view->products  = $this->loadModel('product')->getPairs();
-        $this->view->customers = $this->loadModel('customer')->getPairs('client');
-
-        $customerIdList = $this->customer->getCustomersSawByMe('view');
-
-        $this->view->orders = $this->dao->select('*')->from(TABLE_ORDER)
+        $customerIdList = $this->loadModel('customer')->getCustomersSawByMe('view');
+        $orders = $this->dao->select('*')->from(TABLE_ORDER)
             ->where('deleted')->eq(0)
             ->andWhere('customer')->in($customerIdList)
             ->beginIF($params->type and strpos($params->type, 'status') === false)->andWhere($params->type)->eq($params->account)->fi()
@@ -149,6 +143,26 @@ class block extends control
             ->orderBy($params->orderBy)
             ->limit($params->num)
             ->fetchAll('id');
+
+        $products  = $this->loadModel('product')->getPairs();
+        $customers = $this->loadModel('customer')->getPairs('client');
+        foreach($orders as $order)
+        {
+            $order->products = array();
+            $productList = explode(',', $order->product);
+            foreach($productList as $product) if(isset($products[$product])) $order->products[] = $products[$product];
+        }
+        foreach($orders as $order)
+        {
+            $productName = count($order->products) > 1 ? current($order->products) . $this->lang->etc : current($order->products);
+            $order->name = sprintf($this->lang->order->titleLBL, zget($customers, $order->customer), $productName, date('Y-m-d', strtotime($order->createdDate))); 
+        }
+
+        $this->view->sso          = base64_decode($this->get->sso);
+        $this->view->code         = $this->get->blockid;
+        $this->view->products     = $products;
+        $this->view->currencySign = $this->loadModel('common')->getCurrencySign();
+        $this->view->orders       = $orders;
 
         $this->display();
     }
