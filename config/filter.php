@@ -60,6 +60,7 @@ $filter->block->default->get['hash']            = 'reg::md5';
 $filter->block->default->get['sso']             = 'reg::word';
 $filter->block->default->get['app']             = 'reg::character';
 $filter->block->default->get['param']           = 'reg::base64';
+$filter->block->default->get['longblock']       = 'reg::number';
 $filter->entry->depts->get['key']               = 'reg::key';
 $filter->entry->users->get['key']               = 'reg::key';
 $filter->entry->visit->get['referer']           = 'reg::base64';

@@ -163,7 +163,7 @@ class block extends control
         $this->view->products     = $products;
         $this->view->currencySign = $this->loadModel('common')->getCurrencySign();
         $this->view->orders       = $orders;
-        $this->view->longBlock    = $this->get->longBlock;
+        $this->view->longBlock    = $this->get->longblock;
 
         $this->display();
     }
@@ -279,7 +279,7 @@ class block extends control
         $this->view->sso       = base64_decode($this->get->sso);
         $this->view->code      = $this->get->blockid;
         $this->view->customers = $customers;
-        $this->view->longBlock = $this->get->longBlock;
+        $this->view->longBlock = $this->get->longblock;
 
         $this->display();
     }

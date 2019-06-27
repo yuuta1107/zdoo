@@ -227,13 +227,14 @@ class block extends control
             $block->params->account = $this->app->user->account;
             $block->params->uid     = $this->app->user->id;
 
-            $query            = array();
-            $query['mode']    = 'getblockdata';
-            $query['blockid'] = $block->block;
-            $query['hash']    = '';
-            $query['lang']    = $this->app->getClientLang();
-            $query['sso']     = '';
-            $query['app']     = $appName;
+            $query              = array();
+            $query['mode']      = 'getblockdata';
+            $query['blockid']   = $block->block;
+            $query['hash']      = '';
+            $query['lang']      = $this->app->getClientLang();
+            $query['sso']       = '';
+            $query['app']       = $appName;
+            $query['longblock'] = $this->block->isLongBlock($block);
             if(isset($block->params)) $query['param'] = base64_encode(json_encode($block->params));
 
             $query = http_build_query($query);
