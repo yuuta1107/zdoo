@@ -302,3 +302,6 @@ td #aliasLabel {display: table-row;}
 .xuanxuan-card {width: 525px;}
 
 .ke-container{border-radius:0px !important;}
+
+.input-group > .input-group-addon:first-child{border-left-width: 1px;}
+.input-group > .input-group-btn:last-child > button{border-left-width: 0;}
