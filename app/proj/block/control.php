@@ -292,7 +292,8 @@ class block extends control
         $params = $this->get->param;
         $this->params = json_decode(base64_decode($params));
 
-        $this->view->sso  = base64_decode($this->get->sso);
-        $this->view->code = $this->get->blockid;
+        $this->view->sso       = base64_decode($this->get->sso);
+        $this->view->code      = $this->get->blockid;
+        $this->view->longBlock = $this->get->longblock;
     }
 }
