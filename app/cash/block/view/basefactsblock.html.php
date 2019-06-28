@@ -10,28 +10,25 @@
  * @link        http://www.ranzhi.org
  */
 ?>
-<table class='table table-data table-hover block-contract table-fixed'>
-  <?php $appid = ($this->get->app == 'sys' and isset($_GET['entry'])) ? "class='app-btn' data-id='{$this->get->entry}'" : ''?>
-  <div style="overflow:auto;" class='table-wrapper'>
-    <table id='barChart' class='table table-condensed table-hover table-striped table-bordered table-chart' data-chart='bar' data-target='#myBarChart' data-animation='false'>
-      <thead>
-        <tr class='text-center'>
-          <th class='w-50px'><?php echo $lang->trade->month;?></th>
-          <th class='w-100px chart-label-in'><i class='chart-color-dot-in icon-circle text-green'></i> <?php echo $lang->trade->in . ' (' . zget($currencySign, $this->config->setting->mainCurrency) . ')';?></th>
-          <th class='w-100px chart-label-out'><i class='chart-color-dot-out icon-circle text-red'></i> <?php echo $lang->trade->out . ' (' . zget($currencySign, $this->config->setting->mainCurrency) . ')';?></th>
-          <th class='w-100px chart-label-profit'><?php echo $lang->trade->profit . '/' . $lang->trade->loss . ' (' . zget($currencySign, $this->config->setting->mainCurrency) . ')';?></th>
-        </tr>
-      </thead>
-      <tbody>
-        <?php foreach($annualChartDatas as $month => $monthChartData):?>
-        <tr class='text-center'>
-          <td><?php echo $month;?></td>
-          <td><?php echo $monthChartData['in'];?></td>
-          <td><?php echo $monthChartData['out'];?></td>
-          <td><?php echo $monthChartData['profit'];?></td>
-        </tr>
-        <?php endforeach;?>
-      </tbody>
-    </table>
-  </div>
-</table>
+<div class='panel-body has-table scrollbar-hover'>
+  <table class='table table-borderless table-fixed table-fixed-head table-hover tablesorter block-basefacts'>
+    <thead>
+      <tr class='text-center'>
+        <th class='w-50px'><?php echo $lang->trade->month;?></th>
+        <th><?php echo $lang->trade->in . '(' . zget($currencySign, $this->config->setting->mainCurrency) . ')';?></th>
+        <th><?php echo $lang->trade->out . '(' . zget($currencySign, $this->config->setting->mainCurrency) . ')';?></th>
+        <th><?php echo $lang->trade->profit . '/' . $lang->trade->loss . ' (' . zget($currencySign, $this->config->setting->mainCurrency) . ')';?></th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php foreach($annualChartDatas as $month => $monthChartData):?>
+      <tr class='text-center'>
+        <td><?php echo $month;?></td>
+        <td><?php echo $monthChartData['in'];?></td>
+        <td><?php echo $monthChartData['out'];?></td>
+        <td><?php echo $monthChartData['profit'];?></td>
+      </tr>
+      <?php endforeach;?>
+    </tbody>
+  </table>
+</div>

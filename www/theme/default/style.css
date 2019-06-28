@@ -205,7 +205,7 @@ td #aliasLabel {display: table-row;}
 .table-data tr[data-url] {cursor: pointer;}
 
 /* pri */
-.pri {display: inline-block; width: 20px; height: 20px; text-align: center; cursor: pointer; border: 1px solid #999; background-color: #ccc; color: #fff; margin-right: 5px; border-radius: 4px;}
+.pri {display: inline-block; width: 20px; height: 20px; line-height: 20px; text-align: center; cursor: pointer; border: 1px solid #999; background-color: #ccc; color: #fff; margin-right: 5px; border-radius: 4px;}
 .pri.pri-1 {background: #ffe6e5; border-color: #d2322d; color: #d2322d;}
 .pri.pri-2 {background: #ffd98c; border-color: #ea8400; color: #ea8400;}
 .pri.pri-3 {background: #f2d7ff; border-color: #8521bf; color: #8521bf;}
@@ -305,3 +305,5 @@ td #aliasLabel {display: table-row;}
 
 .input-group > .input-group-addon:first-child{border-left-width: 1px;}
 .input-group > .input-group-btn:last-child > button{border-left-width: 0;}
+
+.panel-body.has-table{padding: 10px;}

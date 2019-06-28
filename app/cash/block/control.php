@@ -168,6 +168,11 @@ class block extends control
 
         $this->view->currencySign  = $this->loadModel('common')->getCurrencySign();
         $this->view->depositorList = $this->loadModel('depositor', 'cash')->getPairs();
+        $this->view->customerList  = $this->loadModel('customer')->getPairs();
+        $this->view->productList   = $this->loadModel('product')->getPairs();
+        $this->view->longBlock     = $this->get->longblock;
+        $this->view->type          = $this->params->type;
+        $this->view->categories    = $this->lang->trade->categoryList + $this->loadModel('tree')->getPairs(0, 'out') + $this->tree->getPairs(0, 'in');
         $this->display();
     }
 
